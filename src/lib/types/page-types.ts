@@ -1,0 +1,135 @@
+// Scaffolder contract: page data shapes the factory emits, the components consume.
+// FAQ uses { question, answer } (Zmode canonical, matches cars-spanish reference).
+
+export interface FAQ {
+  question: string
+  answer: string
+}
+
+export interface Testimonial {
+  quote: string
+  author: string
+  location?: string
+  rating?: number
+}
+
+export interface RelatedLink {
+  href: string
+  label: string
+}
+
+export interface ServiceRef {
+  slug: string
+  name: string
+  short: string
+  tagline?: string
+}
+
+export interface AreaRef {
+  slug: string
+  name: string
+  tier?: 'home-base' | 'primary' | 'secondary'
+  zipCodes?: string[]
+}
+
+export interface InfoPageRef {
+  slug: string
+  name: string
+}
+
+export interface ServicePageData {
+  slug: string
+  title: string
+  description: string
+  hero: {
+    h1: string
+    subhead: string
+    trustLine?: string
+  }
+  whatWeCover: {
+    title: string
+    intro: string
+    items: string[]
+  }
+  scenarios: {
+    title: string
+    intro: string
+    cards: { title: string; text: string }[]
+  }
+  pricing: {
+    title: string
+    body: string
+    notes: string[]
+  }
+  coverage: {
+    title: string
+    intro: string
+    areas: RelatedLink[]
+  }
+  testimonial?: Testimonial
+  faqs: FAQ[]
+  relatedServices: RelatedLink[]
+}
+
+export interface ServiceAreaPageData {
+  slug: string
+  title: string
+  description: string
+  name: string
+  tier?: 'home-base' | 'primary' | 'secondary'
+  zipCodes?: string[]
+  hero: {
+    h1: string
+    subhead: string
+  }
+  about: {
+    title: string
+    body: string[]
+  }
+  servicesHere: {
+    title: string
+    intro: string
+    featured: string[]
+  }
+  landmarks: {
+    title: string
+    intro: string
+    items: string[]
+  }
+  testimonial?: Testimonial
+  faqs: FAQ[]
+  relatedAreas: RelatedLink[]
+}
+
+export interface InfoPageSection {
+  heading: string
+  body: string[]
+  list?: string[]
+}
+
+export interface InfoPageData {
+  slug: string
+  title: string
+  description: string
+  hero: {
+    h1: string
+    subhead: string
+  }
+  intro: string[]
+  sections: InfoPageSection[]
+  faqs: FAQ[]
+  relatedInfo: RelatedLink[]
+  relatedServices: RelatedLink[]
+}
+
+export interface Review {
+  id: string
+  rating: number
+  authorName: string
+  text: string
+  date: string
+  source: 'google' | 'yelp' | 'manual' | 'direct' | 'hybrid'
+  verified?: boolean
+  serviceUsed?: string
+  location?: string
+}
