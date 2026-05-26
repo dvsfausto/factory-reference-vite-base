@@ -185,7 +185,11 @@ export function ServicePageTemplate({ data }: Props) {
                   <>Built for <span className="font-script text-brand-600">{SITE.address.city || "you"}</span></>
                 )}
               </h2>
-              <p className="mt-5 text-lg text-ink-700 leading-relaxed">{data.localContext.body}</p>
+              <div className="mt-5 space-y-4">
+                {data.localContext.body.map((p, i) => (
+                  <p key={i} className="text-lg text-ink-700 leading-relaxed">{p}</p>
+                ))}
+              </div>
             </div>
           </div>
         </section>

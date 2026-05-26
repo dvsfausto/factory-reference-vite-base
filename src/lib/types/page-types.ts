@@ -74,7 +74,7 @@ export interface ServicePageData {
   }
   localContext?: {
     title?: string
-    body: string
+    body: string[]
   }
   testimonial?: Testimonial
   faqs: FAQ[]
@@ -108,7 +108,7 @@ export interface ServiceAreaPageData {
   }
   localContext?: {
     title?: string
-    body: string
+    body: string[]
   }
   testimonial?: Testimonial
   faqs: FAQ[]
