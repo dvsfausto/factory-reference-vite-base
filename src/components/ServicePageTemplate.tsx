@@ -74,18 +74,49 @@ export function ServicePageTemplate({ data }: Props) {
       <section className="bg-white">
         <div className="mx-auto max-w-3xl px-4 py-16">
           <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-            {data.whatWeCover.title}
+            {data.whatWeBuy.title}
           </h2>
           <p className="mt-4 text-lg leading-relaxed text-slate-700">
-            {data.whatWeCover.intro}
+            {data.whatWeBuy.body}
           </p>
           <ul className="mt-8 space-y-3">
-            {data.whatWeCover.items.map((item, i) => (
+            {data.whatWeBuy.items.map((item, i) => (
               <li key={i} className="flex items-start gap-3 text-slate-800">
                 <span aria-hidden className="mt-1 shrink-0 text-emerald-600">
                   ✓
                 </span>
                 <span className="leading-relaxed">{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* How pricing works */}
+      <section className="bg-slate-50">
+        <div className="mx-auto max-w-6xl px-4 py-16">
+          <div className="max-w-2xl">
+            <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+              {data.howPrice.title}
+            </h2>
+            <p className="mt-4 text-lg leading-relaxed text-slate-700">
+              {data.howPrice.body}
+            </p>
+          </div>
+          <ul className="mt-10 space-y-6">
+            {data.howPrice.factors.map((f, i) => (
+              <li key={i} className="flex gap-4">
+                <span className="shrink-0 text-2xl font-bold text-emerald-600">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <div>
+                  <h3 className="text-lg font-semibold text-slate-900">
+                    {f.title}
+                  </h3>
+                  <p className="mt-1 text-sm leading-relaxed text-slate-600">
+                    {f.text}
+                  </p>
+                </div>
               </li>
             ))}
           </ul>
@@ -125,6 +156,23 @@ export function ServicePageTemplate({ data }: Props) {
           <p className="mt-4 text-lg leading-relaxed text-slate-700">
             {data.pricing.body}
           </p>
+          {data.pricing.ranges && data.pricing.ranges.length > 0 && (
+            <ul className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {data.pricing.ranges.map((r) => (
+                <li
+                  key={r.label}
+                  className="rounded-lg border border-slate-200 bg-white px-4 py-4"
+                >
+                  <p className="text-xs uppercase tracking-wider text-slate-500">
+                    {r.label}
+                  </p>
+                  <p className="mt-1 text-xl font-bold text-emerald-700">
+                    {r.range}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          )}
           {data.pricing.notes.length > 0 && (
             <ul className="mt-8 space-y-2 border-t border-slate-200 pt-6">
               {data.pricing.notes.map((n, i) => (

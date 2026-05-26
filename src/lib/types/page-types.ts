@@ -46,10 +46,15 @@ export interface ServicePageData {
     subhead: string
     trustLine?: string
   }
-  whatWeCover: {
+  whatWeBuy: {
     title: string
-    intro: string
+    body: string
     items: string[]
+  }
+  howPrice: {
+    title: string
+    body: string
+    factors: { title: string; text: string }[]
   }
   scenarios: {
     title: string
@@ -59,6 +64,7 @@ export interface ServicePageData {
   pricing: {
     title: string
     body: string
+    ranges?: { label: string; range: string }[]
     notes: string[]
   }
   coverage: {
