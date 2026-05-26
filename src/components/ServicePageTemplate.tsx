@@ -1,59 +1,65 @@
-import { Link } from '@tanstack/react-router'
-import { FAQSection } from './FAQSection'
-import { CTASection } from './CTASection'
-import { serviceImageUrl } from '~/data/images'
-import { SITE } from '~/data/site'
-import type { ServicePageData } from '~/lib/types/page-types'
+import { Link } from "@tanstack/react-router";
+import { ArrowRight, Check, MapPin, Phone, Star } from "lucide-react";
+import { Breadcrumbs } from "./Breadcrumbs";
+import { FAQSection } from "./FAQSection";
+import { CTASection } from "./CTASection";
+import { SectionHeader } from "./SectionHeader";
+import { serviceImageUrl } from "~/data/images";
+import { SITE } from "~/data/site";
+import leaves from "~/assets/decorative/cleaning-leaves.png";
+import type { ServicePageData } from "~/lib/types/page-types";
 
 interface Props {
-  data: ServicePageData
+  data: ServicePageData;
+}
+
+function splitScriptAccent(heading: string): { lead: string; accent: string } {
+  const words = heading.trim().split(/\s+/);
+  if (words.length < 2) return { lead: "", accent: heading };
+  return { lead: words.slice(0, -1).join(" "), accent: words.slice(-1).join("") };
 }
 
 export function ServicePageTemplate({ data }: Props) {
+  const h1Parts = splitScriptAccent(data.hero.h1);
+  const localTitle = data.localContext?.title;
+  const localTitleParts = localTitle ? splitScriptAccent(localTitle) : null;
+
   return (
     <>
-      {/* Hero — split image right */}
-      <section className="bg-slate-50">
-        <div className="mx-auto max-w-6xl px-4 py-16">
-          <nav className="text-sm text-slate-500">
-            <Link to="/" className="hover:text-emerald-700">
-              Home
-            </Link>{' '}
-            ·{' '}
-            <Link to="/services" className="hover:text-emerald-700">
-              Services
-            </Link>
-          </nav>
-          <div className="mt-6 grid items-center gap-10 lg:grid-cols-2">
-            <div>
-              <h1 className="text-4xl font-bold leading-tight tracking-tight text-slate-900 sm:text-5xl">
-                {data.hero.h1}
+      {/* HERO */}
+      <section className="relative overflow-hidden bg-gradient-to-b from-brand-50 via-white to-white">
+        <img src={leaves} alt="" aria-hidden className="hidden md:block absolute -left-10 top-10 h-[80%] opacity-50 pointer-events-none select-none" />
+        <img src={leaves} alt="" aria-hidden className="hidden md:block absolute -right-10 bottom-0 h-[60%] opacity-40 pointer-events-none select-none rotate-180" />
+        <div className="container-x py-12 md:py-16 relative">
+          <Breadcrumbs items={[
+            { label: "Home", to: "/" },
+            { label: "Services", to: "/services" },
+            { label: data.title },
+          ]} />
+          <div className="mt-6 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+            <div className="lg:col-span-7">
+              <h1 className="mt-4">
+                {h1Parts.lead}
+                {h1Parts.lead && " "}
+                <span className="font-script text-brand-600">{h1Parts.accent}</span>
               </h1>
-              <p className="mt-5 max-w-xl text-lg leading-relaxed text-slate-700">
+              <p className="mt-5 text-lg text-ink-700 max-w-xl leading-relaxed">
                 {data.hero.subhead}
               </p>
               {data.hero.trustLine && (
-                <p className="mt-5 text-sm text-slate-600">
-                  {data.hero.trustLine}
-                </p>
+                <p className="mt-3 text-sm text-ink-500">{data.hero.trustLine}</p>
               )}
-              <div className="mt-8 flex flex-wrap items-center gap-4">
-                <Link
-                  to="/contact"
-                  className="inline-flex items-center justify-center rounded-md bg-emerald-600 px-6 py-3 font-semibold text-white shadow-sm hover:bg-emerald-700"
-                >
-                  Get a quote
+              <div className="mt-7 flex flex-wrap gap-3">
+                <Link to="/contact" className="btn btn-lg btn-primary">
+                  Get Free Quote <ArrowRight className="h-4 w-4" />
                 </Link>
-                <a
-                  href={`tel:${SITE.phone}`}
-                  className="text-base font-semibold text-slate-900 hover:text-emerald-700"
-                >
-                  Or call: {SITE.phoneDisplay}
+                <a href={`tel:${SITE.phone}`} className="btn btn-lg btn-secondary">
+                  <Phone className="h-4 w-4" /> {SITE.phoneDisplay}
                 </a>
               </div>
             </div>
-            <div className="order-first lg:order-last">
-              <div className="aspect-[4/3] overflow-hidden rounded-2xl shadow-xl">
+            <div className="lg:col-span-5">
+              <div className="aspect-[4/3] rounded-2xl border-4 border-white shadow-xl overflow-hidden bg-brand-50">
                 <img
                   src={serviceImageUrl(data.slug)}
                   alt={data.hero.h1}
@@ -62,7 +68,7 @@ export function ServicePageTemplate({ data }: Props) {
                   loading="eager"
                   fetchPriority="high"
                   decoding="async"
-                  className="h-full w-full object-cover"
+                  className="w-full h-full object-cover"
                 />
               </div>
             </div>
@@ -70,117 +76,91 @@ export function ServicePageTemplate({ data }: Props) {
         </div>
       </section>
 
-      {/* What we cover */}
+      {/* WHAT WE COVER */}
       <section className="bg-white">
-        <div className="mx-auto max-w-3xl px-4 py-16">
-          <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-            {data.whatWeBuy.title}
-          </h2>
-          <p className="mt-4 text-lg leading-relaxed text-slate-700">
-            {data.whatWeBuy.body}
-          </p>
-          <ul className="mt-8 space-y-3">
-            {data.whatWeBuy.items.map((item, i) => (
-              <li key={i} className="flex items-start gap-3 text-slate-800">
-                <span aria-hidden className="mt-1 shrink-0 text-emerald-600">
-                  ✓
-                </span>
-                <span className="leading-relaxed">{item}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      {/* How pricing works */}
-      <section className="bg-slate-50">
-        <div className="mx-auto max-w-6xl px-4 py-16">
-          <div className="max-w-2xl">
-            <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-              {data.howPrice.title}
-            </h2>
-            <p className="mt-4 text-lg leading-relaxed text-slate-700">
-              {data.howPrice.body}
-            </p>
+        <div className="container-x py-16 md:py-24">
+          <div className="max-w-3xl">
+            <h2>{data.whatWeBuy.title}</h2>
+            <p className="mt-4 text-lg text-ink-700 leading-relaxed">{data.whatWeBuy.body}</p>
           </div>
-          <ul className="mt-10 space-y-6">
-            {data.howPrice.factors.map((f, i) => (
-              <li key={i} className="flex gap-4">
-                <span className="shrink-0 text-2xl font-bold text-emerald-600">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <div>
-                  <h3 className="text-lg font-semibold text-slate-900">
-                    {f.title}
-                  </h3>
-                  <p className="mt-1 text-sm leading-relaxed text-slate-600">
-                    {f.text}
-                  </p>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      {/* Scenarios */}
-      <section className="bg-slate-50">
-        <div className="mx-auto max-w-6xl px-4 py-16">
-          <div className="max-w-2xl">
-            <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-              {data.scenarios.title}
-            </h2>
-            <p className="mt-4 text-lg leading-relaxed text-slate-700">
-              {data.scenarios.intro}
-            </p>
-          </div>
-          <ul className="mt-10 grid gap-5 sm:grid-cols-2">
-            {data.scenarios.cards.map((c, i) => (
-              <li key={i} className="rounded-2xl bg-white p-6 shadow-sm">
-                <h3 className="text-lg font-semibold text-slate-900">{c.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-slate-600">
-                  {c.text}
-                </p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      {/* Pricing */}
-      <section className="bg-white">
-        <div className="mx-auto max-w-3xl px-4 py-16">
-          <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-            {data.pricing.title}
-          </h2>
-          <p className="mt-4 text-lg leading-relaxed text-slate-700">
-            {data.pricing.body}
-          </p>
-          {data.pricing.ranges && data.pricing.ranges.length > 0 && (
-            <ul className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {data.pricing.ranges.map((r) => (
-                <li
-                  key={r.label}
-                  className="rounded-lg border border-slate-200 bg-white px-4 py-4"
-                >
-                  <p className="text-xs uppercase tracking-wider text-slate-500">
-                    {r.label}
-                  </p>
-                  <p className="mt-1 text-xl font-bold text-emerald-700">
-                    {r.range}
-                  </p>
+          {data.whatWeBuy.items.length > 0 && (
+            <ul className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-4">
+              {data.whatWeBuy.items.map((item, i) => (
+                <li key={i} className="flex items-start gap-3 text-ink-700">
+                  <Check className="h-5 w-5 text-brand-600 mt-0.5 shrink-0" />
+                  <span className="leading-relaxed">{item}</span>
                 </li>
               ))}
             </ul>
+          )}
+        </div>
+      </section>
+
+      {/* HOW PRICING WORKS */}
+      <section className="bg-brand-50 border-y border-brand-100">
+        <div className="container-x py-16 md:py-24">
+          <SectionHeader
+            label="Pricing factors"
+            heading={data.howPrice.title}
+            body={data.howPrice.body}
+            align="left"
+          />
+          {data.howPrice.factors.length > 0 && (
+            <ul className="mt-4 space-y-6">
+              {data.howPrice.factors.map((f, i) => (
+                <li key={i} className="flex gap-5">
+                  <span className="shrink-0 font-display text-3xl text-brand-200 w-12">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <div>
+                    <h3 className="text-lg">{f.title}</h3>
+                    <p className="mt-1 text-ink-700 leading-relaxed">{f.text}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </section>
+
+      {/* SCENARIOS / PERFECT FOR */}
+      <section className="bg-white">
+        <div className="container-x py-16 md:py-24">
+          <SectionHeader heading={data.scenarios.title} body={data.scenarios.intro} />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {data.scenarios.cards.map((c, i) => (
+              <div key={i} className="card-stead p-6">
+                <h4>{c.title}</h4>
+                <p className="mt-2 text-sm text-ink-500 leading-relaxed">{c.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* PRICING DETAIL */}
+      <section className="bg-brand-50 border-y border-brand-100">
+        <div className="container-x py-16 md:py-24">
+          <div className="max-w-3xl mx-auto text-center">
+            <h2>{data.pricing.title}</h2>
+            <p className="mt-4 text-lg text-ink-700 leading-relaxed">{data.pricing.body}</p>
+          </div>
+          {data.pricing.ranges && data.pricing.ranges.length > 0 && (
+            <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl mx-auto">
+              {data.pricing.ranges.map((r) => (
+                <div key={r.label} className="card-stead p-6 text-center">
+                  <p className="text-xs uppercase tracking-wider text-ink-500">{r.label}</p>
+                  <p className="mt-2 font-display text-3xl text-brand-700">{r.range}</p>
+                </div>
+              ))}
+            </div>
           )}
           {data.pricing.notes.length > 0 && (
-            <ul className="mt-8 space-y-2 border-t border-slate-200 pt-6">
+            <ul className="mt-10 max-w-2xl mx-auto space-y-2 border-t border-brand-200 pt-6">
               {data.pricing.notes.map((n, i) => (
-                <li key={i} className="text-base leading-relaxed text-slate-700">
-                  <span aria-hidden className="mr-3 text-emerald-600">
-                    —
-                  </span>
-                  {n}
+                <li key={i} className="text-ink-700 leading-relaxed flex items-start gap-3">
+                  <span aria-hidden className="text-brand-600 shrink-0">—</span>
+                  <span>{n}</span>
                 </li>
               ))}
             </ul>
@@ -188,40 +168,103 @@ export function ServicePageTemplate({ data }: Props) {
         </div>
       </section>
 
-      {/* Coverage */}
-      {data.coverage.areas.length > 0 && (
-        <section className="bg-slate-50">
-          <div className="mx-auto max-w-6xl px-4 py-16">
-            <div className="max-w-2xl">
-              <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-                {data.coverage.title}
+      {/* LOCAL CONTEXT (optional) */}
+      {data.localContext && (
+        <section className="bg-white">
+          <div className="container-x py-16">
+            <div className="card-soft p-8 md:p-10 max-w-3xl mx-auto">
+              <span className="badge-pill bg-white border border-brand-100 text-brand-600">Local insight</span>
+              <h2 className="mt-3">
+                {localTitleParts ? (
+                  <>
+                    {localTitleParts.lead}
+                    {localTitleParts.lead && " "}
+                    <span className="font-script text-brand-600">{localTitleParts.accent}</span>
+                  </>
+                ) : (
+                  <>Built for <span className="font-script text-brand-600">{SITE.address.city || "you"}</span></>
+                )}
               </h2>
-              <p className="mt-4 text-lg leading-relaxed text-slate-700">
-                {data.coverage.intro}
-              </p>
+              <p className="mt-5 text-lg text-ink-700 leading-relaxed">{data.localContext.body}</p>
             </div>
-            <ul className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-              {data.coverage.areas.map((a) => (
-                <li key={a.href}>
-                  <Link
-                    to={a.href}
-                    className="block rounded-lg bg-white px-4 py-3 text-sm font-semibold text-slate-900 hover:text-emerald-700"
-                  >
-                    {a.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
           </div>
         </section>
       )}
 
+      {/* COVERAGE AREAS */}
+      {data.coverage.areas.length > 0 && (
+        <section className="bg-white">
+          <div className="container-x py-16 md:py-24">
+            <SectionHeader heading={data.coverage.title} body={data.coverage.intro} />
+            <div className="flex flex-wrap justify-center gap-2">
+              {data.coverage.areas.map((a) => (
+                <Link
+                  key={a.href}
+                  to={a.href}
+                  className="badge-pill bg-white border border-ink-100 text-ink-700 hover:border-brand-600 hover:text-brand-600 normal-case tracking-normal text-sm"
+                >
+                  <MapPin className="h-3.5 w-3.5" /> {a.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* TESTIMONIAL (optional) */}
+      {data.testimonial && (
+        <section className="bg-brand-50 border-y border-brand-100">
+          <div className="container-x py-16">
+            <figure className="max-w-3xl mx-auto text-center">
+              <div className="flex justify-center gap-0.5 mb-4">
+                {Array.from({ length: data.testimonial.rating ?? 5 }).map((_, i) => (
+                  <Star key={i} className="h-5 w-5 text-yellow-400 fill-yellow-400" />
+                ))}
+              </div>
+              <blockquote className="font-display text-2xl md:text-3xl text-ink-900 leading-snug">
+                "{data.testimonial.quote}"
+              </blockquote>
+              <figcaption className="mt-6 text-ink-700">
+                <span className="font-semibold">{data.testimonial.author}</span>
+                {data.testimonial.location && (
+                  <span className="text-ink-500"> · {data.testimonial.location}</span>
+                )}
+              </figcaption>
+            </figure>
+          </div>
+        </section>
+      )}
+
+      {/* FAQ */}
       <FAQSection faqs={data.faqs} title="Questions we hear often" />
+
+      {/* RELATED SERVICES */}
+      {data.relatedServices.length > 0 && (
+        <section className="bg-brand-50 border-y border-brand-100">
+          <div className="container-x py-16 md:py-24">
+            <SectionHeader heading="You may also need" />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+              {data.relatedServices.map((r) => (
+                <Link
+                  key={r.href}
+                  to={r.href}
+                  className="card-stead p-7 group hover:shadow-lg transition-all"
+                >
+                  <h4>{r.label}</h4>
+                  <div className="mt-3 text-brand-600 font-semibold flex items-center gap-1 group-hover:gap-2 transition-all">
+                    Explore <ArrowRight className="h-4 w-4" />
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       <CTASection
         title="Ready when you are."
         subtitle="Get a free quote and we'll be in touch within a business day."
       />
     </>
-  )
+  );
 }

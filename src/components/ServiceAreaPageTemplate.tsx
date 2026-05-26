@@ -1,59 +1,80 @@
-import { Link } from '@tanstack/react-router'
-import { FAQSection } from './FAQSection'
-import { CTASection } from './CTASection'
-import { areaImageUrl, areaAlt } from '~/data/images'
-import { SERVICES } from '~/data/services'
-import { SITE } from '~/data/site'
-import type { ServiceAreaPageData } from '~/lib/types/page-types'
+import { Link } from "@tanstack/react-router";
+import { ArrowRight, Check, MapPin, Phone } from "lucide-react";
+import { Breadcrumbs } from "./Breadcrumbs";
+import { FAQSection } from "./FAQSection";
+import { CTASection } from "./CTASection";
+import { SectionHeader } from "./SectionHeader";
+import { ReviewCard } from "./ReviewCard";
+import { areaImageUrl, areaAlt, serviceImageUrl } from "~/data/images";
+import { SERVICES } from "~/data/services";
+import { reviews } from "~/data/reviews";
+import { SITE } from "~/data/site";
+import leaves from "~/assets/decorative/cleaning-leaves.png";
+import type { ServiceAreaPageData } from "~/lib/types/page-types";
 
 interface Props {
-  data: ServiceAreaPageData
+  data: ServiceAreaPageData;
+}
+
+function splitScriptAccent(heading: string): { lead: string; accent: string } {
+  const words = heading.trim().split(/\s+/);
+  if (words.length < 2) return { lead: "", accent: heading };
+  return { lead: words.slice(0, -1).join(" "), accent: words.slice(-1).join("") };
 }
 
 export function ServiceAreaPageTemplate({ data }: Props) {
-  const servicesMap = new Map(SERVICES.map((s) => [s.slug, s]))
+  const h1Parts = splitScriptAccent(data.hero.h1);
+  const localTitle = data.localContext?.title;
+  const localTitleParts = localTitle ? splitScriptAccent(localTitle) : null;
+
+  const servicesMap = new Map(SERVICES.map((s) => [s.slug, s]));
   const featured = data.servicesHere.featured
     .map((slug) => servicesMap.get(slug))
-    .filter((s): s is NonNullable<typeof s> => Boolean(s))
+    .filter((s): s is NonNullable<typeof s> => Boolean(s));
+
+  const matchingReviews = reviews.filter((r) => r.location === data.name);
+  const displayReviews = matchingReviews.length >= 3
+    ? matchingReviews.slice(0, 3)
+    : reviews.slice(0, 3);
 
   return (
     <>
-      <section className="bg-slate-50">
-        <div className="mx-auto max-w-6xl px-4 py-16">
-          <nav className="text-sm text-slate-500">
-            <Link to="/" className="hover:text-emerald-700">
-              Home
-            </Link>{' '}
-            ·{' '}
-            <Link to="/areas" className="hover:text-emerald-700">
-              Areas
-            </Link>
-          </nav>
-          <div className="mt-6 grid items-center gap-10 lg:grid-cols-2">
-            <div>
-              <h1 className="text-4xl font-bold leading-tight tracking-tight text-slate-900 sm:text-5xl">
-                {data.hero.h1}
+      {/* HERO */}
+      <section className="relative overflow-hidden bg-gradient-to-b from-brand-50 via-white to-white">
+        <img src={leaves} alt="" aria-hidden className="hidden md:block absolute -left-10 top-10 h-[80%] opacity-50 pointer-events-none select-none" />
+        <img src={leaves} alt="" aria-hidden className="hidden md:block absolute -right-10 bottom-0 h-[60%] opacity-40 pointer-events-none select-none rotate-180" />
+        <div className="container-x py-12 md:py-16 relative">
+          <Breadcrumbs items={[
+            { label: "Home", to: "/" },
+            { label: "Areas", to: "/areas" },
+            { label: data.name },
+          ]} />
+          <div className="mt-6 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+            <div className="lg:col-span-7">
+              {data.zipCodes && data.zipCodes.length > 0 && (
+                <span className="badge-pill bg-white border border-brand-100 text-brand-600">
+                  <MapPin className="h-3.5 w-3.5" /> {data.zipCodes.join(" · ")}
+                </span>
+              )}
+              <h1 className="mt-4">
+                {h1Parts.lead}
+                {h1Parts.lead && " "}
+                <span className="font-script text-brand-600">{h1Parts.accent}</span>
               </h1>
-              <p className="mt-5 max-w-xl text-lg leading-relaxed text-slate-700">
+              <p className="mt-5 text-lg text-ink-700 max-w-xl leading-relaxed">
                 {data.hero.subhead}
               </p>
-              <div className="mt-8 flex flex-wrap items-center gap-4">
-                <Link
-                  to="/contact"
-                  className="inline-flex items-center justify-center rounded-md bg-emerald-600 px-6 py-3 font-semibold text-white shadow-sm hover:bg-emerald-700"
-                >
-                  Get a quote
+              <div className="mt-7 flex flex-wrap gap-3">
+                <Link to="/contact" className="btn btn-lg btn-primary">
+                  Get Free Quote <ArrowRight className="h-4 w-4" />
                 </Link>
-                <a
-                  href={`tel:${SITE.phone}`}
-                  className="text-base font-semibold text-slate-900 hover:text-emerald-700"
-                >
-                  Or call: {SITE.phoneDisplay}
+                <a href={`tel:${SITE.phone}`} className="btn btn-lg btn-secondary">
+                  <Phone className="h-4 w-4" /> {SITE.phoneDisplay}
                 </a>
               </div>
             </div>
-            <div className="order-first lg:order-last">
-              <div className="aspect-[4/3] overflow-hidden rounded-2xl shadow-xl">
+            <div className="lg:col-span-5">
+              <div className="aspect-[4/3] rounded-2xl border-4 border-white shadow-xl overflow-hidden bg-brand-50">
                 <img
                   src={areaImageUrl(data.slug)}
                   alt={areaAlt(data.slug)}
@@ -62,99 +83,160 @@ export function ServiceAreaPageTemplate({ data }: Props) {
                   loading="eager"
                   fetchPriority="high"
                   decoding="async"
-                  className="h-full w-full object-cover"
+                  className="w-full h-full object-cover"
                 />
               </div>
-              {data.zipCodes && data.zipCodes.length > 0 && (
-                <p className="mt-3 text-xs text-slate-500">
-                  ZIP codes: {data.zipCodes.join(' · ')}
-                </p>
-              )}
             </div>
           </div>
         </div>
       </section>
 
+      {/* AT A GLANCE / ABOUT */}
       <section className="bg-white">
-        <div className="mx-auto max-w-3xl px-4 py-16">
-          <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-            {data.about.title}
-          </h2>
-          <div className="mt-6 space-y-4">
-            {data.about.body.map((p, i) => (
-              <p key={i} className="text-base leading-relaxed text-slate-700">
-                {p}
-              </p>
-            ))}
+        <div className="container-x py-16">
+          <div className="card-soft p-8 max-w-3xl mx-auto">
+            <span className="text-xs font-bold text-brand-600 uppercase tracking-wider">
+              {data.name} at a glance
+            </span>
+            <h2 className="mt-3 text-2xl">{data.about.title}</h2>
+            <div className="mt-4 space-y-3">
+              {data.about.body.map((p, i) => (
+                <p key={i} className="text-ink-700 leading-relaxed">{p}</p>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
+      {/* SERVICES HERE */}
       {featured.length > 0 && (
-        <section className="bg-slate-50">
-          <div className="mx-auto max-w-6xl px-4 py-16">
-            <div className="max-w-2xl">
-              <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-                {data.servicesHere.title}
-              </h2>
-              <p className="mt-4 text-lg leading-relaxed text-slate-700">
-                {data.servicesHere.intro}
-              </p>
-            </div>
-            <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <section className="bg-brand-50 border-y border-brand-100">
+          <div className="container-x py-16 md:py-24">
+            <SectionHeader
+              label="Services available"
+              heading={data.servicesHere.title}
+              body={data.servicesHere.intro}
+            />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
               {featured.map((s) => (
-                <li key={s.slug}>
-                  <Link
-                    to="/services/$slug"
-                    params={{ slug: s.slug }}
-                    className="block h-full rounded-2xl bg-white p-5 shadow-sm transition-shadow hover:shadow-lg"
-                  >
-                    <p className="text-lg font-semibold text-slate-900">
-                      {s.name}
-                    </p>
-                    <p className="mt-2 text-sm leading-relaxed text-slate-600">
-                      {s.short}
-                    </p>
-                  </Link>
-                </li>
+                <Link
+                  key={s.slug}
+                  to="/services/$slug"
+                  params={{ slug: s.slug }}
+                  className="card-stead overflow-hidden group hover:shadow-xl hover:-translate-y-1 transition-all"
+                >
+                  <div className="aspect-[4/3] overflow-hidden">
+                    <img
+                      src={serviceImageUrl(s.slug)}
+                      alt={s.name}
+                      loading="lazy"
+                      width={800}
+                      height={600}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                  </div>
+                  <div className="p-6">
+                    <h4>{s.name}</h4>
+                    <p className="mt-2 text-sm text-ink-500">{s.short}</p>
+                    <div className="mt-3 text-brand-600 font-semibold flex items-center gap-1 group-hover:gap-2 transition-all text-sm">
+                      Learn more <ArrowRight className="h-4 w-4" />
+                    </div>
+                  </div>
+                </Link>
               ))}
-            </ul>
+            </div>
           </div>
         </section>
       )}
 
+      {/* LANDMARKS / SUB-AREAS */}
       {data.landmarks.items.length > 0 && (
         <section className="bg-white">
-          <div className="mx-auto max-w-3xl px-4 py-16">
-            <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-              {data.landmarks.title}
-            </h2>
-            <p className="mt-4 text-lg leading-relaxed text-slate-700">
-              {data.landmarks.intro}
-            </p>
-            <ul className="mt-8 grid gap-2 sm:grid-cols-2">
-              {data.landmarks.items.map((l, i) => (
-                <li
-                  key={i}
-                  className="flex items-start gap-2 text-base text-slate-700"
-                >
-                  <span aria-hidden className="mt-1 text-emerald-600">
-                    •
-                  </span>
-                  {l}
-                </li>
+          <div className="container-x py-16 md:py-24">
+            <SectionHeader
+              heading={data.landmarks.title}
+              body={data.landmarks.intro}
+              align="left"
+            />
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              {data.landmarks.items.map((item, i) => (
+                <div key={i} className="flex items-start gap-2 text-ink-700">
+                  <Check className="h-4 w-4 text-brand-600 mt-1 shrink-0" />
+                  <span>{item}</span>
+                </div>
               ))}
-            </ul>
+            </div>
           </div>
         </section>
       )}
 
+      {/* LOCAL CONTEXT (optional) */}
+      {data.localContext && (
+        <section className="bg-brand-50 border-y border-brand-100">
+          <div className="container-x py-16">
+            <div className="card-soft p-8 md:p-10 max-w-3xl mx-auto bg-white">
+              <span className="badge-pill bg-brand-50 text-brand-600">Local insight</span>
+              <h2 className="mt-3">
+                {localTitleParts ? (
+                  <>
+                    {localTitleParts.lead}
+                    {localTitleParts.lead && " "}
+                    <span className="font-script text-brand-600">{localTitleParts.accent}</span>
+                  </>
+                ) : (
+                  <>Why {data.name} chooses <span className="font-script text-brand-600">us</span></>
+                )}
+              </h2>
+              <p className="mt-5 text-lg text-ink-700 leading-relaxed">{data.localContext.body}</p>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* REVIEWS (filtered to area) */}
+      {displayReviews.length > 0 && (
+        <section className="bg-white">
+          <div className="container-x py-16 md:py-24">
+            <SectionHeader
+              label="Reviews"
+              heading={`${data.name} customer stories`}
+            />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+              {displayReviews.map((r) => (
+                <ReviewCard key={r.id} review={r} />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* FAQ */}
       <FAQSection faqs={data.faqs} title={`Questions about ${data.name}`} />
+
+      {/* RELATED AREAS */}
+      {data.relatedAreas.length > 0 && (
+        <section className="bg-brand-50 border-y border-brand-100">
+          <div className="container-x py-16">
+            <SectionHeader heading="We also serve nearby" />
+            <div className="flex flex-wrap justify-center gap-3">
+              {data.relatedAreas.map((a) => (
+                <Link
+                  key={a.href}
+                  to={a.href}
+                  className="card-stead px-5 py-3 hover:border-brand-600 transition-colors"
+                >
+                  <span className="font-semibold text-ink-900">{a.label}</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       <CTASection
         title={`Working in ${data.name}?`}
         subtitle="We'll respond within a business day with a free quote."
       />
     </>
-  )
+  );
 }

@@ -72,6 +72,10 @@ export interface ServicePageData {
     intro: string
     areas: RelatedLink[]
   }
+  localContext?: {
+    title?: string
+    body: string
+  }
   testimonial?: Testimonial
   faqs: FAQ[]
   relatedServices: RelatedLink[]
@@ -101,6 +105,10 @@ export interface ServiceAreaPageData {
     title: string
     intro: string
     items: string[]
+  }
+  localContext?: {
+    title?: string
+    body: string
   }
   testimonial?: Testimonial
   faqs: FAQ[]
