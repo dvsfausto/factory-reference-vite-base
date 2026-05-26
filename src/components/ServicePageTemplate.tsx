@@ -219,13 +219,8 @@ export function ServicePageTemplate({ data }: Props) {
       <FAQSection faqs={data.faqs} title="Questions we hear often" />
 
       <CTASection
-        heading="Ready when you are."
-        body="Get a free quote and we'll be in touch within a business day."
-        ctaPrimary={{ label: 'Get a quote', href: '/contact' }}
-        ctaSecondary={{
-          label: `Call ${SITE.phoneDisplay}`,
-          href: `tel:${SITE.phone}`,
-        }}
+        title="Ready when you are."
+        subtitle="Get a free quote and we'll be in touch within a business day."
       />
     </>
   )

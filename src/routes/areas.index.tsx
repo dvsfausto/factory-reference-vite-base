@@ -30,13 +30,8 @@ function AreasIndex() {
       </section>
       <AreasSection heading="Service areas" areas={AREAS} />
       <CTASection
-        heading="Don't see your area?"
-        body="Call us — we often travel for the right project."
-        ctaPrimary={{
-          label: `Call ${SITE.phoneDisplay}`,
-          href: `tel:${SITE.phone}`,
-        }}
-        ctaSecondary={{ label: 'Get a quote', href: '/contact' }}
+        title="Don't see your area?"
+        subtitle="Call us — we often travel for the right project."
       />
     </>
   )

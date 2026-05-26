@@ -36,14 +36,7 @@ function AboutPage() {
           </p>
         </div>
       </section>
-      <CTASection
-        heading="Want to work together?"
-        ctaPrimary={{ label: 'Get a quote', href: '/contact' }}
-        ctaSecondary={{
-          label: `Call ${SITE.phoneDisplay}`,
-          href: `tel:${SITE.phone}`,
-        }}
-      />
+      <CTASection title="Want to work together?" />
     </>
   )
 }

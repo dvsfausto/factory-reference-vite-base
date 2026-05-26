@@ -29,14 +29,7 @@ function ServicesIndex() {
         </div>
       </section>
       <ServicesSection heading="Services" services={SERVICES} />
-      <CTASection
-        heading="Need a quote?"
-        ctaPrimary={{ label: 'Get a quote', href: '/contact' }}
-        ctaSecondary={{
-          label: `Call ${SITE.phoneDisplay}`,
-          href: `tel:${SITE.phone}`,
-        }}
-      />
+      <CTASection title="Need a quote?" />
     </>
   )
 }

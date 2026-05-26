@@ -75,13 +75,8 @@ function HomePage() {
       <ReviewsSection heading="What customers say" />
       <FAQSection faqs={HOME_FAQS} title="Frequently asked questions" />
       <CTASection
-        heading="Ready when you are."
-        body="Quote in 24 hours. No pressure."
-        ctaPrimary={{ label: 'Get a quote', href: '/contact' }}
-        ctaSecondary={{
-          label: `Call ${SITE.phoneDisplay}`,
-          href: `tel:${SITE.phone}`,
-        }}
+        title="Ready when you are."
+        subtitle="Quote in 24 hours. No pressure."
       />
     </>
   )

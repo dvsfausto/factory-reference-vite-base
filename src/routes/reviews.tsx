@@ -28,14 +28,7 @@ function ReviewsPage() {
         </div>
       </section>
       <ReviewsSection heading="All reviews" count={50} />
-      <CTASection
-        heading="Want to work together?"
-        ctaPrimary={{ label: 'Get a quote', href: '/contact' }}
-        ctaSecondary={{
-          label: `Call ${SITE.phoneDisplay}`,
-          href: `tel:${SITE.phone}`,
-        }}
-      />
+      <CTASection title="Want to work together?" />
     </>
   )
 }

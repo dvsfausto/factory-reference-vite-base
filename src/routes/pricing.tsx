@@ -28,14 +28,7 @@ function PricingPage() {
           </p>
         </div>
       </section>
-      <CTASection
-        heading="Want a quote?"
-        ctaPrimary={{ label: 'Get a quote', href: '/contact' }}
-        ctaSecondary={{
-          label: `Call ${SITE.phoneDisplay}`,
-          href: `tel:${SITE.phone}`,
-        }}
-      />
+      <CTASection title="Want a quote?" />
     </>
   )
 }

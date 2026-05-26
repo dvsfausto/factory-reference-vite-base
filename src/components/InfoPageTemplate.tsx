@@ -120,14 +120,7 @@ export function InfoPageTemplate({ data }: Props) {
         </section>
       )}
 
-      <CTASection
-        heading="Ready when you are."
-        ctaPrimary={{ label: 'Get a quote', href: '/contact' }}
-        ctaSecondary={{
-          label: `Call ${SITE.phoneDisplay}`,
-          href: `tel:${SITE.phone}`,
-        }}
-      />
+      <CTASection title="Ready when you are." />
     </>
   )
 }
