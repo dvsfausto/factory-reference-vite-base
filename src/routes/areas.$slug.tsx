@@ -1,13 +1,13 @@
 import { createFileRoute, notFound } from '@tanstack/react-router'
 import { ServiceAreaPageTemplate } from '~/components/ServiceAreaPageTemplate'
 import { JsonLd } from '~/components/JsonLd'
-import { areasData } from '~/data/areas'
+import { serviceAreasData } from '~/data/areas'
 import { breadcrumbLd, buildMeta, faqLd } from '~/lib/seo'
 import { ogImageForArea } from '~/data/images'
 
 export const Route = createFileRoute('/areas/$slug')({
   loader: ({ params }) => {
-    const data = areasData[params.slug]
+    const data = serviceAreasData[params.slug]
     if (!data) throw notFound()
     return { data }
   },

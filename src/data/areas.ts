@@ -10,4 +10,4 @@ export const AREAS: AreaRef[] = [
   },
 ]
 
-export const areasData: Record<string, ServiceAreaPageData> = {}
+export const serviceAreasData: Record<string, ServiceAreaPageData> = {}
