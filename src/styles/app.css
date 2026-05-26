@@ -1,30 +1,248 @@
-@import 'tailwindcss' source('../');
+@import "tailwindcss" source(none);
+/* Path Z: lifted from mykeepr (Lovable cleaning reference). Original CSS
+   was at src/styles.css → @source "../src"; our location is src/styles/app.css
+   so @source "..".  Tailwind v4 scans the resolved directory for class names. */
+@source "..";
+@import "tw-animate-css";
 
-@layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentcolor);
-  }
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Cormorant Garamond", "Playfair Display", Georgia, serif;
+  --font-script: "Great Vibes", "Allura", cursive;
+
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 20px;
+  --radius-3xl: 24px;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Keepr brand: deep navy + bright blue */
+  --color-brand-50: #F2F7FF;
+  --color-brand-100: #DBE9FF;
+  --color-brand-200: #BFD5FB;
+  --color-brand-400: #60A5FA;
+  --color-brand-500: #3B82F6;
+  --color-brand-600: #1E63D6;
+  --color-brand-700: #1E40AF;
+  --color-brand-800: #1E3A8A;
+  --color-brand-900: #0B2A5B;
+
+  --color-ink-900: #0B1F3A;
+  --color-ink-700: #2C3E5C;
+  --color-ink-500: #5B6B82;
+  --color-ink-300: #B7C3D3;
+  --color-ink-100: #E6ECF4;
+  --color-ink-50: #F5F8FC;
+
+  --color-success-600: #16A34A;
+  --color-success-100: #DCFCE7;
+  --color-warning-600: #D97706;
+  --color-warning-100: #FFFBEB;
+}
+
+:root {
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.205 0.04 256);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.205 0.04 256);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.205 0.04 256);
+  --primary: oklch(0.46 0.18 263);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.968 0.013 255);
+  --secondary-foreground: oklch(0.25 0.04 256);
+  --muted: oklch(0.968 0.013 255);
+  --muted-foreground: oklch(0.5 0.03 256);
+  --accent: oklch(0.95 0.04 256);
+  --accent-foreground: oklch(0.25 0.04 256);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.92 0.013 256);
+  --input: oklch(0.92 0.013 256);
+  --ring: oklch(0.46 0.18 263);
+}
+
+.dark {
+  --background: oklch(0.129 0.042 264.695);
+  --foreground: oklch(0.984 0.003 247.858);
 }
 
 @layer base {
-  html {
-    color-scheme: light dark;
-  }
-
   * {
-    @apply border-gray-200 dark:border-gray-800;
+    border-color: var(--color-border);
   }
 
-  html,
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    @apply text-gray-900 bg-gray-50 dark:bg-gray-950 dark:text-gray-200;
+    background-color: #FFFFFF;
+    color: var(--color-ink-700);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
   }
 
-  .using-mouse * {
-    outline: none !important;
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--color-ink-900);
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: -0.005em;
   }
+
+  h1 { font-size: 60px; line-height: 64px; letter-spacing: -0.5px; font-weight: 500; }
+  h2 { font-size: 42px; line-height: 48px; letter-spacing: -0.25px; }
+  h3 { font-size: 26px; line-height: 34px; }
+  h4 { font-size: 20px; line-height: 28px; font-weight: 600; }
+
+  @media (max-width: 768px) {
+    h1 { font-size: 40px; line-height: 46px; }
+    h2 { font-size: 30px; line-height: 36px; }
+    h3 { font-size: 22px; line-height: 30px; }
+  }
+
+  .font-script {
+    font-family: var(--font-script);
+    font-weight: 400;
+  }
+  .font-display { font-family: var(--font-display); }
+  .font-sans-body { font-family: var(--font-sans); }
+}
+
+@layer components {
+  .container-x {
+    width: 100%;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 15px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    font-family: var(--font-sans);
+  }
+  .btn-lg { height: 52px; padding: 0 1.75rem; }
+  .btn-md { height: 42px; padding: 0 1.25rem; font-size: 14px; }
+  .btn-sm { height: 34px; padding: 0 1rem; font-size: 13px; }
+
+  .btn-primary { background: var(--color-brand-600); color: #fff; box-shadow: 0 4px 14px -4px rgba(30,99,214,0.35); }
+  .btn-primary:hover { background: var(--color-brand-800); box-shadow: 0 10px 24px -8px rgba(30,99,214,0.55); transform: translateY(-1px); }
+
+  .btn-secondary { background: #fff; color: var(--color-brand-800); border: 1.5px solid var(--color-brand-200); }
+  .btn-secondary:hover { background: var(--color-brand-50); border-color: var(--color-brand-600); color: var(--color-brand-600); }
+
+  .btn-ghost { background: transparent; color: var(--color-brand-600); }
+  .btn-ghost:hover { background: var(--color-brand-50); }
+
+  .btn-white { background: #fff; color: var(--color-brand-800); }
+  .btn-white:hover { background: var(--color-brand-50); transform: translateY(-1px); }
+
+  .btn-outline-white { background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,0.7); }
+  .btn-outline-white:hover { background: rgba(255,255,255,0.12); }
+
+  .card-stead {
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 1px 2px rgba(11,42,91,0.04), 0 8px 24px -12px rgba(11,42,91,0.08);
+    border: 1px solid var(--color-ink-100);
+  }
+
+  .card-soft {
+    background: var(--color-brand-50);
+    border-radius: 20px;
+    border: 1px solid var(--color-brand-100);
+  }
+
+  .badge-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.45rem 0.85rem;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-family: var(--font-sans);
+  }
+
+  /* Icon circle — blue-filled, white icon. Matches Keepr brochure motif. */
+  .icon-circle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 48px;
+    width: 48px;
+    border-radius: 999px;
+    background: var(--color-brand-600);
+    color: #fff;
+    box-shadow: 0 6px 16px -6px rgba(30,99,214,0.4);
+  }
+  .icon-circle-lg { height: 60px; width: 60px; }
+  .icon-circle-soft {
+    background: var(--color-brand-50);
+    color: var(--color-brand-600);
+    border: 1.5px solid var(--color-brand-100);
+    box-shadow: none;
+  }
+
+  /* Hairline section divider with a center diamond — repeats the brochure look */
+  .divider-diamond {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    color: var(--color-brand-600);
+  }
+  .divider-diamond::before,
+  .divider-diamond::after {
+    content: "";
+    flex: 0 0 60px;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.5;
+  }
+
+  .focus-ring:focus-visible {
+    outline: 2px solid var(--color-brand-600);
+    outline-offset: 2px;
+  }
+
+  /* Decorative input on contact form */
+  .input-stead{display:block;width:100%;border:1px solid var(--color-ink-300);border-radius:10px;padding:11px 14px;font-size:14px;background:#fff;color:var(--color-ink-900);transition:all .15s;font-family:var(--font-sans)}
+  .input-stead:focus{outline:none;border-color:var(--color-brand-600);box-shadow:0 0 0 3px rgba(30,99,214,.15)}
 }
