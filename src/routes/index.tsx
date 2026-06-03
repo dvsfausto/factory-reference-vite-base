@@ -13,7 +13,8 @@ import { SERVICES } from '~/data/services'
 import { AREAS } from '~/data/areas'
 import { SITE } from '~/data/site'
 import { reviews } from '~/data/reviews'
-import { HERO_IMAGE, HERO_ALT, serviceImageUrl } from '~/data/images'
+import { HERO_ALT, serviceImageUrl } from '~/data/images'
+import { imageSrc } from '~/lib/asset-url'
 import leaves from '~/assets/decorative/cleaning-leaves.png'
 import type { FAQ } from '~/lib/types/page-types'
 
@@ -57,7 +58,7 @@ function splitScriptAccent(heading: string): { lead: string; accent: string } {
 }
 
 function HomePage() {
-  const nameParts = splitScriptAccent(SITE.name)
+  const heroParts = splitScriptAccent(SITE.hero.headline)
   const neighborhoodList = AREAS.slice(0, 8).map((a) => a.name).join(' · ')
   const previewServices = SERVICES.slice(0, 3)
   const previewReviews = reviews.slice(0, 6)
@@ -80,26 +81,38 @@ function HomePage() {
               className="lg:col-span-6"
             >
               <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-brand-700">
-                <span className="h-px w-8 bg-brand-600" /> Introducing
+                <span className="h-px w-8 bg-brand-600" /> {SITE.hero.kicker}
               </span>
               <h1 className="mt-4">
-                {nameParts.lead || SITE.name}
-                {nameParts.lead && (
+                {heroParts.lead || SITE.hero.headline}
+                {heroParts.lead && (
                   <>
                     <br />
                     <span className="font-script text-brand-600 text-[1.15em] block leading-[1.1] mt-1">
-                      {nameParts.accent}
+                      {heroParts.accent}
                     </span>
                   </>
                 )}
               </h1>
+              {SITE.hero.subheadline && (
+                <p className="mt-3 font-display text-xl text-ink-700">
+                  {SITE.hero.subheadline}
+                </p>
+              )}
               <p className="mt-6 text-lg text-ink-700 max-w-xl leading-relaxed">
-                {SITE.tagline}
+                {SITE.hero.body}
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <Link to="/contact" className="btn btn-lg btn-primary">
-                  Get Free Quote <ArrowRight className="h-4 w-4" />
+                  {SITE.hero.cta_primary_label} <ArrowRight className="h-4 w-4" />
                 </Link>
+                {/* NOTE: SITE.hero.cta_secondary_label exists for shape parity
+                    with painter + scaffolder cleaning-english emit, but the
+                    cleaning template's signature design uses a phone-dial button
+                    as the secondary CTA (not a labelled link). Editing
+                    hero.cta_secondary_label via AI editor will not produce a
+                    visible change. To wire it in, replace this phone button OR
+                    add a third button row. */}
                 <a href={`tel:${SITE.phone}`} className="btn btn-lg btn-secondary">
                   <Phone className="h-4 w-4" /> {SITE.phoneDisplay}
                 </a>
@@ -120,7 +133,7 @@ function HomePage() {
               className="lg:col-span-6 relative"
             >
               <HeroSlideshow
-                images={[{ src: `/images/${HERO_IMAGE}`, alt: HERO_ALT }]}
+                images={[{ src: imageSrc(SITE.hero.image_url), alt: HERO_ALT }]}
               />
             </motion.div>
           </div>

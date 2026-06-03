@@ -2,7 +2,11 @@
 // Image filenames live in /public/images/*.webp. The scaffolder writes the
 // public/ overlay AND emits this file with the slug-to-filename maps.
 
-export const HERO_IMAGE = 'hero-reference.webp'
+// HERO_IMAGE moved to SITE.hero.image_url (src/data/site.ts) so the hero image
+// is editor-editable per field. Used here as the service/area fallback.
+import { SITE } from '~/data/site'
+import { imageSrc } from '~/lib/asset-url'
+
 export const HERO_ALT = 'Reference hero image'
 
 export const AREA_IMAGES: Record<string, string> = {}
@@ -10,11 +14,11 @@ export const AREA_ALT: Record<string, string> = {}
 export const SERVICE_IMAGES: Record<string, string> = {}
 
 export function areaImage(slug: string): string {
-  return AREA_IMAGES[slug] ?? HERO_IMAGE
+  return AREA_IMAGES[slug] ?? SITE.hero.image_url
 }
 
 export function areaImageUrl(slug: string): string {
-  return `/images/${areaImage(slug)}`
+  return imageSrc(areaImage(slug))
 }
 
 export function areaAlt(slug: string): string {
@@ -22,17 +26,17 @@ export function areaAlt(slug: string): string {
 }
 
 export function serviceImage(slug: string): string {
-  return SERVICE_IMAGES[slug] ?? HERO_IMAGE
+  return SERVICE_IMAGES[slug] ?? SITE.hero.image_url
 }
 
 export function serviceImageUrl(slug: string): string {
-  return `/images/${serviceImage(slug)}`
+  return imageSrc(serviceImage(slug))
 }
 
 export function ogImageForService(slug: string): string {
-  return `/images/${serviceImage(slug)}`
+  return imageSrc(serviceImage(slug))
 }
 
 export function ogImageForArea(slug: string): string {
-  return `/images/${areaImage(slug)}`
+  return imageSrc(areaImage(slug))
 }

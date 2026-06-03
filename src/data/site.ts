@@ -16,6 +16,21 @@ export const SITE = {
   },
   hours: 'Mon–Fri 8am–6pm',
   tagline: 'Reliable. Professional. Consistent.',
+  // Structured hero copy. The homepage (routes/index.tsx) reads every field
+  // below instead of JSX literals, so editor-api can edit hero copy per field
+  // and the scaffolder's cleaning-english emit (emit-vite/site-config.ts) maps
+  // 1:1 onto this shape. Mirrors the painter template (factory-reference-vite-
+  // painter). image_url is a bare filename resolved via imageSrc() (lib/asset-
+  // url) → /images/<file>; full URLs pass through unchanged.
+  hero: {
+    kicker: 'Cleaning · Cincinnati · Est. 2014',
+    headline: 'The careful kind of cleaning.',
+    subheadline: 'For Cincinnati homes that deserve it.',
+    body: 'Recurring, deep, and move-out cleaning — handled by vetted pros and backed by a spotless-home guarantee.',
+    cta_primary_label: 'Request a quote',
+    cta_secondary_label: 'Browse services',
+    image_url: 'hero-reference.webp',
+  },
   social: {
     instagram: '',
     facebook: '',
