@@ -54,7 +54,12 @@ export const Route = createFileRoute('/')({
 function renderBlock(block: LayoutBlock) {
   switch (block.type) {
     case 'hero':
-      return <HeroBlock key="hero" />
+      return (
+        <HeroBlock
+          key="hero"
+          trustItems={block.params?.trustItems as string[] | undefined}
+        />
+      )
     case 'taglineBar':
       return <TaglineBarBlock key="taglineBar" />
     case 'localBar':

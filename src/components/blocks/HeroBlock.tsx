@@ -15,7 +15,11 @@ function splitScriptAccent(heading: string): { lead: string; accent: string } {
   return { lead: words.slice(0, -1).join(' '), accent: words.slice(-1).join('') }
 }
 
-export function HeroBlock() {
+export function HeroBlock({
+  trustItems = ['Licensed & insured', 'Same-day quotes', 'Local team', '100% satisfaction'],
+}: {
+  trustItems?: string[]
+}) {
   const heroParts = splitScriptAccent(SITE.hero.headline)
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-brand-50 via-white to-white">
@@ -68,7 +72,7 @@ export function HeroBlock() {
               </a>
             </div>
             <ul className="mt-8 grid grid-cols-2 sm:flex sm:flex-wrap gap-x-6 gap-y-2 text-sm text-ink-700">
-              {['Licensed & insured', 'Same-day quotes', 'Local team', '100% satisfaction'].map((t) => (
+              {trustItems.map((t) => (
                 <li key={t} className="flex items-center gap-1.5">
                   <Check className="h-4 w-4 text-brand-600" /> {t}
                 </li>
