@@ -58,7 +58,12 @@ function renderBlock(block: LayoutBlock) {
     case 'taglineBar':
       return <TaglineBarBlock key="taglineBar" />
     case 'localBar':
-      return <LocalBarBlock key="localBar" />
+      return (
+        <LocalBarBlock
+          key="localBar"
+          label={block.params?.label as string | undefined}
+        />
+      )
     case 'trustBar':
       return <TrustBarBlock key="trustBar" />
     case 'servicesPreview':
