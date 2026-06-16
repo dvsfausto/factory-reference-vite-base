@@ -76,7 +76,13 @@ function renderBlock(block: LayoutBlock) {
         />
       )
     case 'cta':
-      return <CtaBlock key="cta" />
+      return (
+        <CtaBlock
+          key="cta"
+          title={block.params?.title as string | undefined}
+          subtitle={block.params?.subtitle as string | undefined}
+        />
+      )
   }
 }
 
