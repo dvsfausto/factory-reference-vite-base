@@ -71,7 +71,16 @@ function renderBlock(block: LayoutBlock) {
         />
       )
     case 'trustBar':
-      return <TrustBarBlock key="trustBar" />
+      return (
+        <TrustBarBlock
+          key="trustBar"
+          items={
+            block.params?.items as
+              | { title: string; description: string }[]
+              | undefined
+          }
+        />
+      )
     case 'servicesPreview':
       return (
         <ServicesPreviewBlock
