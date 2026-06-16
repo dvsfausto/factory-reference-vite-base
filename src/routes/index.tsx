@@ -73,7 +73,17 @@ function renderBlock(block: LayoutBlock) {
     case 'trustBar':
       return <TrustBarBlock key="trustBar" />
     case 'servicesPreview':
-      return <ServicesPreviewBlock key="servicesPreview" />
+      return (
+        <ServicesPreviewBlock
+          key="servicesPreview"
+          label={block.params?.label as string | undefined}
+          heading={block.params?.heading as string | undefined}
+          scriptAccent={block.params?.scriptAccent as string | undefined}
+          body={block.params?.body as string | undefined}
+          exploreLabel={block.params?.exploreLabel as string | undefined}
+          moreLink={block.params?.moreLink as string | undefined}
+        />
+      )
     case 'serviceAreas':
       return (
         <ServiceAreasBlock
