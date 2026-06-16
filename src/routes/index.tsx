@@ -58,6 +58,7 @@ function renderBlock(block: LayoutBlock) {
         <HeroBlock
           key="hero"
           trustItems={block.params?.trustItems as string[] | undefined}
+          decorativeAsset={block.params?.decorativeAsset as string | undefined}
         />
       )
     case 'taglineBar':

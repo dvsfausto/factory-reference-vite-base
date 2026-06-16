@@ -17,14 +17,16 @@ function splitScriptAccent(heading: string): { lead: string; accent: string } {
 
 export function HeroBlock({
   trustItems = ['Licensed & insured', 'Same-day quotes', 'Local team', '100% satisfaction'],
+  decorativeAsset = leaves,
 }: {
   trustItems?: string[]
+  decorativeAsset?: string
 }) {
   const heroParts = splitScriptAccent(SITE.hero.headline)
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-brand-50 via-white to-white">
-      <img src={leaves} alt="" aria-hidden className="hidden md:block absolute -left-10 top-10 h-[80%] opacity-50 pointer-events-none select-none" />
-      <img src={leaves} alt="" aria-hidden className="hidden md:block absolute -right-10 bottom-0 h-[60%] opacity-40 pointer-events-none select-none rotate-180" />
+      <img src={decorativeAsset} alt="" aria-hidden className="hidden md:block absolute -left-10 top-10 h-[80%] opacity-50 pointer-events-none select-none" />
+      <img src={decorativeAsset} alt="" aria-hidden className="hidden md:block absolute -right-10 bottom-0 h-[60%] opacity-40 pointer-events-none select-none rotate-180" />
 
       <div className="container-x py-14 md:py-20 relative">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
