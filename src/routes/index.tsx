@@ -75,7 +75,16 @@ function renderBlock(block: LayoutBlock) {
     case 'servicesPreview':
       return <ServicesPreviewBlock key="servicesPreview" />
     case 'serviceAreas':
-      return <ServiceAreasBlock key="serviceAreas" />
+      return (
+        <ServiceAreasBlock
+          key="serviceAreas"
+          label={block.params?.label as string | undefined}
+          heading={block.params?.heading as string | undefined}
+          scriptAccent={block.params?.scriptAccent as string | undefined}
+          body={block.params?.body as string | undefined}
+          moreLink={block.params?.moreLink as string | undefined}
+        />
+      )
     case 'reviews':
       return (
         <ReviewsBlock

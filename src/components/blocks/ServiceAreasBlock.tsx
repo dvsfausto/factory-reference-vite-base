@@ -5,16 +5,28 @@ import { AREAS } from '~/data/areas'
 
 // Markup extracted VERBATIM from routes/index.tsx (the SERVICE AREAS section).
 // Self-omits when there are no areas — exactly today's `{AREAS.length > 0 && …}`.
-export function ServiceAreasBlock() {
+export function ServiceAreasBlock({
+  label = 'Service areas',
+  heading = 'Where we',
+  scriptAccent = 'work',
+  body = 'Local crews, familiar streets.',
+  moreLink = 'View all areas →',
+}: {
+  label?: string
+  heading?: string
+  scriptAccent?: string
+  body?: string
+  moreLink?: string
+}) {
   if (AREAS.length === 0) return null
   return (
     <section className="bg-white">
       <div className="container-x py-16 md:py-24">
         <SectionHeader
-          label="Service areas"
-          heading="Where we"
-          scriptAccent="work"
-          body="Local crews, familiar streets."
+          label={label}
+          heading={heading}
+          scriptAccent={scriptAccent}
+          body={body}
         />
         <div className="flex flex-wrap justify-center gap-2">
           {AREAS.map((a) => (
@@ -29,7 +41,7 @@ export function ServiceAreasBlock() {
           ))}
         </div>
         <div className="mt-8 text-center">
-          <Link to="/areas" className="btn btn-md btn-secondary">View all areas →</Link>
+          <Link to="/areas" className="btn btn-md btn-secondary">{moreLink}</Link>
         </div>
       </div>
     </section>
