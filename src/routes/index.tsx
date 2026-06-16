@@ -77,7 +77,15 @@ function renderBlock(block: LayoutBlock) {
     case 'serviceAreas':
       return <ServiceAreasBlock key="serviceAreas" />
     case 'reviews':
-      return <ReviewsBlock key="reviews" />
+      return (
+        <ReviewsBlock
+          key="reviews"
+          label={block.params?.label as string | undefined}
+          heading={block.params?.heading as string | undefined}
+          scriptAccent={block.params?.scriptAccent as string | undefined}
+          moreLink={block.params?.moreLink as string | undefined}
+        />
+      )
     case 'faq':
       return (
         <FaqBlock
