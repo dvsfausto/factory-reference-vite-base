@@ -31,6 +31,29 @@ export const SITE = {
     cta_secondary_label: 'Browse services',
     image_url: 'hero-reference.webp',
   },
+  // De-leaked marketing prose (Phase 1). The scaffolder emits vertical-varied
+  // values here (emit-vite/site-config.ts); /about, /pricing, and the homepage
+  // FAQ read these instead of hardcoded literals. Seed values below are the
+  // reference repo's own placeholders, overwritten on every build.
+  about:
+    'We treat every home like our own — background-checked professionals, a clear checklist, and a finish backed by our satisfaction guarantee.',
+  pricing:
+    'Every job is quoted up front based on scope and condition — no hourly meter, no surprises. The price you approve is the price you pay.',
+  homeFaqs: [
+    {
+      question: 'How quickly can you schedule?',
+      answer:
+        'Most homes can be booked within a few days, and recurring slots stay open for ongoing clients.',
+    },
+    {
+      question: 'Are you licensed and insured?',
+      answer: 'Yes — fully insured and bonded, with background-checked professionals.',
+    },
+    {
+      question: 'Do I need to provide supplies?',
+      answer: 'No — our team brings everything needed for a thorough, careful job.',
+    },
+  ],
   social: {
     instagram: '',
     facebook: '',
