@@ -7,24 +7,84 @@ import { AREAS } from "~/data/areas";
 import { INFO_PAGES } from "~/data/info-pages";
 import defaultLeaves from "~/assets/decorative/cleaning-leaves.png";
 
-interface FooterProps {
-  decorativeAsset?: string;
+// Character-aware root footer. Picks its treatment from SITE.character (emitted
+// by the scaffolder only for bold/elegant). Absent → the 'default' theme below,
+// whose class strings are today's verbatim markup → byte-identical for verticals
+// that do not set a character.
+//
+// TOKEN DISCIPLINE: accent → emerald-* (DNA). Warm-dark neutral for elegant is
+// hardcoded here (contained to the theme). Bold uses cool ink-* dark.
+interface FooterTheme {
+  surface: string;
+  tagline: string;
+  socialBorder: string;
+  socialHover: string;
+  heading: string;
+  listText: string;
+  listHover: string;
+  areaAll: string;
+  border: string;
+  bottomText: string;
+  bottomHover: string;
 }
 
-export function Footer({ decorativeAsset = defaultLeaves }: FooterProps = {}) {
+const FOOTER_THEMES: Record<string, FooterTheme> = {
+  default: {
+    surface: "bg-brand-900 text-white",
+    tagline: "text-white/70",
+    socialBorder: "border-white/20",
+    socialHover: "hover:bg-white/10",
+    heading: "text-white font-sans-body uppercase tracking-wider",
+    listText: "text-white/70",
+    listHover: "hover:text-white",
+    areaAll: "text-brand-200 hover:text-white",
+    border: "border-white/10",
+    bottomText: "text-white/50",
+    bottomHover: "hover:text-white",
+  },
+  bold: {
+    surface: "bg-ink-900 text-white",
+    tagline: "text-ink-100/70",
+    socialBorder: "border-white/20",
+    socialHover: "hover:bg-white/10",
+    heading: "text-white font-display uppercase tracking-wider",
+    listText: "text-ink-100/70",
+    listHover: "hover:text-white",
+    areaAll: "text-emerald-600 hover:text-white",
+    border: "border-white/10",
+    bottomText: "text-ink-100/50",
+    bottomHover: "hover:text-white",
+  },
+  elegant: {
+    surface: "bg-[#1A1410] text-[#F2E8DC]",
+    tagline: "text-[#B8A893]",
+    socialBorder: "border-[#3A2E24]",
+    socialHover: "hover:bg-emerald-600/10",
+    heading: "text-[#F2E8DC] font-display tracking-wide",
+    listText: "text-[#B8A893]",
+    listHover: "hover:text-[#F2E8DC]",
+    areaAll: "text-emerald-600 hover:text-[#F2E8DC]",
+    border: "border-[#3A2E24]",
+    bottomText: "text-[#B8A893]/70",
+    bottomHover: "hover:text-[#F2E8DC]",
+  },
+};
+
+export function Footer({ decorativeAsset = defaultLeaves }: { decorativeAsset?: string } = {}) {
   const year = new Date().getFullYear();
   const locationLine = [SITE.address.city, SITE.address.state]
     .filter(Boolean)
     .join(", ");
-  // Bold-character builds set SITE.footerDecor='none' to drop the botanical
-  // leaf sprite (a soft, cleaning-specific decoration that clashes with a bold
-  // look). Absent → the leaf renders (default; byte-identical for verticals
-  // that do not set the flag).
+  // Bold/elegant builds set SITE.footerDecor='none' to drop the botanical leaf
+  // sprite (a soft, cleaning-specific decoration). Absent → the leaf renders
+  // (default; byte-identical for verticals that do not set the flag).
   const showFooterDecor =
     (SITE as { footerDecor?: string }).footerDecor !== "none";
+  const character = (SITE as { character?: string }).character ?? "";
+  const t = FOOTER_THEMES[character] ?? FOOTER_THEMES.default;
 
   return (
-    <footer className="relative overflow-hidden bg-brand-900 text-white">
+    <footer className={`relative overflow-hidden ${t.surface}`}>
       {showFooterDecor && (
         <img src={decorativeAsset} alt="" aria-hidden className="absolute -left-16 top-0 h-full opacity-15 pointer-events-none select-none" />
       )}
@@ -32,36 +92,36 @@ export function Footer({ decorativeAsset = defaultLeaves }: FooterProps = {}) {
         <div className="lg:col-span-1">
           <Logo light height={48} alt={SITE.name} />
           {SITE.tagline && (
-            <p className="mt-4 text-sm text-white/70 leading-relaxed font-display italic">
+            <p className={`mt-4 text-sm ${t.tagline} leading-relaxed font-display italic`}>
               {SITE.tagline}
             </p>
           )}
           <div className="flex gap-3 mt-5">
             {SITE.social.instagram && (
-              <a href={SITE.social.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="h-9 w-9 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 focus-ring">
+              <a href={SITE.social.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className={`h-9 w-9 rounded-full border ${t.socialBorder} flex items-center justify-center ${t.socialHover} focus-ring`}>
                 <Instagram className="h-4 w-4" />
               </a>
             )}
             {SITE.social.facebook && (
-              <a href={SITE.social.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="h-9 w-9 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 focus-ring">
+              <a href={SITE.social.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className={`h-9 w-9 rounded-full border ${t.socialBorder} flex items-center justify-center ${t.socialHover} focus-ring`}>
                 <Facebook className="h-4 w-4" />
               </a>
             )}
             {SITE.social.yelp && (
-              <a href={SITE.social.yelp} target="_blank" rel="noopener noreferrer" aria-label="Yelp" className="h-9 w-9 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 focus-ring text-xs font-bold">Y</a>
+              <a href={SITE.social.yelp} target="_blank" rel="noopener noreferrer" aria-label="Yelp" className={`h-9 w-9 rounded-full border ${t.socialBorder} flex items-center justify-center ${t.socialHover} focus-ring text-xs font-bold`}>Y</a>
             )}
             {SITE.social.google && (
-              <a href={SITE.social.google} target="_blank" rel="noopener noreferrer" aria-label="Google" className="h-9 w-9 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 focus-ring text-xs font-bold">G</a>
+              <a href={SITE.social.google} target="_blank" rel="noopener noreferrer" aria-label="Google" className={`h-9 w-9 rounded-full border ${t.socialBorder} flex items-center justify-center ${t.socialHover} focus-ring text-xs font-bold`}>G</a>
             )}
           </div>
         </div>
 
         <div>
-          <h4 className="text-white text-sm font-semibold mb-4 font-sans-body uppercase tracking-wider">Services</h4>
-          <ul className="space-y-2 text-sm text-white/70">
+          <h4 className={`text-sm font-semibold mb-4 ${t.heading}`}>Services</h4>
+          <ul className={`space-y-2 text-sm ${t.listText}`}>
             {SERVICES.map((s) => (
               <li key={s.slug}>
-                <Link to="/services/$slug" params={{ slug: s.slug }} className="hover:text-white">
+                <Link to="/services/$slug" params={{ slug: s.slug }} className={t.listHover}>
                   {s.name}
                 </Link>
               </li>
@@ -70,29 +130,29 @@ export function Footer({ decorativeAsset = defaultLeaves }: FooterProps = {}) {
         </div>
 
         <div>
-          <h4 className="text-white text-sm font-semibold mb-4 font-sans-body uppercase tracking-wider">Service Areas</h4>
-          <ul className="space-y-2 text-sm text-white/70">
+          <h4 className={`text-sm font-semibold mb-4 ${t.heading}`}>Service Areas</h4>
+          <ul className={`space-y-2 text-sm ${t.listText}`}>
             {AREAS.map((a) => (
               <li key={a.slug}>
-                <Link to="/areas/$slug" params={{ slug: a.slug }} className="hover:text-white">
+                <Link to="/areas/$slug" params={{ slug: a.slug }} className={t.listHover}>
                   {a.name}
                 </Link>
               </li>
             ))}
-            <li><Link to="/areas" className="text-brand-200 hover:text-white">View all areas →</Link></li>
+            <li><Link to="/areas" className={t.areaAll}>View all areas →</Link></li>
           </ul>
         </div>
 
         <div>
-          <h4 className="text-white text-sm font-semibold mb-4 font-sans-body uppercase tracking-wider">Company</h4>
-          <ul className="space-y-2 text-sm text-white/70">
-            <li><Link to="/about" className="hover:text-white">About</Link></li>
-            <li><Link to="/pricing" className="hover:text-white">Pricing</Link></li>
-            <li><Link to="/reviews" className="hover:text-white">Reviews</Link></li>
-            <li><Link to="/contact" className="hover:text-white">Contact</Link></li>
+          <h4 className={`text-sm font-semibold mb-4 ${t.heading}`}>Company</h4>
+          <ul className={`space-y-2 text-sm ${t.listText}`}>
+            <li><Link to="/about" className={t.listHover}>About</Link></li>
+            <li><Link to="/pricing" className={t.listHover}>Pricing</Link></li>
+            <li><Link to="/reviews" className={t.listHover}>Reviews</Link></li>
+            <li><Link to="/contact" className={t.listHover}>Contact</Link></li>
             {INFO_PAGES.map((i) => (
               <li key={i.slug}>
-                <Link to="/info/$slug" params={{ slug: i.slug }} className="hover:text-white">
+                <Link to="/info/$slug" params={{ slug: i.slug }} className={t.listHover}>
                   {i.name}
                 </Link>
               </li>
@@ -101,10 +161,10 @@ export function Footer({ decorativeAsset = defaultLeaves }: FooterProps = {}) {
         </div>
 
         <div>
-          <h4 className="text-white text-sm font-semibold mb-4 font-sans-body uppercase tracking-wider">Get in touch</h4>
-          <ul className="space-y-3 text-sm text-white/70">
-            <li className="flex items-start gap-2"><Phone className="h-4 w-4 mt-0.5 shrink-0" /><a href={`tel:${SITE.phone}`} className="hover:text-white">{SITE.phoneDisplay}</a></li>
-            <li className="flex items-start gap-2"><Mail className="h-4 w-4 mt-0.5 shrink-0" /><a href={`mailto:${SITE.email}`} className="hover:text-white break-all">{SITE.email}</a></li>
+          <h4 className={`text-sm font-semibold mb-4 ${t.heading}`}>Get in touch</h4>
+          <ul className={`space-y-3 text-sm ${t.listText}`}>
+            <li className="flex items-start gap-2"><Phone className="h-4 w-4 mt-0.5 shrink-0" /><a href={`tel:${SITE.phone}`} className={t.listHover}>{SITE.phoneDisplay}</a></li>
+            <li className="flex items-start gap-2"><Mail className="h-4 w-4 mt-0.5 shrink-0" /><a href={`mailto:${SITE.email}`} className={`${t.listHover} break-all`}>{SITE.email}</a></li>
             {locationLine && (
               <li className="flex items-start gap-2"><MapPin className="h-4 w-4 mt-0.5 shrink-0" /><span>{locationLine}</span></li>
             )}
@@ -115,13 +175,13 @@ export function Footer({ decorativeAsset = defaultLeaves }: FooterProps = {}) {
         </div>
       </div>
 
-      <div className="border-t border-white/10 relative">
-        <div className="container-x py-5 flex flex-wrap items-center justify-between gap-3 text-xs text-white/50">
+      <div className={`border-t ${t.border} relative`}>
+        <div className={`container-x py-5 flex flex-wrap items-center justify-between gap-3 text-xs ${t.bottomText}`}>
           <div>© {year} {SITE.name}</div>
           <div className="flex gap-4">
-            <Link to="/contact" className="hover:text-white">Privacy</Link>
-            <Link to="/contact" className="hover:text-white">Terms</Link>
-            <a href="/sitemap.xml" className="hover:text-white">Sitemap</a>
+            <Link to="/contact" className={t.bottomHover}>Privacy</Link>
+            <Link to="/contact" className={t.bottomHover}>Terms</Link>
+            <a href="/sitemap.xml" className={t.bottomHover}>Sitemap</a>
           </div>
         </div>
       </div>
