@@ -16,10 +16,18 @@ export function Footer({ decorativeAsset = defaultLeaves }: FooterProps = {}) {
   const locationLine = [SITE.address.city, SITE.address.state]
     .filter(Boolean)
     .join(", ");
+  // Bold-character builds set SITE.footerDecor='none' to drop the botanical
+  // leaf sprite (a soft, cleaning-specific decoration that clashes with a bold
+  // look). Absent → the leaf renders (default; byte-identical for verticals
+  // that do not set the flag).
+  const showFooterDecor =
+    (SITE as { footerDecor?: string }).footerDecor !== "none";
 
   return (
     <footer className="relative overflow-hidden bg-brand-900 text-white">
-      <img src={decorativeAsset} alt="" aria-hidden className="absolute -left-16 top-0 h-full opacity-15 pointer-events-none select-none" />
+      {showFooterDecor && (
+        <img src={decorativeAsset} alt="" aria-hidden className="absolute -left-16 top-0 h-full opacity-15 pointer-events-none select-none" />
+      )}
       <div className="container-x py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 relative">
         <div className="lg:col-span-1">
           <Logo light height={48} alt={SITE.name} />

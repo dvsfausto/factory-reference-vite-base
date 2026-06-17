@@ -9,10 +9,13 @@ import { HeroBoldFullbleedBlock } from '~/components/blocks/HeroBoldFullbleedBlo
 import { TaglineBarBlock } from '~/components/blocks/TaglineBarBlock'
 import { LocalBarBlock } from '~/components/blocks/LocalBarBlock'
 import { TrustBarBlock } from '~/components/blocks/TrustBarBlock'
+import { TrustBarBoldBlock } from '~/components/blocks/TrustBarBoldBlock'
 import { ServicesPreviewBlock } from '~/components/blocks/ServicesPreviewBlock'
 import { ServicesBoldBlock } from '~/components/blocks/ServicesBoldBlock'
 import { ServiceAreasBlock } from '~/components/blocks/ServiceAreasBlock'
+import { ServiceAreasBoldBlock } from '~/components/blocks/ServiceAreasBoldBlock'
 import { ReviewsBlock } from '~/components/blocks/ReviewsBlock'
+import { ReviewsBoldBlock } from '~/components/blocks/ReviewsBoldBlock'
 import { FaqBlock } from '~/components/blocks/FaqBlock'
 import { CtaBlock } from '~/components/blocks/CtaBlock'
 import { CtaBoldBlock } from '~/components/blocks/CtaBoldBlock'
@@ -53,6 +56,18 @@ const CTA_VARIANTS: Record<string, typeof CtaBlock> = {
   bold: CtaBoldBlock,
 }
 
+const TRUST_VARIANTS: Record<string, typeof TrustBarBlock> = {
+  bold: TrustBarBoldBlock,
+}
+
+const REVIEWS_VARIANTS: Record<string, typeof ReviewsBlock> = {
+  bold: ReviewsBoldBlock,
+}
+
+const AREAS_VARIANTS: Record<string, typeof ServiceAreasBlock> = {
+  bold: ServiceAreasBoldBlock,
+}
+
 // Map a layout block to its rendered section. Order/presence are driven by
 // HOMEPAGE_LAYOUT (src/data/layout.ts); each block owns its own markup +
 // data-conditional auto-omit. The faq block receives HOME_FAQS from this route
@@ -78,9 +93,10 @@ function renderBlock(block: LayoutBlock) {
           label={block.params?.label as string | undefined}
         />
       )
-    case 'trustBar':
+    case 'trustBar': {
+      const TrustComponent = TRUST_VARIANTS[block.variant ?? ''] ?? TrustBarBlock
       return (
-        <TrustBarBlock
+        <TrustComponent
           key="trustBar"
           items={
             block.params?.items as
@@ -89,6 +105,7 @@ function renderBlock(block: LayoutBlock) {
           }
         />
       )
+    }
     case 'servicesPreview': {
       const ServicesComponent =
         SERVICES_VARIANTS[block.variant ?? ''] ?? ServicesPreviewBlock
@@ -104,9 +121,10 @@ function renderBlock(block: LayoutBlock) {
         />
       )
     }
-    case 'serviceAreas':
+    case 'serviceAreas': {
+      const AreasComponent = AREAS_VARIANTS[block.variant ?? ''] ?? ServiceAreasBlock
       return (
-        <ServiceAreasBlock
+        <AreasComponent
           key="serviceAreas"
           label={block.params?.label as string | undefined}
           heading={block.params?.heading as string | undefined}
@@ -115,9 +133,11 @@ function renderBlock(block: LayoutBlock) {
           moreLink={block.params?.moreLink as string | undefined}
         />
       )
-    case 'reviews':
+    }
+    case 'reviews': {
+      const ReviewsComponent = REVIEWS_VARIANTS[block.variant ?? ''] ?? ReviewsBlock
       return (
-        <ReviewsBlock
+        <ReviewsComponent
           key="reviews"
           label={block.params?.label as string | undefined}
           heading={block.params?.heading as string | undefined}
@@ -125,6 +145,7 @@ function renderBlock(block: LayoutBlock) {
           moreLink={block.params?.moreLink as string | undefined}
         />
       )
+    }
     case 'faq':
       return (
         <FaqBlock
