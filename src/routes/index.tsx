@@ -10,6 +10,7 @@ import { HeroElegantBlock } from '~/components/blocks/HeroElegantBlock'
 import { HeroFriendlyBlock } from '~/components/blocks/HeroFriendlyBlock'
 import { HeroModernBlock } from '~/components/blocks/HeroModernBlock'
 import { HeroCorporateBlock } from '~/components/blocks/HeroCorporateBlock'
+import { HeroCreativeBlock } from '~/components/blocks/HeroCreativeBlock'
 import { TaglineBarBlock } from '~/components/blocks/TaglineBarBlock'
 import { LocalBarBlock } from '~/components/blocks/LocalBarBlock'
 import { TrustBarBlock } from '~/components/blocks/TrustBarBlock'
@@ -18,24 +19,28 @@ import { TrustBarElegantBlock } from '~/components/blocks/TrustBarElegantBlock'
 import { TrustBarFriendlyBlock } from '~/components/blocks/TrustBarFriendlyBlock'
 import { TrustBarModernBlock } from '~/components/blocks/TrustBarModernBlock'
 import { TrustBarCorporateBlock } from '~/components/blocks/TrustBarCorporateBlock'
+import { TrustBarCreativeBlock } from '~/components/blocks/TrustBarCreativeBlock'
 import { ServicesPreviewBlock } from '~/components/blocks/ServicesPreviewBlock'
 import { ServicesBoldBlock } from '~/components/blocks/ServicesBoldBlock'
 import { ServicesElegantBlock } from '~/components/blocks/ServicesElegantBlock'
 import { ServicesFriendlyBlock } from '~/components/blocks/ServicesFriendlyBlock'
 import { ServicesModernBlock } from '~/components/blocks/ServicesModernBlock'
 import { ServicesCorporateBlock } from '~/components/blocks/ServicesCorporateBlock'
+import { ServicesCreativeBlock } from '~/components/blocks/ServicesCreativeBlock'
 import { ServiceAreasBlock } from '~/components/blocks/ServiceAreasBlock'
 import { ServiceAreasBoldBlock } from '~/components/blocks/ServiceAreasBoldBlock'
 import { ServiceAreasElegantBlock } from '~/components/blocks/ServiceAreasElegantBlock'
 import { ServiceAreasFriendlyBlock } from '~/components/blocks/ServiceAreasFriendlyBlock'
 import { ServiceAreasModernBlock } from '~/components/blocks/ServiceAreasModernBlock'
 import { ServiceAreasCorporateBlock } from '~/components/blocks/ServiceAreasCorporateBlock'
+import { ServiceAreasCreativeBlock } from '~/components/blocks/ServiceAreasCreativeBlock'
 import { ReviewsBlock } from '~/components/blocks/ReviewsBlock'
 import { ReviewsBoldBlock } from '~/components/blocks/ReviewsBoldBlock'
 import { ReviewsElegantBlock } from '~/components/blocks/ReviewsElegantBlock'
 import { ReviewsFriendlyBlock } from '~/components/blocks/ReviewsFriendlyBlock'
 import { ReviewsModernBlock } from '~/components/blocks/ReviewsModernBlock'
 import { ReviewsCorporateBlock } from '~/components/blocks/ReviewsCorporateBlock'
+import { ReviewsCreativeBlock } from '~/components/blocks/ReviewsCreativeBlock'
 import { FaqBlock } from '~/components/blocks/FaqBlock'
 import { CtaBlock } from '~/components/blocks/CtaBlock'
 import { CtaBoldBlock } from '~/components/blocks/CtaBoldBlock'
@@ -43,6 +48,7 @@ import { CtaElegantBlock } from '~/components/blocks/CtaElegantBlock'
 import { CtaFriendlyBlock } from '~/components/blocks/CtaFriendlyBlock'
 import { CtaModernBlock } from '~/components/blocks/CtaModernBlock'
 import { CtaCorporateBlock } from '~/components/blocks/CtaCorporateBlock'
+import { CtaCreativeBlock } from '~/components/blocks/CtaCreativeBlock'
 
 // Homepage FAQ — vertical-varied, emitted into SITE.homeFaqs by the scaffolder
 // (Phase 1 copy de-leak). No longer a hardcoded network-wide constant.
@@ -72,6 +78,7 @@ const HERO_VARIANTS: Record<string, typeof HeroBlock> = {
   friendly: HeroFriendlyBlock,
   modern: HeroModernBlock,
   corporate: HeroCorporateBlock,
+  creative: HeroCreativeBlock,
 }
 
 // Per-type variant maps for the other character-carrying blocks (same pattern as
@@ -82,6 +89,7 @@ const SERVICES_VARIANTS: Record<string, typeof ServicesPreviewBlock> = {
   friendly: ServicesFriendlyBlock,
   modern: ServicesModernBlock,
   corporate: ServicesCorporateBlock,
+  creative: ServicesCreativeBlock,
 }
 
 const CTA_VARIANTS: Record<string, typeof CtaBlock> = {
@@ -90,6 +98,7 @@ const CTA_VARIANTS: Record<string, typeof CtaBlock> = {
   friendly: CtaFriendlyBlock,
   modern: CtaModernBlock,
   corporate: CtaCorporateBlock,
+  creative: CtaCreativeBlock,
 }
 
 const TRUST_VARIANTS: Record<string, typeof TrustBarBlock> = {
@@ -98,6 +107,7 @@ const TRUST_VARIANTS: Record<string, typeof TrustBarBlock> = {
   friendly: TrustBarFriendlyBlock,
   modern: TrustBarModernBlock,
   corporate: TrustBarCorporateBlock,
+  creative: TrustBarCreativeBlock,
 }
 
 const REVIEWS_VARIANTS: Record<string, typeof ReviewsBlock> = {
@@ -106,6 +116,7 @@ const REVIEWS_VARIANTS: Record<string, typeof ReviewsBlock> = {
   friendly: ReviewsFriendlyBlock,
   modern: ReviewsModernBlock,
   corporate: ReviewsCorporateBlock,
+  creative: ReviewsCreativeBlock,
 }
 
 const AREAS_VARIANTS: Record<string, typeof ServiceAreasBlock> = {
@@ -114,6 +125,7 @@ const AREAS_VARIANTS: Record<string, typeof ServiceAreasBlock> = {
   friendly: ServiceAreasFriendlyBlock,
   modern: ServiceAreasModernBlock,
   corporate: ServiceAreasCorporateBlock,
+  creative: ServiceAreasCreativeBlock,
 }
 
 // Map a layout block to its rendered section. Order/presence are driven by
