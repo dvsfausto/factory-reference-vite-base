@@ -76,7 +76,8 @@ export function ServicePageTemplate({ data }: Props) {
         </div>
       </section>
 
-      {/* WHAT WE COVER */}
+      {/* WHAT WE COVER — omit when the section has no items */}
+      {data.whatWeBuy.items.length > 0 && (
       <section className="bg-white">
         <div className="container-x py-16 md:py-24">
           <div className="max-w-3xl">
@@ -95,8 +96,10 @@ export function ServicePageTemplate({ data }: Props) {
           )}
         </div>
       </section>
+      )}
 
-      {/* HOW PRICING WORKS */}
+      {/* HOW PRICING WORKS — omit when there are no pricing factors */}
+      {data.howPrice.factors.length > 0 && (
       <section className="bg-brand-50 border-y border-brand-100">
         <div className="container-x py-16 md:py-24">
           <SectionHeader
@@ -122,8 +125,10 @@ export function ServicePageTemplate({ data }: Props) {
           )}
         </div>
       </section>
+      )}
 
-      {/* SCENARIOS / PERFECT FOR */}
+      {/* SCENARIOS / PERFECT FOR — omit when there are no scenario cards */}
+      {data.scenarios.cards.length > 0 && (
       <section className="bg-white">
         <div className="container-x py-16 md:py-24">
           <SectionHeader heading={data.scenarios.title} body={data.scenarios.intro} />
@@ -137,8 +142,11 @@ export function ServicePageTemplate({ data }: Props) {
           </div>
         </div>
       </section>
+      )}
 
-      {/* PRICING DETAIL */}
+      {/* PRICING DETAIL — omit when there are no ranges or notes */}
+      {(data.pricing.notes.length > 0 ||
+        (data.pricing.ranges?.length ?? 0) > 0) && (
       <section className="bg-brand-50 border-y border-brand-100">
         <div className="container-x py-16 md:py-24">
           <div className="max-w-3xl mx-auto text-center">
@@ -167,6 +175,7 @@ export function ServicePageTemplate({ data }: Props) {
           )}
         </div>
       </section>
+      )}
 
       {/* LOCAL CONTEXT (optional) */}
       {data.localContext && (
@@ -226,7 +235,7 @@ export function ServicePageTemplate({ data }: Props) {
                 ))}
               </div>
               <blockquote className="font-display text-2xl md:text-3xl text-ink-900 leading-snug">
-                "{data.testimonial.quote}"
+                "{data.testimonial.text}"
               </blockquote>
               <figcaption className="mt-6 text-ink-700">
                 <span className="font-semibold">{data.testimonial.author}</span>

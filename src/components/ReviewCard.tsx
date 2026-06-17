@@ -1,7 +1,10 @@
 import { Star, Quote } from "lucide-react";
 import type { Review } from "~/lib/types/page-types";
 
-const PLATFORM_COLORS: Record<Review["source"], string> = {
+const PLATFORM_COLORS: Record<
+  'google' | 'yelp' | 'manual' | 'direct' | 'hybrid',
+  string
+> = {
   google: "bg-blue-50 text-blue-700",
   yelp: "bg-red-50 text-red-700",
   manual: "bg-slate-50 text-slate-700",
@@ -19,21 +22,23 @@ export function ReviewCard({ review }: { review: Review }) {
             <Star key={i} className="h-4 w-4 text-yellow-400 fill-yellow-400" />
           ))}
         </div>
-        <span className={`badge-pill text-[10px] capitalize ${PLATFORM_COLORS[review.source]}`}>
-          {review.source}
-        </span>
+        {review.source && (
+          <span className={`badge-pill text-[10px] capitalize ${PLATFORM_COLORS[review.source]}`}>
+            {review.source}
+          </span>
+        )}
       </div>
       <p className="text-ink-700 leading-relaxed flex-1 relative font-sans-body not-italic text-lg">"{review.text}"</p>
       <div className="mt-5 pt-4 border-t border-ink-100 text-sm">
         <div className="font-semibold text-ink-900">
-          {review.authorName}
+          {review.author}
           {review.location && (
             <span className="text-ink-500 font-normal"> · {review.location}</span>
           )}
         </div>
-        {(review.serviceUsed || review.date) && (
+        {(review.service || review.date) && (
           <div className="text-xs text-ink-500 mt-0.5">
-            {[review.serviceUsed, review.date].filter(Boolean).join(" · ")}
+            {[review.service, review.date].filter(Boolean).join(" · ")}
           </div>
         )}
       </div>

@@ -29,10 +29,7 @@ function AboutPage() {
       <section className="bg-white">
         <div className="mx-auto max-w-3xl px-4 py-16">
           <p className="text-base leading-relaxed text-slate-700">
-            Replace this section with your studio story. The scaffolder writes
-            the homepage, service pages, area pages, and info pages directly
-            from intake data — this about page is a placeholder for hand-tuned
-            copy.
+            {SITE.about}
           </p>
         </div>
       </section>

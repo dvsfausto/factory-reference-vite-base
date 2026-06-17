@@ -22,9 +22,7 @@ function PricingPage() {
             Pricing
           </h1>
           <p className="mt-5 text-lg leading-relaxed text-slate-700">
-            Every estimate is written after a walk-through of the job. The
-            number on the estimate is the number on the invoice — unless a
-            change order is agreed to in writing.
+            {SITE.pricing}
           </p>
         </div>
       </section>

@@ -6,8 +6,11 @@ export interface FAQ {
   answer: string
 }
 
+// CANONICAL Testimonial contract (M4.2). Source of truth:
+// factory-build/factory/contracts/testimonial.ts. Keep shape-identical to it
+// and to the painter template — enforced by scripts/check-contract-parity.ts.
 export interface Testimonial {
-  quote: string
+  text: string
   author: string
   location?: string
   rating?: number
@@ -136,14 +139,17 @@ export interface InfoPageData {
   relatedServices: RelatedLink[]
 }
 
+// CANONICAL Review contract (M4.1). Source of truth:
+// factory-build/factory/contracts/review.ts. Keep shape-identical to it and to
+// the painter template — enforced by scripts/check-contract-parity.ts.
 export interface Review {
   id: string
-  rating: number
-  authorName: string
   text: string
-  date: string
-  source: 'google' | 'yelp' | 'manual' | 'direct' | 'hybrid'
-  verified?: boolean
-  serviceUsed?: string
+  author: string
+  rating: number
   location?: string
+  service?: string
+  date?: string
+  source?: 'google' | 'yelp' | 'manual' | 'direct' | 'hybrid'
+  avatar?: string
 }

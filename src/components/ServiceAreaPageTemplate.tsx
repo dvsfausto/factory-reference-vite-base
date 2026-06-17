@@ -91,7 +91,8 @@ export function ServiceAreaPageTemplate({ data }: Props) {
         </div>
       </section>
 
-      {/* AT A GLANCE / ABOUT */}
+      {/* AT A GLANCE / ABOUT — omit when there's no about body */}
+      {data.about.body.length > 0 && (
       <section className="bg-white">
         <div className="container-x py-16">
           <div className="card-soft p-8 max-w-3xl mx-auto">
@@ -107,6 +108,7 @@ export function ServiceAreaPageTemplate({ data }: Props) {
           </div>
         </div>
       </section>
+      )}
 
       {/* SERVICES HERE */}
       {featured.length > 0 && (

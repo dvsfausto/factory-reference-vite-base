@@ -61,10 +61,10 @@ function ReviewCard({ review }: { review: Review }) {
         &ldquo;{review.text}&rdquo;
       </blockquote>
       <footer className="mt-4 border-t border-slate-200 pt-3 text-sm">
-        <p className="font-semibold text-slate-900">{review.authorName}</p>
-        {(review.location || review.serviceUsed) && (
+        <p className="font-semibold text-slate-900">{review.author}</p>
+        {(review.location || review.service) && (
           <p className="mt-0.5 text-slate-500">
-            {[review.location, review.serviceUsed].filter(Boolean).join(' · ')}
+            {[review.location, review.service].filter(Boolean).join(' · ')}
           </p>
         )}
       </footer>
