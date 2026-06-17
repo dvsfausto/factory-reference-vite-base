@@ -31,6 +31,14 @@ export type BlockType =
 export interface LayoutBlock {
   /** Which section-block to render. */
   type: BlockType
+  /**
+   * Optional component VARIANT for this block. Selects an alternate composition
+   * of the same block type (e.g. a 'bold-fullbleed' hero) via the render path's
+   * per-type variant map. Absent/unknown → the block's default component
+   * (backward-compat: verticals that don't set a variant render exactly as
+   * before). Driven by design_dna.layout per industry.
+   */
+  variant?: string
   /** Optional per-block overrides. Omitted → block uses its built-in defaults. */
   params?: Record<string, unknown>
 }

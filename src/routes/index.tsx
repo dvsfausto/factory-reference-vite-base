@@ -5,6 +5,7 @@ import { SITE } from '~/data/site'
 import type { FAQ } from '~/lib/types/page-types'
 import { HOMEPAGE_LAYOUT, type LayoutBlock } from '~/data/layout'
 import { HeroBlock } from '~/components/blocks/HeroBlock'
+import { HeroBoldFullbleedBlock } from '~/components/blocks/HeroBoldFullbleedBlock'
 import { TaglineBarBlock } from '~/components/blocks/TaglineBarBlock'
 import { LocalBarBlock } from '~/components/blocks/LocalBarBlock'
 import { TrustBarBlock } from '~/components/blocks/TrustBarBlock'
@@ -32,20 +33,30 @@ export const Route = createFileRoute('/')({
   component: HomePage,
 })
 
+// Per-type component VARIANTS. A block may select an alternate composition of
+// the same type via block.variant; an absent/unknown variant falls back to the
+// block's default component (backward-compat). Keyed type → variant id →
+// component. Today only 'hero' has a variant ('bold-fullbleed', for trades).
+const HERO_VARIANTS: Record<string, typeof HeroBlock> = {
+  'bold-fullbleed': HeroBoldFullbleedBlock,
+}
+
 // Map a layout block to its rendered section. Order/presence are driven by
 // HOMEPAGE_LAYOUT (src/data/layout.ts); each block owns its own markup +
 // data-conditional auto-omit. The faq block receives HOME_FAQS from this route
 // (the scaffolder-target constant above).
 function renderBlock(block: LayoutBlock) {
   switch (block.type) {
-    case 'hero':
+    case 'hero': {
+      const HeroComponent = HERO_VARIANTS[block.variant ?? ''] ?? HeroBlock
       return (
-        <HeroBlock
+        <HeroComponent
           key="hero"
           trustItems={block.params?.trustItems as string[] | undefined}
           decorativeAsset={block.params?.decorativeAsset as string | undefined}
         />
       )
+    }
     case 'taglineBar':
       return <TaglineBarBlock key="taglineBar" />
     case 'localBar':
