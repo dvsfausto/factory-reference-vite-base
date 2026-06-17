@@ -29,8 +29,12 @@ export function TrustBarElegantBlock({
 }) {
   const s = elegantSurface()
   const icons = [Flame, GlassWater, Award]
+  // Tonal rhythm (elegant only): this band LIFTS to the raised tone — a shelf of
+  // trust points under the deep hero — so the homepage reads with intentional
+  // depth (hero deep, trustBar raised, the deep services+reviews core, areas
+  // raised, cta deep) rather than a flat wall of one tone.
   return (
-    <section className={s.section}>
+    <section className={s.sectionAlt}>
       <div className="container-x py-16 md:py-20">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
           {items.map((item, i) => {
