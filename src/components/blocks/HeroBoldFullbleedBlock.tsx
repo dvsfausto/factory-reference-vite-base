@@ -9,13 +9,19 @@ import { imageSrc } from '~/lib/asset-url'
 // trades (construction/remodel). Deliberately the OPPOSITE of the default
 // HeroBlock's split-grid + botanical leaf sprites + script-italic accent word.
 //
-// It uses ONLY design tokens the DNA drives, so a construction DNA actually
-// shows through:
-//   · font-display (→ Oswald)  — heavy UPPERCASE headline
-//   · emerald-* role (→ steel-blue) — the CTA fill + the full-width trust band
-//   · rounded-* (→ square scale)    — blocky, structural corners (the stock
-//     .btn is a hardcoded 999px pill, which is why the default hero ignores the
-//     radius DNA; this variant uses square rounded-* utilities instead)
+// TOKEN DISCIPLINE — the reference every catalog variant patterns from. Each
+// role pulls from the var its OWNER controls, so brand kit + DNA BOTH land
+// without fighting:
+//   · BRAND (customer identity) → the PRIMARY CTA uses bg-primary /
+//     text-primary-foreground (→ var(--primary), which the brand emit owns), so
+//     a customer's brand color lands on it. NOT bg-brand-*/.btn-primary (literal
+//     hex that ignores the kit).
+//   · DNA accent (→ steel-blue) → emerald-* utilities, reserved for the ACCENT
+//     role ONLY: the eyebrow chip, the subheadline, the full-width trust band.
+//   · DNA radius (→ square scale) → rounded-* utilities. NOT .btn (hardcoded
+//     999px pill, which is why the stock hero ignores the radius DNA).
+//   · DNA font (→ Oswald) → font-display on the headline + CTA label.
+//   · Neutrals → ink-* / white on the dark full-bleed surface.
 //
 // Props are identical to HeroBlock so the homepage render path threads them the
 // same way. `decorativeAsset` is accepted for prop parity but intentionally
@@ -66,10 +72,14 @@ export function HeroBoldFullbleedBlock({
           </p>
 
           <div className="mt-9 flex flex-wrap gap-4">
-            {/* Primary CTA: solid steel-blue, square corners, Oswald label. */}
+            {/* Primary CTA: BRAND-owned color (bg-primary, var(--primary)) so a
+                customer's brand kit lands on it. Square corners (DNA radius via
+                rounded-md, not the .btn 999px pill) + Oswald label. Deliberately
+                not emerald (that is the DNA accent role) and not the literal
+                brand scale or .btn-primary (fixed hex that ignores the kit). */}
             <Link
               to="/contact"
-              className="inline-flex h-[54px] items-center gap-2 rounded-md bg-emerald-600 px-8 font-display text-base font-semibold uppercase tracking-wide text-white transition-colors hover:bg-emerald-700"
+              className="inline-flex h-[54px] items-center gap-2 rounded-md bg-primary px-8 font-display text-base font-semibold uppercase tracking-wide text-primary-foreground transition-opacity hover:opacity-90"
             >
               {SITE.hero.cta_primary_label} <ArrowRight className="h-4 w-4" />
             </Link>
