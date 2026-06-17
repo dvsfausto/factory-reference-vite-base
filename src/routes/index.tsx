@@ -15,6 +15,7 @@ import { ServiceAreasBlock } from '~/components/blocks/ServiceAreasBlock'
 import { ReviewsBlock } from '~/components/blocks/ReviewsBlock'
 import { FaqBlock } from '~/components/blocks/FaqBlock'
 import { CtaBlock } from '~/components/blocks/CtaBlock'
+import { CtaBoldBlock } from '~/components/blocks/CtaBoldBlock'
 
 // Homepage FAQ — vertical-varied, emitted into SITE.homeFaqs by the scaffolder
 // (Phase 1 copy de-leak). No longer a hardcoded network-wide constant.
@@ -46,6 +47,10 @@ const HERO_VARIANTS: Record<string, typeof HeroBlock> = {
 // HERO_VARIANTS: absent/unknown variant → the default component, backward-compat).
 const SERVICES_VARIANTS: Record<string, typeof ServicesPreviewBlock> = {
   bold: ServicesBoldBlock,
+}
+
+const CTA_VARIANTS: Record<string, typeof CtaBlock> = {
+  bold: CtaBoldBlock,
 }
 
 // Map a layout block to its rendered section. Order/presence are driven by
@@ -128,14 +133,16 @@ function renderBlock(block: LayoutBlock) {
           title={block.params?.title as string | undefined}
         />
       )
-    case 'cta':
+    case 'cta': {
+      const CtaComponent = CTA_VARIANTS[block.variant ?? ''] ?? CtaBlock
       return (
-        <CtaBlock
+        <CtaComponent
           key="cta"
           title={block.params?.title as string | undefined}
           subtitle={block.params?.subtitle as string | undefined}
         />
       )
+    }
   }
 }
 
