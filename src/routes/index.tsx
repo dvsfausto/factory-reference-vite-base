@@ -6,19 +6,25 @@ import type { FAQ } from '~/lib/types/page-types'
 import { HOMEPAGE_LAYOUT, type LayoutBlock } from '~/data/layout'
 import { HeroBlock } from '~/components/blocks/HeroBlock'
 import { HeroBoldFullbleedBlock } from '~/components/blocks/HeroBoldFullbleedBlock'
+import { HeroElegantBlock } from '~/components/blocks/HeroElegantBlock'
 import { TaglineBarBlock } from '~/components/blocks/TaglineBarBlock'
 import { LocalBarBlock } from '~/components/blocks/LocalBarBlock'
 import { TrustBarBlock } from '~/components/blocks/TrustBarBlock'
 import { TrustBarBoldBlock } from '~/components/blocks/TrustBarBoldBlock'
+import { TrustBarElegantBlock } from '~/components/blocks/TrustBarElegantBlock'
 import { ServicesPreviewBlock } from '~/components/blocks/ServicesPreviewBlock'
 import { ServicesBoldBlock } from '~/components/blocks/ServicesBoldBlock'
+import { ServicesElegantBlock } from '~/components/blocks/ServicesElegantBlock'
 import { ServiceAreasBlock } from '~/components/blocks/ServiceAreasBlock'
 import { ServiceAreasBoldBlock } from '~/components/blocks/ServiceAreasBoldBlock'
+import { ServiceAreasElegantBlock } from '~/components/blocks/ServiceAreasElegantBlock'
 import { ReviewsBlock } from '~/components/blocks/ReviewsBlock'
 import { ReviewsBoldBlock } from '~/components/blocks/ReviewsBoldBlock'
+import { ReviewsElegantBlock } from '~/components/blocks/ReviewsElegantBlock'
 import { FaqBlock } from '~/components/blocks/FaqBlock'
 import { CtaBlock } from '~/components/blocks/CtaBlock'
 import { CtaBoldBlock } from '~/components/blocks/CtaBoldBlock'
+import { CtaElegantBlock } from '~/components/blocks/CtaElegantBlock'
 
 // Homepage FAQ — vertical-varied, emitted into SITE.homeFaqs by the scaffolder
 // (Phase 1 copy de-leak). No longer a hardcoded network-wide constant.
@@ -44,28 +50,34 @@ export const Route = createFileRoute('/')({
 // component. Today only 'hero' has a variant ('bold-fullbleed', for trades).
 const HERO_VARIANTS: Record<string, typeof HeroBlock> = {
   'bold-fullbleed': HeroBoldFullbleedBlock,
+  elegant: HeroElegantBlock,
 }
 
 // Per-type variant maps for the other character-carrying blocks (same pattern as
 // HERO_VARIANTS: absent/unknown variant → the default component, backward-compat).
 const SERVICES_VARIANTS: Record<string, typeof ServicesPreviewBlock> = {
   bold: ServicesBoldBlock,
+  elegant: ServicesElegantBlock,
 }
 
 const CTA_VARIANTS: Record<string, typeof CtaBlock> = {
   bold: CtaBoldBlock,
+  elegant: CtaElegantBlock,
 }
 
 const TRUST_VARIANTS: Record<string, typeof TrustBarBlock> = {
   bold: TrustBarBoldBlock,
+  elegant: TrustBarElegantBlock,
 }
 
 const REVIEWS_VARIANTS: Record<string, typeof ReviewsBlock> = {
   bold: ReviewsBoldBlock,
+  elegant: ReviewsElegantBlock,
 }
 
 const AREAS_VARIANTS: Record<string, typeof ServiceAreasBlock> = {
   bold: ServiceAreasBoldBlock,
+  elegant: ServiceAreasElegantBlock,
 }
 
 // Map a layout block to its rendered section. Order/presence are driven by
