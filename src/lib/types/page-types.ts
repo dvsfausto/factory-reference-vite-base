@@ -6,8 +6,11 @@ export interface FAQ {
   answer: string
 }
 
+// CANONICAL Testimonial contract (M4.2). Source of truth:
+// factory-build/factory/contracts/testimonial.ts. Keep shape-identical to it
+// and to the painter template — enforced by scripts/check-contract-parity.ts.
 export interface Testimonial {
-  quote: string
+  text: string
   author: string
   location?: string
   rating?: number

@@ -38,7 +38,7 @@ export function TestimonialsSection({ heading, intro, testimonials }: Props) {
                 </div>
               )}
               <blockquote className="flex-1 text-base leading-relaxed text-slate-800">
-                &ldquo;{t.quote}&rdquo;
+                &ldquo;{t.text}&rdquo;
               </blockquote>
               <footer className="mt-5 border-t border-slate-200 pt-4 text-sm">
                 <p className="font-semibold text-slate-900">{t.author}</p>
