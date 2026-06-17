@@ -10,6 +10,7 @@ import { TaglineBarBlock } from '~/components/blocks/TaglineBarBlock'
 import { LocalBarBlock } from '~/components/blocks/LocalBarBlock'
 import { TrustBarBlock } from '~/components/blocks/TrustBarBlock'
 import { ServicesPreviewBlock } from '~/components/blocks/ServicesPreviewBlock'
+import { ServicesBoldBlock } from '~/components/blocks/ServicesBoldBlock'
 import { ServiceAreasBlock } from '~/components/blocks/ServiceAreasBlock'
 import { ReviewsBlock } from '~/components/blocks/ReviewsBlock'
 import { FaqBlock } from '~/components/blocks/FaqBlock'
@@ -39,6 +40,12 @@ export const Route = createFileRoute('/')({
 // component. Today only 'hero' has a variant ('bold-fullbleed', for trades).
 const HERO_VARIANTS: Record<string, typeof HeroBlock> = {
   'bold-fullbleed': HeroBoldFullbleedBlock,
+}
+
+// Per-type variant maps for the other character-carrying blocks (same pattern as
+// HERO_VARIANTS: absent/unknown variant → the default component, backward-compat).
+const SERVICES_VARIANTS: Record<string, typeof ServicesPreviewBlock> = {
+  bold: ServicesBoldBlock,
 }
 
 // Map a layout block to its rendered section. Order/presence are driven by
@@ -77,9 +84,11 @@ function renderBlock(block: LayoutBlock) {
           }
         />
       )
-    case 'servicesPreview':
+    case 'servicesPreview': {
+      const ServicesComponent =
+        SERVICES_VARIANTS[block.variant ?? ''] ?? ServicesPreviewBlock
       return (
-        <ServicesPreviewBlock
+        <ServicesComponent
           key="servicesPreview"
           label={block.params?.label as string | undefined}
           heading={block.params?.heading as string | undefined}
@@ -89,6 +98,7 @@ function renderBlock(block: LayoutBlock) {
           moreLink={block.params?.moreLink as string | undefined}
         />
       )
+    }
     case 'serviceAreas':
       return (
         <ServiceAreasBlock
