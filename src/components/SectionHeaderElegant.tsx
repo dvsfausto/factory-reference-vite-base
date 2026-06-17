@@ -5,10 +5,13 @@
 // (NOT the cursive script flourish, NOT a solid block). Designed for the warm-
 // dark surfaces the elegant blocks own, so its text is warm cream / taupe.
 //
-// TOKEN DISCIPLINE: font-display (DNA serif); emerald-* (DNA accent → amber) for
-// the eyebrow rule + label; warm-dark neutrals hardcoded (cream #F2E8DC, taupe
-// #B8A893) — contained to the elegant components. No font-script, no bg-brand-*,
-// no .btn. Same Props shape as SectionHeader / SectionHeaderBold (drop-in).
+// TOKEN DISCIPLINE: font-display (DNA serif); emerald-* (DNA accent) for the
+// eyebrow rule + label; surface neutrals from elegantSurface() — LIGHT by default
+// (warm charcoal text), DARK on opt-in (cream/taupe, byte-identical to before).
+// No font-script, no bg-brand-*, no .btn. Same Props shape as the other section
+// headers (drop-in).
+import { elegantSurface } from "~/lib/elegant-surface";
+
 interface Props {
   label?: string;
   heading: string;
@@ -24,6 +27,7 @@ export function SectionHeaderElegant({
   body,
   align = "left",
 }: Props) {
+  const s = elegantSurface();
   const alignClass =
     align === "center" ? "items-center text-center mx-auto max-w-2xl" : "max-w-2xl";
   // Fold the accent word into the solid serif heading (no cursive flourish).
@@ -41,11 +45,11 @@ export function SectionHeaderElegant({
           {label}
         </span>
       )}
-      <h2 className="mt-5 font-display text-4xl font-medium leading-[1.1] tracking-tight text-[#F2E8DC] sm:text-5xl">
+      <h2 className={`mt-5 font-display text-4xl font-medium leading-[1.1] tracking-tight ${s.text} sm:text-5xl`}>
         {fullHeading}
       </h2>
       {body && (
-        <p className="mt-4 max-w-xl text-lg leading-relaxed text-[#B8A893]">{body}</p>
+        <p className={`mt-4 max-w-xl text-lg leading-relaxed ${s.muted}`}>{body}</p>
       )}
     </div>
   );

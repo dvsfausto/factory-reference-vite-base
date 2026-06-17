@@ -73,6 +73,20 @@ const FOOTER_THEMES: Record<string, FooterTheme> = {
     bottomHover: "hover:text-[#F2E8DC]",
     logoLight: true,
   },
+  "elegant-light": {
+    surface: "bg-[#FBF7EF] text-[#2B2620]",
+    tagline: "text-[#8A7E6E]",
+    socialBorder: "border-[#E7DCC9]",
+    socialHover: "hover:bg-emerald-50",
+    heading: "text-[#2B2620] font-display tracking-wide",
+    listText: "text-[#8A7E6E]",
+    listHover: "hover:text-emerald-700",
+    areaAll: "text-emerald-700 hover:text-emerald-600",
+    border: "border-[#E7DCC9]",
+    bottomText: "text-[#8A7E6E]",
+    bottomHover: "hover:text-emerald-700",
+    logoLight: false,
+  },
   friendly: {
     surface: "bg-[#FFF6EC] text-[#3D3530]",
     tagline: "text-[#7A6F66]",
@@ -100,7 +114,12 @@ export function Footer({ decorativeAsset = defaultLeaves }: { decorativeAsset?: 
   const showFooterDecor =
     (SITE as { footerDecor?: string }).footerDecor !== "none";
   const character = (SITE as { character?: string }).character ?? "";
-  const t = FOOTER_THEMES[character] ?? FOOTER_THEMES.default;
+  const surface = (SITE as { surface?: string }).surface ?? "";
+  // Elegant defaults to its LIGHT footer; surface='dark' keeps the original dark
+  // elegant footer (byte-identical for a dark-opt-in build).
+  const themeKey =
+    character === "elegant" && surface !== "dark" ? "elegant-light" : character;
+  const t = FOOTER_THEMES[themeKey] ?? FOOTER_THEMES.default;
 
   return (
     <footer className={`relative overflow-hidden ${t.surface}`}>

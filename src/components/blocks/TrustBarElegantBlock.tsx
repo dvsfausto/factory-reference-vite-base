@@ -1,14 +1,14 @@
 import { Award, Flame, GlassWater } from 'lucide-react'
+import { elegantSurface } from '~/lib/elegant-surface'
 
-// TrustBar VARIANT: 'elegant' — the 3 feature points under the hero, dark-luxury.
-// Warm-dark surface, thin amber-ruled icon marks (no round icon-circles, no
-// brand color), refined serif headings. Left-aligned for an editorial feel.
+// TrustBar VARIANT: 'elegant' — the 3 feature points under the hero, refined.
+// Surface from elegantSurface(): LIGHT by default, DARK on opt-in (the original
+// espresso, byte-identical). Thin emerald-ruled icon marks (no round icon-circles,
+// no brand color), refined serif headings, left-aligned for an editorial feel.
 //
-// TOKEN DISCIPLINE: emerald-* (DNA → amber) icon + hairline; warm-dark surface
-// (#1A1410) + cream/taupe text component-owned; rounded-* (DNA); font-display
-// (serif). No brand-* literals, no .btn. Prop signature identical to
-// TrustBarBlock; returns an Element (NOT null) to match the default's signature
-// (the return-type parity the bold trust card had to fix).
+// TOKEN DISCIPLINE: emerald-* (DNA accent) icon + hairline; surface neutrals from
+// elegantSurface(); rounded-* (DNA); font-display (serif). No brand-* literals, no
+// .btn. Prop signature identical to TrustBarBlock; returns an Element (NOT null).
 export function TrustBarElegantBlock({
   items = [
     {
@@ -27,20 +27,21 @@ export function TrustBarElegantBlock({
 }: {
   items?: { title: string; description: string }[]
 }) {
+  const s = elegantSurface()
   const icons = [Flame, GlassWater, Award]
   return (
-    <section className="bg-[#1A1410]">
+    <section className={s.section}>
       <div className="container-x py-16 md:py-20">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
           {items.map((item, i) => {
             const Icon = icons[i] ?? Flame
             return (
-              <div key={i} className="flex flex-col items-start border-t border-[#3A2E24] pt-6">
+              <div key={i} className={`flex flex-col items-start border-t ${s.border} pt-6`}>
                 <Icon className="h-7 w-7 text-emerald-600" strokeWidth={1.5} />
-                <h3 className="mt-4 font-display text-xl font-medium tracking-tight text-[#F2E8DC]">
+                <h3 className={`mt-4 font-display text-xl font-medium tracking-tight ${s.text}`}>
                   {item.title}
                 </h3>
-                <p className="mt-2 text-[#B8A893]">{item.description}</p>
+                <p className={`mt-2 ${s.muted}`}>{item.description}</p>
               </div>
             )
           })}

@@ -106,6 +106,28 @@ const HEADER_THEMES: Record<string, HeaderTheme> = {
     mobilePhone: "text-emerald-600",
     mobileCta: "inline-flex h-12 w-full items-center justify-center rounded-lg bg-primary font-display text-sm font-medium tracking-wide text-primary-foreground",
   },
+  "elegant-light": {
+    shell: "bg-[#FBF7EF]",
+    scrolledShadow: "shadow-[0_2px_16px_rgba(43,38,32,0.07)]",
+    skip: "focus:bg-emerald-600 focus:text-white",
+    navLink: "font-display text-[15px] text-[#8A7E6E] hover:text-[#2B2620]",
+    cta: "inline-flex h-[42px] items-center rounded-lg bg-primary px-5 font-display text-sm font-medium tracking-wide text-primary-foreground transition-opacity hover:opacity-90",
+    ctaLabel: "Get in touch",
+    dropdownSurface: "bg-white border border-[#E7DCC9] rounded-lg shadow-xl",
+    dropdownItem: "hover:bg-emerald-50",
+    dropdownTitle: "text-[#2B2620]",
+    dropdownSub: "text-[#8A7E6E]",
+    areaAllLink: "text-emerald-700 hover:bg-emerald-50",
+    phoneLink: "text-[#8A7E6E] hover:text-[#2B2620]",
+    menuIcon: "text-[#2B2620]",
+    logoLight: false,
+    mobilePanel: "bg-[#FBF7EF]",
+    mobileText: "text-[#2B2620]",
+    mobileLabel: "text-[#8A7E6E]",
+    mobileBorder: "border-[#E7DCC9]",
+    mobilePhone: "text-emerald-700",
+    mobileCta: "inline-flex h-12 w-full items-center justify-center rounded-lg bg-primary font-display text-sm font-medium tracking-wide text-primary-foreground",
+  },
   friendly: {
     shell: "bg-[#FFFBF5]",
     scrolledShadow: "shadow-[0_2px_16px_rgba(61,53,48,0.08)]",
@@ -135,7 +157,12 @@ export function Header() {
   const [open, setOpen] = useState(false);
   const [openMenu, setOpenMenu] = useState<"services" | "areas" | null>(null);
   const character = (SITE as { character?: string }).character ?? "";
-  const t = HEADER_THEMES[character] ?? HEADER_THEMES.default;
+  const surface = (SITE as { surface?: string }).surface ?? "";
+  // Elegant defaults to its LIGHT shell; surface='dark' selects the original dark
+  // elegant theme (so a dark-opt-in build keeps today's shell, byte-identical).
+  const themeKey =
+    character === "elegant" && surface !== "dark" ? "elegant-light" : character;
+  const t = HEADER_THEMES[themeKey] ?? HEADER_THEMES.default;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
