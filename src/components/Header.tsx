@@ -106,6 +106,28 @@ const HEADER_THEMES: Record<string, HeaderTheme> = {
     mobilePhone: "text-emerald-600",
     mobileCta: "inline-flex h-12 w-full items-center justify-center rounded-lg bg-primary font-display text-sm font-medium tracking-wide text-primary-foreground",
   },
+  friendly: {
+    shell: "bg-[#FFFBF5]",
+    scrolledShadow: "shadow-[0_2px_16px_rgba(61,53,48,0.08)]",
+    skip: "focus:bg-emerald-600 focus:text-white",
+    navLink: "font-display text-[15px] font-medium text-[#7A6F66] hover:text-emerald-700",
+    cta: "inline-flex h-[42px] items-center rounded-2xl bg-primary px-5 font-display text-sm font-semibold text-primary-foreground shadow-md transition-opacity hover:opacity-90",
+    ctaLabel: "Schedule a tour",
+    dropdownSurface: "bg-white border border-[#F0E6DA] rounded-2xl shadow-xl",
+    dropdownItem: "hover:bg-emerald-50",
+    dropdownTitle: "text-[#3D3530]",
+    dropdownSub: "text-[#7A6F66]",
+    areaAllLink: "text-emerald-700 hover:bg-emerald-50",
+    phoneLink: "text-[#7A6F66] hover:text-emerald-700",
+    menuIcon: "text-[#3D3530]",
+    logoLight: false,
+    mobilePanel: "bg-[#FFFBF5]",
+    mobileText: "text-[#3D3530]",
+    mobileLabel: "text-[#7A6F66]",
+    mobileBorder: "border-[#F0E6DA]",
+    mobilePhone: "text-emerald-700",
+    mobileCta: "inline-flex h-12 w-full items-center justify-center rounded-2xl bg-primary font-display text-sm font-semibold text-primary-foreground shadow-md",
+  },
 };
 
 export function Header() {

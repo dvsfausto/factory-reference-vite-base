@@ -26,6 +26,8 @@ interface FooterTheme {
   border: string;
   bottomText: string;
   bottomHover: string;
+  // The dark footers use the light logo; friendly's light footer needs the dark.
+  logoLight: boolean;
 }
 
 const FOOTER_THEMES: Record<string, FooterTheme> = {
@@ -41,6 +43,7 @@ const FOOTER_THEMES: Record<string, FooterTheme> = {
     border: "border-white/10",
     bottomText: "text-white/50",
     bottomHover: "hover:text-white",
+    logoLight: true,
   },
   bold: {
     surface: "bg-ink-900 text-white",
@@ -54,6 +57,7 @@ const FOOTER_THEMES: Record<string, FooterTheme> = {
     border: "border-white/10",
     bottomText: "text-ink-100/50",
     bottomHover: "hover:text-white",
+    logoLight: true,
   },
   elegant: {
     surface: "bg-[#1A1410] text-[#F2E8DC]",
@@ -67,6 +71,21 @@ const FOOTER_THEMES: Record<string, FooterTheme> = {
     border: "border-[#3A2E24]",
     bottomText: "text-[#B8A893]/70",
     bottomHover: "hover:text-[#F2E8DC]",
+    logoLight: true,
+  },
+  friendly: {
+    surface: "bg-[#FFF6EC] text-[#3D3530]",
+    tagline: "text-[#7A6F66]",
+    socialBorder: "border-[#F0E6DA]",
+    socialHover: "hover:bg-emerald-50",
+    heading: "text-[#3D3530] font-display tracking-tight",
+    listText: "text-[#7A6F66]",
+    listHover: "hover:text-emerald-700",
+    areaAll: "text-emerald-700 hover:text-emerald-600",
+    border: "border-[#F0E6DA]",
+    bottomText: "text-[#7A6F66]",
+    bottomHover: "hover:text-emerald-700",
+    logoLight: false,
   },
 };
 
@@ -90,7 +109,7 @@ export function Footer({ decorativeAsset = defaultLeaves }: { decorativeAsset?: 
       )}
       <div className="container-x py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 relative">
         <div className="lg:col-span-1">
-          <Logo light height={48} alt={SITE.name} />
+          <Logo light={t.logoLight} height={48} alt={SITE.name} />
           {SITE.tagline && (
             <p className={`mt-4 text-sm ${t.tagline} leading-relaxed font-display italic`}>
               {SITE.tagline}
