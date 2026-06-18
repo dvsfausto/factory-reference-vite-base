@@ -12,6 +12,10 @@ import { HeroModernBlock } from '~/components/blocks/HeroModernBlock'
 import { HeroCorporateBlock } from '~/components/blocks/HeroCorporateBlock'
 import { HeroCreativeBlock } from '~/components/blocks/HeroCreativeBlock'
 import { HeroCenteredBlock } from '~/components/blocks/HeroCenteredBlock'
+import { HeroBackgroundBlock } from '~/components/blocks/HeroBackgroundBlock'
+import { HeroSplitReversedBlock } from '~/components/blocks/HeroSplitReversedBlock'
+import { HeroMinimalBlock } from '~/components/blocks/HeroMinimalBlock'
+import { HeroVideoBlock } from '~/components/blocks/HeroVideoBlock'
 import { TaglineBarBlock } from '~/components/blocks/TaglineBarBlock'
 import { LocalBarBlock } from '~/components/blocks/LocalBarBlock'
 import { TrustBarBlock } from '~/components/blocks/TrustBarBlock'
@@ -80,10 +84,15 @@ const HERO_VARIANTS: Record<string, typeof HeroBlock> = {
   modern: HeroModernBlock,
   corporate: HeroCorporateBlock,
   creative: HeroCreativeBlock,
-  // LAYOUT variant (composite scheme): a centered, full-width re-composition of
-  // the modern character. Selected the same way (block.variant === 'centered');
-  // the resolver and LayoutBlock type are unchanged.
+  // LAYOUT variants (composite scheme): character-agnostic re-compositions of the
+  // hero, orthogonal to the character keys above. Selected the same way
+  // (block.variant === '<layout>'); the resolver and LayoutBlock type are
+  // unchanged — these are pure additive map keys.
   centered: HeroCenteredBlock,
+  background: HeroBackgroundBlock,
+  'split-reversed': HeroSplitReversedBlock,
+  minimal: HeroMinimalBlock,
+  video: HeroVideoBlock,
 }
 
 // Per-type variant maps for the other character-carrying blocks (same pattern as
