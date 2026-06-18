@@ -27,6 +27,11 @@ export type BlockType =
   | 'reviews'
   | 'faq'
   | 'cta'
+  // 'team' is a first-class section type (TEAM_VARIANTS), composable on any page.
+  // No vertical's homepage DNA emits it today, so HOMEPAGE_LAYOUT is unchanged and
+  // the emitted layout.ts (which preserves this union verbatim) gains only this
+  // additive member; the about page composes it via its own ABOUT_LAYOUT.
+  | 'team'
 
 export interface LayoutBlock {
   /** Which section-block to render. */

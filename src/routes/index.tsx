@@ -51,6 +51,8 @@ import { ServiceAreasMapStyleBlock } from '~/components/blocks/ServiceAreasMapSt
 import { ServiceAreasColumnedListBlock } from '~/components/blocks/ServiceAreasColumnedListBlock'
 import { ServiceAreasCardsBlock } from '~/components/blocks/ServiceAreasCardsBlock'
 import { ServiceAreasStackedBlock } from '~/components/blocks/ServiceAreasStackedBlock'
+import { TeamGridBlock } from '~/components/blocks/TeamGridBlock'
+import { TEAM_VARIANTS } from '~/components/blocks/team-variants'
 import { ReviewsBlock } from '~/components/blocks/ReviewsBlock'
 import { ReviewsBoldBlock } from '~/components/blocks/ReviewsBoldBlock'
 import { ReviewsElegantBlock } from '~/components/blocks/ReviewsElegantBlock'
@@ -298,6 +300,17 @@ function renderBlock(block: LayoutBlock) {
           key="cta"
           title={block.params?.title as string | undefined}
           subtitle={block.params?.subtitle as string | undefined}
+        />
+      )
+    }
+    case 'team': {
+      const TeamComponent = TEAM_VARIANTS[block.variant ?? ''] ?? TeamGridBlock
+      return (
+        <TeamComponent
+          key="team"
+          label={block.params?.label as string | undefined}
+          heading={block.params?.heading as string | undefined}
+          body={block.params?.body as string | undefined}
         />
       )
     }
