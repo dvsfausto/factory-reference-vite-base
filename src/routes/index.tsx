@@ -11,6 +11,7 @@ import { HeroFriendlyBlock } from '~/components/blocks/HeroFriendlyBlock'
 import { HeroModernBlock } from '~/components/blocks/HeroModernBlock'
 import { HeroCorporateBlock } from '~/components/blocks/HeroCorporateBlock'
 import { HeroCreativeBlock } from '~/components/blocks/HeroCreativeBlock'
+import { HeroCenteredBlock } from '~/components/blocks/HeroCenteredBlock'
 import { TaglineBarBlock } from '~/components/blocks/TaglineBarBlock'
 import { LocalBarBlock } from '~/components/blocks/LocalBarBlock'
 import { TrustBarBlock } from '~/components/blocks/TrustBarBlock'
@@ -79,6 +80,10 @@ const HERO_VARIANTS: Record<string, typeof HeroBlock> = {
   modern: HeroModernBlock,
   corporate: HeroCorporateBlock,
   creative: HeroCreativeBlock,
+  // LAYOUT variant (composite scheme): a centered, full-width re-composition of
+  // the modern character. Selected the same way (block.variant === 'centered');
+  // the resolver and LayoutBlock type are unchanged.
+  centered: HeroCenteredBlock,
 }
 
 // Per-type variant maps for the other character-carrying blocks (same pattern as
