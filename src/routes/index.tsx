@@ -53,6 +53,18 @@ import { ServiceAreasCardsBlock } from '~/components/blocks/ServiceAreasCardsBlo
 import { ServiceAreasStackedBlock } from '~/components/blocks/ServiceAreasStackedBlock'
 import { TeamGridBlock } from '~/components/blocks/TeamGridBlock'
 import { TEAM_VARIANTS } from '~/components/blocks/team-variants'
+import { PricingTiersBlock } from '~/components/blocks/PricingTiersBlock'
+import { PRICING_VARIANTS } from '~/components/blocks/pricing-variants'
+import { GalleryMasonryBlock } from '~/components/blocks/GalleryMasonryBlock'
+import { GALLERY_VARIANTS } from '~/components/blocks/gallery-variants'
+import { ProcessNumberedStepsBlock } from '~/components/blocks/ProcessNumberedStepsBlock'
+import { PROCESS_VARIANTS } from '~/components/blocks/process-variants'
+import { FaqAccordionBlock } from '~/components/blocks/FaqAccordionBlock'
+import { FAQSECTION_VARIANTS } from '~/components/blocks/faqsection-variants'
+import { StoryNarrativeBlock } from '~/components/blocks/StoryNarrativeBlock'
+import { STORY_VARIANTS } from '~/components/blocks/story-variants'
+import { FormContactBlock } from '~/components/blocks/FormContactBlock'
+import { FORMS_VARIANTS } from '~/components/blocks/forms-variants'
 import { ReviewsBlock } from '~/components/blocks/ReviewsBlock'
 import { ReviewsBoldBlock } from '~/components/blocks/ReviewsBoldBlock'
 import { ReviewsElegantBlock } from '~/components/blocks/ReviewsElegantBlock'
@@ -314,6 +326,74 @@ function renderBlock(block: LayoutBlock) {
         />
       )
     }
+    case 'pricing': {
+      const PricingComponent = PRICING_VARIANTS[block.variant ?? ''] ?? PricingTiersBlock
+      return (
+        <PricingComponent
+          key="pricing"
+          label={block.params?.label as string | undefined}
+          heading={block.params?.heading as string | undefined}
+          body={block.params?.body as string | undefined}
+        />
+      )
+    }
+    case 'gallery': {
+      const GalleryComponent = GALLERY_VARIANTS[block.variant ?? ''] ?? GalleryMasonryBlock
+      return (
+        <GalleryComponent
+          key="gallery"
+          label={block.params?.label as string | undefined}
+          heading={block.params?.heading as string | undefined}
+          body={block.params?.body as string | undefined}
+        />
+      )
+    }
+    case 'process': {
+      const ProcessComponent = PROCESS_VARIANTS[block.variant ?? ''] ?? ProcessNumberedStepsBlock
+      return (
+        <ProcessComponent
+          key="process"
+          label={block.params?.label as string | undefined}
+          heading={block.params?.heading as string | undefined}
+          body={block.params?.body as string | undefined}
+        />
+      )
+    }
+    case 'faqSection': {
+      const FaqSectionComponent = FAQSECTION_VARIANTS[block.variant ?? ''] ?? FaqAccordionBlock
+      return (
+        <FaqSectionComponent
+          key="faqSection"
+          label={block.params?.label as string | undefined}
+          heading={block.params?.heading as string | undefined}
+          body={block.params?.body as string | undefined}
+        />
+      )
+    }
+    case 'story': {
+      const StoryComponent = STORY_VARIANTS[block.variant ?? ''] ?? StoryNarrativeBlock
+      return (
+        <StoryComponent
+          key="story"
+          label={block.params?.label as string | undefined}
+          heading={block.params?.heading as string | undefined}
+          body={block.params?.body as string | undefined}
+        />
+      )
+    }
+    case 'forms': {
+      const FormsComponent = FORMS_VARIANTS[block.variant ?? ''] ?? FormContactBlock
+      return (
+        <FormsComponent
+          key="forms"
+          label={block.params?.label as string | undefined}
+          heading={block.params?.heading as string | undefined}
+          body={block.params?.body as string | undefined}
+        />
+      )
+    }
+    default:
+      return null
   }
 }
 

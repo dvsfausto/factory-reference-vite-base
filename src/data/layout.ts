@@ -32,6 +32,15 @@ export type BlockType =
   // the emitted layout.ts (which preserves this union verbatim) gains only this
   // additive member; the about page composes it via its own ABOUT_LAYOUT.
   | 'team'
+  // First-class section types (each has a *_VARIANTS map + a renderBlock case),
+  // composable on any page. No homepage DNA emits them, so HOMEPAGE_LAYOUT is
+  // unchanged; the emitted layout.ts gains only these additive union members.
+  | 'pricing'
+  | 'gallery'
+  | 'process'
+  | 'faqSection'
+  | 'story'
+  | 'forms'
 
 export interface LayoutBlock {
   /** Which section-block to render. */

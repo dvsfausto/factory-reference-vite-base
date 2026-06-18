@@ -5,6 +5,8 @@ import { PRICING_LAYOUT, type PricingBlock } from '~/data/pricing-layout'
 import { TrustBarBlock } from '~/components/blocks/TrustBarBlock'
 import { FaqBlock } from '~/components/blocks/FaqBlock'
 import { CtaBlock } from '~/components/blocks/CtaBlock'
+import { PricingTiersBlock } from '~/components/blocks/PricingTiersBlock'
+import { PRICING_VARIANTS } from '~/components/blocks/pricing-variants'
 
 export const Route = createFileRoute('/pricing')({
   head: () =>
@@ -50,6 +52,17 @@ function renderPricingBlock(block: PricingBlock) {
   switch (block.type) {
     case 'intro':
       return <PricingIntro key="intro" />
+    case 'pricing': {
+      const PricingComponent = PRICING_VARIANTS[block.variant ?? ''] ?? PricingTiersBlock
+      return (
+        <PricingComponent
+          key="pricing"
+          label={block.params?.label as string | undefined}
+          heading={block.params?.heading as string | undefined}
+          body={block.params?.body as string | undefined}
+        />
+      )
+    }
     case 'trustBar':
       return <TrustBarBlock key="trustBar" />
     case 'faq':
