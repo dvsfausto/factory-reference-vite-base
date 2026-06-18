@@ -65,6 +65,24 @@ import { StoryNarrativeBlock } from '~/components/blocks/StoryNarrativeBlock'
 import { STORY_VARIANTS } from '~/components/blocks/story-variants'
 import { FormContactBlock } from '~/components/blocks/FormContactBlock'
 import { FORMS_VARIANTS } from '~/components/blocks/forms-variants'
+import { MembershipTierCardsBlock } from '~/components/blocks/MembershipTierCardsBlock'
+import { MEMBERSHIP_VARIANTS } from '~/components/blocks/membership-variants'
+import { PackagesBundleCardsBlock } from '~/components/blocks/PackagesBundleCardsBlock'
+import { PACKAGES_VARIANTS } from '~/components/blocks/packages-variants'
+import { CaseStudiesFeaturedBlock } from '~/components/blocks/CaseStudiesFeaturedBlock'
+import { CASE_STUDIES_VARIANTS } from '~/components/blocks/case-studies-variants'
+import { VideoTestimonialsGridBlock } from '~/components/blocks/VideoTestimonialsGridBlock'
+import { VIDEO_TESTIMONIALS_VARIANTS } from '~/components/blocks/video-testimonials-variants'
+import { PromotionsBannerBlock } from '~/components/blocks/PromotionsBannerBlock'
+import { PROMOTIONS_VARIANTS } from '~/components/blocks/promotions-variants'
+import { FinancingHighlightBandBlock } from '~/components/blocks/FinancingHighlightBandBlock'
+import { FINANCING_VARIANTS } from '~/components/blocks/financing-variants'
+import { PartnersLogoWallBlock } from '~/components/blocks/PartnersLogoWallBlock'
+import { PARTNERS_VARIANTS } from '~/components/blocks/partners-variants'
+import { MapEmbedStylePanelBlock } from '~/components/blocks/MapEmbedStylePanelBlock'
+import { MAP_VARIANTS } from '~/components/blocks/map-variants'
+import { BlogCardGridBlock } from '~/components/blocks/BlogCardGridBlock'
+import { BLOG_VARIANTS } from '~/components/blocks/blog-variants'
 import { ReviewsBlock } from '~/components/blocks/ReviewsBlock'
 import { ReviewsBoldBlock } from '~/components/blocks/ReviewsBoldBlock'
 import { ReviewsElegantBlock } from '~/components/blocks/ReviewsElegantBlock'
@@ -386,6 +404,105 @@ function renderBlock(block: LayoutBlock) {
       return (
         <FormsComponent
           key="forms"
+          label={block.params?.label as string | undefined}
+          heading={block.params?.heading as string | undefined}
+          body={block.params?.body as string | undefined}
+        />
+      )
+    }
+    case 'membership': {
+      const MembershipComponent = MEMBERSHIP_VARIANTS[block.variant ?? ''] ?? MembershipTierCardsBlock
+      return (
+        <MembershipComponent
+          key="membership"
+          label={block.params?.label as string | undefined}
+          heading={block.params?.heading as string | undefined}
+          body={block.params?.body as string | undefined}
+        />
+      )
+    }
+    case 'packages': {
+      const PackagesComponent = PACKAGES_VARIANTS[block.variant ?? ''] ?? PackagesBundleCardsBlock
+      return (
+        <PackagesComponent
+          key="packages"
+          label={block.params?.label as string | undefined}
+          heading={block.params?.heading as string | undefined}
+          body={block.params?.body as string | undefined}
+        />
+      )
+    }
+    case 'caseStudies': {
+      const CaseStudiesComponent = CASE_STUDIES_VARIANTS[block.variant ?? ''] ?? CaseStudiesFeaturedBlock
+      return (
+        <CaseStudiesComponent
+          key="caseStudies"
+          label={block.params?.label as string | undefined}
+          heading={block.params?.heading as string | undefined}
+          body={block.params?.body as string | undefined}
+        />
+      )
+    }
+    case 'videoTestimonials': {
+      const VideoTestimonialsComponent = VIDEO_TESTIMONIALS_VARIANTS[block.variant ?? ''] ?? VideoTestimonialsGridBlock
+      return (
+        <VideoTestimonialsComponent
+          key="videoTestimonials"
+          label={block.params?.label as string | undefined}
+          heading={block.params?.heading as string | undefined}
+          body={block.params?.body as string | undefined}
+        />
+      )
+    }
+    case 'promotions': {
+      const PromotionsComponent = PROMOTIONS_VARIANTS[block.variant ?? ''] ?? PromotionsBannerBlock
+      return (
+        <PromotionsComponent
+          key="promotions"
+          label={block.params?.label as string | undefined}
+          heading={block.params?.heading as string | undefined}
+          body={block.params?.body as string | undefined}
+        />
+      )
+    }
+    case 'financing': {
+      const FinancingComponent = FINANCING_VARIANTS[block.variant ?? ''] ?? FinancingHighlightBandBlock
+      return (
+        <FinancingComponent
+          key="financing"
+          label={block.params?.label as string | undefined}
+          heading={block.params?.heading as string | undefined}
+          body={block.params?.body as string | undefined}
+        />
+      )
+    }
+    case 'partners': {
+      const PartnersComponent = PARTNERS_VARIANTS[block.variant ?? ''] ?? PartnersLogoWallBlock
+      return (
+        <PartnersComponent
+          key="partners"
+          label={block.params?.label as string | undefined}
+          heading={block.params?.heading as string | undefined}
+          body={block.params?.body as string | undefined}
+        />
+      )
+    }
+    case 'map': {
+      const MapComponent = MAP_VARIANTS[block.variant ?? ''] ?? MapEmbedStylePanelBlock
+      return (
+        <MapComponent
+          key="map"
+          label={block.params?.label as string | undefined}
+          heading={block.params?.heading as string | undefined}
+          body={block.params?.body as string | undefined}
+        />
+      )
+    }
+    case 'blog': {
+      const BlogComponent = BLOG_VARIANTS[block.variant ?? ''] ?? BlogCardGridBlock
+      return (
+        <BlogComponent
+          key="blog"
           label={block.params?.label as string | undefined}
           heading={block.params?.heading as string | undefined}
           body={block.params?.body as string | undefined}

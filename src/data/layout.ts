@@ -41,6 +41,18 @@ export type BlockType =
   | 'faqSection'
   | 'story'
   | 'forms'
+  // Gap-analysis section types (batch 2): each has a *_VARIANTS map + renderBlock
+  // case, composable on any page. Additive union members — no homepage DNA emits
+  // them, so HOMEPAGE_LAYOUT and every emitted layout.ts stay unchanged.
+  | 'membership'
+  | 'packages'
+  | 'caseStudies'
+  | 'videoTestimonials'
+  | 'promotions'
+  | 'financing'
+  | 'partners'
+  | 'map'
+  | 'blog'
 
 export interface LayoutBlock {
   /** Which section-block to render. */
