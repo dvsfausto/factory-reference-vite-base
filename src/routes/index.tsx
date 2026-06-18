@@ -25,6 +25,9 @@ import { TrustBarFriendlyBlock } from '~/components/blocks/TrustBarFriendlyBlock
 import { TrustBarModernBlock } from '~/components/blocks/TrustBarModernBlock'
 import { TrustBarCorporateBlock } from '~/components/blocks/TrustBarCorporateBlock'
 import { TrustBarCreativeBlock } from '~/components/blocks/TrustBarCreativeBlock'
+import { TrustBarStatNumbersBlock } from '~/components/blocks/TrustBarStatNumbersBlock'
+import { TrustBarLogoStripBlock } from '~/components/blocks/TrustBarLogoStripBlock'
+import { TrustBarCredentialCellsBlock } from '~/components/blocks/TrustBarCredentialCellsBlock'
 import { ServicesPreviewBlock } from '~/components/blocks/ServicesPreviewBlock'
 import { ServicesBoldBlock } from '~/components/blocks/ServicesBoldBlock'
 import { ServicesElegantBlock } from '~/components/blocks/ServicesElegantBlock'
@@ -32,6 +35,11 @@ import { ServicesFriendlyBlock } from '~/components/blocks/ServicesFriendlyBlock
 import { ServicesModernBlock } from '~/components/blocks/ServicesModernBlock'
 import { ServicesCorporateBlock } from '~/components/blocks/ServicesCorporateBlock'
 import { ServicesCreativeBlock } from '~/components/blocks/ServicesCreativeBlock'
+import { ServicesAlternatingRowsBlock } from '~/components/blocks/ServicesAlternatingRowsBlock'
+import { ServicesBentoBlock } from '~/components/blocks/ServicesBentoBlock'
+import { ServicesListBlock } from '~/components/blocks/ServicesListBlock'
+import { ServicesIconTilesBlock } from '~/components/blocks/ServicesIconTilesBlock'
+import { ServicesCarouselBlock } from '~/components/blocks/ServicesCarouselBlock'
 import { ServiceAreasBlock } from '~/components/blocks/ServiceAreasBlock'
 import { ServiceAreasBoldBlock } from '~/components/blocks/ServiceAreasBoldBlock'
 import { ServiceAreasElegantBlock } from '~/components/blocks/ServiceAreasElegantBlock'
@@ -39,6 +47,10 @@ import { ServiceAreasFriendlyBlock } from '~/components/blocks/ServiceAreasFrien
 import { ServiceAreasModernBlock } from '~/components/blocks/ServiceAreasModernBlock'
 import { ServiceAreasCorporateBlock } from '~/components/blocks/ServiceAreasCorporateBlock'
 import { ServiceAreasCreativeBlock } from '~/components/blocks/ServiceAreasCreativeBlock'
+import { ServiceAreasMapStyleBlock } from '~/components/blocks/ServiceAreasMapStyleBlock'
+import { ServiceAreasColumnedListBlock } from '~/components/blocks/ServiceAreasColumnedListBlock'
+import { ServiceAreasCardsBlock } from '~/components/blocks/ServiceAreasCardsBlock'
+import { ServiceAreasStackedBlock } from '~/components/blocks/ServiceAreasStackedBlock'
 import { ReviewsBlock } from '~/components/blocks/ReviewsBlock'
 import { ReviewsBoldBlock } from '~/components/blocks/ReviewsBoldBlock'
 import { ReviewsElegantBlock } from '~/components/blocks/ReviewsElegantBlock'
@@ -46,6 +58,10 @@ import { ReviewsFriendlyBlock } from '~/components/blocks/ReviewsFriendlyBlock'
 import { ReviewsModernBlock } from '~/components/blocks/ReviewsModernBlock'
 import { ReviewsCorporateBlock } from '~/components/blocks/ReviewsCorporateBlock'
 import { ReviewsCreativeBlock } from '~/components/blocks/ReviewsCreativeBlock'
+import { ReviewsSpotlightBlock } from '~/components/blocks/ReviewsSpotlightBlock'
+import { ReviewsCarouselBlock } from '~/components/blocks/ReviewsCarouselBlock'
+import { ReviewsMasonryBlock } from '~/components/blocks/ReviewsMasonryBlock'
+import { ReviewsStackedBlock } from '~/components/blocks/ReviewsStackedBlock'
 import { FaqBlock } from '~/components/blocks/FaqBlock'
 import { CtaBlock } from '~/components/blocks/CtaBlock'
 import { CtaBoldBlock } from '~/components/blocks/CtaBoldBlock'
@@ -54,6 +70,10 @@ import { CtaFriendlyBlock } from '~/components/blocks/CtaFriendlyBlock'
 import { CtaModernBlock } from '~/components/blocks/CtaModernBlock'
 import { CtaCorporateBlock } from '~/components/blocks/CtaCorporateBlock'
 import { CtaCreativeBlock } from '~/components/blocks/CtaCreativeBlock'
+import { CtaColorBlock } from '~/components/blocks/CtaColorBlock'
+import { CtaSplitWithImageBlock } from '~/components/blocks/CtaSplitWithImageBlock'
+import { CtaBoxedCardBlock } from '~/components/blocks/CtaBoxedCardBlock'
+import { CtaStackedCenteredBlock } from '~/components/blocks/CtaStackedCenteredBlock'
 
 // Homepage FAQ — vertical-varied, emitted into SITE.homeFaqs by the scaffolder
 // (Phase 1 copy de-leak). No longer a hardcoded network-wide constant.
@@ -104,6 +124,17 @@ const SERVICES_VARIANTS: Record<string, typeof ServicesPreviewBlock> = {
   modern: ServicesModernBlock,
   corporate: ServicesCorporateBlock,
   creative: ServicesCreativeBlock,
+  // LAYOUT variants (composite scheme): character-agnostic re-compositions of the
+  // services section, orthogonal to the character keys above and selected the same
+  // way (block.variant === '<layout>'). Pure additive map keys — the resolver and
+  // LayoutBlock type are unchanged. 'grid' explicitly names the default fallback
+  // so the swap-variant op can switch back to it.
+  grid: ServicesPreviewBlock,
+  'alternating-rows': ServicesAlternatingRowsBlock,
+  bento: ServicesBentoBlock,
+  list: ServicesListBlock,
+  'icon-tiles': ServicesIconTilesBlock,
+  carousel: ServicesCarouselBlock,
 }
 
 const CTA_VARIANTS: Record<string, typeof CtaBlock> = {
@@ -113,6 +144,14 @@ const CTA_VARIANTS: Record<string, typeof CtaBlock> = {
   modern: CtaModernBlock,
   corporate: CtaCorporateBlock,
   creative: CtaCreativeBlock,
+  // LAYOUT variants (composite scheme): character-agnostic compositions of the CTA
+  // section, additive + selected the same way (block.variant). 'band' names the
+  // default fallback explicitly so the swap-variant op can switch back to it.
+  band: CtaBlock,
+  'color-block': CtaColorBlock,
+  'split-with-image': CtaSplitWithImageBlock,
+  'boxed-card': CtaBoxedCardBlock,
+  'stacked-centered': CtaStackedCenteredBlock,
 }
 
 const TRUST_VARIANTS: Record<string, typeof TrustBarBlock> = {
@@ -122,6 +161,13 @@ const TRUST_VARIANTS: Record<string, typeof TrustBarBlock> = {
   modern: TrustBarModernBlock,
   corporate: TrustBarCorporateBlock,
   creative: TrustBarCreativeBlock,
+  // LAYOUT variants (composite scheme): character-agnostic compositions of the
+  // trust bar, additive + selected the same way (block.variant). 'icon-row' names
+  // the default fallback explicitly so the swap-variant op can switch back to it.
+  'icon-row': TrustBarBlock,
+  'stat-numbers': TrustBarStatNumbersBlock,
+  'logo-strip': TrustBarLogoStripBlock,
+  'credential-cells': TrustBarCredentialCellsBlock,
 }
 
 const REVIEWS_VARIANTS: Record<string, typeof ReviewsBlock> = {
@@ -131,6 +177,14 @@ const REVIEWS_VARIANTS: Record<string, typeof ReviewsBlock> = {
   modern: ReviewsModernBlock,
   corporate: ReviewsCorporateBlock,
   creative: ReviewsCreativeBlock,
+  // LAYOUT variants (composite scheme): character-agnostic re-compositions of the
+  // reviews section, additive + selected the same way (block.variant). 'grid' names
+  // the default fallback explicitly so the swap-variant op can switch back to it.
+  grid: ReviewsBlock,
+  spotlight: ReviewsSpotlightBlock,
+  carousel: ReviewsCarouselBlock,
+  masonry: ReviewsMasonryBlock,
+  stacked: ReviewsStackedBlock,
 }
 
 const AREAS_VARIANTS: Record<string, typeof ServiceAreasBlock> = {
@@ -140,6 +194,15 @@ const AREAS_VARIANTS: Record<string, typeof ServiceAreasBlock> = {
   modern: ServiceAreasModernBlock,
   corporate: ServiceAreasCorporateBlock,
   creative: ServiceAreasCreativeBlock,
+  // LAYOUT variants (composite scheme): character-agnostic compositions of the
+  // service-areas section, additive + selected the same way (block.variant).
+  // 'chips' names the default fallback explicitly so the swap-variant op can
+  // switch back to it.
+  chips: ServiceAreasBlock,
+  'map-style': ServiceAreasMapStyleBlock,
+  'columned-list': ServiceAreasColumnedListBlock,
+  cards: ServiceAreasCardsBlock,
+  stacked: ServiceAreasStackedBlock,
 }
 
 // Map a layout block to its rendered section. Order/presence are driven by
