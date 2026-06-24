@@ -10,8 +10,8 @@ import { TrustBar } from '~/components/TrustBar'
 export function TrustBarBlock({
   items = [
     {
-      title: 'Licensed & insured',
-      description: 'Professional team with proper credentials and coverage.',
+      title: 'Friendly local team',
+      description: 'Real people who take pride in their work and stand behind it.',
     },
     {
       title: 'Same-day quotes',

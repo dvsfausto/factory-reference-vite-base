@@ -16,7 +16,7 @@ function splitScriptAccent(heading: string): { lead: string; accent: string } {
 }
 
 export function HeroBlock({
-  trustItems = ['Licensed & insured', 'Same-day quotes', 'Local team', '100% satisfaction'],
+  trustItems = ['Friendly service', 'Same-day quotes', 'Local team', '100% satisfaction'],
   decorativeAsset = leaves,
 }: {
   trustItems?: string[]

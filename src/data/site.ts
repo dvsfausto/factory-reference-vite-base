@@ -26,7 +26,7 @@ export const SITE = {
     kicker: 'Cleaning · Cincinnati · Est. 2014',
     headline: 'The careful kind of cleaning.',
     subheadline: 'For Cincinnati homes that deserve it.',
-    body: 'Recurring, deep, and move-out cleaning — handled by vetted pros and backed by a spotless-home guarantee.',
+    body: 'Recurring, deep, and move-out cleaning — handled by a careful team and backed by a spotless-home guarantee.',
     cta_primary_label: 'Request a quote',
     cta_secondary_label: 'Browse services',
     image_url: 'hero-reference.webp',
@@ -36,7 +36,7 @@ export const SITE = {
   // FAQ read these instead of hardcoded literals. Seed values below are the
   // reference repo's own placeholders, overwritten on every build.
   about:
-    'We treat every home like our own — background-checked professionals, a clear checklist, and a finish backed by our satisfaction guarantee.',
+    'We treat every home like our own — a careful team, a clear checklist, and a finish backed by our satisfaction guarantee.',
   pricing:
     'Every job is quoted up front based on scope and condition — no hourly meter, no surprises. The price you approve is the price you pay.',
   homeFaqs: [
@@ -47,7 +47,8 @@ export const SITE = {
     },
     {
       question: 'Are you licensed and insured?',
-      answer: 'Yes — fully insured and bonded, with background-checked professionals.',
+      answer:
+        'Ask us about our background and coverage — we’re glad to share the details so you feel comfortable before we start.',
     },
     {
       question: 'Do I need to provide supplies?',
