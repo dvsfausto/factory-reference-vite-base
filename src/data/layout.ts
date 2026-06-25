@@ -27,10 +27,44 @@ export type BlockType =
   | 'reviews'
   | 'faq'
   | 'cta'
+  // 'team' is a first-class section type (TEAM_VARIANTS), composable on any page.
+  // No vertical's homepage DNA emits it today, so HOMEPAGE_LAYOUT is unchanged and
+  // the emitted layout.ts (which preserves this union verbatim) gains only this
+  // additive member; the about page composes it via its own ABOUT_LAYOUT.
+  | 'team'
+  // First-class section types (each has a *_VARIANTS map + a renderBlock case),
+  // composable on any page. No homepage DNA emits them, so HOMEPAGE_LAYOUT is
+  // unchanged; the emitted layout.ts gains only these additive union members.
+  | 'pricing'
+  | 'gallery'
+  | 'process'
+  | 'faqSection'
+  | 'story'
+  | 'forms'
+  // Gap-analysis section types (batch 2): each has a *_VARIANTS map + renderBlock
+  // case, composable on any page. Additive union members — no homepage DNA emits
+  // them, so HOMEPAGE_LAYOUT and every emitted layout.ts stay unchanged.
+  | 'membership'
+  | 'packages'
+  | 'caseStudies'
+  | 'videoTestimonials'
+  | 'promotions'
+  | 'financing'
+  | 'partners'
+  | 'map'
+  | 'blog'
 
 export interface LayoutBlock {
   /** Which section-block to render. */
   type: BlockType
+  /**
+   * Optional component VARIANT for this block. Selects an alternate composition
+   * of the same block type (e.g. a 'bold-fullbleed' hero) via the render path's
+   * per-type variant map. Absent/unknown → the block's default component
+   * (backward-compat: verticals that don't set a variant render exactly as
+   * before). Driven by design_dna.layout per industry.
+   */
+  variant?: string
   /** Optional per-block overrides. Omitted → block uses its built-in defaults. */
   params?: Record<string, unknown>
 }

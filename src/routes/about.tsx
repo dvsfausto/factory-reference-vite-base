@@ -1,7 +1,11 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { CTASection } from '~/components/CTASection'
 import { buildMeta } from '~/lib/seo'
 import { SITE } from '~/data/site'
+import { ABOUT_LAYOUT, type AboutBlock } from '~/data/about-layout'
+import { TEAM_VARIANTS } from '~/components/blocks/team-variants'
+import { TeamGridBlock } from '~/components/blocks/TeamGridBlock'
+import { TrustBarBlock } from '~/components/blocks/TrustBarBlock'
+import { CtaBlock } from '~/components/blocks/CtaBlock'
 
 export const Route = createFileRoute('/about')({
   head: () =>
@@ -13,27 +17,59 @@ export const Route = createFileRoute('/about')({
   component: AboutPage,
 })
 
-function AboutPage() {
+// The /about page identity: name + tagline + about prose. The one about-specific
+// block (the rest of the page reuses the shared section library), DNA-tokened to
+// match the composed sections below it.
+function AboutIntro() {
   return (
-    <>
-      <section className="bg-slate-50">
-        <div className="mx-auto max-w-3xl px-4 py-16">
-          <h1 className="text-4xl font-bold leading-tight tracking-tight text-slate-900 sm:text-5xl">
+    <section className="bg-white">
+      <div className="container-x py-20 md:py-28">
+        <div className="max-w-3xl">
+          <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600">
+            <span className="h-px w-6 bg-emerald-600" />
+            About
+          </span>
+          <h1 className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight text-[#0F172A] sm:text-5xl">
             About {SITE.name}
           </h1>
-          <p className="mt-5 text-lg leading-relaxed text-slate-700">
-            {SITE.tagline}
-          </p>
+          <p className="mt-5 text-xl leading-relaxed text-[#64748B]">{SITE.tagline}</p>
+          {SITE.about && (
+            <p className="mt-6 text-lg leading-relaxed text-[#475569]">{SITE.about}</p>
+          )}
         </div>
-      </section>
-      <section className="bg-white">
-        <div className="mx-auto max-w-3xl px-4 py-16">
-          <p className="text-base leading-relaxed text-slate-700">
-            {SITE.about}
-          </p>
-        </div>
-      </section>
-      <CTASection title="Want to work together?" />
-    </>
+      </div>
+    </section>
   )
+}
+
+// Inner-page block renderer — the about analogue of the homepage's renderBlock.
+// Maps an AboutBlock to its section: the page-specific 'intro', the new team
+// section (via TEAM_VARIANTS), and reused library sections (trustBar, cta). An
+// unhandled type renders nothing (self-omitting, like the homepage path).
+function renderAboutBlock(block: AboutBlock) {
+  switch (block.type) {
+    case 'intro':
+      return <AboutIntro key="intro" />
+    case 'team': {
+      const TeamComponent = TEAM_VARIANTS[block.variant ?? ''] ?? TeamGridBlock
+      return (
+        <TeamComponent
+          key="team"
+          label={block.params?.label as string | undefined}
+          heading={block.params?.heading as string | undefined}
+          body={block.params?.body as string | undefined}
+        />
+      )
+    }
+    case 'trustBar':
+      return <TrustBarBlock key="trustBar" />
+    case 'cta':
+      return <CtaBlock key="cta" />
+    default:
+      return null
+  }
+}
+
+function AboutPage() {
+  return <>{ABOUT_LAYOUT.map(renderAboutBlock)}</>
 }

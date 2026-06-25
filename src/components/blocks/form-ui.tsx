@@ -1,0 +1,92 @@
+import { Check } from 'lucide-react'
+
+// Shared, DNA-tokened form controls for the Forms variants (trustworthy, the
+// conversion point). TOKEN DISCIPLINE: emerald-* (DNA) 50/100/600/700 focus +
+// success accents, rounded-* (DNA), font-display (DNA), bg-primary submit.
+
+export function Field({
+  label,
+  name,
+  type = 'text',
+  required,
+  autoComplete,
+  placeholder,
+}: {
+  label: string
+  name: string
+  type?: string
+  required?: boolean
+  autoComplete?: string
+  placeholder?: string
+}) {
+  return (
+    <label className="block">
+      <span className="font-display text-sm font-medium text-[#0F172A]">
+        {label} {required && <span className="text-emerald-600">*</span>}
+      </span>
+      <input
+        type={type}
+        name={name}
+        required={required}
+        autoComplete={autoComplete}
+        placeholder={placeholder}
+        className="mt-2 w-full rounded-xl border border-[#E6E8EC] bg-white px-4 py-3 text-base text-[#0F172A] outline-none transition-colors placeholder:text-[#94A3B8] focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600"
+      />
+    </label>
+  )
+}
+
+export function Textarea({
+  label,
+  name,
+  required,
+  rows = 4,
+  placeholder,
+}: {
+  label: string
+  name: string
+  required?: boolean
+  rows?: number
+  placeholder?: string
+}) {
+  return (
+    <label className="block">
+      <span className="font-display text-sm font-medium text-[#0F172A]">
+        {label} {required && <span className="text-emerald-600">*</span>}
+      </span>
+      <textarea
+        name={name}
+        required={required}
+        rows={rows}
+        placeholder={placeholder}
+        className="mt-2 w-full rounded-xl border border-[#E6E8EC] bg-white px-4 py-3 text-base text-[#0F172A] outline-none transition-colors placeholder:text-[#94A3B8] focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600"
+      />
+    </label>
+  )
+}
+
+export function SubmitButton({ status }: { status: 'idle' | 'submitting' | 'success' | 'error'; }) {
+  return (
+    <button
+      type="submit"
+      disabled={status === 'submitting'}
+      className="inline-flex h-12 items-center justify-center rounded-xl bg-primary px-7 font-display text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-60"
+    >
+      {status === 'submitting' ? 'Sending…' : 'Send request'}
+    </button>
+  )
+}
+
+export function SuccessCard() {
+  return (
+    <div className="rounded-2xl border border-emerald-600 bg-emerald-50 p-10 text-center">
+      <span className="mx-auto grid h-12 w-12 place-items-center rounded-full bg-emerald-600 text-white">
+        <Check className="h-6 w-6" />
+      </span>
+      <h3 className="mt-5 font-display text-2xl font-semibold tracking-tight text-[#0F172A]">We'll be in touch shortly.</h3>
+      <p className="mx-auto mt-3 max-w-md leading-relaxed text-[#475569]">
+        Thanks for reaching out — a real person reads every request and replies within one business day.
+      </p>
+    </div>
+  )
+}
