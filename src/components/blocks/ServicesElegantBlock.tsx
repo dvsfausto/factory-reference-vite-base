@@ -37,9 +37,9 @@ export function ServicesElegantBlock({
     <section className={s.section}>
       <div className="container-x py-20 md:py-28">
         <SectionHeaderElegant
-          label={label ?? SITE.homeServices.label}
-          heading={heading ?? SITE.homeServices.heading}
-          body={body ?? SITE.homeServices.body}
+          label={label ?? ((SITE as { homeServices?: { label?: string; heading?: string; body?: string } }).homeServices?.label ?? 'What we do')}
+          heading={heading ?? ((SITE as { homeServices?: { label?: string; heading?: string; body?: string } }).homeServices?.heading ?? 'Services')}
+          body={body ?? ((SITE as { homeServices?: { label?: string; heading?: string; body?: string } }).homeServices?.body ?? 'A focused set of services, done well.')}
         />
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
           {previewServices.map((sv) => (

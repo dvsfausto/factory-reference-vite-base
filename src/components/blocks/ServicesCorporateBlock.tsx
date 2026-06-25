@@ -34,9 +34,9 @@ export function ServicesCorporateBlock({
     <section className="border-y border-[#D8DEE7] bg-[#F4F6F9]">
       <div className="container-x py-16 md:py-20">
         <SectionHeaderCorporate
-          label={label ?? SITE.homeServices.label}
-          heading={heading ?? SITE.homeServices.heading}
-          body={body ?? SITE.homeServices.body}
+          label={label ?? ((SITE as { homeServices?: { label?: string; heading?: string; body?: string } }).homeServices?.label ?? 'What we do')}
+          heading={heading ?? ((SITE as { homeServices?: { label?: string; heading?: string; body?: string } }).homeServices?.heading ?? 'Services')}
+          body={body ?? ((SITE as { homeServices?: { label?: string; heading?: string; body?: string } }).homeServices?.body ?? 'A focused set of services, done well.')}
         />
         <div className="grid grid-cols-1 gap-px overflow-hidden rounded-lg border border-[#D8DEE7] bg-[#D8DEE7] md:grid-cols-3">
           {previewServices.map((s) => (

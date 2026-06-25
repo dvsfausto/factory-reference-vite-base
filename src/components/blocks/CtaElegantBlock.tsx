@@ -20,8 +20,8 @@ export function CtaElegantBlock({
   subtitle?: string
 }) {
   const s = elegantSurface()
-  const headline = title ?? SITE.homeCta.title
-  const sub = subtitle ?? SITE.homeCta.subtitle
+  const headline = title ?? ((SITE as { homeCta?: { title?: string; subtitle?: string } }).homeCta?.title ?? 'Ready to get started?')
+  const sub = subtitle ?? ((SITE as { homeCta?: { title?: string; subtitle?: string } }).homeCta?.subtitle ?? 'Tell us what you need and we’ll take it from there.')
   return (
     <section className={`relative isolate overflow-hidden ${s.section} ${s.text}`}>
       <div className="h-px w-full bg-emerald-600/50" />

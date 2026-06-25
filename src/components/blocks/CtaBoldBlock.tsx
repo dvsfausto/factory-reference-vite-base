@@ -23,8 +23,8 @@ export function CtaBoldBlock({
   title?: string
   subtitle?: string
 }) {
-  const headline = title ?? SITE.homeCta.title
-  const sub = subtitle ?? SITE.homeCta.subtitle
+  const headline = title ?? ((SITE as { homeCta?: { title?: string; subtitle?: string } }).homeCta?.title ?? 'Ready to get started?')
+  const sub = subtitle ?? ((SITE as { homeCta?: { title?: string; subtitle?: string } }).homeCta?.subtitle ?? 'Tell us what you need and we’ll take it from there.')
   return (
     <section className="relative isolate overflow-hidden bg-ink-900 text-white">
       {/* Emerald accent rule across the top — the DNA accent as a structural band. */}
