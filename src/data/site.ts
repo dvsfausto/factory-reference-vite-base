@@ -61,6 +61,18 @@ export const SITE = {
     yelp: '',
     google: '',
   },
+  // Homepage identity copy promoted out of block JSX into DATA (variant blocks read
+  // these). Seed placeholders; the scaffolder's emit-vite/site-config overwrites them
+  // per build when a vertical provides copy.homeServices / copy.homeCta.
+  homeServices: {
+    label: 'What we do',
+    heading: 'Services',
+    body: 'A focused set of services, done well.',
+  },
+  homeCta: {
+    title: 'Ready to get started?',
+    subtitle: 'Tell us what you need and we’ll take it from there.',
+  },
 }
 
 export const BUSINESS_ID = '00000000-0000-0000-0000-000000000000'
