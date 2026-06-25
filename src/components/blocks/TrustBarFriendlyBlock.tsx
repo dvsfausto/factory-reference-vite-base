@@ -11,7 +11,7 @@ import { HeartHandshake, ShieldCheck, Sparkles } from 'lucide-react'
 export function TrustBarFriendlyBlock({
   items = [
     {
-      title: 'Licensed & accredited',
+      title: 'Caring, dedicated staff',
       description: 'Vetted, qualified teachers and a program parents can trust.',
     },
     {

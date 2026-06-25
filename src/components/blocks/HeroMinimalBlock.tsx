@@ -22,7 +22,7 @@ import { SITE } from '~/data/site'
 // Props identical to HeroBlock; decorativeAsset accepted for parity but unused.
 // Returns an Element (no null), matching HeroBlock.
 export function HeroMinimalBlock({
-  trustItems = ['Same-week appointments', 'Transparent pricing', 'Gentle, modern care', 'Most insurance accepted'],
+  trustItems = ['Same-week appointments', 'Transparent pricing', 'Gentle, modern care', 'Friendly, modern office'],
 }: {
   trustItems?: string[]
   decorativeAsset?: string

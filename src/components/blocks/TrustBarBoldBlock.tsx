@@ -13,8 +13,8 @@ import { Clock, Heart, ShieldCheck } from 'lucide-react'
 export function TrustBarBoldBlock({
   items = [
     {
-      title: 'Licensed & insured',
-      description: 'Professional team with proper credentials and coverage.',
+      title: 'Reliable local crew',
+      description: 'A team that shows up and stands behind its work.',
     },
     {
       title: 'Same-day quotes',

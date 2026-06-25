@@ -19,7 +19,7 @@ const ICONS: LucideIcon[] = [ShieldCheck, Clock, Heart, Award, BadgeCheck, Star]
 
 export function TrustBarCredentialCellsBlock({
   items = [
-    { title: 'Licensed & insured', description: 'Professional team with proper credentials and coverage.' },
+    { title: 'Reliable local team', description: 'Real people who take pride in their work.' },
     { title: 'Same-day quotes', description: 'We reply within a business day, often the same day.' },
     { title: 'Local team', description: 'Familiar faces, familiar streets, real accountability.' },
   ],

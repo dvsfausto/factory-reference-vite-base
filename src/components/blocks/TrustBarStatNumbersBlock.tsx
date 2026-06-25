@@ -17,7 +17,7 @@
 // Prop signature identical to TrustBarBlock; returns an Element (no null).
 export function TrustBarStatNumbersBlock({
   items = [
-    { title: 'Licensed & insured', description: 'Proper credentials and full coverage.' },
+    { title: 'Reliable local team', description: 'Dependable service you can count on.' },
     { title: 'Same-day quotes', description: 'A reply within a business day.' },
     { title: 'Local team', description: 'Familiar faces and real accountability.' },
   ],

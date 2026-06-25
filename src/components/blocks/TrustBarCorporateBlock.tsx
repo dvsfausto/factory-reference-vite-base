@@ -15,8 +15,8 @@ export function TrustBarCorporateBlock({
       description: 'A track record built on results and long-standing client relationships.',
     },
     {
-      title: 'Accredited & in good standing',
-      description: 'Fully licensed, with the credentials to back every engagement.',
+      title: 'Trusted, principled counsel',
+      description: 'Straightforward advice and transparent fees on every engagement.',
     },
     {
       title: 'Clear, principled counsel',
