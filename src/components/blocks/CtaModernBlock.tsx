@@ -20,6 +20,7 @@ export function CtaModernBlock({
 }) {
   const headline = title ?? ((SITE as { homeCta?: { title?: string; subtitle?: string } }).homeCta?.title ?? 'Ready to get started?')
   const sub = subtitle ?? ((SITE as { homeCta?: { title?: string; subtitle?: string } }).homeCta?.subtitle ?? 'Tell us what you need and we’ll take it from there.')
+  const ctaLabel = ((SITE as { headerCtaLabel?: string }).headerCtaLabel ?? 'Get a free quote')
   return (
     <section className="bg-white">
       <div className="container-x py-20 md:py-28">
@@ -41,7 +42,7 @@ export function CtaModernBlock({
               to="/contact"
               className="inline-flex h-[52px] items-center gap-2 rounded-xl bg-primary px-7 font-display text-base font-semibold text-primary-foreground transition-opacity hover:opacity-90"
             >
-              Book an appointment <ArrowRight className="h-4 w-4" />
+              {ctaLabel} <ArrowRight className="h-4 w-4" />
             </Link>
             <a
               href={`tel:${SITE.phone}`}

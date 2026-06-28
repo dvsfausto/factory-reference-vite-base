@@ -19,7 +19,7 @@ export function ServicesFriendlyBlock({
   heading,
   body,
   exploreLabel = 'Learn more',
-  moreLink = 'See all programs',
+  moreLink = 'See all services',
 }: {
   label?: string
   heading?: string

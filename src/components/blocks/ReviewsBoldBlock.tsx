@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { SITE } from '~/data/site'
 import { SectionHeaderBold } from '~/components/SectionHeaderBold'
 import { ReviewCard } from '~/components/ReviewCard'
 import { reviews } from '~/data/reviews'
@@ -9,10 +10,10 @@ import { reviews } from '~/data/reviews'
 // 'bold' variant so other verticals keep the default header byte-identically.
 // Prop signature matches ReviewsBlock.
 export function ReviewsBoldBlock({
-  label = 'Reviews',
-  heading = 'What customers',
-  scriptAccent = 'say',
-  moreLink = 'Read all reviews →',
+  label = ((SITE as { homeReviews?: { label?: string; heading?: string; scriptAccent?: string } }).homeReviews?.label ?? 'Reviews'),
+  heading = ((SITE as { homeReviews?: { label?: string; heading?: string; scriptAccent?: string } }).homeReviews?.heading ?? 'What customers'),
+  scriptAccent = ((SITE as { homeReviews?: { label?: string; heading?: string; scriptAccent?: string } }).homeReviews?.scriptAccent ?? 'say'),
+  moreLink = 'Read all reviews',
 }: {
   label?: string
   heading?: string

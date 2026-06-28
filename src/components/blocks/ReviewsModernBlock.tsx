@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { SITE } from '~/data/site'
 import { Star } from 'lucide-react'
 import { SectionHeaderModern } from '~/components/SectionHeaderModern'
 import { reviews } from '~/data/reviews'
@@ -10,9 +11,9 @@ import { reviews } from '~/data/reviews'
 // TOKEN DISCIPLINE: cool light surfaces component-owned; emerald-* (DNA → indigo)
 // stars + the "read all" CTA; rounded-* (DNA, restrained); font-display.
 export function ReviewsModernBlock({
-  label = 'Patient stories',
-  heading = 'What our patients',
-  scriptAccent = 'say',
+  label = ((SITE as { homeReviews?: { label?: string; heading?: string; scriptAccent?: string } }).homeReviews?.label ?? 'Reviews'),
+  heading = ((SITE as { homeReviews?: { label?: string; heading?: string; scriptAccent?: string } }).homeReviews?.heading ?? 'What customers'),
+  scriptAccent = ((SITE as { homeReviews?: { label?: string; heading?: string; scriptAccent?: string } }).homeReviews?.scriptAccent ?? 'say'),
   moreLink = 'Read all reviews',
 }: {
   label?: string

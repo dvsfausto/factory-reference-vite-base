@@ -25,6 +25,7 @@ export function CtaBoldBlock({
 }) {
   const headline = title ?? ((SITE as { homeCta?: { title?: string; subtitle?: string } }).homeCta?.title ?? 'Ready to get started?')
   const sub = subtitle ?? ((SITE as { homeCta?: { title?: string; subtitle?: string } }).homeCta?.subtitle ?? 'Tell us what you need and we’ll take it from there.')
+  const ctaLabel = ((SITE as { headerCtaLabel?: string }).headerCtaLabel ?? 'Get a free quote')
   return (
     <section className="relative isolate overflow-hidden bg-ink-900 text-white">
       {/* Emerald accent rule across the top — the DNA accent as a structural band. */}
@@ -48,7 +49,7 @@ export function CtaBoldBlock({
               to="/contact"
               className="inline-flex h-[54px] items-center gap-2 rounded-md bg-primary px-8 font-display text-base font-semibold uppercase tracking-wide text-primary-foreground transition-opacity hover:opacity-90"
             >
-              Get a free estimate <ArrowRight className="h-4 w-4" />
+              {ctaLabel} <ArrowRight className="h-4 w-4" />
             </Link>
             <a
               href={`tel:${SITE.phone}`}

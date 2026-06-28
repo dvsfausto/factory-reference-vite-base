@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { SITE } from '~/data/site'
 import { Star } from 'lucide-react'
 import { SectionHeaderCorporate } from '~/components/SectionHeaderCorporate'
 import { reviews } from '~/data/reviews'
@@ -10,10 +11,10 @@ import { reviews } from '~/data/reviews'
 // TOKEN DISCIPLINE: structured light surfaces component-owned; emerald-* (DNA →
 // navy) stars + the "read all" CTA; rounded-* (DNA, tight); font-display.
 export function ReviewsCorporateBlock({
-  label = 'Client testimonials',
-  heading = 'Trusted by the clients we',
-  scriptAccent = 'represent',
-  moreLink = 'Read all testimonials',
+  label = ((SITE as { homeReviews?: { label?: string; heading?: string; scriptAccent?: string } }).homeReviews?.label ?? 'Reviews'),
+  heading = ((SITE as { homeReviews?: { label?: string; heading?: string; scriptAccent?: string } }).homeReviews?.heading ?? 'What customers'),
+  scriptAccent = ((SITE as { homeReviews?: { label?: string; heading?: string; scriptAccent?: string } }).homeReviews?.scriptAccent ?? 'say'),
+  moreLink = 'Read all reviews',
 }: {
   label?: string
   heading?: string

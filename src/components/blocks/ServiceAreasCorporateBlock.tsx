@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { SITE } from '~/data/site'
 import { MapPin } from 'lucide-react'
 import { SectionHeaderCorporate } from '~/components/SectionHeaderCorporate'
 import { AREAS } from '~/data/areas'
@@ -10,10 +11,10 @@ import { AREAS } from '~/data/areas'
 // TOKEN DISCIPLINE: structured light surface component-owned; emerald-* (DNA →
 // navy) on hover + icons; rounded-* (DNA, tight); font-display. No brand-* / .btn.
 export function ServiceAreasCorporateBlock({
-  label = 'Jurisdictions',
-  heading = 'Serving clients across',
-  scriptAccent = 'the region',
-  body = 'Counsel and representation throughout the areas we serve.',
+  label = ((SITE as { homeAreas?: { label?: string; heading?: string; scriptAccent?: string; body?: string } }).homeAreas?.label ?? 'Service areas'),
+  heading = ((SITE as { homeAreas?: { label?: string; heading?: string; scriptAccent?: string; body?: string } }).homeAreas?.heading ?? 'Where we'),
+  scriptAccent = ((SITE as { homeAreas?: { label?: string; heading?: string; scriptAccent?: string; body?: string } }).homeAreas?.scriptAccent ?? 'work'),
+  body = ((SITE as { homeAreas?: { label?: string; heading?: string; scriptAccent?: string; body?: string } }).homeAreas?.body ?? 'Local coverage, close to home.'),
   moreLink = 'All areas',
 }: {
   label?: string

@@ -20,8 +20,8 @@ export function ServicesElegantBlock({
   label,
   heading,
   body,
-  exploreLabel = 'View offering',
-  moreLink = 'All offerings',
+  exploreLabel = 'View service',
+  moreLink = 'See all services',
 }: {
   label?: string
   heading?: string

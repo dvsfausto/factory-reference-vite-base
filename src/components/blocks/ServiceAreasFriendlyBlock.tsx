@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { SITE } from '~/data/site'
 import { MapPin } from 'lucide-react'
 import { SectionHeaderFriendly } from '~/components/SectionHeaderFriendly'
 import { AREAS } from '~/data/areas'
@@ -10,10 +11,10 @@ import { AREAS } from '~/data/areas'
 // TOKEN DISCIPLINE: light-warm surface component-owned; emerald-* (DNA → coral)
 // on chip hover + icons; rounded-* (DNA, soft); font-display. No brand-* / .btn.
 export function ServiceAreasFriendlyBlock({
-  label = 'Who we serve',
-  heading = 'Families from all over',
-  scriptAccent = 'town',
-  body = 'Bringing warm, hands-on learning to neighborhoods near you.',
+  label = ((SITE as { homeAreas?: { label?: string; heading?: string; scriptAccent?: string; body?: string } }).homeAreas?.label ?? 'Service areas'),
+  heading = ((SITE as { homeAreas?: { label?: string; heading?: string; scriptAccent?: string; body?: string } }).homeAreas?.heading ?? 'Where we'),
+  scriptAccent = ((SITE as { homeAreas?: { label?: string; heading?: string; scriptAccent?: string; body?: string } }).homeAreas?.scriptAccent ?? 'work'),
+  body = ((SITE as { homeAreas?: { label?: string; heading?: string; scriptAccent?: string; body?: string } }).homeAreas?.body ?? 'Local coverage, close to home.'),
   moreLink = 'All areas',
 }: {
   label?: string

@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { SITE } from '~/data/site'
 import { MapPin } from 'lucide-react'
 import { SectionHeaderBold } from '~/components/SectionHeaderBold'
 import { AREAS } from '~/data/areas'
@@ -10,11 +11,11 @@ import { AREAS } from '~/data/areas'
 // ServiceAreasBlock. Area chips use the emerald accent on hover (DNA), not the
 // brand literal.
 export function ServiceAreasBoldBlock({
-  label = 'Service areas',
-  heading = 'Where we',
-  scriptAccent = 'work',
-  body = 'Local crews, familiar streets.',
-  moreLink = 'View all areas →',
+  label = ((SITE as { homeAreas?: { label?: string; heading?: string; scriptAccent?: string; body?: string } }).homeAreas?.label ?? 'Service areas'),
+  heading = ((SITE as { homeAreas?: { label?: string; heading?: string; scriptAccent?: string; body?: string } }).homeAreas?.heading ?? 'Where we'),
+  scriptAccent = ((SITE as { homeAreas?: { label?: string; heading?: string; scriptAccent?: string; body?: string } }).homeAreas?.scriptAccent ?? 'work'),
+  body = ((SITE as { homeAreas?: { label?: string; heading?: string; scriptAccent?: string; body?: string } }).homeAreas?.body ?? 'Local coverage, close to home.'),
+  moreLink = 'All areas',
 }: {
   label?: string
   heading?: string

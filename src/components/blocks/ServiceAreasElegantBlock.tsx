@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { SITE } from '~/data/site'
 import { MapPin } from 'lucide-react'
 import { SectionHeaderElegant } from '~/components/SectionHeaderElegant'
 import { elegantSurface } from '~/lib/elegant-surface'
@@ -13,10 +14,10 @@ import { AREAS } from '~/data/areas'
 // on the chips' hover + icons; rounded-* (DNA); font-display serif. No brand-* /
 // .btn.
 export function ServiceAreasElegantBlock({
-  label = 'Where we are',
-  heading = 'An easy evening from',
-  scriptAccent = 'across the Lowcountry',
-  body = 'A short drive, a long stay.',
+  label = ((SITE as { homeAreas?: { label?: string; heading?: string; scriptAccent?: string; body?: string } }).homeAreas?.label ?? 'Service areas'),
+  heading = ((SITE as { homeAreas?: { label?: string; heading?: string; scriptAccent?: string; body?: string } }).homeAreas?.heading ?? 'Where we'),
+  scriptAccent = ((SITE as { homeAreas?: { label?: string; heading?: string; scriptAccent?: string; body?: string } }).homeAreas?.scriptAccent ?? 'work'),
+  body = ((SITE as { homeAreas?: { label?: string; heading?: string; scriptAccent?: string; body?: string } }).homeAreas?.body ?? 'Local coverage, close to home.'),
   moreLink = 'All areas',
 }: {
   label?: string

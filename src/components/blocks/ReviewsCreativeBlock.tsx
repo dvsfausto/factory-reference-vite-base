@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { SITE } from '~/data/site'
 import { ArrowUpRight } from 'lucide-react'
 import { SectionHeaderCreative } from '~/components/SectionHeaderCreative'
 import { reviews } from '~/data/reviews'
@@ -10,10 +11,10 @@ import { reviews } from '~/data/reviews'
 // TOKEN DISCIPLINE: expressive light surfaces component-owned; emerald-* (DNA →
 // magenta) quote marks + the "read all" CTA; rounded-* (DNA, large); font-display.
 export function ReviewsCreativeBlock({
-  label = 'Kind words',
-  heading = 'Clients who',
-  scriptAccent = 'get it',
-  moreLink = 'All the love',
+  label = ((SITE as { homeReviews?: { label?: string; heading?: string; scriptAccent?: string } }).homeReviews?.label ?? 'Reviews'),
+  heading = ((SITE as { homeReviews?: { label?: string; heading?: string; scriptAccent?: string } }).homeReviews?.heading ?? 'What customers'),
+  scriptAccent = ((SITE as { homeReviews?: { label?: string; heading?: string; scriptAccent?: string } }).homeReviews?.scriptAccent ?? 'say'),
+  moreLink = 'Read all reviews',
 }: {
   label?: string
   heading?: string

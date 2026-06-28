@@ -68,7 +68,7 @@ const HEADER_THEMES: Record<string, HeaderTheme> = {
     skip: "focus:bg-emerald-600 focus:text-white",
     navLink: "font-display text-sm font-semibold uppercase tracking-wide text-ink-100 hover:text-white",
     cta: "inline-flex h-[42px] items-center rounded-md bg-primary px-5 font-display text-sm font-semibold uppercase tracking-wide text-primary-foreground transition-opacity hover:opacity-90",
-    ctaLabel: "Free estimate",
+    ctaLabel: "Free Quote",
     dropdownSurface: "bg-ink-900 border border-white/10 rounded-md shadow-xl",
     dropdownItem: "hover:bg-white/5",
     dropdownTitle: "text-ink-100",
@@ -90,7 +90,7 @@ const HEADER_THEMES: Record<string, HeaderTheme> = {
     skip: "focus:bg-emerald-600 focus:text-white",
     navLink: "font-display text-[15px] text-[#B8A893] hover:text-[#F2E8DC]",
     cta: "inline-flex h-[42px] items-center rounded-lg bg-primary px-5 font-display text-sm font-medium tracking-wide text-primary-foreground transition-opacity hover:opacity-90",
-    ctaLabel: "Become a member",
+    ctaLabel: "Free Quote",
     dropdownSurface: "bg-[#241C16] border border-[#3A2E24] rounded-lg shadow-xl",
     dropdownItem: "hover:bg-emerald-600/10",
     dropdownTitle: "text-[#F2E8DC]",
@@ -134,7 +134,7 @@ const HEADER_THEMES: Record<string, HeaderTheme> = {
     skip: "focus:bg-emerald-600 focus:text-white",
     navLink: "font-display text-[15px] font-medium text-[#64748B] hover:text-[#0F172A]",
     cta: "inline-flex h-[42px] items-center rounded-xl bg-primary px-5 font-display text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90",
-    ctaLabel: "Book online",
+    ctaLabel: "Free Quote",
     dropdownSurface: "bg-white border border-[#E6E8EC] rounded-xl shadow-lg",
     dropdownItem: "hover:bg-[#F6F7F9]",
     dropdownTitle: "text-[#0F172A]",
@@ -156,7 +156,7 @@ const HEADER_THEMES: Record<string, HeaderTheme> = {
     skip: "focus:bg-emerald-600 focus:text-white",
     navLink: "font-display text-[15px] font-medium text-[#1A2433] hover:text-emerald-700",
     cta: "inline-flex h-[42px] items-center rounded-md bg-primary px-5 font-display text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90",
-    ctaLabel: "Free consultation",
+    ctaLabel: "Free Quote",
     dropdownSurface: "bg-white border border-[#D8DEE7] rounded-md shadow-lg",
     dropdownItem: "hover:bg-[#F4F6F9]",
     dropdownTitle: "text-[#1A2433]",
@@ -200,7 +200,7 @@ const HEADER_THEMES: Record<string, HeaderTheme> = {
     skip: "focus:bg-emerald-600 focus:text-white",
     navLink: "font-display text-[15px] font-medium text-[#7A6F66] hover:text-emerald-700",
     cta: "inline-flex h-[42px] items-center rounded-2xl bg-primary px-5 font-display text-sm font-semibold text-primary-foreground shadow-md transition-opacity hover:opacity-90",
-    ctaLabel: "Schedule a tour",
+    ctaLabel: "Free Quote",
     dropdownSurface: "bg-white border border-[#F0E6DA] rounded-2xl shadow-xl",
     dropdownItem: "hover:bg-emerald-50",
     dropdownTitle: "text-[#3D3530]",
@@ -229,6 +229,7 @@ export function Header() {
   const themeKey =
     character === "elegant" && surface !== "dark" ? "elegant-light" : character;
   const t = HEADER_THEMES[themeKey] ?? HEADER_THEMES.default;
+  const headerCtaLabel = ((SITE as { headerCtaLabel?: string }).headerCtaLabel ?? t.ctaLabel);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -326,7 +327,7 @@ export function Header() {
               <Phone className="h-4 w-4" />
               {SITE.phoneDisplay}
             </a>
-            <Link to="/contact" className={t.cta}>{t.ctaLabel}</Link>
+            <Link to="/contact" className={t.cta}>{headerCtaLabel}</Link>
           </div>
 
           <button
@@ -375,7 +376,7 @@ export function Header() {
                 <Phone className="h-5 w-5" /> {SITE.phoneDisplay}
               </a>
               <Link to="/contact" onClick={() => setOpen(false)} className={t.mobileCta}>
-                {t.ctaLabel}
+                {headerCtaLabel}
               </Link>
             </div>
           </div>

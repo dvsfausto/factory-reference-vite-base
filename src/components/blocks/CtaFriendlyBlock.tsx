@@ -20,6 +20,7 @@ export function CtaFriendlyBlock({
 }) {
   const headline = title ?? ((SITE as { homeCta?: { title?: string; subtitle?: string } }).homeCta?.title ?? 'Ready to get started?')
   const sub = subtitle ?? ((SITE as { homeCta?: { title?: string; subtitle?: string } }).homeCta?.subtitle ?? 'Tell us what you need and we’ll take it from there.')
+  const ctaLabel = ((SITE as { headerCtaLabel?: string }).headerCtaLabel ?? 'Get a free quote')
   return (
     <section className="bg-[#FFFBF5]">
       <div className="container-x py-16 md:py-20">
@@ -35,7 +36,7 @@ export function CtaFriendlyBlock({
               to="/contact"
               className="inline-flex h-[54px] items-center gap-2 rounded-2xl bg-primary px-8 font-display text-base font-semibold text-primary-foreground shadow-lg transition-opacity hover:opacity-90"
             >
-              Schedule a tour <ArrowRight className="h-4 w-4" />
+              {ctaLabel} <ArrowRight className="h-4 w-4" />
             </Link>
             <a
               href={`tel:${SITE.phone}`}

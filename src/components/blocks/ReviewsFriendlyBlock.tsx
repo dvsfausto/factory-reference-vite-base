@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { SITE } from '~/data/site'
 import { Star } from 'lucide-react'
 import { SectionHeaderFriendly } from '~/components/SectionHeaderFriendly'
 import { reviews } from '~/data/reviews'
@@ -10,9 +11,9 @@ import { reviews } from '~/data/reviews'
 // TOKEN DISCIPLINE: light-warm surfaces component-owned; emerald-* (DNA → coral)
 // stars + "read all" CTA; rounded-* (DNA, soft); font-display.
 export function ReviewsFriendlyBlock({
-  label = 'Happy families',
-  heading = 'What parents',
-  scriptAccent = 'say',
+  label = ((SITE as { homeReviews?: { label?: string; heading?: string; scriptAccent?: string } }).homeReviews?.label ?? 'Reviews'),
+  heading = ((SITE as { homeReviews?: { label?: string; heading?: string; scriptAccent?: string } }).homeReviews?.heading ?? 'What customers'),
+  scriptAccent = ((SITE as { homeReviews?: { label?: string; heading?: string; scriptAccent?: string } }).homeReviews?.scriptAccent ?? 'say'),
   moreLink = 'Read all reviews',
 }: {
   label?: string

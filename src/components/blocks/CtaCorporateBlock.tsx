@@ -20,6 +20,7 @@ export function CtaCorporateBlock({
 }) {
   const headline = title ?? ((SITE as { homeCta?: { title?: string; subtitle?: string } }).homeCta?.title ?? 'Ready to get started?')
   const sub = subtitle ?? ((SITE as { homeCta?: { title?: string; subtitle?: string } }).homeCta?.subtitle ?? 'Tell us what you need and we’ll take it from there.')
+  const ctaLabel = ((SITE as { headerCtaLabel?: string }).headerCtaLabel ?? 'Get a free quote')
   return (
     <section className="bg-[#142844] text-white">
       <div className="container-x py-16 md:py-20">
@@ -41,7 +42,7 @@ export function CtaCorporateBlock({
               to="/contact"
               className="inline-flex h-[52px] items-center gap-2 rounded-md bg-primary px-7 font-display text-base font-semibold text-primary-foreground transition-opacity hover:opacity-90"
             >
-              Schedule a consultation <ArrowRight className="h-4 w-4" />
+              {ctaLabel} <ArrowRight className="h-4 w-4" />
             </Link>
             <a
               href={`tel:${SITE.phone}`}

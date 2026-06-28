@@ -73,6 +73,23 @@ export const SITE = {
     title: 'Ready to get started?',
     subtitle: 'Tell us what you need and we’ll take it from there.',
   },
+  // Section identity copy for the remapped serviceAreas/reviews variants + the global
+  // header CTA. Variant components read these (cast + ?? neutral fallback) so character
+  // sections carry the VERTICAL's copy when authored, and a vertical-NEUTRAL generic when
+  // not — never another vertical's baked demo copy. Overwritten per build when a vertical
+  // provides copy.homeAreas / copy.homeReviews / copy.headerCtaLabel.
+  homeAreas: {
+    label: 'Service areas',
+    heading: 'Where we',
+    scriptAccent: 'work',
+    body: 'Local coverage, close to home.',
+  },
+  homeReviews: {
+    label: 'Reviews',
+    heading: 'What customers',
+    scriptAccent: 'say',
+  },
+  headerCtaLabel: 'Get a free quote',
 }
 
 export const BUSINESS_ID = '00000000-0000-0000-0000-000000000000'

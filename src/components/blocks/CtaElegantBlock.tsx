@@ -22,6 +22,7 @@ export function CtaElegantBlock({
   const s = elegantSurface()
   const headline = title ?? ((SITE as { homeCta?: { title?: string; subtitle?: string } }).homeCta?.title ?? 'Ready to get started?')
   const sub = subtitle ?? ((SITE as { homeCta?: { title?: string; subtitle?: string } }).homeCta?.subtitle ?? 'Tell us what you need and we’ll take it from there.')
+  const ctaLabel = ((SITE as { headerCtaLabel?: string }).headerCtaLabel ?? 'Get a free quote')
   return (
     <section className={`relative isolate overflow-hidden ${s.section} ${s.text}`}>
       <div className="h-px w-full bg-emerald-600/50" />
@@ -44,7 +45,7 @@ export function CtaElegantBlock({
               to="/contact"
               className="inline-flex h-[54px] items-center gap-2 rounded-lg bg-primary px-8 font-display text-base font-medium tracking-wide text-primary-foreground transition-opacity hover:opacity-90"
             >
-              Reserve a visit <ArrowRight className="h-4 w-4" />
+              {ctaLabel} <ArrowRight className="h-4 w-4" />
             </Link>
             <a
               href={`tel:${SITE.phone}`}

@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { SITE } from '~/data/site'
 import { ArrowUpRight } from 'lucide-react'
 import { SectionHeaderCreative } from '~/components/SectionHeaderCreative'
 import { AREAS } from '~/data/areas'
@@ -10,10 +11,10 @@ import { AREAS } from '~/data/areas'
 // TOKEN DISCIPLINE: expressive light surface component-owned; emerald-* (DNA →
 // magenta) on the pills; rounded-* (DNA, large); font-display. No brand-* / .btn.
 export function ServiceAreasCreativeBlock({
-  label = 'Around here',
-  heading = 'Made for clients',
-  scriptAccent = 'everywhere',
-  body = 'We work with people near and far — come say hi.',
+  label = ((SITE as { homeAreas?: { label?: string; heading?: string; scriptAccent?: string; body?: string } }).homeAreas?.label ?? 'Service areas'),
+  heading = ((SITE as { homeAreas?: { label?: string; heading?: string; scriptAccent?: string; body?: string } }).homeAreas?.heading ?? 'Where we'),
+  scriptAccent = ((SITE as { homeAreas?: { label?: string; heading?: string; scriptAccent?: string; body?: string } }).homeAreas?.scriptAccent ?? 'work'),
+  body = ((SITE as { homeAreas?: { label?: string; heading?: string; scriptAccent?: string; body?: string } }).homeAreas?.body ?? 'Local coverage, close to home.'),
   moreLink = 'All areas',
 }: {
   label?: string
