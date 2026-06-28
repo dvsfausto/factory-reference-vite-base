@@ -10,16 +10,16 @@ import { CalendarCheck, ShieldCheck, Sparkles } from 'lucide-react'
 export function TrustBarModernBlock({
   items = [
     {
-      title: 'Same-week appointments',
-      description: 'Easy online booking and visits that respect your time.',
+      title: 'Free estimates',
+      description: 'Clear quotes up front — no surprises after the work.',
     },
     {
-      title: 'Transparent pricing',
-      description: 'Clear estimates up front — no surprises after your visit.',
+      title: 'On schedule',
+      description: 'We show up when we say we will, and keep you posted.',
     },
     {
-      title: 'Gentle, modern care',
-      description: 'Up-to-date technology and a calm, comfortable experience.',
+      title: 'Local team',
+      description: 'Familiar faces and real accountability, close to home.',
     },
   ],
 }: {

@@ -11,16 +11,16 @@ import { Scale, ShieldCheck, Award } from 'lucide-react'
 export function TrustBarCorporateBlock({
   items = [
     {
-      title: 'Decades of experience',
-      description: 'A track record built on results and long-standing client relationships.',
+      title: 'Free estimates',
+      description: 'Clear quotes up front — no surprises after the work.',
     },
     {
-      title: 'Trusted, principled counsel',
-      description: 'Straightforward advice and transparent fees on every engagement.',
+      title: 'On schedule',
+      description: 'We show up when we say we will, and keep you posted.',
     },
     {
-      title: 'Clear, principled counsel',
-      description: 'Straightforward advice and transparent fees — no surprises.',
+      title: 'Local team',
+      description: 'Familiar faces and real accountability, close to home.',
     },
   ],
 }: {

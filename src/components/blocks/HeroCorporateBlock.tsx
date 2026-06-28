@@ -20,7 +20,7 @@ import { imageSrc } from '~/lib/asset-url'
 // Props identical to HeroBlock; decorativeAsset accepted for parity but unused.
 // `trustItems` is repurposed as the CREDENTIALS row. Returns an Element (no null).
 export function HeroCorporateBlock({
-  trustItems = ['Free initial consultation', 'Responsive service', 'Clear, principled counsel', 'Long-term partnerships'],
+  trustItems = ['Free estimates', 'On schedule', 'Local team', 'Satisfaction guaranteed'],
 }: {
   trustItems?: string[]
   decorativeAsset?: string

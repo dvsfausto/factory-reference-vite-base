@@ -18,7 +18,7 @@ import { imageSrc } from '~/lib/asset-url'
 // (DNA serif). Surface neutrals component-owned per mode. No bg-brand-*/.btn-
 // primary/.btn. Props identical to HeroBlock; returns an Element (no null).
 export function HeroElegantBlock({
-  trustItems = ['Walk-in humidor', 'Members & guests welcome', 'Craft spirits list', 'Private events'],
+  trustItems = ['Free estimates', 'On schedule', 'Local team', 'Satisfaction guaranteed'],
 }: {
   trustItems?: string[]
   decorativeAsset?: string

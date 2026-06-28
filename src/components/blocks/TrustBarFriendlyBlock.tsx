@@ -11,16 +11,16 @@ import { HeartHandshake, ShieldCheck, Sparkles } from 'lucide-react'
 export function TrustBarFriendlyBlock({
   items = [
     {
-      title: 'Caring, dedicated staff',
-      description: 'Vetted, qualified teachers and a program parents can trust.',
+      title: 'Free estimates',
+      description: 'Clear quotes up front — no surprises after the work.',
     },
     {
-      title: 'Small class sizes',
-      description: 'More attention for every child, every single day.',
+      title: 'On schedule',
+      description: 'We show up when we say we will, and keep you posted.',
     },
     {
-      title: 'Safe & nurturing',
-      description: 'A warm, secure space where kids feel happy to learn.',
+      title: 'Local team',
+      description: 'Familiar faces and real accountability, close to home.',
     },
   ],
 }: {

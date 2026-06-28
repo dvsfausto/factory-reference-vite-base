@@ -20,7 +20,7 @@ import { imageSrc } from '~/lib/asset-url'
 // Props identical to HeroBlock; decorativeAsset accepted for parity but unused.
 // Returns an Element (no null).
 export function HeroCreativeBlock({
-  trustItems = ['Brand & web design', 'Studio-led work', 'Built to be seen', 'Booking 2026'],
+  trustItems = ['Free estimates', 'On schedule', 'Local team', 'Satisfaction guaranteed'],
 }: {
   trustItems?: string[]
   decorativeAsset?: string

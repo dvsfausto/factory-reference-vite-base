@@ -12,16 +12,16 @@ import { elegantSurface } from '~/lib/elegant-surface'
 export function TrustBarElegantBlock({
   items = [
     {
-      title: 'Walk-in humidor',
-      description: 'A curated, climate-kept selection — from first cigars to rare boxes.',
+      title: 'Free estimates',
+      description: 'Clear quotes up front — no surprises after the work.',
     },
     {
-      title: 'A considered list',
-      description: 'Bourbon, rum, and Scotch chosen to pair, poured by people who know them.',
+      title: 'On schedule',
+      description: 'We show up when we say we will, and keep you posted.',
     },
     {
-      title: 'Made for lingering',
-      description: 'Deep leather, low light, and no one rushing you toward the door.',
+      title: 'Local team',
+      description: 'Familiar faces and real accountability, close to home.',
     },
   ],
 }: {

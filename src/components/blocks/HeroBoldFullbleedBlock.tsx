@@ -27,7 +27,7 @@ import { imageSrc } from '~/lib/asset-url'
 // same way. `decorativeAsset` is accepted for prop parity but intentionally
 // unused — this composition carries no decorative sprite.
 export function HeroBoldFullbleedBlock({
-  trustItems = ['Free estimates', 'On schedule', 'Local crew', 'Built to last'],
+  trustItems = ['Free estimates', 'On schedule', 'Local team', 'Satisfaction guaranteed'],
 }: {
   trustItems?: string[]
   decorativeAsset?: string

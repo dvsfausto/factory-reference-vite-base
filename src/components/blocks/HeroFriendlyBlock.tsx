@@ -21,7 +21,7 @@ import { imageSrc } from '~/lib/asset-url'
 // Props identical to HeroBlock (uniform render path); decorativeAsset accepted
 // for parity but unused. Returns an Element (no null), matching HeroBlock.
 export function HeroFriendlyBlock({
-  trustItems = ['Small class sizes', 'Caring teachers', 'Hands-on learning', 'Safe & nurturing'],
+  trustItems = ['Free estimates', 'On schedule', 'Local team', 'Satisfaction guaranteed'],
 }: {
   trustItems?: string[]
   decorativeAsset?: string

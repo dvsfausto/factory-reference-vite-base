@@ -9,16 +9,16 @@
 export function TrustBarCreativeBlock({
   items = [
     {
-      title: 'Brand & identity',
-      description: 'Logos, systems, and stories that actually feel like you.',
+      title: 'Free estimates',
+      description: 'Clear quotes up front — no surprises after the work.',
     },
     {
-      title: 'Web & digital',
-      description: 'Sites and products designed to be seen and remembered.',
+      title: 'On schedule',
+      description: 'We show up when we say we will, and keep you posted.',
     },
     {
-      title: 'Art direction',
-      description: 'A point of view, applied across everything you make.',
+      title: 'Local team',
+      description: 'Familiar faces and real accountability, close to home.',
     },
   ],
 }: {
