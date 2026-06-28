@@ -256,7 +256,7 @@ export function Header() {
         </a>
         <div className="container-x flex items-center justify-between h-20">
           <Link to="/" className="focus-ring rounded-md" aria-label={`${SITE.name} home`}>
-            <Logo light={t.logoLight} height={44} alt={SITE.name} />
+            <Logo src={SITE.logo_url} light={t.logoLight} height={44} alt={SITE.name} />
           </Link>
 
           <nav className="hidden lg:flex items-center gap-1" aria-label="Primary">
@@ -343,7 +343,7 @@ export function Header() {
       {open && (
         <div className={`fixed inset-0 z-[60] ${t.mobilePanel} lg:hidden overflow-y-auto`}>
           <div className="container-x flex items-center justify-between h-20">
-            <Logo light={t.logoLight} height={40} alt={SITE.name} />
+            <Logo src={SITE.logo_url} light={t.logoLight} height={40} alt={SITE.name} />
             <button onClick={() => setOpen(false)} aria-label="Close menu" className={`p-2 focus-ring rounded-md ${t.menuIcon}`}>
               <X className="h-6 w-6" />
             </button>
