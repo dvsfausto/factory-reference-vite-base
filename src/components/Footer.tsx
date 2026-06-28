@@ -170,7 +170,7 @@ export function Footer({ decorativeAsset = defaultLeaves }: { decorativeAsset?: 
       )}
       <div className="container-x py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 relative">
         <div className="lg:col-span-1">
-          <Logo light={t.logoLight} height={48} alt={SITE.name} />
+          <Logo src={SITE.logo_url} light={t.logoLight} height={48} alt={SITE.name} />
           {SITE.tagline && (
             <p className={`mt-4 text-sm ${t.tagline} leading-relaxed font-display italic`}>
               {SITE.tagline}

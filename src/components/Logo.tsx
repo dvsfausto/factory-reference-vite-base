@@ -7,7 +7,20 @@ type Props = {
 };
 
 export function Logo({ src, alt = "Logo", className = "", light = false, height = 40 }: Props) {
-  if (!src) return null;
+  // No logo asset (e.g. a build with no brand kit) → render the business name as a
+  // text wordmark, never a broken/empty <img>. Keeps logo-less builds branded.
+  if (!src) {
+    return (
+      <span
+        className={`font-display font-semibold tracking-tight leading-none ${
+          light ? "text-white" : "text-ink-900"
+        } ${className}`}
+        style={{ fontSize: Math.round(height * 0.5) }}
+      >
+        {alt}
+      </span>
+    );
+  }
   return (
     <div className={`flex items-center ${className}`}>
       <img

@@ -4,6 +4,7 @@
 
 export const SITE = {
   name: 'Reference Site',
+  logo_url: '',
   domain: 'https://example.com',
   phone: '+15555550100',
   phoneDisplay: '(555) 555-0100',
