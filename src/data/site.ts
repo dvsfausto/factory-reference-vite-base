@@ -24,7 +24,7 @@ export const SITE = {
   // painter). image_url is a bare filename resolved via imageSrc() (lib/asset-
   // url) → /images/<file>; full URLs pass through unchanged.
   hero: {
-    kicker: 'Cleaning · Cincinnati · Est. 2014',
+    kicker: 'Cleaning · Cincinnati',
     headline: 'The careful kind of cleaning.',
     subheadline: 'For Cincinnati homes that deserve it.',
     body: 'Recurring, deep, and move-out cleaning — handled by a careful team and backed by a spotless-home guarantee.',
