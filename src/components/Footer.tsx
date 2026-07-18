@@ -196,18 +196,23 @@ export function Footer({ decorativeAsset = defaultLeaves }: { decorativeAsset?: 
           </div>
         </div>
 
-        <div>
-          <h4 className={`text-sm font-semibold mb-4 ${t.heading}`}>Services</h4>
-          <ul className={`space-y-2 text-sm ${t.listText}`}>
-            {SERVICES.map((s) => (
-              <li key={s.slug}>
-                <Link to="/services/$slug" params={{ slug: s.slug }} className={t.listHover}>
-                  {s.name}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
+        {/* Services column omitted when the site has no service pages (generic
+            vertical, no owner services) — no empty "Services" header, no dead
+            /services/$slug links. Runtime guard only; the route file stays. */}
+        {SERVICES.length > 0 && (
+          <div>
+            <h4 className={`text-sm font-semibold mb-4 ${t.heading}`}>Services</h4>
+            <ul className={`space-y-2 text-sm ${t.listText}`}>
+              {SERVICES.map((s) => (
+                <li key={s.slug}>
+                  <Link to="/services/$slug" params={{ slug: s.slug }} className={t.listHover}>
+                    {s.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
 
         <div>
           <h4 className={`text-sm font-semibold mb-4 ${t.heading}`}>Service Areas</h4>
