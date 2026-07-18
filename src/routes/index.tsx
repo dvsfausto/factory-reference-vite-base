@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { JsonLd } from '~/components/JsonLd'
-import { faqLd } from '~/lib/seo'
+import { buildMeta, faqLd } from '~/lib/seo'
+import { imageSrc } from '~/lib/asset-url'
 import { SITE } from '~/data/site'
 import type { FAQ } from '~/lib/types/page-types'
 import { HOMEPAGE_LAYOUT, type LayoutBlock } from '~/data/layout'
@@ -112,22 +113,20 @@ import { CtaStackedCenteredBlock } from '~/components/blocks/CtaStackedCenteredB
 const HOME_FAQS: FAQ[] = SITE.homeFaqs
 
 export const Route = createFileRoute('/')({
-  head: () => ({
-    meta: [
-      // Keyword title from the (real, ${city}-expanded) hero headline — NOT the
-      // now-empty tagline, which produced "<name> — " with a trailing dash.
-      { title: `${SITE.name} — ${SITE.hero.headline}` },
-      // description/og:description read SITE.description (real meta copy), falling
-      // back to the name — the tagline no longer feeds meta (it's intentionally
-      // empty so the tagline bar self-omits). This is the homepage override that
-      // was shadowing __root's SITE.description fix.
-      { name: 'description', content: SITE.description || SITE.name },
-      { property: 'og:title', content: SITE.name },
-      { property: 'og:description', content: SITE.description || SITE.name },
-      { property: 'og:url', content: SITE.domain },
-    ],
-    links: [{ rel: 'canonical', href: SITE.domain }],
-  }),
+  // Homepage SEO head goes through the SHARED buildMeta() (same helper sub-pages
+  // use) so every page — and every vertical — emits the identical COMPLETE set:
+  // title, description, og:title/description/url/type/image(+alt), twitter
+  // card/title/description/image, and canonical. Keyword title from the real
+  // ${city}-expanded hero headline (NOT the now-empty tagline). description reads
+  // SITE.description (real meta copy). canonical + og:url read SITE.domain, so the
+  // deployer's pre-push domain rewrite points them at the served host.
+  head: () =>
+    buildMeta({
+      title: `${SITE.name} — ${SITE.hero.headline}`,
+      description: SITE.description || SITE.name,
+      path: '/',
+      ogImage: imageSrc(SITE.hero.image_url),
+    }),
   component: HomePage,
 })
 
