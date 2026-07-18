@@ -114,10 +114,16 @@ const HOME_FAQS: FAQ[] = SITE.homeFaqs
 export const Route = createFileRoute('/')({
   head: () => ({
     meta: [
-      { title: `${SITE.name} — ${SITE.tagline}` },
-      { name: 'description', content: SITE.tagline },
+      // Keyword title from the (real, ${city}-expanded) hero headline — NOT the
+      // now-empty tagline, which produced "<name> — " with a trailing dash.
+      { title: `${SITE.name} — ${SITE.hero.headline}` },
+      // description/og:description read SITE.description (real meta copy), falling
+      // back to the name — the tagline no longer feeds meta (it's intentionally
+      // empty so the tagline bar self-omits). This is the homepage override that
+      // was shadowing __root's SITE.description fix.
+      { name: 'description', content: SITE.description || SITE.name },
       { property: 'og:title', content: SITE.name },
-      { property: 'og:description', content: SITE.tagline },
+      { property: 'og:description', content: SITE.description || SITE.name },
       { property: 'og:url', content: SITE.domain },
     ],
     links: [{ rel: 'canonical', href: SITE.domain }],
