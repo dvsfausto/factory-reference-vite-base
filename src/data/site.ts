@@ -17,6 +17,11 @@ export const SITE = {
   },
   hours: 'Mon–Fri 8am–6pm',
   tagline: 'Reliable. Professional. Consistent.',
+  // Meta/OG description. The scaffolder emits a real, honest per-site value; this
+  // seed keeps the reference project type-checking + rendering standalone. Read by
+  // __root (falling back to SITE.name), decoupled from `tagline` so the tagline bar
+  // can be empty without emptying the site's <meta description>.
+  description: 'Reliable, professional service you can count on.',
   // Structured hero copy. The homepage (routes/index.tsx) reads every field
   // below instead of JSX literals, so editor-api can edit hero copy per field
   // and the scaffolder's cleaning-english emit (emit-vite/site-config.ts) maps

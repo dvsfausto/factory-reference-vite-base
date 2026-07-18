@@ -21,11 +21,11 @@ export const Route = createRootRoute({
       { charSet: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { title: SITE.name },
-      { name: 'description', content: SITE.tagline },
+      { name: 'description', content: SITE.description || SITE.name },
       { property: 'og:type', content: 'website' },
       { property: 'og:site_name', content: SITE.name },
       { property: 'og:title', content: SITE.name },
-      { property: 'og:description', content: SITE.tagline },
+      { property: 'og:description', content: SITE.description || SITE.name },
       { name: 'twitter:card', content: 'summary_large_image' },
     ],
     links: [

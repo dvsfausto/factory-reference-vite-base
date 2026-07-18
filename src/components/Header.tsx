@@ -287,34 +287,38 @@ export function Header() {
               )}
             </div>
 
-            <div
-              className="relative"
-              onMouseEnter={() => setOpenMenu("areas")}
-              onMouseLeave={() => setOpenMenu(null)}
-            >
-              <button className={`flex items-center gap-1 px-3 py-2 ${t.navLink} focus-ring rounded-md`}>
-                Areas <ChevronDown className="h-4 w-4" />
-              </button>
-              {openMenu === "areas" && (
-                <div className="absolute left-0 top-full pt-2">
-                  <div className={`${t.dropdownSurface} p-2 w-64`}>
-                    {AREAS.map((a) => (
-                      <Link
-                        key={a.slug}
-                        to="/areas/$slug"
-                        params={{ slug: a.slug }}
-                        className={`block px-3 py-2 rounded-lg text-sm font-medium ${t.dropdownTitle} ${t.dropdownItem}`}
-                      >
-                        {a.name}
+            {/* Areas nav omitted when the site has no service-area pages (e.g. a
+                single-area business) — no empty dropdown, no dead /areas link. */}
+            {AREAS.length > 0 && (
+              <div
+                className="relative"
+                onMouseEnter={() => setOpenMenu("areas")}
+                onMouseLeave={() => setOpenMenu(null)}
+              >
+                <button className={`flex items-center gap-1 px-3 py-2 ${t.navLink} focus-ring rounded-md`}>
+                  Areas <ChevronDown className="h-4 w-4" />
+                </button>
+                {openMenu === "areas" && (
+                  <div className="absolute left-0 top-full pt-2">
+                    <div className={`${t.dropdownSurface} p-2 w-64`}>
+                      {AREAS.map((a) => (
+                        <Link
+                          key={a.slug}
+                          to="/areas/$slug"
+                          params={{ slug: a.slug }}
+                          className={`block px-3 py-2 rounded-lg text-sm font-medium ${t.dropdownTitle} ${t.dropdownItem}`}
+                        >
+                          {a.name}
+                        </Link>
+                      ))}
+                      <Link to="/areas" className={`block px-3 py-2 rounded-lg text-sm font-medium ${t.areaAllLink}`}>
+                        View all areas →
                       </Link>
-                    ))}
-                    <Link to="/areas" className={`block px-3 py-2 rounded-lg text-sm font-medium ${t.areaAllLink}`}>
-                      View all areas →
-                    </Link>
+                    </div>
                   </div>
-                </div>
-              )}
-            </div>
+                )}
+              </div>
+            )}
 
             <Link to="/pricing" className={`px-3 py-2 ${t.navLink} focus-ring rounded-md`}>Pricing</Link>
             <Link to="/reviews" className={`px-3 py-2 ${t.navLink} focus-ring rounded-md`}>Reviews</Link>
@@ -357,14 +361,16 @@ export function Header() {
                 </Link>
               ))}
             </div>
-            <div>
-              <div className={`text-xs font-semibold ${t.mobileLabel} uppercase tracking-wider mb-2`}>Areas</div>
-              {AREAS.map((a) => (
-                <Link key={a.slug} to="/areas/$slug" params={{ slug: a.slug }} onClick={() => setOpen(false)} className={`block py-2 text-base font-medium ${t.mobileText}`}>
-                  {a.name}
-                </Link>
-              ))}
-            </div>
+            {AREAS.length > 0 && (
+              <div>
+                <div className={`text-xs font-semibold ${t.mobileLabel} uppercase tracking-wider mb-2`}>Areas</div>
+                {AREAS.map((a) => (
+                  <Link key={a.slug} to="/areas/$slug" params={{ slug: a.slug }} onClick={() => setOpen(false)} className={`block py-2 text-base font-medium ${t.mobileText}`}>
+                    {a.name}
+                  </Link>
+                ))}
+              </div>
+            )}
             <div className="space-y-2">
               <Link to="/pricing" onClick={() => setOpen(false)} className={`block py-2 text-base font-medium ${t.mobileText}`}>Pricing</Link>
               <Link to="/reviews" onClick={() => setOpen(false)} className={`block py-2 text-base font-medium ${t.mobileText}`}>Reviews</Link>

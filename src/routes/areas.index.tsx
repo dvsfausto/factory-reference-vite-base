@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, redirect } from '@tanstack/react-router'
 import { AreasSection } from '~/components/AreasSection'
 import { CTASection } from '~/components/CTASection'
 import { buildMeta } from '~/lib/seo'
@@ -6,6 +6,14 @@ import { AREAS } from '~/data/areas'
 import { SITE } from '~/data/site'
 
 export const Route = createFileRoute('/areas/')({
+  // No service areas (e.g. a single-area business) → there is no "where we work"
+  // to show, so send visitors home rather than render an empty index. The
+  // scaffolder also prunes this route file entirely when there are 0 areas (→
+  // a real 404); this guard covers the window before that ships and any path
+  // that keeps the route.
+  beforeLoad: () => {
+    if (AREAS.length === 0) throw redirect({ to: '/' })
+  },
   head: () =>
     buildMeta({
       title: `Service areas — ${SITE.name}`,
