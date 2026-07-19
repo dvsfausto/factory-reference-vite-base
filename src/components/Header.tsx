@@ -260,32 +260,37 @@ export function Header() {
           </Link>
 
           <nav className="hidden lg:flex items-center gap-1" aria-label="Primary">
-            <div
-              className="relative"
-              onMouseEnter={() => setOpenMenu("services")}
-              onMouseLeave={() => setOpenMenu(null)}
-            >
-              <button className={`flex items-center gap-1 px-3 py-2 ${t.navLink} focus-ring rounded-md`}>
-                Services <ChevronDown className="h-4 w-4" />
-              </button>
-              {openMenu === "services" && (
-                <div className="absolute left-0 top-full pt-2">
-                  <div className={`${t.dropdownSurface} p-2 w-72`}>
-                    {SERVICES.map((s) => (
-                      <Link
-                        key={s.slug}
-                        to="/services/$slug"
-                        params={{ slug: s.slug }}
-                        className={`block px-3 py-2 rounded-lg text-sm ${t.dropdownItem}`}
-                      >
-                        <div className={`font-medium ${t.dropdownTitle}`}>{s.name}</div>
-                        {s.tagline && <div className={`text-xs ${t.dropdownSub}`}>{s.tagline}</div>}
-                      </Link>
-                    ))}
+            {/* Services nav omitted when the site has no service pages (e.g. a
+                generic-vertical business whose owner supplied none) — no empty
+                dropdown, no dead /services link. Mirrors the AREAS guard below. */}
+            {SERVICES.length > 0 && (
+              <div
+                className="relative"
+                onMouseEnter={() => setOpenMenu("services")}
+                onMouseLeave={() => setOpenMenu(null)}
+              >
+                <button className={`flex items-center gap-1 px-3 py-2 ${t.navLink} focus-ring rounded-md`}>
+                  Services <ChevronDown className="h-4 w-4" />
+                </button>
+                {openMenu === "services" && (
+                  <div className="absolute left-0 top-full pt-2">
+                    <div className={`${t.dropdownSurface} p-2 w-72`}>
+                      {SERVICES.map((s) => (
+                        <Link
+                          key={s.slug}
+                          to="/services/$slug"
+                          params={{ slug: s.slug }}
+                          className={`block px-3 py-2 rounded-lg text-sm ${t.dropdownItem}`}
+                        >
+                          <div className={`font-medium ${t.dropdownTitle}`}>{s.name}</div>
+                          {s.tagline && <div className={`text-xs ${t.dropdownSub}`}>{s.tagline}</div>}
+                        </Link>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              )}
-            </div>
+                )}
+              </div>
+            )}
 
             {/* Areas nav omitted when the site has no service-area pages (e.g. a
                 single-area business) — no empty dropdown, no dead /areas link. */}
@@ -353,14 +358,16 @@ export function Header() {
             </button>
           </div>
           <div className="container-x pb-12 space-y-6">
-            <div>
-              <div className={`text-xs font-semibold ${t.mobileLabel} uppercase tracking-wider mb-2`}>Services</div>
-              {SERVICES.map((s) => (
-                <Link key={s.slug} to="/services/$slug" params={{ slug: s.slug }} onClick={() => setOpen(false)} className={`block py-2 text-base font-medium ${t.mobileText}`}>
-                  {s.name}
-                </Link>
-              ))}
-            </div>
+            {SERVICES.length > 0 && (
+              <div>
+                <div className={`text-xs font-semibold ${t.mobileLabel} uppercase tracking-wider mb-2`}>Services</div>
+                {SERVICES.map((s) => (
+                  <Link key={s.slug} to="/services/$slug" params={{ slug: s.slug }} onClick={() => setOpen(false)} className={`block py-2 text-base font-medium ${t.mobileText}`}>
+                    {s.name}
+                  </Link>
+                ))}
+              </div>
+            )}
             {AREAS.length > 0 && (
               <div>
                 <div className={`text-xs font-semibold ${t.mobileLabel} uppercase tracking-wider mb-2`}>Areas</div>
