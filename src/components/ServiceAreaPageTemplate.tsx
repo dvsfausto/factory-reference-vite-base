@@ -5,6 +5,7 @@ import { FAQSection } from "./FAQSection";
 import { CTASection } from "./CTASection";
 import { SectionHeader } from "./SectionHeader";
 import { renderCharacterHero, renderCharacterCta } from "./CharacterHero";
+import { resolveCharacterTokens } from "~/lib/character-tokens";
 import { ReviewCard } from "./ReviewCard";
 import { areaImageUrl, areaAlt, serviceImageUrl } from "~/data/images";
 import { SERVICES } from "~/data/services";
@@ -51,6 +52,19 @@ export function ServiceAreaPageTemplate({ data }: Props) {
     title: `Working in ${data.name}?`,
     subtitle: "We'll respond within a business day with a free quote.",
   });
+
+  // Character tokens for the shared middle sections (see character-tokens.ts). null →
+  // known verticals keep the literals below (byte-identical). brand accents (text-brand-*)
+  // stay per operator decision.
+  const T = resolveCharacterTokens();
+  const secPlain = T?.section ?? "bg-white";
+  const secBand = T ? `${T.sectionAlt} border-y ${T.border}` : "bg-brand-50 border-y border-brand-100";
+  const tPad = T?.spacingY ?? "py-16 md:py-24";
+  const tBody = T?.text ?? "text-ink-700";
+  const tMuted = T?.muted ?? "text-ink-500";
+  const Header = T?.SectionHeader ?? SectionHeader;
+  const hCls = T ? `${T.text} ${T.headingCase}`.trim() : undefined;
+  const tCard = T ? `${T.card} ${T.cardRadius} border ${T.border} ${T.cardElevation}` : "card-stead";
 
   return (
     <>
@@ -131,16 +145,16 @@ export function ServiceAreaPageTemplate({ data }: Props) {
 
       {/* AT A GLANCE / ABOUT — omit when there's no about body */}
       {data.about.body.length > 0 && (
-      <section className="bg-white">
-        <div className="container-x py-16">
-          <div className="card-soft p-8 max-w-3xl mx-auto">
+      <section className={secPlain}>
+        <div className={`container-x ${T ? T.spacingY.split(" ")[0] : "py-16"}`}>
+          <div className={`${T ? `${T.card} ${T.cardRadius} border ${T.border}` : "card-soft"} p-8 max-w-3xl mx-auto`}>
             <span className="text-xs font-bold text-brand-600 uppercase tracking-wider">
               {data.name} at a glance
             </span>
-            <h2 className="mt-3 text-2xl">{data.about.title}</h2>
+            <h2 className={`mt-3 text-2xl ${T ? T.text : ""}`.trimEnd()}>{data.about.title}</h2>
             <div className="mt-4 space-y-3">
               {data.about.body.map((p, i) => (
-                <p key={i} className="text-ink-700 leading-relaxed">{p}</p>
+                <p key={i} className={`${tBody} leading-relaxed`}>{p}</p>
               ))}
             </div>
           </div>
@@ -150,9 +164,9 @@ export function ServiceAreaPageTemplate({ data }: Props) {
 
       {/* SERVICES HERE */}
       {featured.length > 0 && (
-        <section className="bg-brand-50 border-y border-brand-100">
-          <div className="container-x py-16 md:py-24">
-            <SectionHeader
+        <section className={secBand}>
+          <div className={`container-x ${tPad}`}>
+            <Header
               label="Services available"
               heading={data.servicesHere.title}
               body={data.servicesHere.intro}
@@ -163,7 +177,7 @@ export function ServiceAreaPageTemplate({ data }: Props) {
                   key={s.slug}
                   to="/services/$slug"
                   params={{ slug: s.slug }}
-                  className="card-stead overflow-hidden group hover:shadow-xl hover:-translate-y-1 transition-all"
+                  className={T ? `${T.card} ${T.cardRadius} border ${T.border} overflow-hidden group ${T.cardElevation}` : "card-stead overflow-hidden group hover:shadow-xl hover:-translate-y-1 transition-all"}
                 >
                   <div className="aspect-[4/3] overflow-hidden">
                     <img
@@ -176,8 +190,8 @@ export function ServiceAreaPageTemplate({ data }: Props) {
                     />
                   </div>
                   <div className="p-6">
-                    <h4>{s.name}</h4>
-                    <p className="mt-2 text-sm text-ink-500">{s.short}</p>
+                    <h4 className={hCls}>{s.name}</h4>
+                    <p className={`mt-2 text-sm ${tMuted}`}>{s.short}</p>
                     <div className="mt-3 text-brand-600 font-semibold flex items-center gap-1 group-hover:gap-2 transition-all text-sm">
                       Learn more <ArrowRight className="h-4 w-4" />
                     </div>
@@ -191,16 +205,16 @@ export function ServiceAreaPageTemplate({ data }: Props) {
 
       {/* LANDMARKS / SUB-AREAS */}
       {data.landmarks.items.length > 0 && (
-        <section className="bg-white">
-          <div className="container-x py-16 md:py-24">
-            <SectionHeader
+        <section className={secPlain}>
+          <div className={`container-x ${tPad}`}>
+            <Header
               heading={data.landmarks.title}
               body={data.landmarks.intro}
               align="left"
             />
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
               {data.landmarks.items.map((item, i) => (
-                <div key={i} className="flex items-start gap-2 text-ink-700">
+                <div key={i} className={`flex items-start gap-2 ${tBody}`}>
                   <Check className="h-4 w-4 text-brand-600 mt-1 shrink-0" />
                   <span>{item}</span>
                 </div>
@@ -212,11 +226,11 @@ export function ServiceAreaPageTemplate({ data }: Props) {
 
       {/* LOCAL CONTEXT (optional) */}
       {data.localContext && (
-        <section className="bg-brand-50 border-y border-brand-100">
-          <div className="container-x py-16">
-            <div className="card-soft p-8 md:p-10 max-w-3xl mx-auto bg-white">
+        <section className={secBand}>
+          <div className={`container-x ${T ? T.spacingY.split(" ")[0] : "py-16"}`}>
+            <div className={T ? `${T.card} ${T.cardRadius} border ${T.border} p-8 md:p-10 max-w-3xl mx-auto` : "card-soft p-8 md:p-10 max-w-3xl mx-auto bg-white"}>
               <span className="badge-pill bg-brand-50 text-brand-600">Local insight</span>
-              <h2 className="mt-3">
+              <h2 className={`mt-3 ${T ? T.text : ""}`.trimEnd()}>
                 {localTitleParts ? (
                   <>
                     {localTitleParts.lead}
@@ -229,7 +243,7 @@ export function ServiceAreaPageTemplate({ data }: Props) {
               </h2>
               <div className="mt-5 space-y-4">
                 {data.localContext.body.map((p, i) => (
-                  <p key={i} className="text-lg text-ink-700 leading-relaxed">{p}</p>
+                  <p key={i} className={`text-lg ${tBody} leading-relaxed`}>{p}</p>
                 ))}
               </div>
             </div>
@@ -239,9 +253,9 @@ export function ServiceAreaPageTemplate({ data }: Props) {
 
       {/* REVIEWS (filtered to area) */}
       {displayReviews.length > 0 && (
-        <section className="bg-white">
-          <div className="container-x py-16 md:py-24">
-            <SectionHeader
+        <section className={secPlain}>
+          <div className={`container-x ${tPad}`}>
+            <Header
               label="Reviews"
               heading={`${data.name} customer stories`}
             />
@@ -259,17 +273,17 @@ export function ServiceAreaPageTemplate({ data }: Props) {
 
       {/* RELATED AREAS */}
       {data.relatedAreas.length > 0 && (
-        <section className="bg-brand-50 border-y border-brand-100">
-          <div className="container-x py-16">
-            <SectionHeader heading="We also serve nearby" />
+        <section className={secBand}>
+          <div className={`container-x ${T ? T.spacingY.split(" ")[0] : "py-16"}`}>
+            <Header heading="We also serve nearby" />
             <div className="flex flex-wrap justify-center gap-3">
               {data.relatedAreas.map((a) => (
                 <Link
                   key={a.href}
                   to={a.href}
-                  className="card-stead px-5 py-3 hover:border-brand-600 transition-colors"
+                  className={T ? `${T.card} ${T.cardRadius} border ${T.border} px-5 py-3 ${T.text} transition-colors` : "card-stead px-5 py-3 hover:border-brand-600 transition-colors"}
                 >
-                  <span className="font-semibold text-ink-900">{a.label}</span>
+                  <span className={T ? "font-semibold" : "font-semibold text-ink-900"}>{a.label}</span>
                 </Link>
               ))}
             </div>

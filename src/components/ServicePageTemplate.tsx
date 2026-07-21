@@ -5,6 +5,7 @@ import { FAQSection } from "./FAQSection";
 import { CTASection } from "./CTASection";
 import { SectionHeader } from "./SectionHeader";
 import { renderCharacterHero, renderCharacterCta } from "./CharacterHero";
+import { resolveCharacterTokens } from "~/lib/character-tokens";
 import { serviceImageUrl } from "~/data/images";
 import { SITE } from "~/data/site";
 import leaves from "~/assets/decorative/cleaning-leaves.png";
@@ -38,6 +39,23 @@ export function ServicePageTemplate({ data }: Props) {
     title: "Ready when you are.",
     subtitle: "Get a free quote and we'll be in touch within a business day.",
   });
+
+  // Character tokens for the shared MIDDLE sections. null → known verticals keep the
+  // literals below verbatim (byte-identical). Each `?? '<literal>'` IS the current
+  // hardcoded class, so a no-character build is unchanged. DECISION: brand accents
+  // (text-brand-*) are intentionally NOT tokenized — the customer's brand color stays.
+  const T = resolveCharacterTokens();
+  const secPlain = T?.section ?? "bg-white";
+  const secBand = T ? `${T.sectionAlt} border-y ${T.border}` : "bg-brand-50 border-y border-brand-100";
+  const tPad = T?.spacingY ?? "py-16 md:py-24";
+  const tBody = T?.text ?? "text-ink-700"; // body paragraphs
+  const tMuted = T?.muted ?? "text-ink-500"; // captions/labels
+  const tStrong = T?.text ?? "text-ink-900"; // strong/blockquote
+  const tCard = T ? `${T.card} ${T.cardRadius} border ${T.border} p-6 ${T.cardElevation}` : "card-stead p-6";
+  const Header = T?.SectionHeader ?? SectionHeader;
+  // Inline headings (currently class-less <h2>/<h4>): undefined for known verticals →
+  // no class emitted (byte-identical); character text color + case when present.
+  const hCls = T ? `${T.text} ${T.headingCase}`.trim() : undefined;
 
   return (
     <>
@@ -115,16 +133,16 @@ export function ServicePageTemplate({ data }: Props) {
 
       {/* WHAT WE COVER — omit when the section has no items */}
       {data.whatWeBuy.items.length > 0 && (
-      <section className="bg-white">
-        <div className="container-x py-16 md:py-24">
+      <section className={secPlain}>
+        <div className={`container-x ${tPad}`}>
           <div className="max-w-3xl">
-            <h2>{data.whatWeBuy.title}</h2>
-            <p className="mt-4 text-lg text-ink-700 leading-relaxed">{data.whatWeBuy.body}</p>
+            <h2 className={hCls}>{data.whatWeBuy.title}</h2>
+            <p className={`mt-4 text-lg ${tBody} leading-relaxed`}>{data.whatWeBuy.body}</p>
           </div>
           {data.whatWeBuy.items.length > 0 && (
             <ul className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-4">
               {data.whatWeBuy.items.map((item, i) => (
-                <li key={i} className="flex items-start gap-3 text-ink-700">
+                <li key={i} className={`flex items-start gap-3 ${tBody}`}>
                   <Check className="h-5 w-5 text-brand-600 mt-0.5 shrink-0" />
                   <span className="leading-relaxed">{item}</span>
                 </li>
@@ -137,9 +155,9 @@ export function ServicePageTemplate({ data }: Props) {
 
       {/* HOW PRICING WORKS — omit when there are no pricing factors */}
       {data.howPrice.factors.length > 0 && (
-      <section className="bg-brand-50 border-y border-brand-100">
-        <div className="container-x py-16 md:py-24">
-          <SectionHeader
+      <section className={secBand}>
+        <div className={`container-x ${tPad}`}>
+          <Header
             label="Pricing factors"
             heading={data.howPrice.title}
             body={data.howPrice.body}
@@ -153,8 +171,8 @@ export function ServicePageTemplate({ data }: Props) {
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <div>
-                    <h3 className="text-lg">{f.title}</h3>
-                    <p className="mt-1 text-ink-700 leading-relaxed">{f.text}</p>
+                    <h3 className={`text-lg ${T ? T.text : ""}`.trimEnd()}>{f.title}</h3>
+                    <p className={`mt-1 ${tBody} leading-relaxed`}>{f.text}</p>
                   </div>
                 </li>
               ))}
@@ -166,14 +184,14 @@ export function ServicePageTemplate({ data }: Props) {
 
       {/* SCENARIOS / PERFECT FOR — omit when there are no scenario cards */}
       {data.scenarios.cards.length > 0 && (
-      <section className="bg-white">
-        <div className="container-x py-16 md:py-24">
-          <SectionHeader heading={data.scenarios.title} body={data.scenarios.intro} />
+      <section className={secPlain}>
+        <div className={`container-x ${tPad}`}>
+          <Header heading={data.scenarios.title} body={data.scenarios.intro} />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {data.scenarios.cards.map((c, i) => (
-              <div key={i} className="card-stead p-6">
-                <h4>{c.title}</h4>
-                <p className="mt-2 text-sm text-ink-500 leading-relaxed">{c.text}</p>
+              <div key={i} className={tCard}>
+                <h4 className={hCls}>{c.title}</h4>
+                <p className={`mt-2 text-sm ${tMuted} leading-relaxed`}>{c.text}</p>
               </div>
             ))}
           </div>
@@ -184,26 +202,26 @@ export function ServicePageTemplate({ data }: Props) {
       {/* PRICING DETAIL — omit when there are no ranges or notes */}
       {(data.pricing.notes.length > 0 ||
         (data.pricing.ranges?.length ?? 0) > 0) && (
-      <section className="bg-brand-50 border-y border-brand-100">
-        <div className="container-x py-16 md:py-24">
+      <section className={secBand}>
+        <div className={`container-x ${tPad}`}>
           <div className="max-w-3xl mx-auto text-center">
-            <h2>{data.pricing.title}</h2>
-            <p className="mt-4 text-lg text-ink-700 leading-relaxed">{data.pricing.body}</p>
+            <h2 className={hCls}>{data.pricing.title}</h2>
+            <p className={`mt-4 text-lg ${tBody} leading-relaxed`}>{data.pricing.body}</p>
           </div>
           {data.pricing.ranges && data.pricing.ranges.length > 0 && (
             <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl mx-auto">
               {data.pricing.ranges.map((r) => (
-                <div key={r.label} className="card-stead p-6 text-center">
-                  <p className="text-xs uppercase tracking-wider text-ink-500">{r.label}</p>
+                <div key={r.label} className={`${tCard} text-center`}>
+                  <p className={`text-xs uppercase tracking-wider ${tMuted}`}>{r.label}</p>
                   <p className="mt-2 font-display text-3xl text-brand-700">{r.range}</p>
                 </div>
               ))}
             </div>
           )}
           {data.pricing.notes.length > 0 && (
-            <ul className="mt-10 max-w-2xl mx-auto space-y-2 border-t border-brand-200 pt-6">
+            <ul className={`mt-10 max-w-2xl mx-auto space-y-2 border-t ${T?.border ?? "border-brand-200"} pt-6`}>
               {data.pricing.notes.map((n, i) => (
-                <li key={i} className="text-ink-700 leading-relaxed flex items-start gap-3">
+                <li key={i} className={`${tBody} leading-relaxed flex items-start gap-3`}>
                   <span aria-hidden className="text-brand-600 shrink-0">—</span>
                   <span>{n}</span>
                 </li>
@@ -216,11 +234,11 @@ export function ServicePageTemplate({ data }: Props) {
 
       {/* LOCAL CONTEXT (optional) */}
       {data.localContext && (
-        <section className="bg-white">
-          <div className="container-x py-16">
-            <div className="card-soft p-8 md:p-10 max-w-3xl mx-auto">
+        <section className={secPlain}>
+          <div className={`container-x ${T ? T.spacingY.split(" ")[0] : "py-16"}`}>
+            <div className={`${T ? `${T.card} ${T.cardRadius} border ${T.border}` : "card-soft"} p-8 md:p-10 max-w-3xl mx-auto`}>
               <span className="badge-pill bg-white border border-brand-100 text-brand-600">Local insight</span>
-              <h2 className="mt-3">
+              <h2 className={`mt-3 ${T ? T.text : ""}`.trimEnd()}>
                 {localTitleParts ? (
                   <>
                     {localTitleParts.lead}
@@ -233,7 +251,7 @@ export function ServicePageTemplate({ data }: Props) {
               </h2>
               <div className="mt-5 space-y-4">
                 {data.localContext.body.map((p, i) => (
-                  <p key={i} className="text-lg text-ink-700 leading-relaxed">{p}</p>
+                  <p key={i} className={`text-lg ${tBody} leading-relaxed`}>{p}</p>
                 ))}
               </div>
             </div>
@@ -243,15 +261,15 @@ export function ServicePageTemplate({ data }: Props) {
 
       {/* COVERAGE AREAS */}
       {data.coverage.areas.length > 0 && (
-        <section className="bg-white">
-          <div className="container-x py-16 md:py-24">
-            <SectionHeader heading={data.coverage.title} body={data.coverage.intro} />
+        <section className={secPlain}>
+          <div className={`container-x ${tPad}`}>
+            <Header heading={data.coverage.title} body={data.coverage.intro} />
             <div className="flex flex-wrap justify-center gap-2">
               {data.coverage.areas.map((a) => (
                 <Link
                   key={a.href}
                   to={a.href}
-                  className="badge-pill bg-white border border-ink-100 text-ink-700 hover:border-brand-600 hover:text-brand-600 normal-case tracking-normal text-sm"
+                  className={`badge-pill bg-white border ${T?.border ?? "border-ink-100"} ${tBody} hover:border-brand-600 hover:text-brand-600 normal-case tracking-normal text-sm`}
                 >
                   <MapPin className="h-3.5 w-3.5" /> {a.label}
                 </Link>
@@ -263,21 +281,21 @@ export function ServicePageTemplate({ data }: Props) {
 
       {/* TESTIMONIAL (optional) */}
       {data.testimonial && (
-        <section className="bg-brand-50 border-y border-brand-100">
-          <div className="container-x py-16">
+        <section className={secBand}>
+          <div className={`container-x ${T ? T.spacingY.split(" ")[0] : "py-16"}`}>
             <figure className="max-w-3xl mx-auto text-center">
               <div className="flex justify-center gap-0.5 mb-4">
                 {Array.from({ length: data.testimonial.rating ?? 5 }).map((_, i) => (
                   <Star key={i} className="h-5 w-5 text-yellow-400 fill-yellow-400" />
                 ))}
               </div>
-              <blockquote className="font-display text-2xl md:text-3xl text-ink-900 leading-snug">
+              <blockquote className={`font-display text-2xl md:text-3xl ${tStrong} leading-snug`}>
                 "{data.testimonial.text}"
               </blockquote>
-              <figcaption className="mt-6 text-ink-700">
+              <figcaption className={`mt-6 ${tBody}`}>
                 <span className="font-semibold">{data.testimonial.author}</span>
                 {data.testimonial.location && (
-                  <span className="text-ink-500"> · {data.testimonial.location}</span>
+                  <span className={tMuted}> · {data.testimonial.location}</span>
                 )}
               </figcaption>
             </figure>
@@ -290,17 +308,17 @@ export function ServicePageTemplate({ data }: Props) {
 
       {/* RELATED SERVICES */}
       {data.relatedServices.length > 0 && (
-        <section className="bg-brand-50 border-y border-brand-100">
-          <div className="container-x py-16 md:py-24">
-            <SectionHeader heading="You may also need" />
+        <section className={secBand}>
+          <div className={`container-x ${tPad}`}>
+            <Header heading="You may also need" />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
               {data.relatedServices.map((r) => (
                 <Link
                   key={r.href}
                   to={r.href}
-                  className="card-stead p-7 group hover:shadow-lg transition-all"
+                  className={T ? `${T.card} ${T.cardRadius} border ${T.border} p-7 group ${T.cardElevation}` : "card-stead p-7 group hover:shadow-lg transition-all"}
                 >
-                  <h4>{r.label}</h4>
+                  <h4 className={hCls}>{r.label}</h4>
                   <div className="mt-3 text-brand-600 font-semibold flex items-center gap-1 group-hover:gap-2 transition-all">
                     Explore <ArrowRight className="h-4 w-4" />
                   </div>

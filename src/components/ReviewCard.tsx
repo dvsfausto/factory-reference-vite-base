@@ -1,4 +1,5 @@
 import { Star, Quote } from "lucide-react";
+import { resolveCharacterTokens } from "~/lib/character-tokens";
 import type { Review } from "~/lib/types/page-types";
 
 const PLATFORM_COLORS: Record<
@@ -13,8 +14,18 @@ const PLATFORM_COLORS: Record<
 };
 
 export function ReviewCard({ review }: { review: Review }) {
+  // Character tokens (see character-tokens.ts). null → known verticals keep the
+  // literals verbatim (byte-identical — SHARED component). brand watermark + rating
+  // stars + source chips stay per decision (brand/semantic accents not tokenized).
+  const T = resolveCharacterTokens();
+  const tCard = T ? `${T.card} ${T.cardRadius} border ${T.border} ${T.cardElevation}` : "card-stead";
+  const tBody = T?.text ?? "text-ink-700";
+  const tStrong = T?.text ?? "text-ink-900";
+  const tMuted = T?.muted ?? "text-ink-500";
+  const tBorder = T ? T.border : "border-ink-100";
+
   return (
-    <div className="card-stead p-7 h-full flex flex-col relative overflow-hidden">
+    <div className={`${tCard} p-7 h-full flex flex-col relative overflow-hidden`}>
       <Quote className="absolute -top-2 -right-2 h-20 w-20 text-brand-50" strokeWidth={1} />
       <div className="flex items-start justify-between mb-3 relative">
         <div className="flex gap-0.5">
@@ -28,16 +39,16 @@ export function ReviewCard({ review }: { review: Review }) {
           </span>
         )}
       </div>
-      <p className="text-ink-700 leading-relaxed flex-1 relative font-sans-body not-italic text-lg">"{review.text}"</p>
-      <div className="mt-5 pt-4 border-t border-ink-100 text-sm">
-        <div className="font-semibold text-ink-900">
+      <p className={`${tBody} leading-relaxed flex-1 relative font-sans-body not-italic text-lg`}>"{review.text}"</p>
+      <div className={`mt-5 pt-4 border-t ${tBorder} text-sm`}>
+        <div className={`font-semibold ${tStrong}`}>
           {review.author}
           {review.location && (
-            <span className="text-ink-500 font-normal"> · {review.location}</span>
+            <span className={`${tMuted} font-normal`}> · {review.location}</span>
           )}
         </div>
         {(review.service || review.date) && (
-          <div className="text-xs text-ink-500 mt-0.5">
+          <div className={`text-xs ${tMuted} mt-0.5`}>
             {[review.service, review.date].filter(Boolean).join(" · ")}
           </div>
         )}
