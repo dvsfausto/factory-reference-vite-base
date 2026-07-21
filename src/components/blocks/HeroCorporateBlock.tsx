@@ -21,9 +21,21 @@ import { imageSrc } from '~/lib/asset-url'
 // `trustItems` is repurposed as the CREDENTIALS row. Returns an Element (no null).
 export function HeroCorporateBlock({
   trustItems = ['Free estimates', 'On schedule', 'Local team', 'Satisfaction guaranteed'],
+  headline = SITE.hero.headline,
+  body = SITE.hero.body,
+  imageUrl = SITE.hero.image_url,
+  kicker = SITE.hero.kicker,
+  subheadline = SITE.hero.subheadline,
+  ctaLabel = SITE.hero.cta_primary_label,
 }: {
   trustItems?: string[]
   decorativeAsset?: string
+  headline?: string
+  body?: string
+  imageUrl?: string
+  kicker?: string
+  subheadline?: string
+  ctaLabel?: string
 }) {
   return (
     <section className="bg-white">
@@ -37,21 +49,21 @@ export function HeroCorporateBlock({
           >
             <span className="inline-flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.16em] text-emerald-600">
               <span className="h-0.5 w-7 bg-emerald-600" />
-              {SITE.hero.kicker}
+              {kicker}
             </span>
 
             <h1 className="mt-4 font-display text-4xl font-bold leading-[1.08] tracking-tight text-[#1A2433] sm:text-5xl lg:text-6xl">
-              {SITE.hero.headline}
+              {headline}
             </h1>
 
-            {SITE.hero.subheadline && (
+            {subheadline && (
               <p className="mt-4 text-xl leading-relaxed text-[#5A6678]">
-                {SITE.hero.subheadline}
+                {subheadline}
               </p>
             )}
 
             <p className="mt-4 max-w-xl text-lg leading-relaxed text-[#5A6678]">
-              {SITE.hero.body}
+              {body}
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
@@ -59,7 +71,7 @@ export function HeroCorporateBlock({
                 to="/contact"
                 className="inline-flex h-[52px] items-center gap-2 rounded-md bg-primary px-7 font-display text-base font-semibold text-primary-foreground transition-opacity hover:opacity-90"
               >
-                {SITE.hero.cta_primary_label} <ArrowRight className="h-4 w-4" />
+                {ctaLabel} <ArrowRight className="h-4 w-4" />
               </Link>
               <a
                 href={`tel:${SITE.phone}`}
@@ -79,7 +91,7 @@ export function HeroCorporateBlock({
           >
             <div className="overflow-hidden rounded-lg border border-[#D8DEE7] shadow-sm">
               <img
-                src={imageSrc(SITE.hero.image_url)}
+                src={imageSrc(imageUrl)}
                 alt={HERO_ALT}
                 className="aspect-[4/3] w-full object-cover"
               />
