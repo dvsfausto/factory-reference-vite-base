@@ -37,7 +37,7 @@ export function ServicePageTemplate({ data }: Props) {
   });
   const characterCta = renderCharacterCta({
     title: "Ready when you are.",
-    subtitle: "Get a free quote and we'll be in touch within a business day.",
+    subtitle: "Tell us what you need and we'll be in touch within a business day.",
   });
 
   // Character tokens for the shared MIDDLE sections. null → known verticals keep the
@@ -105,7 +105,7 @@ export function ServicePageTemplate({ data }: Props) {
               )}
               <div className="mt-7 flex flex-wrap gap-3">
                 <Link to="/contact" className="btn btn-lg btn-primary">
-                  Get Free Quote <ArrowRight className="h-4 w-4" />
+                  {((SITE as { ctaLabel?: string }).ctaLabel ?? "Get Free Quote") + " "}<ArrowRight className="h-4 w-4" />
                 </Link>
                 <a href={`tel:${SITE.phone}`} className="btn btn-lg btn-secondary">
                   <Phone className="h-4 w-4" /> {SITE.phoneDisplay}

@@ -229,7 +229,7 @@ export function Header() {
   const themeKey =
     character === "elegant" && surface !== "dark" ? "elegant-light" : character;
   const t = HEADER_THEMES[themeKey] ?? HEADER_THEMES.default;
-  const headerCtaLabel = ((SITE as { headerCtaLabel?: string }).headerCtaLabel ?? t.ctaLabel);
+  const headerCtaLabel = ((SITE as { headerCtaLabel?: string; ctaLabel?: string }).headerCtaLabel ?? (SITE as { ctaLabel?: string }).ctaLabel ?? t.ctaLabel);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);

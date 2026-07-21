@@ -16,7 +16,7 @@ export function CTASection({
   title = "Ready to get started?",
   subtitle,
   to = "/contact",
-  label = "Get Free Quote",
+  label = (SITE as { ctaLabel?: string }).ctaLabel ?? "Get Free Quote",
   decorativeAsset = defaultLeaves,
   showSparkleBadge = true,
 }: Props) {

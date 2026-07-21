@@ -253,7 +253,10 @@ function renderBlock(block: LayoutBlock) {
       return (
         <HeroComponent
           key="hero"
-          trustItems={block.params?.trustItems as string[] | undefined}
+          trustItems={
+            (block.params?.trustItems as string[] | undefined) ??
+            (SITE as { trustItems?: { title: string }[] }).trustItems?.map((t) => t.title)
+          }
           decorativeAsset={block.params?.decorativeAsset as string | undefined}
         />
       )
@@ -273,9 +276,10 @@ function renderBlock(block: LayoutBlock) {
         <TrustComponent
           key="trustBar"
           items={
-            block.params?.items as
+            (block.params?.items as
               | { title: string; description: string }[]
-              | undefined
+              | undefined) ??
+            (SITE as { trustItems?: { title: string; description: string }[] }).trustItems
           }
         />
       )

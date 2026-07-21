@@ -11,7 +11,7 @@ import { Field, Textarea, SubmitButton, SuccessCard } from './form-ui'
 // 50/100/600/700. Radius -> rounded-* (DNA). Font -> font-display (DNA). Dark
 // header panel (slate-950) component-owned. Never bg-brand-* / .btn.
 export function FormQuoteBlock({
-  label = 'Free quote',
+  label = (SITE as { ctaLabel?: string }).ctaLabel ?? 'Free quote',
   heading = 'Request a quote',
   body = 'Tell us about the project and we respond within one business day.',
 }: {
