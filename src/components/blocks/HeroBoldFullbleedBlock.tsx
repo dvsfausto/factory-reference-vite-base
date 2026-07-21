@@ -23,20 +23,35 @@ import { imageSrc } from '~/lib/asset-url'
 //   · DNA font (→ Oswald) → font-display on the headline + CTA label.
 //   · Neutrals → ink-* / white on the dark full-bleed surface.
 //
-// Props are identical to HeroBlock so the homepage render path threads them the
-// same way. `decorativeAsset` is accepted for prop parity but intentionally
-// unused — this composition carries no decorative sprite.
+// CONTENT is PROPS with SITE fallback (F.inner): the homepage renders this with no
+// content props → every field defaults to SITE.hero.* (byte-identical to before).
+// Inner pages (service/area templates) pass PER-PAGE content (their own title,
+// body, image) so the SAME character hero renders that page's content, not the
+// homepage's. SITE.phone/phoneDisplay stay site-level (same business everywhere).
+// `decorativeAsset` is accepted for prop parity but intentionally unused here.
 export function HeroBoldFullbleedBlock({
   trustItems = ['Free estimates', 'On schedule', 'Local team', 'Satisfaction guaranteed'],
+  headline = SITE.hero.headline,
+  body = SITE.hero.body,
+  imageUrl = SITE.hero.image_url,
+  kicker = SITE.hero.kicker,
+  subheadline = SITE.hero.subheadline,
+  ctaLabel = SITE.hero.cta_primary_label,
 }: {
   trustItems?: string[]
   decorativeAsset?: string
+  headline?: string
+  body?: string
+  imageUrl?: string
+  kicker?: string
+  subheadline?: string
+  ctaLabel?: string
 }) {
   return (
     <section className="relative isolate flex flex-col overflow-hidden bg-ink-900 text-white">
       {/* Full-bleed jobsite/build photo — "we build things", not a boutique. */}
       <img
-        src={imageSrc(SITE.hero.image_url)}
+        src={imageSrc(imageUrl)}
         alt={HERO_ALT}
         className="absolute inset-0 -z-20 h-full w-full object-cover"
       />
@@ -53,22 +68,22 @@ export function HeroBoldFullbleedBlock({
           {/* Eyebrow: a solid steel-blue block + the kicker — blocky, not dainty. */}
           <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] text-ink-100">
             <span className="inline-block h-3 w-3 bg-emerald-600" />
-            {SITE.hero.kicker}
+            {kicker}
           </span>
 
           {/* Heavy UPPERCASE Oswald headline — the whole line, no script split. */}
           <h1 className="mt-5 font-display text-5xl font-bold uppercase leading-[0.95] tracking-tight text-white sm:text-6xl lg:text-7xl">
-            {SITE.hero.headline}
+            {headline}
           </h1>
 
-          {SITE.hero.subheadline && (
+          {subheadline && (
             <p className="mt-5 font-display text-xl uppercase tracking-wide text-emerald-100">
-              {SITE.hero.subheadline}
+              {subheadline}
             </p>
           )}
 
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink-100/85">
-            {SITE.hero.body}
+            {body}
           </p>
 
           <div className="mt-9 flex flex-wrap gap-4">
@@ -81,7 +96,7 @@ export function HeroBoldFullbleedBlock({
               to="/contact"
               className="inline-flex h-[54px] items-center gap-2 rounded-md bg-primary px-8 font-display text-base font-semibold uppercase tracking-wide text-primary-foreground transition-opacity hover:opacity-90"
             >
-              {SITE.hero.cta_primary_label} <ArrowRight className="h-4 w-4" />
+              {ctaLabel} <ArrowRight className="h-4 w-4" />
             </Link>
             {/* Secondary CTA: outline phone, same square structural corners. */}
             <a

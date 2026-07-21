@@ -16,12 +16,28 @@ import { imageSrc } from '~/lib/asset-url'
 // TOKEN DISCIPLINE: primary CTA → bg-primary / text-primary-foreground (brand-
 // owned). Accent → emerald-* (DNA). Radius → rounded-* (DNA). Font → font-display
 // (DNA serif). Surface neutrals component-owned per mode. No bg-brand-*/.btn-
-// primary/.btn. Props identical to HeroBlock; returns an Element (no null).
+// primary/.btn. Returns an Element (no null).
+//
+// CONTENT is PROPS with SITE fallback (F.inner): homepage passes no content props
+// → defaults to SITE.hero.* (byte-identical). Inner pages pass PER-PAGE content.
+// SITE.phone/phoneDisplay stay site-level.
 export function HeroElegantBlock({
   trustItems = ['Free estimates', 'On schedule', 'Local team', 'Satisfaction guaranteed'],
+  headline = SITE.hero.headline,
+  body = SITE.hero.body,
+  imageUrl = SITE.hero.image_url,
+  kicker = SITE.hero.kicker,
+  subheadline = SITE.hero.subheadline,
+  ctaLabel = SITE.hero.cta_primary_label,
 }: {
   trustItems?: string[]
   decorativeAsset?: string
+  headline?: string
+  body?: string
+  imageUrl?: string
+  kicker?: string
+  subheadline?: string
+  ctaLabel?: string
 }) {
   const dark = (SITE as { surface?: string }).surface === 'dark'
 
@@ -30,7 +46,7 @@ export function HeroElegantBlock({
       <section className="relative isolate flex flex-col overflow-hidden bg-[#1A1410] text-[#F2E8DC]">
         {/* Full-bleed lounge photo under a warm espresso scrim — low-light, intimate. */}
         <img
-          src={imageSrc(SITE.hero.image_url)}
+          src={imageSrc(imageUrl)}
           alt={HERO_ALT}
           className="absolute inset-0 -z-20 h-full w-full object-cover"
         />
@@ -45,22 +61,22 @@ export function HeroElegantBlock({
           >
             <span className="inline-flex items-center gap-3 text-xs font-medium uppercase tracking-[0.3em] text-emerald-600">
               <span className="h-px w-8 bg-emerald-600" />
-              {SITE.hero.kicker}
+              {kicker}
             </span>
 
             {/* Refined serif headline — title-case, generous, unhurried. */}
             <h1 className="mt-6 font-display text-5xl font-medium leading-[1.05] tracking-tight text-[#F2E8DC] sm:text-6xl lg:text-7xl">
-              {SITE.hero.headline}
+              {headline}
             </h1>
 
-            {SITE.hero.subheadline && (
+            {subheadline && (
               <p className="mt-5 font-display text-2xl italic leading-snug text-emerald-100">
-                {SITE.hero.subheadline}
+                {subheadline}
               </p>
             )}
 
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-[#B8A893]">
-              {SITE.hero.body}
+              {body}
             </p>
 
             <div className="mt-10 flex flex-wrap gap-4">
@@ -68,7 +84,7 @@ export function HeroElegantBlock({
                 to="/contact"
                 className="inline-flex h-[54px] items-center gap-2 rounded-lg bg-primary px-8 font-display text-base font-medium tracking-wide text-primary-foreground transition-opacity hover:opacity-90"
               >
-                {SITE.hero.cta_primary_label} <ArrowRight className="h-4 w-4" />
+                {ctaLabel} <ArrowRight className="h-4 w-4" />
               </Link>
               <a
                 href={`tel:${SITE.phone}`}
@@ -104,21 +120,21 @@ export function HeroElegantBlock({
           >
             <span className="inline-flex items-center gap-3 text-xs font-medium uppercase tracking-[0.3em] text-emerald-700">
               <span className="h-px w-8 bg-emerald-600" />
-              {SITE.hero.kicker}
+              {kicker}
             </span>
 
             <h1 className="mt-6 font-display text-5xl font-medium leading-[1.05] tracking-tight text-[#2B2620] sm:text-6xl">
-              {SITE.hero.headline}
+              {headline}
             </h1>
 
-            {SITE.hero.subheadline && (
+            {subheadline && (
               <p className="mt-5 font-display text-2xl italic leading-snug text-emerald-700">
-                {SITE.hero.subheadline}
+                {subheadline}
               </p>
             )}
 
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-[#8A7E6E]">
-              {SITE.hero.body}
+              {body}
             </p>
 
             <div className="mt-10 flex flex-wrap gap-4">
@@ -126,7 +142,7 @@ export function HeroElegantBlock({
                 to="/contact"
                 className="inline-flex h-[54px] items-center gap-2 rounded-lg bg-primary px-8 font-display text-base font-medium tracking-wide text-primary-foreground transition-opacity hover:opacity-90"
               >
-                {SITE.hero.cta_primary_label} <ArrowRight className="h-4 w-4" />
+                {ctaLabel} <ArrowRight className="h-4 w-4" />
               </Link>
               <a
                 href={`tel:${SITE.phone}`}
@@ -153,7 +169,7 @@ export function HeroElegantBlock({
           >
             <div className="overflow-hidden rounded-2xl border border-[#E7DCC9] shadow-xl">
               <img
-                src={imageSrc(SITE.hero.image_url)}
+                src={imageSrc(imageUrl)}
                 alt={HERO_ALT}
                 className="aspect-[4/3] w-full object-cover"
               />

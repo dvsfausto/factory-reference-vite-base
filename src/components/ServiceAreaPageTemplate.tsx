@@ -4,6 +4,7 @@ import { Breadcrumbs } from "./Breadcrumbs";
 import { FAQSection } from "./FAQSection";
 import { CTASection } from "./CTASection";
 import { SectionHeader } from "./SectionHeader";
+import { renderCharacterHero, renderCharacterCta } from "./CharacterHero";
 import { ReviewCard } from "./ReviewCard";
 import { areaImageUrl, areaAlt, serviceImageUrl } from "~/data/images";
 import { SERVICES } from "~/data/services";
@@ -37,9 +38,45 @@ export function ServiceAreaPageTemplate({ data }: Props) {
     ? matchingReviews.slice(0, 3)
     : reviews.slice(0, 3);
 
+  // Character hero/CTA (generic vertical only). Per-page content: this area's OWN
+  // name + OWN image. subheadline="" suppresses the homepage subheadline. null for
+  // known verticals → bespoke area hero (byte-identical).
+  const characterHero = renderCharacterHero({
+    headline: data.name,
+    body: data.hero.subhead,
+    imageUrl: areaImageUrl(data.slug),
+    subheadline: "",
+  });
+  const characterCta = renderCharacterCta({
+    title: `Working in ${data.name}?`,
+    subtitle: "We'll respond within a business day with a free quote.",
+  });
+
   return (
     <>
-      {/* HERO */}
+      {/* HERO — character variant (generic vertical) rendering THIS area's own name
+          + own image, else the bespoke area hero (known verticals, byte-identical).
+          Breadcrumbs relocate ABOVE the character hero (SSR/SEO); the zipCodes badge
+          relocates just below it so it stays visible. */}
+      {characterHero ? (
+        <>
+          <nav aria-label="Breadcrumb" className="container-x pt-8 md:pt-10">
+            <Breadcrumbs items={[
+              { label: "Home", to: "/" },
+              { label: "Areas", to: "/areas" },
+              { label: data.name },
+            ]} />
+          </nav>
+          {characterHero}
+          {data.zipCodes && data.zipCodes.length > 0 && (
+            <div className="container-x">
+              <span className="badge-pill bg-white border border-brand-100 text-brand-600">
+                <MapPin className="h-3.5 w-3.5" /> {data.zipCodes.join(" · ")}
+              </span>
+            </div>
+          )}
+        </>
+      ) : (
       <section className="relative overflow-hidden bg-gradient-to-b from-brand-50 via-white to-white">
         <img src={leaves} alt="" aria-hidden className="hidden md:block absolute -left-10 top-10 h-[80%] opacity-50 pointer-events-none select-none" />
         <img src={leaves} alt="" aria-hidden className="hidden md:block absolute -right-10 bottom-0 h-[60%] opacity-40 pointer-events-none select-none rotate-180" />
@@ -90,6 +127,7 @@ export function ServiceAreaPageTemplate({ data }: Props) {
           </div>
         </div>
       </section>
+      )}
 
       {/* AT A GLANCE / ABOUT — omit when there's no about body */}
       {data.about.body.length > 0 && (
@@ -239,10 +277,12 @@ export function ServiceAreaPageTemplate({ data }: Props) {
         </section>
       )}
 
-      <CTASection
-        title={`Working in ${data.name}?`}
-        subtitle="We'll respond within a business day with a free quote."
-      />
+      {characterCta ?? (
+        <CTASection
+          title={`Working in ${data.name}?`}
+          subtitle="We'll respond within a business day with a free quote."
+        />
+      )}
     </>
   );
 }

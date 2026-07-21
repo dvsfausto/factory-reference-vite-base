@@ -20,9 +20,21 @@ import { imageSrc } from '~/lib/asset-url'
 // Returns an Element (no null), matching HeroBlock.
 export function HeroModernBlock({
   trustItems = ['Free estimates', 'On schedule', 'Local team', 'Satisfaction guaranteed'],
+  headline = SITE.hero.headline,
+  body = SITE.hero.body,
+  imageUrl = SITE.hero.image_url,
+  kicker = SITE.hero.kicker,
+  subheadline = SITE.hero.subheadline,
+  ctaLabel = SITE.hero.cta_primary_label,
 }: {
   trustItems?: string[]
   decorativeAsset?: string
+  headline?: string
+  body?: string
+  imageUrl?: string
+  kicker?: string
+  subheadline?: string
+  ctaLabel?: string
 }) {
   return (
     <section className="bg-white">
@@ -35,21 +47,21 @@ export function HeroModernBlock({
           >
             <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600">
               <span className="h-px w-6 bg-emerald-600" />
-              {SITE.hero.kicker}
+              {kicker}
             </span>
 
             <h1 className="mt-6 font-display text-5xl font-semibold leading-[1.05] tracking-tight text-[#0F172A] sm:text-6xl">
-              {SITE.hero.headline}
+              {headline}
             </h1>
 
-            {SITE.hero.subheadline && (
+            {subheadline && (
               <p className="mt-5 text-xl leading-relaxed text-[#64748B]">
-                {SITE.hero.subheadline}
+                {subheadline}
               </p>
             )}
 
             <p className="mt-5 max-w-xl text-lg leading-relaxed text-[#64748B]">
-              {SITE.hero.body}
+              {body}
             </p>
 
             <div className="mt-9 flex flex-wrap gap-4">
@@ -57,7 +69,7 @@ export function HeroModernBlock({
                 to="/contact"
                 className="inline-flex h-[52px] items-center gap-2 rounded-xl bg-primary px-7 font-display text-base font-semibold text-primary-foreground transition-opacity hover:opacity-90"
               >
-                {SITE.hero.cta_primary_label} <ArrowRight className="h-4 w-4" />
+                {ctaLabel} <ArrowRight className="h-4 w-4" />
               </Link>
               <a
                 href={`tel:${SITE.phone}`}
@@ -86,7 +98,7 @@ export function HeroModernBlock({
           >
             <div className="overflow-hidden rounded-2xl border border-[#E6E8EC] shadow-sm">
               <img
-                src={imageSrc(SITE.hero.image_url)}
+                src={imageSrc(imageUrl)}
                 alt={HERO_ALT}
                 className="aspect-[4/3] w-full object-cover"
               />

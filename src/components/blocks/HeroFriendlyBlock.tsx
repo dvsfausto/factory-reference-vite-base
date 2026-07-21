@@ -22,9 +22,21 @@ import { imageSrc } from '~/lib/asset-url'
 // for parity but unused. Returns an Element (no null), matching HeroBlock.
 export function HeroFriendlyBlock({
   trustItems = ['Free estimates', 'On schedule', 'Local team', 'Satisfaction guaranteed'],
+  headline = SITE.hero.headline,
+  body = SITE.hero.body,
+  imageUrl = SITE.hero.image_url,
+  kicker = SITE.hero.kicker,
+  subheadline = SITE.hero.subheadline,
+  ctaLabel = SITE.hero.cta_primary_label,
 }: {
   trustItems?: string[]
   decorativeAsset?: string
+  headline?: string
+  body?: string
+  imageUrl?: string
+  kicker?: string
+  subheadline?: string
+  ctaLabel?: string
 }) {
   return (
     <section className="bg-[#FFFBF5]">
@@ -37,21 +49,21 @@ export function HeroFriendlyBlock({
           >
             <span className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.14em] text-emerald-700">
               <span className="h-2.5 w-2.5 rounded-full bg-emerald-600" />
-              {SITE.hero.kicker}
+              {kicker}
             </span>
 
             <h1 className="mt-5 font-display text-5xl font-bold leading-[1.05] tracking-tight text-[#3D3530] sm:text-6xl">
-              {SITE.hero.headline}
+              {headline}
             </h1>
 
-            {SITE.hero.subheadline && (
+            {subheadline && (
               <p className="mt-4 font-display text-2xl font-medium text-emerald-700">
-                {SITE.hero.subheadline}
+                {subheadline}
               </p>
             )}
 
             <p className="mt-5 max-w-xl text-lg leading-relaxed text-[#7A6F66]">
-              {SITE.hero.body}
+              {body}
             </p>
 
             <div className="mt-8 flex flex-wrap gap-4">
@@ -59,7 +71,7 @@ export function HeroFriendlyBlock({
                 to="/contact"
                 className="inline-flex h-[54px] items-center gap-2 rounded-2xl bg-primary px-8 font-display text-base font-semibold text-primary-foreground shadow-lg transition-opacity hover:opacity-90"
               >
-                {SITE.hero.cta_primary_label} <ArrowRight className="h-4 w-4" />
+                {ctaLabel} <ArrowRight className="h-4 w-4" />
               </Link>
               <a
                 href={`tel:${SITE.phone}`}
@@ -91,7 +103,7 @@ export function HeroFriendlyBlock({
           >
             <div className="overflow-hidden rounded-3xl border border-[#F0E6DA] shadow-xl">
               <img
-                src={imageSrc(SITE.hero.image_url)}
+                src={imageSrc(imageUrl)}
                 alt={HERO_ALT}
                 className="aspect-[4/3] w-full object-cover"
               />

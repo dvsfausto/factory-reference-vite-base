@@ -4,6 +4,7 @@ import { Breadcrumbs } from "./Breadcrumbs";
 import { FAQSection } from "./FAQSection";
 import { CTASection } from "./CTASection";
 import { SectionHeader } from "./SectionHeader";
+import { renderCharacterHero, renderCharacterCta } from "./CharacterHero";
 import { serviceImageUrl } from "~/data/images";
 import { SITE } from "~/data/site";
 import leaves from "~/assets/decorative/cleaning-leaves.png";
@@ -24,9 +25,44 @@ export function ServicePageTemplate({ data }: Props) {
   const localTitle = data.localContext?.title;
   const localTitleParts = localTitle ? splitScriptAccent(localTitle) : null;
 
+  // Character hero/CTA (generic vertical only). Per-page content: this service's
+  // OWN title + OWN image (NOT the homepage's). subheadline="" suppresses the
+  // homepage subheadline on the inner page. null for known verticals → bespoke.
+  const characterHero = renderCharacterHero({
+    headline: data.title,
+    body: data.hero.subhead,
+    imageUrl: serviceImageUrl(data.slug),
+    subheadline: "",
+  });
+  const characterCta = renderCharacterCta({
+    title: "Ready when you are.",
+    subtitle: "Get a free quote and we'll be in touch within a business day.",
+  });
+
   return (
     <>
-      {/* HERO */}
+      {/* HERO — character variant (generic vertical) rendering THIS service's own
+          title + own image, else the bespoke service hero (known verticals, byte-
+          identical). Breadcrumbs relocate ABOVE the character hero (it has no
+          breadcrumb slot) so the nav/SEO hierarchy stays in the SSR'd DOM;
+          data.hero.trustLine renders just below it so it stays visible. */}
+      {characterHero ? (
+        <>
+          <nav aria-label="Breadcrumb" className="container-x pt-8 md:pt-10">
+            <Breadcrumbs items={[
+              { label: "Home", to: "/" },
+              { label: "Services", to: "/services" },
+              { label: data.title },
+            ]} />
+          </nav>
+          {characterHero}
+          {data.hero.trustLine && (
+            <div className="container-x">
+              <p className="py-4 text-sm text-ink-500">{data.hero.trustLine}</p>
+            </div>
+          )}
+        </>
+      ) : (
       <section className="relative overflow-hidden bg-gradient-to-b from-brand-50 via-white to-white">
         <img src={leaves} alt="" aria-hidden className="hidden md:block absolute -left-10 top-10 h-[80%] opacity-50 pointer-events-none select-none" />
         <img src={leaves} alt="" aria-hidden className="hidden md:block absolute -right-10 bottom-0 h-[60%] opacity-40 pointer-events-none select-none rotate-180" />
@@ -75,6 +111,7 @@ export function ServicePageTemplate({ data }: Props) {
           </div>
         </div>
       </section>
+      )}
 
       {/* WHAT WE COVER — omit when the section has no items */}
       {data.whatWeBuy.items.length > 0 && (
@@ -274,10 +311,12 @@ export function ServicePageTemplate({ data }: Props) {
         </section>
       )}
 
-      <CTASection
-        title="Ready when you are."
-        subtitle="Get a free quote and we'll be in touch within a business day."
-      />
+      {characterCta ?? (
+        <CTASection
+          title="Ready when you are."
+          subtitle="Get a free quote and we'll be in touch within a business day."
+        />
+      )}
     </>
   );
 }
