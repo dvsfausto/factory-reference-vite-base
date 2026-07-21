@@ -294,7 +294,11 @@ export function ServiceAreaPageTemplate({ data }: Props) {
       {characterCta ?? (
         <CTASection
           title={`Working in ${data.name}?`}
-          subtitle="We'll respond within a business day with a free quote."
+          subtitle={
+            (SITE as { ctaLabel?: string }).ctaLabel
+              ? "We'll respond within a business day."
+              : "We'll respond within a business day with a free quote."
+          }
         />
       )}
     </>

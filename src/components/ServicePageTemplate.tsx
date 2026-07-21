@@ -332,7 +332,11 @@ export function ServicePageTemplate({ data }: Props) {
       {characterCta ?? (
         <CTASection
           title="Ready when you are."
-          subtitle="Get a free quote and we'll be in touch within a business day."
+          subtitle={
+            (SITE as { ctaLabel?: string }).ctaLabel
+              ? "Tell us what you need and we'll be in touch within a business day."
+              : "Get a free quote and we'll be in touch within a business day."
+          }
         />
       )}
     </>

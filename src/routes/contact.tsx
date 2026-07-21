@@ -7,7 +7,9 @@ export const Route = createFileRoute('/contact')({
   head: () =>
     buildMeta({
       title: `Contact ${SITE.name}`,
-      description: `Get a free quote from ${SITE.name}.`,
+      description: (SITE as { ctaLabel?: string }).ctaLabel
+        ? `Contact ${SITE.name} — we'll reply within a business day.`
+        : `Get a free quote from ${SITE.name}.`,
       path: '/contact',
     }),
   component: ContactPage,
@@ -22,7 +24,9 @@ function ContactPage() {
             Get in touch
           </h1>
           <p className="mt-4 text-lg leading-relaxed text-slate-700">
-            We reply within a business day to every quote request.
+            {(SITE as { ctaLabel?: string }).ctaLabel
+              ? "We reply within a business day to every message."
+              : "We reply within a business day to every quote request."}
           </p>
           <div className="mt-8">
             <LeadForm />

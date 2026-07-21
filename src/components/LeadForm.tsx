@@ -36,9 +36,9 @@ interface LeadEnvelope {
 }
 
 export function LeadForm({
-  heading = 'Get a free quote',
+  heading = (SITE as { ctaLabel?: string }).ctaLabel ?? 'Get a free quote',
   sublabel = "We'll reply within a business day.",
-  submitLabel = 'Request a quote',
+  submitLabel = (SITE as { ctaLabel?: string }).ctaLabel ?? 'Request a quote',
   formType = 'lead_form',
 }: Props) {
   const [form, setForm] = useState<FormState>(INITIAL)
