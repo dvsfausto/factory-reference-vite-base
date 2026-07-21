@@ -1,12 +1,13 @@
 import { Link } from "@tanstack/react-router";
 import { Sparkles } from "lucide-react";
+import { SITE } from "~/data/site";
 
 type Props = {
   to?: string;
   label?: string;
 };
 
-export function FloatingCTA({ to = "/contact", label = "Free Quote" }: Props) {
+export function FloatingCTA({ to = "/contact", label = (SITE as { ctaLabel?: string }).ctaLabel ?? "Free Quote" }: Props) {
   return (
     <Link
       to={to}

@@ -67,7 +67,14 @@ export function renderCharacterHero(props: CharacterHeroProps): ReactElement | n
   if (!character) return null
   const Hero = HERO_BY_CHARACTER[character]
   if (!Hero) return null
-  return <Hero {...props} />
+  // Inner-page character hero trust row: default to SITE.trustItems (titles) when the
+  // caller doesn't pass its own, so the generic vertical's neutral trust copy carries
+  // instead of the hero variant's trade-flavored literals. null-character path above
+  // means known verticals never reach here (byte-identical).
+  const trustItems =
+    props.trustItems ??
+    (SITE as { trustItems?: { title: string }[] }).trustItems?.map((t) => t.title)
+  return <Hero {...props} trustItems={trustItems} />
 }
 
 /** Render the character CTA (title/subtitle already have a SITE.homeCta fallback),

@@ -50,7 +50,7 @@ export function ServiceAreaPageTemplate({ data }: Props) {
   });
   const characterCta = renderCharacterCta({
     title: `Working in ${data.name}?`,
-    subtitle: "We'll respond within a business day with a free quote.",
+    subtitle: "We'll respond within a business day.",
   });
 
   // Character tokens for the shared middle sections (see character-tokens.ts). null →
@@ -117,7 +117,7 @@ export function ServiceAreaPageTemplate({ data }: Props) {
               </p>
               <div className="mt-7 flex flex-wrap gap-3">
                 <Link to="/contact" className="btn btn-lg btn-primary">
-                  Get Free Quote <ArrowRight className="h-4 w-4" />
+                  {((SITE as { ctaLabel?: string }).ctaLabel ?? "Get Free Quote") + " "}<ArrowRight className="h-4 w-4" />
                 </Link>
                 <a href={`tel:${SITE.phone}`} className="btn btn-lg btn-secondary">
                   <Phone className="h-4 w-4" /> {SITE.phoneDisplay}
