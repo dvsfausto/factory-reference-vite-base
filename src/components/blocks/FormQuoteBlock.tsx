@@ -12,8 +12,10 @@ import { Field, Textarea, SubmitButton, SuccessCard } from './form-ui'
 // header panel (slate-950) component-owned. Never bg-brand-* / .btn.
 export function FormQuoteBlock({
   label = (SITE as { ctaLabel?: string }).ctaLabel ?? 'Free quote',
-  heading = 'Request a quote',
-  body = 'Tell us about the project and we respond within one business day.',
+  heading = (SITE as { ctaLabel?: string }).ctaLabel ? 'Tell us what you need' : 'Request a quote',
+  body = (SITE as { ctaLabel?: string }).ctaLabel
+    ? "Tell us what you need and we'll respond within one business day."
+    : 'Tell us about the project and we respond within one business day.',
 }: {
   label?: string
   heading?: string
