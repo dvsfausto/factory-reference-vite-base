@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Menu, X, Phone, ChevronDown } from "lucide-react";
 import { Logo } from "./Logo";
 import { SITE } from "~/data/site";
-import { SERVICES } from "~/data/services";
+import { SERVICES } from "~/data/services-view";
 import { AREAS } from "~/data/areas";
 
 // Character-aware root header. The shell sees SITE (not the homepage layout), so

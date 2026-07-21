@@ -1,7 +1,7 @@
 import { Link } from '@tanstack/react-router'
 import { ArrowRight } from 'lucide-react'
 import { SITE } from '~/data/site'
-import { SERVICES } from '~/data/services'
+import { SERVICES } from '~/data/services-view'
 
 // ServicesPreview LAYOUT: 'list' — an editorial, type-forward index: each service
 // is a hairline-separated row with an ordinal, a large display name, a blurb, and

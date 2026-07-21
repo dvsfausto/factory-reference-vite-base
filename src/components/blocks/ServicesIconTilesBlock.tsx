@@ -12,7 +12,7 @@ import {
   type LucideIcon,
 } from 'lucide-react'
 import { SITE } from '~/data/site'
-import { SERVICES } from '~/data/services'
+import { SERVICES } from '~/data/services-view'
 
 // ServicesPreview LAYOUT: 'icon-tiles' — icon + title + blurb tiles, NO photos.
 // The right call when a business has no service imagery: an intentional icon

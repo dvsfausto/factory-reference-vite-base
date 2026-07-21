@@ -2,7 +2,7 @@ import { createFileRoute, redirect } from '@tanstack/react-router'
 import { ServicesSection } from '~/components/ServicesSection'
 import { CTASection } from '~/components/CTASection'
 import { buildMeta } from '~/lib/seo'
-import { SERVICES } from '~/data/services'
+import { SERVICES } from '~/data/services-view'
 import { SITE } from '~/data/site'
 
 export const Route = createFileRoute('/services/')({
