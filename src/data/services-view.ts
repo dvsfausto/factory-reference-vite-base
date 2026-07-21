@@ -14,3 +14,15 @@ import { SERVICES as SERVICES_ALL } from './services';
 import type { ServiceRef } from '~/lib/types/page-types';
 
 export const SERVICES: ServiceRef[] = SERVICES_ALL.filter((s) => s.published !== false);
+
+/**
+ * Related-links render-filter: keep any non-`/services/…` link as-is; drop a `/services/<slug>` link
+ * whose service is unpublished. Lets service/info pages self-heal their `relatedServices` cross-links
+ * with NO cross-page data mutation — and it auto-reverses on restore. When nothing is unpublished
+ * every link matches a visible service → identical render (backward-compatible).
+ */
+export function isRelatedServiceVisible(href: string): boolean {
+  const m = href.match(/^\/services\/([a-z0-9-]+)\/?$/);
+  if (!m) return true;
+  return SERVICES.some((s) => s.slug === m[1]);
+}

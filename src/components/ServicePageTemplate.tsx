@@ -8,6 +8,7 @@ import { renderCharacterHero, renderCharacterCta } from "./CharacterHero";
 import { resolveCharacterTokens } from "~/lib/character-tokens";
 import { serviceImageUrl } from "~/data/images";
 import { SITE } from "~/data/site";
+import { isRelatedServiceVisible } from "~/data/services-view";
 import leaves from "~/assets/decorative/cleaning-leaves.png";
 import type { ServicePageData } from "~/lib/types/page-types";
 
@@ -306,13 +307,13 @@ export function ServicePageTemplate({ data }: Props) {
       {/* FAQ */}
       <FAQSection faqs={data.faqs} title="Questions we hear often" />
 
-      {/* RELATED SERVICES */}
-      {data.relatedServices.length > 0 && (
+      {/* RELATED SERVICES — drop links to unpublished services (self-heals, no cross-page edit). */}
+      {data.relatedServices.filter((r) => isRelatedServiceVisible(r.href)).length > 0 && (
         <section className={secBand}>
           <div className={`container-x ${tPad}`}>
             <Header heading="You may also need" />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
-              {data.relatedServices.map((r) => (
+              {data.relatedServices.filter((r) => isRelatedServiceVisible(r.href)).map((r) => (
                 <Link
                   key={r.href}
                   to={r.href}
