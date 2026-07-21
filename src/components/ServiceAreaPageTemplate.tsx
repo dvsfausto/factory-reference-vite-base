@@ -42,7 +42,7 @@ export function ServiceAreaPageTemplate({ data }: Props) {
   // name + OWN image. subheadline="" suppresses the homepage subheadline. null for
   // known verticals → bespoke area hero (byte-identical).
   const characterHero = renderCharacterHero({
-    headline: data.name,
+    headline: data.hero.h1,
     body: data.hero.subhead,
     imageUrl: areaImageUrl(data.slug),
     subheadline: "",

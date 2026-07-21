@@ -29,7 +29,7 @@ export function ServicePageTemplate({ data }: Props) {
   // OWN title + OWN image (NOT the homepage's). subheadline="" suppresses the
   // homepage subheadline on the inner page. null for known verticals → bespoke.
   const characterHero = renderCharacterHero({
-    headline: data.title,
+    headline: data.hero.h1,
     body: data.hero.subhead,
     imageUrl: serviceImageUrl(data.slug),
     subheadline: "",
