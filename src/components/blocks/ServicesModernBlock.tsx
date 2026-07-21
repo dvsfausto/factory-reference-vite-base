@@ -2,7 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { ArrowRight } from 'lucide-react'
 import { SectionHeaderModern } from '~/components/SectionHeaderModern'
 import { SITE } from '~/data/site'
-import { SERVICES } from '~/data/services'
+import { SERVICES } from '~/data/services-view'
 import { serviceImageUrl } from '~/data/images'
 
 // ServicesPreview VARIANT: 'modern' — clean offerings grid. Identity copy from

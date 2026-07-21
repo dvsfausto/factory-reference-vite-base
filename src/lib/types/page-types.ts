@@ -26,6 +26,12 @@ export interface ServiceRef {
   name: string
   short: string
   tagline?: string
+  /**
+   * Publish state. Absent === published (backward-compatible). The editor sets `false` to
+   * UNPUBLISH a service: `visibleServices()` (src/data/services-view.ts) filters it out of every
+   * UI consumer, and the /services/$slug loader 301-redirects it. Restore un-sets the flag.
+   */
+  published?: boolean
 }
 
 export interface AreaRef {

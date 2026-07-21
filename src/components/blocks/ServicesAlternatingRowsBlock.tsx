@@ -1,7 +1,7 @@
 import { Link } from '@tanstack/react-router'
 import { ArrowRight } from 'lucide-react'
 import { SITE } from '~/data/site'
-import { SERVICES } from '~/data/services'
+import { SERVICES } from '~/data/services-view'
 import { serviceImageUrl } from '~/data/images'
 
 // ServicesPreview LAYOUT: 'alternating-rows' — an Apple-style zigzag, one service

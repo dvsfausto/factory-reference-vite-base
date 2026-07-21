@@ -2,7 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { ArrowRight } from 'lucide-react'
 import { SectionHeaderCorporate } from '~/components/SectionHeaderCorporate'
 import { SITE } from '~/data/site'
-import { SERVICES } from '~/data/services'
+import { SERVICES } from '~/data/services-view'
 import { serviceImageUrl } from '~/data/images'
 
 // ServicesPreview VARIANT: 'corporate' — a structured "practice areas" grid.

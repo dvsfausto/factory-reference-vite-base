@@ -3,7 +3,7 @@ import { ArrowRight } from 'lucide-react'
 import { SectionHeaderElegant } from '~/components/SectionHeaderElegant'
 import { elegantSurface } from '~/lib/elegant-surface'
 import { SITE } from '~/data/site'
-import { SERVICES } from '~/data/services'
+import { SERVICES } from '~/data/services-view'
 import { serviceImageUrl } from '~/data/images'
 
 // ServicesPreview VARIANT: 'elegant' — refined offerings grid. Identity copy from

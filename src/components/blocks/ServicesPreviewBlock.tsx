@@ -1,7 +1,7 @@
 import { Link } from '@tanstack/react-router'
 import { ArrowRight } from 'lucide-react'
 import { SectionHeader } from '~/components/SectionHeader'
-import { SERVICES } from '~/data/services'
+import { SERVICES } from '~/data/services-view'
 import { serviceImageUrl } from '~/data/images'
 
 // Markup extracted VERBATIM from routes/index.tsx (the SERVICES PREVIEW

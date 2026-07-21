@@ -8,7 +8,7 @@ import { renderCharacterHero, renderCharacterCta } from "./CharacterHero";
 import { resolveCharacterTokens } from "~/lib/character-tokens";
 import { ReviewCard } from "./ReviewCard";
 import { areaImageUrl, areaAlt, serviceImageUrl } from "~/data/images";
-import { SERVICES } from "~/data/services";
+import { SERVICES } from "~/data/services-view";
 import { reviews } from "~/data/reviews";
 import { SITE } from "~/data/site";
 import leaves from "~/assets/decorative/cleaning-leaves.png";

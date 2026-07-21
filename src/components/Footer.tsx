@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { Instagram, Facebook, Phone, Mail, MapPin, Clock } from "lucide-react";
 import { Logo } from "./Logo";
 import { SITE } from "~/data/site";
-import { SERVICES } from "~/data/services";
+import { SERVICES } from "~/data/services-view";
 import { AREAS } from "~/data/areas";
 import { INFO_PAGES } from "~/data/info-pages";
 import defaultLeaves from "~/assets/decorative/cleaning-leaves.png";

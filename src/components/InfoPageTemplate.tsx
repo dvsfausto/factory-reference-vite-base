@@ -4,6 +4,7 @@ import { Breadcrumbs } from "./Breadcrumbs";
 import { FAQSection } from "./FAQSection";
 import { CTASection } from "./CTASection";
 import { SectionHeader } from "./SectionHeader";
+import { isRelatedServiceVisible } from "~/data/services-view";
 import leaves from "~/assets/decorative/cleaning-leaves.png";
 import type { InfoPageData } from "~/lib/types/page-types";
 
@@ -19,6 +20,8 @@ function splitScriptAccent(heading: string): { lead: string; accent: string } {
 
 export function InfoPageTemplate({ data }: Props) {
   const h1Parts = splitScriptAccent(data.hero.h1);
+  // Drop related-service links to unpublished services (self-heals; identical when none unpublished).
+  const relatedServices = data.relatedServices.filter((r) => isRelatedServiceVisible(r.href));
 
   return (
     <>
@@ -83,18 +86,18 @@ export function InfoPageTemplate({ data }: Props) {
       </article>
 
       {/* RELATED */}
-      {(data.relatedServices.length > 0 || data.relatedInfo.length > 0) && (
+      {(relatedServices.length > 0 || data.relatedInfo.length > 0) && (
         <section className="bg-brand-50 border-y border-brand-100">
           <div className="container-x py-16">
             <SectionHeader heading="Related reading" />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-4xl mx-auto">
-              {data.relatedServices.length > 0 && (
+              {relatedServices.length > 0 && (
                 <div>
                   <p className="badge-pill bg-white border border-brand-100 text-brand-600">
                     Related services
                   </p>
                   <ul className="mt-4 space-y-3">
-                    {data.relatedServices.map((r) => (
+                    {relatedServices.map((r) => (
                       <li key={r.href}>
                         <Link
                           to={r.href}
