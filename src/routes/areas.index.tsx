@@ -1,6 +1,7 @@
 import { createFileRoute, redirect } from '@tanstack/react-router'
 import { AreasSection } from '~/components/AreasSection'
 import { CTASection } from '~/components/CTASection'
+import { renderCharacterCta } from '~/components/CharacterHero'
 import { buildMeta } from '~/lib/seo'
 import { AREAS } from '~/data/areas'
 import { SITE } from '~/data/site'
@@ -37,10 +38,15 @@ function AreasIndex() {
         </div>
       </section>
       <AreasSection heading="Service areas" areas={AREAS} />
-      <CTASection
-        title="Don't see your area?"
-        subtitle="Call us — we often travel for the right project."
-      />
+      {renderCharacterCta({
+        title: "Don't see your area?",
+        subtitle: 'Call us — we often travel for the right project.',
+      }) ?? (
+        <CTASection
+          title="Don't see your area?"
+          subtitle="Call us — we often travel for the right project."
+        />
+      )}
     </>
   )
 }

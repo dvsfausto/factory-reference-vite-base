@@ -1,6 +1,7 @@
 import { createFileRoute, redirect } from '@tanstack/react-router'
 import { ServicesSection } from '~/components/ServicesSection'
 import { CTASection } from '~/components/CTASection'
+import { renderCharacterCta } from '~/components/CharacterHero'
 import { buildMeta } from '~/lib/seo'
 import { SERVICES } from '~/data/services-view'
 import { SITE } from '~/data/site'
@@ -38,7 +39,7 @@ function ServicesIndex() {
         </div>
       </section>
       <ServicesSection heading="Services" services={SERVICES} />
-      <CTASection title="Need a quote?" />
+      {renderCharacterCta({ title: 'Need a quote?' }) ?? <CTASection title="Need a quote?" />}
     </>
   )
 }

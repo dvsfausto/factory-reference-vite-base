@@ -8,7 +8,8 @@
     "build": "vite build && tsc --noEmit",
     "preview": "vite preview",
     "start": "node .output/server/index.mjs",
-    "lint:honesty": "node scripts/check-no-credential-claims.mjs"
+    "lint:honesty": "node scripts/check-no-credential-claims.mjs",
+    "lint:palette": "node scripts/check-standalone-palette.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
