@@ -35,6 +35,12 @@ export function ServicePageTemplate({ data }: Props) {
     body: data.hero.subhead,
     imageUrl: serviceImageUrl(data.slug),
     subheadline: "",
+    // Per-service trustLine ("a · b · c") flows INTO the character hero's own trust row
+    // (integrated, below the headline) instead of an orphaned bare band under the hero.
+    // Split on the middot the scaffolder joins with; absent → hero falls back to SITE.trustItems.
+    trustItems: data.hero.trustLine
+      ? data.hero.trustLine.split("·").map((s) => s.trim()).filter(Boolean)
+      : undefined,
   });
   const characterCta = renderCharacterCta({
     title: "Ready when you are.",
@@ -63,8 +69,9 @@ export function ServicePageTemplate({ data }: Props) {
       {/* HERO — character variant (generic vertical) rendering THIS service's own
           title + own image, else the bespoke service hero (known verticals, byte-
           identical). Breadcrumbs relocate ABOVE the character hero (it has no
-          breadcrumb slot) so the nav/SEO hierarchy stays in the SSR'd DOM;
-          data.hero.trustLine renders just below it so it stays visible. */}
+          breadcrumb slot) so the nav/SEO hierarchy stays in the SSR'd DOM.
+          data.hero.trustLine now flows INTO the hero's trust row (above), not a
+          bare band below it. */}
       {characterHero ? (
         <>
           <nav aria-label="Breadcrumb" className="container-x pt-8 md:pt-10">
@@ -75,11 +82,6 @@ export function ServicePageTemplate({ data }: Props) {
             ]} />
           </nav>
           {characterHero}
-          {data.hero.trustLine && (
-            <div className="container-x">
-              <p className="py-4 text-sm text-ink-500">{data.hero.trustLine}</p>
-            </div>
-          )}
         </>
       ) : (
       <section className="relative overflow-hidden bg-gradient-to-b from-brand-50 via-white to-white">
