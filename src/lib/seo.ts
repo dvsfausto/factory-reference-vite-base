@@ -38,6 +38,25 @@ export function buildMeta(input: BuildMetaInput) {
   return { meta, links: [{ rel: 'canonical', href: url }] }
 }
 
+// Phase A1: business hours → schema.org OpeningHoursSpecification. SITE.openingHours is an
+// optional structured record ({ "Monday": { open, close }, ... }) that the factory scaffolder
+// emits ONLY when the business has real hours; the generated `export const SITE` is a bare
+// literal that omits the field otherwise, so it is read through an optional cast. Absent/empty
+// → returns {} → localBusinessLd() output is BYTE-IDENTICAL to before. Partial (weekdays only)
+// → only the present days appear; closed days are never invented.
+function openingHoursSpecification() {
+  const oh = (SITE as { openingHours?: Record<string, { open: string; close: string }> })
+    .openingHours
+  if (!oh) return {}
+  const spec = Object.entries(oh).map(([day, h]) => ({
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: day,
+    opens: h.open,
+    closes: h.close,
+  }))
+  return spec.length > 0 ? { openingHoursSpecification: spec } : {}
+}
+
 export function localBusinessLd() {
   return {
     '@context': 'https://schema.org',
@@ -55,6 +74,7 @@ export function localBusinessLd() {
       addressCountry: 'US',
     },
     priceRange: '$$',
+    ...openingHoursSpecification(),
   }
 }
 
