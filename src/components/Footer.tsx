@@ -214,19 +214,24 @@ export function Footer({ decorativeAsset = defaultLeaves }: { decorativeAsset?: 
           </div>
         )}
 
-        <div>
-          <h4 className={`text-sm font-semibold mb-4 ${t.heading}`}>Service Areas</h4>
-          <ul className={`space-y-2 text-sm ${t.listText}`}>
-            {AREAS.map((a) => (
-              <li key={a.slug}>
-                <Link to="/areas/$slug" params={{ slug: a.slug }} className={t.listHover}>
-                  {a.name}
-                </Link>
-              </li>
-            ))}
-            <li><Link to="/areas" className={t.areaAll}>View all areas →</Link></li>
-          </ul>
-        </div>
+        {/* Service Areas column omitted when the site has no area pages (single-location
+            business) — no empty "Service Areas" header, no "View all areas" link to a page
+            that redirects home. Mirrors the Services guard above (runtime only; route stays). */}
+        {AREAS.length > 0 && (
+          <div>
+            <h4 className={`text-sm font-semibold mb-4 ${t.heading}`}>Service Areas</h4>
+            <ul className={`space-y-2 text-sm ${t.listText}`}>
+              {AREAS.map((a) => (
+                <li key={a.slug}>
+                  <Link to="/areas/$slug" params={{ slug: a.slug }} className={t.listHover}>
+                    {a.name}
+                  </Link>
+                </li>
+              ))}
+              <li><Link to="/areas" className={t.areaAll}>View all areas →</Link></li>
+            </ul>
+          </div>
+        )}
 
         <div>
           <h4 className={`text-sm font-semibold mb-4 ${t.heading}`}>Company</h4>
