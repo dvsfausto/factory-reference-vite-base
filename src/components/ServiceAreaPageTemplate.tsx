@@ -75,13 +75,18 @@ export function ServiceAreaPageTemplate({ data }: Props) {
           relocates just below it so it stays visible. */}
       {characterHero ? (
         <>
-          <nav aria-label="Breadcrumb" className="container-x pt-8 md:pt-10">
-            <Breadcrumbs items={[
-              { label: "Home", to: "/" },
-              { label: "Areas", to: "/areas" },
-              { label: data.name },
-            ]} />
-          </nav>
+          {/* Character breadcrumb band — same as ServicePageTemplate: needs the character
+              surface (secPlain) so it doesn't render on the page's default white. secPlain =
+              T?.section ?? "bg-white" → known verticals byte-identical (and never hit this branch). */}
+          <div className={secPlain}>
+            <nav aria-label="Breadcrumb" className="container-x pt-8 md:pt-10">
+              <Breadcrumbs items={[
+                { label: "Home", to: "/" },
+                { label: "Areas", to: "/areas" },
+                { label: data.name },
+              ]} />
+            </nav>
+          </div>
           {characterHero}
           {data.zipCodes && data.zipCodes.length > 0 && (
             <div className="container-x">

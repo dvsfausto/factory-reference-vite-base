@@ -194,7 +194,10 @@ const CREATIVE: CharacterTokens = {
   SectionHeader: SectionHeaderCreative as SectionHeaderComponent,
 }
 
-const BY_CHARACTER: Record<string, CharacterTokens> = {
+// Exported so the palette harness can compare a rendered crumb's ink classes against each
+// character's OWN tokens (bold legitimately uses text-ink-500/900, so a blanket "no ink"
+// assertion would false-positive it — the harness must know the per-character tokens).
+export const BY_CHARACTER: Record<string, CharacterTokens> = {
   bold: BOLD,
   elegant: ELEGANT_LIGHT,
   friendly: FRIENDLY,

@@ -76,13 +76,19 @@ export function ServicePageTemplate({ data }: Props) {
           bare band below it. */}
       {characterHero ? (
         <>
-          <nav aria-label="Breadcrumb" className="container-x pt-8 md:pt-10">
-            <Breadcrumbs items={[
-              { label: "Home", to: "/" },
-              { label: "Services", to: "/services" },
-              { label: data.title },
-            ]} />
-          </nav>
+          {/* Character breadcrumb band: the crumb sits ABOVE the character hero, so it needs
+              the character surface (secPlain) or it renders on the page's default white — a
+              white-band leak on e.g. a cream elegant page. secPlain = T?.section ?? "bg-white",
+              so known verticals (no character) are byte-identical AND never reach this branch. */}
+          <div className={secPlain}>
+            <nav aria-label="Breadcrumb" className="container-x pt-8 md:pt-10">
+              <Breadcrumbs items={[
+                { label: "Home", to: "/" },
+                { label: "Services", to: "/services" },
+                { label: data.title },
+              ]} />
+            </nav>
+          </div>
           {characterHero}
         </>
       ) : (

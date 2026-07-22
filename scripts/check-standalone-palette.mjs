@@ -43,6 +43,11 @@ const ORPHAN_TRUSTLINE = 'py-4 text-sm text-ink-500'
 // bug). Known verticals legitimately use brand-*, so this check is CHARACTER-ONLY. `bg-primary`
 // (the CSS-var brand CTA) is intentionally NOT matched — brand expression stays on the CTA.
 const BRAND_UTILITY = /(?:text|bg|border|from|via|to|ring|fill|stroke)-brand-\d/g
+// Default-INK breadcrumb leak: the breadcrumb muted/current-page text (text-ink-500/900) must
+// adopt the character tokens (T.muted/T.text) on a character site, or it reads as default grey
+// on e.g. a cream elegant page. Distinct from BRAND_UTILITY (a -brand-N leak) — which is exactly
+// why the breadcrumb slipped through: the crumb was rendered but no assertion inspected it.
+const DEFAULT_INK = /text-ink-(?:500|900)/g
 
 const routesDir = join(root, 'src', 'routes')
 const routeFiles = readdirSync(routesDir).filter(
@@ -75,6 +80,9 @@ const skipped = []
 
 try {
   const render = await server.ssrLoadModule(join(root, 'scripts', 'palette-harness', 'render-entry.tsx'))
+  // Per-character tokens, so the breadcrumb ink-leak check compares against each character's OWN
+  // muted/text (bold legitimately uses text-ink-500/900) instead of blanket-flagging any ink.
+  const { BY_CHARACTER } = await server.ssrLoadModule(join(root, 'src', 'lib', 'character-tokens.ts'))
 
   // 1. Every standalone route × every character → no default-blue CTA.
   for (const file of routeFiles) {
@@ -130,6 +138,28 @@ try {
       const brandHits = [...new Set(html.match(BRAND_UTILITY) ?? [])]
       if (brandHits.length) {
         failures.push(`${page.label} [${ch}]: brand-* chrome on a character site → ${brandHits.join(', ')}`)
+      }
+      // Breadcrumb band — the surface a character touches that had no coverage. On a character
+      // site the crumb sits above the character hero, so BOTH its surface and text must be
+      // tokenized: (1) its wrapper div must carry the character surface (secPlain's bg-*) or it
+      // renders on default white (the white-band leak); (2) its text must use T.muted/T.text,
+      // not default text-ink-500/900. This is the exact leak class this harness must cover to
+      // stop the find-a-leak cycle.
+      if (html.includes('aria-label="Breadcrumb"')) {
+        const crumbStart = html.indexOf('aria-label="Breadcrumb"')
+        const crumbHtml = html.slice(crumbStart, crumbStart + 600)
+        // A leak is a DEFAULT ink class in the crumb that is NOT one of THIS character's own
+        // tokens — bold's muted/text ARE text-ink-500/900 by design, so those don't count.
+        const isInk = (c) => /text-ink-(?:500|900)/.test(c ?? '')
+        const tok = BY_CHARACTER[ch] ?? {}
+        const ownInk = new Set([tok.muted, tok.text].filter(isInk))
+        const inkHits = [...new Set(crumbHtml.match(DEFAULT_INK) ?? [])].filter((h) => !ownInk.has(h))
+        if (inkHits.length) {
+          failures.push(`${page.label} [${ch}]: default-ink breadcrumb text on a character site → ${inkHits.join(', ')}`)
+        }
+        if (!/<div class="[^"]*\bbg-[^"]*"><nav aria-label="Breadcrumb"/.test(html)) {
+          failures.push(`${page.label} [${ch}]: breadcrumb band has no character surface (white-band leak)`)
+        }
       }
     }
   }
