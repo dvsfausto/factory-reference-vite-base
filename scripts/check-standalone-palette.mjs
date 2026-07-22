@@ -36,6 +36,13 @@ const CHARACTERS = ['bold', 'elegant', 'friendly', 'modern', 'corporate', 'creat
 const DEFAULT_BLUE = /from-brand-800|via-brand-700|to-brand-900/
 // The orphaned trustLine band that the inner-page hero refactor left behind.
 const ORPHAN_TRUSTLINE = 'py-4 text-sm text-ink-500'
+// ANY customer-brand-palette utility class (text/bg/border/from/via/to/ring/fill/stroke-brand-N).
+// On a CHARACTER site the shared inner-page sections render the character hero (no brand-*) and
+// must adopt the character accent for chrome (eyebrow chips, script accents, numerals, icons,
+// links) — so a `-brand-N` class in a character render is a leak (the exact "brand-blue on cream"
+// bug). Known verticals legitimately use brand-*, so this check is CHARACTER-ONLY. `bg-primary`
+// (the CSS-var brand CTA) is intentionally NOT matched — brand expression stays on the CTA.
+const BRAND_UTILITY = /(?:text|bg|border|from|via|to|ring|fill|stroke)-brand-\d/g
 
 const routesDir = join(root, 'src', 'routes')
 const routeFiles = readdirSync(routesDir).filter(
@@ -100,19 +107,30 @@ try {
     }
   }
 
-  // 2. Character service page → no orphaned trustLine band.
-  for (const ch of CHARACTERS) {
-    render.setCharacter(ch)
-    let html
-    try {
-      html = render.renderServicePage()
-    } catch (err) {
-      skipped.push(`service-page [${ch}] (render error: ${(err && err.message) || err})`)
-      continue
-    }
-    checks++
-    if (html.includes(ORPHAN_TRUSTLINE)) {
-      failures.push(`service page [${ch}]: orphaned trustLine band (${ORPHAN_TRUSTLINE})`)
+  // 2. Character service + area pages → no orphaned trustLine band, and NO brand-* chrome
+  //    (eyebrow chips / script accents / numerals / icons / links must adopt the character accent).
+  const innerPages = [
+    { label: 'service page', render: render.renderServicePage },
+    { label: 'area page', render: render.renderAreaPage },
+  ]
+  for (const page of innerPages) {
+    for (const ch of CHARACTERS) {
+      render.setCharacter(ch)
+      let html
+      try {
+        html = page.render()
+      } catch (err) {
+        skipped.push(`${page.label} [${ch}] (render error: ${(err && err.message) || err})`)
+        continue
+      }
+      checks++
+      if (html.includes(ORPHAN_TRUSTLINE)) {
+        failures.push(`${page.label} [${ch}]: orphaned trustLine band (${ORPHAN_TRUSTLINE})`)
+      }
+      const brandHits = [...new Set(html.match(BRAND_UTILITY) ?? [])]
+      if (brandHits.length) {
+        failures.push(`${page.label} [${ch}]: brand-* chrome on a character site → ${brandHits.join(', ')}`)
+      }
     }
   }
 } finally {

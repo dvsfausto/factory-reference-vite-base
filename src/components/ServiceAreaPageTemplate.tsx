@@ -54,8 +54,9 @@ export function ServiceAreaPageTemplate({ data }: Props) {
   });
 
   // Character tokens for the shared middle sections (see character-tokens.ts). null →
-  // known verticals keep the literals below (byte-identical). brand accents (text-brand-*)
-  // stay per operator decision.
+  // known verticals keep the literals below (byte-identical). Decorative chrome (chips,
+  // script accents, numerals, links, icons) adopts T.accent* on character sites; brand
+  // color stays only on the primary CTA (revised 2026-07-22).
   const T = resolveCharacterTokens();
   const secPlain = T?.section ?? "bg-white";
   const secBand = T ? `${T.sectionAlt} border-y ${T.border}` : "bg-brand-50 border-y border-brand-100";
@@ -84,7 +85,7 @@ export function ServiceAreaPageTemplate({ data }: Props) {
           {characterHero}
           {data.zipCodes && data.zipCodes.length > 0 && (
             <div className="container-x">
-              <span className="badge-pill bg-white border border-brand-100 text-brand-600">
+              <span className={T ? `badge-pill bg-white border ${T.accentBorder} ${T.accent}` : "badge-pill bg-white border border-brand-100 text-brand-600"}>
                 <MapPin className="h-3.5 w-3.5" /> {data.zipCodes.join(" · ")}
               </span>
             </div>
@@ -148,7 +149,7 @@ export function ServiceAreaPageTemplate({ data }: Props) {
       <section className={secPlain}>
         <div className={`container-x ${T ? T.spacingY.split(" ")[0] : "py-16"}`}>
           <div className={`${T ? `${T.card} ${T.cardRadius} border ${T.border}` : "card-soft"} p-8 max-w-3xl mx-auto`}>
-            <span className="text-xs font-bold text-brand-600 uppercase tracking-wider">
+            <span className={`text-xs font-bold ${T ? T.accent : "text-brand-600"} uppercase tracking-wider`}>
               {data.name} at a glance
             </span>
             <h2 className={`mt-3 text-2xl ${T ? T.text : ""}`.trimEnd()}>{data.about.title}</h2>
@@ -192,7 +193,7 @@ export function ServiceAreaPageTemplate({ data }: Props) {
                   <div className="p-6">
                     <h4 className={hCls}>{s.name}</h4>
                     <p className={`mt-2 text-sm ${tMuted}`}>{s.short}</p>
-                    <div className="mt-3 text-brand-600 font-semibold flex items-center gap-1 group-hover:gap-2 transition-all text-sm">
+                    <div className={`mt-3 ${T ? T.accent : "text-brand-600"} font-semibold flex items-center gap-1 group-hover:gap-2 transition-all text-sm`}>
                       Learn more <ArrowRight className="h-4 w-4" />
                     </div>
                   </div>
@@ -215,7 +216,7 @@ export function ServiceAreaPageTemplate({ data }: Props) {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
               {data.landmarks.items.map((item, i) => (
                 <div key={i} className={`flex items-start gap-2 ${tBody}`}>
-                  <Check className="h-4 w-4 text-brand-600 mt-1 shrink-0" />
+                  <Check className={`h-4 w-4 ${T ? T.accent : "text-brand-600"} mt-1 shrink-0`} />
                   <span>{item}</span>
                 </div>
               ))}
@@ -229,16 +230,16 @@ export function ServiceAreaPageTemplate({ data }: Props) {
         <section className={secBand}>
           <div className={`container-x ${T ? T.spacingY.split(" ")[0] : "py-16"}`}>
             <div className={T ? `${T.card} ${T.cardRadius} border ${T.border} p-8 md:p-10 max-w-3xl mx-auto` : "card-soft p-8 md:p-10 max-w-3xl mx-auto bg-white"}>
-              <span className="badge-pill bg-brand-50 text-brand-600">Local insight</span>
+              <span className={T ? `badge-pill ${T.accentBg} ${T.accent}` : "badge-pill bg-brand-50 text-brand-600"}>Local insight</span>
               <h2 className={`mt-3 ${T ? T.text : ""}`.trimEnd()}>
                 {localTitleParts ? (
                   <>
                     {localTitleParts.lead}
                     {localTitleParts.lead && " "}
-                    <span className="font-script text-brand-600">{localTitleParts.accent}</span>
+                    <span className={`font-script ${T ? T.accent : "text-brand-600"}`}>{localTitleParts.accent}</span>
                   </>
                 ) : (
-                  <>Why {data.name} chooses <span className="font-script text-brand-600">us</span></>
+                  <>Why {data.name} chooses <span className={`font-script ${T ? T.accent : "text-brand-600"}`}>us</span></>
                 )}
               </h2>
               <div className="mt-5 space-y-4">

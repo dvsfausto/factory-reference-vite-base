@@ -11,9 +11,15 @@
 // DERIVED, not invented — every value below is lifted from the real variant classes
 // (Services{Bold,Elegant,Friendly,Modern,Corporate,Creative}Block + elegantSurface).
 // Operator decisions (2026-07-21):
-//   · accentRole: KEEP the customer brand color (text-brand-*) on inner-page
-//     icons/numerals — the character is hash-assigned; the brand kit is the
-//     customer's. So accents are NOT tokenized here; templates keep text-brand-*.
+//   · accentRole (REVISED 2026-07-22): the customer brand color (text-brand-*) is
+//     BRAND EXPRESSION and stays on the primary CTA (CtaBlock, a separate section).
+//     But DECORATIVE CHROME inside the shared middle sections — eyebrow chips, script
+//     flourishes, section numerals, dividers, read-more links, feature-check icons —
+//     is CHARACTER chrome, not brand: bright brand-blue on an elegant cream surface
+//     reads as broken. So on a character site those adopt the character accent
+//     (emerald, the DNA accent every character block already uses) via the accent*
+//     tokens below; known verticals keep text-brand-* (byte-identical). There is no
+//     primary CTA in the middle sections, so nothing brand-expressive is retinted.
 //   · bold sectionAlt: border-based (white + border-y border-ink-100), no invented
 //     tint — hairlines are bold's language.
 //   · dark elegant card: lifted to #2C221B (from #241C16) for card/section
@@ -46,6 +52,19 @@ export interface CharacterTokens {
   text: string
   /** Secondary/muted text. */
   muted: string
+  /** Decorative-chrome accent (eyebrow chips, script flourishes, links, em-dashes) —
+   *  the character DNA accent, replacing brand-blue inside tokenized sections. */
+  accent: string
+  /** Stronger accent shade (prominent numerals, e.g. price ranges). */
+  accentStrong: string
+  /** Faint accent shade (large ghosted numerals). */
+  accentFaint: string
+  /** Soft accent background (eyebrow-chip fill). */
+  accentBg: string
+  /** Accent hairline (eyebrow-chip border). */
+  accentBorder: string
+  /** Accent hover (interactive chips/links). */
+  accentHover: string
   /** Card corner radius (on top of the DNA radius scale). */
   cardRadius: string
   /** Card elevation/hover treatment. */
@@ -60,7 +79,17 @@ export interface CharacterTokens {
   SectionHeader: SectionHeaderComponent
 }
 
+const CHARACTER_ACCENT = {
+  accent: 'text-emerald-600',
+  accentStrong: 'text-emerald-700',
+  accentFaint: 'text-emerald-200',
+  accentBg: 'bg-emerald-50',
+  accentBorder: 'border-emerald-100',
+  accentHover: 'hover:border-emerald-600 hover:text-emerald-600',
+} as const
+
 const BOLD: CharacterTokens = {
+  ...CHARACTER_ACCENT,
   section: 'bg-background',
   sectionAlt: 'bg-background', // border-based rhythm (decision): white + border-y border-ink-100
   card: 'bg-white',
@@ -76,6 +105,7 @@ const BOLD: CharacterTokens = {
 }
 
 const ELEGANT_LIGHT: CharacterTokens = {
+  ...CHARACTER_ACCENT,
   section: 'bg-[#FBF7EF]',
   sectionAlt: 'bg-[#F3ECDE]',
   card: 'bg-white',
@@ -101,6 +131,7 @@ const ELEGANT_DARK: CharacterTokens = {
 }
 
 const FRIENDLY: CharacterTokens = {
+  ...CHARACTER_ACCENT,
   section: 'bg-[#FFF6EC]',
   sectionAlt: 'bg-[#FFFBF5]',
   card: 'bg-white',
@@ -116,6 +147,7 @@ const FRIENDLY: CharacterTokens = {
 }
 
 const MODERN: CharacterTokens = {
+  ...CHARACTER_ACCENT,
   section: 'bg-[#F6F7F9]',
   sectionAlt: 'bg-white',
   card: 'bg-white',
@@ -131,6 +163,7 @@ const MODERN: CharacterTokens = {
 }
 
 const CORPORATE: CharacterTokens = {
+  ...CHARACTER_ACCENT,
   section: 'bg-[#F4F6F9]',
   sectionAlt: 'bg-white',
   card: 'bg-white',
@@ -146,6 +179,7 @@ const CORPORATE: CharacterTokens = {
 }
 
 const CREATIVE: CharacterTokens = {
+  ...CHARACTER_ACCENT,
   section: 'bg-white',
   sectionAlt: 'bg-[#FBFAFC]',
   card: 'bg-[#FBFAFC]',

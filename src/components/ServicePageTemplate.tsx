@@ -49,8 +49,10 @@ export function ServicePageTemplate({ data }: Props) {
 
   // Character tokens for the shared MIDDLE sections. null → known verticals keep the
   // literals below verbatim (byte-identical). Each `?? '<literal>'` IS the current
-  // hardcoded class, so a no-character build is unchanged. DECISION: brand accents
-  // (text-brand-*) are intentionally NOT tokenized — the customer's brand color stays.
+  // hardcoded class, so a no-character build is unchanged. DECISION (revised 2026-07-22):
+  // decorative chrome (eyebrow chips, script flourishes, numerals, dividers, links, feature
+  // icons) adopts the character accent (T.accent*) on character sites — brand-blue reads as
+  // broken on cream; brand color stays only on the primary CTA (a separate CtaBlock).
   const T = resolveCharacterTokens();
   const secPlain = T?.section ?? "bg-white";
   const secBand = T ? `${T.sectionAlt} border-y ${T.border}` : "bg-brand-50 border-y border-brand-100";
@@ -146,7 +148,7 @@ export function ServicePageTemplate({ data }: Props) {
             <ul className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-4">
               {data.whatWeBuy.items.map((item, i) => (
                 <li key={i} className={`flex items-start gap-3 ${tBody}`}>
-                  <Check className="h-5 w-5 text-brand-600 mt-0.5 shrink-0" />
+                  <Check className={`h-5 w-5 ${T ? T.accent : "text-brand-600"} mt-0.5 shrink-0`} />
                   <span className="leading-relaxed">{item}</span>
                 </li>
               ))}
@@ -170,7 +172,7 @@ export function ServicePageTemplate({ data }: Props) {
             <ul className="mt-4 space-y-6">
               {data.howPrice.factors.map((f, i) => (
                 <li key={i} className="flex gap-5">
-                  <span className="shrink-0 font-display text-3xl text-brand-200 w-12">
+                  <span className={`shrink-0 font-display text-3xl ${T ? T.accentFaint : "text-brand-200"} w-12`}>
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <div>
@@ -216,7 +218,7 @@ export function ServicePageTemplate({ data }: Props) {
               {data.pricing.ranges.map((r) => (
                 <div key={r.label} className={`${tCard} text-center`}>
                   <p className={`text-xs uppercase tracking-wider ${tMuted}`}>{r.label}</p>
-                  <p className="mt-2 font-display text-3xl text-brand-700">{r.range}</p>
+                  <p className={`mt-2 font-display text-3xl ${T ? T.accentStrong : "text-brand-700"}`}>{r.range}</p>
                 </div>
               ))}
             </div>
@@ -225,7 +227,7 @@ export function ServicePageTemplate({ data }: Props) {
             <ul className={`mt-10 max-w-2xl mx-auto space-y-2 border-t ${T?.border ?? "border-brand-200"} pt-6`}>
               {data.pricing.notes.map((n, i) => (
                 <li key={i} className={`${tBody} leading-relaxed flex items-start gap-3`}>
-                  <span aria-hidden className="text-brand-600 shrink-0">—</span>
+                  <span aria-hidden className={`${T ? T.accent : "text-brand-600"} shrink-0`}>—</span>
                   <span>{n}</span>
                 </li>
               ))}
@@ -240,16 +242,16 @@ export function ServicePageTemplate({ data }: Props) {
         <section className={secPlain}>
           <div className={`container-x ${T ? T.spacingY.split(" ")[0] : "py-16"}`}>
             <div className={`${T ? `${T.card} ${T.cardRadius} border ${T.border}` : "card-soft"} p-8 md:p-10 max-w-3xl mx-auto`}>
-              <span className="badge-pill bg-white border border-brand-100 text-brand-600">Local insight</span>
+              <span className={T ? `badge-pill bg-white border ${T.accentBorder} ${T.accent}` : "badge-pill bg-white border border-brand-100 text-brand-600"}>Local insight</span>
               <h2 className={`mt-3 ${T ? T.text : ""}`.trimEnd()}>
                 {localTitleParts ? (
                   <>
                     {localTitleParts.lead}
                     {localTitleParts.lead && " "}
-                    <span className="font-script text-brand-600">{localTitleParts.accent}</span>
+                    <span className={`font-script ${T ? T.accent : "text-brand-600"}`}>{localTitleParts.accent}</span>
                   </>
                 ) : (
-                  <>Built for <span className="font-script text-brand-600">{SITE.address.city || "you"}</span></>
+                  <>Built for <span className={`font-script ${T ? T.accent : "text-brand-600"}`}>{SITE.address.city || "you"}</span></>
                 )}
               </h2>
               <div className="mt-5 space-y-4">
@@ -272,7 +274,7 @@ export function ServicePageTemplate({ data }: Props) {
                 <Link
                   key={a.href}
                   to={a.href}
-                  className={`badge-pill bg-white border ${T?.border ?? "border-ink-100"} ${tBody} hover:border-brand-600 hover:text-brand-600 normal-case tracking-normal text-sm`}
+                  className={`badge-pill bg-white border ${T?.border ?? "border-ink-100"} ${tBody} ${T ? T.accentHover : "hover:border-brand-600 hover:text-brand-600"} normal-case tracking-normal text-sm`}
                 >
                   <MapPin className="h-3.5 w-3.5" /> {a.label}
                 </Link>
@@ -322,7 +324,7 @@ export function ServicePageTemplate({ data }: Props) {
                   className={T ? `${T.card} ${T.cardRadius} border ${T.border} p-7 group ${T.cardElevation}` : "card-stead p-7 group hover:shadow-lg transition-all"}
                 >
                   <h4 className={hCls}>{r.label}</h4>
-                  <div className="mt-3 text-brand-600 font-semibold flex items-center gap-1 group-hover:gap-2 transition-all">
+                  <div className={`mt-3 ${T ? T.accent : "text-brand-600"} font-semibold flex items-center gap-1 group-hover:gap-2 transition-all`}>
                     Explore <ArrowRight className="h-4 w-4" />
                   </div>
                 </Link>

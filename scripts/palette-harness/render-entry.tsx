@@ -2,6 +2,7 @@ import { createElement, type ComponentType } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { SITE } from '~/data/site'
 import { ServicePageTemplate } from '~/components/ServicePageTemplate'
+import { ServiceAreaPageTemplate } from '~/components/ServiceAreaPageTemplate'
 
 // Runs INSIDE the vite SSR module graph (loaded via ssrLoadModule by
 // scripts/check-standalone-palette.mjs) so it shares the app's React instance and
@@ -44,4 +45,26 @@ const SERVICE_MOCK = {
 
 export function renderServicePage(): string {
   return renderToStaticMarkup(createElement(ServicePageTemplate, { data: SERVICE_MOCK }))
+}
+
+// An area page exercising the same in-section chrome: a localContext (eyebrow chip +
+// script-accent heading), zipCodes (eyebrow chip in the character-hero band), landmarks
+// (feature-check icons). Used to assert no brand-* chrome leaks on a character site.
+const AREA_MOCK = {
+  slug: 'sample-area',
+  title: 'Sample Service in Sample Area',
+  description: 'A sample service area.',
+  name: 'Sample Area',
+  zipCodes: ['00001', '00002'],
+  hero: { h1: 'Sample Service in Sample Area', subhead: 'Serving the area.' },
+  about: { title: 'About the area', body: ['b'] },
+  servicesHere: { title: 'Services here', intro: 'i', featured: [] },
+  landmarks: { title: 'Landmarks', intro: 'i', items: ['Landmark A', 'Landmark B'] },
+  localContext: { title: 'Why Sample Area chooses us', body: ['b'] },
+  faqs: [],
+  relatedAreas: [],
+} as unknown as Parameters<typeof ServiceAreaPageTemplate>[0]['data']
+
+export function renderAreaPage(): string {
+  return renderToStaticMarkup(createElement(ServiceAreaPageTemplate, { data: AREA_MOCK }))
 }
