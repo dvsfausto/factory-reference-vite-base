@@ -1,5 +1,6 @@
 import type { TeamMember } from './team-variants'
 import { SITE } from '~/data/site'
+import { resolveCharacterTokens } from '~/lib/character-tokens'
 
 // Team LAYOUT: 'grid' — an even grid of team member cards (photo, name, role,
 // optional bio). Character-agnostic, the default team composition.
@@ -38,8 +39,10 @@ export function TeamGridBlock({
   const team = (SITE as { team?: TeamMember[] }).team
   if (!team || team.length === 0) return null
   const members = team.slice(0, 8)
+  // Character surface tokens (null for known verticals → the literals below, byte-identical).
+  const T = resolveCharacterTokens()
   return (
-    <section className="bg-white">
+    <section className={T?.section ?? "bg-white"}>
       <div className="container-x py-20 md:py-28">
         <div className="max-w-2xl">
           <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600">
@@ -55,7 +58,7 @@ export function TeamGridBlock({
         <div className="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {members.map((m, i) => (
             <div key={`${m.name}-${i}`} className="flex flex-col">
-              <div className="aspect-[4/5] overflow-hidden rounded-2xl border border-[#E6E8EC] bg-[#F8FAFC]">
+              <div className={T ? `aspect-[4/5] overflow-hidden ${T.cardRadius} border ${T.border} ${T.card}` : "aspect-[4/5] overflow-hidden rounded-2xl border border-[#E6E8EC] bg-[#F8FAFC]"}>
                 {m.photo ? (
                   <img
                     src={m.photo}

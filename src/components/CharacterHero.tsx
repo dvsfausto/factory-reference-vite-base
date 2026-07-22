@@ -22,6 +22,12 @@ import { CtaFriendlyBlock } from './blocks/CtaFriendlyBlock'
 import { CtaModernBlock } from './blocks/CtaModernBlock'
 import { CtaCorporateBlock } from './blocks/CtaCorporateBlock'
 import { CtaCreativeBlock } from './blocks/CtaCreativeBlock'
+import { TrustBarBoldBlock } from './blocks/TrustBarBoldBlock'
+import { TrustBarElegantBlock } from './blocks/TrustBarElegantBlock'
+import { TrustBarFriendlyBlock } from './blocks/TrustBarFriendlyBlock'
+import { TrustBarModernBlock } from './blocks/TrustBarModernBlock'
+import { TrustBarCorporateBlock } from './blocks/TrustBarCorporateBlock'
+import { TrustBarCreativeBlock } from './blocks/TrustBarCreativeBlock'
 
 /** Per-page content the inner-page character hero renders (all optional → each
  *  falls back to SITE.hero.* inside the variant, so an omitted field is safe). */
@@ -56,6 +62,16 @@ const CTA_BY_CHARACTER: Record<string, ComponentType<{ title?: string; subtitle?
   creative: CtaCreativeBlock,
 }
 
+type TrustItems = { items?: { title: string; description: string }[] }
+const TRUSTBAR_BY_CHARACTER: Record<string, ComponentType<TrustItems>> = {
+  bold: TrustBarBoldBlock,
+  elegant: TrustBarElegantBlock,
+  friendly: TrustBarFriendlyBlock,
+  modern: TrustBarModernBlock,
+  corporate: TrustBarCorporateBlock,
+  creative: TrustBarCreativeBlock,
+}
+
 function siteCharacter(): string | undefined {
   return (SITE as { character?: string }).character
 }
@@ -85,4 +101,15 @@ export function renderCharacterCta(props: { title?: string; subtitle?: string } 
   const Cta = CTA_BY_CHARACTER[character]
   if (!Cta) return null
   return <Cta {...props} />
+}
+
+/** Render the character trust bar (items default to the variant's own), or null when there's no
+ *  character → caller renders the default TrustBarBlock. Fixes the default trust bar leaking onto
+ *  /about + /pricing (which render TrustBarBlock directly, outside the homepage's variant-map). */
+export function renderCharacterTrustBar(props: TrustItems = {}): ReactElement | null {
+  const character = siteCharacter()
+  if (!character) return null
+  const Trust = TRUSTBAR_BY_CHARACTER[character]
+  if (!Trust) return null
+  return <Trust {...props} />
 }

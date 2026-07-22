@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { ReviewsSection } from '~/components/ReviewsSection'
 import { CTASection } from '~/components/CTASection'
+import { renderCharacterCta } from '~/components/CharacterHero'
 import { buildMeta } from '~/lib/seo'
 import { SITE } from '~/data/site'
 
@@ -28,7 +29,7 @@ function ReviewsPage() {
         </div>
       </section>
       <ReviewsSection heading="All reviews" count={50} />
-      <CTASection title="Want to work together?" />
+      {renderCharacterCta({ title: 'Want to work together?' }) ?? <CTASection title="Want to work together?" />}
     </>
   )
 }

@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { buildMeta } from '~/lib/seo'
 import { SITE } from '~/data/site'
+import { resolveCharacterTokens } from '~/lib/character-tokens'
 import { ABOUT_LAYOUT, type AboutBlock } from '~/data/about-layout'
 import { TEAM_VARIANTS } from '~/components/blocks/team-variants'
 import { TeamGridBlock } from '~/components/blocks/TeamGridBlock'
@@ -21,20 +22,21 @@ export const Route = createFileRoute('/about')({
 // block (the rest of the page reuses the shared section library), DNA-tokened to
 // match the composed sections below it.
 function AboutIntro() {
+  const T = resolveCharacterTokens()
   return (
-    <section className="bg-white">
+    <section className={T?.section ?? "bg-white"}>
       <div className="container-x py-20 md:py-28">
         <div className="max-w-3xl">
           <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600">
             <span className="h-px w-6 bg-emerald-600" />
             About
           </span>
-          <h1 className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight text-[#0F172A] sm:text-5xl">
+          <h1 className={`mt-5 font-display text-4xl font-semibold leading-tight tracking-tight ${T?.text ?? "text-[#0F172A]"} sm:text-5xl`}>
             About {SITE.name}
           </h1>
-          <p className="mt-5 text-xl leading-relaxed text-[#64748B]">{SITE.tagline}</p>
+          <p className={`mt-5 text-xl leading-relaxed ${T?.muted ?? "text-[#64748B]"}`}>{SITE.tagline}</p>
           {SITE.about && (
-            <p className="mt-6 text-lg leading-relaxed text-[#475569]">{SITE.about}</p>
+            <p className={`mt-6 text-lg leading-relaxed ${T?.muted ?? "text-[#475569]"}`}>{SITE.about}</p>
           )}
         </div>
       </div>
