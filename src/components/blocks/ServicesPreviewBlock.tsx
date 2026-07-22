@@ -24,6 +24,15 @@ export function ServicesPreviewBlock({
 }) {
   const previewServices = SERVICES.slice(0, 3)
   if (previewServices.length === 0) return null
+  // Columns match the count so a lone (or paired) service — a single owner-service generic
+  // build — doesn't strand in an otherwise-empty 3-col row. 3+ → md:grid-cols-3, byte-identical
+  // for the template verticals (which always carry ≥3 services).
+  const gridCols =
+    previewServices.length === 1
+      ? 'md:grid-cols-1 md:max-w-sm md:mx-auto'
+      : previewServices.length === 2
+        ? 'md:grid-cols-2 md:max-w-2xl md:mx-auto'
+        : 'md:grid-cols-3'
   return (
     <section className="bg-brand-50 border-y border-brand-100">
       <div className="container-x py-16 md:py-24">
@@ -33,7 +42,7 @@ export function ServicesPreviewBlock({
           scriptAccent={scriptAccent}
           body={body}
         />
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className={`grid grid-cols-1 ${gridCols} gap-6`}>
           {previewServices.map((s) => (
             <Link
               key={s.slug}
