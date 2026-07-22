@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { buildMeta } from '~/lib/seo'
 import { SITE } from '~/data/site'
+import { resolveCharacterTokens } from '~/lib/character-tokens'
 import { PRICING_LAYOUT, type PricingBlock } from '~/data/pricing-layout'
 import { TrustBarBlock } from '~/components/blocks/TrustBarBlock'
 import { FaqBlock } from '~/components/blocks/FaqBlock'
@@ -23,19 +24,20 @@ export const Route = createFileRoute('/pricing')({
 // match the composed sections below it. SITE.pricing is guarded so the section
 // degrades gracefully to just the heading if the prose is absent.
 function PricingIntro() {
+  const T = resolveCharacterTokens()
   return (
-    <section className="bg-white">
+    <section className={T?.section ?? "bg-white"}>
       <div className="container-x py-20 md:py-28">
         <div className="max-w-3xl">
           <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600">
             <span className="h-px w-6 bg-emerald-600" />
             Pricing
           </span>
-          <h1 className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight text-[#0F172A] sm:text-5xl">
+          <h1 className={`mt-5 font-display text-4xl font-semibold leading-tight tracking-tight ${T?.text ?? "text-[#0F172A]"} sm:text-5xl`}>
             Honest, up-front pricing
           </h1>
           {SITE.pricing && (
-            <p className="mt-6 text-lg leading-relaxed text-[#475569]">{SITE.pricing}</p>
+            <p className={`mt-6 text-lg leading-relaxed ${T?.muted ?? "text-[#475569]"}`}>{SITE.pricing}</p>
           )}
         </div>
       </div>
