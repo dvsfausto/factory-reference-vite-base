@@ -80,7 +80,7 @@ export function ServicePageTemplate({ data }: Props) {
               the character surface (secPlain) or it renders on the page's default white — a
               white-band leak on e.g. a cream elegant page. secPlain = T?.section ?? "bg-white",
               so known verticals (no character) are byte-identical AND never reach this branch. */}
-          <div className={secPlain}>
+          <div className={T?.crumb?.surface ?? secPlain}>
             <nav aria-label="Breadcrumb" className="container-x pt-8 md:pt-10">
               <Breadcrumbs items={[
                 { label: "Home", to: "/" },

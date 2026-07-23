@@ -52,6 +52,12 @@ export interface CharacterTokens {
   text: string
   /** Secondary/muted text. */
   muted: string
+  /** Optional breadcrumb-band override for a character whose HERO is dark but whose `section` is
+   *  light. The crumb sits directly OVER the hero, so it must coordinate with the hero surface, not
+   *  the middle-section surface. Only `bold` needs it (bold's `section` IS bg-background/white, so
+   *  wrapping the crumb in the section renders a white band over its dark navy hero). Undefined →
+   *  the crumb uses `section` + `text`/`muted` (today's behaviour; every other character unchanged). */
+  crumb?: { surface: string; text: string; muted: string }
   /** Decorative-chrome accent (eyebrow chips, script flourishes, links, em-dashes) —
    *  the character DNA accent, replacing brand-blue inside tokenized sections. */
   accent: string
@@ -96,6 +102,10 @@ const BOLD: CharacterTokens = {
   border: 'border-ink-100',
   text: 'text-ink-900',
   muted: 'text-ink-500',
+  // Bold's hero is dark navy (HeroBoldFullbleedBlock → bg-ink-900 text-white) but its section is
+  // white. The crumb sits over the hero, so it coordinates with the hero's dark chrome (matching the
+  // dark footer, bg-ink-900) with light text — not the white section that produced the white band.
+  crumb: { surface: 'bg-ink-900', text: 'text-white', muted: 'text-white/70' },
   cardRadius: 'rounded-lg',
   cardElevation: 'transition-all hover:-translate-y-1 hover:border-emerald-600 hover:shadow-xl',
   buttonRadius: 'rounded-lg',

@@ -157,8 +157,26 @@ try {
         if (inkHits.length) {
           failures.push(`${page.label} [${ch}]: default-ink breadcrumb text on a character site → ${inkHits.join(', ')}`)
         }
-        if (!/<div class="[^"]*\bbg-[^"]*"><nav aria-label="Breadcrumb"/.test(html)) {
-          failures.push(`${page.label} [${ch}]: breadcrumb band has no character surface (white-band leak)`)
+        // Surface must CONTRAST with the hero. The crumb sits directly over the character hero, so a
+        // WHITE crumb (bg-background / bg-white) over a DARK hero is the white-band leak. The OLD
+        // check only required "some bg-* class" — bold's section token IS bg-background (white), so a
+        // white band over bold's dark navy hero PASSED. That was the blind spot (same shape as the
+        // text carve-out: bold's own token happens to be the leak value). Do NOT blanket-flag white:
+        // `creative` legitimately uses a white crumb over a LIGHT hero. Only white-over-dark is a leak.
+        const crumbWrap = html.match(/<div class="([^"]*)"><nav aria-label="Breadcrumb"/)
+        if (!crumbWrap) {
+          failures.push(`${page.label} [${ch}]: breadcrumb band has no surface wrapper (white-band leak)`)
+        } else {
+          const crumbCls = crumbWrap[1]
+          const crumbWhite = /\b(?:bg-background|bg-white)\b/.exec(crumbCls)
+          // Hero = the first <section> after the crumb band. Dark heroes (bold, elegant) carry a dark
+          // surface class (bg-ink-900 or a #0-2xxxxx hex); light heroes don't.
+          const afterCrumb = html.slice(html.indexOf(crumbWrap[0]) + crumbWrap[0].length)
+          const heroCls = (afterCrumb.match(/<section class="([^"]*)"/) ?? [, ''])[1]
+          const heroDark = /\bbg-ink-900\b|\bbg-\[#[0-2][0-9A-Fa-f]{5}\]/.test(heroCls)
+          if (crumbWhite && heroDark) {
+            failures.push(`${page.label} [${ch}]: white breadcrumb band (${crumbWhite[0]}) over the dark ${ch} hero — white-band leak`)
+          }
         }
       }
     }
