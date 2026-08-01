@@ -1,5 +1,6 @@
 import { createFileRoute, notFound } from '@tanstack/react-router'
-import { ServiceAreaPageTemplate } from '~/components/ServiceAreaPageTemplate'
+import { SectionList } from '~/components/render-section'
+import { AREA_DETAIL_LAYOUT } from '~/data/area-detail-layout'
 import { JsonLd } from '~/components/JsonLd'
 import { serviceAreasData } from '~/data/areas'
 import { breadcrumbLd, buildMeta, faqLd } from '~/lib/seo'
@@ -37,7 +38,7 @@ function AreaPage() {
         ])}
       />
       {data.faqs.length > 0 && <JsonLd data={faqLd(data.faqs)} />}
-      <ServiceAreaPageTemplate data={data} />
+      <SectionList blocks={AREA_DETAIL_LAYOUT} ctx={{ area: data, faqs: data.faqs }} />
     </>
   )
 }

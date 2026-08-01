@@ -3,7 +3,7 @@ import { Phone, Mail, MapPin, Clock } from 'lucide-react'
 import { Reveal } from '~/components/Reveal'
 import { SITE } from '~/data/site'
 import { serviceImageUrl } from '~/data/images'
-import type { FAQ, ServicePageData } from '~/lib/types/page-types'
+import type { FAQ, ServicePageData, ServiceAreaPageData, InfoPageData } from '~/lib/types/page-types'
 // Page-specific full-content components reused by the inner-page block cases
 // (servicesIndex/areasIndex/reviewsIndex/contactForm). These render the FULL list
 // (not the homepage's preview) — see the cases below.
@@ -153,6 +153,13 @@ import { CtaStackedCenteredBlock } from '~/components/blocks/CtaStackedCenteredB
 import { ServiceWhatWeCoverBlock } from '~/components/blocks/ServiceWhatWeCoverBlock'
 import { ServiceDetailsBlock } from '~/components/blocks/ServiceDetailsBlock'
 import { RelatedServicesBlock } from '~/components/blocks/RelatedServicesBlock'
+// Area-detail per-item blocks (Arc 3 · Stage D)
+import { AreaAboutBlock } from '~/components/blocks/AreaAboutBlock'
+import { AreaDetailsBlock } from '~/components/blocks/AreaDetailsBlock'
+import { RelatedAreasBlock } from '~/components/blocks/RelatedAreasBlock'
+// Info-page per-item blocks (Arc 3 · Stage E)
+import { InfoArticleBlock } from '~/components/blocks/InfoArticleBlock'
+import { RelatedInfoBlock } from '~/components/blocks/RelatedInfoBlock'
 
 // ─────────────────────────────────────────────────────────────────────────────
 // SHARED SECTION RENDERER (Arc 3 · Stage B).
@@ -344,6 +351,11 @@ export interface SectionContext {
   // cases (serviceWhatWeCover/serviceDetails/relatedServices) render its content. Absent
   // on the homepage / about / pricing / global pages → those cases return null (no-op).
   service?: ServicePageData
+  // Per-ITEM payloads for the area-detail (Stage D) and info (Stage E) routes. Same
+  // contract as `service`: when present the `hero` case renders THIS item's hero and
+  // the area/info cases render its content; absent everywhere else → those cases no-op.
+  area?: ServiceAreaPageData
+  info?: InfoPageData
 }
 
 // A layout block — the shared shape both HOMEPAGE_LAYOUT (LayoutBlock) and the
@@ -450,6 +462,33 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext): ReactN
           />
         )
       }
+      // PER-ITEM hero for the area (Stage D) + info (Stage E) routes. Areas/info have no
+      // own image, so the hero uses the business hero photo (SITE.hero.image_url) — honest
+      // (the business's own photo), never a fabricated image. Reuses the per-item WOW hero map.
+      if (ctx?.area) {
+        const AreaHero = SERVICE_HERO_VARIANTS[block.variant ?? ''] ?? HeroAuroraBlock
+        return (
+          <AreaHero
+            key="hero"
+            headline={ctx.area.hero.h1}
+            body={ctx.area.hero.subhead}
+            subheadline=""
+            imageUrl={SITE.hero.image_url}
+          />
+        )
+      }
+      if (ctx?.info) {
+        const InfoHero = SERVICE_HERO_VARIANTS[block.variant ?? ''] ?? HeroAuroraBlock
+        return (
+          <InfoHero
+            key="hero"
+            headline={ctx.info.hero.h1}
+            body={ctx.info.hero.subhead}
+            subheadline=""
+            imageUrl={SITE.hero.image_url}
+          />
+        )
+      }
       const HeroComponent = HERO_VARIANTS[block.variant ?? ''] ?? HeroBlock
       return (
         <HeroComponent
@@ -474,6 +513,18 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext): ReactN
       return ctx?.service ? <ServiceDetailsBlock service={ctx.service} /> : null
     case 'relatedServices':
       return ctx?.service ? <RelatedServicesBlock service={ctx.service} /> : null
+    // ── AREA-DETAIL per-item cases (Arc 3 · Stage D) — via ctx.area, else null ──
+    case 'areaAbout':
+      return ctx?.area ? <AreaAboutBlock area={ctx.area} variant={block.variant} /> : null
+    case 'areaDetails':
+      return ctx?.area ? <AreaDetailsBlock area={ctx.area} /> : null
+    case 'relatedAreas':
+      return ctx?.area ? <RelatedAreasBlock area={ctx.area} /> : null
+    // ── INFO-page per-item cases (Arc 3 · Stage E) — via ctx.info, else null ──
+    case 'infoArticle':
+      return ctx?.info ? <InfoArticleBlock info={ctx.info} variant={block.variant} /> : null
+    case 'relatedInfo':
+      return ctx?.info ? <RelatedInfoBlock info={ctx.info} /> : null
     case 'taglineBar':
       return <TaglineBarBlock key="taglineBar" />
     case 'localBar':
