@@ -1,5 +1,6 @@
 import { createFileRoute, notFound } from '@tanstack/react-router'
-import { InfoPageTemplate } from '~/components/InfoPageTemplate'
+import { SectionList } from '~/components/render-section'
+import { INFO_DETAIL_LAYOUT } from '~/data/info-detail-layout'
 import { JsonLd } from '~/components/JsonLd'
 import { infoPagesData } from '~/data/info-pages'
 import { articleLd, breadcrumbLd, buildMeta, faqLd } from '~/lib/seo'
@@ -41,7 +42,7 @@ function InfoPage() {
         ])}
       />
       {data.faqs.length > 0 && <JsonLd data={faqLd(data.faqs)} />}
-      <InfoPageTemplate data={data} />
+      <SectionList blocks={INFO_DETAIL_LAYOUT} ctx={{ info: data, faqs: data.faqs }} />
     </>
   )
 }
