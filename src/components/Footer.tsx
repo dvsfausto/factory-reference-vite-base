@@ -31,6 +31,24 @@ interface FooterTheme {
 }
 
 const FOOTER_THEMES: Record<string, FooterTheme> = {
+  // WOW chrome (Arc 1 · Stage 2). A deep premium footer with a brand-gradient top
+  // hairline + ambient brand glow (added in the markup, gated on themeKey==='wow'),
+  // brand-reactive via the brand ramp. Selected by SITE.chromeStyle='wow'. Same
+  // markup/content — shell-only restyle. logoLight so the logo reads on the dark.
+  wow: {
+    surface: "bg-ink-900 text-white",
+    tagline: "text-white/65",
+    socialBorder: "border-white/20",
+    socialHover: "hover:bg-white/10",
+    heading: "text-white font-display tracking-wide",
+    listText: "text-white/65",
+    listHover: "hover:text-white",
+    areaAll: "text-brand-200 hover:text-white",
+    border: "border-white/10",
+    bottomText: "text-white/45",
+    bottomHover: "hover:text-white",
+    logoLight: true,
+  },
   default: {
     surface: "bg-brand-900 text-white",
     tagline: "text-white/70",
@@ -153,18 +171,41 @@ export function Footer({ decorativeAsset = defaultLeaves }: { decorativeAsset?: 
   // Bold/elegant builds set SITE.footerDecor='none' to drop the botanical leaf
   // sprite (a soft, cleaning-specific decoration). Absent → the leaf renders
   // (default; byte-identical for verticals that do not set the flag).
-  const showFooterDecor =
-    (SITE as { footerDecor?: string }).footerDecor !== "none";
   const character = (SITE as { character?: string }).character ?? "";
   const surface = (SITE as { surface?: string }).surface ?? "";
-  // Elegant defaults to its LIGHT footer; surface='dark' keeps the original dark
-  // elegant footer (byte-identical for a dark-opt-in build).
+  // SITE.chromeStyle mirrors the header: 'wow' selects the brand-reactive glass
+  // chrome. Absent/unknown → character logic (byte-identical for builds without it).
+  const chrome = (SITE as { chromeStyle?: string }).chromeStyle ?? "";
   const themeKey =
-    character === "elegant" && surface !== "dark" ? "elegant-light" : character;
+    chrome && FOOTER_THEMES[chrome]
+      ? chrome
+      : character === "elegant" && surface !== "dark"
+        ? "elegant-light"
+        : character;
   const t = FOOTER_THEMES[themeKey] ?? FOOTER_THEMES.default;
+  // The botanical leaf sprite is a cleaning-specific decoration — drop it for the
+  // WOW chrome (its brand glow replaces it), and honor the existing 'none' opt-out.
+  const showFooterDecor =
+    (SITE as { footerDecor?: string }).footerDecor !== "none" && themeKey !== "wow";
 
   return (
     <footer className={`relative overflow-hidden ${t.surface}`}>
+      {/* WOW chrome only: a brand-gradient top hairline + one ambient brand glow,
+          echoing the aurora/glass sections. Additive; no other theme renders these. */}
+      {themeKey === "wow" && (
+        <>
+          <div
+            aria-hidden
+            className="absolute inset-x-0 top-0 z-10 h-px"
+            style={{ backgroundImage: "var(--wow-grad-brand)" }}
+          />
+          <div
+            aria-hidden
+            className="pointer-events-none absolute -top-1/4 right-0 h-2/3 w-1/2 opacity-25"
+            style={{ backgroundImage: "var(--wow-grad-brand)", filter: "blur(90px)" }}
+          />
+        </>
+      )}
       {showFooterDecor && (
         <img src={decorativeAsset} alt="" aria-hidden className="absolute -left-16 top-0 h-full opacity-15 pointer-events-none select-none" />
       )}
