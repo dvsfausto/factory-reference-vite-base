@@ -1,5 +1,6 @@
 import { createFileRoute, notFound, redirect } from '@tanstack/react-router'
-import { ServicePageTemplate } from '~/components/ServicePageTemplate'
+import { SectionList } from '~/components/render-section'
+import { SERVICE_DETAIL_LAYOUT } from '~/data/service-detail-layout'
 import { JsonLd } from '~/components/JsonLd'
 import { servicesData } from '~/data/services'
 import { SERVICES } from '~/data/services-view'
@@ -48,7 +49,15 @@ function ServicePage() {
         ])}
       />
       {data.faqs.length > 0 && <JsonLd data={faqLd(data.faqs)} />}
-      <ServicePageTemplate data={data} />
+      {/* Arc 3 · Stage C: the fixed ServicePageTemplate is replaced by the shared
+          renderer driven by SERVICE_DETAIL_LAYOUT. ctx.service carries THIS service's
+          per-item content (hero + whatWeBuy/howPrice/scenarios/pricing/coverage/
+          localContext/testimonial/relatedServices); ctx.faqs feeds the faq block.
+          ServicePageTemplate.tsx stays in the repo (unused) for backward-reference. */}
+      <SectionList
+        blocks={SERVICE_DETAIL_LAYOUT}
+        ctx={{ service: data, faqs: data.faqs }}
+      />
     </>
   )
 }

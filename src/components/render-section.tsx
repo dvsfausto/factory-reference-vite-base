@@ -2,7 +2,8 @@ import type { ComponentProps, ComponentType, ReactNode } from 'react'
 import { Phone, Mail, MapPin, Clock } from 'lucide-react'
 import { Reveal } from '~/components/Reveal'
 import { SITE } from '~/data/site'
-import type { FAQ } from '~/lib/types/page-types'
+import { serviceImageUrl } from '~/data/images'
+import type { FAQ, ServicePageData } from '~/lib/types/page-types'
 // Page-specific full-content components reused by the inner-page block cases
 // (servicesIndex/areasIndex/reviewsIndex/contactForm). These render the FULL list
 // (not the homepage's preview) — see the cases below.
@@ -147,6 +148,11 @@ import { CtaColorBlock } from '~/components/blocks/CtaColorBlock'
 import { CtaSplitWithImageBlock } from '~/components/blocks/CtaSplitWithImageBlock'
 import { CtaBoxedCardBlock } from '~/components/blocks/CtaBoxedCardBlock'
 import { CtaStackedCenteredBlock } from '~/components/blocks/CtaStackedCenteredBlock'
+// SERVICE-DETAIL per-item blocks (Arc 3 · Stage C) — each reads THIS service's
+// content from ctx.service (SectionContext) and honestly omits empty sub-sections.
+import { ServiceWhatWeCoverBlock } from '~/components/blocks/ServiceWhatWeCoverBlock'
+import { ServiceDetailsBlock } from '~/components/blocks/ServiceDetailsBlock'
+import { RelatedServicesBlock } from '~/components/blocks/RelatedServicesBlock'
 
 // ─────────────────────────────────────────────────────────────────────────────
 // SHARED SECTION RENDERER (Arc 3 · Stage B).
@@ -183,6 +189,21 @@ const HERO_VARIANTS: Record<string, typeof HeroBlock> = {
   // WOW variants (Arc 1 · Stage 2): brand-reactive + animated, consuming --wow-*.
   // 'aurora' = cinematic full-bleed (dark); 'spotlight' = editorial split (light);
   // 'editorial' = magazine/typographic. Selected the same way (block.variant).
+  aurora: HeroAuroraBlock,
+  spotlight: HeroSpotlightBlock,
+  editorial: HeroEditorialBlock,
+}
+
+// SERVICE-DETAIL hero variants (Arc 3 · Stage C). The WOW heroes (aurora/spotlight/
+// editorial) already accept per-item content props (headline/body/imageUrl/subheadline/
+// trustItems); the DEFAULT HeroBlock does NOT — so the service-page hero path selects
+// from this per-item-typed map (default 'aurora'), keeping the homepage `hero` path
+// (HERO_VARIANTS, trustItems/decorativeAsset only) untouched. Same block, two content
+// channels: SITE.hero on the homepage, ctx.service.hero on a service page.
+const SERVICE_HERO_VARIANTS: Record<
+  string,
+  ComponentType<ComponentProps<typeof HeroAuroraBlock>>
+> = {
   aurora: HeroAuroraBlock,
   spotlight: HeroSpotlightBlock,
   editorial: HeroEditorialBlock,
@@ -318,6 +339,11 @@ const FAQ_VARIANTS: Record<string, ComponentType<ComponentProps<typeof FaqBlock>
 export interface SectionContext {
   faqs?: FAQ[]
   intro?: { eyebrow?: string; heading: string; body?: string; script?: string }
+  // Per-ITEM payload for the service-detail route (Arc 3 · Stage C). When present, the
+  // `hero` case renders THIS service's hero (else SITE.hero), and the three service
+  // cases (serviceWhatWeCover/serviceDetails/relatedServices) render its content. Absent
+  // on the homepage / about / pricing / global pages → those cases return null (no-op).
+  service?: ServicePageData
 }
 
 // A layout block — the shared shape both HOMEPAGE_LAYOUT (LayoutBlock) and the
@@ -402,6 +428,28 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext): ReactN
     case 'intro':
       return ctx?.intro ? <IntroBlock {...ctx.intro} /> : null
     case 'hero': {
+      // PER-ITEM hero (service-detail route): render THIS service's own headline / body /
+      // image / trustLine through a WOW hero variant (default 'aurora'). Mirrors
+      // ServicePageTemplate's renderCharacterHero feed: subheadline="" suppresses the
+      // homepage subheadline; trustLine ("a · b · c") splits into the hero's trust row
+      // (absent → hero keeps its default trust items).
+      if (ctx?.service) {
+        const svc = ctx.service
+        const ServiceHero = SERVICE_HERO_VARIANTS[block.variant ?? ''] ?? HeroAuroraBlock
+        const trustItems = svc.hero.trustLine
+          ? svc.hero.trustLine.split('·').map((s) => s.trim()).filter(Boolean)
+          : undefined
+        return (
+          <ServiceHero
+            key="hero"
+            headline={svc.hero.h1}
+            body={svc.hero.subhead}
+            subheadline=""
+            imageUrl={serviceImageUrl(svc.slug)}
+            trustItems={trustItems}
+          />
+        )
+      }
       const HeroComponent = HERO_VARIANTS[block.variant ?? ''] ?? HeroBlock
       return (
         <HeroComponent
@@ -414,6 +462,18 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext): ReactN
         />
       )
     }
+    // ── SERVICE-DETAIL per-item cases (Arc 3 · Stage C) ───────────────────────
+    // Each renders THIS service's content via ctx.service, and returns null when
+    // ctx.service is absent (backward-compat: homepage/about/pricing/global pages
+    // are unaffected) OR when the block itself has nothing to show (honest omit).
+    case 'serviceWhatWeCover':
+      return ctx?.service ? (
+        <ServiceWhatWeCoverBlock service={ctx.service} variant={block.variant} />
+      ) : null
+    case 'serviceDetails':
+      return ctx?.service ? <ServiceDetailsBlock service={ctx.service} /> : null
+    case 'relatedServices':
+      return ctx?.service ? <RelatedServicesBlock service={ctx.service} /> : null
     case 'taglineBar':
       return <TaglineBarBlock key="taglineBar" />
     case 'localBar':
