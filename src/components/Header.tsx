@@ -18,6 +18,9 @@ import { AREAS } from "~/data/areas";
 // #B8A893), contained to the character themes. Bold uses the cool ink-* dark.
 interface HeaderTheme {
   shell: string;
+  /** WOW-only: shell classes applied when scrolled (frosted glass intensifies).
+   *  Absent → shell stays constant on scroll (every character theme, unchanged). */
+  shellScrolled?: string;
   scrolledShadow: string;
   skip: string;
   navLink: string;
@@ -40,6 +43,35 @@ interface HeaderTheme {
 }
 
 const HEADER_THEMES: Record<string, HeaderTheme> = {
+  // WOW chrome (Arc 1 · Stage 2). A frosted-glass sticky header that intensifies
+  // on scroll, brand-reactive via the --wow-* tokens + the brand ramp. Character-
+  // agnostic: selected by SITE.chromeStyle='wow' (not a character), so it composes
+  // with any brand color. CTA carries the brand gradient + glow; links + dropdowns
+  // use the brand ramp; the bottom hairline is brand-tinted. Same markup/behavior
+  // as every theme — shell-only restyle.
+  wow: {
+    shell: "bg-white/70 border-b border-[color:var(--wow-hairline)]",
+    shellScrolled: "bg-white/85 border-b border-[color:var(--wow-hairline)] shadow-[var(--wow-shadow-soft)]",
+    scrolledShadow: "",
+    skip: "focus:bg-primary focus:text-primary-foreground",
+    navLink: "text-[15px] font-medium text-ink-700 hover:text-brand-600 transition-colors",
+    cta: "inline-flex h-[42px] items-center rounded-full px-5 text-sm font-semibold text-white bg-[image:var(--wow-grad-brand)] shadow-[var(--wow-shadow-glow)] transition-transform hover:-translate-y-0.5",
+    ctaLabel: "Free Quote",
+    dropdownSurface: "bg-white/90 backdrop-blur-xl border border-[color:var(--wow-hairline)] rounded-2xl shadow-[var(--wow-shadow-soft)]",
+    dropdownItem: "hover:bg-brand-50",
+    dropdownTitle: "text-ink-900",
+    dropdownSub: "text-ink-500",
+    areaAllLink: "text-brand-600 hover:bg-brand-50",
+    phoneLink: "text-ink-700 hover:text-brand-600",
+    menuIcon: "text-ink-900",
+    logoLight: false,
+    mobilePanel: "bg-white/95 backdrop-blur-xl",
+    mobileText: "text-ink-900",
+    mobileLabel: "text-ink-500",
+    mobileBorder: "border-[color:var(--wow-hairline)]",
+    mobilePhone: "text-brand-600",
+    mobileCta: "inline-flex h-12 w-full items-center justify-center rounded-full text-white font-semibold bg-[image:var(--wow-grad-brand)] shadow-[var(--wow-shadow-glow)]",
+  },
   default: {
     shell: "bg-white/95",
     scrolledShadow: "shadow-[0_2px_16px_rgba(11,42,91,0.08)]",
@@ -224,10 +256,16 @@ export function Header() {
   const [openMenu, setOpenMenu] = useState<"services" | "areas" | null>(null);
   const character = (SITE as { character?: string }).character ?? "";
   const surface = (SITE as { surface?: string }).surface ?? "";
-  // Elegant defaults to its LIGHT shell; surface='dark' selects the original dark
-  // elegant theme (so a dark-opt-in build keeps today's shell, byte-identical).
+  // SITE.chromeStyle is the frame (header/footer) style override — 'wow' selects
+  // the brand-reactive glass chrome, independent of character. Absent/unknown →
+  // the character logic below (byte-identical for builds that don't set it).
+  const chrome = (SITE as { chromeStyle?: string }).chromeStyle ?? "";
   const themeKey =
-    character === "elegant" && surface !== "dark" ? "elegant-light" : character;
+    chrome && HEADER_THEMES[chrome]
+      ? chrome
+      : character === "elegant" && surface !== "dark"
+        ? "elegant-light"
+        : character;
   const t = HEADER_THEMES[themeKey] ?? HEADER_THEMES.default;
   const headerCtaLabel = ((SITE as { headerCtaLabel?: string; ctaLabel?: string }).headerCtaLabel ?? (SITE as { ctaLabel?: string }).ctaLabel ?? t.ctaLabel);
 
@@ -247,7 +285,9 @@ export function Header() {
   return (
     <>
       <header
-        className={`sticky top-0 z-40 ${t.shell} backdrop-blur transition-shadow ${
+        className={`sticky top-0 z-40 ${
+          scrolled && t.shellScrolled ? t.shellScrolled : t.shell
+        } backdrop-blur ${t.shellScrolled ? "transition-all" : "transition-shadow"} ${
           scrolled ? t.scrolledShadow : ""
         }`}
       >
