@@ -1,4 +1,4 @@
-import { Link } from '@tanstack/react-router'
+import { PrimaryCta } from './PrimaryCta'
 import { ArrowRight, Phone } from 'lucide-react'
 import { elegantSurface } from '~/lib/elegant-surface'
 import { SITE } from '~/data/site'
@@ -41,12 +41,11 @@ export function CtaElegantBlock({
             <p className={`mt-5 max-w-xl text-lg leading-relaxed ${s.muted}`}>{sub}</p>
           )}
           <div className="mt-10 flex flex-wrap gap-4">
-            <Link
-              to="/contact"
+            <PrimaryCta
               className="inline-flex h-[54px] items-center gap-2 rounded-lg bg-primary px-8 font-display text-base font-medium tracking-wide text-primary-foreground transition-opacity hover:opacity-90"
             >
               {ctaLabel} <ArrowRight className="h-4 w-4" />
-            </Link>
+            </PrimaryCta>
             <a
               href={`tel:${SITE.phone}`}
               className={`inline-flex h-[54px] items-center gap-2 rounded-lg border border-emerald-600/60 px-7 font-medium ${s.text} transition-colors hover:border-emerald-600 hover:bg-emerald-600/10`}

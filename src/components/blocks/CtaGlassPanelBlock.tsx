@@ -1,4 +1,4 @@
-import { Link } from '@tanstack/react-router'
+import { PrimaryCta } from './PrimaryCta'
 import { motion } from 'framer-motion'
 import { ArrowRight, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
@@ -79,13 +79,12 @@ export function CtaGlassPanelBlock({
             )}
 
             <div className="mt-9 flex flex-wrap justify-center gap-3.5">
-              <Link
-                to="/contact"
+              <PrimaryCta
                 className="inline-flex h-[52px] items-center gap-2 rounded-full bg-primary px-8 font-semibold text-primary-foreground transition-transform hover:-translate-y-0.5"
                 style={{ boxShadow: 'var(--wow-shadow-glow)' }}
               >
                 {label} <ArrowRight className="h-4 w-4" />
-              </Link>
+              </PrimaryCta>
               <a
                 href={`tel:${SITE.phone}`}
                 className="inline-flex h-[52px] items-center gap-2 rounded-full border px-6 font-semibold text-brand-800 transition-colors hover:bg-brand-50"

@@ -1,4 +1,4 @@
-import { Link } from '@tanstack/react-router'
+import { PrimaryCta } from './PrimaryCta'
 import { motion, useReducedMotion } from 'framer-motion'
 import { ArrowRight, Phone, Sparkles } from 'lucide-react'
 import { SITE } from '~/data/site'
@@ -103,13 +103,12 @@ export function CtaAuroraGlowBlock({
           transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           className="mt-10 flex flex-wrap justify-center gap-3.5"
         >
-          <Link
-            to="/contact"
+          <PrimaryCta
             className="inline-flex h-[52px] items-center gap-2 rounded-full bg-white px-8 font-semibold text-brand-800 transition-transform hover:-translate-y-0.5"
             style={{ boxShadow: 'var(--wow-shadow-glow)' }}
           >
             {label} <ArrowRight className="h-4 w-4" />
-          </Link>
+          </PrimaryCta>
           <a
             href={`tel:${SITE.phone}`}
             className="inline-flex h-[52px] items-center gap-2 rounded-full border border-white/70 px-6 font-semibold text-white transition-colors hover:bg-white/10"

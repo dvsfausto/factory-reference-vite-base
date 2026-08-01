@@ -1,4 +1,4 @@
-import { Link } from '@tanstack/react-router'
+import { PrimaryCta } from './PrimaryCta'
 import { ArrowUpRight, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 
@@ -38,12 +38,11 @@ export function CtaCreativeBlock({
             <p className="mt-6 max-w-xl text-xl leading-relaxed text-white/90">{sub}</p>
           )}
           <div className="mt-10 flex flex-wrap gap-4">
-            <Link
-              to="/contact"
+            <PrimaryCta
               className="inline-flex h-[56px] items-center gap-2 rounded-2xl bg-primary px-8 font-display text-base font-bold text-primary-foreground transition-transform hover:-translate-y-0.5"
             >
               Start a project <ArrowUpRight className="h-5 w-5" />
-            </Link>
+            </PrimaryCta>
             <a
               href={`tel:${SITE.phone}`}
               className="inline-flex h-[56px] items-center gap-2 rounded-2xl border-2 border-white px-7 font-display font-bold text-white transition-colors hover:bg-white hover:text-emerald-700"

@@ -1,4 +1,4 @@
-import { Link } from '@tanstack/react-router'
+import { PrimaryCta } from './PrimaryCta'
 import { ArrowRight, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 
@@ -46,12 +46,11 @@ export function CtaColorBlock({
             <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-primary-foreground/85">{sub}</p>
           )}
           <div className="mt-10 flex flex-wrap justify-center gap-4">
-            <Link
-              to="/contact"
+            <PrimaryCta
               className="inline-flex h-[54px] items-center gap-2 rounded-xl bg-white px-8 font-display text-base font-semibold text-[#0F172A] transition-transform hover:-translate-y-0.5"
             >
               Get started <ArrowRight className="h-4 w-4" />
-            </Link>
+            </PrimaryCta>
             <a
               href={`tel:${SITE.phone}`}
               className="inline-flex h-[54px] items-center gap-2 rounded-xl border border-primary-foreground/40 px-7 font-display font-semibold text-primary-foreground transition-colors hover:bg-primary-foreground/10"

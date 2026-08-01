@@ -1,6 +1,6 @@
-import { Link } from "@tanstack/react-router";
 import { Phone, Sparkles } from "lucide-react";
 import { SITE } from "~/data/site";
+import { PrimaryCta } from "~/components/blocks/PrimaryCta";
 import defaultLeaves from "~/assets/decorative/cleaning-leaves.png";
 
 interface Props {
@@ -41,7 +41,7 @@ export function CTASection({
           <p className="mt-5 text-white/85 text-lg max-w-xl mx-auto">{subtitle}</p>
         )}
         <div className="mt-9 flex flex-wrap justify-center gap-3">
-          <Link to={to} className="btn btn-lg btn-white">{label}</Link>
+          <PrimaryCta to={to} className="btn btn-lg btn-white">{label}</PrimaryCta>
           <a href={`tel:${SITE.phone}`} className="btn btn-lg btn-outline-white">
             <Phone className="h-4 w-4" /> {SITE.phoneDisplay}
           </a>

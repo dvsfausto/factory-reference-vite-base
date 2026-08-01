@@ -1,4 +1,4 @@
-import { Link } from '@tanstack/react-router'
+import { PrimaryCta } from './PrimaryCta'
 import { motion } from 'framer-motion'
 import { ArrowRight, Check, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
@@ -57,12 +57,11 @@ export function HeroSplitReversedBlock({
             </p>
 
             <div className="mt-9 flex flex-wrap gap-4">
-              <Link
-                to="/contact"
+              <PrimaryCta
                 className="inline-flex h-[52px] items-center gap-2 rounded-xl bg-primary px-7 font-display text-base font-semibold text-primary-foreground transition-opacity hover:opacity-90"
               >
                 {SITE.hero.cta_primary_label} <ArrowRight className="h-4 w-4" />
-              </Link>
+              </PrimaryCta>
               <a
                 href={`tel:${SITE.phone}`}
                 className="inline-flex h-[52px] items-center gap-2 rounded-xl border border-[#E6E8EC] px-6 font-display font-semibold text-[#0F172A] transition-colors hover:border-emerald-600 hover:text-emerald-700"

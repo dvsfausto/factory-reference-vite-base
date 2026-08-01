@@ -1,4 +1,4 @@
-import { Link } from '@tanstack/react-router'
+import { PrimaryCta } from './PrimaryCta'
 import { ArrowRight, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 
@@ -38,12 +38,11 @@ export function CtaCorporateBlock({
             <p className="mt-4 max-w-xl text-lg leading-relaxed text-white/70">{sub}</p>
           )}
           <div className="mt-8 flex flex-wrap gap-3">
-            <Link
-              to="/contact"
+            <PrimaryCta
               className="inline-flex h-[52px] items-center gap-2 rounded-md bg-primary px-7 font-display text-base font-semibold text-primary-foreground transition-opacity hover:opacity-90"
             >
               {ctaLabel} <ArrowRight className="h-4 w-4" />
-            </Link>
+            </PrimaryCta>
             <a
               href={`tel:${SITE.phone}`}
               className="inline-flex h-[52px] items-center gap-2 rounded-md border border-white/30 px-6 font-display font-semibold text-white transition-colors hover:border-white hover:bg-white/10"

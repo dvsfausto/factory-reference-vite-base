@@ -1,4 +1,4 @@
-import { Link } from '@tanstack/react-router'
+import { PrimaryCta } from './PrimaryCta'
 import { motion } from 'framer-motion'
 import { ArrowRight, Check, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
@@ -67,12 +67,11 @@ export function HeroFriendlyBlock({
             </p>
 
             <div className="mt-8 flex flex-wrap gap-4">
-              <Link
-                to="/contact"
+              <PrimaryCta
                 className="inline-flex h-[54px] items-center gap-2 rounded-2xl bg-primary px-8 font-display text-base font-semibold text-primary-foreground shadow-lg transition-opacity hover:opacity-90"
               >
                 {ctaLabel} <ArrowRight className="h-4 w-4" />
-              </Link>
+              </PrimaryCta>
               <a
                 href={`tel:${SITE.phone}`}
                 className="inline-flex h-[54px] items-center gap-2 rounded-2xl border-2 border-emerald-600/40 px-7 font-display font-semibold text-[#3D3530] transition-colors hover:border-emerald-600 hover:bg-emerald-50"

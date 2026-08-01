@@ -1,4 +1,4 @@
-import { Link } from '@tanstack/react-router'
+import { PrimaryCta } from './PrimaryCta'
 import { ArrowRight, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 
@@ -45,12 +45,11 @@ export function CtaStackedCenteredBlock({
             <p className="mt-7 max-w-xl text-xl leading-relaxed text-[#64748B]">{sub}</p>
           )}
           <div className="mt-12 flex flex-wrap justify-center gap-4">
-            <Link
-              to="/contact"
+            <PrimaryCta
               className="inline-flex h-[56px] items-center gap-2 rounded-xl bg-primary px-8 font-display text-base font-semibold text-primary-foreground transition-opacity hover:opacity-90"
             >
               Get started <ArrowRight className="h-4 w-4" />
-            </Link>
+            </PrimaryCta>
             <a
               href={`tel:${SITE.phone}`}
               className="inline-flex h-[56px] items-center gap-2 rounded-xl px-6 font-display font-semibold text-[#0F172A] transition-colors hover:text-emerald-700"

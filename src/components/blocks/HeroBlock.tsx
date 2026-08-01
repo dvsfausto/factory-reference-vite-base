@@ -1,4 +1,4 @@
-import { Link } from '@tanstack/react-router'
+import { PrimaryCta } from './PrimaryCta'
 import { motion } from 'framer-motion'
 import { ArrowRight, Check, Phone } from 'lucide-react'
 import { HeroSlideshow } from '~/components/HeroSlideshow'
@@ -59,9 +59,9 @@ export function HeroBlock({
               {SITE.hero.body}
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link to="/contact" className="btn btn-lg btn-primary">
+              <PrimaryCta className="btn btn-lg btn-primary">
                 {SITE.hero.cta_primary_label} <ArrowRight className="h-4 w-4" />
-              </Link>
+              </PrimaryCta>
               {/* NOTE: SITE.hero.cta_secondary_label exists for shape parity
                   with painter + scaffolder cleaning-english emit, but the
                   cleaning template's signature design uses a phone-dial button

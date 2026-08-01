@@ -1,4 +1,4 @@
-import { Link } from '@tanstack/react-router'
+import { PrimaryCta } from './PrimaryCta'
 import { motion } from 'framer-motion'
 import { ArrowRight, Check, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
@@ -92,12 +92,11 @@ export function HeroBoldFullbleedBlock({
                 rounded-md, not the .btn 999px pill) + Oswald label. Deliberately
                 not emerald (that is the DNA accent role) and not the literal
                 brand scale or .btn-primary (fixed hex that ignores the kit). */}
-            <Link
-              to="/contact"
+            <PrimaryCta
               className="inline-flex h-[54px] items-center gap-2 rounded-md bg-primary px-8 font-display text-base font-semibold uppercase tracking-wide text-primary-foreground transition-opacity hover:opacity-90"
             >
               {ctaLabel} <ArrowRight className="h-4 w-4" />
-            </Link>
+            </PrimaryCta>
             {/* Secondary CTA: outline phone, same square structural corners. */}
             <a
               href={`tel:${SITE.phone}`}

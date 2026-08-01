@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Menu, X, Phone, ChevronDown } from "lucide-react";
 import { Logo } from "./Logo";
 import { SITE, BOOKING } from "~/data/site";
+import { PrimaryCta } from "~/components/blocks/PrimaryCta";
 import { SERVICES } from "~/data/services-view";
 import { AREAS } from "~/data/areas";
 
@@ -395,11 +396,7 @@ export function Header() {
               <Phone className="h-4 w-4" />
               {SITE.phoneDisplay}
             </a>
-            {bookNative ? (
-              <a href="#book" className={t.cta}>{headerCtaLabel}</a>
-            ) : (
-              <Link to="/contact" className={t.cta}>{headerCtaLabel}</Link>
-            )}
+            <PrimaryCta className={t.cta}>{headerCtaLabel}</PrimaryCta>
           </div>
 
           <button
@@ -451,15 +448,9 @@ export function Header() {
               <a href={`tel:${SITE.phone}`} className={`flex items-center gap-2 text-base font-semibold ${t.mobilePhone}`}>
                 <Phone className="h-5 w-5" /> {SITE.phoneDisplay}
               </a>
-              {bookNative ? (
-                <a href="#book" onClick={() => setOpen(false)} className={t.mobileCta}>
-                  {headerCtaLabel}
-                </a>
-              ) : (
-                <Link to="/contact" onClick={() => setOpen(false)} className={t.mobileCta}>
-                  {headerCtaLabel}
-                </Link>
-              )}
+              <PrimaryCta onClick={() => setOpen(false)} className={t.mobileCta}>
+                {headerCtaLabel}
+              </PrimaryCta>
             </div>
           </div>
         </div>

@@ -1,4 +1,4 @@
-import { Link } from '@tanstack/react-router'
+import { PrimaryCta } from './PrimaryCta'
 import { ArrowRight, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 
@@ -45,12 +45,11 @@ export function CtaBoxedCardBlock({
             <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-slate-300">{sub}</p>
           )}
           <div className="mt-10 flex flex-wrap justify-center gap-4">
-            <Link
-              to="/contact"
+            <PrimaryCta
               className="inline-flex h-[54px] items-center gap-2 rounded-xl bg-primary px-8 font-display text-base font-semibold text-primary-foreground transition-opacity hover:opacity-90"
             >
               Get started <ArrowRight className="h-4 w-4" />
-            </Link>
+            </PrimaryCta>
             <a
               href={`tel:${SITE.phone}`}
               className="inline-flex h-[54px] items-center gap-2 rounded-xl border border-white/25 px-7 font-display font-semibold text-white transition-colors hover:border-emerald-600 hover:text-emerald-100"
