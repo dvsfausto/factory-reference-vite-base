@@ -78,7 +78,9 @@ const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
 
 // ── formatting helpers (display-only; the server owns the authoritative UTC math) ──
 function formatPrice(price: number | null): string {
-  if (price == null || Number.isNaN(price)) return ''
+  // Hide unset/zero prices (barber "Haircut" often has price 0 = not-priced) rather
+  // than showing a misleading "$0"; a real charge (e.g. $20 Facial) still renders.
+  if (price == null || Number.isNaN(price) || price <= 0) return ''
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
