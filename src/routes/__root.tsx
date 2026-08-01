@@ -57,6 +57,13 @@ function RootDocument({ children }: { children: React.ReactNode }) {
     <html lang="en">
       <head>
         <HeadContent />
+        {/* WOW motion layer: mark JS-capable BEFORE first paint so scroll-reveal hides its start-state
+            without a flash. No-JS never sets this → content stays visible (SSR/SEO safe). */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: "try{document.documentElement.classList.add('js-reveal')}catch(e){}",
+          }}
+        />
       </head>
       <body>
         {children}

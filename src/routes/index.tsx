@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { JsonLd } from '~/components/JsonLd'
+import { Reveal } from '~/components/Reveal'
 import { buildMeta, faqLd } from '~/lib/seo'
 import { imageSrc } from '~/lib/asset-url'
 import { SITE } from '~/data/site'
@@ -527,7 +528,11 @@ function HomePage() {
   return (
     <>
       <JsonLd data={faqLd(HOME_FAQS)} />
-      {HOMEPAGE_LAYOUT.map(renderBlock)}
+      {HOMEPAGE_LAYOUT.map((block, i) => (
+        <Reveal key={i} disabled={i === 0 || block.type === 'hero'}>
+          {renderBlock(block)}
+        </Reveal>
+      ))}
     </>
   )
 }

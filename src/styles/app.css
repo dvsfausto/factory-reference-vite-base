@@ -246,3 +246,54 @@
   .input-stead{display:block;width:100%;border:1px solid var(--color-ink-300);border-radius:10px;padding:11px 14px;font-size:14px;background:#fff;color:var(--color-ink-900);transition:all .15s;font-family:var(--font-sans)}
   .input-stead:focus{outline:none;border-color:var(--color-brand-600);box-shadow:0 0 0 3px rgba(30,99,214,.15)}
 }
+
+/* ════════════════════════════════════════════════════════════════════════════
+   WOW SUBSTRATE (Arc 1 · Stage 1) — additive only. New tokens + the motion layer.
+   Brand-reactive: every value below is DERIVED from the existing --color-brand-*
+   ramp via color-mix, so a business's brand color flows in with NO factory change.
+   Nothing above is modified → a stock build renders byte-identical (golden harness).
+   ════════════════════════════════════════════════════════════════════════════ */
+:root {
+  /* motion timing */
+  --wow-ease: cubic-bezier(0.32, 0.72, 0, 1);
+  --wow-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --wow-dur-fast: 0.3s;
+  --wow-dur: 0.6s;
+  --wow-dur-slow: 0.9s;
+  /* brand-derived visual richness */
+  --wow-grad-brand: linear-gradient(135deg, var(--color-brand-500), color-mix(in oklab, var(--color-brand-700) 82%, black));
+  --wow-grad-surface: radial-gradient(120% 90% at 80% 8%, color-mix(in oklab, var(--color-brand-100) 55%, white), white 60%);
+  --wow-shadow-soft: 0 40px 80px -50px color-mix(in oklab, var(--color-brand-700) 45%, transparent);
+  --wow-shadow-glow: 0 24px 52px -20px color-mix(in oklab, var(--color-brand-500) 55%, transparent);
+  --wow-shadow-lift: 0 60px 100px -50px color-mix(in oklab, var(--color-brand-700) 50%, transparent);
+  --wow-hairline: color-mix(in oklab, var(--color-brand-700) 12%, transparent);
+  --wow-tint: color-mix(in oklab, var(--color-brand-500) 8%, transparent);
+  --wow-blur: 16px;
+}
+
+/* Motion layer — scroll reveal. Hidden ONLY when the client set .js-reveal (see __root.tsx);
+   without JS (or before the class is set) content is fully visible → SSR/SEO safe, no flash. */
+.js-reveal [data-reveal] {
+  transition: opacity var(--wow-dur-slow) var(--wow-ease-out),
+              transform var(--wow-dur-slow) var(--wow-ease-out),
+              filter var(--wow-dur-slow) var(--wow-ease-out);
+}
+.js-reveal [data-reveal]:not(.reveal-in) {
+  opacity: 0;
+  transform: translateY(24px);
+  filter: blur(4px);
+  will-change: opacity, transform;
+}
+.js-reveal [data-reveal].reveal-in {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .js-reveal [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+  }
+}
