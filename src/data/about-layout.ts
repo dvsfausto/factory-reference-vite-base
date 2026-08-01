@@ -21,6 +21,6 @@ export interface AboutBlock {
 export const ABOUT_LAYOUT: AboutBlock[] = [
   { type: 'intro' },
   { type: 'team', variant: 'grid' },
-  { type: 'trustBar' },
-  { type: 'cta' },
+  { type: 'trustBar', variant: 'glow-cards' },
+  { type: 'cta', variant: 'aurora-glow' },
 ]

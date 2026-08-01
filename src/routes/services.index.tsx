@@ -1,10 +1,9 @@
 import { createFileRoute, redirect } from '@tanstack/react-router'
-import { ServicesSection } from '~/components/ServicesSection'
-import { CTASection } from '~/components/CTASection'
-import { renderCharacterCta } from '~/components/CharacterHero'
 import { buildMeta } from '~/lib/seo'
 import { SERVICES } from '~/data/services-view'
 import { SITE } from '~/data/site'
+import { SERVICES_INDEX_LAYOUT } from '~/data/services-index-layout'
+import { SectionList } from '~/components/render-section'
 
 export const Route = createFileRoute('/services/')({
   // No services (e.g. a generic-vertical business whose owner supplied none) →
@@ -25,21 +24,23 @@ export const Route = createFileRoute('/services/')({
   component: ServicesIndex,
 })
 
+// The /services index now renders through the SHARED renderer (Arc 3 · Stage B): the
+// old bg-slate intro + ServicesSection + CTA JSX is replaced by SERVICES_INDEX_LAYOUT.
+// The WOW page-intro copy is passed as ctx.intro (shared IntroBlock), the
+// 'servicesIndex' block renders the FULL services list (ALL services, not the
+// homepage's 3-item preview), and the cta is the WOW aurora-glow with the original CTA
+// copy preserved. Reveal is applied by SectionList.
 function ServicesIndex() {
   return (
-    <>
-      <section className="bg-slate-50">
-        <div className="mx-auto max-w-3xl px-4 py-16">
-          <h1 className="text-4xl font-bold leading-tight tracking-tight text-slate-900 sm:text-5xl">
-            What we do
-          </h1>
-          <p className="mt-5 text-lg leading-relaxed text-slate-700">
-            A short list of focused services, done well.
-          </p>
-        </div>
-      </section>
-      <ServicesSection heading="Services" services={SERVICES} />
-      {renderCharacterCta({ title: 'Need a quote?' }) ?? <CTASection title="Need a quote?" />}
-    </>
+    <SectionList
+      blocks={SERVICES_INDEX_LAYOUT}
+      ctx={{
+        intro: {
+          eyebrow: 'Services',
+          heading: 'Our services',
+          body: 'A short list of focused services, done well.',
+        },
+      }}
+    />
   )
 }

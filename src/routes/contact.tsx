@@ -1,7 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { LeadForm } from '~/components/LeadForm'
 import { buildMeta } from '~/lib/seo'
 import { SITE } from '~/data/site'
+import { CONTACT_LAYOUT } from '~/data/contact-layout'
+import { SectionList } from '~/components/render-section'
 
 export const Route = createFileRoute('/contact')({
   head: () =>
@@ -15,53 +16,25 @@ export const Route = createFileRoute('/contact')({
   component: ContactPage,
 })
 
+// The /contact page now renders through the SHARED renderer (Arc 3 · Stage B): the
+// old bg-slate section is replaced by CONTACT_LAYOUT. The WOW page-intro copy is
+// passed as ctx.intro (shared IntroBlock), and the 'contactForm' block renders the
+// EXACT LeadForm (untouched fields + frozen Supabase envelope) beside a brand-surfaced
+// info card of the REAL contact details (each row omits when empty). Reveal is applied
+// by SectionList. Intro body preserves the original reply-time copy.
 function ContactPage() {
   return (
-    <section className="bg-slate-50">
-      <div className="mx-auto grid max-w-6xl gap-12 px-4 py-16 lg:grid-cols-3">
-        <div className="lg:col-span-2">
-          <h1 className="text-4xl font-bold leading-tight tracking-tight text-slate-900 sm:text-5xl">
-            Get in touch
-          </h1>
-          <p className="mt-4 text-lg leading-relaxed text-slate-700">
-            {(SITE as { ctaLabel?: string }).ctaLabel
-              ? "We reply within a business day to every message."
-              : "We reply within a business day to every quote request."}
-          </p>
-          <div className="mt-8">
-            <LeadForm />
-          </div>
-        </div>
-        <aside className="space-y-6">
-          <div className="rounded-2xl bg-white p-6 shadow-sm">
-            <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">
-              Other ways to reach us
-            </p>
-            <div className="mt-4 space-y-3 text-sm">
-              <a
-                href={`tel:${SITE.phone}`}
-                className="block font-semibold text-slate-900 hover:text-emerald-700"
-              >
-                {SITE.phoneDisplay}
-              </a>
-              <a
-                href={`mailto:${SITE.email}`}
-                className="block text-slate-700 hover:text-emerald-700"
-              >
-                {SITE.email}
-              </a>
-              {SITE.address.city && (
-                <p className="text-slate-700">
-                  {[SITE.address.city, SITE.address.state, SITE.address.zip]
-                    .filter(Boolean)
-                    .join(', ')}
-                </p>
-              )}
-              {SITE.hours && <p className="text-slate-700">{SITE.hours}</p>}
-            </div>
-          </div>
-        </aside>
-      </div>
-    </section>
+    <SectionList
+      blocks={CONTACT_LAYOUT}
+      ctx={{
+        intro: {
+          eyebrow: 'Contact',
+          heading: 'Get in touch',
+          body: (SITE as { ctaLabel?: string }).ctaLabel
+            ? 'We reply within a business day to every message.'
+            : 'We reply within a business day to every quote request.',
+        },
+      }}
+    />
   )
 }

@@ -1,10 +1,9 @@
 import { createFileRoute, redirect } from '@tanstack/react-router'
-import { AreasSection } from '~/components/AreasSection'
-import { CTASection } from '~/components/CTASection'
-import { renderCharacterCta } from '~/components/CharacterHero'
 import { buildMeta } from '~/lib/seo'
 import { AREAS } from '~/data/areas'
 import { SITE } from '~/data/site'
+import { AREAS_INDEX_LAYOUT } from '~/data/areas-index-layout'
+import { SectionList } from '~/components/render-section'
 
 export const Route = createFileRoute('/areas/')({
   // No service areas (e.g. a single-area business) → there is no "where we work"
@@ -24,29 +23,22 @@ export const Route = createFileRoute('/areas/')({
   component: AreasIndex,
 })
 
+// The /areas index now renders through the SHARED renderer (Arc 3 · Stage B): the old
+// bg-slate intro + AreasSection + CTA JSX is replaced by AREAS_INDEX_LAYOUT. The WOW
+// page-intro copy is passed as ctx.intro (shared IntroBlock), the 'areasIndex' block
+// renders the FULL service-areas list (ALL areas), and the cta is the WOW aurora-glow
+// with the original CTA copy preserved. Reveal is applied by SectionList.
 function AreasIndex() {
   return (
-    <>
-      <section className="bg-slate-50">
-        <div className="mx-auto max-w-3xl px-4 py-16">
-          <h1 className="text-4xl font-bold leading-tight tracking-tight text-slate-900 sm:text-5xl">
-            Where we work
-          </h1>
-          <p className="mt-5 text-lg leading-relaxed text-slate-700">
-            Local crews, familiar streets.
-          </p>
-        </div>
-      </section>
-      <AreasSection heading="Service areas" areas={AREAS} />
-      {renderCharacterCta({
-        title: "Don't see your area?",
-        subtitle: 'Call us — we often travel for the right project.',
-      }) ?? (
-        <CTASection
-          title="Don't see your area?"
-          subtitle="Call us — we often travel for the right project."
-        />
-      )}
-    </>
+    <SectionList
+      blocks={AREAS_INDEX_LAYOUT}
+      ctx={{
+        intro: {
+          eyebrow: 'Service areas',
+          heading: 'Where we work',
+          body: 'Local crews, familiar streets.',
+        },
+      }}
+    />
   )
 }
