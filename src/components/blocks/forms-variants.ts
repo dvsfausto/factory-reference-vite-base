@@ -3,6 +3,8 @@ import { FormBookingBlock } from './FormBookingBlock'
 import { FormQuoteBlock } from './FormQuoteBlock'
 import { FormSplitWithInfoBlock } from './FormSplitWithInfoBlock'
 import { FormMinimalBlock } from './FormMinimalBlock'
+import { FormFloatGlassBlock } from './FormFloatGlassBlock'
+import { FormBrandSplitBlock } from './FormBrandSplitBlock'
 
 // Per-type variant map for the Forms (contact/booking/quote) section (additive,
 // like HERO_VARIANTS), contact as the default fallback. Every variant posts the
@@ -15,4 +17,7 @@ export const FORMS_VARIANTS: Record<string, typeof FormContactBlock> = {
   quote: FormQuoteBlock,
   'split-with-info': FormSplitWithInfoBlock,
   minimal: FormMinimalBlock,
+  // WOW Stage 2 (brand-reactive + motion; same submitLead handler/fields, restyled shell only).
+  'float-glass': FormFloatGlassBlock,
+  'brand-split': FormBrandSplitBlock,
 }
