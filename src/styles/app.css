@@ -297,3 +297,16 @@
     transition: none !important;
   }
 }
+
+/* Stage 3 motion level — SITE.motionLevel='subtle' (restrained business types, e.g. law
+   /consulting/medical). Sets .motion-subtle on <html> (see __root.tsx): a gentler scroll
+   reveal (shorter travel, no blur, quicker) so the site feels composed, not energetic.
+   Absent → full motion (byte-identical). Reduced-motion still wins (rule above + below). */
+.motion-subtle.js-reveal [data-reveal] {
+  transition: opacity var(--wow-dur) var(--wow-ease-out),
+              transform var(--wow-dur) var(--wow-ease-out);
+}
+.motion-subtle.js-reveal [data-reveal]:not(.reveal-in) {
+  transform: translateY(10px);
+  filter: none;
+}

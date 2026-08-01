@@ -54,7 +54,12 @@ export const Route = createRootRoute({
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html
+      lang="en"
+      // SITE.motionLevel='subtle' (restrained business types) → gentler scroll-reveal
+      // (see .motion-subtle in app.css). Absent → full motion (byte-identical default).
+      className={(SITE as { motionLevel?: string }).motionLevel === 'subtle' ? 'motion-subtle' : undefined}
+    >
       <head>
         <HeadContent />
         {/* WOW motion layer: mark JS-capable BEFORE first paint so scroll-reveal hides its start-state
