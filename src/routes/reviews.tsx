@@ -1,9 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { ReviewsSection } from '~/components/ReviewsSection'
-import { CTASection } from '~/components/CTASection'
-import { renderCharacterCta } from '~/components/CharacterHero'
 import { buildMeta } from '~/lib/seo'
 import { SITE } from '~/data/site'
+import { REVIEWS_LAYOUT } from '~/data/reviews-layout'
+import { SectionList } from '~/components/render-section'
 
 export const Route = createFileRoute('/reviews')({
   head: () =>
@@ -15,21 +14,23 @@ export const Route = createFileRoute('/reviews')({
   component: ReviewsPage,
 })
 
+// The /reviews page now renders through the SHARED renderer (Arc 3 · Stage B): the
+// old bg-slate intro + ReviewsSection + CTA JSX is replaced by REVIEWS_LAYOUT. The
+// WOW page-intro copy is passed as ctx.intro (shared IntroBlock), the 'reviewsIndex'
+// block renders the FULL reviews list (ALL reviews, count 50 — self-omitting when
+// there are none, which is honest), and the cta is the WOW aurora-glow with the
+// original CTA copy preserved. Reveal is applied by SectionList.
 function ReviewsPage() {
   return (
-    <>
-      <section className="bg-slate-50">
-        <div className="mx-auto max-w-3xl px-4 py-16">
-          <h1 className="text-4xl font-bold leading-tight tracking-tight text-slate-900 sm:text-5xl">
-            Reviews
-          </h1>
-          <p className="mt-5 text-lg leading-relaxed text-slate-700">
-            Verified customer reviews across the work we&apos;ve done.
-          </p>
-        </div>
-      </section>
-      <ReviewsSection heading="All reviews" count={50} />
-      {renderCharacterCta({ title: 'Want to work together?' }) ?? <CTASection title="Want to work together?" />}
-    </>
+    <SectionList
+      blocks={REVIEWS_LAYOUT}
+      ctx={{
+        intro: {
+          eyebrow: 'Reviews',
+          heading: 'Reviews',
+          body: "Verified customer reviews across the work we've done.",
+        },
+      }}
+    />
   )
 }

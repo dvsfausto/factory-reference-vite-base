@@ -21,8 +21,8 @@ export interface PricingBlock {
 
 export const PRICING_LAYOUT: PricingBlock[] = [
   { type: 'intro' },
-  { type: 'pricing', variant: 'tiers' },
-  { type: 'trustBar' },
-  { type: 'faq' },
-  { type: 'cta' },
+  { type: 'pricing', variant: 'luxe-glass' },
+  { type: 'trustBar', variant: 'glow-cards' },
+  { type: 'faq', variant: 'glass-accordion' },
+  { type: 'cta', variant: 'aurora-glow' },
 ]
