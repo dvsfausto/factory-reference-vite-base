@@ -1,3 +1,4 @@
+import type { ComponentProps, ComponentType } from 'react'
 import { createFileRoute } from '@tanstack/react-router'
 import { JsonLd } from '~/components/JsonLd'
 import { Reveal } from '~/components/Reveal'
@@ -23,6 +24,33 @@ import { HeroVideoBlock } from '~/components/blocks/HeroVideoBlock'
 import { HeroAuroraBlock } from '~/components/blocks/HeroAuroraBlock'
 import { HeroSpotlightBlock } from '~/components/blocks/HeroSpotlightBlock'
 import { HeroEditorialBlock } from '~/components/blocks/HeroEditorialBlock'
+// WOW Stage 2 — additional section variants (brand-reactive + motion, consume --wow-*).
+// Additive map keys only; unknown variant → the section's default component.
+import { ServicesLuxeBlock } from '~/components/blocks/ServicesLuxeBlock'
+import { ServicesFeatureRowsBlock } from '~/components/blocks/ServicesFeatureRowsBlock'
+import { ServicesSpotlightTilesBlock } from '~/components/blocks/ServicesSpotlightTilesBlock'
+import { ReviewsLuminousBlock } from '~/components/blocks/ReviewsLuminousBlock'
+import { ReviewsPullQuoteBlock } from '~/components/blocks/ReviewsPullQuoteBlock'
+import { ReviewsGlassWallBlock } from '~/components/blocks/ReviewsGlassWallBlock'
+import { CtaAuroraGlowBlock } from '~/components/blocks/CtaAuroraGlowBlock'
+import { CtaGlassPanelBlock } from '~/components/blocks/CtaGlassPanelBlock'
+import { TrustBarGlowCardsBlock } from '~/components/blocks/TrustBarGlowCardsBlock'
+import { TrustBarHairlineRowsBlock } from '~/components/blocks/TrustBarHairlineRowsBlock'
+import { ServiceAreasGlowPinsBlock } from '~/components/blocks/ServiceAreasGlowPinsBlock'
+import { ServiceAreasBrandPanelBlock } from '~/components/blocks/ServiceAreasBrandPanelBlock'
+import { FaqGlassAccordionBlock } from '~/components/blocks/FaqGlassAccordionBlock'
+import { FaqSplitPanelBlock } from '~/components/blocks/FaqSplitPanelBlock'
+import { StoryEditorialFrameBlock } from '~/components/blocks/StoryEditorialFrameBlock'
+import { StoryManifestoGlowBlock } from '~/components/blocks/StoryManifestoGlowBlock'
+import { GalleryCinematicMasonryBlock } from '~/components/blocks/GalleryCinematicMasonryBlock'
+import { GalleryFeaturedFilmBlock } from '~/components/blocks/GalleryFeaturedFilmBlock'
+import { GalleryEdgeGridBlock } from '~/components/blocks/GalleryEdgeGridBlock'
+import { PricingLuxeGlassBlock } from '~/components/blocks/PricingLuxeGlassBlock'
+import { PricingSpotlightTierBlock } from '~/components/blocks/PricingSpotlightTierBlock'
+import { ProcessGlowNodesBlock } from '~/components/blocks/ProcessGlowNodesBlock'
+import { ProcessBoldNumeralsBlock } from '~/components/blocks/ProcessBoldNumeralsBlock'
+import { FormFloatGlassBlock } from '~/components/blocks/FormFloatGlassBlock'
+import { FormBrandSplitBlock } from '~/components/blocks/FormBrandSplitBlock'
 import { TaglineBarBlock } from '~/components/blocks/TaglineBarBlock'
 import { LocalBarBlock } from '~/components/blocks/LocalBarBlock'
 import { TrustBarBlock } from '~/components/blocks/TrustBarBlock'
@@ -184,6 +212,11 @@ const SERVICES_VARIANTS: Record<string, typeof ServicesPreviewBlock> = {
   list: ServicesListBlock,
   'icon-tiles': ServicesIconTilesBlock,
   carousel: ServicesCarouselBlock,
+  // WOW Stage 2 (brand-reactive + motion): luxe glass grid, alternating feature
+  // rows, lead-spotlight tiles.
+  luxe: ServicesLuxeBlock,
+  'feature-rows': ServicesFeatureRowsBlock,
+  'spotlight-tiles': ServicesSpotlightTilesBlock,
 }
 
 const CTA_VARIANTS: Record<string, typeof CtaBlock> = {
@@ -201,9 +234,15 @@ const CTA_VARIANTS: Record<string, typeof CtaBlock> = {
   'split-with-image': CtaSplitWithImageBlock,
   'boxed-card': CtaBoxedCardBlock,
   'stacked-centered': CtaStackedCenteredBlock,
+  // WOW Stage 2: full-bleed brand-gradient aurora band, floating glass panel.
+  'aurora-glow': CtaAuroraGlowBlock,
+  'glass-panel': CtaGlassPanelBlock,
 }
 
-const TRUST_VARIANTS: Record<string, typeof TrustBarBlock> = {
+// ComponentType (not `typeof TrustBarBlock`): the WOW variants honestly omit
+// (return null) on empty items, a wider return type than the default's — this
+// annotation accepts both.
+const TRUST_VARIANTS: Record<string, ComponentType<ComponentProps<typeof TrustBarBlock>>> = {
   bold: TrustBarBoldBlock,
   elegant: TrustBarElegantBlock,
   friendly: TrustBarFriendlyBlock,
@@ -217,6 +256,9 @@ const TRUST_VARIANTS: Record<string, typeof TrustBarBlock> = {
   'stat-numbers': TrustBarStatNumbersBlock,
   'logo-strip': TrustBarLogoStripBlock,
   'credential-cells': TrustBarCredentialCellsBlock,
+  // WOW Stage 2: glass cards with gradient icon badges, hairline-divided rows.
+  'glow-cards': TrustBarGlowCardsBlock,
+  'hairline-rows': TrustBarHairlineRowsBlock,
 }
 
 const REVIEWS_VARIANTS: Record<string, typeof ReviewsBlock> = {
@@ -234,6 +276,10 @@ const REVIEWS_VARIANTS: Record<string, typeof ReviewsBlock> = {
   carousel: ReviewsCarouselBlock,
   masonry: ReviewsMasonryBlock,
   stacked: ReviewsStackedBlock,
+  // WOW Stage 2: luminous glass quote cards, featured pull-quote, glass wall.
+  luminous: ReviewsLuminousBlock,
+  'pull-quote': ReviewsPullQuoteBlock,
+  'glass-wall': ReviewsGlassWallBlock,
 }
 
 const AREAS_VARIANTS: Record<string, typeof ServiceAreasBlock> = {
@@ -252,6 +298,20 @@ const AREAS_VARIANTS: Record<string, typeof ServiceAreasBlock> = {
   'columned-list': ServiceAreasColumnedListBlock,
   cards: ServiceAreasCardsBlock,
   stacked: ServiceAreasStackedBlock,
+  // WOW Stage 2: glass area pins on a brand field, bold brand-gradient panel.
+  'glow-pins': ServiceAreasGlowPinsBlock,
+  'brand-panel': ServiceAreasBrandPanelBlock,
+}
+
+// FAQ variant map (WOW Stage 2). The homepage 'faq' block historically had no
+// variant swap (it rendered FaqBlock directly); this additive map gives it the
+// same variant seam as every other section. Default (absent/unknown) → FaqBlock,
+// so no-variant builds render byte-identically. Every entry takes the SAME props
+// FaqBlock does (faqs + optional title).
+const FAQ_VARIANTS: Record<string, ComponentType<ComponentProps<typeof FaqBlock>>> = {
+  accordion: FaqBlock,
+  'glass-accordion': FaqGlassAccordionBlock,
+  'split-panel': FaqSplitPanelBlock,
 }
 
 // Map a layout block to its rendered section. Order/presence are driven by
@@ -336,14 +396,16 @@ function renderBlock(block: LayoutBlock) {
         />
       )
     }
-    case 'faq':
+    case 'faq': {
+      const FaqComponent = FAQ_VARIANTS[block.variant ?? ''] ?? FaqBlock
       return (
-        <FaqBlock
+        <FaqComponent
           key="faq"
           faqs={HOME_FAQS}
           title={block.params?.title as string | undefined}
         />
       )
+    }
     case 'cta': {
       const CtaComponent = CTA_VARIANTS[block.variant ?? ''] ?? CtaBlock
       return (

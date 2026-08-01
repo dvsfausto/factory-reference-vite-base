@@ -4,6 +4,8 @@ import { PricingToggleBlock } from './PricingToggleBlock'
 import { PricingCardsBlock } from './PricingCardsBlock'
 import { PricingSingleHighlightBlock } from './PricingSingleHighlightBlock'
 import { PricingListBlock } from './PricingListBlock'
+import { PricingLuxeGlassBlock } from './PricingLuxeGlassBlock'
+import { PricingSpotlightTierBlock } from './PricingSpotlightTierBlock'
 
 // One pricing plan. OPTIONAL data (read from SITE.plans via cast in the pricing
 // blocks — never declared on the emitted SITE literal), so a site with no plans
@@ -29,4 +31,7 @@ export const PRICING_VARIANTS: Record<string, typeof PricingTiersBlock> = {
   cards: PricingCardsBlock,
   'single-highlight': PricingSingleHighlightBlock,
   list: PricingListBlock,
+  // WOW Stage 2 (brand-reactive + motion; honest: no-plans+prose → numbers-free panel).
+  'luxe-glass': PricingLuxeGlassBlock,
+  'spotlight-tier': PricingSpotlightTierBlock,
 }

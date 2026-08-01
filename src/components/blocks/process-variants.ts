@@ -3,6 +3,8 @@ import { ProcessTimelineBlock } from './ProcessTimelineBlock'
 import { ProcessCardsBlock } from './ProcessCardsBlock'
 import { ProcessAlternatingBlock } from './ProcessAlternatingBlock'
 import { ProcessVerticalRailBlock } from './ProcessVerticalRailBlock'
+import { ProcessGlowNodesBlock } from './ProcessGlowNodesBlock'
+import { ProcessBoldNumeralsBlock } from './ProcessBoldNumeralsBlock'
 
 // One process step. OPTIONAL data (read from SITE.steps via cast in the process
 // blocks — never declared on the emitted SITE literal), so a site with no steps
@@ -22,4 +24,7 @@ export const PROCESS_VARIANTS: Record<string, typeof ProcessNumberedStepsBlock> 
   cards: ProcessCardsBlock,
   alternating: ProcessAlternatingBlock,
   'vertical-rail': ProcessVerticalRailBlock,
+  // WOW Stage 2 (brand-reactive + motion): gradient-connector timeline, bold index numerals.
+  'glow-nodes': ProcessGlowNodesBlock,
+  'bold-numerals': ProcessBoldNumeralsBlock,
 }

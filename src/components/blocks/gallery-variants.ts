@@ -4,6 +4,9 @@ import { GalleryBeforeAfterBlock } from './GalleryBeforeAfterBlock'
 import { GalleryCarouselBlock } from './GalleryCarouselBlock'
 import { GalleryFeaturedThumbsBlock } from './GalleryFeaturedThumbsBlock'
 import { GalleryJustifiedBlock } from './GalleryJustifiedBlock'
+import { GalleryCinematicMasonryBlock } from './GalleryCinematicMasonryBlock'
+import { GalleryFeaturedFilmBlock } from './GalleryFeaturedFilmBlock'
+import { GalleryEdgeGridBlock } from './GalleryEdgeGridBlock'
 
 // Per-type variant map for the gallery/portfolio section (additive, like
 // HERO_VARIANTS). PIPELINE-SEEDED data model: every variant reads the PROJECTS
@@ -16,4 +19,8 @@ export const GALLERY_VARIANTS: Record<string, typeof GalleryMasonryBlock> = {
   carousel: GalleryCarouselBlock,
   'featured-thumbs': GalleryFeaturedThumbsBlock,
   justified: GalleryJustifiedBlock,
+  // WOW Stage 2 (brand-reactive + motion): cinematic masonry, featured filmstrip, edge-to-edge grid.
+  'cinematic-masonry': GalleryCinematicMasonryBlock,
+  'featured-film': GalleryFeaturedFilmBlock,
+  'edge-grid': GalleryEdgeGridBlock,
 }
