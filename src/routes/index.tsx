@@ -18,6 +18,11 @@ import { HeroBackgroundBlock } from '~/components/blocks/HeroBackgroundBlock'
 import { HeroSplitReversedBlock } from '~/components/blocks/HeroSplitReversedBlock'
 import { HeroMinimalBlock } from '~/components/blocks/HeroMinimalBlock'
 import { HeroVideoBlock } from '~/components/blocks/HeroVideoBlock'
+// WOW layout variants (Arc 1 · Stage 2) — brand-reactive, motion-rich heroes that
+// consume the --wow-* tokens (styles/app.css). Additive map keys; unknown → default.
+import { HeroAuroraBlock } from '~/components/blocks/HeroAuroraBlock'
+import { HeroSpotlightBlock } from '~/components/blocks/HeroSpotlightBlock'
+import { HeroEditorialBlock } from '~/components/blocks/HeroEditorialBlock'
 import { TaglineBarBlock } from '~/components/blocks/TaglineBarBlock'
 import { LocalBarBlock } from '~/components/blocks/LocalBarBlock'
 import { TrustBarBlock } from '~/components/blocks/TrustBarBlock'
@@ -151,6 +156,12 @@ const HERO_VARIANTS: Record<string, typeof HeroBlock> = {
   'split-reversed': HeroSplitReversedBlock,
   minimal: HeroMinimalBlock,
   video: HeroVideoBlock,
+  // WOW variants (Arc 1 · Stage 2): brand-reactive + animated, consuming --wow-*.
+  // 'aurora' = cinematic full-bleed (dark); 'spotlight' = editorial split (light);
+  // 'editorial' = magazine/typographic. Selected the same way (block.variant).
+  aurora: HeroAuroraBlock,
+  spotlight: HeroSpotlightBlock,
+  editorial: HeroEditorialBlock,
 }
 
 // Per-type variant maps for the other character-carrying blocks (same pattern as

@@ -18,3 +18,7 @@ yarn.lock
 /blob-report/
 /playwright/.cache/
 .tanstack
+# dev-only design skills (never ship to customer repos)
+.agents/
+.claude/
+skills-lock.json
