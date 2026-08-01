@@ -267,7 +267,18 @@ export function Header() {
         ? "elegant-light"
         : character;
   const t = HEADER_THEMES[themeKey] ?? HEADER_THEMES.default;
-  const headerCtaLabel = ((SITE as { headerCtaLabel?: string; ctaLabel?: string }).headerCtaLabel ?? (SITE as { ctaLabel?: string }).ctaLabel ?? t.ctaLabel);
+  // Header CTA reflects the business's TRANSACTION TYPE — booking businesses shouldn't
+  // show "Free Quote". Infer it from the hero's primary CTA (set per-vertical/onboarding:
+  // "Book Your Visit" → booking, "Request a quote" → quote) so header + hero are CONSISTENT.
+  // An explicit SITE.headerCtaLabel/ctaLabel still wins; a non-matching CTA falls to the
+  // theme default (byte-identical). Near-term service-tier — no business_model dependency.
+  const heroCta = ((SITE.hero as { cta_primary_label?: string })?.cta_primary_label ?? '').toLowerCase();
+  const transactionCta = /\b(book|schedul|appoint|reserv|reservation|visit|tour|class|session|consult|table)\b/.test(heroCta)
+    ? 'Book Now'
+    : /\b(quote|estimate)\b/.test(heroCta)
+      ? 'Get a Quote'
+      : undefined;
+  const headerCtaLabel = ((SITE as { headerCtaLabel?: string; ctaLabel?: string }).headerCtaLabel ?? (SITE as { ctaLabel?: string }).ctaLabel ?? transactionCta ?? t.ctaLabel);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
