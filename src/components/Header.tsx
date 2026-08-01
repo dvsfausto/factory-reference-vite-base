@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Menu, X, Phone, ChevronDown } from "lucide-react";
 import { Logo } from "./Logo";
-import { SITE } from "~/data/site";
+import { SITE, BOOKING } from "~/data/site";
 import { SERVICES } from "~/data/services-view";
 import { AREAS } from "~/data/areas";
 
@@ -278,7 +278,15 @@ export function Header() {
     : /\b(quote|estimate)\b/.test(heroCta)
       ? 'Get a Quote'
       : undefined;
-  const headerCtaLabel = ((SITE as { headerCtaLabel?: string; ctaLabel?: string }).headerCtaLabel ?? (SITE as { ctaLabel?: string }).ctaLabel ?? transactionCta ?? t.ctaLabel);
+  // NATIVE BOOKING (Arc 4a · Stage 2): when the on-page wizard is enabled, the header
+  // CTA scrolls to it (#book) instead of routing to /contact, and defaults its label to
+  // "Book Now" (an explicit emitted headerCtaLabel/ctaLabel still wins). Booking-off
+  // builds are byte-identical — bookNative is false and both paths below collapse to the
+  // exact prior <Link to="/contact"> + label.
+  const bookNative = BOOKING.enabled;
+  const headerCtaLabel = bookNative
+    ? ((SITE as { headerCtaLabel?: string; ctaLabel?: string }).headerCtaLabel ?? (SITE as { ctaLabel?: string }).ctaLabel ?? 'Book Now')
+    : ((SITE as { headerCtaLabel?: string; ctaLabel?: string }).headerCtaLabel ?? (SITE as { ctaLabel?: string }).ctaLabel ?? transactionCta ?? t.ctaLabel);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -387,7 +395,11 @@ export function Header() {
               <Phone className="h-4 w-4" />
               {SITE.phoneDisplay}
             </a>
-            <Link to="/contact" className={t.cta}>{headerCtaLabel}</Link>
+            {bookNative ? (
+              <a href="#book" className={t.cta}>{headerCtaLabel}</a>
+            ) : (
+              <Link to="/contact" className={t.cta}>{headerCtaLabel}</Link>
+            )}
           </div>
 
           <button
@@ -439,9 +451,15 @@ export function Header() {
               <a href={`tel:${SITE.phone}`} className={`flex items-center gap-2 text-base font-semibold ${t.mobilePhone}`}>
                 <Phone className="h-5 w-5" /> {SITE.phoneDisplay}
               </a>
-              <Link to="/contact" onClick={() => setOpen(false)} className={t.mobileCta}>
-                {headerCtaLabel}
-              </Link>
+              {bookNative ? (
+                <a href="#book" onClick={() => setOpen(false)} className={t.mobileCta}>
+                  {headerCtaLabel}
+                </a>
+              ) : (
+                <Link to="/contact" onClick={() => setOpen(false)} className={t.mobileCta}>
+                  {headerCtaLabel}
+                </Link>
+              )}
             </div>
           </div>
         </div>

@@ -53,6 +53,13 @@ export type BlockType =
   | 'partners'
   | 'map'
   | 'blog'
+  // Native self-service BOOKING section (Arc 4a · Stage 2). A real on-page scheduler
+  // (service → date → time → confirmed) that books without leaving the site, reading
+  // live bookable services + availability under the anon key and posting create-booking.
+  // Additive union member — HOMEPAGE_LAYOUT is unchanged; the scaffolder splices
+  // { type: 'booking' } into the emitted layout ONLY for solo-appointment business
+  // types (site.ts BOOKING.enabled), so no-booking builds stay byte-identical.
+  | 'booking'
 
 export interface LayoutBlock {
   /** Which section-block to render. */

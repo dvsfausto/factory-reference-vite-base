@@ -160,6 +160,8 @@ import { RelatedAreasBlock } from '~/components/blocks/RelatedAreasBlock'
 // Info-page per-item blocks (Arc 3 · Stage E)
 import { InfoArticleBlock } from '~/components/blocks/InfoArticleBlock'
 import { RelatedInfoBlock } from '~/components/blocks/RelatedInfoBlock'
+// Native self-service BOOKING wizard (Arc 4a · Stage 2) — self-gates on BOOKING.enabled.
+import { BookingWizardBlock } from '~/components/blocks/BookingWizardBlock'
 
 // ─────────────────────────────────────────────────────────────────────────────
 // SHARED SECTION RENDERER (Arc 3 · Stage B).
@@ -336,6 +338,13 @@ const FAQ_VARIANTS: Record<string, ComponentType<ComponentProps<typeof FaqBlock>
   accordion: FaqBlock,
   'glass-accordion': FaqGlassAccordionBlock,
   'split-panel': FaqSplitPanelBlock,
+}
+
+// BOOKING variant map (Arc 4a · Stage 2). One native wizard today ('wizard' = default);
+// the map gives the section the same additive variant seam as every other block, and
+// BookingWizardBlock itself returns null when BOOKING.enabled is false (honest no-op).
+const BOOKING_VARIANTS: Record<string, ComponentType<ComponentProps<typeof BookingWizardBlock>>> = {
+  wizard: BookingWizardBlock,
 }
 
 /**
@@ -778,6 +787,17 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext): ReactN
       return (
         <BlogComponent
           key="blog"
+          label={block.params?.label as string | undefined}
+          heading={block.params?.heading as string | undefined}
+          body={block.params?.body as string | undefined}
+        />
+      )
+    }
+    case 'booking': {
+      const BookingComponent = BOOKING_VARIANTS[block.variant ?? ''] ?? BookingWizardBlock
+      return (
+        <BookingComponent
+          key="booking"
           label={block.params?.label as string | undefined}
           heading={block.params?.heading as string | undefined}
           body={block.params?.body as string | undefined}

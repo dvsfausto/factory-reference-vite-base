@@ -102,3 +102,25 @@ export const BUSINESS_ID = '00000000-0000-0000-0000-000000000000'
 export const SUPABASE_ENDPOINT =
   'https://nldfnnyhrovytkuvtuby.supabase.co/functions/v1/handle-website-lead'
 export const SITE_LANGUAGE: 'en' | 'es' = 'en'
+
+// Supabase project constants (static tail, preserved across rebuilds — same
+// project for every business). SUPABASE_URL is the REST/functions base; the anon
+// key is a PUBLIC JWT (role "anon") already embedded in every glow client bundle,
+// safe to ship in a static site. Used by the native BookingWizardBlock to read the
+// business's bookable services + weekly availability (anon-readable via RLS) and to
+// POST the public create-booking edge function. NOT used for the lead form (that
+// posts SUPABASE_ENDPOINT with no auth header).
+export const SUPABASE_URL = 'https://nldfnnyhrovytkuvtuby.supabase.co'
+export const SUPABASE_ANON_KEY =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5sZGZubnlocm92eXRrdXZ0dWJ5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkzNTcyMjYsImV4cCI6MjA3NDkzMzIyNn0.X40zQQ1dkkSfggxjhAkMOqwKQa43jIKQNNLjtD9jpU0'
+
+// Native self-service booking config. `enabled` gates the on-page BookingWizardBlock
+// + the header/hero "Book Now" anchor; the scaffolder emits `true` ONLY for
+// solo-appointment business types where the single-resource scheduler is correct
+// (see character-presets bookingDefaultForType). `timezone` is the business's IANA
+// zone (create-booking converts the picked wall-clock time → UTC using it). Seed =
+// disabled so the reference project renders standalone with no booking section.
+export const BOOKING: { enabled: boolean; timezone: string } = {
+  enabled: false,
+  timezone: 'America/New_York',
+}
