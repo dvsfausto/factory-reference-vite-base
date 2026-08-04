@@ -12,7 +12,7 @@ import { Header } from '~/components/Header'
 import { Footer } from '~/components/Footer'
 import { JsonLd } from '~/components/JsonLd'
 import { localBusinessLd } from '~/lib/seo'
-import { SITE } from '~/data/site'
+import { SITE, BUSINESS_ID, SUPABASE_URL } from '~/data/site'
 import appCss from '~/styles/app.css?url'
 
 export const Route = createRootRoute({
@@ -67,6 +67,27 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <script
           dangerouslySetInnerHTML={{
             __html: "try{document.documentElement.classList.add('js-reveal')}catch(e){}",
+          }}
+        />
+        {/* Own-beacon site analytics: dependency-free, fire-and-forget. Fires ONE sendBeacon on first
+            load + every SPA route change (patches history.pushState/replaceState + popstate — TanStack
+            Router navigates through the History API, so this catches all client navigations). business_id
+            is baked in at generation (BUSINESS_ID from ~/data/site); the all-zeros placeholder is skipped
+            so un-generated/preview builds never emit. Never blocks paint. Server enriches country/device. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              `(function(){var b=${JSON.stringify(BUSINESS_ID)},` +
+              `e=${JSON.stringify(SUPABASE_URL + '/functions/v1/collect-pageview')};` +
+              `if(!b||b==='00000000-0000-0000-0000-000000000000')return;var last='';` +
+              `function ping(){try{var p=location.pathname+location.search;if(p===last)return;last=p;` +
+              `var body=JSON.stringify({business_id:b,path:p,referrer:document.referrer||''});` +
+              `if(navigator.sendBeacon){navigator.sendBeacon(e,body)}` +
+              `else{fetch(e,{method:'POST',body:body,keepalive:true,headers:{'Content-Type':'application/json'}})}` +
+              `}catch(_){}}` +
+              `ping();var w=function(t){var o=history[t];if(!o)return;` +
+              `history[t]=function(){var r=o.apply(this,arguments);ping();return r}};` +
+              `w('pushState');w('replaceState');addEventListener('popstate',ping)})();`,
           }}
         />
       </head>
