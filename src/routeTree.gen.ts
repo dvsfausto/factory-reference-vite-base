@@ -17,6 +17,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ServicesIndexRouteImport } from './routes/services.index'
 import { Route as AreasIndexRouteImport } from './routes/areas.index'
 import { Route as ServicesSlugRouteImport } from './routes/services.$slug'
+import { Route as PSlugRouteImport } from './routes/p.$slug'
 import { Route as InfoSlugRouteImport } from './routes/info.$slug'
 import { Route as AreasSlugRouteImport } from './routes/areas.$slug'
 
@@ -60,6 +61,11 @@ const ServicesSlugRoute = ServicesSlugRouteImport.update({
   path: '/services/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PSlugRoute = PSlugRouteImport.update({
+  id: '/p/$slug',
+  path: '/p/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const InfoSlugRoute = InfoSlugRouteImport.update({
   id: '/info/$slug',
   path: '/info/$slug',
@@ -79,6 +85,7 @@ export interface FileRoutesByFullPath {
   '/reviews': typeof ReviewsRoute
   '/areas/$slug': typeof AreasSlugRoute
   '/info/$slug': typeof InfoSlugRoute
+  '/p/$slug': typeof PSlugRoute
   '/services/$slug': typeof ServicesSlugRoute
   '/areas/': typeof AreasIndexRoute
   '/services/': typeof ServicesIndexRoute
@@ -91,6 +98,7 @@ export interface FileRoutesByTo {
   '/reviews': typeof ReviewsRoute
   '/areas/$slug': typeof AreasSlugRoute
   '/info/$slug': typeof InfoSlugRoute
+  '/p/$slug': typeof PSlugRoute
   '/services/$slug': typeof ServicesSlugRoute
   '/areas': typeof AreasIndexRoute
   '/services': typeof ServicesIndexRoute
@@ -104,6 +112,7 @@ export interface FileRoutesById {
   '/reviews': typeof ReviewsRoute
   '/areas/$slug': typeof AreasSlugRoute
   '/info/$slug': typeof InfoSlugRoute
+  '/p/$slug': typeof PSlugRoute
   '/services/$slug': typeof ServicesSlugRoute
   '/areas/': typeof AreasIndexRoute
   '/services/': typeof ServicesIndexRoute
@@ -118,6 +127,7 @@ export interface FileRouteTypes {
     | '/reviews'
     | '/areas/$slug'
     | '/info/$slug'
+    | '/p/$slug'
     | '/services/$slug'
     | '/areas/'
     | '/services/'
@@ -130,6 +140,7 @@ export interface FileRouteTypes {
     | '/reviews'
     | '/areas/$slug'
     | '/info/$slug'
+    | '/p/$slug'
     | '/services/$slug'
     | '/areas'
     | '/services'
@@ -142,6 +153,7 @@ export interface FileRouteTypes {
     | '/reviews'
     | '/areas/$slug'
     | '/info/$slug'
+    | '/p/$slug'
     | '/services/$slug'
     | '/areas/'
     | '/services/'
@@ -155,6 +167,7 @@ export interface RootRouteChildren {
   ReviewsRoute: typeof ReviewsRoute
   AreasSlugRoute: typeof AreasSlugRoute
   InfoSlugRoute: typeof InfoSlugRoute
+  PSlugRoute: typeof PSlugRoute
   ServicesSlugRoute: typeof ServicesSlugRoute
   AreasIndexRoute: typeof AreasIndexRoute
   ServicesIndexRoute: typeof ServicesIndexRoute
@@ -218,6 +231,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServicesSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/p/$slug': {
+      id: '/p/$slug'
+      path: '/p/$slug'
+      fullPath: '/p/$slug'
+      preLoaderRoute: typeof PSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/info/$slug': {
       id: '/info/$slug'
       path: '/info/$slug'
@@ -243,6 +263,7 @@ const rootRouteChildren: RootRouteChildren = {
   ReviewsRoute: ReviewsRoute,
   AreasSlugRoute: AreasSlugRoute,
   InfoSlugRoute: InfoSlugRoute,
+  PSlugRoute: PSlugRoute,
   ServicesSlugRoute: ServicesSlugRoute,
   AreasIndexRoute: AreasIndexRoute,
   ServicesIndexRoute: ServicesIndexRoute,

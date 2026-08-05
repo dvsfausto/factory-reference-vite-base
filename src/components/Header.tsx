@@ -6,6 +6,7 @@ import { SITE, BOOKING } from "~/data/site";
 import { PrimaryCta } from "~/components/blocks/PrimaryCta";
 import { SERVICES } from "~/data/services-view";
 import { AREAS } from "~/data/areas";
+import { CUSTOM_PAGES } from "~/data/custom-pages";
 
 // Character-aware root header. The shell sees SITE (not the homepage layout), so
 // it picks its treatment from SITE.character (emitted by the scaffolder only for
@@ -389,6 +390,10 @@ export function Header() {
             <Link to="/reviews" className={`px-3 py-2 ${t.navLink} focus-ring rounded-md`}>Reviews</Link>
             <Link to="/about" className={`px-3 py-2 ${t.navLink} focus-ring rounded-md`}>About</Link>
             <Link to="/contact" className={`px-3 py-2 ${t.navLink} focus-ring rounded-md`}>Contact</Link>
+            {/* Custom pages (Phase 2). Empty CUSTOM_PAGES → nothing renders (byte-identical). */}
+            {CUSTOM_PAGES.filter((p) => p.nav !== false).map((p) => (
+              <Link key={p.slug} to="/p/$slug" params={{ slug: p.slug }} className={`px-3 py-2 ${t.navLink} focus-ring rounded-md`}>{p.title}</Link>
+            ))}
           </nav>
 
           <div className="hidden lg:flex items-center gap-3">
@@ -443,6 +448,9 @@ export function Header() {
               <Link to="/reviews" onClick={() => setOpen(false)} className={`block py-2 text-base font-medium ${t.mobileText}`}>Reviews</Link>
               <Link to="/about" onClick={() => setOpen(false)} className={`block py-2 text-base font-medium ${t.mobileText}`}>About</Link>
               <Link to="/contact" onClick={() => setOpen(false)} className={`block py-2 text-base font-medium ${t.mobileText}`}>Contact</Link>
+              {CUSTOM_PAGES.filter((p) => p.nav !== false).map((p) => (
+                <Link key={p.slug} to="/p/$slug" params={{ slug: p.slug }} onClick={() => setOpen(false)} className={`block py-2 text-base font-medium ${t.mobileText}`}>{p.title}</Link>
+              ))}
             </div>
             <div className={`pt-4 border-t ${t.mobileBorder} space-y-3`}>
               <a href={`tel:${SITE.phone}`} className={`flex items-center gap-2 text-base font-semibold ${t.mobilePhone}`}>

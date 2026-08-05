@@ -5,6 +5,7 @@ import { SITE } from "~/data/site";
 import { SERVICES } from "~/data/services-view";
 import { AREAS } from "~/data/areas";
 import { INFO_PAGES } from "~/data/info-pages";
+import { CUSTOM_PAGES } from "~/data/custom-pages";
 import defaultLeaves from "~/assets/decorative/cleaning-leaves.png";
 
 // Character-aware root footer. Picks its treatment from SITE.character (emitted
@@ -285,6 +286,14 @@ export function Footer({ decorativeAsset = defaultLeaves }: { decorativeAsset?: 
               <li key={i.slug}>
                 <Link to="/info/$slug" params={{ slug: i.slug }} className={t.listHover}>
                   {i.name}
+                </Link>
+              </li>
+            ))}
+            {/* Custom pages (Phase 2). Empty CUSTOM_PAGES → nothing renders (byte-identical). */}
+            {CUSTOM_PAGES.filter((p) => p.nav !== false).map((p) => (
+              <li key={p.slug}>
+                <Link to="/p/$slug" params={{ slug: p.slug }} className={t.listHover}>
+                  {p.title}
                 </Link>
               </li>
             ))}

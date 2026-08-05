@@ -8,6 +8,7 @@ import type { FAQ, ServicePageData, ServiceAreaPageData, InfoPageData } from '~/
 // (servicesIndex/areasIndex/reviewsIndex/contactForm). These render the FULL list
 // (not the homepage's preview) — see the cases below.
 import { IntroBlock } from '~/components/blocks/IntroBlock'
+import { RichTextBlock } from '~/components/blocks/RichTextBlock'
 import { ServicesSection } from '~/components/ServicesSection'
 import { AreasSection } from '~/components/AreasSection'
 import { ReviewsSection } from '~/components/ReviewsSection'
@@ -448,6 +449,18 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext): ReactN
   switch (block.type) {
     case 'intro':
       return ctx?.intro ? <IntroBlock {...ctx.intro} /> : null
+    // Generic PROSE block (Phase 2 — custom pages). Copy rides entirely in params so any
+    // page can carry supplied text; self-omits when there's no heading/body. Absent from
+    // every factory page's layout → this case is never hit on existing pages (byte-identical).
+    case 'richText':
+      return (
+        <RichTextBlock
+          key="richText"
+          eyebrow={block.params?.eyebrow as string | undefined}
+          heading={block.params?.heading as string | undefined}
+          body={block.params?.body as string | undefined}
+        />
+      )
     case 'hero': {
       // PER-ITEM hero (service-detail route): render THIS service's own headline / body /
       // image / trustLine through a WOW hero variant (default 'aurora'). Mirrors

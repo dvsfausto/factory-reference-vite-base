@@ -46,6 +46,38 @@ export interface InfoPageRef {
   name: string
 }
 
+// ── CUSTOM PAGES (Phase 2 — add/remove whole pages) ──────────────────────────
+// A customer-created routable page served by the generic /p/$slug catch-all route
+// and rendered through the SAME SectionList as every other page. Content comes from
+// (a) the page's own supplied copy (ctx.intro + each block's params) and (b) any
+// existing global-data blocks the layout composes — never a new content store.
+// AUTO-GENERATED into src/data/custom-pages.ts from design_dna.customPages; absent
+// → the reference ships empty arrays (no /p pages, no custom nav) → byte-identical.
+export interface CustomPageRef {
+  slug: string
+  title: string
+  /** Show a header/footer nav link for this page. Default true; false → reachable by URL only. */
+  nav?: boolean
+}
+
+export interface CustomPageBlock {
+  type: string
+  variant?: string
+  params?: Record<string, unknown>
+}
+
+export interface CustomPageData {
+  slug: string
+  /** Page title — the <title>/meta title and the nav label. */
+  title: string
+  /** Meta description for this page's <head>. */
+  description: string
+  /** Page header copy, rendered by the shared `intro` block via ctx.intro. */
+  intro?: { eyebrow?: string; heading: string; body?: string }
+  /** The page's section list — composed from the shared block library (incl. `richText`). */
+  layout: CustomPageBlock[]
+}
+
 export interface ServicePageData {
   slug: string
   title: string
