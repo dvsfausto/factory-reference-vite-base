@@ -908,7 +908,7 @@ export function SectionList({
         const scope = sectionStyleVars(block.params?.style)
         return (
           <Reveal key={i} disabled={i === 0 || block.type === 'hero'}>
-            {scope ? <div style={scope}>{rendered}</div> : rendered}
+            {scope ? <div data-zsec={block.type} style={scope}>{rendered}</div> : rendered}
           </Reveal>
         )
       })}
