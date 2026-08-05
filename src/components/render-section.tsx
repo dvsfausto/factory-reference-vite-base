@@ -850,22 +850,35 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext): ReactN
 // overrides for THIS section only; we set them as CSS custom properties on a scope wrapper so the
 // block's utilities (bg-primary, text-foreground, …) resolve them from the nearest ancestor —
 // overriding the global :root for this subtree, leaving every other section on the global palette.
-// Semantic set only (primary/accent/background/foreground); WOW brand-ramp/gradient recolor deferred.
-// Absent params.style → no wrapper → byte-identical to the pre-5b render.
+// Semantic colors (primary/accent/background/foreground; WOW brand-ramp/gradient deferred) PLUS fonts
+// (Phase 1 · Step 5c): fontDisplay → --font-display, fontBody → --font-sans, scoped on the SAME
+// wrapper. The scoped --font-* reaches headings via the @layer-base h1–h6 { font-family:
+// var(--font-display) } rule, and reaches the .font-display/.font-sans utility classes via the
+// unlayered `.font-x { var }` re-point rules the factory emits when section fonts exist. When a body
+// font is set we also apply font-family on the wrapper so plain body text (which inherits <body>'s
+// computed font, not the var) follows the section font. Absent params.style → no wrapper → byte-identical.
 const SECTION_STYLE_VARS: Record<string, string> = {
   primary: '--primary',
   accent: '--accent',
   background: '--background',
   foreground: '--foreground',
+  fontDisplay: '--font-display',
+  fontBody: '--font-sans',
 }
 function sectionStyleVars(style: unknown): CSSProperties | undefined {
   if (!style || typeof style !== 'object') return undefined
+  const s = style as Record<string, unknown>
   const out: Record<string, string> = {}
   for (const [key, cssVar] of Object.entries(SECTION_STYLE_VARS)) {
-    const v = (style as Record<string, unknown>)[key]
+    const v = s[key]
     if (typeof v === 'string' && v.trim()) out[cssVar] = v.trim()
   }
-  return Object.keys(out).length ? (out as CSSProperties) : undefined
+  if (Object.keys(out).length === 0) return undefined
+  // A section BODY font must be applied on the wrapper too — plain body text inherits <body>'s
+  // COMPUTED font (set at <body> from var(--font-sans)), so a scoped --font-sans alone wouldn't
+  // reach it. Headings still override via the base h1–h6 rule. Only when fontBody is set.
+  if (typeof s.fontBody === 'string' && s.fontBody.trim()) out.fontFamily = 'var(--font-sans)'
+  return out as CSSProperties
 }
 
 export function SectionList({
