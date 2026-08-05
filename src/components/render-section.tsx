@@ -1,4 +1,4 @@
-import type { ComponentProps, ComponentType, ReactNode } from 'react'
+import type { ComponentProps, ComponentType, CSSProperties, ReactNode } from 'react'
 import { Phone, Mail, MapPin, Clock } from 'lucide-react'
 import { Reveal } from '~/components/Reveal'
 import { SITE } from '~/data/site'
@@ -846,6 +846,28 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext): ReactN
  * rule the homepage used (the first block + any hero skip the reveal; they own their
  * own entrance). Additive/backward-compat: a page with no layout renders nothing here.
  */
+// Section-level style (Phase 1 · Step 5b). A block's optional params.style carries semantic color
+// overrides for THIS section only; we set them as CSS custom properties on a scope wrapper so the
+// block's utilities (bg-primary, text-foreground, …) resolve them from the nearest ancestor —
+// overriding the global :root for this subtree, leaving every other section on the global palette.
+// Semantic set only (primary/accent/background/foreground); WOW brand-ramp/gradient recolor deferred.
+// Absent params.style → no wrapper → byte-identical to the pre-5b render.
+const SECTION_STYLE_VARS: Record<string, string> = {
+  primary: '--primary',
+  accent: '--accent',
+  background: '--background',
+  foreground: '--foreground',
+}
+function sectionStyleVars(style: unknown): CSSProperties | undefined {
+  if (!style || typeof style !== 'object') return undefined
+  const out: Record<string, string> = {}
+  for (const [key, cssVar] of Object.entries(SECTION_STYLE_VARS)) {
+    const v = (style as Record<string, unknown>)[key]
+    if (typeof v === 'string' && v.trim()) out[cssVar] = v.trim()
+  }
+  return Object.keys(out).length ? (out as CSSProperties) : undefined
+}
+
 export function SectionList({
   blocks,
   ctx,
@@ -855,11 +877,15 @@ export function SectionList({
 }): ReactNode {
   return (
     <>
-      {blocks.map((block, i) => (
-        <Reveal key={i} disabled={i === 0 || block.type === 'hero'}>
-          {renderSection(block, ctx)}
-        </Reveal>
-      ))}
+      {blocks.map((block, i) => {
+        const rendered = renderSection(block, ctx)
+        const scope = sectionStyleVars(block.params?.style)
+        return (
+          <Reveal key={i} disabled={i === 0 || block.type === 'hero'}>
+            {scope ? <div style={scope}>{rendered}</div> : rendered}
+          </Reveal>
+        )
+      })}
     </>
   )
 }
