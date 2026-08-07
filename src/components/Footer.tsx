@@ -37,7 +37,13 @@ const FOOTER_THEMES: Record<string, FooterTheme> = {
   // brand-reactive via the brand ramp. Selected by SITE.chromeStyle='wow'. Same
   // markup/content — shell-only restyle. logoLight so the logo reads on the dark.
   wow: {
-    surface: "bg-ink-900 text-white",
+    // B1: brand-derive the surface. bg-brand-900 is re-pointed by brand-theme.ts to
+    // var(--color-brand-900) (the primary mixed 0.52→black — dark enough for white text on every
+    // brand measured: 726/726 ≥ AA), so the footer carries the brand's own dark tone instead of a
+    // fixed navy, while staying dark so the white text / borders / logoLight below remain correct.
+    // A no-primary build (no ramp) falls back to the baked brand-900 default. Path-C's end-of-file
+    // footer{} override still wins the cascade unchanged.
+    surface: "bg-brand-900 text-white",
     tagline: "text-white/65",
     socialBorder: "border-white/20",
     socialHover: "hover:bg-white/10",
