@@ -4,7 +4,7 @@ import { Menu, X, Phone, ChevronDown } from "lucide-react";
 import { Logo } from "./Logo";
 import { SITE, BOOKING } from "~/data/site";
 import { PrimaryCta } from "~/components/blocks/PrimaryCta";
-import { SERVICES } from "~/data/services-view";
+import { PAGED_SERVICES as SERVICES } from "~/data/services-view";
 import { AREAS } from "~/data/areas";
 import { CUSTOM_PAGES } from "~/data/custom-pages";
 

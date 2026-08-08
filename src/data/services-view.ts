@@ -16,6 +16,22 @@ import type { ServiceRef } from '~/lib/types/page-types';
 export const SERVICES: ServiceRef[] = SERVICES_ALL.filter((s) => s.published !== false);
 
 /**
+ * PAGED view — the subset of visible services that have a DEDICATED PAGE (three-way separation:
+ * visible ≠ paged). Nav (Header/Footer), the sitemap, and the /services/$slug loader read from HERE
+ * so a non-paged service (paged:false — set by the scaffolder beyond the top-8, or by a customer
+ * override) is dropped from nav + sitemap + gets a 301, while it STAYS in `SERVICES` (list/grid/
+ * pricing) and keeps its editable servicesData entry. Absent paged === paged, so when nothing is
+ * capped this equals the visible list → byte-identical render (backward-compatible).
+ */
+export const PAGED_SERVICES: ServiceRef[] = SERVICES.filter((s) => s.paged !== false);
+
+/** True iff this slug has a dedicated page (visible AND paged). Used by the list renderer to choose
+ *  a card vs an anchor, and by the loader/sitemap to gate the page. */
+export function isServicePaged(slug: string): boolean {
+  return PAGED_SERVICES.some((s) => s.slug === slug);
+}
+
+/**
  * Related-links render-filter: keep any non-`/services/…` link as-is; drop a `/services/<slug>` link
  * whose service is unpublished. Lets service/info pages self-heal their `relatedServices` cross-links
  * with NO cross-page data mutation — and it auto-reverses on restore. When nothing is unpublished

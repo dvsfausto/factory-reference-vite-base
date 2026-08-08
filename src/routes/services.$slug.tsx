@@ -3,7 +3,7 @@ import { SectionList } from '~/components/render-section'
 import { SERVICE_DETAIL_LAYOUT } from '~/data/service-detail-layout'
 import { JsonLd } from '~/components/JsonLd'
 import { servicesData } from '~/data/services'
-import { SERVICES } from '~/data/services-view'
+import { PAGED_SERVICES } from '~/data/services-view'
 import { serviceLd, breadcrumbLd, faqLd, buildMeta } from '~/lib/seo'
 import { ogImageForService } from '~/data/images'
 import { SITE } from '~/data/site'
@@ -12,10 +12,12 @@ export const Route = createFileRoute('/services/$slug')({
   loader: ({ params }) => {
     const data = servicesData[params.slug]
     if (!data) throw notFound()
-    // UNPUBLISHED (published:false → filtered out of the visible list): send a REAL HTTP 301 to the
-    // parent index so search equity transfers and the URL is dropped cleanly. Data stays put; restore
-    // (published:true) makes the slug visible again and this stops firing — no persistent rule to undo.
-    if (!SERVICES.some((s) => s.slug === params.slug)) {
+    // NOT PAGED — either UNPUBLISHED (published:false) or NON-PAGED (paged:false, beyond the top-8 or
+    // a customer override): send a REAL HTTP 301 to the parent index so search equity transfers and no
+    // thin/duplicate page is served. servicesData stays put (still editable); restoring published/paged
+    // makes the slug serve again and this stops firing — no persistent rule to undo. This is what makes
+    // a non-paged link non-dangling BY CONSTRUCTION.
+    if (!PAGED_SERVICES.some((s) => s.slug === params.slug)) {
       throw redirect({ to: '/services', statusCode: 301 })
     }
     return { data }

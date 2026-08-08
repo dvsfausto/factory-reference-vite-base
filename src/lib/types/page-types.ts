@@ -32,6 +32,16 @@ export interface ServiceRef {
    * UI consumer, and the /services/$slug loader 301-redirects it. Restore un-sets the flag.
    */
   published?: boolean
+  /**
+   * Paging state — the three-way separation (visible ≠ has-a-page). Absent === paged
+   * (backward-compatible: any ≤8-service build is byte-identical to today). The scaffolder sets
+   * `false` for services beyond the top-8 (by display_order) so they stay VISIBLE (list/grid/
+   * pricing render the ref) and fully EDITABLE (servicesData is still emitted) but get NO dedicated
+   * page: `PAGED_SERVICES` (services-view.ts) drops them from nav + sitemap, the /services/$slug
+   * loader 301-redirects them, and the index renders them as a card, not an anchor. A customer
+   * override (design_dna.services.paged) can force this on or off and survives rebuild.
+   */
+  paged?: boolean
 }
 
 export interface AreaRef {
