@@ -8,6 +8,11 @@ import { SERVICES } from "~/data/services-view";
 import { AREAS } from "~/data/areas";
 import { CUSTOM_PAGES } from "~/data/custom-pages";
 
+// PRAISE-61 — nav links a customer chose to hide from the menu (design_dna.chrome.nav.hidden →
+// SITE.hiddenNav). ABSENT/empty → nothing filtered → byte-identical to today. Filtering only; the
+// pages still exist and are reachable by URL. Keys: pricing/reviews/about/contact.
+const HIDDEN_NAV: string[] = (SITE as { hiddenNav?: string[] }).hiddenNav ?? [];
+
 // Character-aware root header. The shell sees SITE (not the homepage layout), so
 // it picks its treatment from SITE.character (emitted by the scaffolder only for
 // bold/elegant verticals). Absent → the 'default' theme below, whose class
@@ -386,10 +391,10 @@ export function Header() {
               </div>
             )}
 
-            <Link to="/pricing" className={`px-3 py-2 ${t.navLink} focus-ring rounded-md`}>Pricing</Link>
-            <Link to="/reviews" className={`px-3 py-2 ${t.navLink} focus-ring rounded-md`}>Reviews</Link>
-            <Link to="/about" className={`px-3 py-2 ${t.navLink} focus-ring rounded-md`}>About</Link>
-            <Link to="/contact" className={`px-3 py-2 ${t.navLink} focus-ring rounded-md`}>Contact</Link>
+            {!HIDDEN_NAV.includes('pricing') && <Link to="/pricing" className={`px-3 py-2 ${t.navLink} focus-ring rounded-md`}>Pricing</Link>}
+            {!HIDDEN_NAV.includes('reviews') && <Link to="/reviews" className={`px-3 py-2 ${t.navLink} focus-ring rounded-md`}>Reviews</Link>}
+            {!HIDDEN_NAV.includes('about') && <Link to="/about" className={`px-3 py-2 ${t.navLink} focus-ring rounded-md`}>About</Link>}
+            {!HIDDEN_NAV.includes('contact') && <Link to="/contact" className={`px-3 py-2 ${t.navLink} focus-ring rounded-md`}>Contact</Link>}
             {/* Custom pages (Phase 2). Empty CUSTOM_PAGES → nothing renders (byte-identical). */}
             {CUSTOM_PAGES.filter((p) => p.nav !== false).map((p) => (
               <Link key={p.slug} to="/p/$slug" params={{ slug: p.slug }} className={`px-3 py-2 ${t.navLink} focus-ring rounded-md`}>{p.title}</Link>
@@ -444,10 +449,10 @@ export function Header() {
               </div>
             )}
             <div className="space-y-2">
-              <Link to="/pricing" onClick={() => setOpen(false)} className={`block py-2 text-base font-medium ${t.mobileText}`}>Pricing</Link>
-              <Link to="/reviews" onClick={() => setOpen(false)} className={`block py-2 text-base font-medium ${t.mobileText}`}>Reviews</Link>
-              <Link to="/about" onClick={() => setOpen(false)} className={`block py-2 text-base font-medium ${t.mobileText}`}>About</Link>
-              <Link to="/contact" onClick={() => setOpen(false)} className={`block py-2 text-base font-medium ${t.mobileText}`}>Contact</Link>
+              {!HIDDEN_NAV.includes('pricing') && <Link to="/pricing" onClick={() => setOpen(false)} className={`block py-2 text-base font-medium ${t.mobileText}`}>Pricing</Link>}
+              {!HIDDEN_NAV.includes('reviews') && <Link to="/reviews" onClick={() => setOpen(false)} className={`block py-2 text-base font-medium ${t.mobileText}`}>Reviews</Link>}
+              {!HIDDEN_NAV.includes('about') && <Link to="/about" onClick={() => setOpen(false)} className={`block py-2 text-base font-medium ${t.mobileText}`}>About</Link>}
+              {!HIDDEN_NAV.includes('contact') && <Link to="/contact" onClick={() => setOpen(false)} className={`block py-2 text-base font-medium ${t.mobileText}`}>Contact</Link>}
               {CUSTOM_PAGES.filter((p) => p.nav !== false).map((p) => (
                 <Link key={p.slug} to="/p/$slug" params={{ slug: p.slug }} onClick={() => setOpen(false)} className={`block py-2 text-base font-medium ${t.mobileText}`}>{p.title}</Link>
               ))}

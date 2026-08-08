@@ -8,6 +8,10 @@ import { INFO_PAGES } from "~/data/info-pages";
 import { CUSTOM_PAGES } from "~/data/custom-pages";
 import defaultLeaves from "~/assets/decorative/cleaning-leaves.png";
 
+// PRAISE-61 — nav links hidden from the menu (design_dna.chrome.nav.hidden → SITE.hiddenNav).
+// ABSENT/empty → byte-identical; filtering only, the pages still exist and are reachable by URL.
+const HIDDEN_NAV: string[] = (SITE as { hiddenNav?: string[] }).hiddenNav ?? [];
+
 // Character-aware root footer. Picks its treatment from SITE.character (emitted
 // by the scaffolder only for bold/elegant). Absent → the 'default' theme below,
 // whose class strings are today's verbatim markup → byte-identical for verticals
@@ -284,10 +288,10 @@ export function Footer({ decorativeAsset = defaultLeaves }: { decorativeAsset?: 
         <div>
           <h4 className={`text-sm font-semibold mb-4 ${t.heading}`}>Company</h4>
           <ul className={`space-y-2 text-sm ${t.listText}`}>
-            <li><Link to="/about" className={t.listHover}>About</Link></li>
-            <li><Link to="/pricing" className={t.listHover}>Pricing</Link></li>
-            <li><Link to="/reviews" className={t.listHover}>Reviews</Link></li>
-            <li><Link to="/contact" className={t.listHover}>Contact</Link></li>
+            {!HIDDEN_NAV.includes('about') && <li><Link to="/about" className={t.listHover}>About</Link></li>}
+            {!HIDDEN_NAV.includes('pricing') && <li><Link to="/pricing" className={t.listHover}>Pricing</Link></li>}
+            {!HIDDEN_NAV.includes('reviews') && <li><Link to="/reviews" className={t.listHover}>Reviews</Link></li>}
+            {!HIDDEN_NAV.includes('contact') && <li><Link to="/contact" className={t.listHover}>Contact</Link></li>}
             {INFO_PAGES.map((i) => (
               <li key={i.slug}>
                 <Link to="/info/$slug" params={{ slug: i.slug }} className={t.listHover}>
