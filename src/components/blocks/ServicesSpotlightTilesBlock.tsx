@@ -74,7 +74,7 @@ export function ServicesSpotlightTilesBlock({
             <Link
               to="/services/$slug"
               params={{ slug: lead.slug }}
-              className="group relative flex h-full min-h-[22rem] flex-col justify-end overflow-hidden rounded-[1.75rem] border p-7 sm:p-9"
+              className="group relative flex h-full min-h-[22rem] flex-col justify-end overflow-hidden rounded-[1.75rem] border bg-ink-900 p-7 sm:p-9"
               style={{
                 borderColor: 'var(--wow-hairline)',
                 boxShadow: 'var(--wow-shadow-lift)',
@@ -88,18 +88,23 @@ export function ServicesSpotlightTilesBlock({
                 height={800}
                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.05]"
               />
-              {/* Brand wash so inset copy stays legible over any photo. */}
+              {/* Brand wash — decorative brand TINT over the photo (aesthetic only). */}
               <span
                 aria-hidden
                 className="absolute inset-0"
                 style={{ backgroundImage: 'var(--wow-grad-brand)', opacity: 0.72 }}
               />
+              {/* Legibility scrim — a NEUTRAL dark gradient that covers the whole copy
+                  area (bottom ~55%), not just the bottom 40%. Sits ABOVE the brand wash
+                  so white copy stays ≥4.5:1 regardless of the photo OR a light brand
+                  wash (light/yellow primaries). The bg-ink-900 tile base guarantees the
+                  same when the image is missing or still loading. */}
               <span
                 aria-hidden
                 className="absolute inset-0"
                 style={{
                   backgroundImage:
-                    'linear-gradient(to top, rgba(0,0,0,0.45), transparent 60%)',
+                    'linear-gradient(to top, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.6) 45%, transparent 78%)',
                 }}
               />
               <div className="relative">

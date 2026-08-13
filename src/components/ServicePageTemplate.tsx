@@ -64,7 +64,9 @@ export function ServicePageTemplate({ data }: Props) {
   const Header = T?.SectionHeader ?? SectionHeader;
   // Inline headings (currently class-less <h2>/<h4>): undefined for known verticals →
   // no class emitted (byte-identical); character text color + case when present.
-  const hCls = T ? `${T.text} ${T.headingCase}`.trim() : undefined;
+  // No-character sites (T null) must still get a guaranteed heading colour — undefined
+  // means the heading inherits, which can render invisibly. Mirror tStrong's ink-900 default.
+  const hCls = T ? `${T.text} ${T.headingCase}`.trim() : "text-ink-900";
 
   return (
     <>
