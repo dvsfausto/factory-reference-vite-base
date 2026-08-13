@@ -159,8 +159,11 @@
   .btn-md { height: 42px; padding: 0 1.25rem; font-size: 14px; }
   .btn-sm { height: 34px; padding: 0 1rem; font-size: 13px; }
 
-  .btn-primary { background: var(--color-brand-600); color: #fff; box-shadow: 0 4px 14px -4px rgba(30,99,214,0.35); }
-  .btn-primary:hover { background: var(--color-brand-800); box-shadow: 0 10px 24px -8px rgba(30,99,214,0.55); transform: translateY(-1px); }
+  /* CTA fg/hover are WCAG-derived per brand at emit time (brand-theme.ts): white text on
+     dark primaries, black on light/yellow ones so white-on-gold (2.1:1) can't ship. The
+     fallbacks keep a brand-less build byte-identical (#fff + brand-800). */
+  .btn-primary { background: var(--color-brand-600); color: var(--btn-primary-fg, #fff); box-shadow: 0 4px 14px -4px rgba(30,99,214,0.35); }
+  .btn-primary:hover { background: var(--btn-primary-hover, var(--color-brand-800)); box-shadow: 0 10px 24px -8px rgba(30,99,214,0.55); transform: translateY(-1px); }
 
   .btn-secondary { background: #fff; color: var(--color-brand-800); border: 1.5px solid var(--color-brand-200); }
   .btn-secondary:hover { background: var(--color-brand-50); border-color: var(--color-brand-600); color: var(--color-brand-600); }
