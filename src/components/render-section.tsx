@@ -704,6 +704,12 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext): ReactN
           label={block.params?.label as string | undefined}
           heading={block.params?.heading as string | undefined}
           body={block.params?.body as string | undefined}
+          // Catalog-widget params (quote form): editable button + the owner-chosen quotable-service
+          // list. Other variants ignore them. Absent `services` → the quote block offers all quotable.
+          submitLabel={block.params?.submitLabel as string | undefined}
+          services={
+            block.params?.services as { slug: string; name: string }[] | undefined
+          }
         />
       )
     }

@@ -25,6 +25,24 @@ export const SERVICES: ServiceRef[] = SERVICES_ALL.filter((s) => s.published !==
  */
 export const PAGED_SERVICES: ServiceRef[] = SERVICES.filter((s) => s.paged !== false);
 
+/**
+ * QUOTABLE view — visible services the customer REQUESTS A QUOTE for. That's the two quotable
+ * affordances: `collect` (quotable, no price — the owner builds the estimate; Melvin's case) and
+ * `quote` (quotable with a fixed estimate). The quote-request widget offers exactly these. The pattern
+ * generalises: a booking widget reads `action === 'book'`, a cart reads `'buy'`. Absent `action`
+ * (older builds that never forwarded the affordance) → empty, and the widget falls back to offering
+ * all of SERVICES so it is never a dead form.
+ */
+const QUOTABLE_ACTIONS: ServiceRef['action'][] = ['collect', 'quote'];
+export const QUOTABLE_SERVICES: ServiceRef[] = SERVICES.filter((s) => QUOTABLE_ACTIONS.includes(s.action));
+
+/** The services a catalog widget should offer for a set of affordances, with the never-empty
+ *  fallback: the filtered set when known, else all visible services. */
+export function servicesForActions(actions: ServiceRef['action'][]): ServiceRef[] {
+  const filtered = SERVICES.filter((s) => actions.includes(s.action));
+  return filtered.length > 0 ? filtered : SERVICES;
+}
+
 /** True iff this slug has a dedicated page (visible AND paged). Used by the list renderer to choose
  *  a card vs an anchor, and by the loader/sitemap to gate the page. */
 export function isServicePaged(slug: string): boolean {

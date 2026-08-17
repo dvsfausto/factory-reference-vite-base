@@ -65,14 +65,20 @@ export function Textarea({
   )
 }
 
-export function SubmitButton({ status }: { status: 'idle' | 'submitting' | 'success' | 'error'; }) {
+export function SubmitButton({
+  status,
+  label = 'Send request',
+}: {
+  status: 'idle' | 'submitting' | 'success' | 'error'
+  label?: string // editable per widget (e.g. the quote form's 'Request my quote')
+}) {
   return (
     <button
       type="submit"
       disabled={status === 'submitting'}
       className="inline-flex h-12 items-center justify-center rounded-xl bg-primary px-7 font-display text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-60"
     >
-      {status === 'submitting' ? 'Sending…' : 'Send request'}
+      {status === 'submitting' ? 'Sending…' : label}
     </button>
   )
 }

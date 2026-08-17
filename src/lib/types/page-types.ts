@@ -42,6 +42,13 @@ export interface ServiceRef {
    * override (design_dna.services.paged) can force this on or off and survives rebuild.
    */
   paged?: boolean
+  /**
+   * Catalog affordance — the generated `services.action` (buy/collect/quote/book/inquire) forwarded
+   * by the scaffolder from the owner's catalog. Drives which catalog-reading widgets offer this
+   * service: the quote form lists only `action === 'quote'`, booking only `'book'`, etc. Absent ===
+   * unknown (older builds) → catalog widgets fall back to offering all visible services.
+   */
+  action?: 'buy' | 'collect' | 'quote' | 'book' | 'inquire'
 }
 
 export interface AreaRef {

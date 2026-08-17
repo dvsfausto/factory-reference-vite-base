@@ -1,28 +1,41 @@
 import { useState, type FormEvent } from 'react'
 import { SITE } from '~/data/site'
-import { submitLead, type LeadStatus } from './forms-submit'
+import { servicesForActions } from '~/data/services-view'
+import { submitQuoteRequest, type LeadStatus } from './forms-submit'
 import { Field, Textarea, SubmitButton, SuccessCard } from './form-ui'
 
-// Forms LAYOUT: 'quote' — a "request a quote" form with a service-of-interest
-// field. Character-agnostic. Posts the confirmed handle-website-lead envelope
-// (source_page 'quote'); the service is FOLDED INTO message (no new payload keys).
+// Forms LAYOUT: 'quote' — the CATALOG quote-request widget (the pattern booking/cart copy). It lists
+// only the owner's QUOTABLE services (services.action === 'quote', forwarded by the scaffolder) and
+// files a STRUCTURED quote_request via request-quote → the owner's Requests tab (not a generic lead).
 //
-// TOKEN DISCIPLINE: primary CTA -> bg-primary. Accent -> emerald-* (DNA)
-// 50/100/600/700. Radius -> rounded-* (DNA). Font -> font-display (DNA). Dark
-// header panel (slate-950) component-owned. Never bg-brand-* / .btn.
+// EDITABLE surface = block params (heading/body/label/submitLabel/services). On the /quote customPage
+// these ride in design_dna.customPages → the owner edits them AND they survive a rebuild. `services`
+// lets the owner choose which quotable services appear; absent → all quotable (never a dead form).
+//
+// TOKEN DISCIPLINE: primary CTA -> bg-primary. Accent -> emerald-* (DNA). Radius -> rounded-* (DNA).
+// Font -> font-display (DNA). Dark header panel component-owned. Never bg-brand-* / .btn.
 export function FormQuoteBlock({
-  label = (SITE as { ctaLabel?: string }).ctaLabel ?? 'Free quote',
-  heading = (SITE as { ctaLabel?: string }).ctaLabel ? 'Tell us what you need' : 'Request a quote',
-  body = (SITE as { ctaLabel?: string }).ctaLabel
-    ? "Tell us what you need and we'll respond within one business day."
-    : 'Tell us about the project and we respond within one business day.',
+  label = 'Free quote',
+  heading = 'Request a quote',
+  body = 'Tell us about the project and we respond within one business day.',
+  submitLabel = 'Request my quote',
+  services,
 }: {
   label?: string
   heading?: string
   body?: string
+  submitLabel?: string
+  services?: { slug: string; name: string }[]
 }) {
   const [status, setStatus] = useState<LeadStatus>('idle')
   const [error, setError] = useState<string | null>(null)
+
+  // The quotable services to offer: the block's own list (owner-chosen, editable) → else the site's
+  // quotable services, with servicesForActions falling back to all visible services if the affordance
+  // was never forwarded (so the form is never empty). Options are keyed by slug (stable), submitted by
+  // name (the server's resolver key — services has no slug column).
+  const options =
+    services && services.length > 0 ? services : servicesForActions(['collect', 'quote'])
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -30,20 +43,18 @@ export function FormQuoteBlock({
     const fd = new FormData(form)
     setStatus('submitting')
     setError(null)
-    const service = String(fd.get('service') ?? '').trim()
-    const note = String(fd.get('message') ?? '').trim()
-    const message = [service && `Service of interest: ${service}`, note && `\n${note}`].filter(Boolean).join('\n')
+    const serviceSlug = String(fd.get('service') ?? '').trim()
+    const serviceName = options.find((s) => s.slug === serviceSlug)?.name
     try {
-      await submitLead(
-        {
-          first_name: String(fd.get('first_name') ?? ''),
-          last_name: String(fd.get('last_name') ?? ''),
-          phone: String(fd.get('phone') ?? ''),
-          email: String(fd.get('email') ?? '') || undefined,
-          message,
-        },
-        'quote',
-      )
+      await submitQuoteRequest({
+        first_name: String(fd.get('first_name') ?? ''),
+        last_name: String(fd.get('last_name') ?? ''),
+        phone: String(fd.get('phone') ?? ''),
+        email: String(fd.get('email') ?? '') || undefined,
+        serviceName,
+        details: String(fd.get('details') ?? ''),
+        hp: String(fd.get('company_site') ?? ''),
+      })
       setStatus('success')
       form.reset()
     } catch (err) {
@@ -76,15 +87,43 @@ export function FormQuoteBlock({
                   <Field label="Phone" name="phone" type="tel" required autoComplete="tel" />
                   <Field label="Email" name="email" type="email" autoComplete="email" />
                 </div>
+                {options.length > 0 && (
+                  <div className="mt-5">
+                    <label htmlFor="quote-service" className="block text-sm font-medium text-ink-800">
+                      Service you need a quote for
+                    </label>
+                    <select
+                      id="quote-service"
+                      name="service"
+                      defaultValue={options.length === 1 ? options[0].slug : ''}
+                      className="mt-1.5 w-full rounded-xl border border-[#D5D9DF] bg-white px-4 py-3 text-ink-900 outline-none focus:border-emerald-600 focus:ring-2 focus:ring-emerald-100"
+                    >
+                      {options.length !== 1 && <option value="">Select a service…</option>}
+                      {options.map((s) => (
+                        <option key={s.slug} value={s.slug}>{s.name}</option>
+                      ))}
+                    </select>
+                  </div>
+                )}
                 <div className="mt-5">
-                  <Field label="What do you need?" name="service" placeholder="e.g. the service you're interested in" />
+                  <Textarea
+                    label="Project details"
+                    name="details"
+                    required
+                    rows={5}
+                    placeholder="Scope, sizes/measurements, timing — anything that helps us quote accurately."
+                  />
                 </div>
-                <div className="mt-5">
-                  <Textarea label="Project details" name="message" required rows={5} placeholder="A few sentences about the work." />
+                {/* Honeypot: hidden from humans, tempting to bots. request-quote silently drops when filled. */}
+                <div aria-hidden="true" className="absolute left-[-9999px] h-0 w-0 overflow-hidden">
+                  <label>
+                    Company website
+                    <input type="text" name="company_site" tabIndex={-1} autoComplete="off" />
+                  </label>
                 </div>
                 {status === 'error' && error && <p className="mt-4 text-sm text-red-600">{error}</p>}
                 <div className="mt-8 flex flex-wrap items-center gap-4">
-                  <SubmitButton status={status} />
+                  <SubmitButton status={status} label={submitLabel} />
                   <span className="text-sm text-[#64748B]">
                     Or call{' '}
                     <a href={`tel:${SITE.phone}`} className="font-medium text-emerald-700 underline-offset-2 hover:underline">
