@@ -4,6 +4,7 @@ import { Menu, X, Phone, ChevronDown } from "lucide-react";
 import { Logo } from "./Logo";
 import { SITE, BOOKING } from "~/data/site";
 import { PrimaryCta } from "~/components/blocks/PrimaryCta";
+import { primaryCta } from "~/lib/primaryCta";
 import { PAGED_SERVICES as SERVICES } from "~/data/services-view";
 import { AREAS } from "~/data/areas";
 import { CUSTOM_PAGES } from "~/data/custom-pages";
@@ -277,23 +278,15 @@ export function Header() {
   // Header CTA reflects the business's TRANSACTION TYPE — booking businesses shouldn't
   // show "Free Quote". Infer it from the hero's primary CTA (set per-vertical/onboarding:
   // "Book Your Visit" → booking, "Request a quote" → quote) so header + hero are CONSISTENT.
-  // An explicit SITE.headerCtaLabel/ctaLabel still wins; a non-matching CTA falls to the
-  // theme default (byte-identical). Near-term service-tier — no business_model dependency.
-  const heroCta = ((SITE.hero as { cta_primary_label?: string })?.cta_primary_label ?? '').toLowerCase();
-  const transactionCta = /\b(book|schedul|appoint|reserv|reservation|visit|tour|class|session|consult|table)\b/.test(heroCta)
-    ? 'Book Now'
-    : /\b(quote|estimate)\b/.test(heroCta)
-      ? 'Get a Quote'
-      : undefined;
-  // NATIVE BOOKING (Arc 4a · Stage 2): when the on-page wizard is enabled, the header
-  // CTA scrolls to it (#book) instead of routing to /contact, and defaults its label to
-  // "Book Now" (an explicit emitted headerCtaLabel/ctaLabel still wins). Booking-off
-  // builds are byte-identical — bookNative is false and both paths below collapse to the
-  // exact prior <Link to="/contact"> + label.
-  const bookNative = BOOKING.enabled;
-  const headerCtaLabel = bookNative
-    ? ((SITE as { headerCtaLabel?: string; ctaLabel?: string }).headerCtaLabel ?? (SITE as { ctaLabel?: string }).ctaLabel ?? 'Book Now')
-    : ((SITE as { headerCtaLabel?: string; ctaLabel?: string }).headerCtaLabel ?? (SITE as { ctaLabel?: string }).ctaLabel ?? transactionCta ?? t.ctaLabel);
+  // The header CTA label comes from the AFFORDANCE (primaryCta().label — "Get a quote" / "Book now" /
+  // "Shop"), so it's correct on arrival with no owner setup and never leaks the generic contact label.
+  // An explicit emitted/edited SITE.headerCtaLabel/ctaLabel (design_dna) still wins. The theme default
+  // (t.ctaLabel) is the last resort only when there is genuinely no affordance.
+  const headerCtaLabel =
+    (SITE as { headerCtaLabel?: string; ctaLabel?: string }).headerCtaLabel ??
+    (SITE as { ctaLabel?: string }).ctaLabel ??
+    primaryCta().label ??
+    t.ctaLabel;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);

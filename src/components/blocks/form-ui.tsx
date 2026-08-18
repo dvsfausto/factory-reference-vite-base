@@ -83,16 +83,21 @@ export function SubmitButton({
   )
 }
 
-export function SuccessCard() {
+export function SuccessCard({
+  title = "We'll be in touch shortly.",
+  body = 'Thanks for reaching out — a real person reads every request and replies within one business day.',
+}: {
+  // Affordance-specific success copy so a quote form doesn't confirm like a contact form.
+  title?: string
+  body?: string
+} = {}) {
   return (
     <div className="rounded-2xl border border-emerald-600 bg-emerald-50 p-10 text-center">
       <span className="mx-auto grid h-12 w-12 place-items-center rounded-full bg-emerald-600 text-white">
         <Check className="h-6 w-6" />
       </span>
-      <h3 className="mt-5 font-display text-2xl font-semibold tracking-tight text-[#0F172A]">We'll be in touch shortly.</h3>
-      <p className="mx-auto mt-3 max-w-md leading-relaxed text-[#475569]">
-        Thanks for reaching out — a real person reads every request and replies within one business day.
-      </p>
+      <h3 className="mt-5 font-display text-2xl font-semibold tracking-tight text-[#0F172A]">{title}</h3>
+      <p className="mx-auto mt-3 max-w-md leading-relaxed text-[#475569]">{body}</p>
     </div>
   )
 }

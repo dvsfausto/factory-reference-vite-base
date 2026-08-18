@@ -78,7 +78,10 @@ export function FormQuoteBlock({
 
           <div className="p-8 md:p-12">
             {status === 'success' ? (
-              <SuccessCard />
+              <SuccessCard
+                title="Your quote request is in."
+                body="Thanks — we'll review the details and send your custom quote within one business day."
+              />
             ) : (
               <form onSubmit={onSubmit}>
                 <div className="grid gap-5 md:grid-cols-2">
