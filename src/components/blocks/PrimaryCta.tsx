@@ -1,6 +1,6 @@
 import { Link } from '@tanstack/react-router'
 import type { CSSProperties, ReactNode } from 'react'
-import { BOOKING } from '~/data/site'
+import { primaryCta } from '~/lib/primaryCta'
 
 // ─────────────────────────────────────────────────────────────────────────────
 // SHARED PRIMARY CTA TARGET (Arc 4a · Stage 2).
@@ -20,14 +20,15 @@ import { BOOKING } from '~/data/site'
 // each variant keeps its exact look; only the destination is centralized here.
 // ─────────────────────────────────────────────────────────────────────────────
 export function PrimaryCta({
-  to = '/contact',
+  to,
   className,
   style,
   onClick,
   ariaLabel,
   children,
 }: {
-  /** Fallback route when booking is OFF (booking-ON always wins → /#book). */
+  /** Explicit target override. Default = the affordance CTA (primaryCta().href): a bookable business
+   *  gets /#book, a quote-only trade /quote, a shop /shop, else /contact. */
   to?: string
   className?: string
   style?: CSSProperties
@@ -35,15 +36,19 @@ export function PrimaryCta({
   ariaLabel?: string
   children: ReactNode
 }) {
-  if (BOOKING.enabled) {
+  const target = to ?? primaryCta().href
+  // A hash target (/#book) scrolls the on-page wizard and must be a plain <a> (works from inner pages
+  // too — they navigate home then scroll). A route target (/quote, /shop, /contact) is an SPA <Link>.
+  const isHash = target.startsWith('#') || target.startsWith('/#')
+  if (isHash) {
     return (
-      <a href="/#book" className={className} style={style} onClick={onClick} aria-label={ariaLabel}>
+      <a href={target} className={className} style={style} onClick={onClick} aria-label={ariaLabel}>
         {children}
       </a>
     )
   }
   return (
-    <Link to={to} className={className} style={style} onClick={onClick} aria-label={ariaLabel}>
+    <Link to={target} className={className} style={style} onClick={onClick} aria-label={ariaLabel}>
       {children}
     </Link>
   )

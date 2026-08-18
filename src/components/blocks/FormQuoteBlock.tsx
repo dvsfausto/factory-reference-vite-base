@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { SITE } from '~/data/site'
-import { servicesForActions } from '~/data/services-view'
+import { useCatalogServices } from '~/lib/useCatalogServices'
 import { submitQuoteRequest, type LeadStatus } from './forms-submit'
 import { Field, Textarea, SubmitButton, SuccessCard } from './form-ui'
 
@@ -30,12 +30,11 @@ export function FormQuoteBlock({
   const [status, setStatus] = useState<LeadStatus>('idle')
   const [error, setError] = useState<string | null>(null)
 
-  // The quotable services to offer: the block's own list (owner-chosen, editable) → else the site's
-  // quotable services, with servicesForActions falling back to all visible services if the affordance
-  // was never forwarded (so the form is never empty). Options are keyed by slug (stable), submitted by
-  // name (the server's resolver key — services has no slug column).
-  const options =
-    services && services.length > 0 ? services : servicesForActions(['collect', 'quote'])
+  // The quotable services to offer: the block's own list (owner-chosen, editable) → else a LIVE read of
+  // the business's quotable services (SSR = baked for SEO/instant; client reconciles so a service added
+  // after the build shows with no rebuild; failure → baked). Options keyed by slug; submitted by id.
+  const liveServices = useCatalogServices(['collect', 'quote'])
+  const options = services && services.length > 0 ? services : liveServices
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()

@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ReviewsRouteImport } from './routes/reviews'
+import { Route as QuoteRouteImport } from './routes/quote'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
@@ -24,6 +25,11 @@ import { Route as AreasSlugRouteImport } from './routes/areas.$slug'
 const ReviewsRoute = ReviewsRouteImport.update({
   id: '/reviews',
   path: '/reviews',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QuoteRoute = QuoteRouteImport.update({
+  id: '/quote',
+  path: '/quote',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PricingRoute = PricingRouteImport.update({
@@ -82,6 +88,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/pricing': typeof PricingRoute
+  '/quote': typeof QuoteRoute
   '/reviews': typeof ReviewsRoute
   '/areas/$slug': typeof AreasSlugRoute
   '/info/$slug': typeof InfoSlugRoute
@@ -95,6 +102,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/pricing': typeof PricingRoute
+  '/quote': typeof QuoteRoute
   '/reviews': typeof ReviewsRoute
   '/areas/$slug': typeof AreasSlugRoute
   '/info/$slug': typeof InfoSlugRoute
@@ -109,6 +117,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/pricing': typeof PricingRoute
+  '/quote': typeof QuoteRoute
   '/reviews': typeof ReviewsRoute
   '/areas/$slug': typeof AreasSlugRoute
   '/info/$slug': typeof InfoSlugRoute
@@ -124,6 +133,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/pricing'
+    | '/quote'
     | '/reviews'
     | '/areas/$slug'
     | '/info/$slug'
@@ -137,6 +147,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/pricing'
+    | '/quote'
     | '/reviews'
     | '/areas/$slug'
     | '/info/$slug'
@@ -150,6 +161,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/pricing'
+    | '/quote'
     | '/reviews'
     | '/areas/$slug'
     | '/info/$slug'
@@ -164,6 +176,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   ContactRoute: typeof ContactRoute
   PricingRoute: typeof PricingRoute
+  QuoteRoute: typeof QuoteRoute
   ReviewsRoute: typeof ReviewsRoute
   AreasSlugRoute: typeof AreasSlugRoute
   InfoSlugRoute: typeof InfoSlugRoute
@@ -180,6 +193,13 @@ declare module '@tanstack/react-router' {
       path: '/reviews'
       fullPath: '/reviews'
       preLoaderRoute: typeof ReviewsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/quote': {
+      id: '/quote'
+      path: '/quote'
+      fullPath: '/quote'
+      preLoaderRoute: typeof QuoteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/pricing': {
@@ -260,6 +280,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   ContactRoute: ContactRoute,
   PricingRoute: PricingRoute,
+  QuoteRoute: QuoteRoute,
   ReviewsRoute: ReviewsRoute,
   AreasSlugRoute: AreasSlugRoute,
   InfoSlugRoute: InfoSlugRoute,
