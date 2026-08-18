@@ -16,7 +16,7 @@ export interface FormBlockProps {
   heading?: string
   body?: string
   submitLabel?: string
-  services?: { slug: string; name: string }[]
+  services?: { slug: string; name: string; id?: string }[]
 }
 
 // Per-type variant map for the Forms (contact/booking/quote) section (additive, like HERO_VARIANTS),

@@ -51,8 +51,10 @@ export interface QuoteInput {
   last_name: string
   phone: string
   email?: string
-  serviceName?: string // the chosen quotable service's display name — the server's resolver key
-                       // (services has no slug column) and the owner's one-line summary
+  serviceId?: string   // the chosen service's catalog UUID — the server's PRIMARY resolver key (real
+                       // identity; survives renames, no name collisions)
+  serviceName?: string // display name — the owner's one-line summary + the fallback resolver key when
+                       // an older build shipped no id
   details: string      // the project details / measurements the customer typed
   hp?: string          // honeypot — bots fill it; server silently drops
 }
@@ -61,6 +63,7 @@ export async function submitQuoteRequest(input: QuoteInput): Promise<void> {
   const name = [input.first_name, input.last_name].map((s) => s.trim()).filter(Boolean).join(' ')
   const payload = {
     businessId: BUSINESS_ID,
+    serviceId: input.serviceId?.trim() || null,
     serviceName: input.serviceName?.trim() || null,
     name,
     email: input.email?.trim() || undefined,

@@ -25,7 +25,7 @@ export function FormQuoteBlock({
   heading?: string
   body?: string
   submitLabel?: string
-  services?: { slug: string; name: string }[]
+  services?: { slug: string; name: string; id?: string }[]
 }) {
   const [status, setStatus] = useState<LeadStatus>('idle')
   const [error, setError] = useState<string | null>(null)
@@ -44,14 +44,15 @@ export function FormQuoteBlock({
     setStatus('submitting')
     setError(null)
     const serviceSlug = String(fd.get('service') ?? '').trim()
-    const serviceName = options.find((s) => s.slug === serviceSlug)?.name
+    const selected = options.find((s) => s.slug === serviceSlug)
     try {
       await submitQuoteRequest({
         first_name: String(fd.get('first_name') ?? ''),
         last_name: String(fd.get('last_name') ?? ''),
         phone: String(fd.get('phone') ?? ''),
         email: String(fd.get('email') ?? '') || undefined,
-        serviceName,
+        serviceId: selected?.id,
+        serviceName: selected?.name,
         details: String(fd.get('details') ?? ''),
         hp: String(fd.get('company_site') ?? ''),
       })

@@ -49,6 +49,13 @@ export interface ServiceRef {
    * unknown (older builds) → catalog widgets fall back to offering all visible services.
    */
   action?: 'buy' | 'collect' | 'quote' | 'book' | 'inquire'
+  /**
+   * Catalog service UUID — the REAL cross-boundary identity (not the fragile name), emitted by the
+   * scaffolder from the owner's catalog. Catalog widgets submit this so a rename never breaks the link
+   * and two same-named services never collide. Representative id for a folded tier-family. Absent
+   * (older builds) → the widget falls back to the service name.
+   */
+  id?: string
 }
 
 export interface AreaRef {
