@@ -1,4 +1,3 @@
-import { SERVICES } from '~/data/services-view'
 import { customPagesData } from '~/data/custom-pages'
 import { BOOKING, SITE } from '~/data/site'
 
@@ -8,31 +7,35 @@ import { BOOKING, SITE } from '~/data/site'
 // painter's CTA says "Get a quote", never "Get in touch". Editable after (SITE.cta override wins), but
 // correct on arrival.
 //
-// Signal priority (each is an AUTHORITATIVE "this business offers this action", so we never fall to the
-// generic contact label when a real affordance exists):
-//   1. SITE.cta override (design_dna, durable) — the owner's edit.
-//   2. A widget PAGE exists (customPagesData['quote'|'book'|'shop']) — its very presence proves the
-//      affordance, independent of how services.ts was emitted.
-//   3. The native booking wizard (BOOKING.enabled) or a service action.
-//   4. Only if NONE of the above → "Get in touch" / /contact.
+// Signal priority — every target must PROVABLY RESOLVE (never a dead CTA):
+//   1. SITE.cta override (design_dna, durable) — the owner's edit / the scaffolder's page-aware affordance.
+//   2. A widget PAGE that EXISTS (customPagesData['book'|'quote'|'shop']) → that page. Its presence is
+//      the affordance AND the guarantee the link resolves.
+//   3. The native booking wizard (BOOKING.enabled) → the homepage /#book anchor (the section is rendered).
+//   4. Otherwise → "Get in touch" / /contact (a route that always exists).
+//
+// ⚠️ We do NOT route off raw `services.action` here. `action='book'` is a DEFAULT FLOOD (bookable
+// defaults true → nearly every service reads 'book'), so a lead/multi-staff business — vetoed from the
+// /book page, no quotable services — would otherwise get a "Book now" CTA pointing at a /book page that
+// was never generated → 404. Likewise `action='buy'` → /shop, a page we don't generate yet. Deliberate
+// affordance routing (quote/book) already flows through SITE.cta, which the scaffolder emits ONLY when
+// the corresponding page exists. So here we trust PAGES, not actions. See affordance-gate-not-deliberate.
 // ─────────────────────────────────────────────────────────────────────────────
 export function primaryCta(): { href: string; label: string } {
   const override = (SITE as { cta?: { href?: string; label?: string } }).cta
   if (override?.href && override?.label) return { href: override.href, label: override.label }
 
   const hasPage = (slug: string) => !!customPagesData[slug]
-  const actions = new Set(SERVICES.map((s) => s.action))
   const base =
-    BOOKING.enabled || hasPage('book') || actions.has('book')
-      // A dedicated /book PAGE is the shareable front door ("text your customer the link"),
-      // so it wins over the on-page /#book anchor whenever it exists. /#book only when the
-      // homepage wizard is the sole booking surface (legacy solo build, no /book page yet).
-      ? { href: hasPage('book') ? '/book' : BOOKING.enabled ? '/#book' : '/book', label: 'Book now' }
-      : hasPage('quote') || actions.has('collect') || actions.has('quote')
-        ? { href: '/quote', label: 'Get a quote' }
-        : hasPage('shop') || actions.has('buy')
-          ? { href: '/shop', label: 'Shop' }
-          : { href: '/contact', label: 'Get in touch' }
+    hasPage('book')
+      ? { href: '/book', label: 'Book now' }
+      : BOOKING.enabled
+        ? { href: '/#book', label: 'Book now' }
+        : hasPage('quote')
+          ? { href: '/quote', label: 'Get a quote' }
+          : hasPage('shop')
+            ? { href: '/shop', label: 'Shop' }
+            : { href: '/contact', label: 'Get in touch' }
   // A partial override (only href OR only label) still wins for the field it sets.
   return { href: override?.href ?? base.href, label: override?.label ?? base.label }
 }
