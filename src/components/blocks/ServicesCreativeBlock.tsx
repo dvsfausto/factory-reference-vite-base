@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { tr } from '~/lib/i18n'
 import { ArrowUpRight } from 'lucide-react'
 import { SectionHeaderCreative } from '~/components/SectionHeaderCreative'
 import { SITE } from '~/data/site'
@@ -18,8 +19,8 @@ export function ServicesCreativeBlock({
   label,
   heading,
   body,
-  exploreLabel = 'See the work',
-  moreLink = 'Everything we do',
+  exploreLabel = tr('section.seeTheWork'),
+  moreLink = tr('section.everythingWeDo'),
 }: {
   label?: string
   heading?: string

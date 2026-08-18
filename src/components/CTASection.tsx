@@ -1,4 +1,5 @@
 import { Phone, Sparkles } from "lucide-react";
+import { tr } from '~/lib/i18n'
 import { SITE } from "~/data/site";
 import { PrimaryCta } from "~/components/blocks/PrimaryCta";
 import defaultLeaves from "~/assets/decorative/cleaning-leaves.png";
@@ -13,10 +14,10 @@ interface Props {
 }
 
 export function CTASection({
-  title = "Ready to get started?",
+  title = tr('cta.readyToStart'),
   subtitle,
   to = "/contact",
-  label = (SITE as { ctaLabel?: string }).ctaLabel ?? "Get Free Quote",
+  label = (SITE as { ctaLabel?: string }).ctaLabel ?? tr('cta.getFreeQuote'),
   decorativeAsset = defaultLeaves,
   showSparkleBadge = true,
 }: Props) {

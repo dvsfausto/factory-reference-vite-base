@@ -1,4 +1,5 @@
 import { Quote } from 'lucide-react'
+import { tr } from '~/lib/i18n'
 import type { VideoTestimonial } from './video-testimonials-variants'
 import { SITE } from '~/data/site'
 
@@ -11,8 +12,8 @@ import { SITE } from '~/data/site'
 // Radius -> rounded-* (DNA). Font -> font-display (DNA). Dark stage (slate-950)
 // component-owned. No CTA by design. Never bg-brand-* / .btn.
 export function VideoTestimonialsSpotlightBlock({
-  label = 'Testimonials',
-  heading = 'Real stories',
+  label = tr('section.testimonials'),
+  heading = tr('section.realStories'),
   body,
 }: {
   label?: string

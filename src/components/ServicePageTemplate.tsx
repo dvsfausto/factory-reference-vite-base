@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { tr } from '~/lib/i18n'
 import { ArrowRight, Check, MapPin, Phone, Star } from "lucide-react";
 import { Breadcrumbs } from "./Breadcrumbs";
 import { FAQSection } from "./FAQSection";
@@ -43,8 +44,8 @@ export function ServicePageTemplate({ data }: Props) {
       : undefined,
   });
   const characterCta = renderCharacterCta({
-    title: "Ready when you are.",
-    subtitle: "Tell us what you need and we'll be in touch within a business day.",
+    title: tr('cta.readyWhenYouAre'),
+    subtitle: tr('tmpl.tellUsBusinessDay'),
   });
 
   // Character tokens for the shared MIDDLE sections. null → known verticals keep the
@@ -83,7 +84,7 @@ export function ServicePageTemplate({ data }: Props) {
               white-band leak on e.g. a cream elegant page. secPlain = T?.section ?? "bg-white",
               so known verticals (no character) are byte-identical AND never reach this branch. */}
           <div className={T?.crumb?.surface ?? secPlain}>
-            <nav aria-label="Breadcrumb" className="container-x pt-8 md:pt-10">
+            <nav aria-label={tr('breadcrumb.aria')} className="container-x pt-8 md:pt-10">
               <Breadcrumbs items={[
                 { label: "Home", to: "/" },
                 { label: "Services", to: "/services" },
@@ -118,7 +119,7 @@ export function ServicePageTemplate({ data }: Props) {
               )}
               <div className="mt-7 flex flex-wrap gap-3">
                 <Link to="/contact" className="btn btn-lg btn-primary">
-                  {((SITE as { ctaLabel?: string }).ctaLabel ?? "Get Free Quote") + " "}<ArrowRight className="h-4 w-4" />
+                  {((SITE as { ctaLabel?: string }).ctaLabel ?? tr('cta.getFreeQuote')) + " "}<ArrowRight className="h-4 w-4" />
                 </Link>
                 <a href={`tel:${SITE.phone}`} className="btn btn-lg btn-secondary">
                   <Phone className="h-4 w-4" /> {SITE.phoneDisplay}
@@ -171,7 +172,7 @@ export function ServicePageTemplate({ data }: Props) {
       <section className={secBand}>
         <div className={`container-x ${tPad}`}>
           <Header
-            label="Pricing factors"
+            label={tr('tmpl.pricingFactors')}
             heading={data.howPrice.title}
             body={data.howPrice.body}
             align="left"
@@ -250,7 +251,7 @@ export function ServicePageTemplate({ data }: Props) {
         <section className={secPlain}>
           <div className={`container-x ${T ? T.spacingY.split(" ")[0] : "py-16"}`}>
             <div className={`${T ? `${T.card} ${T.cardRadius} border ${T.border}` : "card-soft"} p-8 md:p-10 max-w-3xl mx-auto`}>
-              <span className={T ? `badge-pill bg-white border ${T.accentBorder} ${T.accent}` : "badge-pill bg-white border border-brand-100 text-brand-600"}>Local insight</span>
+              <span className={T ? `badge-pill bg-white border ${T.accentBorder} ${T.accent}` : "badge-pill bg-white border border-brand-100 text-brand-600"}>{tr('tmpl.localInsight')}</span>
               <h2 className={`mt-3 ${T ? T.text : ""}`.trimEnd()}>
                 {localTitleParts ? (
                   <>
@@ -259,7 +260,7 @@ export function ServicePageTemplate({ data }: Props) {
                     <span className={`font-script ${T ? T.accent : "text-brand-600"}`}>{localTitleParts.accent}</span>
                   </>
                 ) : (
-                  <>Built for <span className={`font-script ${T ? T.accent : "text-brand-600"}`}>{SITE.address.city || "you"}</span></>
+                  <>{tr('tmpl.builtFor')} <span className={`font-script ${T ? T.accent : "text-brand-600"}`}>{SITE.address.city || "you"}</span></>
                 )}
               </h2>
               <div className="mt-5 space-y-4">
@@ -317,13 +318,13 @@ export function ServicePageTemplate({ data }: Props) {
       )}
 
       {/* FAQ */}
-      <FAQSection faqs={data.faqs} title="Questions we hear often" />
+      <FAQSection faqs={data.faqs} title={tr('tmpl.questionsWeHearOften')} />
 
       {/* RELATED SERVICES — drop links to unpublished services (self-heals, no cross-page edit). */}
       {data.relatedServices.filter((r) => isRelatedServiceVisible(r.href)).length > 0 && (
         <section className={secBand}>
           <div className={`container-x ${tPad}`}>
-            <Header heading="You may also need" />
+            <Header heading={tr('tmpl.youMayAlsoNeed')} />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
               {data.relatedServices.filter((r) => isRelatedServiceVisible(r.href)).map((r) => (
                 <Link
@@ -344,11 +345,11 @@ export function ServicePageTemplate({ data }: Props) {
 
       {characterCta ?? (
         <CTASection
-          title="Ready when you are."
+          title={tr('cta.readyWhenYouAre')}
           subtitle={
             (SITE as { ctaLabel?: string }).ctaLabel
-              ? "Tell us what you need and we'll be in touch within a business day."
-              : "Get a free quote and we'll be in touch within a business day."
+              ? tr('tmpl.tellUsBusinessDay')
+              : tr('tmpl.freeQuoteBusinessDay')
           }
         />
       )}

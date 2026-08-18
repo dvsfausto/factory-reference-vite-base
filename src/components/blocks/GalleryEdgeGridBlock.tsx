@@ -1,4 +1,5 @@
 import { motion, useReducedMotion } from 'framer-motion'
+import { tr } from '~/lib/i18n'
 import { PROJECTS } from '~/data/projects'
 
 // Gallery VARIANT: 'edge-grid' — an edge-to-edge uniform grid of photos with a
@@ -16,8 +17,8 @@ import { PROJECTS } from '~/data/projects'
 // HONESTY: renders ONLY the real PROJECTS images/titles/captions. Early-returns
 // null when PROJECTS is empty, mirroring the default GalleryMasonryBlock.
 export function GalleryEdgeGridBlock({
-  label = 'Our work',
-  heading = 'Recent projects',
+  label = tr('section.ourWork'),
+  heading = tr('section.recentProjects'),
   body,
 }: {
   label?: string

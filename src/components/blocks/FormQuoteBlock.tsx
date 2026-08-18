@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from 'react'
+import { tr } from '~/lib/i18n'
 import { SITE } from '~/data/site'
 import { useCatalogServices } from '~/lib/useCatalogServices'
 import { submitQuoteRequest, type LeadStatus } from './forms-submit'
@@ -15,10 +16,10 @@ import { Field, Textarea, SubmitButton, SuccessCard } from './form-ui'
 // TOKEN DISCIPLINE: primary CTA -> bg-primary. Accent -> emerald-* (DNA). Radius -> rounded-* (DNA).
 // Font -> font-display (DNA). Dark header panel component-owned. Never bg-brand-* / .btn.
 export function FormQuoteBlock({
-  label = 'Free quote',
-  heading = 'Request a quote',
-  body = 'Tell us about the project and we respond within one business day.',
-  submitLabel = 'Request my quote',
+  label = tr('form.freeQuote'),
+  heading = tr('form.requestQuote'),
+  body = tr('form.quoteBody'),
+  submitLabel = tr('form.requestMyQuote'),
   services,
 }: {
   label?: string
@@ -59,7 +60,7 @@ export function FormQuoteBlock({
       form.reset()
     } catch (err) {
       setStatus('error')
-      setError(err instanceof Error ? err.message : 'Something went wrong.')
+      setError(err instanceof Error ? err.message : tr('form.somethingWrong'))
     }
   }
 
@@ -79,16 +80,16 @@ export function FormQuoteBlock({
           <div className="p-8 md:p-12">
             {status === 'success' ? (
               <SuccessCard
-                title="Your quote request is in."
-                body="Thanks — we'll review the details and send your custom quote within one business day."
+                title={tr('form.quoteSuccessTitle')}
+                body={tr('form.quoteSuccessBody')}
               />
             ) : (
               <form onSubmit={onSubmit}>
                 <div className="grid gap-5 md:grid-cols-2">
-                  <Field label="First name" name="first_name" required autoComplete="given-name" />
-                  <Field label="Last name" name="last_name" required autoComplete="family-name" />
-                  <Field label="Phone" name="phone" type="tel" required autoComplete="tel" />
-                  <Field label="Email" name="email" type="email" autoComplete="email" />
+                  <Field label={tr('form.firstName')} name="first_name" required autoComplete="given-name" />
+                  <Field label={tr('form.lastName')} name="last_name" required autoComplete="family-name" />
+                  <Field label={tr('form.phone')} name="phone" type="tel" required autoComplete="tel" />
+                  <Field label={tr('form.email')} name="email" type="email" autoComplete="email" />
                 </div>
                 {options.length > 0 && (
                   <div className="mt-5">
@@ -110,11 +111,11 @@ export function FormQuoteBlock({
                 )}
                 <div className="mt-5">
                   <Textarea
-                    label="Project details"
+                    label={tr('form.projectDetails')}
                     name="details"
                     required
                     rows={5}
-                    placeholder="Scope, sizes/measurements, timing — anything that helps us quote accurately."
+                    placeholder={tr('form.phQuote')}
                   />
                 </div>
                 {/* Honeypot: hidden from humans, tempting to bots. request-quote silently drops when filled. */}

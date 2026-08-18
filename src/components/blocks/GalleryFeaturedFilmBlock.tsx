@@ -1,4 +1,5 @@
 import { motion, useReducedMotion } from 'framer-motion'
+import { tr } from '~/lib/i18n'
 import { PROJECTS } from '~/data/projects'
 
 // Gallery VARIANT: 'featured-film' — a large lead image over a radial brand glow
@@ -17,8 +18,8 @@ import { PROJECTS } from '~/data/projects'
 // null when PROJECTS is empty (and guards the featured item), mirroring the
 // default GalleryMasonryBlock's omit-when-empty behavior.
 export function GalleryFeaturedFilmBlock({
-  label = 'Our work',
-  heading = 'Recent projects',
+  label = tr('section.ourWork'),
+  heading = tr('section.recentProjects'),
   body,
 }: {
   label?: string

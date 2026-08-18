@@ -1,5 +1,6 @@
 import { customPagesData } from '~/data/custom-pages'
 import { BOOKING, SITE } from '~/data/site'
+import { tr } from '~/lib/i18n'
 
 // ─────────────────────────────────────────────────────────────────────────────
 // THE PRIMARY CTA — the single source of truth for the one-click front door's TARGET and LABEL, so
@@ -28,14 +29,14 @@ export function primaryCta(): { href: string; label: string } {
   const hasPage = (slug: string) => !!customPagesData[slug]
   const base =
     hasPage('book')
-      ? { href: '/book', label: 'Book now' }
+      ? { href: '/book', label: tr('cta.bookNow') }
       : BOOKING.enabled
-        ? { href: '/#book', label: 'Book now' }
+        ? { href: '/#book', label: tr('cta.bookNow') }
         : hasPage('quote')
-          ? { href: '/quote', label: 'Get a quote' }
+          ? { href: '/quote', label: tr('cta.getQuote') }
           : hasPage('shop')
-            ? { href: '/shop', label: 'Shop' }
-            : { href: '/contact', label: 'Get in touch' }
+            ? { href: '/shop', label: tr('cta.shop') }
+            : { href: '/contact', label: tr('cta.getInTouch') }
   // A partial override (only href OR only label) still wins for the field it sets.
   return { href: override?.href ?? base.href, label: override?.label ?? base.label }
 }

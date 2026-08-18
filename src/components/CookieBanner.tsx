@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { tr } from '~/lib/i18n'
 import { X } from "lucide-react";
 
 const STORAGE_KEY = "site-cookies-accepted";
@@ -18,8 +19,8 @@ export function CookieBanner() {
       <button
         onClick={() => { localStorage.setItem(STORAGE_KEY, "1"); setShow(false); }}
         className="btn btn-sm btn-primary"
-      >Accept</button>
-      <button onClick={() => setShow(false)} aria-label="Dismiss" className="text-ink-500 hover:text-ink-900"><X className="h-4 w-4" /></button>
+      >{tr('cookie.accept')}</button>
+      <button onClick={() => setShow(false)} aria-label={tr('cookie.dismiss')} className="text-ink-500 hover:text-ink-900"><X className="h-4 w-4" /></button>
     </div>
   );
 }

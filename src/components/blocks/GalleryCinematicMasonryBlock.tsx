@@ -1,4 +1,5 @@
 import { motion, useReducedMotion } from 'framer-motion'
+import { tr } from '~/lib/i18n'
 import { PROJECTS } from '~/data/projects'
 
 // Gallery VARIANT: 'cinematic-masonry' — a column-flow wall of rounded, brand-
@@ -17,8 +18,8 @@ import { PROJECTS } from '~/data/projects'
 // stock, honestly labeled in the data). Early-returns null when PROJECTS is
 // empty, mirroring the default GalleryMasonryBlock.
 export function GalleryCinematicMasonryBlock({
-  label = 'Our work',
-  heading = 'Recent projects',
+  label = tr('section.ourWork'),
+  heading = tr('section.recentProjects'),
   body,
 }: {
   label?: string

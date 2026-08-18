@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { tr } from '~/lib/i18n'
 import { ArrowRight } from 'lucide-react'
 import { SectionHeaderCorporate } from '~/components/SectionHeaderCorporate'
 import { SITE } from '~/data/site'
@@ -18,8 +19,8 @@ export function ServicesCorporateBlock({
   label,
   heading,
   body,
-  exploreLabel = 'Learn more',
-  moreLink = 'All practice areas',
+  exploreLabel = tr('common.learnMore'),
+  moreLink = tr('section.allPracticeAreas'),
 }: {
   label?: string
   heading?: string

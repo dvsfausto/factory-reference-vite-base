@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { tr } from '~/lib/i18n'
 import type { VideoTestimonial } from './video-testimonials-variants'
 import { SITE } from '~/data/site'
 
@@ -11,8 +12,8 @@ import { SITE } from '~/data/site'
 // ring. Radius -> rounded-* (DNA). Font -> font-display (DNA). Light surface
 // component-owned. No CTA by design. Never bg-brand-* / .btn.
 export function VideoTestimonialsFeaturedThumbsBlock({
-  label = 'Testimonials',
-  heading = 'In their words',
+  label = tr('section.testimonials'),
+  heading = tr('section.inTheirWords'),
   body,
 }: {
   label?: string

@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { tr } from '~/lib/i18n'
 import { ArrowUpRight } from 'lucide-react'
 import { SITE } from '~/data/site'
 import { SERVICES } from '~/data/services-view'
@@ -27,7 +28,7 @@ export function ServicesBentoBlock({
   label,
   heading,
   body,
-  moreLink = 'All services',
+  moreLink = tr('common.allServices'),
 }: {
   label?: string
   heading?: string

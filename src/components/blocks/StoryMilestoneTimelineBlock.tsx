@@ -1,4 +1,5 @@
 import { SITE } from '~/data/site'
+import { tr } from '~/lib/i18n'
 
 // Story LAYOUT: 'milestone-timeline' — a vertical timeline of dated milestones.
 // Character-agnostic. OMIT-WHEN-ABSENT: milestones read from optional
@@ -8,8 +9,8 @@ import { SITE } from '~/data/site'
 // year, emerald-100 rail. Radius -> rounded-* (DNA). Font -> font-display (DNA).
 // Light surface component-owned (white / slate / #E6E8EC). No CTA by design.
 export function StoryMilestoneTimelineBlock({
-  label = 'Our story',
-  heading = 'How we got here',
+  label = tr('section.ourStory'),
+  heading = tr('section.howWeGotHere'),
   body,
 }: {
   label?: string

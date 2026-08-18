@@ -1,4 +1,5 @@
 import { MapPin } from 'lucide-react'
+import { tr } from '~/lib/i18n'
 import { AREAS } from '~/data/areas'
 
 // Map LAYOUT: 'full-width-band' — a full-width map-textured band with the heading
@@ -12,8 +13,8 @@ import { AREAS } from '~/data/areas'
 // emerald-600 home label. Radius -> rounded-* (DNA). Font -> font-display (DNA).
 // Map field (slate-950) component-owned. No CTA by design. Never bg-brand-*.
 export function MapFullWidthBandBlock({
-  label = 'Coverage',
-  heading = 'Serving the whole area',
+  label = tr('section.coverage'),
+  heading = tr('section.servingWholeArea'),
   body,
 }: {
   label?: string

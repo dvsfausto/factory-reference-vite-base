@@ -1,4 +1,5 @@
 import { Check } from 'lucide-react'
+import { tr } from '~/lib/i18n'
 
 // Shared, DNA-tokened form controls for the Forms variants (trustworthy, the
 // conversion point). TOKEN DISCIPLINE: emerald-* (DNA) 50/100/600/700 focus +
@@ -67,7 +68,7 @@ export function Textarea({
 
 export function SubmitButton({
   status,
-  label = 'Send request',
+  label = tr('form.sendRequest'),
 }: {
   status: 'idle' | 'submitting' | 'success' | 'error'
   label?: string // editable per widget (e.g. the quote form's 'Request my quote')
@@ -78,14 +79,14 @@ export function SubmitButton({
       disabled={status === 'submitting'}
       className="inline-flex h-12 items-center justify-center rounded-xl bg-primary px-7 font-display text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-60"
     >
-      {status === 'submitting' ? 'Sending…' : label}
+      {status === 'submitting' ? tr('form.sending') : label}
     </button>
   )
 }
 
 export function SuccessCard({
-  title = "We'll be in touch shortly.",
-  body = 'Thanks for reaching out — a real person reads every request and replies within one business day.',
+  title = tr('form.successTitle'),
+  body = tr('form.successBody'),
 }: {
   // Affordance-specific success copy so a quote form doesn't confirm like a contact form.
   title?: string

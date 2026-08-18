@@ -1,4 +1,5 @@
 import { useState, useId } from 'react'
+import { tr } from '~/lib/i18n'
 import { BUSINESS_ID, SITE, SITE_LANGUAGE, SUPABASE_ENDPOINT } from '~/data/site'
 
 interface Props {
@@ -36,9 +37,9 @@ interface LeadEnvelope {
 }
 
 export function LeadForm({
-  heading = (SITE as { ctaLabel?: string }).ctaLabel ?? 'Get a free quote',
-  sublabel = "We'll reply within a business day.",
-  submitLabel = (SITE as { ctaLabel?: string }).ctaLabel ?? 'Request a quote',
+  heading = (SITE as { ctaLabel?: string }).ctaLabel ?? tr('form.getFreeQuote'),
+  sublabel = tr('form.leadReplyNote'),
+  submitLabel = (SITE as { ctaLabel?: string }).ctaLabel ?? tr('form.requestQuote'),
   formType = 'lead_form',
 }: Props) {
   const [form, setForm] = useState<FormState>(INITIAL)
@@ -130,7 +131,7 @@ export function LeadForm({
       <div className="mt-6 grid gap-4">
         <Field
           id={`${idPrefix}-name`}
-          label="Full name"
+          label={tr('form.fullName')}
           type="text"
           required
           value={form.name}
@@ -139,7 +140,7 @@ export function LeadForm({
         />
         <Field
           id={`${idPrefix}-phone`}
-          label="Phone"
+          label={tr('form.phone')}
           type="tel"
           required
           value={form.phone}
@@ -149,7 +150,7 @@ export function LeadForm({
         />
         <Field
           id={`${idPrefix}-email`}
-          label="Email"
+          label={tr('form.email')}
           type="email"
           value={form.email}
           onChange={update('email')}
@@ -173,7 +174,7 @@ export function LeadForm({
         disabled={status === 'submitting'}
         className="mt-6 inline-flex w-full items-center justify-center rounded-md bg-emerald-600 px-6 py-3 font-semibold text-white shadow-sm transition-colors hover:bg-emerald-700 disabled:opacity-60"
       >
-        {status === 'submitting' ? 'Sending…' : submitLabel}
+        {status === 'submitting' ? tr('form.sending') : submitLabel}
       </button>
 
       {errorMessage && (

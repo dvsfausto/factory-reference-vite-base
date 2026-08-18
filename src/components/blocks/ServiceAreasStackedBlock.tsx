@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { tr } from '~/lib/i18n'
 import { ArrowRight, MapPin } from 'lucide-react'
 import { AREAS } from '~/data/areas'
 
@@ -24,10 +25,10 @@ const TIER_LABEL: Record<string, string> = {
 }
 
 export function ServiceAreasStackedBlock({
-  label = 'Service areas',
-  heading = 'Areas we serve',
-  body = 'Proudly covering the surrounding communities.',
-  moreLink = 'All areas',
+  label = tr('section.serviceAreas'),
+  heading = tr('section.areasWeServe'),
+  body = tr('section.proudlyCovering'),
+  moreLink = tr('common.allAreas'),
 }: {
   label?: string
   heading?: string

@@ -1,4 +1,5 @@
 import { PROJECTS } from '~/data/projects'
+import { tr } from '~/lib/i18n'
 
 // Gallery LAYOUT: 'justified' — a flickr-style justified gallery: photos flow into
 // rows of varied widths that fill the full measure, with consistent gutters.
@@ -14,8 +15,8 @@ import { PROJECTS } from '~/data/projects'
 const GROW = [2, 3, 2, 3, 2, 2, 3, 2]
 
 export function GalleryJustifiedBlock({
-  label = 'Our work',
-  heading = 'Recent projects',
+  label = tr('section.ourWork'),
+  heading = tr('section.recentProjects'),
   body,
 }: {
   label?: string

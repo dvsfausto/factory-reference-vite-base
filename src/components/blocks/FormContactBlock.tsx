@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from 'react'
+import { tr } from '~/lib/i18n'
 import { SITE } from '~/data/site'
 import { submitLead, type LeadStatus } from './forms-submit'
 import { Field, Textarea, SubmitButton, SuccessCard } from './form-ui'
@@ -11,9 +12,9 @@ import { Field, Textarea, SubmitButton, SuccessCard } from './form-ui'
 // 50/100/600/700. Radius -> rounded-* (DNA). Font -> font-display (DNA). Light
 // surface component-owned (#F8FAFC / white card / #E6E8EC). Never bg-brand-*.
 export function FormContactBlock({
-  label = 'Contact us',
-  heading = 'Get in touch',
-  body = 'Send us a note and a real person replies within one business day.',
+  label = tr('form.contactUs'),
+  heading = tr('form.getInTouch'),
+  body = tr('form.contactBody'),
 }: {
   label?: string
   heading?: string
@@ -43,7 +44,7 @@ export function FormContactBlock({
       form.reset()
     } catch (err) {
       setStatus('error')
-      setError(err instanceof Error ? err.message : 'Something went wrong.')
+      setError(err instanceof Error ? err.message : tr('form.somethingWrong'))
     }
   }
 
@@ -68,13 +69,13 @@ export function FormContactBlock({
             ) : (
               <form onSubmit={onSubmit} className="rounded-2xl border border-[#E6E8EC] bg-white p-8 md:p-10">
                 <div className="grid gap-5 md:grid-cols-2">
-                  <Field label="First name" name="first_name" required autoComplete="given-name" />
-                  <Field label="Last name" name="last_name" required autoComplete="family-name" />
-                  <Field label="Phone" name="phone" type="tel" required autoComplete="tel" />
-                  <Field label="Email" name="email" type="email" autoComplete="email" />
+                  <Field label={tr('form.firstName')} name="first_name" required autoComplete="given-name" />
+                  <Field label={tr('form.lastName')} name="last_name" required autoComplete="family-name" />
+                  <Field label={tr('form.phone')} name="phone" type="tel" required autoComplete="tel" />
+                  <Field label={tr('form.email')} name="email" type="email" autoComplete="email" />
                 </div>
                 <div className="mt-5">
-                  <Textarea label="How can we help?" name="message" required rows={5} placeholder="A few sentences about what you need." />
+                  <Textarea label={tr('form.howCanWeHelp')} name="message" required rows={5} placeholder={tr('form.phHelp')} />
                 </div>
                 {status === 'error' && error && <p className="mt-4 text-sm text-red-600">{error}</p>}
                 <div className="mt-8 flex flex-wrap items-center gap-4">

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { tr } from '~/lib/i18n'
 import { PROJECTS, type GalleryItem } from '~/data/projects'
 
 // Gallery LAYOUT: 'before-after-slider' — an interactive drag-to-reveal slider per
@@ -49,8 +50,8 @@ function Slider({ item }: { item: GalleryItem }) {
 }
 
 export function GalleryBeforeAfterBlock({
-  label = 'Before & after',
-  heading = 'See the difference',
+  label = tr('section.beforeAfter'),
+  heading = tr('section.seeTheDifference'),
   body,
 }: {
   label?: string

@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { tr } from '~/lib/i18n'
 import { Star } from 'lucide-react'
 import { reviews } from '~/data/reviews'
 
@@ -18,9 +19,9 @@ import { reviews } from '~/data/reviews'
 //
 // Prop signature identical to ReviewsBlock; returns Element | null.
 export function ReviewsStackedBlock({
-  label = 'Reviews',
-  heading = 'What customers say',
-  moreLink = 'Read all reviews',
+  label = tr('nav.reviews'),
+  heading = tr('section.whatCustomersSay'),
+  moreLink = tr('section.readAllReviews'),
 }: {
   label?: string
   heading?: string

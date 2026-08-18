@@ -1,4 +1,5 @@
 import type { ProcessStep } from './process-variants'
+import { tr } from '~/lib/i18n'
 import { getProcessIcon } from './process-icons'
 import { SITE } from '~/data/site'
 
@@ -10,8 +11,8 @@ import { SITE } from '~/data/site'
 // line, emerald-100 track. Radius -> rounded-* (DNA). Font -> font-display (DNA).
 // Cool surface component-owned (#F8FAFC / slate). No CTA by design.
 export function ProcessTimelineBlock({
-  label = 'How it works',
-  heading = 'Your journey, step by step',
+  label = tr('section.howItWorks'),
+  heading = tr('section.yourJourney'),
   body,
 }: {
   label?: string

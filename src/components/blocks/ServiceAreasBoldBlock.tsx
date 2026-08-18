@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { tr } from '~/lib/i18n'
 import { SITE } from '~/data/site'
 import { MapPin } from 'lucide-react'
 import { SectionHeaderBold } from '~/components/SectionHeaderBold'
@@ -15,7 +16,7 @@ export function ServiceAreasBoldBlock({
   heading = ((SITE as { homeAreas?: { label?: string; heading?: string; scriptAccent?: string; body?: string } }).homeAreas?.heading ?? 'Where we'),
   scriptAccent = ((SITE as { homeAreas?: { label?: string; heading?: string; scriptAccent?: string; body?: string } }).homeAreas?.scriptAccent ?? 'work'),
   body = ((SITE as { homeAreas?: { label?: string; heading?: string; scriptAccent?: string; body?: string } }).homeAreas?.body ?? 'Local coverage, close to home.'),
-  moreLink = 'All areas',
+  moreLink = tr('common.allAreas'),
 }: {
   label?: string
   heading?: string

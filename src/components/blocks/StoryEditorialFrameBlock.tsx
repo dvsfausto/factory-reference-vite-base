@@ -1,4 +1,5 @@
 import { motion, useReducedMotion } from 'framer-motion'
+import { tr } from '~/lib/i18n'
 import { SITE } from '~/data/site'
 import { HERO_ALT } from '~/data/images'
 import { imageSrc } from '~/lib/asset-url'
@@ -20,7 +21,7 @@ import { imageSrc } from '~/lib/asset-url'
 // override), never a fabricated photo. Early-returns null when there is no prose,
 // mirroring the default StoryNarrativeBlock's omit-when-empty behavior.
 export function StoryEditorialFrameBlock({
-  label = 'Our story',
+  label = tr('section.ourStory'),
   heading,
   body,
 }: {

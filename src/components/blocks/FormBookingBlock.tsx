@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from 'react'
+import { tr } from '~/lib/i18n'
 import { SITE } from '~/data/site'
 import { submitLead, type LeadStatus } from './forms-submit'
 import { Field, Textarea, SubmitButton, SuccessCard } from './form-ui'
@@ -12,9 +13,9 @@ import { Field, Textarea, SubmitButton, SuccessCard } from './form-ui'
 // 50/100/600/700. Radius -> rounded-* (DNA). Font -> font-display (DNA). Light
 // surface component-owned (white / slate / #E6E8EC). Never bg-brand-* / .btn.
 export function FormBookingBlock({
-  label = 'Book a visit',
-  heading = 'Request an appointment',
-  body = 'Pick a day and time that suit you — we confirm within one business day.',
+  label = tr('form.bookVisit'),
+  heading = tr('form.requestAppointment'),
+  body = tr('form.bookingBody'),
 }: {
   label?: string
   heading?: string
@@ -50,7 +51,7 @@ export function FormBookingBlock({
       form.reset()
     } catch (err) {
       setStatus('error')
-      setError(err instanceof Error ? err.message : 'Something went wrong.')
+      setError(err instanceof Error ? err.message : tr('form.somethingWrong'))
     }
   }
 
@@ -75,15 +76,15 @@ export function FormBookingBlock({
             ) : (
               <form onSubmit={onSubmit} className="rounded-2xl border border-[#E6E8EC] bg-white p-8 md:p-10">
                 <div className="grid gap-5 md:grid-cols-2">
-                  <Field label="First name" name="first_name" required autoComplete="given-name" />
-                  <Field label="Last name" name="last_name" required autoComplete="family-name" />
-                  <Field label="Phone" name="phone" type="tel" required autoComplete="tel" />
-                  <Field label="Email" name="email" type="email" autoComplete="email" />
-                  <Field label="Preferred date" name="preferred_date" type="date" />
-                  <Field label="Preferred time" name="preferred_time" placeholder="e.g. mornings, after 4pm" />
+                  <Field label={tr('form.firstName')} name="first_name" required autoComplete="given-name" />
+                  <Field label={tr('form.lastName')} name="last_name" required autoComplete="family-name" />
+                  <Field label={tr('form.phone')} name="phone" type="tel" required autoComplete="tel" />
+                  <Field label={tr('form.email')} name="email" type="email" autoComplete="email" />
+                  <Field label={tr('form.preferredDate')} name="preferred_date" type="date" />
+                  <Field label={tr('form.preferredTime')} name="preferred_time" placeholder={tr('form.phCallbackTime')} />
                 </div>
                 <div className="mt-5">
-                  <Textarea label="Anything we should know?" name="message" rows={4} placeholder="Reason for your visit, or any notes." />
+                  <Textarea label={tr('form.visitNotes')} name="message" rows={4} placeholder={tr('form.phVisitNotes')} />
                 </div>
                 {status === 'error' && error && <p className="mt-4 text-sm text-red-600">{error}</p>}
                 <div className="mt-8 flex flex-wrap items-center gap-4">

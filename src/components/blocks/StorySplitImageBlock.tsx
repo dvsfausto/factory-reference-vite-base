@@ -1,4 +1,5 @@
 import { SITE } from '~/data/site'
+import { tr } from '~/lib/i18n'
 import { HERO_ALT } from '~/data/images'
 import { imageSrc } from '~/lib/asset-url'
 
@@ -11,7 +12,7 @@ import { imageSrc } from '~/lib/asset-url'
 // Radius -> rounded-* (DNA). Font -> font-display (DNA). Light surface component-
 // owned (#F8FAFC / slate / #E6E8EC). No CTA by design. Never bg-brand-* / .btn.
 export function StorySplitImageBlock({
-  label = 'Our story',
+  label = tr('section.ourStory'),
   heading,
   body,
 }: {

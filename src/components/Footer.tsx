@@ -7,6 +7,7 @@ import { AREAS } from "~/data/areas";
 import { INFO_PAGES } from "~/data/info-pages";
 import { CUSTOM_PAGES } from "~/data/custom-pages";
 import defaultLeaves from "~/assets/decorative/cleaning-leaves.png";
+import { tr } from "~/lib/i18n";
 
 // PRAISE-61 — nav links hidden from the menu (design_dna.chrome.nav.hidden → SITE.hiddenNav).
 // ABSENT/empty → byte-identical; filtering only, the pages still exist and are reachable by URL.
@@ -253,7 +254,7 @@ export function Footer({ decorativeAsset = defaultLeaves }: { decorativeAsset?: 
             /services/$slug links. Runtime guard only; the route file stays. */}
         {SERVICES.length > 0 && (
           <div>
-            <h4 className={`text-sm font-semibold mb-4 ${t.heading}`}>Services</h4>
+            <h4 className={`text-sm font-semibold mb-4 ${t.heading}`}>{tr('footer.services')}</h4>
             <ul className={`space-y-2 text-sm ${t.listText}`}>
               {SERVICES.map((s) => (
                 <li key={s.slug}>
@@ -271,7 +272,7 @@ export function Footer({ decorativeAsset = defaultLeaves }: { decorativeAsset?: 
             that redirects home. Mirrors the Services guard above (runtime only; route stays). */}
         {AREAS.length > 0 && (
           <div>
-            <h4 className={`text-sm font-semibold mb-4 ${t.heading}`}>Service Areas</h4>
+            <h4 className={`text-sm font-semibold mb-4 ${t.heading}`}>{tr('footer.serviceAreas')}</h4>
             <ul className={`space-y-2 text-sm ${t.listText}`}>
               {AREAS.map((a) => (
                 <li key={a.slug}>
@@ -280,18 +281,18 @@ export function Footer({ decorativeAsset = defaultLeaves }: { decorativeAsset?: 
                   </Link>
                 </li>
               ))}
-              <li><Link to="/areas" className={t.areaAll}>View all areas →</Link></li>
+              <li><Link to="/areas" className={t.areaAll}>{tr('nav.viewAllAreas')}</Link></li>
             </ul>
           </div>
         )}
 
         <div>
-          <h4 className={`text-sm font-semibold mb-4 ${t.heading}`}>Company</h4>
+          <h4 className={`text-sm font-semibold mb-4 ${t.heading}`}>{tr('footer.company')}</h4>
           <ul className={`space-y-2 text-sm ${t.listText}`}>
-            {!HIDDEN_NAV.includes('about') && <li><Link to="/about" className={t.listHover}>About</Link></li>}
-            {!HIDDEN_NAV.includes('pricing') && <li><Link to="/pricing" className={t.listHover}>Pricing</Link></li>}
-            {!HIDDEN_NAV.includes('reviews') && <li><Link to="/reviews" className={t.listHover}>Reviews</Link></li>}
-            {!HIDDEN_NAV.includes('contact') && <li><Link to="/contact" className={t.listHover}>Contact</Link></li>}
+            {!HIDDEN_NAV.includes('about') && <li><Link to="/about" className={t.listHover}>{tr('footer.about')}</Link></li>}
+            {!HIDDEN_NAV.includes('pricing') && <li><Link to="/pricing" className={t.listHover}>{tr('footer.pricing')}</Link></li>}
+            {!HIDDEN_NAV.includes('reviews') && <li><Link to="/reviews" className={t.listHover}>{tr('footer.reviews')}</Link></li>}
+            {!HIDDEN_NAV.includes('contact') && <li><Link to="/contact" className={t.listHover}>{tr('footer.contact')}</Link></li>}
             {INFO_PAGES.map((i) => (
               <li key={i.slug}>
                 <Link to="/info/$slug" params={{ slug: i.slug }} className={t.listHover}>
@@ -311,7 +312,7 @@ export function Footer({ decorativeAsset = defaultLeaves }: { decorativeAsset?: 
         </div>
 
         <div>
-          <h4 className={`text-sm font-semibold mb-4 ${t.heading}`}>Get in touch</h4>
+          <h4 className={`text-sm font-semibold mb-4 ${t.heading}`}>{tr('footer.getInTouch')}</h4>
           <ul className={`space-y-3 text-sm ${t.listText}`}>
             <li className="flex items-start gap-2"><Phone className="h-4 w-4 mt-0.5 shrink-0" /><a href={`tel:${SITE.phone}`} className={t.listHover}>{SITE.phoneDisplay}</a></li>
             <li className="flex items-start gap-2"><Mail className="h-4 w-4 mt-0.5 shrink-0" /><a href={`mailto:${SITE.email}`} className={`${t.listHover} break-all`}>{SITE.email}</a></li>
@@ -329,9 +330,9 @@ export function Footer({ decorativeAsset = defaultLeaves }: { decorativeAsset?: 
         <div className={`container-x py-5 flex flex-wrap items-center justify-between gap-3 text-xs ${t.bottomText}`}>
           <div>© {year} {SITE.name}</div>
           <div className="flex gap-4">
-            <Link to="/contact" className={t.bottomHover}>Privacy</Link>
-            <Link to="/contact" className={t.bottomHover}>Terms</Link>
-            <a href="/sitemap.xml" className={t.bottomHover}>Sitemap</a>
+            <Link to="/contact" className={t.bottomHover}>{tr('footer.privacy')}</Link>
+            <Link to="/contact" className={t.bottomHover}>{tr('footer.terms')}</Link>
+            <a href="/sitemap.xml" className={t.bottomHover}>{tr('footer.sitemap')}</a>
           </div>
         </div>
       </div>

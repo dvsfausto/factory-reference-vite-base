@@ -1,4 +1,5 @@
 import type { ProcessStep } from './process-variants'
+import { tr } from '~/lib/i18n'
 import { getProcessIcon } from './process-icons'
 import { SITE } from '~/data/site'
 
@@ -11,8 +12,8 @@ import { SITE } from '~/data/site'
 // emerald-100 rail. Radius -> rounded-* (DNA). Font -> font-display (DNA). Light
 // surface component-owned (white / slate / #E6E8EC). No CTA by design.
 export function ProcessVerticalRailBlock({
-  label = 'How it works',
-  heading = 'Our process',
+  label = tr('section.howItWorks'),
+  heading = tr('section.ourProcess'),
   body,
 }: {
   label?: string

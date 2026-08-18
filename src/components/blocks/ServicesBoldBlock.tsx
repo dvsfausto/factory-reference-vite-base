@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { tr } from '~/lib/i18n'
 import { ArrowRight } from 'lucide-react'
 import { SectionHeaderBold } from '~/components/SectionHeaderBold'
 import { SITE } from '~/data/site'
@@ -23,8 +24,8 @@ export function ServicesBoldBlock({
   label,
   heading,
   body,
-  exploreLabel = 'View service',
-  moreLink = 'All services',
+  exploreLabel = tr('common.viewService'),
+  moreLink = tr('common.allServices'),
 }: {
   label?: string
   heading?: string

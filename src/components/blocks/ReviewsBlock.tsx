@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { tr } from '~/lib/i18n'
 import { SectionHeader } from '~/components/SectionHeader'
 import { ReviewCard } from '~/components/ReviewCard'
 import { reviews } from '~/data/reviews'
@@ -7,10 +8,10 @@ import { reviews } from '~/data/reviews'
 // Self-omits when there are no reviews — exactly today's
 // `{previewReviews.length > 0 && …}`.
 export function ReviewsBlock({
-  label = 'Reviews',
-  heading = 'What customers',
-  scriptAccent = 'say',
-  moreLink = 'Read all reviews →',
+  label = tr('nav.reviews'),
+  heading = tr('section.whatCustomersHeading'),
+  scriptAccent = tr('section.sayAccent'),
+  moreLink = tr('section.readAllReviewsArrow'),
 }: {
   label?: string
   heading?: string

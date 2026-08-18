@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { tr } from '~/lib/i18n'
 import { ArrowRight } from 'lucide-react'
 import { SITE } from '~/data/site'
 import { SERVICES } from '~/data/services-view'
@@ -23,8 +24,8 @@ export function ServicesListBlock({
   label,
   heading,
   body,
-  exploreLabel = 'Learn more',
-  moreLink = 'All services',
+  exploreLabel = tr('common.learnMore'),
+  moreLink = tr('common.allServices'),
 }: {
   label?: string
   heading?: string

@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { tr } from '~/lib/i18n'
 import { ArrowRight } from 'lucide-react'
 import { SectionHeaderFriendly } from '~/components/SectionHeaderFriendly'
 import { SITE } from '~/data/site'
@@ -18,8 +19,8 @@ export function ServicesFriendlyBlock({
   label,
   heading,
   body,
-  exploreLabel = 'Learn more',
-  moreLink = 'See all services',
+  exploreLabel = tr('common.learnMore'),
+  moreLink = tr('common.seeAllServices'),
 }: {
   label?: string
   heading?: string

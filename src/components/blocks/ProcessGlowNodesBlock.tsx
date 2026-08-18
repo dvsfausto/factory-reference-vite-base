@@ -1,4 +1,5 @@
 import { motion, useReducedMotion } from 'framer-motion'
+import { tr } from '~/lib/i18n'
 import type { ProcessStep } from './process-variants'
 import { getProcessIcon } from './process-icons'
 import { SITE } from '~/data/site'
@@ -18,8 +19,8 @@ import { SITE } from '~/data/site'
 // HONESTY: renders ONLY real SITE.steps. No steps → null (never fabricates a
 // process). Icon falls back to the step number, as the default does.
 export function ProcessGlowNodesBlock({
-  label = 'How it works',
-  heading = 'A simple process',
+  label = tr('section.howItWorks'),
+  heading = tr('section.simpleProcess'),
   body,
 }: {
   label?: string

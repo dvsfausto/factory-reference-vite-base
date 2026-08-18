@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { tr } from '~/lib/i18n'
 import { ArrowRight } from 'lucide-react'
 import { SectionHeaderModern } from '~/components/SectionHeaderModern'
 import { SITE } from '~/data/site'
@@ -18,8 +19,8 @@ export function ServicesModernBlock({
   label,
   heading,
   body,
-  exploreLabel = 'Learn more',
-  moreLink = 'All services',
+  exploreLabel = tr('common.learnMore'),
+  moreLink = tr('common.allServices'),
 }: {
   label?: string
   heading?: string

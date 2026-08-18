@@ -1,4 +1,5 @@
 import type { TeamMember } from './team-variants'
+import { tr } from '~/lib/i18n'
 import { SITE } from '~/data/site'
 
 // Team LAYOUT: 'spotlight' — one member carries real editorial weight (a large
@@ -25,8 +26,8 @@ function initials(name: string): string {
 }
 
 export function TeamSpotlightBlock({
-  label = 'Our team',
-  heading = 'Meet the team',
+  label = tr('section.ourTeam'),
+  heading = tr('section.meetTheTeam'),
   body,
 }: {
   label?: string

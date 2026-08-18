@@ -1,4 +1,5 @@
 import { SITE } from '~/data/site'
+import { tr } from '~/lib/i18n'
 
 // Story LAYOUT: 'narrative' — a large, centered editorial statement (ported from
 // the painter ManifestoBlock, DNA-tokened). Character-agnostic. Uses SITE.about as
@@ -9,7 +10,7 @@ import { SITE } from '~/data/site'
 // Radius -> rounded-* (DNA). Font -> font-display (DNA). Light surface component-
 // owned (white / slate). No CTA by design. Never bg-brand-* / .btn.
 export function StoryNarrativeBlock({
-  label = 'Our story',
+  label = tr('section.ourStory'),
 }: {
   label?: string
   heading?: string

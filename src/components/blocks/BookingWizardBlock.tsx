@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { tr, MONTHS_SHORT, DAYS_SHORT, LANG } from '~/lib/i18n'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import {
   Calendar,
@@ -73,8 +74,8 @@ const ANON_HEADERS = {
   apikey: SUPABASE_ANON_KEY,
   Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
 }
-const DAY_LABELS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+const DAY_LABELS = DAYS_SHORT[LANG]
+const MONTHS = MONTHS_SHORT[LANG]
 
 // ── formatting helpers (display-only; the server owns the authoritative UTC math) ──
 function formatPrice(price: number | null): string {
@@ -157,9 +158,9 @@ function generateSlots(
 }
 
 export function BookingWizardBlock({
-  label = 'Book online',
-  heading = 'Book your appointment',
-  body = 'Pick a service and a time that works for you — confirmed instantly, no phone tag.',
+  label = tr('booking.bookOnline'),
+  heading = tr('booking.bookYourAppointment'),
+  body = tr('booking.bookBody'),
   forceEnabled = false,
 }: {
   label?: string
@@ -271,14 +272,14 @@ export function BookingWizardBlock({
         error?: string
       }
       if (!res.ok || !data.success) {
-        throw new Error(data.error || 'We could not complete your booking.')
+        throw new Error(data.error || tr('booking.couldNotComplete'))
       }
       setStep('confirmed')
     } catch (err) {
       setSubmitError(
         err instanceof Error
           ? err.message
-          : 'Something went wrong. Please try again.',
+          : tr('booking.retry'),
       )
     } finally {
       setSubmitting(false)
@@ -355,16 +356,16 @@ export function BookingWizardBlock({
             {loading && (
               <div className="flex items-center justify-center gap-3 py-16 text-ink-600">
                 <Loader2 className="h-5 w-5 animate-spin" />
-                <span className="text-sm font-medium">Loading availability…</span>
+                <span className="text-sm font-medium">{tr('booking.loadingAvailability')}</span>
               </div>
             )}
 
             {loadError && (
-              <FallbackCard message="We couldn't load online booking just now." />
+              <FallbackCard message={tr('booking.couldNotLoad')} />
             )}
 
             {emptyConfig && (
-              <FallbackCard message="Online booking isn't set up yet — we'd love to book you by phone." />
+              <FallbackCard message={tr('booking.fallback')} />
             )}
 
             {!loading && !loadError && !emptyConfig && (
@@ -400,7 +401,7 @@ export function BookingWizardBlock({
 
                   {/* STEP: service */}
                   {step === 'service' && (
-                    <StepShell title="Choose a service">
+                    <StepShell title={tr('booking.chooseService')}>
                       <div className="grid gap-3">
                         {services.map((s) => (
                           <button
@@ -440,7 +441,7 @@ export function BookingWizardBlock({
 
                   {/* STEP: date */}
                   {step === 'date' && (
-                    <StepShell title="Pick a day" onBack={() => setStep('service')}>
+                    <StepShell title={tr('booking.pickDay')} onBack={() => setStep('service')}>
                       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
                         {days.map((d) => {
                           const selected =
@@ -483,10 +484,10 @@ export function BookingWizardBlock({
 
                   {/* STEP: time */}
                   {step === 'time' && (
-                    <StepShell title="Choose a time" onBack={() => setStep('date')}>
+                    <StepShell title={tr('booking.chooseTime')} onBack={() => setStep('date')}>
                       {slots.length === 0 ? (
                         <p className="rounded-2xl border border-dashed px-5 py-8 text-center text-sm text-ink-600" style={{ borderColor: 'var(--wow-hairline)' }}>
-                          No open times left that day. Pick another day, or call us
+                          {tr('booking.noOpenTimes')} 
                           at{' '}
                           <a
                             href={`tel:${SITE.phone}`}
@@ -531,7 +532,7 @@ export function BookingWizardBlock({
                   {/* STEP: details */}
                   {step === 'details' && (
                     <StepShell
-                      title="Your details"
+                      title={tr('booking.yourDetails')}
                       onBack={() => setStep('time')}
                     >
                       <form
@@ -543,7 +544,7 @@ export function BookingWizardBlock({
                       >
                         <div className="grid gap-4 sm:grid-cols-2">
                           <WField
-                            label="First name"
+                            label={tr('form.firstName')}
                             required
                             value={customer.firstName}
                             autoComplete="given-name"
@@ -552,7 +553,7 @@ export function BookingWizardBlock({
                             }
                           />
                           <WField
-                            label="Last name"
+                            label={tr('form.lastName')}
                             required
                             value={customer.lastName}
                             autoComplete="family-name"
@@ -561,7 +562,7 @@ export function BookingWizardBlock({
                             }
                           />
                           <WField
-                            label="Phone"
+                            label={tr('form.phone')}
                             type="tel"
                             required
                             value={customer.phone}
@@ -571,7 +572,7 @@ export function BookingWizardBlock({
                             }
                           />
                           <WField
-                            label="Email"
+                            label={tr('form.email')}
                             type="email"
                             value={customer.email}
                             autoComplete="email"
@@ -581,9 +582,7 @@ export function BookingWizardBlock({
                           />
                         </div>
                         <label className="block">
-                          <span className="font-display text-sm font-medium text-ink-900">
-                            Anything we should know?
-                          </span>
+                          <span className="font-display text-sm font-medium text-ink-900">{tr('booking.anythingToKnow')}</span>
                           <textarea
                             rows={3}
                             value={customer.notes}
@@ -613,9 +612,7 @@ export function BookingWizardBlock({
                           >
                             {submitting ? (
                               <>
-                                <Loader2 className="h-4 w-4 animate-spin" />
-                                Booking…
-                              </>
+                                <Loader2 className="h-4 w-4 animate-spin" />{tr('booking.submitting')}</>
                             ) : (
                               <>
                                 Confirm booking
@@ -658,14 +655,12 @@ export function BookingWizardBlock({
                 >
                   <Check className="h-7 w-7" />
                 </span>
-                <h3 className="mt-5 font-display text-2xl font-semibold tracking-tight text-ink-900">
-                  You're booked in.
-                </h3>
+                <h3 className="mt-5 font-display text-2xl font-semibold tracking-tight text-ink-900">{tr('booking.confirmed')}</h3>
                 <p className="mx-auto mt-2 max-w-md leading-relaxed text-ink-700">
-                  {service.name} — {formatDateLong(date)} at {to12h(time)}.
+                  {service.name} — {formatDateLong(date)} {tr('booking.at')} {to12h(time)}.
                   {customer.email
-                    ? ` A confirmation is on its way to ${customer.email}.`
-                    : ` We'll see you then.`}
+                    ? ` ${tr('booking.confirmationTo')} ${customer.email}.`
+                    : ` ${tr('booking.seeYouThen')}`}
                 </p>
                 <div
                   className="mx-auto mt-6 max-w-xs rounded-2xl border bg-white p-4 text-left text-sm"
@@ -702,7 +697,7 @@ function StepShell({
           <button
             type="button"
             onClick={onBack}
-            aria-label="Back"
+            aria-label={tr('booking.back')}
             className="grid h-8 w-8 place-items-center rounded-full border text-ink-700 transition-colors hover:text-brand-700"
             style={{ borderColor: 'var(--wow-hairline)' }}
           >

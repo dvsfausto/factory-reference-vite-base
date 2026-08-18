@@ -1,4 +1,5 @@
 import { SITE } from '~/data/site'
+import { tr } from '~/lib/i18n'
 
 // FAQ-section LAYOUT: 'list' — a single-column, type-forward open list of
 // questions and answers with generous spacing and numbered prompts. Character-
@@ -9,8 +10,8 @@ import { SITE } from '~/data/site'
 // Radius -> rounded-* (DNA). Font -> font-display (DNA). Light surface component-
 // owned (white / slate / hairline #E6E8EC). No CTA by design. Never bg-brand-*.
 export function FaqListBlock({
-  label = 'FAQ',
-  heading = 'Frequently asked questions',
+  label = tr('section.faqLabel'),
+  heading = tr('section.faq'),
   body,
 }: {
   label?: string

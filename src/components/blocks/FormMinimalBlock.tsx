@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from 'react'
+import { tr } from '~/lib/i18n'
 import { SITE } from '~/data/site'
 import { submitLead, type LeadStatus } from './forms-submit'
 import { Field, Textarea, SubmitButton, SuccessCard } from './form-ui'
@@ -12,9 +13,9 @@ import { Field, Textarea, SubmitButton, SuccessCard } from './form-ui'
 // 50/100/600/700. Radius -> rounded-* (DNA). Font -> font-display (DNA). Light
 // surface component-owned (white / slate / #E6E8EC). Never bg-brand-* / .btn.
 export function FormMinimalBlock({
-  label = 'Get in touch',
-  heading = 'Ready to start?',
-  body = 'Leave your details and we’ll call you back — usually the same day.',
+  label = tr('form.getInTouch'),
+  heading = tr('form.readyToStart'),
+  body = tr('form.minimalBody'),
 }: {
   label?: string
   heading?: string
@@ -36,7 +37,7 @@ export function FormMinimalBlock({
           last_name: '',
           phone: String(fd.get('phone') ?? ''),
           email: undefined,
-          message: String(fd.get('message') ?? '') || 'Requested a callback.',
+          message: String(fd.get('message') ?? '') || tr('form.requestedCallback'),
         },
         'contact',
       )
@@ -44,7 +45,7 @@ export function FormMinimalBlock({
       form.reset()
     } catch (err) {
       setStatus('error')
-      setError(err instanceof Error ? err.message : 'Something went wrong.')
+      setError(err instanceof Error ? err.message : tr('form.somethingWrong'))
     }
   }
 
@@ -67,9 +68,9 @@ export function FormMinimalBlock({
                 <SuccessCard />
               ) : (
                 <form onSubmit={onSubmit} className="flex flex-col gap-4">
-                  <Field label="Name" name="first_name" required autoComplete="name" />
-                  <Field label="Phone" name="phone" type="tel" required autoComplete="tel" />
-                  <Textarea label="What do you need? (optional)" name="message" rows={3} placeholder="Optional — a sentence is plenty." />
+                  <Field label={tr('form.name')} name="first_name" required autoComplete="name" />
+                  <Field label={tr('form.phone')} name="phone" type="tel" required autoComplete="tel" />
+                  <Textarea label={tr('form.whatDoYouNeed')} name="message" rows={3} placeholder={tr('form.phMinimal')} />
                   {status === 'error' && error && <p className="text-sm text-red-600">{error}</p>}
                   <div className="mt-1 flex flex-wrap items-center gap-4">
                     <SubmitButton status={status} />

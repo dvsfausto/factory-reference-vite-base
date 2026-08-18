@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { tr } from '~/lib/i18n'
 import { ArrowRight } from "lucide-react";
 import { Breadcrumbs } from "./Breadcrumbs";
 import { FAQSection } from "./FAQSection";
@@ -89,7 +90,7 @@ export function InfoPageTemplate({ data }: Props) {
       {(relatedServices.length > 0 || data.relatedInfo.length > 0) && (
         <section className="bg-brand-50 border-y border-brand-100">
           <div className="container-x py-16">
-            <SectionHeader heading="Related reading" />
+            <SectionHeader heading={tr('tmpl.relatedReading')} />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-4xl mx-auto">
               {relatedServices.length > 0 && (
                 <div>
@@ -137,9 +138,9 @@ export function InfoPageTemplate({ data }: Props) {
       )}
 
       {/* FAQ */}
-      <FAQSection faqs={data.faqs} title="More questions" />
+      <FAQSection faqs={data.faqs} title={tr('tmpl.moreQuestions')} />
 
-      <CTASection title="Ready when you are." />
+      <CTASection title={tr('cta.readyWhenYouAre')} />
     </>
   );
 }

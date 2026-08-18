@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { tr } from '~/lib/i18n'
 import { MapPin, Plus, Minus } from 'lucide-react'
 import { AREAS } from '~/data/areas'
 
@@ -19,8 +20,8 @@ const SPOTS = [
 ]
 
 export function MapEmbedStylePanelBlock({
-  label = 'Coverage',
-  heading = 'Where we work',
+  label = tr('section.coverage'),
+  heading = tr('section.whereWeWork'),
   body,
 }: {
   label?: string

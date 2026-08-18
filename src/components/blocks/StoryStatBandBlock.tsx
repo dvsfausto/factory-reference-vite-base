@@ -1,4 +1,5 @@
 import { SITE } from '~/data/site'
+import { tr } from '~/lib/i18n'
 
 // Story LAYOUT: 'stat-band' — a band of headline metrics (years in business, jobs
 // done, rating, …). Character-agnostic. OMIT-WHEN-ABSENT: stats read from optional
@@ -8,7 +9,7 @@ import { SITE } from '~/data/site'
 // Radius -> rounded-* (DNA). Font -> font-display (DNA). Dark band (slate-950)
 // component-owned. No CTA by design. Never bg-brand-* / .btn.
 export function StoryStatBandBlock({
-  label = 'By the numbers',
+  label = tr('section.byTheNumbers'),
   heading,
   body,
 }: {

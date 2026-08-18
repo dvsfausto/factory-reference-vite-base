@@ -1,4 +1,5 @@
 import type { Partner } from './partners-variants'
+import { tr } from '~/lib/i18n'
 import { SITE } from '~/data/site'
 
 // Partners LAYOUT: 'logo-wall' — a centered multi-row wall of partner logos.
@@ -9,8 +10,8 @@ import { SITE } from '~/data/site'
 // (DNA). Font -> font-display (DNA). Light surface component-owned (white / slate).
 // No CTA by design. Never bg-brand-* / .btn.
 export function PartnersLogoWallBlock({
-  label = 'Partners',
-  heading = 'Trusted partners',
+  label = tr('section.partners'),
+  heading = tr('section.trustedPartners'),
   body,
 }: {
   label?: string

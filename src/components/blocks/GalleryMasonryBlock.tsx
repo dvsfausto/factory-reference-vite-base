@@ -1,4 +1,5 @@
 import { PROJECTS } from '~/data/projects'
+import { tr } from '~/lib/i18n'
 
 // Gallery LAYOUT: 'masonry' — a column-flow wall of project photos at their
 // natural heights. Character-agnostic. PIPELINE-SEEDED: images come from the
@@ -9,8 +10,8 @@ import { PROJECTS } from '~/data/projects'
 // (DNA). Font -> font-display (DNA). Light surface component-owned (white / slate /
 // #E6E8EC). No CTA in this section by design. Never bg-brand-* / .btn.
 export function GalleryMasonryBlock({
-  label = 'Our work',
-  heading = 'Recent projects',
+  label = tr('section.ourWork'),
+  heading = tr('section.recentProjects'),
   body,
 }: {
   label?: string

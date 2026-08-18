@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { tr } from '~/lib/i18n'
 import { Plus } from 'lucide-react'
 import { SITE } from '~/data/site'
 
@@ -10,8 +11,8 @@ import { SITE } from '~/data/site'
 // Radius -> rounded-* (DNA). Font -> font-display (DNA). Light surface component-
 // owned (white / slate / hairline #E6E8EC). No CTA by design. Never bg-brand-*.
 export function FaqAccordionBlock({
-  label = 'FAQ',
-  heading = 'Frequently asked questions',
+  label = tr('section.faqLabel'),
+  heading = tr('section.faq'),
   body,
 }: {
   label?: string

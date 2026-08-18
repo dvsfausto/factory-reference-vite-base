@@ -1,4 +1,5 @@
 import { motion, useReducedMotion } from 'framer-motion'
+import { tr } from '~/lib/i18n'
 import { SITE } from '~/data/site'
 
 // Story VARIANT: 'manifesto-glow' — a large, centered narrative statement on a
@@ -18,7 +19,7 @@ import { SITE } from '~/data/site'
 // No invented figures. Early-returns null when there is no quote, mirroring the
 // default StoryNarrativeBlock's omit-when-empty behavior.
 export function StoryManifestoGlowBlock({
-  label = 'Our story',
+  label = tr('section.ourStory'),
   body,
 }: {
   label?: string

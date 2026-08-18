@@ -8,6 +8,7 @@ import { primaryCta } from "~/lib/primaryCta";
 import { PAGED_SERVICES as SERVICES } from "~/data/services-view";
 import { AREAS } from "~/data/areas";
 import { CUSTOM_PAGES } from "~/data/custom-pages";
+import { tr } from "~/lib/i18n";
 
 // PRAISE-61 — nav links a customer chose to hide from the menu (design_dna.chrome.nav.hidden →
 // SITE.hiddenNav). ABSENT/empty → nothing filtered → byte-identical to today. Filtering only; the
@@ -311,14 +312,14 @@ export function Header() {
         }`}
       >
         <a href="#main" className={`sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 ${t.skip} focus:px-3 focus:py-1.5 focus:rounded-md`}>
-          Skip to content
+          {tr('nav.skipToContent')}
         </a>
         <div className="container-x flex items-center justify-between h-20">
           <Link to="/" className="focus-ring rounded-md" aria-label={`${SITE.name} home`}>
             <Logo src={SITE.logo_url} light={t.logoLight} height={44} alt={SITE.name} />
           </Link>
 
-          <nav className="hidden lg:flex items-center gap-1" aria-label="Primary">
+          <nav className="hidden lg:flex items-center gap-1" aria-label={tr('nav.ariaPrimary')}>
             {/* Services nav omitted when the site has no service pages (e.g. a
                 generic-vertical business whose owner supplied none) — no empty
                 dropdown, no dead /services link. Mirrors the AREAS guard below. */}
@@ -329,7 +330,7 @@ export function Header() {
                 onMouseLeave={() => setOpenMenu(null)}
               >
                 <button className={`flex items-center gap-1 px-3 py-2 ${t.navLink} focus-ring rounded-md`}>
-                  Services <ChevronDown className="h-4 w-4" />
+                  {tr('nav.services')} <ChevronDown className="h-4 w-4" />
                 </button>
                 {openMenu === "services" && (
                   <div className="absolute left-0 top-full pt-2">
@@ -360,7 +361,7 @@ export function Header() {
                 onMouseLeave={() => setOpenMenu(null)}
               >
                 <button className={`flex items-center gap-1 px-3 py-2 ${t.navLink} focus-ring rounded-md`}>
-                  Areas <ChevronDown className="h-4 w-4" />
+                  {tr('nav.areas')} <ChevronDown className="h-4 w-4" />
                 </button>
                 {openMenu === "areas" && (
                   <div className="absolute left-0 top-full pt-2">
@@ -376,7 +377,7 @@ export function Header() {
                         </Link>
                       ))}
                       <Link to="/areas" className={`block px-3 py-2 rounded-lg text-sm font-medium ${t.areaAllLink}`}>
-                        View all areas →
+                        {tr('nav.viewAllAreas')}
                       </Link>
                     </div>
                   </div>
@@ -384,10 +385,10 @@ export function Header() {
               </div>
             )}
 
-            {!HIDDEN_NAV.includes('pricing') && <Link to="/pricing" className={`px-3 py-2 ${t.navLink} focus-ring rounded-md`}>Pricing</Link>}
-            {!HIDDEN_NAV.includes('reviews') && <Link to="/reviews" className={`px-3 py-2 ${t.navLink} focus-ring rounded-md`}>Reviews</Link>}
-            {!HIDDEN_NAV.includes('about') && <Link to="/about" className={`px-3 py-2 ${t.navLink} focus-ring rounded-md`}>About</Link>}
-            {!HIDDEN_NAV.includes('contact') && <Link to="/contact" className={`px-3 py-2 ${t.navLink} focus-ring rounded-md`}>Contact</Link>}
+            {!HIDDEN_NAV.includes('pricing') && <Link to="/pricing" className={`px-3 py-2 ${t.navLink} focus-ring rounded-md`}>{tr('nav.pricing')}</Link>}
+            {!HIDDEN_NAV.includes('reviews') && <Link to="/reviews" className={`px-3 py-2 ${t.navLink} focus-ring rounded-md`}>{tr('nav.reviews')}</Link>}
+            {!HIDDEN_NAV.includes('about') && <Link to="/about" className={`px-3 py-2 ${t.navLink} focus-ring rounded-md`}>{tr('nav.about')}</Link>}
+            {!HIDDEN_NAV.includes('contact') && <Link to="/contact" className={`px-3 py-2 ${t.navLink} focus-ring rounded-md`}>{tr('nav.contact')}</Link>}
             {/* Custom pages (Phase 2). Empty CUSTOM_PAGES → nothing renders (byte-identical). */}
             {CUSTOM_PAGES.filter((p) => p.nav !== false).map((p) => (
               <Link key={p.slug} to="/p/$slug" params={{ slug: p.slug }} className={`px-3 py-2 ${t.navLink} focus-ring rounded-md`}>{p.title}</Link>
@@ -405,7 +406,7 @@ export function Header() {
           <button
             className="lg:hidden p-2 focus-ring rounded-md"
             onClick={() => setOpen(true)}
-            aria-label="Open menu"
+            aria-label={tr('nav.openMenu')}
           >
             <Menu className={`h-6 w-6 ${t.menuIcon}`} />
           </button>
@@ -416,14 +417,14 @@ export function Header() {
         <div className={`fixed inset-0 z-[60] ${t.mobilePanel} lg:hidden overflow-y-auto`}>
           <div className="container-x flex items-center justify-between h-20">
             <Logo src={SITE.logo_url} light={t.logoLight} height={40} alt={SITE.name} />
-            <button onClick={() => setOpen(false)} aria-label="Close menu" className={`p-2 focus-ring rounded-md ${t.menuIcon}`}>
+            <button onClick={() => setOpen(false)} aria-label={tr('nav.closeMenu')} className={`p-2 focus-ring rounded-md ${t.menuIcon}`}>
               <X className="h-6 w-6" />
             </button>
           </div>
           <div className="container-x pb-12 space-y-6">
             {SERVICES.length > 0 && (
               <div>
-                <div className={`text-xs font-semibold ${t.mobileLabel} uppercase tracking-wider mb-2`}>Services</div>
+                <div className={`text-xs font-semibold ${t.mobileLabel} uppercase tracking-wider mb-2`}>{tr('nav.services')}</div>
                 {SERVICES.map((s) => (
                   <Link key={s.slug} to="/services/$slug" params={{ slug: s.slug }} onClick={() => setOpen(false)} className={`block py-2 text-base font-medium ${t.mobileText}`}>
                     {s.name}
@@ -433,7 +434,7 @@ export function Header() {
             )}
             {AREAS.length > 0 && (
               <div>
-                <div className={`text-xs font-semibold ${t.mobileLabel} uppercase tracking-wider mb-2`}>Areas</div>
+                <div className={`text-xs font-semibold ${t.mobileLabel} uppercase tracking-wider mb-2`}>{tr('nav.areas')}</div>
                 {AREAS.map((a) => (
                   <Link key={a.slug} to="/areas/$slug" params={{ slug: a.slug }} onClick={() => setOpen(false)} className={`block py-2 text-base font-medium ${t.mobileText}`}>
                     {a.name}
@@ -442,10 +443,10 @@ export function Header() {
               </div>
             )}
             <div className="space-y-2">
-              {!HIDDEN_NAV.includes('pricing') && <Link to="/pricing" onClick={() => setOpen(false)} className={`block py-2 text-base font-medium ${t.mobileText}`}>Pricing</Link>}
-              {!HIDDEN_NAV.includes('reviews') && <Link to="/reviews" onClick={() => setOpen(false)} className={`block py-2 text-base font-medium ${t.mobileText}`}>Reviews</Link>}
-              {!HIDDEN_NAV.includes('about') && <Link to="/about" onClick={() => setOpen(false)} className={`block py-2 text-base font-medium ${t.mobileText}`}>About</Link>}
-              {!HIDDEN_NAV.includes('contact') && <Link to="/contact" onClick={() => setOpen(false)} className={`block py-2 text-base font-medium ${t.mobileText}`}>Contact</Link>}
+              {!HIDDEN_NAV.includes('pricing') && <Link to="/pricing" onClick={() => setOpen(false)} className={`block py-2 text-base font-medium ${t.mobileText}`}>{tr('nav.pricing')}</Link>}
+              {!HIDDEN_NAV.includes('reviews') && <Link to="/reviews" onClick={() => setOpen(false)} className={`block py-2 text-base font-medium ${t.mobileText}`}>{tr('nav.reviews')}</Link>}
+              {!HIDDEN_NAV.includes('about') && <Link to="/about" onClick={() => setOpen(false)} className={`block py-2 text-base font-medium ${t.mobileText}`}>{tr('nav.about')}</Link>}
+              {!HIDDEN_NAV.includes('contact') && <Link to="/contact" onClick={() => setOpen(false)} className={`block py-2 text-base font-medium ${t.mobileText}`}>{tr('nav.contact')}</Link>}
               {CUSTOM_PAGES.filter((p) => p.nav !== false).map((p) => (
                 <Link key={p.slug} to="/p/$slug" params={{ slug: p.slug }} onClick={() => setOpen(false)} className={`block py-2 text-base font-medium ${t.mobileText}`}>{p.title}</Link>
               ))}

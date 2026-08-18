@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { tr } from '~/lib/i18n'
 import { ArrowRight } from 'lucide-react'
 import { SectionHeaderElegant } from '~/components/SectionHeaderElegant'
 import { elegantSurface } from '~/lib/elegant-surface'
@@ -20,8 +21,8 @@ export function ServicesElegantBlock({
   label,
   heading,
   body,
-  exploreLabel = 'View service',
-  moreLink = 'See all services',
+  exploreLabel = tr('common.viewService'),
+  moreLink = tr('common.seeAllServices'),
 }: {
   label?: string
   heading?: string

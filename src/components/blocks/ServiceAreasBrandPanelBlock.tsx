@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { tr } from '~/lib/i18n'
 import { motion, useReducedMotion } from 'framer-motion'
 import { ArrowRight, MapPin } from 'lucide-react'
 import { AREAS } from '~/data/areas'
@@ -20,11 +21,11 @@ import { AREAS } from '~/data/areas'
 // Self-omits (returns null) when there are no areas, like the default. Content is
 // props with the SITE-mirrored fallbacks.
 export function ServiceAreasBrandPanelBlock({
-  label = 'Service areas',
-  heading = 'Where we',
-  scriptAccent = 'work',
-  body = 'Local crews, familiar streets.',
-  moreLink = 'View all areas →',
+  label = tr('section.serviceAreas'),
+  heading = tr('section.whereWeHeading'),
+  scriptAccent = tr('section.workAccent'),
+  body = tr('section.localCrews'),
+  moreLink = tr('nav.viewAllAreas'),
 }: {
   label?: string
   heading?: string

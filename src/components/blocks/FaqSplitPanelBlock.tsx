@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { tr } from '~/lib/i18n'
 import { motion, useReducedMotion } from 'framer-motion'
 import { ChevronDown, HelpCircle } from 'lucide-react'
 import type { FAQ } from '~/lib/types/page-types'
@@ -20,7 +21,7 @@ import type { FAQ } from '~/lib/types/page-types'
 // when empty (mirrors the default FAQSection). `title` is the contract override.
 export function FaqSplitPanelBlock({
   faqs,
-  title = 'Frequently asked questions',
+  title = tr('section.faq'),
 }: {
   faqs: FAQ[]
   title?: string

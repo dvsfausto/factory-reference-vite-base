@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { tr } from '~/lib/i18n'
 import { ArrowRight, Check, MapPin, Phone } from "lucide-react";
 import { Breadcrumbs } from "./Breadcrumbs";
 import { FAQSection } from "./FAQSection";
@@ -50,7 +51,7 @@ export function ServiceAreaPageTemplate({ data }: Props) {
   });
   const characterCta = renderCharacterCta({
     title: `Working in ${data.name}?`,
-    subtitle: "We'll respond within a business day.",
+    subtitle: tr('tmpl.respondBusinessDay'),
   });
 
   // Character tokens for the shared middle sections (see character-tokens.ts). null →
@@ -79,7 +80,7 @@ export function ServiceAreaPageTemplate({ data }: Props) {
               surface (secPlain) so it doesn't render on the page's default white. secPlain =
               T?.section ?? "bg-white" → known verticals byte-identical (and never hit this branch). */}
           <div className={T?.crumb?.surface ?? secPlain}>
-            <nav aria-label="Breadcrumb" className="container-x pt-8 md:pt-10">
+            <nav aria-label={tr('breadcrumb.aria')} className="container-x pt-8 md:pt-10">
               <Breadcrumbs items={[
                 { label: "Home", to: "/" },
                 { label: "Areas", to: "/areas" },
@@ -123,7 +124,7 @@ export function ServiceAreaPageTemplate({ data }: Props) {
               </p>
               <div className="mt-7 flex flex-wrap gap-3">
                 <Link to="/contact" className="btn btn-lg btn-primary">
-                  {((SITE as { ctaLabel?: string }).ctaLabel ?? "Get Free Quote") + " "}<ArrowRight className="h-4 w-4" />
+                  {((SITE as { ctaLabel?: string }).ctaLabel ?? tr('cta.getFreeQuote')) + " "}<ArrowRight className="h-4 w-4" />
                 </Link>
                 <a href={`tel:${SITE.phone}`} className="btn btn-lg btn-secondary">
                   <Phone className="h-4 w-4" /> {SITE.phoneDisplay}
@@ -173,7 +174,7 @@ export function ServiceAreaPageTemplate({ data }: Props) {
         <section className={secBand}>
           <div className={`container-x ${tPad}`}>
             <Header
-              label="Services available"
+              label={tr('tmpl.servicesAvailable')}
               heading={data.servicesHere.title}
               body={data.servicesHere.intro}
             />
@@ -235,7 +236,7 @@ export function ServiceAreaPageTemplate({ data }: Props) {
         <section className={secBand}>
           <div className={`container-x ${T ? T.spacingY.split(" ")[0] : "py-16"}`}>
             <div className={T ? `${T.card} ${T.cardRadius} border ${T.border} p-8 md:p-10 max-w-3xl mx-auto` : "card-soft p-8 md:p-10 max-w-3xl mx-auto bg-white"}>
-              <span className={T ? `badge-pill ${T.accentBg} ${T.accent}` : "badge-pill bg-brand-50 text-brand-600"}>Local insight</span>
+              <span className={T ? `badge-pill ${T.accentBg} ${T.accent}` : "badge-pill bg-brand-50 text-brand-600"}>{tr('tmpl.localInsight')}</span>
               <h2 className={`mt-3 ${T ? T.text : ""}`.trimEnd()}>
                 {localTitleParts ? (
                   <>
@@ -262,7 +263,7 @@ export function ServiceAreaPageTemplate({ data }: Props) {
         <section className={secPlain}>
           <div className={`container-x ${tPad}`}>
             <Header
-              label="Reviews"
+              label={tr('nav.reviews')}
               heading={`${data.name} customer stories`}
             />
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -281,7 +282,7 @@ export function ServiceAreaPageTemplate({ data }: Props) {
       {data.relatedAreas.length > 0 && (
         <section className={secBand}>
           <div className={`container-x ${T ? T.spacingY.split(" ")[0] : "py-16"}`}>
-            <Header heading="We also serve nearby" />
+            <Header heading={tr('tmpl.weAlsoServeNearby')} />
             <div className="flex flex-wrap justify-center gap-3">
               {data.relatedAreas.map((a) => (
                 <Link
@@ -302,8 +303,8 @@ export function ServiceAreaPageTemplate({ data }: Props) {
           title={`Working in ${data.name}?`}
           subtitle={
             (SITE as { ctaLabel?: string }).ctaLabel
-              ? "We'll respond within a business day."
-              : "We'll respond within a business day with a free quote."
+              ? tr('tmpl.respondBusinessDay')
+              : tr('tmpl.respondBusinessDayQuote')
           }
         />
       )}

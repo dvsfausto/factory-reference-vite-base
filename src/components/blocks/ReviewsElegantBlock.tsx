@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { tr } from '~/lib/i18n'
 import { SITE } from '~/data/site'
 import { Star } from 'lucide-react'
 import { SectionHeaderElegant } from '~/components/SectionHeaderElegant'
@@ -17,7 +18,7 @@ export function ReviewsElegantBlock({
   label = ((SITE as { homeReviews?: { label?: string; heading?: string; scriptAccent?: string } }).homeReviews?.label ?? 'Reviews'),
   heading = ((SITE as { homeReviews?: { label?: string; heading?: string; scriptAccent?: string } }).homeReviews?.heading ?? 'What customers'),
   scriptAccent = ((SITE as { homeReviews?: { label?: string; heading?: string; scriptAccent?: string } }).homeReviews?.scriptAccent ?? 'say'),
-  moreLink = 'Read all reviews',
+  moreLink = tr('section.readAllReviews'),
 }: {
   label?: string
   heading?: string

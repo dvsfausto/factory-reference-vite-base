@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { tr } from '~/lib/i18n'
 import { motion, useReducedMotion } from 'framer-motion'
 import { Quote, Star } from 'lucide-react'
 import { reviews } from '~/data/reviews'
@@ -22,10 +23,10 @@ import { SectionHeader } from '~/components/SectionHeader'
 // No invented ratings, counts or authors. Empty reviews → early-return null, matching
 // the default ReviewsBlock's self-omit.
 export function ReviewsGlassWallBlock({
-  label = 'Reviews',
-  heading = 'What customers',
-  scriptAccent = 'say',
-  moreLink = 'Read all reviews →',
+  label = tr('nav.reviews'),
+  heading = tr('section.whatCustomersHeading'),
+  scriptAccent = tr('section.sayAccent'),
+  moreLink = tr('section.readAllReviewsArrow'),
 }: {
   label?: string
   heading?: string

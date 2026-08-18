@@ -1,4 +1,5 @@
 import type { Partner } from './partners-variants'
+import { tr } from '~/lib/i18n'
 import { SITE } from '~/data/site'
 
 // Partners LAYOUT: 'with-text' — a two-column split: a heading + blurb beside the
@@ -10,9 +11,9 @@ import { SITE } from '~/data/site'
 // (DNA). Font -> font-display (DNA). Light surface component-owned (white / slate /
 // #E6E8EC). No CTA by design. Never bg-brand-* / .btn.
 export function PartnersWithTextBlock({
-  label = 'Partners',
-  heading = 'Better together',
-  body = 'We work with trusted partners to deliver more for every customer.',
+  label = tr('section.partners'),
+  heading = tr('section.betterTogether'),
+  body = tr('section.partnersBody'),
 }: {
   label?: string
   heading?: string

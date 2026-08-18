@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { tr } from '~/lib/i18n'
 import { MapPin } from 'lucide-react'
 import { SectionHeader } from '~/components/SectionHeader'
 import { AREAS } from '~/data/areas'
@@ -6,11 +7,11 @@ import { AREAS } from '~/data/areas'
 // Markup extracted VERBATIM from routes/index.tsx (the SERVICE AREAS section).
 // Self-omits when there are no areas — exactly today's `{AREAS.length > 0 && …}`.
 export function ServiceAreasBlock({
-  label = 'Service areas',
-  heading = 'Where we',
-  scriptAccent = 'work',
-  body = 'Local crews, familiar streets.',
-  moreLink = 'View all areas →',
+  label = tr('section.serviceAreas'),
+  heading = tr('section.whereWeHeading'),
+  scriptAccent = tr('section.workAccent'),
+  body = tr('section.localCrews'),
+  moreLink = tr('nav.viewAllAreas'),
 }: {
   label?: string
   heading?: string

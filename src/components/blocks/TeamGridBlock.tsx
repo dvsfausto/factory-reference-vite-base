@@ -1,4 +1,5 @@
 import type { TeamMember } from './team-variants'
+import { tr } from '~/lib/i18n'
 import { SITE } from '~/data/site'
 import { resolveCharacterTokens } from '~/lib/character-tokens'
 
@@ -27,8 +28,8 @@ function initials(name: string): string {
 }
 
 export function TeamGridBlock({
-  label = 'Our team',
-  heading = 'Meet the team',
+  label = tr('section.ourTeam'),
+  heading = tr('section.meetTheTeam'),
   body,
 }: {
   label?: string

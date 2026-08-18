@@ -1,4 +1,5 @@
 import { PROJECTS } from '~/data/projects'
+import { tr } from '~/lib/i18n'
 
 // Gallery LAYOUT: 'grid' — an even, uniform grid of square project cards (the
 // painter "work, illustrated" pattern, DNA-tokened). Character-agnostic. PIPELINE-
@@ -9,8 +10,8 @@ import { PROJECTS } from '~/data/projects'
 // (DNA). Font -> font-display (DNA). Light surface component-owned (section
 // #F8FAFC, white cards, #E6E8EC). No CTA by design. Never bg-brand-* / .btn.
 export function GalleryGridBlock({
-  label = 'Our work',
-  heading = 'Recent projects',
+  label = tr('section.ourWork'),
+  heading = tr('section.recentProjects'),
   body,
 }: {
   label?: string

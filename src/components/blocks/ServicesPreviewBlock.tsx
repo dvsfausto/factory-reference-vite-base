@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { tr } from '~/lib/i18n'
 import { ArrowRight } from 'lucide-react'
 import { SectionHeader } from '~/components/SectionHeader'
 import { SERVICES } from '~/data/services-view'
@@ -8,12 +9,12 @@ import { serviceImageUrl } from '~/data/images'
 // section). Self-omits when there are no services — exactly today's
 // `{previewServices.length > 0 && …}`.
 export function ServicesPreviewBlock({
-  label = 'Our services',
-  heading = 'What we',
-  scriptAccent = 'do',
-  body = 'A focused list of services, done well.',
-  exploreLabel = 'Explore',
-  moreLink = 'View all services →',
+  label = tr('section.ourServices'),
+  heading = tr('section.whatWeHeading'),
+  scriptAccent = tr('section.doAccent'),
+  body = tr('section.servicesBody'),
+  exploreLabel = tr('common.explore'),
+  moreLink = tr('section.viewAllServices'),
 }: {
   label?: string
   heading?: string

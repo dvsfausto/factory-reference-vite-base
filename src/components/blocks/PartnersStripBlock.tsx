@@ -1,4 +1,5 @@
 import type { Partner } from './partners-variants'
+import { tr } from '~/lib/i18n'
 import { SITE } from '~/data/site'
 
 // Partners LAYOUT: 'strip' — a compact single-row band of partner marks with an
@@ -9,7 +10,7 @@ import { SITE } from '~/data/site'
 // (DNA). Font -> font-display (DNA). Light surface component-owned (white / slate /
 // hairline #E6E8EC). No CTA by design. Never bg-brand-* / .btn.
 export function PartnersStripBlock({
-  label = 'Trusted by',
+  label = tr('section.trustedBy'),
 }: {
   label?: string
   heading?: string

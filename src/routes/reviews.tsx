@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { tr } from '~/lib/i18n'
 import { buildMeta } from '~/lib/seo'
 import { SITE } from '~/data/site'
 import { REVIEWS_LAYOUT } from '~/data/reviews-layout'
@@ -28,7 +29,7 @@ function ReviewsPage() {
         intro: {
           eyebrow: 'Reviews',
           heading: 'Reviews',
-          body: "Verified customer reviews across the work we've done.",
+          body: tr('reviews.body'),
         },
       }}
     />

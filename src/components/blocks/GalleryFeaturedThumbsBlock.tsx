@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { tr } from '~/lib/i18n'
 import { PROJECTS } from '~/data/projects'
 
 // Gallery LAYOUT: 'featured+thumbs' — one large featured photo with a thumbnail
@@ -10,8 +11,8 @@ import { PROJECTS } from '~/data/projects'
 // ring. Radius -> rounded-* (DNA). Font -> font-display (DNA). Light surface
 // component-owned (white / slate / #E6E8EC). No CTA by design. Never bg-brand-*.
 export function GalleryFeaturedThumbsBlock({
-  label = 'Our work',
-  heading = 'Recent projects',
+  label = tr('section.ourWork'),
+  heading = tr('section.recentProjects'),
   body,
 }: {
   label?: string

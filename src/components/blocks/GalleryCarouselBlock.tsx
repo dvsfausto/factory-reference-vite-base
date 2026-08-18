@@ -1,4 +1,5 @@
 import { PROJECTS } from '~/data/projects'
+import { tr } from '~/lib/i18n'
 
 // Gallery LAYOUT: 'carousel' — a horizontal scroll-snap filmstrip of project
 // photos. Character-agnostic, CSS-only (SSR-safe). PIPELINE-SEEDED: images from
@@ -8,8 +9,8 @@ import { PROJECTS } from '~/data/projects'
 // (DNA). Font -> font-display (DNA). Light surface component-owned (white / slate /
 // #E6E8EC). No CTA by design. Never bg-brand-* / .btn.
 export function GalleryCarouselBlock({
-  label = 'Our work',
-  heading = 'Recent projects',
+  label = tr('section.ourWork'),
+  heading = tr('section.recentProjects'),
   body,
 }: {
   label?: string

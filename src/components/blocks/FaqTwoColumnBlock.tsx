@@ -1,4 +1,5 @@
 import { SITE } from '~/data/site'
+import { tr } from '~/lib/i18n'
 
 // FAQ-section LAYOUT: 'two-column' — every question and answer shown at once in a
 // two-column grid (no accordion). Character-agnostic. The scannable, all-open
@@ -8,8 +9,8 @@ import { SITE } from '~/data/site'
 // Radius -> rounded-* (DNA). Font -> font-display (DNA). Cool surface component-
 // owned (#F8FAFC / slate / #E6E8EC). No CTA by design. Never bg-brand-* / .btn.
 export function FaqTwoColumnBlock({
-  label = 'FAQ',
-  heading = 'Questions, answered',
+  label = tr('section.faqLabel'),
+  heading = tr('section.questionsAnswered'),
   body,
 }: {
   label?: string

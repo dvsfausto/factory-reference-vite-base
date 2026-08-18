@@ -1,4 +1,5 @@
 import type { ProcessStep } from './process-variants'
+import { tr } from '~/lib/i18n'
 import { getProcessIcon } from './process-icons'
 import { SITE } from '~/data/site'
 
@@ -10,8 +11,8 @@ import { SITE } from '~/data/site'
 // Radius -> rounded-* (DNA). Font -> font-display (DNA). Light surface component-
 // owned (white cards, #E6E8EC). No CTA by design. Never bg-brand-* / .btn.
 export function ProcessCardsBlock({
-  label = 'How it works',
-  heading = 'A simple process',
+  label = tr('section.howItWorks'),
+  heading = tr('section.simpleProcess'),
   body,
 }: {
   label?: string

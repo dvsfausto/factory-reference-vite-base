@@ -1,4 +1,5 @@
 import type { VideoTestimonial } from './video-testimonials-variants'
+import { tr } from '~/lib/i18n'
 import { SITE } from '~/data/site'
 
 // Video Testimonials LAYOUT: 'grid' — a grid of native video players (poster +
@@ -10,8 +11,8 @@ import { SITE } from '~/data/site'
 // (DNA). Font -> font-display (DNA). Light surface component-owned (white / slate /
 // #E6E8EC). No CTA by design. Never bg-brand-* / .btn.
 export function VideoTestimonialsGridBlock({
-  label = 'Testimonials',
-  heading = 'Hear from our customers',
+  label = tr('section.testimonials'),
+  heading = tr('section.hearFromCustomers'),
   body,
 }: {
   label?: string

@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { tr } from '~/lib/i18n'
 import { motion, useReducedMotion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import { SectionHeader } from '~/components/SectionHeader'
@@ -25,12 +26,12 @@ import { serviceImageUrl } from '~/data/images'
 // Zero services → returns null exactly like the default. The "view all" link only
 // shows when there are genuinely more services than previewed. Nothing invented.
 export function ServicesLuxeBlock({
-  label = 'Our services',
-  heading = 'What we',
-  scriptAccent = 'do',
-  body = 'A focused list of services, done well.',
-  exploreLabel = 'Explore',
-  moreLink = 'View all services →',
+  label = tr('section.ourServices'),
+  heading = tr('section.whatWeHeading'),
+  scriptAccent = tr('section.doAccent'),
+  body = tr('section.servicesBody'),
+  exploreLabel = tr('common.explore'),
+  moreLink = tr('section.viewAllServices'),
 }: {
   label?: string
   heading?: string

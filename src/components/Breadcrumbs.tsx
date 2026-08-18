@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { ChevronRight } from "lucide-react";
 import { resolveCharacterTokens } from "~/lib/character-tokens";
+import { tr } from "~/lib/i18n";
 
 export function Breadcrumbs({ items }: { items: { label: string; to?: string }[] }) {
   // Inner-page chrome: on a character site the link-hover adopts the character accent
@@ -13,7 +14,7 @@ export function Breadcrumbs({ items }: { items: { label: string; to?: string }[]
   const crumbText = T?.crumb?.text ?? T?.text ?? "text-ink-900";
   const linkHover = T ? T.accentHover.split(" ").filter((c) => c.startsWith("hover:text-")).join(" ") : "hover:text-brand-600";
   return (
-    <nav aria-label="Breadcrumb" className={`text-sm ${crumbMuted}`}>
+    <nav aria-label={tr('breadcrumb.aria')} className={`text-sm ${crumbMuted}`}>
       <ol className="flex flex-wrap items-center gap-1.5">
         {items.map((it, i) => (
           <li key={i} className="flex items-center gap-1.5">
