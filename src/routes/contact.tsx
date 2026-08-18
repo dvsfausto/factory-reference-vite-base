@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { tr } from '~/lib/i18n'
 import { buildMeta } from '~/lib/seo'
 import { SITE } from '~/data/site'
 import { CONTACT_LAYOUT } from '~/data/contact-layout'
@@ -7,7 +8,7 @@ import { SectionList } from '~/components/render-section'
 export const Route = createFileRoute('/contact')({
   head: () =>
     buildMeta({
-      title: `Contact ${SITE.name}`,
+      title: `${tr('contact.title')} ${SITE.name}`,
       description: (SITE as { ctaLabel?: string }).ctaLabel
         ? `Contact ${SITE.name} — we'll reply within a business day.`
         : `Get a free quote from ${SITE.name}.`,

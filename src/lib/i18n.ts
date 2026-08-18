@@ -207,6 +207,7 @@ const EN = {
   'reviews.body': "Verified customer reviews across the work we've done.",
   'contact.replyMessage': 'We reply within a business day to every message.',
   'contact.replyQuote': 'We reply within a business day to every quote request.',
+  'contact.title': 'Contact',
 } as const
 
 // Miami Spanish — natural, not literal. Same keys as EN.
@@ -392,6 +393,7 @@ const ES: Record<keyof typeof EN, string> = {
   'reviews.body': 'Reseñas verificadas de clientes sobre el trabajo que hemos hecho.',
   'contact.replyMessage': 'Respondemos cada mensaje en un día hábil.',
   'contact.replyQuote': 'Respondemos cada solicitud de cotización en un día hábil.',
+  'contact.title': 'Contacto',
 }
 
 const DICT: Record<Lang, Record<string, string>> = { en: EN, es: ES }
