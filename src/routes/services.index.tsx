@@ -1,6 +1,6 @@
 import { createFileRoute, redirect } from '@tanstack/react-router'
 import { tr } from '~/lib/i18n'
-import { buildMeta } from '~/lib/seo'
+import { buildMeta, breadcrumbLd } from '~/lib/seo'
 import { SERVICES } from '~/data/services-view'
 import { SITE } from '~/data/site'
 import { SERVICES_INDEX_LAYOUT } from '~/data/services-index-layout'
@@ -17,11 +17,11 @@ export const Route = createFileRoute('/services/')({
     if (SERVICES.length === 0) throw redirect({ to: '/' })
   },
   head: () =>
-    buildMeta({
+    ({ ...buildMeta({
       title: `${tr('nav.services')} — ${SITE.name}`,
       description: `${tr('route.servicesDesc')} ${SITE.name}.`,
       path: '/services',
-    }),
+    }), scripts: [{ type: 'application/ld+json', children: JSON.stringify(breadcrumbLd([{ name: tr('breadcrumb.home'), url: '/' }, { name: tr('nav.services'), url: '/services' }])) }] }),
   component: ServicesIndex,
 })
 

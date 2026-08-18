@@ -1,17 +1,17 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { tr } from '~/lib/i18n'
-import { buildMeta } from '~/lib/seo'
+import { buildMeta, breadcrumbLd } from '~/lib/seo'
 import { SITE } from '~/data/site'
 import { PRICING_LAYOUT } from '~/data/pricing-layout'
 import { SectionList } from '~/components/render-section'
 
 export const Route = createFileRoute('/pricing')({
   head: () =>
-    buildMeta({
+    ({ ...buildMeta({
       title: `${tr('nav.pricing')} — ${SITE.name}`,
       description: `${tr('route.pricingDesc')} ${SITE.name}.`,
       path: '/pricing',
-    }),
+    }), scripts: [{ type: 'application/ld+json', children: JSON.stringify(breadcrumbLd([{ name: tr('breadcrumb.home'), url: '/' }, { name: tr('nav.pricing'), url: '/pricing' }])) }] }),
   component: PricingPage,
 })
 
