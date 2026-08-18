@@ -160,11 +160,19 @@ export function BookingWizardBlock({
   label = 'Book online',
   heading = 'Book your appointment',
   body = 'Pick a service and a time that works for you — confirmed instantly, no phone tag.',
+  forceEnabled = false,
 }: {
   label?: string
   heading?: string
   body?: string
+  // Render the wizard even when BOOKING.enabled is false. BOOKING.enabled gates the
+  // AUTO-SPLICED homepage section (solo-typed builds); the dedicated /book customPage
+  // places this block EXPLICITLY (params.forceEnabled), so it must render there for any
+  // affordance-eligible business regardless of the homepage-section heuristic. Same live
+  // reads, same create-booking write, same honest fallback — only the gate differs.
+  forceEnabled?: boolean
 }) {
+  const enabled = BOOKING.enabled || forceEnabled
   const reduce = useReducedMotion()
   const [loading, setLoading] = useState(true)
   const [loadError, setLoadError] = useState(false)
@@ -187,7 +195,7 @@ export function BookingWizardBlock({
 
   // Load bookable services + weekly availability once, client-side (anon reads).
   useEffect(() => {
-    if (!BOOKING.enabled) return
+    if (!enabled) return
     let cancelled = false
     ;(async () => {
       try {
@@ -223,7 +231,7 @@ export function BookingWizardBlock({
     return () => {
       cancelled = true
     }
-  }, [])
+  }, [enabled])
 
   const days = useMemo(() => bookableDays(availability), [availability])
   const slots = useMemo(
@@ -231,7 +239,7 @@ export function BookingWizardBlock({
     [service, date, availability],
   )
 
-  if (!BOOKING.enabled) return null
+  if (!enabled) return null
 
   // Honest fallback: enabled but nothing to book yet → offer the phone, never a dead end.
   const emptyConfig = !loading && !loadError && (services.length === 0 || days.length === 0)

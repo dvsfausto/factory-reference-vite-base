@@ -820,6 +820,7 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext): ReactN
           label={block.params?.label as string | undefined}
           heading={block.params?.heading as string | undefined}
           body={block.params?.body as string | undefined}
+          forceEnabled={block.params?.forceEnabled as boolean | undefined}
         />
       )
     }

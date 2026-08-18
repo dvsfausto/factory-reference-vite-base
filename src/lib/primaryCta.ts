@@ -24,7 +24,10 @@ export function primaryCta(): { href: string; label: string } {
   const actions = new Set(SERVICES.map((s) => s.action))
   const base =
     BOOKING.enabled || hasPage('book') || actions.has('book')
-      ? { href: BOOKING.enabled ? '/#book' : '/book', label: 'Book now' }
+      // A dedicated /book PAGE is the shareable front door ("text your customer the link"),
+      // so it wins over the on-page /#book anchor whenever it exists. /#book only when the
+      // homepage wizard is the sole booking surface (legacy solo build, no /book page yet).
+      ? { href: hasPage('book') ? '/book' : BOOKING.enabled ? '/#book' : '/book', label: 'Book now' }
       : hasPage('quote') || actions.has('collect') || actions.has('quote')
         ? { href: '/quote', label: 'Get a quote' }
         : hasPage('shop') || actions.has('buy')
