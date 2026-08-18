@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { tr } from '~/lib/i18n'
 import type { AreaRef } from '~/lib/types/page-types'
 
 interface Props {
@@ -25,7 +26,7 @@ export function AreasSection({ heading, intro, areas, mapEmbedUrl }: Props) {
           <div className="mt-10 overflow-hidden rounded-2xl border border-slate-200 shadow-sm">
             <iframe
               src={mapEmbedUrl}
-              title="Service area map"
+              title={tr('section.serviceAreaMap')}
               loading="lazy"
               className="h-[360px] w-full border-0"
             />

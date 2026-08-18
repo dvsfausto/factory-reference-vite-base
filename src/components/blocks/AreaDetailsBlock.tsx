@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { tr } from '~/lib/i18n'
 import { Link } from '@tanstack/react-router'
 import { ArrowRight, MapPin, Quote, Star } from 'lucide-react'
 import type { ServiceAreaPageData } from '~/lib/types/page-types'
@@ -77,9 +78,7 @@ export function AreaDetailsBlock({
     blocks.push(
       <div key="servicesHere">
         <div className="max-w-3xl">
-          <p className="text-xs font-bold uppercase tracking-[0.18em] text-brand-700">
-            Services available
-          </p>
+          <p className="text-xs font-bold uppercase tracking-[0.18em] text-brand-700">{tr('tmpl.servicesAvailable')}</p>
           <h2 className="mt-3 font-display text-3xl leading-tight text-ink-900 sm:text-4xl">
             {servicesHere.title}
           </h2>
@@ -116,8 +115,7 @@ export function AreaDetailsBlock({
                   {s.name}
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-ink-600">{s.short}</p>
-                <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-brand-600 transition-all group-hover:gap-2">
-                  Learn more <ArrowRight className="h-4 w-4" />
+                <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-brand-600 transition-all group-hover:gap-2">{tr('common.learnMore')}<ArrowRight className="h-4 w-4" />
                 </span>
               </div>
             </Link>
@@ -177,9 +175,7 @@ export function AreaDetailsBlock({
           <span
             className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-white"
             style={{ backgroundImage: 'var(--wow-grad-brand)' }}
-          >
-            Local insight
-          </span>
+          >{tr('tmpl.localInsight')}</span>
           <h2 className="mt-4 font-display text-2xl leading-tight text-ink-900 sm:text-3xl">
             {localContext.title ?? `Why ${area.name} chooses us`}
           </h2>

@@ -1,4 +1,5 @@
 import { motion, useReducedMotion } from 'framer-motion'
+import { tr } from '~/lib/i18n'
 import { Link } from '@tanstack/react-router'
 import { ArrowRight } from 'lucide-react'
 import type { ServicePageData } from '~/lib/types/page-types'
@@ -13,7 +14,7 @@ import { isRelatedServiceVisible } from '~/data/services-view'
 //   · --wow-hairline     → card hairline borders.
 //   · --wow-shadow-soft / --wow-shadow-glow → card resting lift / hover glow.
 //   · --wow-ease-out     → entrance + hover easing.
-// BRAND identity → the "Explore" affordance uses text-brand-600. No literal hex.
+// BRAND identity → the tr('common.explore') affordance uses text-brand-600. No literal hex.
 //
 // HONESTY: links are the real per-service relatedServices, filtered through
 // isRelatedServiceVisible so an UNPUBLISHED target self-heals out (matches
@@ -34,9 +35,7 @@ export function RelatedServicesBlock({
       style={{ backgroundImage: 'var(--wow-grad-surface)' }}
     >
       <div className="container-x py-16 md:py-24">
-        <h2 className="text-center font-display text-3xl leading-tight text-ink-900 sm:text-4xl">
-          You may also need
-        </h2>
+        <h2 className="text-center font-display text-3xl leading-tight text-ink-900 sm:text-4xl">{tr('tmpl.youMayAlsoNeed')}</h2>
         <div className="mx-auto mt-10 grid max-w-3xl grid-cols-1 gap-6 md:grid-cols-2">
           {related.map((r, i) => (
             <motion.div
@@ -71,8 +70,7 @@ export function RelatedServicesBlock({
                 }}
               >
                 <h3 className="font-display text-lg leading-snug text-ink-900">{r.label}</h3>
-                <span className="mt-3 inline-flex items-center gap-1 font-semibold text-brand-600 transition-all group-hover:gap-2">
-                  Explore <ArrowRight className="h-4 w-4" />
+                <span className="mt-3 inline-flex items-center gap-1 font-semibold text-brand-600 transition-all group-hover:gap-2">{tr('common.explore')}<ArrowRight className="h-4 w-4" />
                 </span>
               </Link>
             </motion.div>

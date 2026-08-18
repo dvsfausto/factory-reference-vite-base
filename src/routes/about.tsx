@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { tr } from '~/lib/i18n'
 import { buildMeta } from '~/lib/seo'
 import { SITE } from '~/data/site'
 import { ABOUT_LAYOUT } from '~/data/about-layout'
@@ -7,8 +8,8 @@ import { SectionList } from '~/components/render-section'
 export const Route = createFileRoute('/about')({
   head: () =>
     buildMeta({
-      title: `About ${SITE.name}`,
-      description: `Local team. Honest work. ${SITE.tagline}`,
+      title: `${tr('route.about')} ${SITE.name}`,
+      description: `${tr('route.aboutDesc')} ${SITE.tagline}`,
       path: '/about',
     }),
   component: AboutPage,
@@ -27,8 +28,8 @@ function AboutPage() {
       blocks={ABOUT_LAYOUT}
       ctx={{
         intro: {
-          eyebrow: 'About',
-          heading: `About ${SITE.name}`,
+          eyebrow: tr('nav.about'),
+          heading: `${tr('route.about')} ${SITE.name}`,
           body: [SITE.tagline, SITE.about].filter(Boolean).join(' '),
           script: undefined,
         },

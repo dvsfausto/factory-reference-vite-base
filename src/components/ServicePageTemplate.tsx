@@ -86,8 +86,8 @@ export function ServicePageTemplate({ data }: Props) {
           <div className={T?.crumb?.surface ?? secPlain}>
             <nav aria-label={tr('breadcrumb.aria')} className="container-x pt-8 md:pt-10">
               <Breadcrumbs items={[
-                { label: "Home", to: "/" },
-                { label: "Services", to: "/services" },
+                { label: tr('breadcrumb.home'), to: "/" },
+                { label: tr('nav.services'), to: "/services" },
                 { label: data.title },
               ]} />
             </nav>
@@ -100,8 +100,8 @@ export function ServicePageTemplate({ data }: Props) {
         <img src={leaves} alt="" aria-hidden className="hidden md:block absolute -right-10 bottom-0 h-[60%] opacity-40 pointer-events-none select-none rotate-180" />
         <div className="container-x py-12 md:py-16 relative">
           <Breadcrumbs items={[
-            { label: "Home", to: "/" },
-            { label: "Services", to: "/services" },
+            { label: tr('breadcrumb.home'), to: "/" },
+            { label: tr('nav.services'), to: "/services" },
             { label: data.title },
           ]} />
           <div className="mt-6 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
@@ -333,8 +333,7 @@ export function ServicePageTemplate({ data }: Props) {
                   className={T ? `${T.card} ${T.cardRadius} border ${T.border} p-7 group ${T.cardElevation}` : "card-stead p-7 group hover:shadow-lg transition-all"}
                 >
                   <h4 className={hCls}>{r.label}</h4>
-                  <div className={`mt-3 ${T ? T.accent : "text-brand-600"} font-semibold flex items-center gap-1 group-hover:gap-2 transition-all`}>
-                    Explore <ArrowRight className="h-4 w-4" />
+                  <div className={`mt-3 ${T ? T.accent : "text-brand-600"} font-semibold flex items-center gap-1 group-hover:gap-2 transition-all`}>{tr('common.explore')}<ArrowRight className="h-4 w-4" />
                   </div>
                 </Link>
               ))}

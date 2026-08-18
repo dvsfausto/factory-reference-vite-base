@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { tr } from '~/lib/i18n'
 import { ChevronDown } from "lucide-react";
 import { resolveCharacterTokens } from "~/lib/character-tokens";
 import type { FAQ } from "~/lib/types/page-types";
@@ -9,7 +10,7 @@ interface Props {
   intro?: string;
 }
 
-export function FAQSection({ faqs, title = "Frequently asked questions", intro }: Props) {
+export function FAQSection({ faqs, title = tr('section.faq'), intro }: Props) {
   const [open, setOpen] = useState<number | null>(0);
   if (faqs.length === 0) return null;
 

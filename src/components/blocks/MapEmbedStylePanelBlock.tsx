@@ -62,7 +62,7 @@ export function MapEmbedStylePanelBlock({
           })}
         </div>
         <div className="mt-8">
-          <Link to="/areas" className="inline-flex h-12 items-center rounded-xl bg-primary px-7 font-display text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90">See all areas</Link>
+          <Link to="/areas" className="inline-flex h-12 items-center rounded-xl bg-primary px-7 font-display text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90">{tr('section.seeAllAreas')}</Link>
         </div>
       </div>
     </section>

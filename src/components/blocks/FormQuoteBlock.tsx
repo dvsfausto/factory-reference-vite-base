@@ -93,9 +93,7 @@ export function FormQuoteBlock({
                 </div>
                 {options.length > 0 && (
                   <div className="mt-5">
-                    <label htmlFor="quote-service" className="block text-sm font-medium text-ink-800">
-                      Service you need a quote for
-                    </label>
+                    <label htmlFor="quote-service" className="block text-sm font-medium text-ink-800">{tr('form.serviceNeeded')}</label>
                     <select
                       id="quote-service"
                       name="service"
@@ -120,9 +118,7 @@ export function FormQuoteBlock({
                 </div>
                 {/* Honeypot: hidden from humans, tempting to bots. request-quote silently drops when filled. */}
                 <div aria-hidden="true" className="absolute left-[-9999px] h-0 w-0 overflow-hidden">
-                  <label>
-                    Company website
-                    <input type="text" name="company_site" tabIndex={-1} autoComplete="off" />
+                  <label>{tr('form.companyWebsite')}<input type="text" name="company_site" tabIndex={-1} autoComplete="off" />
                   </label>
                 </div>
                 {status === 'error' && error && <p className="mt-4 text-sm text-red-600">{error}</p>}

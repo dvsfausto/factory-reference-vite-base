@@ -1,4 +1,5 @@
 import { getAggregateRating, getHomepageReviews, reviews } from '~/data/reviews'
+import { tr } from '~/lib/i18n'
 import type { Review } from '~/lib/types/page-types'
 
 interface Props {
@@ -8,7 +9,7 @@ interface Props {
 }
 
 export function ReviewsSection({
-  heading = 'Verified reviews',
+  heading = tr('section.verifiedReviews'),
   intro,
   count = 3,
 }: Props) {

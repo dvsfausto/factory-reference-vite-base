@@ -157,7 +157,7 @@ export function LeadForm({
           autoComplete="email"
         />
         <div>
-          <Label htmlFor={`${idPrefix}-message`}>How can we help?</Label>
+          <Label htmlFor={`${idPrefix}-message`}>{tr('form.howCanWeHelp')}</Label>
           <textarea
             id={`${idPrefix}-message`}
             rows={4}

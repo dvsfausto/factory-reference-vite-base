@@ -1,4 +1,5 @@
 import type { ComponentProps, ComponentType, CSSProperties, ReactNode } from 'react'
+import { tr } from '~/lib/i18n'
 import { Phone, Mail, MapPin, Clock } from 'lucide-react'
 import { Reveal } from '~/components/Reveal'
 import { SITE } from '~/data/site'
@@ -409,9 +410,7 @@ function ContactFormSection() {
                 boxShadow: 'var(--wow-shadow-lift)',
               }}
             >
-              <p className="text-xs font-bold uppercase tracking-[0.18em] text-brand-700">
-                Other ways to reach us
-              </p>
+              <p className="text-xs font-bold uppercase tracking-[0.18em] text-brand-700">{tr('misc.otherWays')}</p>
               <div className="mt-5 flex flex-col gap-4">
                 {rows.map((r, i) => (
                   <div key={i} className="flex items-center gap-3.5">

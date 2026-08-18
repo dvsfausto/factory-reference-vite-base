@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { tr } from '~/lib/i18n'
 import { serviceImageUrl } from '~/data/images'
 import type { ServiceRef } from '~/lib/types/page-types'
 
@@ -46,9 +47,7 @@ export function ServicesSection({ heading, intro, services }: Props) {
                 </p>
                 <p className="mt-2 text-sm leading-relaxed text-slate-600">{s.short}</p>
                 {paged && (
-                  <p className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-emerald-700">
-                    Learn more
-                    <span aria-hidden className="transition-transform group-hover:translate-x-0.5">
+                  <p className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-emerald-700">{tr('common.learnMore')}<span aria-hidden className="transition-transform group-hover:translate-x-0.5">
                       →
                     </span>
                   </p>

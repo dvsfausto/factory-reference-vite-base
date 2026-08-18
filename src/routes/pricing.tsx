@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { tr } from '~/lib/i18n'
 import { buildMeta } from '~/lib/seo'
 import { SITE } from '~/data/site'
 import { PRICING_LAYOUT } from '~/data/pricing-layout'
@@ -7,8 +8,8 @@ import { SectionList } from '~/components/render-section'
 export const Route = createFileRoute('/pricing')({
   head: () =>
     buildMeta({
-      title: `Pricing — ${SITE.name}`,
-      description: `Transparent pricing from ${SITE.name}.`,
+      title: `${tr('nav.pricing')} — ${SITE.name}`,
+      description: `${tr('route.pricingDesc')} ${SITE.name}.`,
       path: '/pricing',
     }),
   component: PricingPage,
@@ -27,8 +28,8 @@ function PricingPage() {
       blocks={PRICING_LAYOUT}
       ctx={{
         intro: {
-          eyebrow: 'Pricing',
-          heading: 'Simple, honest pricing',
+          eyebrow: tr('nav.pricing'),
+          heading: tr('route.pricingHeading'),
           body: SITE.pricing,
         },
         faqs: SITE.homeFaqs,

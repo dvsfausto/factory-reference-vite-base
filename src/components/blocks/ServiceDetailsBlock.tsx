@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { tr } from '~/lib/i18n'
 import { Link } from '@tanstack/react-router'
 import { MapPin, Quote, Star } from 'lucide-react'
 import type { ServicePageData } from '~/lib/types/page-types'
@@ -67,9 +68,7 @@ export function ServiceDetailsBlock({
     blocks.push(
       <div key="howPrice">
         <div className="max-w-3xl">
-          <p className="text-xs font-bold uppercase tracking-[0.18em] text-brand-700">
-            Pricing factors
-          </p>
+          <p className="text-xs font-bold uppercase tracking-[0.18em] text-brand-700">{tr('tmpl.pricingFactors')}</p>
           <h2 className="mt-3 font-display text-3xl leading-tight text-ink-900 sm:text-4xl">
             {howPrice.title}
           </h2>
@@ -235,9 +234,7 @@ export function ServiceDetailsBlock({
           <span
             className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-white"
             style={{ backgroundImage: 'var(--wow-grad-brand)' }}
-          >
-            Local insight
-          </span>
+          >{tr('tmpl.localInsight')}</span>
           <h2 className="mt-4 font-display text-2xl leading-tight text-ink-900 sm:text-3xl">
             {localContext.title ?? 'Built for your neighborhood'}
           </h2>

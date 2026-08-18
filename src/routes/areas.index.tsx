@@ -1,4 +1,5 @@
 import { createFileRoute, redirect } from '@tanstack/react-router'
+import { tr, LANG } from '~/lib/i18n'
 import { buildMeta } from '~/lib/seo'
 import { AREAS } from '~/data/areas'
 import { SITE } from '~/data/site'
@@ -16,8 +17,8 @@ export const Route = createFileRoute('/areas/')({
   },
   head: () =>
     buildMeta({
-      title: `Service areas — ${SITE.name}`,
-      description: `Where ${SITE.name} works.`,
+      title: `${tr('section.serviceAreas')} — ${SITE.name}`,
+      description: (LANG==='es' ? `Dónde trabaja ${SITE.name}.` : `Where ${SITE.name} works.`),
       path: '/areas',
     }),
   component: AreasIndex,
@@ -34,9 +35,9 @@ function AreasIndex() {
       blocks={AREAS_INDEX_LAYOUT}
       ctx={{
         intro: {
-          eyebrow: 'Service areas',
-          heading: 'Where we work',
-          body: 'Local crews, familiar streets.',
+          eyebrow: tr('section.serviceAreas'),
+          heading: tr('section.whereWeWork'),
+          body: tr('section.localCrews'),
         },
       }}
     />

@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { tr } from '~/lib/i18n'
+import { tr, LANG } from '~/lib/i18n'
 import { ArrowRight, Check, MapPin, Phone } from "lucide-react";
 import { Breadcrumbs } from "./Breadcrumbs";
 import { FAQSection } from "./FAQSection";
@@ -50,7 +50,7 @@ export function ServiceAreaPageTemplate({ data }: Props) {
     subheadline: "",
   });
   const characterCta = renderCharacterCta({
-    title: `Working in ${data.name}?`,
+    title: (LANG==='es' ? `¿Trabajas en ${data.name}?` : `Working in ${data.name}?`),
     subtitle: tr('tmpl.respondBusinessDay'),
   });
 
@@ -82,8 +82,8 @@ export function ServiceAreaPageTemplate({ data }: Props) {
           <div className={T?.crumb?.surface ?? secPlain}>
             <nav aria-label={tr('breadcrumb.aria')} className="container-x pt-8 md:pt-10">
               <Breadcrumbs items={[
-                { label: "Home", to: "/" },
-                { label: "Areas", to: "/areas" },
+                { label: tr('breadcrumb.home'), to: "/" },
+                { label: tr('nav.areas'), to: "/areas" },
                 { label: data.name },
               ]} />
             </nav>
@@ -103,8 +103,8 @@ export function ServiceAreaPageTemplate({ data }: Props) {
         <img src={leaves} alt="" aria-hidden className="hidden md:block absolute -right-10 bottom-0 h-[60%] opacity-40 pointer-events-none select-none rotate-180" />
         <div className="container-x py-12 md:py-16 relative">
           <Breadcrumbs items={[
-            { label: "Home", to: "/" },
-            { label: "Areas", to: "/areas" },
+            { label: tr('breadcrumb.home'), to: "/" },
+            { label: tr('nav.areas'), to: "/areas" },
             { label: data.name },
           ]} />
           <div className="mt-6 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
@@ -199,8 +199,7 @@ export function ServiceAreaPageTemplate({ data }: Props) {
                   <div className="p-6">
                     <h4 className={hCls}>{s.name}</h4>
                     <p className={`mt-2 text-sm ${tMuted}`}>{s.short}</p>
-                    <div className={`mt-3 ${T ? T.accent : "text-brand-600"} font-semibold flex items-center gap-1 group-hover:gap-2 transition-all text-sm`}>
-                      Learn more <ArrowRight className="h-4 w-4" />
+                    <div className={`mt-3 ${T ? T.accent : "text-brand-600"} font-semibold flex items-center gap-1 group-hover:gap-2 transition-all text-sm`}>{tr('common.learnMore')}<ArrowRight className="h-4 w-4" />
                     </div>
                   </div>
                 </Link>
@@ -300,7 +299,7 @@ export function ServiceAreaPageTemplate({ data }: Props) {
 
       {characterCta ?? (
         <CTASection
-          title={`Working in ${data.name}?`}
+          title={(LANG==='es' ? `¿Trabajas en ${data.name}?` : `Working in ${data.name}?`)}
           subtitle={
             (SITE as { ctaLabel?: string }).ctaLabel
               ? tr('tmpl.respondBusinessDay')

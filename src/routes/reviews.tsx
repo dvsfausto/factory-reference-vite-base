@@ -8,8 +8,8 @@ import { SectionList } from '~/components/render-section'
 export const Route = createFileRoute('/reviews')({
   head: () =>
     buildMeta({
-      title: `Reviews — ${SITE.name}`,
-      description: `What customers say about ${SITE.name}.`,
+      title: `${tr('nav.reviews')} — ${SITE.name}`,
+      description: `${tr('route.reviewsDesc')} ${SITE.name}.`,
       path: '/reviews',
     }),
   component: ReviewsPage,
@@ -27,8 +27,8 @@ function ReviewsPage() {
       blocks={REVIEWS_LAYOUT}
       ctx={{
         intro: {
-          eyebrow: 'Reviews',
-          heading: 'Reviews',
+          eyebrow: tr('nav.reviews'),
+          heading: tr('nav.reviews'),
           body: tr('reviews.body'),
         },
       }}

@@ -32,7 +32,7 @@ export function InfoPageTemplate({ data }: Props) {
         <div className="container-x py-12 md:py-16 relative">
           <div className="max-w-3xl">
             <Breadcrumbs items={[
-              { label: "Home", to: "/" },
+              { label: tr('breadcrumb.home'), to: "/" },
               { label: data.title },
             ]} />
             <h1 className="mt-6">
@@ -94,9 +94,7 @@ export function InfoPageTemplate({ data }: Props) {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-4xl mx-auto">
               {relatedServices.length > 0 && (
                 <div>
-                  <p className="badge-pill bg-white border border-brand-100 text-brand-600">
-                    Related services
-                  </p>
+                  <p className="badge-pill bg-white border border-brand-100 text-brand-600">{tr('related.relatedServices')}</p>
                   <ul className="mt-4 space-y-3">
                     {relatedServices.map((r) => (
                       <li key={r.href}>
@@ -114,9 +112,7 @@ export function InfoPageTemplate({ data }: Props) {
               )}
               {data.relatedInfo.length > 0 && (
                 <div>
-                  <p className="badge-pill bg-white border border-brand-100 text-brand-600">
-                    Read more
-                  </p>
+                  <p className="badge-pill bg-white border border-brand-100 text-brand-600">{tr('common.readMore')}</p>
                   <ul className="mt-4 space-y-3">
                     {data.relatedInfo.map((r) => (
                       <li key={r.href}>

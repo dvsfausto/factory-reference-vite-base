@@ -1,4 +1,5 @@
 import { PrimaryCta } from './PrimaryCta'
+import { tr } from '~/lib/i18n'
 import { motion } from 'framer-motion'
 import { ArrowRight, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
@@ -107,8 +108,7 @@ export function HeroCreativeBlock({
                 className="aspect-[4/5] w-full object-cover"
               />
             </div>
-            <div className="absolute -bottom-6 -right-4 rounded-2xl bg-emerald-600 px-5 py-4 font-display text-sm font-bold text-white shadow-xl">
-              Let's make<br />something.
+            <div className="absolute -bottom-6 -right-4 rounded-2xl bg-emerald-600 px-5 py-4 font-display text-sm font-bold text-white shadow-xl">{tr('hero.letsMake')}<br />something.
             </div>
           </motion.div>
         </div>

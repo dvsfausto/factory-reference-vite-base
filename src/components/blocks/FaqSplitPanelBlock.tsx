@@ -54,9 +54,7 @@ export function FaqSplitPanelBlock({
                 <HelpCircle className="h-5 w-5" />
               </span>
               <h2 className="relative mt-5 text-white">{title}</h2>
-              <p className="relative mt-3 text-sm text-white/80">
-                Everything you need to know before we get started.
-              </p>
+              <p className="relative mt-3 text-sm text-white/80">{tr('faq.everythingYouNeed')}</p>
             </div>
           </div>
 

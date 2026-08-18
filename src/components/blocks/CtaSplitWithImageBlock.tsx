@@ -1,4 +1,5 @@
 import { PrimaryCta } from './PrimaryCta'
+import { tr } from '~/lib/i18n'
 import { ArrowRight, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 import { HERO_ALT } from '~/data/images'
@@ -27,7 +28,7 @@ export function CtaSplitWithImageBlock({
 }) {
   const cta = (SITE as { homeCta?: { title?: string; subtitle?: string } }).homeCta
   const headline = title ?? cta?.title ?? 'Ready when you are.'
-  const sub = subtitle ?? cta?.subtitle ?? 'Reach out today and let us take it from here.'
+  const sub = subtitle ?? cta?.subtitle ?? tr('cta.reachOutToday')
   return (
     <section className="bg-[#F8FAFC]">
       <div className="container-x py-20 md:py-28">
@@ -48,8 +49,7 @@ export function CtaSplitWithImageBlock({
             <div className="mt-9 flex flex-wrap gap-4">
               <PrimaryCta
                 className="inline-flex h-[52px] items-center gap-2 rounded-xl bg-primary px-7 font-display text-base font-semibold text-primary-foreground transition-opacity hover:opacity-90"
-              >
-                Get started <ArrowRight className="h-4 w-4" />
+              >{tr('section.getStarted')}<ArrowRight className="h-4 w-4" />
               </PrimaryCta>
               <a
                 href={`tel:${SITE.phone}`}

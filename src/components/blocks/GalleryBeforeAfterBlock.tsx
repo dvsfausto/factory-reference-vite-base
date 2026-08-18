@@ -28,8 +28,8 @@ function Slider({ item }: { item: GalleryItem }) {
           className="absolute inset-0 h-full w-full object-cover"
           style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}
         />
-        <span className="absolute left-3 top-3 rounded-md bg-white/90 px-2 py-1 font-display text-[10px] font-semibold uppercase tracking-[0.16em] text-[#0F172A] backdrop-blur-sm">Before</span>
-        <span className="absolute right-3 top-3 rounded-md bg-emerald-600 px-2 py-1 font-display text-[10px] font-semibold uppercase tracking-[0.16em] text-white">After</span>
+        <span className="absolute left-3 top-3 rounded-md bg-white/90 px-2 py-1 font-display text-[10px] font-semibold uppercase tracking-[0.16em] text-[#0F172A] backdrop-blur-sm">{tr('gallery.before')}</span>
+        <span className="absolute right-3 top-3 rounded-md bg-emerald-600 px-2 py-1 font-display text-[10px] font-semibold uppercase tracking-[0.16em] text-white">{tr('gallery.after')}</span>
         <div className="pointer-events-none absolute inset-y-0 w-0.5 bg-white shadow" style={{ left: `${pos}%` }} />
         <input
           type="range"
@@ -43,7 +43,7 @@ function Slider({ item }: { item: GalleryItem }) {
       </div>
       <figcaption className="flex items-center justify-between gap-3 p-4">
         <span className="font-display text-sm font-semibold text-[#0F172A]">{item.title}</span>
-        <span className="text-xs italic text-[#94A3B8]">Illustrative</span>
+        <span className="text-xs italic text-[#94A3B8]">{tr('gallery.illustrative')}</span>
       </figcaption>
     </figure>
   )

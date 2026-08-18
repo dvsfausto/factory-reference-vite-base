@@ -1,4 +1,5 @@
 import { PrimaryCta } from './PrimaryCta'
+import { tr } from '~/lib/i18n'
 import { motion } from 'framer-motion'
 import { ArrowRight, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
@@ -27,8 +28,8 @@ function splitScriptAccent(heading: string): { lead: string; accent: string } {
 }
 
 export function CtaGlassPanelBlock({
-  title = 'Ready when you are.',
-  subtitle = 'Quote in 24 hours. No pressure.',
+  title = tr('cta.readyWhenYouAre'),
+  subtitle = tr('cta.quote24'),
 }: {
   title?: string
   subtitle?: string

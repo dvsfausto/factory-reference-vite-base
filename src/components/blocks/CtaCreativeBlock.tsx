@@ -1,4 +1,5 @@
 import { PrimaryCta } from './PrimaryCta'
+import { tr } from '~/lib/i18n'
 import { ArrowUpRight, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 
@@ -40,8 +41,7 @@ export function CtaCreativeBlock({
           <div className="mt-10 flex flex-wrap gap-4">
             <PrimaryCta
               className="inline-flex h-[56px] items-center gap-2 rounded-2xl bg-primary px-8 font-display text-base font-bold text-primary-foreground transition-transform hover:-translate-y-0.5"
-            >
-              Start a project <ArrowUpRight className="h-5 w-5" />
+            >{tr('cta.startProject')}<ArrowUpRight className="h-5 w-5" />
             </PrimaryCta>
             <a
               href={`tel:${SITE.phone}`}

@@ -1,4 +1,5 @@
 import { motion, useReducedMotion } from 'framer-motion'
+import { tr } from '~/lib/i18n'
 import { Link } from '@tanstack/react-router'
 import { ArrowRight } from 'lucide-react'
 import type { InfoPageData, RelatedLink } from '~/lib/types/page-types'
@@ -8,9 +9,9 @@ import { isRelatedServiceVisible } from '~/data/services-view'
 // cross-link groups rendered as WOW glass cards that lift + glow. Per-item via `info`
 // (ctx.info). Replaces InfoPageTemplate's related section, mirroring Stage C's
 // RelatedServicesBlock but carrying BOTH RelatedLink[] groups:
-//   · info.relatedInfo     → "More resources"   → links use each link's own href
+//   · info.relatedInfo     → tr('related.moreResources')   → links use each link's own href
 //                            (the factory emits /info/$slug hrefs)
-//   · info.relatedServices → "Related services" → links use each link's own href
+//   · info.relatedServices → tr('related.relatedServices') → links use each link's own href
 //                            (the factory emits /services/$slug hrefs), filtered
 //                            through isRelatedServiceVisible so an UNPUBLISHED target
 //                            self-heals out (matches InfoPageTemplate + Stage C).
@@ -19,7 +20,7 @@ import { isRelatedServiceVisible } from '~/data/services-view'
 //   · --wow-grad-surface → the section's soft radial brand tint background.
 //   · --wow-hairline     → card hairline borders.
 //   · --wow-shadow-soft / --wow-shadow-glow → card resting lift / hover glow.
-// BRAND identity → the "Explore" affordance uses text-brand-600. No literal hex.
+// BRAND identity → the tr('common.explore') affordance uses text-brand-600. No literal hex.
 //
 // HONESTY: each group omits when its own list is empty; the whole block returns null
 // when both are empty — no empty section, no fabricated links.
@@ -70,8 +71,7 @@ function LinkGroup({
               }}
             >
               <h3 className="font-display text-lg leading-snug text-ink-900">{r.label}</h3>
-              <span className="mt-3 inline-flex items-center gap-1 font-semibold text-brand-600 transition-all group-hover:gap-2">
-                Explore <ArrowRight className="h-4 w-4" />
+              <span className="mt-3 inline-flex items-center gap-1 font-semibold text-brand-600 transition-all group-hover:gap-2">{tr('common.explore')}<ArrowRight className="h-4 w-4" />
               </span>
             </Link>
           </motion.div>
@@ -102,13 +102,11 @@ export function RelatedInfoBlock({
       style={{ backgroundImage: 'var(--wow-grad-surface)' }}
     >
       <div className="container-x py-16 md:py-24">
-        <h2 className="text-center font-display text-3xl leading-tight text-ink-900 sm:text-4xl">
-          Keep exploring
-        </h2>
+        <h2 className="text-center font-display text-3xl leading-tight text-ink-900 sm:text-4xl">{tr('related.keepExploring')}</h2>
         <div className="mx-auto mt-10 max-w-4xl space-y-12">
-          {showInfo && <LinkGroup heading="More resources" links={relatedInfo} />}
+          {showInfo && <LinkGroup heading={tr('related.moreResources')} links={relatedInfo} />}
           {showServices && (
-            <LinkGroup heading="Related services" links={relatedServices} />
+            <LinkGroup heading={tr('related.relatedServices')} links={relatedServices} />
           )}
         </div>
       </div>

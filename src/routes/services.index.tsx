@@ -1,4 +1,5 @@
 import { createFileRoute, redirect } from '@tanstack/react-router'
+import { tr } from '~/lib/i18n'
 import { buildMeta } from '~/lib/seo'
 import { SERVICES } from '~/data/services-view'
 import { SITE } from '~/data/site'
@@ -17,8 +18,8 @@ export const Route = createFileRoute('/services/')({
   },
   head: () =>
     buildMeta({
-      title: `Services — ${SITE.name}`,
-      description: `Full list of services from ${SITE.name}.`,
+      title: `${tr('nav.services')} — ${SITE.name}`,
+      description: `${tr('route.servicesDesc')} ${SITE.name}.`,
       path: '/services',
     }),
   component: ServicesIndex,
@@ -36,9 +37,9 @@ function ServicesIndex() {
       blocks={SERVICES_INDEX_LAYOUT}
       ctx={{
         intro: {
-          eyebrow: 'Services',
-          heading: 'Our services',
-          body: 'A short list of focused services, done well.',
+          eyebrow: tr('nav.services'),
+          heading: tr('section.ourServices'),
+          body: tr('route.servicesIndexBody'),
         },
       }}
     />

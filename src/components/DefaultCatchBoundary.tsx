@@ -1,3 +1,4 @@
+import { tr } from '~/lib/i18n'
 import {
   ErrorComponent,
   Link,
@@ -25,9 +26,7 @@ export function DefaultCatchBoundary({ error }: ErrorComponentProps) {
             router.invalidate()
           }}
           className={`px-2 py-1 bg-gray-600 dark:bg-gray-700 rounded-sm text-white uppercase font-extrabold`}
-        >
-          Try Again
-        </button>
+        >{tr('error.tryAgain')}</button>
         {isRoot ? (
           <Link
             to="/"
@@ -43,9 +42,7 @@ export function DefaultCatchBoundary({ error }: ErrorComponentProps) {
               e.preventDefault()
               window.history.back()
             }}
-          >
-            Go Back
-          </Link>
+          >{tr('error.goBack')}</Link>
         )}
       </div>
     </div>
