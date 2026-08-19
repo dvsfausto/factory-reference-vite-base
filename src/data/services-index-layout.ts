@@ -1,4 +1,5 @@
 import type { BlockType } from './layout'
+import { familyOr } from '~/lib/family-variant'
 
 // Per-page composition for /services (Arc 3 · Stage B), mirroring about-layout.ts.
 // The services-index route maps over this array via the shared renderer. Adds an
@@ -17,5 +18,5 @@ export interface ServicesIndexBlock {
 export const SERVICES_INDEX_LAYOUT: ServicesIndexBlock[] = [
   { type: 'intro' },
   { type: 'servicesIndex' },
-  { type: 'cta', variant: 'aurora-glow', params: { title: 'Need a quote?' } },
+  { type: 'cta', variant: familyOr('aurora-glow'), params: { title: 'Need a quote?' } },
 ]

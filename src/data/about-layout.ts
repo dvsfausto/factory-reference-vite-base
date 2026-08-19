@@ -1,4 +1,5 @@
 import type { BlockType } from './layout'
+import { familyOr } from '~/lib/family-variant'
 
 // Per-page composition for /about — the inner-page analogue of HOMEPAGE_LAYOUT.
 // The about route maps over this array instead of hardcoding its sections, so the
@@ -21,6 +22,6 @@ export interface AboutBlock {
 export const ABOUT_LAYOUT: AboutBlock[] = [
   { type: 'intro' },
   { type: 'team', variant: 'grid' },
-  { type: 'trustBar', variant: 'glow-cards' },
-  { type: 'cta', variant: 'aurora-glow' },
+  { type: 'trustBar', variant: familyOr('glow-cards') },
+  { type: 'cta', variant: familyOr('aurora-glow') },
 ]

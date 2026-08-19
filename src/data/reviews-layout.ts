@@ -1,4 +1,5 @@
 import type { BlockType } from './layout'
+import { familyOr } from '~/lib/family-variant'
 
 // Per-page composition for /reviews (Arc 3 · Stage B), mirroring about-layout.ts.
 // The reviews route maps over this array via the shared renderer instead of
@@ -17,5 +18,5 @@ export interface ReviewsBlock {
 export const REVIEWS_LAYOUT: ReviewsBlock[] = [
   { type: 'intro' },
   { type: 'reviewsIndex' },
-  { type: 'cta', variant: 'aurora-glow', params: { title: 'Want to work together?' } },
+  { type: 'cta', variant: familyOr('aurora-glow'), params: { title: 'Want to work together?' } },
 ]

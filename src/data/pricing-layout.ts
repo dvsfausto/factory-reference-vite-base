@@ -1,4 +1,5 @@
 import type { BlockType } from './layout'
+import { familyOr } from '~/lib/family-variant'
 
 // Per-page composition for /pricing — the inner-page analogue of HOMEPAGE_LAYOUT,
 // mirroring src/data/about-layout.ts. The pricing route maps over this array
@@ -22,7 +23,7 @@ export interface PricingBlock {
 export const PRICING_LAYOUT: PricingBlock[] = [
   { type: 'intro' },
   { type: 'pricing', variant: 'luxe-glass' },
-  { type: 'trustBar', variant: 'glow-cards' },
+  { type: 'trustBar', variant: familyOr('glow-cards') },
   { type: 'faq', variant: 'glass-accordion' },
-  { type: 'cta', variant: 'aurora-glow' },
+  { type: 'cta', variant: familyOr('aurora-glow') },
 ]

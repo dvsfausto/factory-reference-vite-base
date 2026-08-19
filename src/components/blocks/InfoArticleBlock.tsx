@@ -35,13 +35,13 @@ export function InfoArticleBlock({
   if (!showIntro && !showSections) return null
 
   return (
-    <section className="relative overflow-hidden bg-white">
+    <section className="relative overflow-hidden bg-[var(--fam-surface,#fff)]">
       <div className="container-x py-16 md:py-24">
         <div className="mx-auto max-w-2xl">
           {showIntro && (
             <div className="space-y-5">
               {intro.map((p, i) => (
-                <p key={i} className="text-lg leading-relaxed text-ink-700 md:text-xl">
+                <p key={i} className="text-lg leading-relaxed text-[var(--fam-ink,var(--color-ink-700))] md:text-xl">
                   {p}
                 </p>
               ))}
@@ -51,7 +51,7 @@ export function InfoArticleBlock({
           {showSections && (
             <div
               className={showIntro ? 'mt-14 space-y-14 border-t pt-14' : 'space-y-14'}
-              style={showIntro ? { borderColor: 'var(--wow-hairline)' } : undefined}
+              style={showIntro ? { borderColor: 'var(--fam-hairline, var(--wow-hairline))' } : undefined}
             >
               {sections.map((s, i) => (
                 <motion.section
@@ -70,13 +70,13 @@ export function InfoArticleBlock({
                     className="block h-1 w-12 rounded-full"
                     style={{ backgroundImage: 'var(--wow-grad-brand)' }}
                   />
-                  <h2 className="mt-5 font-display text-2xl leading-tight text-ink-900 sm:text-3xl">
+                  <h2 className="mt-5 font-display text-2xl leading-tight text-[var(--fam-ink,var(--color-ink-900))] sm:text-3xl">
                     {s.heading}
                   </h2>
                   {s.body.length > 0 && (
                     <div className="mt-4 space-y-4">
                       {s.body.map((p, bi) => (
-                        <p key={bi} className="leading-relaxed text-ink-700 md:text-lg">
+                        <p key={bi} className="leading-relaxed text-[var(--fam-ink,var(--color-ink-700))] md:text-lg">
                           {p}
                         </p>
                       ))}
@@ -87,7 +87,7 @@ export function InfoArticleBlock({
                       {s.list.map((l, li) => (
                         <li
                           key={li}
-                          className="flex items-start gap-3 leading-relaxed text-ink-700"
+                          className="flex items-start gap-3 leading-relaxed text-[var(--fam-ink,var(--color-ink-700))]"
                         >
                           <span
                             aria-hidden
