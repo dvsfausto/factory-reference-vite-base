@@ -1,4 +1,5 @@
 import { PrimaryCta } from './PrimaryCta'
+import { tr } from '~/lib/i18n'
 import { motion } from 'framer-motion'
 import { ArrowRight, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
@@ -24,7 +25,7 @@ import { imageSrc } from '~/lib/asset-url'
 // Props identical to HeroBlock; decorativeAsset accepted for parity but unused.
 // Returns an Element (no null), matching HeroBlock.
 export function HeroBackgroundBlock({
-  trustItems = ['Free estimates', 'On schedule', 'Local team', 'Satisfaction guaranteed'],
+  trustItems = [tr('trust.freeEstimates'), tr('trust.onSchedule'), tr('trust.localTeam'), tr('trust.satisfactionGuaranteed')],
 }: {
   trustItems?: string[]
   decorativeAsset?: string

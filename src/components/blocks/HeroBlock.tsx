@@ -1,4 +1,5 @@
 import { PrimaryCta } from './PrimaryCta'
+import { tr } from '~/lib/i18n'
 import { motion } from 'framer-motion'
 import { ArrowRight, Check, Phone } from 'lucide-react'
 import { HeroSlideshow } from '~/components/HeroSlideshow'
@@ -16,7 +17,7 @@ function splitScriptAccent(heading: string): { lead: string; accent: string } {
 }
 
 export function HeroBlock({
-  trustItems = ['Friendly service', 'Same-day quotes', 'Local team', '100% satisfaction'],
+  trustItems = [tr('trust.friendlyService'), tr('trust.sameDayQuotes'), tr('trust.localTeam'), tr('trust.satisfaction100')],
   decorativeAsset = leaves,
 }: {
   trustItems?: string[]

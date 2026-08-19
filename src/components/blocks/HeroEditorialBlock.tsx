@@ -1,4 +1,5 @@
 import { PrimaryCta } from './PrimaryCta'
+import { tr } from '~/lib/i18n'
 import { motion, useReducedMotion } from 'framer-motion'
 import { ArrowRight, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
@@ -21,7 +22,7 @@ import { imageSrc } from '~/lib/asset-url'
 // HONESTY: no invented figures, the strip is the real trust items only.
 // `decorativeAsset` accepted for parity, unused. Content is props with SITE fallback.
 export function HeroEditorialBlock({
-  trustItems = ['Friendly service', 'Same-day quotes', 'Local team', '100% satisfaction'],
+  trustItems = [tr('trust.friendlyService'), tr('trust.sameDayQuotes'), tr('trust.localTeam'), tr('trust.satisfaction100')],
   headline = SITE.hero.headline,
   body = SITE.hero.body,
   imageUrl = SITE.hero.image_url,

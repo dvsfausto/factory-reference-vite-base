@@ -21,7 +21,7 @@ import { imageSrc } from '~/lib/asset-url'
 // Props identical to HeroBlock; decorativeAsset accepted for parity but unused.
 // Returns an Element (no null).
 export function HeroCreativeBlock({
-  trustItems = ['Free estimates', 'On schedule', 'Local team', 'Satisfaction guaranteed'],
+  trustItems = [tr('trust.freeEstimates'), tr('trust.onSchedule'), tr('trust.localTeam'), tr('trust.satisfactionGuaranteed')],
   headline = SITE.hero.headline,
   body = SITE.hero.body,
   imageUrl = SITE.hero.image_url,

@@ -1,4 +1,5 @@
 import { PrimaryCta } from './PrimaryCta'
+import { tr } from '~/lib/i18n'
 import { motion } from 'framer-motion'
 import { ArrowRight, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
@@ -22,7 +23,7 @@ import { imageSrc } from '~/lib/asset-url'
 // → defaults to SITE.hero.* (byte-identical). Inner pages pass PER-PAGE content.
 // SITE.phone/phoneDisplay stay site-level.
 export function HeroElegantBlock({
-  trustItems = ['Free estimates', 'On schedule', 'Local team', 'Satisfaction guaranteed'],
+  trustItems = [tr('trust.freeEstimates'), tr('trust.onSchedule'), tr('trust.localTeam'), tr('trust.satisfactionGuaranteed')],
   headline = SITE.hero.headline,
   body = SITE.hero.body,
   imageUrl = SITE.hero.image_url,

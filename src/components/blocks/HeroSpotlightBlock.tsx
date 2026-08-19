@@ -1,4 +1,5 @@
 import { PrimaryCta } from './PrimaryCta'
+import { tr } from '~/lib/i18n'
 import { motion, useReducedMotion } from 'framer-motion'
 import { ArrowRight, Check, Phone, Star } from 'lucide-react'
 import { SITE } from '~/data/site'
@@ -30,7 +31,7 @@ function splitScriptAccent(heading: string): { lead: string; accent: string } {
 }
 
 export function HeroSpotlightBlock({
-  trustItems = ['Friendly service', 'Same-day quotes', 'Local team', '100% satisfaction'],
+  trustItems = [tr('trust.friendlyService'), tr('trust.sameDayQuotes'), tr('trust.localTeam'), tr('trust.satisfaction100')],
   headline = SITE.hero.headline,
   body = SITE.hero.body,
   imageUrl = SITE.hero.image_url,
