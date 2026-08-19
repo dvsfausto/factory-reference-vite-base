@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { tr } from '~/lib/i18n'
 import { motion, useReducedMotion } from 'framer-motion'
 import { ArrowRight, Check, Sparkles } from 'lucide-react'
 import type { PricingPlan } from './pricing-variants'
@@ -23,7 +24,7 @@ import { SITE } from '~/data/site'
 //      brand-framed "how pricing works" panel with a CTA and ZERO invented numbers.
 //   3. No plans AND no prose → null (never fabricates pricing).
 export function PricingLuxeGlassBlock({
-  label = 'Pricing',
+  label = tr('nav.pricing'),
   heading = 'Simple, transparent pricing',
   body,
 }: {

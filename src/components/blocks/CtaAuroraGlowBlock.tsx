@@ -36,7 +36,7 @@ export function CtaAuroraGlowBlock({
 }) {
   const reduce = useReducedMotion()
   const parts = splitScriptAccent(title)
-  const label = (SITE as { ctaLabel?: string }).ctaLabel ?? 'Get Free Quote'
+  const label = (SITE as { ctaLabel?: string }).ctaLabel ?? tr('cta.getFreeQuote')
 
   return (
     <section

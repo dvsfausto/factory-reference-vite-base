@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { tr } from '~/lib/i18n'
 import { motion, useReducedMotion } from 'framer-motion'
 import { ArrowRight, Check } from 'lucide-react'
 import type { PricingPlan } from './pricing-variants'
@@ -24,7 +25,7 @@ import { SITE } from '~/data/site'
 //      rail and the prose + CTA, ZERO invented numbers.
 //   3. No plans AND no prose → null (never fabricates pricing).
 export function PricingSpotlightTierBlock({
-  label = 'Pricing',
+  label = tr('nav.pricing'),
   heading = 'Simple, transparent pricing',
   body,
 }: {

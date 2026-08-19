@@ -34,8 +34,8 @@ export function ServicesElegantBlock({
   const previewServices = SERVICES.slice(0, 5)
   if (previewServices.length === 0) return null
   const hs = (SITE as { homeServices?: { label?: string; heading?: string; body?: string } }).homeServices
-  const secHeading = heading ?? hs?.heading ?? 'Services'
-  const secBody = body ?? hs?.body ?? 'A focused set of services, done well.'
+  const secHeading = heading ?? hs?.heading ?? tr('nav.services')
+  const secBody = body ?? hs?.body ?? tr('section.servicesBody')
   void exploreLabel
   void label
   // EDITORIAL, taste-skill revised: NO eyebrow (headline alone), NO split-header (heading + lede STACKED),

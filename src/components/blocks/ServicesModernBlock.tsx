@@ -31,8 +31,8 @@ export function ServicesModernBlock({
   const previewServices = SERVICES.slice(0, 6)
   if (previewServices.length === 0) return null
   const hs = (SITE as { homeServices?: { heading?: string; body?: string } }).homeServices
-  const secHeading = heading ?? hs?.heading ?? 'Services'
-  const secBody = body ?? hs?.body ?? 'A focused set of services, done well.'
+  const secHeading = heading ?? hs?.heading ?? tr('nav.services')
+  const secBody = body ?? hs?.body ?? tr('section.servicesBody')
   void label
   void exploreLabel
   // MODERN, taste-skill light touch: TIGHT + ASYMMETRIC (the one structural move that separates modern from
