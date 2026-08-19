@@ -32,10 +32,10 @@ export function RelatedServicesBlock({
   return (
     <section
       className="relative overflow-hidden"
-      style={{ backgroundImage: 'var(--wow-grad-surface)' }}
+      style={{ backgroundColor: 'var(--fam-surface, transparent)', backgroundImage: 'var(--fam-grad-surface, var(--wow-grad-surface))' }}
     >
       <div className="container-x py-16 md:py-24">
-        <h2 className="text-center font-display text-3xl leading-tight text-ink-900 sm:text-4xl">{tr('tmpl.youMayAlsoNeed')}</h2>
+        <h2 className="text-center font-display text-3xl leading-tight text-[var(--fam-ink,var(--color-ink-900))] sm:text-4xl">{tr('tmpl.youMayAlsoNeed')}</h2>
         <div className="mx-auto mt-10 grid max-w-3xl grid-cols-1 gap-6 md:grid-cols-2">
           {related.map((r, i) => (
             <motion.div
@@ -53,7 +53,7 @@ export function RelatedServicesBlock({
                 to={r.href}
                 className="group flex h-full flex-col justify-between rounded-2xl border bg-white/85 p-7 backdrop-blur-md transition-transform duration-500 hover:-translate-y-1"
                 style={{
-                  borderColor: 'var(--wow-hairline)',
+                  borderColor: 'var(--fam-hairline, var(--wow-hairline))',
                   boxShadow: 'var(--wow-shadow-soft)',
                 }}
                 onMouseEnter={(e) => {
@@ -69,7 +69,7 @@ export function RelatedServicesBlock({
                   e.currentTarget.style.boxShadow = 'var(--wow-shadow-soft)'
                 }}
               >
-                <h3 className="font-display text-lg leading-snug text-ink-900">{r.label}</h3>
+                <h3 className="font-display text-lg leading-snug text-[var(--fam-ink,var(--color-ink-900))]">{r.label}</h3>
                 <span className="mt-3 inline-flex items-center gap-1 font-semibold text-brand-600 transition-all group-hover:gap-2">{tr('common.explore')}<ArrowRight className="h-4 w-4" />
                 </span>
               </Link>

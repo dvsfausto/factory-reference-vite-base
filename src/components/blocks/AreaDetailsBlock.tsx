@@ -79,11 +79,11 @@ export function AreaDetailsBlock({
       <div key="servicesHere">
         <div className="max-w-3xl">
           <p className="text-xs font-bold uppercase tracking-[0.18em] text-brand-700">{tr('tmpl.servicesAvailable')}</p>
-          <h2 className="mt-3 font-display text-3xl leading-tight text-ink-900 sm:text-4xl">
+          <h2 className="mt-3 font-display text-3xl leading-tight text-[var(--fam-ink,var(--color-ink-900))] sm:text-4xl">
             {servicesHere.title}
           </h2>
           {servicesHere.intro && (
-            <p className="mt-4 text-lg leading-relaxed text-ink-700">
+            <p className="mt-4 text-lg leading-relaxed text-[var(--fam-ink,var(--color-ink-700))]">
               {servicesHere.intro}
             </p>
           )}
@@ -96,7 +96,7 @@ export function AreaDetailsBlock({
               params={{ slug: s.slug }}
               className="group flex flex-col overflow-hidden rounded-2xl border bg-white/85 backdrop-blur-md transition-transform duration-500 hover:-translate-y-1"
               style={{
-                borderColor: 'var(--wow-hairline)',
+                borderColor: 'var(--fam-hairline, var(--wow-hairline))',
                 boxShadow: 'var(--wow-shadow-soft)',
               }}
             >
@@ -111,10 +111,10 @@ export function AreaDetailsBlock({
                 />
               </div>
               <div className="p-6">
-                <h3 className="font-display text-lg leading-snug text-ink-900">
+                <h3 className="font-display text-lg leading-snug text-[var(--fam-ink,var(--color-ink-900))]">
                   {s.name}
                 </h3>
-                <p className="mt-2 text-sm leading-relaxed text-ink-600">{s.short}</p>
+                <p className="mt-2 text-sm leading-relaxed text-[var(--fam-ink-muted,var(--color-ink-500))]">{s.short}</p>
                 <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-brand-600 transition-all group-hover:gap-2">{tr('common.learnMore')}<ArrowRight className="h-4 w-4" />
                 </span>
               </div>
@@ -129,11 +129,11 @@ export function AreaDetailsBlock({
     blocks.push(
       <div key="landmarks">
         <div className="max-w-3xl">
-          <h2 className="font-display text-3xl leading-tight text-ink-900 sm:text-4xl">
+          <h2 className="font-display text-3xl leading-tight text-[var(--fam-ink,var(--color-ink-900))] sm:text-4xl">
             {landmarks.title}
           </h2>
           {landmarks.intro && (
-            <p className="mt-4 text-lg leading-relaxed text-ink-700">
+            <p className="mt-4 text-lg leading-relaxed text-[var(--fam-ink,var(--color-ink-700))]">
               {landmarks.intro}
             </p>
           )}
@@ -144,7 +144,7 @@ export function AreaDetailsBlock({
               key={i}
               className="flex items-start gap-3.5 rounded-2xl border bg-white/80 p-5 backdrop-blur-md"
               style={{
-                borderColor: 'var(--wow-hairline)',
+                borderColor: 'var(--fam-hairline, var(--wow-hairline))',
                 boxShadow: 'var(--wow-shadow-soft)',
               }}
             >
@@ -154,7 +154,7 @@ export function AreaDetailsBlock({
               >
                 <MapPin className="h-4 w-4" />
               </span>
-              <span className="leading-relaxed text-ink-800">{item}</span>
+              <span className="leading-relaxed text-[var(--fam-ink,var(--color-ink-900))]">{item}</span>
             </li>
           ))}
         </ul>
@@ -168,7 +168,7 @@ export function AreaDetailsBlock({
         <div
           className="rounded-3xl border bg-white/85 p-8 backdrop-blur-md md:p-10"
           style={{
-            borderColor: 'var(--wow-hairline)',
+            borderColor: 'var(--fam-hairline, var(--wow-hairline))',
             boxShadow: 'var(--wow-shadow-soft)',
           }}
         >
@@ -176,12 +176,12 @@ export function AreaDetailsBlock({
             className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-white"
             style={{ backgroundImage: 'var(--wow-grad-brand)' }}
           >{tr('tmpl.localInsight')}</span>
-          <h2 className="mt-4 font-display text-2xl leading-tight text-ink-900 sm:text-3xl">
+          <h2 className="mt-4 font-display text-2xl leading-tight text-[var(--fam-ink,var(--color-ink-900))] sm:text-3xl">
             {localContext.title ?? `Why ${area.name} chooses us`}
           </h2>
           <div className="mt-5 space-y-4">
             {localContext.body.map((p, i) => (
-              <p key={i} className="text-lg leading-relaxed text-ink-700">
+              <p key={i} className="text-lg leading-relaxed text-[var(--fam-ink,var(--color-ink-700))]">
                 {p}
               </p>
             ))}
@@ -211,10 +211,10 @@ export function AreaDetailsBlock({
             <Star key={i} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
           ))}
         </div>
-        <blockquote className="mt-4 font-display text-2xl leading-snug text-ink-900 md:text-3xl">
+        <blockquote className="mt-4 font-display text-2xl leading-snug text-[var(--fam-ink,var(--color-ink-900))] md:text-3xl">
           “{testimonial.text}”
         </blockquote>
-        <figcaption className="mt-6 text-ink-700">
+        <figcaption className="mt-6 text-[var(--fam-ink,var(--color-ink-700))]">
           <span className="font-semibold">{testimonial.author}</span>
           {testimonial.location && (
             <span className="text-ink-500"> · {testimonial.location}</span>

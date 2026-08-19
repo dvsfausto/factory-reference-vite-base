@@ -36,15 +36,15 @@ export function ServiceWhatWeCoverBlock({
   return (
     <section
       className="relative overflow-hidden"
-      style={{ backgroundImage: 'var(--wow-grad-surface)' }}
+      style={{ backgroundColor: 'var(--fam-surface, transparent)', backgroundImage: 'var(--fam-grad-surface, var(--wow-grad-surface))' }}
     >
       <div className="container-x py-16 md:py-24">
         <div className="max-w-3xl">
-          <h2 className="font-display text-3xl leading-tight text-ink-900 sm:text-4xl">
+          <h2 className="font-display text-3xl leading-tight text-[var(--fam-ink,var(--color-ink-900))] sm:text-4xl">
             {whatWeBuy.title}
           </h2>
           {hasBody && (
-            <p className="mt-4 text-lg leading-relaxed text-ink-700">{whatWeBuy.body}</p>
+            <p className="mt-4 text-lg leading-relaxed text-[var(--fam-ink,var(--color-ink-700))]">{whatWeBuy.body}</p>
           )}
         </div>
 
@@ -63,7 +63,7 @@ export function ServiceWhatWeCoverBlock({
                 }}
                 className="flex items-start gap-3.5 rounded-2xl border bg-white/80 p-5 backdrop-blur-md"
                 style={{
-                  borderColor: 'var(--wow-hairline)',
+                  borderColor: 'var(--fam-hairline, var(--wow-hairline))',
                   boxShadow: 'var(--wow-shadow-soft)',
                 }}
               >
@@ -73,7 +73,7 @@ export function ServiceWhatWeCoverBlock({
                 >
                   <Check className="h-4 w-4" />
                 </span>
-                <span className="leading-relaxed text-ink-800">{item}</span>
+                <span className="leading-relaxed text-[var(--fam-ink,var(--color-ink-900))]">{item}</span>
               </motion.li>
             ))}
           </ul>

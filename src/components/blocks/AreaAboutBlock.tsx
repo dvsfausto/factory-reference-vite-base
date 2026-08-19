@@ -31,13 +31,13 @@ export function AreaAboutBlock({
   return (
     <section
       className="relative overflow-hidden"
-      style={{ backgroundImage: 'var(--wow-grad-surface)' }}
+      style={{ backgroundColor: 'var(--fam-surface, transparent)', backgroundImage: 'var(--fam-grad-surface, var(--wow-grad-surface))' }}
     >
       <div className="container-x py-16 md:py-24">
         <div
           className="mx-auto max-w-3xl rounded-3xl border bg-white/85 p-8 backdrop-blur-md md:p-10"
           style={{
-            borderColor: 'var(--wow-hairline)',
+            borderColor: 'var(--fam-hairline, var(--wow-hairline))',
             boxShadow: 'var(--wow-shadow-soft)',
           }}
         >
@@ -52,12 +52,12 @@ export function AreaAboutBlock({
           >
             {name} at a glance
           </span>
-          <h2 className="mt-3 font-display text-3xl leading-tight text-ink-900 sm:text-4xl">
+          <h2 className="mt-3 font-display text-3xl leading-tight text-[var(--fam-ink,var(--color-ink-900))] sm:text-4xl">
             {about.title}
           </h2>
           <div className="mt-5 space-y-4">
             {about.body.map((p, i) => (
-              <p key={i} className="text-lg leading-relaxed text-ink-700">
+              <p key={i} className="text-lg leading-relaxed text-[var(--fam-ink,var(--color-ink-700))]">
                 {p}
               </p>
             ))}

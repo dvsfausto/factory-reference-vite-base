@@ -1,4 +1,5 @@
 import type { BlockType } from './layout'
+import { familyOr } from '~/lib/family-variant'
 
 // Per-item composition for /areas/$slug — the area-DETAIL analogue of
 // HOMEPAGE_LAYOUT / ABOUT_LAYOUT and the Stage-D mirror of SERVICE_DETAIL_LAYOUT. The
@@ -35,5 +36,5 @@ export const AREA_DETAIL_LAYOUT: AreaDetailBlock[] = [
   { type: 'areaDetails' },
   { type: 'relatedAreas' },
   { type: 'faq', variant: 'glass-accordion' },
-  { type: 'cta', variant: 'aurora-glow' },
+  { type: 'cta', variant: familyOr('aurora-glow') },
 ]

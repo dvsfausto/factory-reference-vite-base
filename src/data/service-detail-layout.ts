@@ -1,4 +1,5 @@
 import type { BlockType } from './layout'
+import { familyOr } from '~/lib/family-variant'
 
 // Per-item composition for /services/$slug — the service-DETAIL analogue of
 // HOMEPAGE_LAYOUT / ABOUT_LAYOUT. The service route maps over this array (via the
@@ -31,5 +32,5 @@ export const SERVICE_DETAIL_LAYOUT: ServiceDetailBlock[] = [
   { type: 'serviceDetails' },
   { type: 'relatedServices' },
   { type: 'faq', variant: 'glass-accordion' },
-  { type: 'cta', variant: 'aurora-glow' },
+  { type: 'cta', variant: familyOr('aurora-glow') },
 ]
