@@ -55,19 +55,24 @@ export function ServicePageTemplate({ data }: Props) {
   // icons) adopts the character accent (T.accent*) on character sites — brand-blue reads as
   // broken on cream; brand color stays only on the primary CTA (a separate CtaBlock).
   const T = resolveCharacterTokens();
-  const secPlain = T?.section ?? "bg-white";
-  const secBand = T ? `${T.sectionAlt} border-y ${T.border}` : "bg-brand-50 border-y border-brand-100";
+  // FAMILY TOKENS (Approach A): when there is no character (design-wave family sites), the T-null defaults
+  // now read the GLOBAL --fam-* tokens the scaffolder emits from the family palette, so this service page
+  // matches the homepage family instead of rendering white/brand-blue. The chained fallback
+  // var(--fam-x, var(--color-x)) keeps NON-family sites byte-identical (the token is unset → the original
+  // --color-* value renders). CTAs still use the brand (.btn-primary) — only surfaces/ink adopt the family.
+  const secPlain = T?.section ?? "bg-[var(--fam-surface,#fff)]";
+  const secBand = T ? `${T.sectionAlt} border-y ${T.border}` : "bg-[var(--fam-surface-2,var(--color-brand-50))] border-y border-[var(--fam-hairline,var(--color-brand-100))]";
   const tPad = T?.spacingY ?? "py-16 md:py-24";
-  const tBody = T?.text ?? "text-ink-700"; // body paragraphs
-  const tMuted = T?.muted ?? "text-ink-500"; // captions/labels
-  const tStrong = T?.text ?? "text-ink-900"; // strong/blockquote
+  const tBody = T?.text ?? "text-[var(--fam-ink,var(--color-ink-700))]"; // body paragraphs
+  const tMuted = T?.muted ?? "text-[var(--fam-ink-muted,var(--color-ink-500))]"; // captions/labels
+  const tStrong = T?.text ?? "text-[var(--fam-ink,var(--color-ink-900))]"; // strong/blockquote
   const tCard = T ? `${T.card} ${T.cardRadius} border ${T.border} p-6 ${T.cardElevation}` : "card-stead p-6";
   const Header = T?.SectionHeader ?? SectionHeader;
   // Inline headings (currently class-less <h2>/<h4>): undefined for known verticals →
   // no class emitted (byte-identical); character text color + case when present.
   // No-character sites (T null) must still get a guaranteed heading colour — undefined
   // means the heading inherits, which can render invisibly. Mirror tStrong's ink-900 default.
-  const hCls = T ? `${T.text} ${T.headingCase}`.trim() : "text-ink-900";
+  const hCls = T ? `${T.text} ${T.headingCase}`.trim() : "text-[var(--fam-ink,var(--color-ink-900))]";
 
   return (
     <>
