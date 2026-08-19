@@ -16,7 +16,7 @@ export const Route = createFileRoute('/')({
   // deployer's pre-push domain rewrite points them at the served host.
   head: () =>
     buildMeta({
-      title: `${SITE.name} — ${SITE.hero.headline}`,
+      title: `${SITE.name} | ${SITE.hero.headline}`,
       description: SITE.description || SITE.name,
       path: '/',
       ogImage: imageSrc(SITE.hero.image_url),

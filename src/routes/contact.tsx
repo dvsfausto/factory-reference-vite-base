@@ -10,7 +10,7 @@ export const Route = createFileRoute('/contact')({
     ({ ...buildMeta({
       title: `${tr('contact.title')} ${SITE.name}`,
       description: (SITE as { ctaLabel?: string }).ctaLabel
-        ? `Contact ${SITE.name} — we'll reply within a business day.`
+        ? `Contact ${SITE.name}. We'll reply within a business day.`
         : `Get a free quote from ${SITE.name}.`,
       path: '/contact',
     }), scripts: [{ type: 'application/ld+json', children: JSON.stringify(breadcrumbLd([{ name: tr('breadcrumb.home'), url: '/' }, { name: tr('nav.contact'), url: '/contact' }])) }] }),

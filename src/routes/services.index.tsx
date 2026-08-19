@@ -18,7 +18,7 @@ export const Route = createFileRoute('/services/')({
   },
   head: () =>
     ({ ...buildMeta({
-      title: `${tr('nav.services')} — ${SITE.name}`,
+      title: `${tr('nav.services')} | ${SITE.name}`,
       description: `${tr('route.servicesDesc')} ${SITE.name}.`,
       path: '/services',
     }), scripts: [{ type: 'application/ld+json', children: JSON.stringify(breadcrumbLd([{ name: tr('breadcrumb.home'), url: '/' }, { name: tr('nav.services'), url: '/services' }])) }] }),

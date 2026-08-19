@@ -68,7 +68,7 @@ export async function submitQuoteRequest(input: QuoteInput): Promise<void> {
     name,
     email: input.email?.trim() || undefined,
     phone: input.phone.trim(),
-    summary: input.serviceName ? `Quote request — ${input.serviceName}` : 'Quote request',
+    summary: input.serviceName ? `Quote request: ${input.serviceName}` : 'Quote request',
     details: { projectDetails: input.details.trim(), service: input.serviceName ?? null },
     source: 'website',
     hp: input.hp ?? '',

@@ -8,7 +8,7 @@ import { SectionList } from '~/components/render-section'
 export const Route = createFileRoute('/reviews')({
   head: () =>
     ({ ...buildMeta({
-      title: `${tr('nav.reviews')} — ${SITE.name}`,
+      title: `${tr('nav.reviews')} | ${SITE.name}`,
       description: `${tr('route.reviewsDesc')} ${SITE.name}.`,
       path: '/reviews',
     }), scripts: [{ type: 'application/ld+json', children: JSON.stringify(breadcrumbLd([{ name: tr('breadcrumb.home'), url: '/' }, { name: tr('nav.reviews'), url: '/reviews' }])) }] }),

@@ -17,7 +17,7 @@ export const Route = createFileRoute('/areas/')({
   },
   head: () =>
     ({ ...buildMeta({
-      title: `${tr('section.serviceAreas')} — ${SITE.name}`,
+      title: `${tr('section.serviceAreas')} | ${SITE.name}`,
       description: (LANG==='es' ? `Dónde trabaja ${SITE.name}.` : `Where ${SITE.name} works.`),
       path: '/areas',
     }), scripts: [{ type: 'application/ld+json', children: JSON.stringify(breadcrumbLd([{ name: tr('breadcrumb.home'), url: '/' }, { name: tr('section.serviceAreas'), url: '/areas' }])) }] }),

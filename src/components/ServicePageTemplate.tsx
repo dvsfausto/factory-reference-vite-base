@@ -236,7 +236,7 @@ export function ServicePageTemplate({ data }: Props) {
             <ul className={`mt-10 max-w-2xl mx-auto space-y-2 border-t ${T?.border ?? "border-brand-200"} pt-6`}>
               {data.pricing.notes.map((n, i) => (
                 <li key={i} className={`${tBody} leading-relaxed flex items-start gap-3`}>
-                  <span aria-hidden className={`${T ? T.accent : "text-brand-600"} shrink-0`}>—</span>
+                  <span aria-hidden className={`${T ? T.accent : "text-brand-600"} shrink-0`}>·</span>
                   <span>{n}</span>
                 </li>
               ))}

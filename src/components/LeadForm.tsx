@@ -103,7 +103,7 @@ export function LeadForm({
   if (status === 'ok') {
     return (
       <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-8 text-center">
-        <h3 className="text-2xl font-bold text-slate-900">Thanks — we got it.</h3>
+        <h3 className="text-2xl font-bold text-slate-900">Thanks, we got it.</h3>
         <p className="mt-3 text-base leading-relaxed text-slate-700">
           We&apos;ll be in touch within a business day. If it&apos;s urgent,
           call us at{' '}
