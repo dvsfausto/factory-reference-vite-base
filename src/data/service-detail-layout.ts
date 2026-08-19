@@ -27,7 +27,7 @@ export interface ServiceDetailBlock {
 }
 
 export const SERVICE_DETAIL_LAYOUT: ServiceDetailBlock[] = [
-  { type: 'hero', variant: 'aurora' },
+  { type: 'hero', variant: 'banner' },
   { type: 'serviceWhatWeCover' },
   { type: 'serviceDetails' },
   { type: 'relatedServices' },

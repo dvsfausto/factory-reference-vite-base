@@ -33,6 +33,7 @@ import { HeroVideoBlock } from '~/components/blocks/HeroVideoBlock'
 import { HeroAuroraBlock } from '~/components/blocks/HeroAuroraBlock'
 import { HeroSpotlightBlock } from '~/components/blocks/HeroSpotlightBlock'
 import { HeroEditorialBlock } from '~/components/blocks/HeroEditorialBlock'
+import { HeroServiceBannerBlock } from '~/components/blocks/HeroServiceBannerBlock'
 // WOW Stage 2 — additional section variants (brand-reactive + motion, consume --wow-*).
 // Additive map keys only; unknown variant → the section's default component.
 import { ServicesLuxeBlock } from '~/components/blocks/ServicesLuxeBlock'
@@ -203,6 +204,8 @@ const HERO_VARIANTS: Record<string, typeof HeroBlock> = {
   aurora: HeroAuroraBlock,
   spotlight: HeroSpotlightBlock,
   editorial: HeroEditorialBlock,
+  // Compact, family-aware inner-page banner (Phase 2) — the DEFAULT for detail heroes now.
+  banner: HeroServiceBannerBlock,
 }
 
 // SERVICE-DETAIL hero variants (Arc 3 · Stage C). The WOW heroes (aurora/spotlight/
@@ -218,6 +221,8 @@ const SERVICE_HERO_VARIANTS: Record<
   aurora: HeroAuroraBlock,
   spotlight: HeroSpotlightBlock,
   editorial: HeroEditorialBlock,
+  // Compact, family-aware inner-page banner (Phase 2) — the DEFAULT for detail heroes now.
+  banner: HeroServiceBannerBlock,
 }
 
 // Per-type variant maps for the other character-carrying blocks (same pattern as

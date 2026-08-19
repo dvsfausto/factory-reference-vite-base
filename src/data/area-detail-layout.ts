@@ -31,7 +31,7 @@ export interface AreaDetailBlock {
 }
 
 export const AREA_DETAIL_LAYOUT: AreaDetailBlock[] = [
-  { type: 'hero', variant: 'aurora' },
+  { type: 'hero', variant: 'banner' },
   { type: 'areaAbout' },
   { type: 'areaDetails' },
   { type: 'relatedAreas' },

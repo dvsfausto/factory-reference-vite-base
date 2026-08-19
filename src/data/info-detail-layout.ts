@@ -22,7 +22,7 @@ export interface InfoDetailBlock {
 }
 
 export const INFO_DETAIL_LAYOUT: InfoDetailBlock[] = [
-  { type: 'hero', variant: 'editorial' },
+  { type: 'hero', variant: 'banner' },
   { type: 'infoArticle' },
   { type: 'relatedInfo' },
   { type: 'faq', variant: 'glass-accordion' },
