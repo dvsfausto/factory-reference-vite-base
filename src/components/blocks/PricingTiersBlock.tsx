@@ -3,7 +3,7 @@ import { Check } from 'lucide-react'
 import type { PricingPlan } from './pricing-variants'
 import { SITE } from '~/data/site'
 
-// Pricing LAYOUT: 'tiers' — the classic connected column of plans, the highlighted
+// Pricing LAYOUT: 'tiers', the classic connected column of plans, the highlighted
 // plan scaled up with a "Most popular" badge. Character-agnostic. The default.
 //
 // OMIT-WHEN-ABSENT: plans read from optional SITE.plans via inline cast (the

@@ -1,7 +1,7 @@
 import { PROJECTS } from '~/data/projects'
 import { tr } from '~/lib/i18n'
 
-// Gallery LAYOUT: 'grid' — an even, uniform grid of square project cards (the
+// Gallery LAYOUT: 'grid', an even, uniform grid of square project cards (the
 // painter "work, illustrated" pattern, DNA-tokened). Character-agnostic. PIPELINE-
 // SEEDED: images from the PROJECTS data field; renders populated from the seed,
 // customer photos replace later.

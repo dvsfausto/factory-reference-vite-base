@@ -28,19 +28,11 @@ export function SectionHeaderFriendly({
     align === "center" ? "items-center text-center mx-auto max-w-2xl" : "max-w-2xl";
   const fullHeading = scriptAccent ? `${heading} ${scriptAccent}` : heading;
 
+  // EYEBROW CLEARED (taste-skill: the hero's kicker is the family's one eyebrow; the heading carries the rest).
+  void label;
   return (
     <div className={`flex flex-col ${alignClass} mb-12`}>
-      {label && (
-        <span
-          className={`inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.14em] text-emerald-700 ${
-            align === "center" ? "justify-center" : ""
-          }`}
-        >
-          <span className="h-2.5 w-2.5 rounded-full bg-emerald-600" />
-          {label}
-        </span>
-      )}
-      <h2 className="mt-4 font-display text-4xl font-bold leading-tight tracking-tight text-[#3D3530] sm:text-5xl">
+      <h2 className="font-display text-4xl font-bold leading-tight tracking-tight text-[#3D3530] sm:text-5xl">
         {fullHeading}
       </h2>
       {body && (

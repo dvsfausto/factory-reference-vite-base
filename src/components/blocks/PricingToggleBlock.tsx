@@ -4,14 +4,14 @@ import { Check } from 'lucide-react'
 import type { PricingPlan } from './pricing-variants'
 import { SITE } from '~/data/site'
 
-// Pricing LAYOUT: 'toggle' — tier cards with an interactive monthly / annual
+// Pricing LAYOUT: 'toggle', tier cards with an interactive monthly / annual
 // switch. Character-agnostic. The toggle is the iconic SaaS pricing control; it
 // renders monthly by default (SSR-safe) and swaps prices on the client.
 //
 // OMIT-WHEN-ABSENT: plans from optional SITE.plans via cast; no plans -> null,
 // never fabricates pricing. The annual price is the per-plan optional priceAnnual
 // (cast); when a plan has no annual price it GRACEFULLY shows its monthly price
-// under the annual tab (billed annually at the same rate — never an invented
+// under the annual tab (billed annually at the same rate, never an invented
 // discount). The annual control hides entirely if no plan offers an annual price.
 //
 // TOKEN DISCIPLINE: primary CTA -> bg-primary / text-primary-foreground. Accent ->

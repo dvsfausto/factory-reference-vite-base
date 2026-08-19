@@ -2,7 +2,7 @@ import { motion, useReducedMotion } from 'framer-motion'
 import { tr } from '~/lib/i18n'
 import { PROJECTS } from '~/data/projects'
 
-// Gallery VARIANT: 'cinematic-masonry' — a column-flow wall of rounded, brand-
+// Gallery VARIANT: 'cinematic-masonry', a column-flow wall of rounded, brand-
 // hairlined frames that reveal on scroll; each tile zooms on hover under a brand-
 // gradient overlay carrying the title/caption. The cinematic, brand-reactive
 // counterpart to the flat 'masonry' layout.
@@ -63,7 +63,7 @@ export function GalleryCinematicMasonryBlock({
                   className="w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.06]"
                 />
               </div>
-              {/* Brand-gradient caption overlay — appears on hover. */}
+              {/* Brand-gradient caption overlay, appears on hover. */}
               <figcaption
                 className="pointer-events-none absolute inset-x-0 bottom-0 flex flex-col gap-0.5 p-4 text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100"
                 style={{ backgroundImage: 'var(--wow-grad-brand)' }}

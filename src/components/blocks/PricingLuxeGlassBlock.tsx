@@ -4,7 +4,7 @@ import { ArrowRight, Check, Sparkles } from 'lucide-react'
 import type { PricingPlan } from './pricing-variants'
 import { SITE } from '~/data/site'
 
-// Pricing VARIANT: 'luxe-glass' — a WOW re-composition of the tiers section. Plans
+// Pricing VARIANT: 'luxe-glass', a WOW re-composition of the tiers section. Plans
 // sit as premium glass cards on a soft --wow-grad-surface; the real highlighted
 // plan is filled with the brand gradient and lit by --wow-shadow-glow, floated a
 // touch above the row. Cards lift + glow on hover, staggered whileInView.
@@ -19,7 +19,7 @@ import { SITE } from '~/data/site'
 //
 // HONESTY (hard): renders ONLY real data. Two cases, detected from the data:
 //   1. Real plans (SITE.plans) → premium glass tiers with the real featured plan.
-//   2. NO plans but a prose `body` (e.g. "prices vary — reach out") → an elegant
+//   2. NO plans but a prose `body` (e.g. "prices vary, reach out") → an elegant
 //      brand-framed "how pricing works" panel with a CTA and ZERO invented numbers.
 //   3. No plans AND no prose → null (never fabricates pricing).
 export function PricingLuxeGlassBlock({
@@ -119,7 +119,7 @@ export function PricingLuxeGlassBlock({
             })}
           </div>
         ) : (
-          // Prose-only case — a brand-framed "how pricing works" panel, no numbers.
+          // Prose-only case, a brand-framed "how pricing works" panel, no numbers.
           <motion.div
             initial={reduce ? false : { opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -140,7 +140,7 @@ export function PricingLuxeGlassBlock({
               <Sparkles className="h-6 w-6" />
             </span>
             <p className="mx-auto mt-6 max-w-lg font-display text-xl leading-relaxed text-ink-800">
-              Every project is a little different — reach out and we'll put together
+              Every project is a little different, reach out and we'll put together
               a fair, tailored quote for exactly what you need.
             </p>
             <Link

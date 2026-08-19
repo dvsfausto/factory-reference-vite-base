@@ -2,7 +2,7 @@ import type { Partner } from './partners-variants'
 import { tr } from '~/lib/i18n'
 import { SITE } from '~/data/site'
 
-// Partners LAYOUT: 'grid' — partner marks set in a framed grid of bordered cells
+// Partners LAYOUT: 'grid', partner marks set in a framed grid of bordered cells
 // (shared hairlines). Character-agnostic, structured. OMIT-WHEN-ABSENT:
 // SITE.partners via cast; none -> null. Missing logo -> monochrome wordmark.
 //

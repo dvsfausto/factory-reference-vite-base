@@ -3,7 +3,7 @@ import { Check, Package } from 'lucide-react'
 import type { ServicePackage } from './packages-variants'
 import { SITE } from '~/data/site'
 
-// Packages LAYOUT: 'bundle-cards' — a few large bundle cards, each leading with
+// Packages LAYOUT: 'bundle-cards', a few large bundle cards, each leading with
 // what it INCLUDES and a popular badge. Character-agnostic. OMIT-WHEN-ABSENT:
 // SITE.packages via cast; none -> null, never fabricates a bundle.
 //

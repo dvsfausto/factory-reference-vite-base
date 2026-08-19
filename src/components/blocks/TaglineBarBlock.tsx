@@ -1,7 +1,7 @@
 import { SITE } from '~/data/site'
 
 // Markup extracted VERBATIM from routes/index.tsx (the TAGLINE BAR section).
-// Self-omits when SITE.tagline is empty — exactly today's `{SITE.tagline && …}`.
+// Self-omits when SITE.tagline is empty, exactly today's `{SITE.tagline && …}`.
 export function TaglineBarBlock() {
   if (!SITE.tagline) return null
   return (

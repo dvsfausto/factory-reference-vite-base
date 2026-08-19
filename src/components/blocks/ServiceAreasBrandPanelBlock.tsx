@@ -4,7 +4,7 @@ import { motion, useReducedMotion } from 'framer-motion'
 import { ArrowRight, MapPin } from 'lucide-react'
 import { AREAS } from '~/data/areas'
 
-// ServiceAreas VARIANT: 'brand-panel' — a bold, confident brand-gradient PANEL.
+// ServiceAreas VARIANT: 'brand-panel', a bold, confident brand-gradient PANEL.
 // The section copy sits on a left rail; the real areas are laid out in tidy
 // columns on a deep brand-gradient field, each row separated by a soft hairline
 // and lit by a subtle inner glow. Rows sweep in as the panel scrolls into view.
@@ -17,7 +17,7 @@ import { AREAS } from '~/data/areas'
 // BRAND identity → the panel is --wow-grad-brand with white ink; the CTA is a
 // glass button on the panel. No literal hexes for brand roles.
 //
-// HONESTY: renders ONLY the real AREAS (name + slug link) — no invented counts.
+// HONESTY: renders ONLY the real AREAS (name + slug link), no invented counts.
 // Self-omits (returns null) when there are no areas, like the default. Content is
 // props with the SITE-mirrored fallbacks.
 export function ServiceAreasBrandPanelBlock({

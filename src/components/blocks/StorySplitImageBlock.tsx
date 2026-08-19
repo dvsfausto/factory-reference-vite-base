@@ -3,7 +3,7 @@ import { tr } from '~/lib/i18n'
 import { HERO_ALT } from '~/data/images'
 import { imageSrc } from '~/lib/asset-url'
 
-// Story LAYOUT: 'split-image' — the story prose beside a framed photo.
+// Story LAYOUT: 'split-image', the story prose beside a framed photo.
 // Character-agnostic. Uses SITE.about for the narrative and the existing
 // SITE.hero.image_url for the image (no new field), so it renders on any built
 // site. An optional SITE.story.image overrides the photo via cast.

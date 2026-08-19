@@ -3,7 +3,7 @@ import { Check, Minus } from 'lucide-react'
 import type { PricingPlan } from './pricing-variants'
 import { SITE } from '~/data/site'
 
-// Pricing LAYOUT: 'comparison-table' — a feature matrix: every feature across all
+// Pricing LAYOUT: 'comparison-table', a feature matrix: every feature across all
 // plans becomes a row, each plan a column, with a check or dash per cell. The
 // right call when plans differ by capability and buyers compare line by line.
 // Character-agnostic.

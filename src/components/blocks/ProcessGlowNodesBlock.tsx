@@ -4,7 +4,7 @@ import type { ProcessStep } from './process-variants'
 import { getProcessIcon } from './process-icons'
 import { SITE } from '~/data/site'
 
-// Process VARIANT: 'glow-nodes' — a WOW vertical timeline. A brand-gradient
+// Process VARIANT: 'glow-nodes', a WOW vertical timeline. A brand-gradient
 // connector line runs down the left; each real step hangs off a glowing numbered
 // node (or its icon), the rows staggering in as they scroll into view.
 //

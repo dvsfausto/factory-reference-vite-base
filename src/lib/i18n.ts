@@ -1,15 +1,15 @@
 import { SITE_LANGUAGE } from '~/data/site'
 
 // ─────────────────────────────────────────────────────────────────────────────
-// UI STRINGS DICTIONARY — the fixed furniture that is identical on every site (nav, footer,
+// UI STRINGS DICTIONARY, the fixed furniture that is identical on every site (nav, footer,
 // breadcrumbs, form labels/placeholders/states, section headings, trust copy, error + empty states,
 // widget UI). Keyed on SITE_LANGUAGE (emitted by the scaffolder). `en` values are the EXACT current
-// literals, so an English build is BYTE-IDENTICAL — nothing changes for existing sites. `es` is natural
+// literals, so an English build is BYTE-IDENTICAL, nothing changes for existing sites. `es` is natural
 // MIAMI SPANISH (e.g. "Solicitar cotización", not a word-for-word rendering), not Castilian.
 //
 // Import as `tr` (some components already bind a local `t`): import { tr } from '~/lib/i18n'.
 // Per-business CONTENT (hero/about/services/reviews text) comes from the generated copy / design_dna,
-// NOT here — this is only the furniture. Missing key or language → falls back to English, then the key.
+// NOT here, this is only the furniture. Missing key or language → falls back to English, then the key.
 // ─────────────────────────────────────────────────────────────────────────────
 
 type Lang = 'en' | 'es'
@@ -89,11 +89,11 @@ const EN = {
   'form.replyBusinessDay': 'Reach out and a real person replies within one business day.',
   'form.requestedCallback': 'Requested a callback.',
   'form.successTitle': "We'll be in touch shortly.",
-  'form.successBody': 'Thanks for reaching out — a real person reads every request and replies within one business day.',
+  'form.successBody': 'Thanks for reaching out, a real person reads every request and replies within one business day.',
   'form.quoteSuccessTitle': 'Your quote request is in.',
   'form.phHelp': 'A few sentences about what you need.',
-  'form.phMinimal': 'Optional — a sentence is plenty.',
-  'form.phQuote': 'Scope, sizes/measurements, timing — anything that helps us quote accurately.',
+  'form.phMinimal': 'Optional, a sentence is plenty.',
+  'form.phQuote': 'Scope, sizes/measurements, timing, anything that helps us quote accurately.',
   'form.email': 'Email',
   'form.phone': 'Phone',
   'form.name': 'Name',
@@ -104,15 +104,15 @@ const EN = {
   'form.quoteBody': 'Tell us about the project and we respond within one business day.',
   'form.bookVisit': 'Book a visit',
   'form.requestAppointment': 'Request an appointment',
-  'form.bookingBody': 'Pick a day and time that suit you — we confirm within one business day.',
+  'form.bookingBody': 'Pick a day and time that suit you, we confirm within one business day.',
   'form.preferredDate': 'Preferred date',
   'form.preferredTime': 'Preferred time',
   'form.visitNotes': 'Anything we should know?',
   'form.phVisitNotes': 'Reason for your visit, or any notes.',
-  'form.minimalBody': 'Leave your details and we’ll call you back — usually the same day.',
+  'form.minimalBody': 'Leave your details and we’ll call you back, usually the same day.',
   'form.whatDoYouNeed': 'What do you need? (optional)',
   'form.phCallbackTime': 'e.g. mornings, after 4pm',
-  'form.quoteSuccessBody': "Thanks — we'll review the details and send your custom quote within one business day.",
+  'form.quoteSuccessBody': "Thanks, we'll review the details and send your custom quote within one business day.",
   'form.getFreeQuote': 'Get a free quote',
   'form.leadReplyNote': "We'll reply within a business day.",
   // booking wizard
@@ -127,11 +127,11 @@ const EN = {
   'booking.loadingAvailability': 'Loading availability…',
   'booking.confirmed': "You're booked in.",
   'booking.back': 'Back',
-  'booking.fallback': "Online booking isn't set up yet — we'd love to book you by phone.",
+  'booking.fallback': "Online booking isn't set up yet, we'd love to book you by phone.",
   'booking.couldNotComplete': 'We could not complete your booking.',
   'booking.couldNotLoad': "We couldn't load online booking just now.",
   'booking.retry': 'Something went wrong. Please try again.',
-  'booking.bookBody': 'Pick a service and a time that works for you — confirmed instantly, no phone tag.',
+  'booking.bookBody': 'Pick a service and a time that works for you, confirmed instantly, no phone tag.',
   'booking.confirmBooking': 'Confirm booking',
   'booking.noOpenTimes': 'No open times left that day. Pick another day, or call us',
   'booking.at': 'at',
@@ -233,7 +233,7 @@ const EN = {
   'cta.reachOutToday': 'Reach out today and let us take it from here.',
 } as const
 
-// Miami Spanish — natural, not literal. Same keys as EN.
+// Miami Spanish, natural, not literal. Same keys as EN.
 const ES: Record<keyof typeof EN, string> = {
   'nav.services': 'Servicios',
   'nav.areas': 'Zonas',

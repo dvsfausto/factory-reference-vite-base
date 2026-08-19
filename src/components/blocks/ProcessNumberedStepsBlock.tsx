@@ -3,7 +3,7 @@ import { tr } from '~/lib/i18n'
 import { getProcessIcon } from './process-icons'
 import { SITE } from '~/data/site'
 
-// Process LAYOUT: 'numbered-steps' — a horizontal row of big-numbered steps.
+// Process LAYOUT: 'numbered-steps', a horizontal row of big-numbered steps.
 // Character-agnostic. OMIT-WHEN-ABSENT: steps read from optional SITE.steps via
 // cast; no steps -> null, never fabricates a process. Each step shows its number
 // (or its optional icon when provided).

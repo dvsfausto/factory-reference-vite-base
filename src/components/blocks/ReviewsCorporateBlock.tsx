@@ -5,7 +5,7 @@ import { Star } from 'lucide-react'
 import { SectionHeaderCorporate } from '~/components/SectionHeaderCorporate'
 import { reviews } from '~/data/reviews'
 
-// Reviews VARIANT: 'corporate' — formal client testimonials. SectionHeaderCorporate
+// Reviews VARIANT: 'corporate', formal client testimonials. SectionHeaderCorporate
 // (no diamond, no script) + boxed bordered quote cards on a cool blue-gray section.
 // Prop signature matches ReviewsBlock; returns Element | null.
 //

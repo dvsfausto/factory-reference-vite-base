@@ -1,6 +1,6 @@
 import { Scale, ShieldCheck, Award } from 'lucide-react'
 
-// TrustBar VARIANT: 'corporate' — a structured "why us" value strip. Bordered
+// TrustBar VARIANT: 'corporate', a structured "why us" value strip. Bordered
 // cells, navy line-icons, heavy grotesque headings, dense. No round icon-circles,
 // no brand color. Foregrounds credibility, the way professional verticals lead.
 //
@@ -12,7 +12,7 @@ export function TrustBarCorporateBlock({
   items = [
     {
       title: 'Free estimates',
-      description: 'Clear quotes up front — no surprises after the work.',
+      description: 'Clear quotes up front, no surprises after the work.',
     },
     {
       title: 'On schedule',

@@ -1,7 +1,7 @@
 import { SITE } from '~/data/site'
 import { tr } from '~/lib/i18n'
 
-// FAQ-section LAYOUT: 'two-column' — every question and answer shown at once in a
+// FAQ-section LAYOUT: 'two-column', every question and answer shown at once in a
 // two-column grid (no accordion). Character-agnostic. The scannable, all-open
 // option for shorter answer sets. Reuses SITE.homeFaqs; self-omits when none.
 //

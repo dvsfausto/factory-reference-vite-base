@@ -5,7 +5,7 @@ import { SITE } from '~/data/site'
 import { SERVICES } from '~/data/services-view'
 import { serviceImageUrl } from '~/data/images'
 
-// ServicesPreview LAYOUT: 'carousel' — a horizontal, scroll-snap slider of service
+// ServicesPreview LAYOUT: 'carousel', a horizontal, scroll-snap slider of service
 // cards. The right call when there are many services: they live in a single
 // swipeable track instead of an ever-taller grid. Character-agnostic, CSS-only
 // (scroll-snap, no JS), so it is SSR-safe and degrades to a plain scroll row.

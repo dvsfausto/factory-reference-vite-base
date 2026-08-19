@@ -3,9 +3,9 @@ import { BadgeCheck } from 'lucide-react'
 import type { Membership } from './membership-variants'
 import { SITE } from '~/data/site'
 
-// Membership LAYOUT: 'perks-grid' — benefit-forward: the membership's perks laid
+// Membership LAYOUT: 'perks-grid', benefit-forward: the membership's perks laid
 // out as a grid of badge tiles, with the price/CTA in the header. Character-
-// agnostic. Distinct from the tier layouts — it sells the membership on its perks,
+// agnostic. Distinct from the tier layouts, it sells the membership on its perks,
 // not a column of plans. OMIT-WHEN-ABSENT: SITE.memberships via cast; none -> null.
 //
 // TOKEN DISCIPLINE: primary CTA -> bg-primary. Accent -> emerald-* (DNA)

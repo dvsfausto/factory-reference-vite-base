@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import { ArrowRight, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 
-// CTA VARIANT: 'glass-panel' — a boxed, frosted-glass CTA card that floats over
+// CTA VARIANT: 'glass-panel', a boxed, frosted-glass CTA card that floats over
 // a soft radial brand-tinted section. A brand hairline frames the card, a deep
 // lift shadow raises it off the surface, and a gradient accent rule tops the copy.
 // The contained, boutique counterpart to the full-bleed 'aurora-glow' band.
@@ -19,7 +19,7 @@ import { SITE } from '~/data/site'
 // (var(--primary)); the script accent uses text-brand-600 (brand ramp).
 //
 // HONESTY: renders ONLY the real title/subtitle + the real phone (SITE.phone/
-// phoneDisplay) — nothing invented, no urgency stats. Props mirror the default
+// phoneDisplay), nothing invented, no urgency stats. Props mirror the default
 // (title/subtitle literals) so a no-prop render carries today's real copy.
 function splitScriptAccent(heading: string): { lead: string; accent: string } {
   const words = heading.trim().split(/\s+/)

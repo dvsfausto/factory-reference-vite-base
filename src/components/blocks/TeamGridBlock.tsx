@@ -3,13 +3,13 @@ import { tr } from '~/lib/i18n'
 import { SITE } from '~/data/site'
 import { resolveCharacterTokens } from '~/lib/character-tokens'
 
-// Team LAYOUT: 'grid' — an even grid of team member cards (photo, name, role,
+// Team LAYOUT: 'grid', an even grid of team member cards (photo, name, role,
 // optional bio). Character-agnostic, the default team composition.
 //
 // DATA-DRIVEN + OPTIONAL: members are read from an optional SITE.team via inline
 // cast (the SITE.surface / hero video_url / homeServices precedent). The data and
 // type files stay untouched. When SITE.team is absent or empty the section OMITS
-// ITSELF (returns null) — it NEVER fabricates people. Per-member photo is optional
+// ITSELF (returns null), it NEVER fabricates people. Per-member photo is optional
 // too: a missing photo falls back to a tasteful initials avatar, not a broken img.
 // Real team data later: the scaffolder emits SITE.team from intake, exactly as it
 // emits homeServices / about.

@@ -4,7 +4,7 @@ import type { BlockType } from './layout'
 // The reviews route maps over this array via the shared renderer instead of
 // hardcoding its sections. Adds an 'intro' block (the shared WOW page-intro) and a
 // page-specific 'reviewsIndex' block that renders the FULL reviews list (ALL reviews,
-// count 50) — NOT the homepage's 6-item preview — so no content is dropped. ADDITIVE:
+// count 50) — NOT the homepage's 6-item preview, so no content is dropped. ADDITIVE:
 // the scaffolder never emits or overwrites it.
 export type ReviewsBlockType = BlockType | 'intro' | 'reviewsIndex'
 

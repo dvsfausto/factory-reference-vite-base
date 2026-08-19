@@ -2,7 +2,7 @@ import type { Partner } from './partners-variants'
 import { tr } from '~/lib/i18n'
 import { SITE } from '~/data/site'
 
-// Partners LAYOUT: 'with-text' — a two-column split: a heading + blurb beside the
+// Partners LAYOUT: 'with-text', a two-column split: a heading + blurb beside the
 // partner marks. Character-agnostic. Frames WHY the partnerships matter, not just
 // the logos. OMIT-WHEN-ABSENT: SITE.partners via cast; none -> null. Missing logo
 // -> monochrome wordmark.

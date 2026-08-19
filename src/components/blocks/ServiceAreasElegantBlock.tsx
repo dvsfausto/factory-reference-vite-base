@@ -6,8 +6,8 @@ import { SectionHeaderElegant } from '~/components/SectionHeaderElegant'
 import { elegantSurface } from '~/lib/elegant-surface'
 import { AREAS } from '~/data/areas'
 
-// ServiceAreas VARIANT: 'elegant' — refined area list. SectionHeaderElegant (serif,
-// no script) + emerald-ruled area chips. Surface from elegantSurface() — this
+// ServiceAreas VARIANT: 'elegant', refined area list. SectionHeaderElegant (serif,
+// no script) + emerald-ruled area chips. Surface from elegantSurface(), this
 // section sits on the ALT tone (leather in dark, warm tint in light). Prop
 // signature matches ServiceAreasBlock; returns Element | null.
 //

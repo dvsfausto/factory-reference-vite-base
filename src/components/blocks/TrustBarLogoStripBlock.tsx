@@ -1,6 +1,6 @@
 import { ShieldCheck, Clock, Heart, Award, BadgeCheck, Star, type LucideIcon } from 'lucide-react'
 
-// TrustBar LAYOUT: 'logo-strip' — a compact, monochrome single-row strip of trust
+// TrustBar LAYOUT: 'logo-strip', a compact, monochrome single-row strip of trust
 // marks, the "trusted / certified by" bar pattern. Character-agnostic. Quiet and
 // horizontal by design: it reassures without shouting, sitting between louder
 // sections.
@@ -8,7 +8,7 @@ import { ShieldCheck, Clock, Heart, Award, BadgeCheck, Star, type LucideIcon } f
 // Logos are DATA and OPTIONAL: each item may carry a `logo` (image URL) read via
 // inline cast (the SITE.surface / hero video_url precedent). The data/types files
 // stay untouched; when an item has no logo the mark GRACEFULLY falls back to a
-// fixed line-icon plus the title as a monochrome badge — a clean text strip rather
+// fixed line-icon plus the title as a monochrome badge, a clean text strip rather
 // than a broken image.
 //
 // TOKEN DISCIPLINE: accent -> emerald-* (DNA) restricted to 50/100/600/700:

@@ -5,7 +5,7 @@ import { SITE } from '~/data/site'
 import { HERO_ALT } from '~/data/images'
 import { imageSrc } from '~/lib/asset-url'
 
-// Hero LAYOUT: 'split-reversed' — the modern split, mirrored: the framed image
+// Hero LAYOUT: 'split-reversed', the modern split, mirrored: the framed image
 // sits on the LEFT and the headline/CTA column on the RIGHT (the default split
 // is image-right). Same light-cool modern character + tokens as HeroModernBlock;
 // the only change is the column order, for real variety without a new style.

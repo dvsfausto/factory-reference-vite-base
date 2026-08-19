@@ -4,7 +4,7 @@ import { motion, useReducedMotion } from 'framer-motion'
 import { ChevronDown, HelpCircle } from 'lucide-react'
 import type { FAQ } from '~/lib/types/page-types'
 
-// FAQ VARIANT: 'split-panel' — an editorial two-column layout. A sticky
+// FAQ VARIANT: 'split-panel', an editorial two-column layout. A sticky
 // brand-gradient side panel carries the heading (and a soft glow) beside the Q&A
 // list, which sits on a soft brand-tinted surface. Rows reveal in a stagger as
 // they scroll into view; each toggles open with a chevron rotate.

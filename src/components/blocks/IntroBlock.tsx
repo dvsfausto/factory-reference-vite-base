@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 
-// Shared WOW page-intro (Arc 3 · Stage B) — the brand-reactive replacement for the
+// Shared WOW page-intro (Arc 3 · Stage B), the brand-reactive replacement for the
 // page-local AboutIntro/PricingIntro AND the header for the converted inner pages
 // (reviews, contact, services index, areas index). Rendered via the shared
 // renderSection 'intro' case (see render-section.tsx), which reads it off the
@@ -14,7 +14,7 @@ import { motion } from 'framer-motion'
 //
 // HONESTY: renders ONLY the content passed in; returns null when `heading` is
 // empty (no fabricated copy). Reveal is applied by the SectionList wrapper, so this
-// component does NOT hide itself on scroll — the framer-motion whileInView below is
+// component does NOT hide itself on scroll, the framer-motion whileInView below is
 // intra-section entrance polish only (SSR-safe, honours prefers-reduced-motion via
 // framer-motion + app.css).
 export function IntroBlock({

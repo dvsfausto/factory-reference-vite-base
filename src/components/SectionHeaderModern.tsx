@@ -27,19 +27,12 @@ export function SectionHeaderModern({
     align === "center" ? "items-center text-center mx-auto max-w-2xl" : "max-w-2xl";
   const fullHeading = scriptAccent ? `${heading} ${scriptAccent}` : heading;
 
+  // EYEBROW CLEARED (taste-skill: max ~1 eyebrow per 3 sections — the hero's kicker is the family's one).
+  // The heading alone carries the section; the label is intentionally not rendered.
+  void label;
   return (
     <div className={`flex flex-col ${alignClass} mb-14`}>
-      {label && (
-        <span
-          className={`inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600 ${
-            align === "center" ? "justify-center" : ""
-          }`}
-        >
-          <span className="h-px w-6 bg-emerald-600" />
-          {label}
-        </span>
-      )}
-      <h2 className="mt-5 font-display text-4xl font-semibold leading-[1.1] tracking-tight text-[#0F172A] sm:text-5xl">
+      <h2 className="font-display text-4xl font-semibold leading-[1.1] tracking-tight text-[#0F172A] sm:text-5xl">
         {fullHeading}
       </h2>
       {body && (

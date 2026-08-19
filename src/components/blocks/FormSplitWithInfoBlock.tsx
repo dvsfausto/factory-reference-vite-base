@@ -5,7 +5,7 @@ import { SITE } from '~/data/site'
 import { submitLead, type LeadStatus } from './forms-submit'
 import { Field, Textarea, SubmitButton, SuccessCard } from './form-ui'
 
-// Forms LAYOUT: 'split-with-info' — the contact form beside a panel of real
+// Forms LAYOUT: 'split-with-info', the contact form beside a panel of real
 // business contact details (phone, email, address, hours), which builds trust at
 // the conversion point. Character-agnostic. Posts the confirmed handle-website-
 // lead envelope (source_page 'contact').

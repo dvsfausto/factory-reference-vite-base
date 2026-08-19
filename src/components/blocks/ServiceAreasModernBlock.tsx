@@ -5,7 +5,7 @@ import { MapPin } from 'lucide-react'
 import { SectionHeaderModern } from '~/components/SectionHeaderModern'
 import { AREAS } from '~/data/areas'
 
-// ServiceAreas VARIANT: 'modern' — clean area list. SectionHeaderModern (no script)
+// ServiceAreas VARIANT: 'modern', clean area list. SectionHeaderModern (no script)
 // + sharp minimal area chips. Prop signature matches ServiceAreasBlock; returns
 // Element | null.
 //

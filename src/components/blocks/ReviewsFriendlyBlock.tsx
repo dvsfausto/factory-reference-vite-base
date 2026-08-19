@@ -5,7 +5,7 @@ import { Star } from 'lucide-react'
 import { SectionHeaderFriendly } from '~/components/SectionHeaderFriendly'
 import { reviews } from '~/data/reviews'
 
-// Reviews VARIANT: 'friendly' — warm, bright testimonials. SectionHeaderFriendly
+// Reviews VARIANT: 'friendly', warm, bright testimonials. SectionHeaderFriendly
 // (no ◆ diamond, no script) + white rounded quote cards on a peach-cream section.
 // Prop signature matches ReviewsBlock; returns Element | null.
 //

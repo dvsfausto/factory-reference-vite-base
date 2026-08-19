@@ -1,7 +1,7 @@
 import { PROJECTS } from '~/data/projects'
 import { tr } from '~/lib/i18n'
 
-// Gallery LAYOUT: 'carousel' — a horizontal scroll-snap filmstrip of project
+// Gallery LAYOUT: 'carousel', a horizontal scroll-snap filmstrip of project
 // photos. Character-agnostic, CSS-only (SSR-safe). PIPELINE-SEEDED: images from
 // the PROJECTS data field; renders populated from the seed.
 //

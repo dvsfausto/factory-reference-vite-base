@@ -6,14 +6,14 @@ import { HERO_ALT } from '~/data/images'
 import { getAggregateRating } from '~/data/reviews'
 import { imageSrc } from '~/lib/asset-url'
 
-// Hero VARIANT: 'aurora' — a cinematic, full-bleed WOW composition. The business
+// Hero VARIANT: 'aurora', a cinematic, full-bleed WOW composition. The business
 // photo fills the frame; a slow brand-colored aurora drifts over it (screen
 // blend); the content sits in a frosted-glass panel lit by a brand glow. Built
 // for the Arc-1 WOW layer: it CONSUMES the --wow-* tokens (styles/app.css), which
-// are themselves DERIVED from the --color-brand-* ramp via color-mix — so a
+// are themselves DERIVED from the --color-brand-* ramp via color-mix, so a
 // customer's brand color flows through the gradient + glow with NO per-build edit.
 //
-// TOKEN DISCIPLINE (mirrors HeroBoldFullbleedBlock — the catalog reference):
+// TOKEN DISCIPLINE (mirrors HeroBoldFullbleedBlock, the catalog reference):
 //   · BRAND identity → the PRIMARY CTA uses bg-primary / text-primary-foreground
 //     (→ var(--primary), owned by the brand emit). Never literal brand-* hex.
 //   · BRAND richness → --wow-grad-brand / --wow-shadow-glow / --wow-hairline
@@ -26,7 +26,7 @@ import { imageSrc } from '~/lib/asset-url'
 // are real reviews (getAggregateRating() → null otherwise); trust items are the
 // real, passed-in list. Absent data omits gracefully.
 //
-// CONTENT is PROPS with SITE fallback (F.inner) — the homepage renders it with no
+// CONTENT is PROPS with SITE fallback (F.inner), the homepage renders it with no
 // content props (defaults to SITE.hero.*), inner pages can pass their own. The
 // `decorativeAsset` prop is accepted for parity with the default hero, unused here.
 function splitScriptAccent(heading: string): { lead: string; accent: string } {
@@ -65,9 +65,9 @@ export function HeroAuroraBlock({
         alt={HERO_ALT}
         className="absolute inset-0 -z-30 h-full w-full object-cover"
       />
-      {/* Legibility scrim — dark from the left, fading right. */}
+      {/* Legibility scrim, dark from the left, fading right. */}
       <div className="absolute inset-0 -z-20 bg-gradient-to-tr from-ink-900 via-ink-900/85 to-ink-900/30" />
-      {/* Ambient brand AURORA — a slow-drifting, blurred wash of --wow-grad-brand.
+      {/* Ambient brand AURORA, a slow-drifting, blurred wash of --wow-grad-brand.
           screen blend lifts the brand hue out of the photo. Motion is gated: a
           reduced-motion viewer gets the static glow with no drift. */}
       <motion.div

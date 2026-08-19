@@ -6,7 +6,7 @@ import { SectionHeader } from '~/components/SectionHeader'
 import { SERVICES } from '~/data/services-view'
 import { serviceImageUrl } from '~/data/images'
 
-// Services VARIANT: 'luxe' — a premium glass-card grid on a soft radial brand
+// Services VARIANT: 'luxe', a premium glass-card grid on a soft radial brand
 // surface. Each card is a framed photo above a frosted body; on hover the whole
 // card LIFTS and picks up the brand glow, the photo eases in, and a gradient
 // index badge rides the top-left corner. The boutique counterpart to the plain

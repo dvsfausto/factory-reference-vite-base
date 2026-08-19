@@ -8,7 +8,7 @@ import type { BlockType } from './layout'
 //
 // PricingBlock reuses the homepage BlockType vocabulary (so it can compose any
 // existing section) and adds an 'intro' block specific to this page. This file is
-// ADDITIVE — the scaffolder never emits or overwrites it (it only emits
+// ADDITIVE, the scaffolder never emits or overwrites it (it only emits
 // src/data/layout.ts's HOMEPAGE_LAYOUT array) — so block-composing the pricing
 // page needs no scaffolder change.
 export type PricingBlockType = BlockType | 'intro'

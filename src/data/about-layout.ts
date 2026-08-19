@@ -7,7 +7,7 @@ import type { BlockType } from './layout'
 //
 // AboutBlock reuses the homepage BlockType vocabulary (so it can compose any
 // existing section + 'team') and adds an 'intro' block specific to this page. This
-// file is ADDITIVE — the scaffolder never emits or overwrites it (it only emits
+// file is ADDITIVE, the scaffolder never emits or overwrites it (it only emits
 // src/data/layout.ts's HOMEPAGE_LAYOUT array) — so block-composing the about page
 // needs no scaffolder change.
 export type AboutBlockType = BlockType | 'intro'

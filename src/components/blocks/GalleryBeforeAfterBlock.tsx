@@ -2,14 +2,14 @@ import { useState } from 'react'
 import { tr } from '~/lib/i18n'
 import { PROJECTS, type GalleryItem } from '~/data/projects'
 
-// Gallery LAYOUT: 'before-after-slider' — an interactive drag-to-reveal slider per
+// Gallery LAYOUT: 'before-after-slider', an interactive drag-to-reveal slider per
 // project, comparing a before and after photo. Character-agnostic. PIPELINE-
 // SEEDED: before/after come from optional PROJECTS data fields; only projects that
 // carry a pair are shown. Renders the position at 50% on the server and reveals on
 // drag in the browser.
 //
 // HONESTY: pairs are labeled illustrative. A real before/after is a genuine
-// customer transformation (the asset-library wiring) — a stock pair would imply a
+// customer transformation (the asset-library wiring), a stock pair would imply a
 // job we didn't do, so the seed pairs are explicitly illustrative.
 //
 // TOKEN DISCIPLINE: accent -> emerald-* (DNA) 50/100/600/700: emerald-600 handle.
@@ -20,10 +20,10 @@ function Slider({ item }: { item: GalleryItem }) {
   return (
     <figure className="overflow-hidden rounded-2xl border border-[#E6E8EC] bg-white">
       <div className="relative aspect-[4/3] select-none">
-        <img src={item.afterImage} alt={`${item.title} — after`} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
+        <img src={item.afterImage} alt={`${item.title}, after`} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
         <img
           src={item.beforeImage}
-          alt={`${item.title} — before`}
+          alt={`${item.title}, before`}
           loading="lazy"
           className="absolute inset-0 h-full w-full object-cover"
           style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}

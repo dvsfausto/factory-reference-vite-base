@@ -2,7 +2,7 @@ import { PrimaryCta } from './PrimaryCta'
 import { ArrowRight, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 
-// CTA VARIANT: 'modern' — clean, restrained close. Identity copy from SITE.homeCta.
+// CTA VARIANT: 'modern', clean, restrained close. Identity copy from SITE.homeCta.
 // A simple centered block with generous whitespace on white, a large geometric-
 // sans headline, a brand CTA. No script, no leaf sprites, no brand gradient.
 // Prop signature identical to CtaBlock; returns an Element (no null).

@@ -1,12 +1,11 @@
 import { Link } from '@tanstack/react-router'
 import { tr } from '~/lib/i18n'
 import { ArrowRight } from 'lucide-react'
-import { SectionHeaderModern } from '~/components/SectionHeaderModern'
 import { SITE } from '~/data/site'
 import { SERVICES } from '~/data/services-view'
 import { serviceImageUrl } from '~/data/images'
 
-// ServicesPreview VARIANT: 'modern' — clean offerings grid. Identity copy from
+// ServicesPreview VARIANT: 'modern', clean offerings grid. Identity copy from
 // SITE.homeServices. A cool-gray section, sharp minimal cards (thin border,
 // restrained radius, subtle shadow on hover), generous whitespace, geometric sans.
 // Prop signature identical to ServicesPreviewBlock; returns Element | null.
@@ -29,56 +28,50 @@ export function ServicesModernBlock({
   exploreLabel?: string
   moreLink?: string
 }) {
-  const previewServices = SERVICES.slice(0, 3)
+  const previewServices = SERVICES.slice(0, 6)
   if (previewServices.length === 0) return null
+  const hs = (SITE as { homeServices?: { heading?: string; body?: string } }).homeServices
+  const secHeading = heading ?? hs?.heading ?? 'Services'
+  const secBody = body ?? hs?.body ?? 'A focused set of services, done well.'
+  void label
+  void exploreLabel
+  // MODERN, taste-skill light touch: TIGHT + ASYMMETRIC (the one structural move that separates modern from
+  // friendly's three equal rounded cards). A heading rail on the left, a dense 2-column grid of compact
+  // horizontal cards on the right — small radius, tight gaps, edge-aligned. No eyebrow. The right column is a
+  // visual grid (not filler text), so this is not the banned split-header.
   return (
     <section className="bg-[#F6F7F9]">
       <div className="container-x py-20 md:py-28">
-        <SectionHeaderModern
-          label={label ?? ((SITE as { homeServices?: { label?: string; heading?: string; body?: string } }).homeServices?.label ?? 'What we do')}
-          heading={heading ?? ((SITE as { homeServices?: { label?: string; heading?: string; body?: string } }).homeServices?.heading ?? 'Services')}
-          body={body ?? ((SITE as { homeServices?: { label?: string; heading?: string; body?: string } }).homeServices?.body ?? 'A focused set of services, done well.')}
-        />
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-          {previewServices.map((s) => (
-            <Link
-              key={s.slug}
-              to="/services/$slug"
-              params={{ slug: s.slug }}
-              className="group flex flex-col overflow-hidden rounded-2xl border border-[#E6E8EC] bg-white transition-all hover:border-emerald-600 hover:shadow-md"
-            >
-              <div className="aspect-[16/10] overflow-hidden">
-                <img
-                  src={serviceImageUrl(s.slug)}
-                  alt={s.name}
-                  loading="lazy"
-                  width={800}
-                  height={500}
-                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-              </div>
-              <div className="flex flex-1 flex-col p-7">
-                <h3 className="font-display text-xl font-semibold tracking-tight text-[#0F172A]">
-                  {s.name}
-                </h3>
-                <p className="mt-2 text-[#64748B]">{s.short}</p>
-                <div className="mt-6 flex items-center gap-1 font-display text-sm font-semibold text-emerald-600 transition-all group-hover:gap-2">
-                  {exploreLabel} <ArrowRight className="h-4 w-4" />
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
-        {SERVICES.length > previewServices.length && (
-          <div className="mt-12">
-            <Link
-              to="/services"
-              className="inline-flex h-12 items-center gap-2 rounded-xl bg-primary px-7 font-display text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
-            >
-              {moreLink} <ArrowRight className="h-4 w-4" />
-            </Link>
+        <div className="grid grid-cols-1 gap-x-12 gap-y-8 lg:grid-cols-12">
+          <div className="lg:col-span-4">
+            <h2 className="font-display text-3xl font-semibold tracking-tight text-[#0F172A] sm:text-4xl">{secHeading}</h2>
+            <p className="mt-3 max-w-xs leading-relaxed text-[#64748B]">{secBody}</p>
+            {SERVICES.length > previewServices.length && (
+              <Link to="/services" className="mt-6 inline-flex items-center gap-1.5 font-display text-sm font-semibold text-emerald-600 transition-all hover:gap-2.5">
+                {moreLink} <ArrowRight className="h-4 w-4" />
+              </Link>
+            )}
           </div>
-        )}
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:col-span-8">
+            {previewServices.map((s) => (
+              <Link
+                key={s.slug}
+                to="/services/$slug"
+                params={{ slug: s.slug }}
+                className="zi-rise group flex items-center gap-4 rounded-lg border border-[#E6E8EC] bg-white p-3 transition-colors hover:border-emerald-500"
+              >
+                <div className="zi-media h-16 w-16 shrink-0 overflow-hidden rounded-md">
+                  <img src={serviceImageUrl(s.slug)} alt={s.name} loading="lazy" width={128} height={128} className="h-full w-full object-cover" />
+                </div>
+                <div className="min-w-0">
+                  <h3 className="truncate font-display text-base font-semibold tracking-tight text-[#0F172A]">{s.name}</h3>
+                  <p className="mt-0.5 line-clamp-2 text-sm text-[#64748B]">{s.short}</p>
+                </div>
+                <ArrowRight className="ml-auto h-4 w-4 shrink-0 text-[#94A3B8] transition-all group-hover:translate-x-0.5 group-hover:text-emerald-600" />
+              </Link>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   )

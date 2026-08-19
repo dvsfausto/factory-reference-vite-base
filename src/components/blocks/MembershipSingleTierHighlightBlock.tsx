@@ -3,7 +3,7 @@ import { Check } from 'lucide-react'
 import type { Membership } from './membership-variants'
 import { SITE } from '~/data/site'
 
-// Membership LAYOUT: 'single-tier-highlight' — one membership as a wide bold panel
+// Membership LAYOUT: 'single-tier-highlight', one membership as a wide bold panel
 // (the common single-membership case). Character-agnostic. OMIT-WHEN-ABSENT:
 // SITE.memberships via cast; none -> null. Picks the highlighted membership else
 // the first.

@@ -1,7 +1,7 @@
 import { PROJECTS } from '~/data/projects'
 import { tr } from '~/lib/i18n'
 
-// Gallery LAYOUT: 'justified' — a flickr-style justified gallery: photos flow into
+// Gallery LAYOUT: 'justified', a flickr-style justified gallery: photos flow into
 // rows of varied widths that fill the full measure, with consistent gutters.
 // Character-agnostic. PIPELINE-SEEDED: images from the PROJECTS data field;
 // renders populated from the seed.

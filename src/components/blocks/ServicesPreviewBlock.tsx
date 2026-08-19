@@ -6,7 +6,7 @@ import { SERVICES } from '~/data/services-view'
 import { serviceImageUrl } from '~/data/images'
 
 // Markup extracted VERBATIM from routes/index.tsx (the SERVICES PREVIEW
-// section). Self-omits when there are no services — exactly today's
+// section). Self-omits when there are no services, exactly today's
 // `{previewServices.length > 0 && …}`.
 export function ServicesPreviewBlock({
   label = tr('section.ourServices'),
@@ -25,8 +25,8 @@ export function ServicesPreviewBlock({
 }) {
   const previewServices = SERVICES.slice(0, 3)
   if (previewServices.length === 0) return null
-  // Columns match the count so a lone (or paired) service — a single owner-service generic
-  // build — doesn't strand in an otherwise-empty 3-col row. 3+ → md:grid-cols-3, byte-identical
+  // Columns match the count so a lone (or paired) service, a single owner-service generic
+  // build, doesn't strand in an otherwise-empty 3-col row. 3+ → md:grid-cols-3, byte-identical
   // for the template verticals (which always carry ≥3 services).
   const gridCols =
     previewServices.length === 1

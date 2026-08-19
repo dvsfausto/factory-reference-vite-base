@@ -1,8 +1,8 @@
 import { ShieldCheck, Clock, Heart, Award, BadgeCheck, Star, type LucideIcon } from 'lucide-react'
 
-// TrustBar LAYOUT: 'credential-cells' — each trust point set in its own bordered
+// TrustBar LAYOUT: 'credential-cells', each trust point set in its own bordered
 // cell, joined into a single framed band (shared hairlines, like a credentials
-// table). Character-agnostic. Composed and structured — reads as formal proof
+// table). Character-agnostic. Composed and structured, reads as formal proof
 // rather than a loose icon row.
 //
 // Considered cells (not a stripped grid): a fixed line-icon, a bold title, and a

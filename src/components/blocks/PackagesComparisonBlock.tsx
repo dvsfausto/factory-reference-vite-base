@@ -3,7 +3,7 @@ import { Check, Minus } from 'lucide-react'
 import type { ServicePackage } from './packages-variants'
 import { SITE } from '~/data/site'
 
-// Packages LAYOUT: 'comparison' — an includes matrix across packages (each
+// Packages LAYOUT: 'comparison', an includes matrix across packages (each
 // included item a row, each package a column). Character-agnostic. OMIT-WHEN-
 // ABSENT: SITE.packages via cast; none -> null. The item universe is derived from
 // the data only.

@@ -2,7 +2,7 @@ import { PrimaryCta } from './PrimaryCta'
 import { ArrowRight, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 
-// CTA VARIANT: 'corporate' — a formal, authoritative close on a deep navy band.
+// CTA VARIANT: 'corporate', a formal, authoritative close on a deep navy band.
 // Identity copy from SITE.homeCta. Heavy grotesque headline, structured, a brand
 // CTA. No script, no leaf sprites, no soft gradient. Prop signature identical to
 // CtaBlock; returns an Element (no null).

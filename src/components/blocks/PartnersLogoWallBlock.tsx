@@ -2,7 +2,7 @@ import type { Partner } from './partners-variants'
 import { tr } from '~/lib/i18n'
 import { SITE } from '~/data/site'
 
-// Partners LAYOUT: 'logo-wall' — a centered multi-row wall of partner logos.
+// Partners LAYOUT: 'logo-wall', a centered multi-row wall of partner logos.
 // Character-agnostic. OMIT-WHEN-ABSENT: SITE.partners via cast; none -> null.
 // Missing logo -> the partner name as a monochrome wordmark.
 //

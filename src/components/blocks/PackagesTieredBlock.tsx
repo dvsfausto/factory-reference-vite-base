@@ -3,7 +3,7 @@ import { Check } from 'lucide-react'
 import type { ServicePackage } from './packages-variants'
 import { SITE } from '~/data/site'
 
-// Packages LAYOUT: 'tiered' — escalating good/better/best columns, the popular one
+// Packages LAYOUT: 'tiered', escalating good/better/best columns, the popular one
 // elevated. Character-agnostic. OMIT-WHEN-ABSENT: SITE.packages via cast; none ->
 // null.
 //

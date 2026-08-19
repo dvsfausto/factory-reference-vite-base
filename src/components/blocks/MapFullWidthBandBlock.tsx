@@ -2,11 +2,11 @@ import { MapPin } from 'lucide-react'
 import { tr } from '~/lib/i18n'
 import { AREAS } from '~/data/areas'
 
-// Map LAYOUT: 'full-width-band' — a full-width map-textured band with the heading
+// Map LAYOUT: 'full-width-band', a full-width map-textured band with the heading
 // overlaid and area names as labels across it. Character-agnostic. OMIT-WHEN-
 // ABSENT: renders from AREAS; none -> null.
 //
-// HONESTY: stylized coverage band, no real geography — decorative labels + real
+// HONESTY: stylized coverage band, no real geography, decorative labels + real
 // tier emphasis. Real embedded map is a later integration.
 //
 // TOKEN DISCIPLINE: accent -> emerald-* (DNA) 50/100/600/700: emerald-100 eyebrow,

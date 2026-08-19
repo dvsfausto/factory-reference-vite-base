@@ -3,7 +3,7 @@ import { ArrowUpRight, TrendingUp } from 'lucide-react'
 import type { CaseStudy } from './case-studies-variants'
 import { SITE } from '~/data/site'
 
-// Case Studies LAYOUT: 'featured' — one hero case study with image + outcome,
+// Case Studies LAYOUT: 'featured', one hero case study with image + outcome,
 // plus a column of supporting ones. Character-agnostic. OMIT-WHEN-ABSENT:
 // SITE.caseStudies via cast; none -> null. image/result/client shown only when
 // present (graceful; results never invented).

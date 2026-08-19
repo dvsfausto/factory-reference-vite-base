@@ -2,7 +2,7 @@ import { motion, useReducedMotion } from 'framer-motion'
 import type { InfoPageData } from '~/lib/types/page-types'
 
 // INFO-DETAIL VARIANT (Arc 3 · Stage E): the rich long-form MIDDLE content of an info
-// page, driven per-item by `info` (ctx.info). It renders — in order — the `intro` lead
+// page, driven per-item by `info` (ctx.info). It renders, in order, the `intro` lead
 // paragraphs, then each `sections` entry ({ heading, body[] paragraphs, list? }), EACH
 // section entrance-revealed on scroll. Mirrors Stage C's ServiceDetailsBlock: one block
 // consolidating the article body keeps INFO_DETAIL_LAYOUT lean while preserving every
@@ -14,7 +14,7 @@ import type { InfoPageData } from '~/lib/types/page-types'
 //   · --wow-ease-out is expressed inline as the [0.16,1,0.3,1] entrance curve.
 // BRAND identity stays on the ramp (brand-* accents) + --wow-*; no fabricated data.
 // Reveal on the outer wrapper is applied by the shared SectionList, so there is NO
-// opacity-hider here — the per-section whileInView is polish only.
+// opacity-hider here, the per-section whileInView is polish only.
 //
 // HONESTY (mirrors InfoPageTemplate's per-field guards, per THIS info page):
 //   · intro    → the lead block shows only when intro.length > 0

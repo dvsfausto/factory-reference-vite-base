@@ -3,10 +3,10 @@ import { tr } from '~/lib/i18n'
 import { ArrowRight, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 
-// CTA LAYOUT: 'boxed-card' — the close lives inside a single elevated dark card
+// CTA LAYOUT: 'boxed-card', the close lives inside a single elevated dark card
 // floating on a light section, rather than spanning a full-width band. Character-
 // agnostic. The contained, shadowed card reads as a deliberate object on the page
-// — composed, not a stretched strip.
+//, composed, not a stretched strip.
 //
 // Considered containment: a deep slate card with generous padding, a soft shadow
 // and rounded corners, an emerald eyebrow rule, and the brand button set against

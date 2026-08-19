@@ -3,7 +3,7 @@ import { tr } from '~/lib/i18n'
 import type { VideoTestimonial } from './video-testimonials-variants'
 import { SITE } from '~/data/site'
 
-// Video Testimonials LAYOUT: 'featured+thumbs' — one large player with a thumbnail
+// Video Testimonials LAYOUT: 'featured+thumbs', one large player with a thumbnail
 // strip; clicking a thumb promotes it. Character-agnostic, interactive (first
 // testimonial featured on the server). OMIT-WHEN-ABSENT: SITE.videoTestimonials
 // via cast; none -> null. Missing poster degrades to a neutral slate frame.

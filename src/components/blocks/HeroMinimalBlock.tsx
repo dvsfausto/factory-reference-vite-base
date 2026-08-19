@@ -3,15 +3,15 @@ import { motion } from 'framer-motion'
 import { ArrowRight, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 
-// Hero LAYOUT: 'minimal' — type-only, NO image. An oversized headline, a large
+// Hero LAYOUT: 'minimal', type-only, NO image. An oversized headline, a large
 // subhead, and the CTAs set in a deep field of whitespace, left-aligned on a
 // constrained measure. Stripe/Linear-caliber restraint: the layout is distinct
 // precisely BECAUSE it drops the image and lets the type scale and the empty
-// space do the work — not "centered minus the photo".
+// space do the work, not "centered minus the photo".
 //
 // DRAMA, not emptiness: a genuine display type scale (up to text-8xl with tight
 // leading) against very deep vertical padding, an em-dash rule under a small
-// eyebrow, and a single understated trust line — every element earns its place.
+// eyebrow, and a single understated trust line, every element earns its place.
 //
 // TOKEN DISCIPLINE: primary CTA -> bg-primary / text-primary-foreground (BRAND-
 // owned). Accent -> emerald-* (DNA) restricted to 50/100/600/700: emerald-600

@@ -2,7 +2,7 @@ import { motion, useReducedMotion } from 'framer-motion'
 import { tr } from '~/lib/i18n'
 import { PROJECTS } from '~/data/projects'
 
-// Gallery VARIANT: 'featured-film' — a large lead image over a radial brand glow
+// Gallery VARIANT: 'featured-film', a large lead image over a radial brand glow
 // with a floating glass caption chip, followed by a horizontal filmstrip of the
 // remaining photos (each with its own glass chip). A cinematic hero-and-strip
 // composition, brand-reactive throughout.

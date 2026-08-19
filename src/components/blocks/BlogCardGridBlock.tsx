@@ -1,7 +1,7 @@
 import type { BlogPost } from './blog-variants'
 import { SITE } from '~/data/site'
 
-// Blog LAYOUT: 'card-grid' — a grid of post cards (image when present, title,
+// Blog LAYOUT: 'card-grid', a grid of post cards (image when present, title,
 // excerpt, date). Character-agnostic, section/index only. OMIT-WHEN-ABSENT:
 // SITE.posts via cast; none -> null. Missing image -> a clean text-first card.
 //

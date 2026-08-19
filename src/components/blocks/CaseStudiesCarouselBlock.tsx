@@ -2,7 +2,7 @@ import { TrendingUp } from 'lucide-react'
 import type { CaseStudy } from './case-studies-variants'
 import { SITE } from '~/data/site'
 
-// Case Studies LAYOUT: 'carousel' — a horizontal scroll-snap row of outcome cards.
+// Case Studies LAYOUT: 'carousel', a horizontal scroll-snap row of outcome cards.
 // Character-agnostic, CSS-only (SSR-safe). OMIT-WHEN-ABSENT: SITE.caseStudies via
 // cast; none -> null. image/result/client graceful.
 //

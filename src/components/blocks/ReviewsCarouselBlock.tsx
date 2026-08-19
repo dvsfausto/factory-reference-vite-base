@@ -3,7 +3,7 @@ import { tr } from '~/lib/i18n'
 import { Star } from 'lucide-react'
 import { reviews } from '~/data/reviews'
 
-// Reviews LAYOUT: 'carousel' — a horizontal, scroll-snap slider of review cards,
+// Reviews LAYOUT: 'carousel', a horizontal, scroll-snap slider of review cards,
 // the right call when there are many testimonials. CSS-only (scroll-snap, no JS),
 // SSR-safe, degrades to a plain scroll row. Character-agnostic.
 //

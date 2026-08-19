@@ -313,3 +313,54 @@
   transform: translateY(10px);
   filter: none;
 }
+
+/* ─── INTERACTION / HOVER LAYER — "where a site feels alive and expensive." ───────────────────────────
+   Considered, opt-in hover interactions (cards lift, media floats, elements rise). Tailwind v4 already
+   scopes `hover:` behind (hover: hover), and these rules add (pointer: fine) too — so NOTHING here fires
+   on touch/mobile (a hover that sticks on tap is worse than none). All motion respects the accessibility
+   floor below. Blocks opt in with .zi-card / .zi-media / .zi-rise; a shared `group` drives child effects. */
+@media (hover: hover) and (pointer: fine) {
+  .zi-card {
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
+  }
+  .zi-card:hover,
+  .group:hover .zi-card {
+    transform: translateY(-6px);
+    box-shadow: 0 24px 48px -16px rgb(15 23 42 / 0.22);
+  }
+  .zi-media {
+    overflow: hidden;
+  }
+  .zi-media img {
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
+  }
+  .zi-media:hover img,
+  .group:hover .zi-media img {
+    transform: scale(1.05);
+  }
+  /* Small foreground elements (chips, icons, arrows) that float up when their group is hovered. */
+  .zi-rise {
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
+  }
+  .group:hover .zi-rise {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 24px -10px rgb(15 23 42 / 0.18);
+  }
+}
+
+/* ─── ACCESSIBILITY FLOOR — one place for the WHOLE site (hover + scroll + any animation). ─────────────
+   Someone who asked their OS for reduced motion gets none: every animation/transition collapses to
+   instant, so hover states still change (a card can look raised) but never animate. Replaces the piecemeal
+   reveal-only rule as the site-wide guarantee. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

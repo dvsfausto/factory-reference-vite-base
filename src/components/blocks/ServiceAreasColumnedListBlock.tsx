@@ -3,7 +3,7 @@ import { tr } from '~/lib/i18n'
 import { MapPin } from 'lucide-react'
 import { AREAS } from '~/data/areas'
 
-// ServiceAreas LAYOUT: 'columned-list' — the coverage list set as a multi-column
+// ServiceAreas LAYOUT: 'columned-list', the coverage list set as a multi-column
 // directory, the right call when a business serves many neighborhoods: a compact,
 // scannable index instead of a sprawling chip cloud. Character-agnostic, no imagery.
 //

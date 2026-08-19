@@ -3,10 +3,10 @@ import { tr } from '~/lib/i18n'
 import { ArrowRight, MapPin } from 'lucide-react'
 import { AREAS } from '~/data/areas'
 
-// ServiceAreas LAYOUT: 'stacked' — coverage as full-width hairline-separated rows,
+// ServiceAreas LAYOUT: 'stacked', coverage as full-width hairline-separated rows,
 // each area set at display scale with its coverage detail and a quiet arrow.
 // Character-agnostic, no imagery. Distinct because each area gets the whole width
-// and real type weight — a confident coverage index.
+// and real type weight, a confident coverage index.
 //
 // Editorial rows (not stretched chips): an oversized area name balanced against a
 // compact tier / zip meta column, generous row padding, thin rules between. tier

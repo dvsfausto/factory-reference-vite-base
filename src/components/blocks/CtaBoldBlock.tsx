@@ -2,9 +2,9 @@ import { PrimaryCta } from './PrimaryCta'
 import { ArrowRight, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 
-// CTA VARIANT: 'bold' — matches the hero's weight. The default CtaBlock/
+// CTA VARIANT: 'bold', matches the hero's weight. The default CtaBlock/
 // CTASection uses a brand-gradient band + a font-script accent word + leaf
-// sprites + .btn-white/.btn-outline-white pills — all soft/wellness signals.
+// sprites + .btn-white/.btn-outline-white pills, all soft/wellness signals.
 // This variant is blocky and confident: a solid dark ink band, an emerald accent
 // rule, a heavy UPPERCASE Oswald headline, and a square brand-colored CTA.
 //
@@ -14,7 +14,7 @@ import { SITE } from '~/data/site'
 // (DNA radius, not the .btn pill); font-display (DNA Oswald). Neutrals ink-*/
 // white. Never bg-brand-* / .btn-primary (literal hex) and never .btn (pill).
 //
-// IDENTITY COPY is DATA — title/subtitle read from SITE.homeCta (promoted out of
+// IDENTITY COPY is DATA, title/subtitle read from SITE.homeCta (promoted out of
 // the JSX defaults by the scaffolder). Prop signature identical to CtaBlock.
 export function CtaBoldBlock({
   title,
@@ -28,7 +28,7 @@ export function CtaBoldBlock({
   const ctaLabel = ((SITE as { headerCtaLabel?: string }).headerCtaLabel ?? 'Get a free quote')
   return (
     <section className="relative isolate overflow-hidden bg-ink-900 text-white">
-      {/* Emerald accent rule across the top — the DNA accent as a structural band. */}
+      {/* Emerald accent rule across the top, the DNA accent as a structural band. */}
       <div className="h-1.5 w-full bg-emerald-600" />
       <div className="container-x py-20 md:py-24">
         <div className="max-w-3xl">

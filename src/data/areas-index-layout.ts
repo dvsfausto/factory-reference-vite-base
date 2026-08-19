@@ -21,7 +21,7 @@ export const AREAS_INDEX_LAYOUT: AreasIndexBlock[] = [
     variant: 'aurora-glow',
     params: {
       title: "Don't see your area?",
-      subtitle: 'Call us — we often travel for the right project.',
+      subtitle: 'Call us, we often travel for the right project.',
     },
   },
 ]

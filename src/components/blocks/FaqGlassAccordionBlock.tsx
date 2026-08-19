@@ -4,7 +4,7 @@ import { motion, useReducedMotion } from 'framer-motion'
 import { Plus } from 'lucide-react'
 import type { FAQ } from '~/lib/types/page-types'
 
-// FAQ VARIANT: 'glass-accordion' — a refined, tactile accordion. Each question is
+// FAQ VARIANT: 'glass-accordion', a refined, tactile accordion. Each question is
 // its own lifted GLASS card with a brand hairline; a gradient "+" badge rotates to
 // an "×" on open and the active card gains a soft brand glow. Cards stagger in as
 // they scroll into view. Answers expand/collapse with a smooth height motion.

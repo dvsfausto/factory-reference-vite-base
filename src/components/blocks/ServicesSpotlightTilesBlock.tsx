@@ -6,7 +6,7 @@ import { SectionHeader } from '~/components/SectionHeader'
 import { SERVICES } from '~/data/services-view'
 import { serviceImageUrl } from '~/data/images'
 
-// Services VARIANT: 'spotlight-tiles' — the lead service takes a big, cinematic
+// Services VARIANT: 'spotlight-tiles', the lead service takes a big, cinematic
 // brand-gradient SPOTLIGHT tile (photo under a brand wash, copy inset on glass);
 // the remaining services sit beside it as compact frosted glass tiles that lift +
 // glow on hover. A hierarchy-forward showcase, distinct from the even grid/bento.
@@ -65,7 +65,7 @@ export function ServicesSpotlightTilesBlock({
             rest.length > 0 ? 'lg:grid-cols-2' : 'lg:max-w-3xl lg:mx-auto'
           }`}
         >
-          {/* Lead spotlight tile — big brand-gradient showcase. */}
+          {/* Lead spotlight tile, big brand-gradient showcase. */}
           <motion.div
             initial={reduce ? false : { opacity: 0, y: 28 }}
             whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
@@ -89,13 +89,13 @@ export function ServicesSpotlightTilesBlock({
                 height={800}
                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.05]"
               />
-              {/* Brand wash — decorative brand TINT over the photo (aesthetic only). */}
+              {/* Brand wash, decorative brand TINT over the photo (aesthetic only). */}
               <span
                 aria-hidden
                 className="absolute inset-0"
                 style={{ backgroundImage: 'var(--wow-grad-brand)', opacity: 0.72 }}
               />
-              {/* Legibility scrim — a NEUTRAL dark gradient that covers the whole copy
+              {/* Legibility scrim, a NEUTRAL dark gradient that covers the whole copy
                   area (bottom ~55%), not just the bottom 40%. Sits ABOVE the brand wash
                   so white copy stays ≥4.5:1 regardless of the photo OR a light brand
                   wash (light/yellow primaries). The bg-ink-900 tile base guarantees the

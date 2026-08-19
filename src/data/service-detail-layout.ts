@@ -7,11 +7,11 @@ import type { BlockType } from './layout'
 // reusing the existing section library + three new per-item service blocks.
 //
 // ServiceDetailBlock reuses the homepage BlockType vocabulary (so it can compose any
-// existing section — hero, faq, cta, …) and adds three service-specific block types.
+// existing section, hero, faq, cta, …) and adds three service-specific block types.
 // Those blocks read THIS service's content from ctx.service (SectionContext), so the
 // SAME layout renders every service page with its own copy. This file is ADDITIVE —
 // the scaffolder never emits or overwrites it (it only emits src/data/layout.ts's
-// HOMEPAGE_LAYOUT array) — so block-composing the service page needs no scaffolder
+// HOMEPAGE_LAYOUT array), so block-composing the service page needs no scaffolder
 // change and it ships verbatim with the reference.
 export type ServiceDetailBlockType =
   | BlockType

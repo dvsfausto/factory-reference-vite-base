@@ -4,9 +4,9 @@ import { ArrowRight } from 'lucide-react'
 import { SITE } from '~/data/site'
 import { SERVICES } from '~/data/services-view'
 
-// ServicesPreview LAYOUT: 'list' — an editorial, type-forward index: each service
+// ServicesPreview LAYOUT: 'list', an editorial, type-forward index: each service
 // is a hairline-separated row with an ordinal, a large display name, a blurb, and
-// a quiet arrow. No imagery — distinct precisely because it is restrained and
+// a quiet arrow. No imagery, distinct precisely because it is restrained and
 // reads like a well-set table of contents. Character-agnostic.
 //
 // Editorial restraint (not a stripped grid): real hairline rules between rows,

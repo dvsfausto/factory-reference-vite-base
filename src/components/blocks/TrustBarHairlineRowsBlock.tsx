@@ -1,7 +1,7 @@
 import { motion, useReducedMotion } from 'framer-motion'
 import { SITE } from '~/data/site'
 
-// TRUST BAR VARIANT: 'hairline-rows' — the real trust items in a sleek row,
+// TRUST BAR VARIANT: 'hairline-rows', the real trust items in a sleek row,
 // divided by brand hairlines over a faint brand tint. Each item is led by a
 // slim vertical brand-gradient accent mark; items stagger in as they enter.
 // The flat, editorial counterpart to the tactile 'glow-cards' variant.
@@ -12,9 +12,9 @@ import { SITE } from '~/data/site'
 //   · --wow-hairline   → the dividers between items.
 // BRAND identity stays on the gradient accent mark; neutrals are ink-*.
 //
-// HONESTY: renders ONLY the real trust items (title/description) — same resolve
+// HONESTY: renders ONLY the real trust items (title/description), same resolve
 // chain as the default (items ?? SITE.trustItems ?? DEFAULT_TRUST_ITEMS). No
-// icons are invented and items are NEVER turned into fake numeric stats — they
+// icons are invented and items are NEVER turned into fake numeric stats, they
 // stay qualitative. Empty items → returns null, exactly like the default.
 const DEFAULT_TRUST_ITEMS = [
   {

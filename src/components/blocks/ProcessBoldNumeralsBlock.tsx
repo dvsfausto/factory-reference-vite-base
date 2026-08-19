@@ -4,7 +4,7 @@ import type { ProcessStep } from './process-variants'
 import { getProcessIcon } from './process-icons'
 import { SITE } from '~/data/site'
 
-// Process VARIANT: 'bold-numerals' — a WOW row of big glass step cards, each
+// Process VARIANT: 'bold-numerals', a WOW row of big glass step cards, each
 // watermarked with an oversized brand-gradient index numeral. Cards stagger in on
 // scroll and lift with a brand glow on hover. The bold, editorial counterpart to
 // 'glow-nodes' (the vertical timeline).
@@ -18,7 +18,7 @@ import { SITE } from '~/data/site'
 // Neutrals → ink-* / white. No CTA (mirrors the default process section).
 //
 // HONESTY: renders ONLY real SITE.steps. No steps → null (never fabricates a
-// process). The numeral is the step index — not an invented stat.
+// process). The numeral is the step index, not an invented stat.
 export function ProcessBoldNumeralsBlock({
   label = tr('section.howItWorks'),
   heading = tr('section.simpleProcess'),

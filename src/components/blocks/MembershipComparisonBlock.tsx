@@ -3,7 +3,7 @@ import { Check, Minus } from 'lucide-react'
 import type { Membership } from './membership-variants'
 import { SITE } from '~/data/site'
 
-// Membership LAYOUT: 'comparison' — a perk matrix across membership tiers (perks
+// Membership LAYOUT: 'comparison', a perk matrix across membership tiers (perks
 // as rows, tiers as columns). Character-agnostic. OMIT-WHEN-ABSENT: SITE.memberships
 // via cast; none -> null. The perk universe is derived from the data only.
 //

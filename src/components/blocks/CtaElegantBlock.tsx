@@ -3,9 +3,9 @@ import { ArrowRight, Phone } from 'lucide-react'
 import { elegantSurface } from '~/lib/elegant-surface'
 import { SITE } from '~/data/site'
 
-// CTA VARIANT: 'elegant' — refined close. Identity copy from SITE.homeCta. Surface
+// CTA VARIANT: 'elegant', refined close. Identity copy from SITE.homeCta. Surface
 // from elegantSurface(): LIGHT by default (warm ivory band), DARK on opt-in
-// (espresso band — the original, byte-identical). A thin emerald rule, a refined
+// (espresso band, the original, byte-identical). A thin emerald rule, a refined
 // serif headline, a brand CTA. No script, no leaf sprites, no brand-gradient.
 // Prop signature identical to CtaBlock; returns an Element (no null).
 //

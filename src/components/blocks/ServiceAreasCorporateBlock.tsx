@@ -5,7 +5,7 @@ import { MapPin } from 'lucide-react'
 import { SectionHeaderCorporate } from '~/components/SectionHeaderCorporate'
 import { AREAS } from '~/data/areas'
 
-// ServiceAreas VARIANT: 'corporate' — a structured list of areas/jurisdictions
+// ServiceAreas VARIANT: 'corporate', a structured list of areas/jurisdictions
 // served. SectionHeaderCorporate (no script) + bordered, boxed area cells. Prop
 // signature matches ServiceAreasBlock; returns Element | null.
 //

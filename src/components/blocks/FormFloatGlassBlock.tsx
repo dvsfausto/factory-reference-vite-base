@@ -5,7 +5,7 @@ import { SITE } from '~/data/site'
 import { submitLead, type LeadStatus } from './forms-submit'
 import { Field, Textarea, SubmitButton, SuccessCard } from './form-ui'
 
-// Forms VARIANT: 'float-glass' — a WOW re-skin of the default contact form. The
+// Forms VARIANT: 'float-glass', a WOW re-skin of the default contact form. The
 // SAME form (identical fields, names, and submitLead handler) now floats as a
 // frosted glass card over a soft --wow-grad-surface, framed by a brand hairline
 // and lifted by --wow-shadow-lift, rising in on scroll.

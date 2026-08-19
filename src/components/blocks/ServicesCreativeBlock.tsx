@@ -6,7 +6,7 @@ import { SITE } from '~/data/site'
 import { SERVICES } from '~/data/services-view'
 import { serviceImageUrl } from '~/data/images'
 
-// ServicesPreview VARIANT: 'creative' — a STAGGERED, asymmetric card grid (cards
+// ServicesPreview VARIANT: 'creative', a STAGGERED, asymmetric card grid (cards
 // offset at different vertical positions), big rounded shapes, magenta accents,
 // expressive type. Identity copy from SITE.homeServices. Prop signature identical
 // to ServicesPreviewBlock; returns Element | null.

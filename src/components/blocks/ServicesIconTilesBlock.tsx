@@ -15,13 +15,13 @@ import {
 import { SITE } from '~/data/site'
 import { SERVICES } from '~/data/services-view'
 
-// ServicesPreview LAYOUT: 'icon-tiles' — icon + title + blurb tiles, NO photos.
+// ServicesPreview LAYOUT: 'icon-tiles', icon + title + blurb tiles, NO photos.
 // The right call when a business has no service imagery: an intentional icon
 // treatment carries each tile instead of a missing or generic stock photo.
 // Character-agnostic.
 //
 // Intentional icons (not grid-minus-photos): each icon sits in a soft emerald
-// chip, sized and aligned deliberately. The icon is DATA-DRIVEN and optional —
+// chip, sized and aligned deliberately. The icon is DATA-DRIVEN and optional -
 // read from (s as { icon? }) via inline cast (the SITE.surface / video_url
 // precedent), looked up in a small allowlist, and falling back to a deterministic
 // per-position default when absent or unknown. The data file stays untouched and

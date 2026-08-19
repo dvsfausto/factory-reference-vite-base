@@ -1,7 +1,7 @@
 import type { BlogPost } from './blog-variants'
 import { SITE } from '~/data/site'
 
-// Blog LAYOUT: 'featured+list' — one large featured post beside a compact list of
+// Blog LAYOUT: 'featured+list', one large featured post beside a compact list of
 // the rest. Character-agnostic, section/index only. OMIT-WHEN-ABSENT: SITE.posts
 // via cast; none -> null. Missing image -> text-first featured card.
 //

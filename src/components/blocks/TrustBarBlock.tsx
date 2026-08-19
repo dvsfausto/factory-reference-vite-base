@@ -30,7 +30,7 @@ export function TrustBarBlock({
   items?: { title: string; description: string }[]
 }) {
   // Prefer an explicit param, else the site's emitted trust copy (generic vertical), else the
-  // defaults — identical to before when neither is present (known verticals). Then hand off to the
+  // defaults, identical to before when neither is present (known verticals). Then hand off to the
   // character trust variant on a character site, else the default TrustBar (byte-identical).
   const resolved =
     items ??

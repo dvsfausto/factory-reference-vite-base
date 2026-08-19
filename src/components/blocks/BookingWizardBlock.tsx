@@ -20,27 +20,27 @@ import {
 // ─────────────────────────────────────────────────────────────────────────────
 // NATIVE SELF-SERVICE BOOKING WIZARD (Arc 4a · Stage 2).
 //
-// A real on-page scheduler — service → date → time → details → confirmed — that
+// A real on-page scheduler, service → date → time → details → confirmed, that
 // books WITHOUT leaving the site. It mirrors the glow /book flow's proven contracts:
 //   · READS the business's bookable services + weekly availability LIVE from Supabase
 //     PostgREST under the PUBLIC anon key (both are anon-RLS-readable), keyed by
-//     BUSINESS_ID — so owner edits to hours/services show up with no site rebuild.
+//     BUSINESS_ID, so owner edits to hours/services show up with no site rebuild.
 //   · WRITES via the PUBLIC create-booking edge function (identical payload the glow
 //     BookingPage posts), which converts the picked wall-clock time → UTC using the
 //     business timezone, creates a CONFIRMED booking, advances the contact to
 //     'booked', and fires the customer confirmation email.
 //
-// SCOPE / HONESTY (matches today's real backend behavior — see the Stage-3 gaps):
+// SCOPE / HONESTY (matches today's real backend behavior, see the Stage-3 gaps):
 //   · SINGLE-RESOURCE. The scheduler models one calendar; correct for a SOLO operator
 //     (barber, trainer, consultant). The scaffolder only enables this block for
 //     clearly-solo appointment business types (site.ts BOOKING.enabled).
 //   · NO conflict check. Anon cannot read the bookings table (RLS), and create-booking
 //     does not overlap-check either, so slots are generated from availability + the
-//     past-time filter ONLY — exactly what the glow page effectively does. Concurrent
+//     past-time filter ONLY, exactly what the glow page effectively does. Concurrent
 //     double-booking is possible; server-side conflict checking is Stage-3 hardening.
 //   · Renders nothing unless BOOKING.enabled. If enabled but the business has no active
 //     services or no open availability, it shows an honest "call to book" fallback
-//     rather than an empty/broken picker — never a dead end.
+//     rather than an empty/broken picker, never a dead end.
 // ─────────────────────────────────────────────────────────────────────────────
 
 interface BookableService {
@@ -127,7 +127,7 @@ function bookableDays(availability: Availability[], limit = 14): Date[] {
   return out
 }
 
-// Client-side slot generation — availability window walked in service-duration steps,
+// Client-side slot generation, availability window walked in service-duration steps,
 // past slots dropped. NO conflict subtraction (anon can't read bookings; see header).
 function generateSlots(
   service: BookableService,
@@ -170,7 +170,7 @@ export function BookingWizardBlock({
   // AUTO-SPLICED homepage section (solo-typed builds); the dedicated /book customPage
   // places this block EXPLICITLY (params.forceEnabled), so it must render there for any
   // affordance-eligible business regardless of the homepage-section heuristic. Same live
-  // reads, same create-booking write, same honest fallback — only the gate differs.
+  // reads, same create-booking write, same honest fallback, only the gate differs.
   forceEnabled?: boolean
 }) {
   const enabled = BOOKING.enabled || forceEnabled
@@ -657,7 +657,7 @@ export function BookingWizardBlock({
                 </span>
                 <h3 className="mt-5 font-display text-2xl font-semibold tracking-tight text-ink-900">{tr('booking.confirmed')}</h3>
                 <p className="mx-auto mt-2 max-w-md leading-relaxed text-ink-700">
-                  {service.name} — {formatDateLong(date)} {tr('booking.at')} {to12h(time)}.
+                  {service.name}, {formatDateLong(date)} {tr('booking.at')} {to12h(time)}.
                   {customer.email
                     ? ` ${tr('booking.confirmationTo')} ${customer.email}.`
                     : ` ${tr('booking.seeYouThen')}`}

@@ -3,7 +3,7 @@ import { tr } from '~/lib/i18n'
 import { getProcessIcon } from './process-icons'
 import { SITE } from '~/data/site'
 
-// Process LAYOUT: 'alternating' — a vertical spine with steps zigzagging left and
+// Process LAYOUT: 'alternating', a vertical spine with steps zigzagging left and
 // right of a centered connector. Character-agnostic. OMIT-WHEN-ABSENT: steps from
 // optional SITE.steps via cast; no steps -> null, never fabricates.
 //

@@ -5,7 +5,7 @@ import { useCatalogServices } from '~/lib/useCatalogServices'
 import { submitQuoteRequest, type LeadStatus } from './forms-submit'
 import { Field, Textarea, SubmitButton, SuccessCard } from './form-ui'
 
-// Forms LAYOUT: 'quote' — the CATALOG quote-request widget (the pattern booking/cart copy). It lists
+// Forms LAYOUT: 'quote', the CATALOG quote-request widget (the pattern booking/cart copy). It lists
 // only the owner's QUOTABLE services (services.action === 'quote', forwarded by the scaffolder) and
 // files a STRUCTURED quote_request via request-quote → the owner's Requests tab (not a generic lead).
 //

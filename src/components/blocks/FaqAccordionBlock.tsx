@@ -3,7 +3,7 @@ import { tr } from '~/lib/i18n'
 import { Plus } from 'lucide-react'
 import { SITE } from '~/data/site'
 
-// FAQ-section LAYOUT: 'accordion' — a DNA-tokened interactive accordion (distinct
+// FAQ-section LAYOUT: 'accordion', a DNA-tokened interactive accordion (distinct
 // from the legacy ink-tokened FaqBlock/FAQSection). Character-agnostic. Reuses
 // SITE.homeFaqs; self-omits when there are none.
 //

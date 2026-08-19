@@ -1,7 +1,7 @@
 import { SITE } from '~/data/site'
 import { tr } from '~/lib/i18n'
 
-// Story LAYOUT: 'milestone-timeline' — a vertical timeline of dated milestones.
+// Story LAYOUT: 'milestone-timeline', a vertical timeline of dated milestones.
 // Character-agnostic. OMIT-WHEN-ABSENT: milestones read from optional
 // SITE.milestones via cast; none -> null, never fabricates a history.
 //

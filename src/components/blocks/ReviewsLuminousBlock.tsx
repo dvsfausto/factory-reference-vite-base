@@ -5,7 +5,7 @@ import { Quote, Star } from 'lucide-react'
 import { reviews } from '~/data/reviews'
 import { SectionHeader } from '~/components/SectionHeader'
 
-// Reviews VARIANT: 'luminous' — a set of frosted-glass quote cards floating over a
+// Reviews VARIANT: 'luminous', a set of frosted-glass quote cards floating over a
 // soft radial brand-tinted surface. Each card carries a big brand-gradient quotation
 // mark and lifts + glows on hover; the cards stagger in on scroll. The airy, boutique
 // counterpart to the flat default grid.

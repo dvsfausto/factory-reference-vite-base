@@ -2,7 +2,7 @@ import type { VideoTestimonial } from './video-testimonials-variants'
 import { tr } from '~/lib/i18n'
 import { SITE } from '~/data/site'
 
-// Video Testimonials LAYOUT: 'carousel' — a horizontal scroll-snap row of video
+// Video Testimonials LAYOUT: 'carousel', a horizontal scroll-snap row of video
 // players. Character-agnostic, CSS-only (SSR-safe). OMIT-WHEN-ABSENT:
 // SITE.videoTestimonials via cast; none -> null. Missing poster -> neutral frame.
 //

@@ -5,10 +5,10 @@ import { SITE } from '~/data/site'
 import { HERO_ALT } from '~/data/images'
 import { imageSrc } from '~/lib/asset-url'
 
-// Hero VARIANT: 'modern' — clean, contemporary, tech-forward. A light-cool split
+// Hero VARIANT: 'modern', clean, contemporary, tech-forward. A light-cool split
 // with generous whitespace, a large geometric-sans headline, a sharp framed
 // image, restrained indigo accents, and subtle motion. No leaf sprites, no script
-// flourish, no soft gradients — the distinctness is restraint.
+// flourish, no soft gradients, the distinctness is restraint.
 //
 // TOKEN DISCIPLINE: primary CTA → bg-primary / text-primary-foreground (BRAND-
 // owned). Accent → emerald-* (DNA → indigo): eyebrow rule, trust checks, ghost
@@ -78,7 +78,7 @@ export function HeroModernBlock({
               </a>
             </div>
 
-            {/* Restrained trust row — small, muted, indigo checks. */}
+            {/* Restrained trust row, small, muted, indigo checks. */}
             <div className="mt-10 flex flex-wrap gap-x-6 gap-y-2 text-sm text-[#64748B]">
               {trustItems.map((t) => (
                 <span key={t} className="inline-flex items-center gap-1.5">
@@ -88,14 +88,14 @@ export function HeroModernBlock({
             </div>
           </motion.div>
 
-          {/* Sharp framed image — thin border, restrained radius, minimal shadow. */}
+          {/* Sharp framed image, thin border, restrained radius, minimal shadow. */}
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             className="relative"
           >
-            <div className="overflow-hidden rounded-2xl border border-[#E6E8EC] shadow-sm">
+            <div className="zi-card zi-media overflow-hidden rounded-2xl border border-[#E6E8EC] shadow-sm">
               <img
                 src={imageSrc(imageUrl)}
                 alt={HERO_ALT}

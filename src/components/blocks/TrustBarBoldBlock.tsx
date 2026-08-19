@@ -1,6 +1,6 @@
 import { Clock, Heart, ShieldCheck } from 'lucide-react'
 
-// TrustBar VARIANT: 'bold' — the 3 feature-cards under the hero, made bold.
+// TrustBar VARIANT: 'bold', the 3 feature-cards under the hero, made bold.
 // The default TrustBar renders round icon-circles + text-brand-800 headings
 // (soft/elegant). This variant squares the icon containers (rounded-lg, DNA
 // radius), uses the emerald accent for the icon (DNA, not brand literal), and
@@ -9,7 +9,7 @@ import { Clock, Heart, ShieldCheck } from 'lucide-react'
 // TOKEN DISCIPLINE: emerald-* accent (icon chip), rounded-* (square, NOT the
 // full-round icon-circle), font-display headings, ink-* neutrals. No brand-*
 // literals, no .btn pill. Prop signature identical to TrustBarBlock (icons stay
-// fixed in the component, zipped by index — visual identity, not copy).
+// fixed in the component, zipped by index, visual identity, not copy).
 export function TrustBarBoldBlock({
   items = [
     {

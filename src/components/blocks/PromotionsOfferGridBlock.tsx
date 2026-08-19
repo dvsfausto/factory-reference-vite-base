@@ -2,7 +2,7 @@ import { Scissors } from 'lucide-react'
 import type { Promotion } from './promotions-variants'
 import { SITE } from '~/data/site'
 
-// Promotions LAYOUT: 'offer-grid' — a denser grid of coupon-style tiles (dashed
+// Promotions LAYOUT: 'offer-grid', a denser grid of coupon-style tiles (dashed
 // "tear" edge, the code prominent). Character-agnostic. OMIT-WHEN-ABSENT:
 // SITE.promotions via cast; none -> null, never fabricates an offer.
 //

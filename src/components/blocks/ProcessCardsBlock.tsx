@@ -3,7 +3,7 @@ import { tr } from '~/lib/i18n'
 import { getProcessIcon } from './process-icons'
 import { SITE } from '~/data/site'
 
-// Process LAYOUT: 'cards' — each step in its own elevated card with a number
+// Process LAYOUT: 'cards', each step in its own elevated card with a number
 // badge. Character-agnostic. OMIT-WHEN-ABSENT: steps from optional SITE.steps via
 // cast; no steps -> null, never fabricates.
 //

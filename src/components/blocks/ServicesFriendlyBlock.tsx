@@ -6,7 +6,7 @@ import { SITE } from '~/data/site'
 import { SERVICES } from '~/data/services-view'
 import { serviceImageUrl } from '~/data/images'
 
-// ServicesPreview VARIANT: 'friendly' — warm, bright offerings grid. Identity
+// ServicesPreview VARIANT: 'friendly', warm, bright offerings grid. Identity
 // copy from SITE.homeServices (zero hardcoded section copy). White rounded cards
 // with soft shadows on a warm-cream section, coral accents, rounded friendly
 // type. Prop signature identical to ServicesPreviewBlock; returns Element | null.

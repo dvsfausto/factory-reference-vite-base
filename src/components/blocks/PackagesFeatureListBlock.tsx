@@ -3,7 +3,7 @@ import { ArrowRight, Check } from 'lucide-react'
 import type { ServicePackage } from './packages-variants'
 import { SITE } from '~/data/site'
 
-// Packages LAYOUT: 'feature-list' — each package a full-width detailed row: name +
+// Packages LAYOUT: 'feature-list', each package a full-width detailed row: name +
 // price on the left, the complete includes list laid out on the right. Character-
 // agnostic. The thorough, menu-style read. OMIT-WHEN-ABSENT: SITE.packages via
 // cast; none -> null.

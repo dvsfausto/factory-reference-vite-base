@@ -7,11 +7,11 @@ import type { BlockType } from './layout'
 // reusing the existing section library + two new per-item info blocks.
 //
 // InfoDetailBlock reuses the homepage BlockType vocabulary (so it can compose any
-// existing section — hero, faq, cta, …) and adds two info-specific block types. Those
+// existing section, hero, faq, cta, …) and adds two info-specific block types. Those
 // blocks read THIS info page's content from ctx.info (SectionContext), so the SAME
 // layout renders every info page with its own copy. This file is ADDITIVE — the
 // scaffolder never emits or overwrites it (it only emits src/data/layout.ts's
-// HOMEPAGE_LAYOUT array) — so block-composing the info page needs no scaffolder change
+// HOMEPAGE_LAYOUT array), so block-composing the info page needs no scaffolder change
 // and it ships verbatim with the reference.
 export type InfoDetailBlockType = BlockType | 'infoArticle' | 'relatedInfo'
 

@@ -3,7 +3,7 @@ import { Check, Star } from 'lucide-react'
 import type { Membership } from './membership-variants'
 import { SITE } from '~/data/site'
 
-// Membership LAYOUT: 'tier-cards' — recurring membership tiers as cards, perks
+// Membership LAYOUT: 'tier-cards', recurring membership tiers as cards, perks
 // listed, a "Become a member" CTA. Character-agnostic. OMIT-WHEN-ABSENT: read from
 // optional SITE.memberships via cast; none -> null, never fabricates a plan.
 //

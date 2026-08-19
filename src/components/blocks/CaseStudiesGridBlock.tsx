@@ -2,7 +2,7 @@ import { TrendingUp } from 'lucide-react'
 import type { CaseStudy } from './case-studies-variants'
 import { SITE } from '~/data/site'
 
-// Case Studies LAYOUT: 'grid' — a card grid of outcomes (image when present,
+// Case Studies LAYOUT: 'grid', a card grid of outcomes (image when present,
 // title, summary, result chip, client). Character-agnostic. OMIT-WHEN-ABSENT:
 // SITE.caseStudies via cast; none -> null. image/result/client graceful.
 //

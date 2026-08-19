@@ -2,7 +2,7 @@
 // painter template's src/data/projects.ts + serviceImageUrl/areaImageUrl image
 // pattern). The image SOURCE is a data field: seeded here with honest illustrative
 // stock photos now, and REPLACED by genuine customer-owned photos later (the
-// WhatsApp -> Supabase asset library wiring). This is NOT omit-when-empty — the
+// WhatsApp -> Supabase asset library wiring). This is NOT omit-when-empty, the
 // gallery renders populated from day one off this seed; the components read the
 // data field exactly as the painter reads `p.image`.
 //

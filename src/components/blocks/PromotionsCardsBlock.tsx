@@ -3,7 +3,7 @@ import { Tag } from 'lucide-react'
 import type { Promotion } from './promotions-variants'
 import { SITE } from '~/data/site'
 
-// Promotions LAYOUT: 'cards' — a few clean offer cards (detail + code + expiry +
+// Promotions LAYOUT: 'cards', a few clean offer cards (detail + code + expiry +
 // claim). Character-agnostic. OMIT-WHEN-ABSENT: SITE.promotions via cast; none ->
 // null, never fabricates an offer.
 //

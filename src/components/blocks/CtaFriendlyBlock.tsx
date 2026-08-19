@@ -2,7 +2,7 @@ import { PrimaryCta } from './PrimaryCta'
 import { ArrowRight, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 
-// CTA VARIANT: 'friendly' — warm, inviting close. Identity copy from SITE.homeCta.
+// CTA VARIANT: 'friendly', warm, inviting close. Identity copy from SITE.homeCta.
 // A soft coral-tinted rounded panel (centered, welcoming), rounded friendly type,
 // a rounded brand CTA. No script, no leaf sprites, no brand gradient. Prop
 // signature identical to CtaBlock; returns an Element (no null).

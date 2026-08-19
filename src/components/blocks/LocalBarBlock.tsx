@@ -3,10 +3,10 @@ import { tr } from '~/lib/i18n'
 import { AREAS } from '~/data/areas'
 
 // Markup extracted VERBATIM from routes/index.tsx (the LOCAL BAR section).
-// Self-omits when there are no neighborhoods — exactly today's
+// Self-omits when there are no neighborhoods, exactly today's
 // `{neighborhoodList && …}`.
 // `label` defaults to today's literal; the optional param is the override
-// channel (unused by the default layout) — render stays byte-identical.
+// channel (unused by the default layout), render stays byte-identical.
 export function LocalBarBlock({ label = tr('misc.nowServing') }: { label?: string }) {
   const neighborhoodList = AREAS.slice(0, 8).map((a) => a.name).join(' · ')
   if (!neighborhoodList) return null

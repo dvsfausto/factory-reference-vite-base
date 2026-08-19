@@ -5,7 +5,7 @@ import { ReviewCard } from '~/components/ReviewCard'
 import { reviews } from '~/data/reviews'
 
 // Markup extracted VERBATIM from routes/index.tsx (the REVIEWS section).
-// Self-omits when there are no reviews — exactly today's
+// Self-omits when there are no reviews, exactly today's
 // `{previewReviews.length > 0 && …}`.
 export function ReviewsBlock({
   label = tr('nav.reviews'),

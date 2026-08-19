@@ -5,14 +5,14 @@ import { SITE } from '~/data/site'
 import { HERO_ALT } from '~/data/images'
 import { imageSrc } from '~/lib/asset-url'
 
-// Hero LAYOUT: 'background' — a full-bleed photo with the headline, sub, CTAs and
+// Hero LAYOUT: 'background', a full-bleed photo with the headline, sub, CTAs and
 // trust row set directly on top, anchored bottom-left for an editorial, magazine-
 // cover feel. Harvested from HeroElegantBlock's DARK branch (the scrim-over-photo
 // composition) and generalized to be character-agnostic: a cool/neutral slate
 // scrim instead of elegant's warm espresso, neutral text instead of warm ivory.
 //
 // LEGIBILITY: a real LAYERED gradient scrim (bottom-anchored darkening + a
-// left-anchored pass), not a flat gray box — text stays readable over any photo,
+// left-anchored pass), not a flat gray box, text stays readable over any photo,
 // brightest where the type sits and softest over the image's focal area.
 //
 // TOKEN DISCIPLINE: primary CTA -> bg-primary / text-primary-foreground (BRAND-

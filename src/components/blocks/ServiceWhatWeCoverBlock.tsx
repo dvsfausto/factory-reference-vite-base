@@ -3,7 +3,7 @@ import { Check } from 'lucide-react'
 import type { ServicePageData } from '~/lib/types/page-types'
 
 // SERVICE-DETAIL VARIANT (Arc 3 · Stage C): renders THIS service's `whatWeBuy`
-// section — the "what we cover" lead content — as a WOW composition: a headline +
+// section, the "what we cover" lead content, as a WOW composition: a headline +
 // intro body over a grid of check-marked glass tiles. Per-item content flows in via
 // the `service` prop (ctx.service from the route), so the SAME block serves every
 // service page with its OWN copy. This is the block analogue of ServicePageTemplate's
@@ -20,7 +20,7 @@ import type { ServicePageData } from '~/lib/types/page-types'
 // HONESTY: renders ONLY the real per-service body + items. Returns null when there
 // is no body AND no items (nothing to say → nothing shown), matching the honest
 // empty-omit behaviour of ServicePageTemplate. The items grid itself only renders
-// when there are items — a body-only service shows just the headline + body.
+// when there are items, a body-only service shows just the headline + body.
 export function ServiceWhatWeCoverBlock({
   service,
 }: {

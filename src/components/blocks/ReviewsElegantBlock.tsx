@@ -1,14 +1,13 @@
 import { Link } from '@tanstack/react-router'
 import { tr } from '~/lib/i18n'
 import { SITE } from '~/data/site'
-import { Star } from 'lucide-react'
-import { SectionHeaderElegant } from '~/components/SectionHeaderElegant'
+import { ArrowRight } from 'lucide-react'
 import { elegantSurface } from '~/lib/elegant-surface'
 import { reviews } from '~/data/reviews'
 
-// Reviews VARIANT: 'elegant' — refined testimonials. SectionHeaderElegant (serif,
+// Reviews VARIANT: 'elegant', refined testimonials. SectionHeaderElegant (serif,
 // no ◆ diamond, no script) + quote cards whose surface comes from elegantSurface()
-// — LIGHT by default (white cards on warm ivory), DARK on opt-in (leather cards,
+//, LIGHT by default (white cards on warm ivory), DARK on opt-in (leather cards,
 // the original byte-identical). Prop signature matches ReviewsBlock; returns
 // Element | null.
 //
@@ -26,40 +25,46 @@ export function ReviewsElegantBlock({
   moreLink?: string
 }) {
   const s = elegantSurface()
-  const previewReviews = reviews.slice(0, 6)
+  const previewReviews = reviews.slice(0, 5)
   if (previewReviews.length === 0) return null
+  const [featured, ...rest] = previewReviews
+  void heading
+  void scriptAccent
+  void label
+  // EDITORIAL, taste-skill revised: NO eyebrow (the pull-quote leads). One large featured pull-quote, then
+  // supporting quotes as two hairline-divided columns (a letters-to-the-editor page), NOT a card grid.
   return (
     <section className={s.section}>
       <div className="container-x py-20 md:py-28">
-        <SectionHeaderElegant label={label} heading={heading} scriptAccent={scriptAccent} />
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {previewReviews.map((r) => (
-            <figure
-              key={r.id}
-              className={`flex flex-col rounded-xl border ${s.border} ${s.card} p-6`}
-            >
-              <div className="flex gap-0.5">
-                {Array.from({ length: r.rating ?? 5 }).map((_, i) => (
-                  <Star key={i} className="h-4 w-4 fill-emerald-600 text-emerald-600" />
-                ))}
-              </div>
-              <blockquote className={`mt-4 flex-1 font-display text-lg italic leading-relaxed ${s.text}`}>
-                “{r.text}”
-              </blockquote>
-              <figcaption className={`mt-5 text-sm ${s.muted}`}>
-                <span className={`font-medium ${s.text}`}>{r.author}</span>
-                {r.location && <span> · {r.location}</span>}
-              </figcaption>
-            </figure>
-          ))}
-        </div>
+        {featured && (
+          <figure className="max-w-4xl">
+            <div className="font-display text-7xl leading-none text-emerald-700/30" aria-hidden>“</div>
+            <blockquote className={`-mt-8 font-display text-3xl font-medium italic leading-snug ${s.text} sm:text-[2.5rem] sm:leading-[1.15]`}>
+              {featured.text}
+            </blockquote>
+            <figcaption className={`mt-6 text-xs uppercase tracking-[0.2em] ${s.muted}`}>
+              <span className={s.text}>{featured.author}</span>
+              {featured.location && ` · ${featured.location}`}
+            </figcaption>
+          </figure>
+        )}
+        {rest.length > 0 && (
+          <div className={`mt-14 grid grid-cols-1 gap-x-16 border-t ${s.border} pt-2 md:grid-cols-2`}>
+            {rest.map((r) => (
+              <figure key={r.id} className={`border-b ${s.border} py-8`}>
+                <blockquote className={`font-display text-lg italic leading-relaxed ${s.text}`}>“{r.text}”</blockquote>
+                <figcaption className={`mt-4 text-xs uppercase tracking-[0.16em] ${s.muted}`}>
+                  <span className={s.text}>{r.author}</span>
+                  {r.location && ` · ${r.location}`}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        )}
         {reviews.length > previewReviews.length && (
-          <div className="mt-10">
-            <Link
-              to="/reviews"
-              className={`inline-flex h-12 items-center rounded-lg border border-emerald-600/60 px-6 font-display text-sm font-medium uppercase tracking-[0.18em] ${s.text} transition-colors hover:border-emerald-600 hover:bg-emerald-600/10`}
-            >
-              {moreLink}
+          <div className="mt-12">
+            <Link to="/reviews" className="inline-flex items-center gap-2 font-display text-sm font-medium uppercase tracking-[0.18em] text-emerald-800 underline-offset-4 transition-colors hover:underline">
+              {moreLink} <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
         )}

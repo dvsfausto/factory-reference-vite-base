@@ -4,14 +4,14 @@ import { ArrowRight, MapPin } from 'lucide-react'
 import { AREAS } from '~/data/areas'
 import { areaImageUrl } from '~/data/images'
 
-// ServiceAreas LAYOUT: 'cards' — each area as a composed image card with a tier
+// ServiceAreas LAYOUT: 'cards', each area as a composed image card with a tier
 // badge and coverage detail, rather than a bare chip. Character-agnostic. Gives
 // each neighborhood a sense of place and makes coverage feel substantial.
 //
 // Composed, not stripped: a photo (areaImageUrl, slug-resolved with a hero
 // fallback so a photo-less area still renders), a name, an optional tier badge,
 // and an optional zip-count line. tier and zipCodes are the canonical optional
-// AreaRef fields — shown only when present, never fabricated.
+// AreaRef fields, shown only when present, never fabricated.
 //
 // TOKEN DISCIPLINE: primary CTA -> bg-primary / text-primary-foreground (BRAND-
 // owned). Accent -> emerald-* (DNA) restricted to 50/100/600/700: emerald-50 badge,

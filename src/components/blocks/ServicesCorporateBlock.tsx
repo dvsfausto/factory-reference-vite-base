@@ -6,7 +6,7 @@ import { SITE } from '~/data/site'
 import { SERVICES } from '~/data/services-view'
 import { serviceImageUrl } from '~/data/images'
 
-// ServicesPreview VARIANT: 'corporate' — a structured "practice areas" grid.
+// ServicesPreview VARIANT: 'corporate', a structured "practice areas" grid.
 // Identity copy from SITE.homeServices. Boxed bordered cards (defined borders,
 // tight radius), a cool blue-gray section, dense layout, heavy grotesque type.
 // Prop signature identical to ServicesPreviewBlock; returns Element | null.

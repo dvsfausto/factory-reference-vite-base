@@ -7,7 +7,7 @@ import { SERVICES } from '~/data/services-view'
 import { serviceImageUrl } from '~/data/images'
 
 // AREA-DETAIL VARIANT (Arc 3 · Stage D): the rich, consolidated MIDDLE content of an
-// area page, driven per-item by `area` (ctx.area). It renders — in order —
+// area page, driven per-item by `area` (ctx.area). It renders, in order -
 // servicesHere, landmarks, localContext, and testimonial, EACH omitting when its own
 // data is empty. Consolidating them into one block keeps the AREA_DETAIL_LAYOUT lean
 // while preserving every field ServiceAreaPageTemplate rendered. This is the Stage-D
@@ -61,7 +61,7 @@ export function AreaDetailsBlock({
   const { servicesHere, landmarks, localContext, testimonial } = area
 
   // Resolve featured service slugs against the published view (mirrors the template's
-  // servicesMap lookup) — drops unpublished/unknown slugs so an empty result omits.
+  // servicesMap lookup), drops unpublished/unknown slugs so an empty result omits.
   const servicesMap = new Map(SERVICES.map((s) => [s.slug, s]))
   const featured = servicesHere.featured
     .map((slug) => servicesMap.get(slug))

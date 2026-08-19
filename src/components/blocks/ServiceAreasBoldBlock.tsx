@@ -5,7 +5,7 @@ import { MapPin } from 'lucide-react'
 import { SectionHeaderBold } from '~/components/SectionHeaderBold'
 import { AREAS } from '~/data/areas'
 
-// ServiceAreas VARIANT: 'bold' — identical to ServiceAreasBlock except it wires
+// ServiceAreas VARIANT: 'bold', identical to ServiceAreasBlock except it wires
 // in the EXISTING SectionHeaderBold (solid Oswald, no ◆ diamond, no script
 // flourish). Targeted polish, gated to the 'bold' variant so other verticals
 // keep the default header byte-identically. Prop signature matches

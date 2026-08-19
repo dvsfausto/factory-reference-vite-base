@@ -3,14 +3,14 @@ import { tr } from '~/lib/i18n'
 import { ArrowRight, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 
-// CTA LAYOUT: 'color-block' — a bold, intentional field of the brand color filling
+// CTA LAYOUT: 'color-block', a bold, intentional field of the brand color filling
 // the full section, with the close set in inverted type on top. Character-agnostic.
 // The saturated brand band is the design: high-contrast, confident, impossible to
 // miss as the page's final ask.
 //
 // Inverted on purpose: the section IS bg-primary, so the primary action becomes a
 // solid white button (max contrast on the brand field) and the secondary a quiet
-// white-outline phone — a deliberate inversion, not an accident.
+// white-outline phone, a deliberate inversion, not an accident.
 //
 // TOKEN DISCIPLINE: the brand field is bg-primary / text-primary-foreground (BRAND-
 // owned). Accent restrained to white/translucent on the field (emerald, when used

@@ -6,10 +6,10 @@ import { SITE } from '~/data/site'
 import { submitLead, type LeadStatus } from './forms-submit'
 import { Field, Textarea, SubmitButton, SuccessCard } from './form-ui'
 
-// Forms VARIANT: 'brand-split' — a WOW split at the conversion point: a full
+// Forms VARIANT: 'brand-split', a WOW split at the conversion point: a full
 // brand-gradient side panel (heading + the REAL business contact details) beside
 // the form, which floats as a glass card. Same form, richer frame than the plain
-// 'split-with-info' default — the panel is a brand-gradient wash lit by a glow.
+// 'split-with-info' default, the panel is a brand-gradient wash lit by a glow.
 //
 // WOW tokens consumed (all brand-derived via color-mix, see styles/app.css):
 //   · --wow-grad-brand   → the side panel fill.
@@ -22,7 +22,7 @@ import { Field, Textarea, SubmitButton, SuccessCard } from './form-ui'
 // FORM CONTRACT (unchanged): fields first_name/last_name/phone/email/message and
 // submitLead(..., 'contact') are VERBATIM from the default via shared form-ui +
 // forms-submit. ONLY the shell is restyled. HONESTY: the info rows are the REAL
-// SITE fields (phone/email/address/hours) — each row omits when its field is empty.
+// SITE fields (phone/email/address/hours), each row omits when its field is empty.
 export function FormBrandSplitBlock({
   label = tr('form.contactUs'),
   heading = tr('form.letsTalk'),
@@ -83,7 +83,7 @@ export function FormBrandSplitBlock({
           className="grid grid-cols-1 overflow-hidden rounded-[1.75rem] border bg-white lg:grid-cols-2"
           style={{ borderColor: 'var(--wow-hairline)', boxShadow: 'var(--wow-shadow-lift)' }}
         >
-          {/* Brand-gradient info panel — real contact details only. */}
+          {/* Brand-gradient info panel, real contact details only. */}
           <div
             className="relative flex flex-col p-9 text-white md:p-12"
             style={{ backgroundImage: 'var(--wow-grad-brand)' }}

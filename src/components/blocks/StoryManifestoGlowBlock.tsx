@@ -2,7 +2,7 @@ import { motion, useReducedMotion } from 'framer-motion'
 import { tr } from '~/lib/i18n'
 import { SITE } from '~/data/site'
 
-// Story VARIANT: 'manifesto-glow' — a large, centered narrative statement on a
+// Story VARIANT: 'manifesto-glow', a large, centered narrative statement on a
 // soft radial brand-tinted surface, opened by an oversized brand-gradient quote
 // mark and closed with a script-accented attribution. The cinematic, brand-
 // reactive counterpart to the flat white 'narrative' layout.
@@ -14,7 +14,7 @@ import { SITE } from '~/data/site'
 // BRAND accents → the quote mark uses --wow-grad-brand (bg-clip-text); the
 // attribution + eyebrow use the brand-* ramp.
 //
-// HONESTY: renders only the real story copy — SITE.story.quote (optional cast
+// HONESTY: renders only the real story copy, SITE.story.quote (optional cast
 // override) falling back to SITE.about, and SITE.story.attribution ?? SITE.name.
 // No invented figures. Early-returns null when there is no quote, mirroring the
 // default StoryNarrativeBlock's omit-when-empty behavior.

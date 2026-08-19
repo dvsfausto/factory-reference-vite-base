@@ -5,7 +5,7 @@ import { SITE } from '~/data/site'
 import { HERO_ALT } from '~/data/images'
 import { imageSrc } from '~/lib/asset-url'
 
-// CTA LAYOUT: 'split-with-image' — the close set beside a supporting photo: text
+// CTA LAYOUT: 'split-with-image', the close set beside a supporting photo: text
 // and actions in one column, a framed image in the other. Character-agnostic. The
 // image gives the final ask a human, concrete anchor instead of a bare band.
 //

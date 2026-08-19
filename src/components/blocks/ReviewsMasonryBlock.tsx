@@ -3,12 +3,12 @@ import { tr } from '~/lib/i18n'
 import { Star } from 'lucide-react'
 import { reviews } from '~/data/reviews'
 
-// Reviews LAYOUT: 'masonry' — a column-flow wall of quote cards with GENUINELY
+// Reviews LAYOUT: 'masonry', a column-flow wall of quote cards with GENUINELY
 // varied heights: cards keep their natural length (short raves stay short, long
 // stories stay tall) and pack into balanced columns. Character-agnostic.
 //
 // Real masonry (CSS columns + break-inside-avoid), not a fixed grid: the varied
-// heights are the point — an authentic, lived-in testimonial wall rather than a
+// heights are the point, an authentic, lived-in testimonial wall rather than a
 // row of equal boxes. Works for any number of reviews.
 //
 // TOKEN DISCIPLINE: primary CTA -> bg-primary / text-primary-foreground (BRAND-

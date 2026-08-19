@@ -3,11 +3,11 @@ import { tr } from '~/lib/i18n'
 import { MapPin, Plus, Minus } from 'lucide-react'
 import { AREAS } from '~/data/areas'
 
-// Map LAYOUT: 'embed-style-panel' — a large panel styled like an embedded map
+// Map LAYOUT: 'embed-style-panel', a large panel styled like an embedded map
 // (grid texture, faux zoom controls) with the service areas as labelled pins.
 // Character-agnostic. OMIT-WHEN-ABSENT: renders from AREAS; none -> null.
 //
-// HONESTY: a STYLIZED coverage panel, not a real map — pin positions are a
+// HONESTY: a STYLIZED coverage panel, not a real map, pin positions are a
 // decorative scatter (no claimed coordinates); only the tier emphasis (home-base)
 // is real data. A real embedded map is a later integration.
 //

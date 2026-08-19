@@ -3,9 +3,9 @@ import { tr } from '~/lib/i18n'
 import { ArrowRight, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 
-// CTA LAYOUT: 'stacked-centered' — a single, oversized centered close in a deep
+// CTA LAYOUT: 'stacked-centered', a single, oversized centered close in a deep
 // field of whitespace: eyebrow, display-scale headline, sub, and a centered action
-// stack. Character-agnostic. Distinct through restraint and type drama — the final
+// stack. Character-agnostic. Distinct through restraint and type drama, the final
 // ask gets the whole stage and nothing competes with it.
 //
 // Drama, not emptiness: a genuine display type scale (up to text-7xl, tight

@@ -5,9 +5,9 @@ import { SITE } from '~/data/site'
 import { HERO_ALT } from '~/data/images'
 import { imageSrc } from '~/lib/asset-url'
 
-// Hero VARIANT: 'corporate' — formal, structured, authoritative. A dense split
+// Hero VARIANT: 'corporate', formal, structured, authoritative. A dense split
 // with a heavy grotesque headline, a framed image, and a foregrounded
-// CREDENTIALS strip (bordered cells, not pills) — trust signals up front, the
+// CREDENTIALS strip (bordered cells, not pills), trust signals up front, the
 // way high-trust professional verticals lead. Light + structured, never airy or
 // playful.
 //
@@ -81,14 +81,14 @@ export function HeroCorporateBlock({
             </div>
           </motion.div>
 
-          {/* Framed image — defined border, tight radius, structured. */}
+          {/* Framed image, defined border, tight radius, structured. */}
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             className="lg:col-span-5"
           >
-            <div className="overflow-hidden rounded-lg border border-[#D8DEE7] shadow-sm">
+            <div className="zi-card zi-media overflow-hidden rounded-lg border border-[#D8DEE7] shadow-sm">
               <img
                 src={imageSrc(imageUrl)}
                 alt={HERO_ALT}
@@ -98,7 +98,7 @@ export function HeroCorporateBlock({
           </motion.div>
         </div>
 
-        {/* Credentials strip — foregrounded trust signals in bordered cells. */}
+        {/* Credentials strip, foregrounded trust signals in bordered cells. */}
         <div className="mt-12 grid grid-cols-2 divide-x divide-[#D8DEE7] border-y border-[#D8DEE7] md:grid-cols-4">
           {trustItems.map((t) => (
             <div key={t} className="px-5 py-5 text-sm font-semibold text-[#1A2433]">

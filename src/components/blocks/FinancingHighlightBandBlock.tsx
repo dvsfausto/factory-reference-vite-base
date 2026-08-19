@@ -3,7 +3,7 @@ import { Check, CreditCard } from 'lucide-react'
 import type { Financing } from './financing-variants'
 import { SITE } from '~/data/site'
 
-// Financing LAYOUT: 'highlight-band' — a prominent band announcing financing, with
+// Financing LAYOUT: 'highlight-band', a prominent band announcing financing, with
 // the options as a checklist and the provider named. Character-agnostic. OMIT-WHEN-
 // ABSENT: SITE.financing via cast; absent -> null, never fabricates terms.
 //

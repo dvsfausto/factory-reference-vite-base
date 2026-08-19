@@ -2,7 +2,7 @@ import type { Partner } from './partners-variants'
 import { tr } from '~/lib/i18n'
 import { SITE } from '~/data/site'
 
-// Partners LAYOUT: 'strip' — a compact single-row band of partner marks with an
+// Partners LAYOUT: 'strip', a compact single-row band of partner marks with an
 // inline label. Character-agnostic, quiet. OMIT-WHEN-ABSENT: SITE.partners via
 // cast; none -> null. Missing logo -> monochrome wordmark.
 //

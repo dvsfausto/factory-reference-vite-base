@@ -1,7 +1,7 @@
 import { SITE } from '~/data/site'
 import { tr } from '~/lib/i18n'
 
-// FAQ-section LAYOUT: 'list' — a single-column, type-forward open list of
+// FAQ-section LAYOUT: 'list', a single-column, type-forward open list of
 // questions and answers with generous spacing and numbered prompts. Character-
 // agnostic. Editorial restraint, all answers visible. Reuses SITE.homeFaqs;
 // self-omits when none.

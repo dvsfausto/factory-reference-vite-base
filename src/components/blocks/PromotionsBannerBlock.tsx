@@ -3,7 +3,7 @@ import { ArrowRight, Tag } from 'lucide-react'
 import type { Promotion } from './promotions-variants'
 import { SITE } from '~/data/site'
 
-// Promotions LAYOUT: 'banner' — one featured offer as a bold full-width band.
+// Promotions LAYOUT: 'banner', one featured offer as a bold full-width band.
 // Character-agnostic. OMIT-WHEN-ABSENT: SITE.promotions via cast; none -> null,
 // never fabricates an offer. code/expires shown only when present.
 //

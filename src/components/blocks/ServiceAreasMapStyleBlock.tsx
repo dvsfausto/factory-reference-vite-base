@@ -3,9 +3,9 @@ import { tr } from '~/lib/i18n'
 import { MapPin } from 'lucide-react'
 import { AREAS } from '~/data/areas'
 
-// ServiceAreas LAYOUT: 'map-style' — a coverage panel: the areas as pins on a
+// ServiceAreas LAYOUT: 'map-style', a coverage panel: the areas as pins on a
 // stylized map field beside a text column. Character-agnostic. Evokes a service-
-// area map without fabricating geography — the pins are a decorative scatter, and
+// area map without fabricating geography, the pins are a decorative scatter, and
 // the only real emphasis comes from data (a `tier: 'home-base'` area is promoted
 // to the central marker).
 //

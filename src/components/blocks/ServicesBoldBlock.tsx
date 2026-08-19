@@ -6,17 +6,17 @@ import { SITE } from '~/data/site'
 import { SERVICES } from '~/data/services-view'
 import { serviceImageUrl } from '~/data/images'
 
-// ServicesPreview VARIANT: 'bold' — grounded/industrial services grid for trades.
+// ServicesPreview VARIANT: 'bold', grounded/industrial services grid for trades.
 // Patterns from HeroBoldFullbleedBlock (the catalog reference):
-//   · IDENTITY COPY is DATA — label/heading/body read from SITE.homeServices
+//   · IDENTITY COPY is DATA, label/heading/body read from SITE.homeServices
 //     (promoted out of the block JSX defaults by the scaffolder), so the variant
 //     renders zero hardcoded section copy.
-//   · TOKEN DISCIPLINE — heading via SectionHeaderBold (font-display Oswald, no
+//   · TOKEN DISCIPLINE, heading via SectionHeaderBold (font-display Oswald, no
 //     script); emerald-* for the eyebrow + the "explore" accent (DNA accent);
-//     rounded-* square cards (DNA radius, NOT card-stead's softer literal — these
+//     rounded-* square cards (DNA radius, NOT card-stead's softer literal, these
 //     cards build their own square frame); ink-* neutrals. No bg-brand-*, no .btn
 //     pill.
-//   · Images via the keyed helper serviceImageUrl(slug) + s.name alt — no
+//   · Images via the keyed helper serviceImageUrl(slug) + s.name alt, no
 //     hardcoded paths.
 // Prop signature is identical to ServicesPreviewBlock (uniform render path); the
 // copy props are accepted as overrides and fall back to SITE.homeServices.

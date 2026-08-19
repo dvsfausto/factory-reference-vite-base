@@ -5,7 +5,7 @@ import { ArrowRight } from 'lucide-react'
 import type { InfoPageData, RelatedLink } from '~/lib/types/page-types'
 import { isRelatedServiceVisible } from '~/data/services-view'
 
-// INFO-DETAIL VARIANT (Arc 3 · Stage E): "keep exploring" — THIS info page's two
+// INFO-DETAIL VARIANT (Arc 3 · Stage E): "keep exploring", THIS info page's two
 // cross-link groups rendered as WOW glass cards that lift + glow. Per-item via `info`
 // (ctx.info). Replaces InfoPageTemplate's related section, mirroring Stage C's
 // RelatedServicesBlock but carrying BOTH RelatedLink[] groups:
@@ -23,7 +23,7 @@ import { isRelatedServiceVisible } from '~/data/services-view'
 // BRAND identity → the tr('common.explore') affordance uses text-brand-600. No literal hex.
 //
 // HONESTY: each group omits when its own list is empty; the whole block returns null
-// when both are empty — no empty section, no fabricated links.
+// when both are empty, no empty section, no fabricated links.
 function LinkGroup({
   heading,
   links,

@@ -5,14 +5,14 @@ import { SITE } from '~/data/site'
 import { SERVICES } from '~/data/services-view'
 import { serviceImageUrl } from '~/data/images'
 
-// ServicesPreview LAYOUT: 'bento' — an asymmetric, mixed-size tile grid (the
+// ServicesPreview LAYOUT: 'bento', an asymmetric, mixed-size tile grid (the
 // modern top-of-class look): a large feature tile anchors the composition while
 // wide and standard tiles fill around it, each a photo under a legibility scrim
 // with the service name set on top. Character-agnostic.
 //
 // Genuinely asymmetric (not a grid with random gaps): tile spans follow a
 // deterministic col/row pattern by position, and an OPTIONAL per-item size hint
-// can override it — read via inline cast (s as { size? }), the SITE.surface /
+// can override it, read via inline cast (s as { size? }), the SITE.surface /
 // video_url precedent, so the data file stays untouched and a missing hint simply
 // falls back to the positional pattern. Images via serviceImageUrl (slug-resolved,
 // hero fallback) so a photo-less business still renders.
@@ -41,7 +41,7 @@ export function ServicesBentoBlock({
   const tiles = SERVICES.slice(0, 5)
   if (tiles.length === 0) return null
 
-  // Deterministic span pattern (col/row) keyed by position — the first tile is the
+  // Deterministic span pattern (col/row) keyed by position, the first tile is the
   // large feature; the rest alternate wide and standard for a balanced asymmetry.
   const pattern = [
     'sm:col-span-2 sm:row-span-2',

@@ -2,7 +2,7 @@ import type { TeamMember } from './team-variants'
 import { tr } from '~/lib/i18n'
 import { SITE } from '~/data/site'
 
-// Team LAYOUT: 'spotlight' — one member carries real editorial weight (a large
+// Team LAYOUT: 'spotlight', one member carries real editorial weight (a large
 // portrait and bio in a prominent panel), with the rest of the team listed beside
 // as compact rows. Character-agnostic. Good for an owner/founder-led story.
 //

@@ -1,7 +1,7 @@
 import { PROJECTS } from '~/data/projects'
 import { tr } from '~/lib/i18n'
 
-// Gallery LAYOUT: 'masonry' — a column-flow wall of project photos at their
+// Gallery LAYOUT: 'masonry', a column-flow wall of project photos at their
 // natural heights. Character-agnostic. PIPELINE-SEEDED: images come from the
 // PROJECTS data field (seeded now, customer photos later), so it renders populated
 // from day one (not omit-when-empty).

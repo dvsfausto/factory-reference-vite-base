@@ -3,7 +3,7 @@ import { ArrowRight, Check } from 'lucide-react'
 import type { Membership } from './membership-variants'
 import { SITE } from '~/data/site'
 
-// Membership LAYOUT: 'table' — compact hairline rows, one membership per line with
+// Membership LAYOUT: 'table', compact hairline rows, one membership per line with
 // price + inline perks + a join action. Character-agnostic. The dense, scannable
 // option. OMIT-WHEN-ABSENT: SITE.memberships via cast; none -> null.
 //

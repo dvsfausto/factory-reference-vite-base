@@ -3,7 +3,7 @@ import { tr } from '~/lib/i18n'
 import { getProcessIcon } from './process-icons'
 import { SITE } from '~/data/site'
 
-// Process LAYOUT: 'timeline' — a horizontal timeline: numbered nodes strung along
+// Process LAYOUT: 'timeline', a horizontal timeline: numbered nodes strung along
 // a connecting line, content beneath each. Character-agnostic. OMIT-WHEN-ABSENT:
 // steps from optional SITE.steps via cast; no steps -> null, never fabricates.
 //

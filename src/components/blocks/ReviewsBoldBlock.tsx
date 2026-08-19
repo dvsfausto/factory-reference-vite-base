@@ -5,7 +5,7 @@ import { SectionHeaderBold } from '~/components/SectionHeaderBold'
 import { ReviewCard } from '~/components/ReviewCard'
 import { reviews } from '~/data/reviews'
 
-// Reviews VARIANT: 'bold' — identical to ReviewsBlock except it wires in the
+// Reviews VARIANT: 'bold', identical to ReviewsBlock except it wires in the
 // EXISTING SectionHeaderBold (solid Oswald, no ◆ diamond divider, no script
 // flourish) instead of the default SectionHeader. Targeted polish, gated to the
 // 'bold' variant so other verticals keep the default header byte-identically.

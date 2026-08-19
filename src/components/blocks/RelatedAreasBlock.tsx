@@ -4,13 +4,13 @@ import { Link } from '@tanstack/react-router'
 import { ArrowRight, MapPin } from 'lucide-react'
 import type { ServiceAreaPageData } from '~/lib/types/page-types'
 
-// AREA-DETAIL VARIANT (Arc 3 · Stage D): "we also serve nearby" — THIS area's
+// AREA-DETAIL VARIANT (Arc 3 · Stage D): "we also serve nearby", THIS area's
 // `relatedAreas` cross-links, rendered as WOW glass cards that lift + glow. Per-item
 // via `area` (ctx.area). Replaces ServiceAreaPageTemplate's related-areas section.
 // This is the Stage-D mirror of RelatedServicesBlock.
 //
 // Each RelatedLink is { href, label } (see src/lib/types/page-types.ts). The scaffolder
-// emits href as the full path (`/areas/<slug>`), so the card links via `to={a.href}` —
+// emits href as the full path (`/areas/<slug>`), so the card links via `to={a.href}` -
 // the same string-Link pattern RelatedServicesBlock uses for `/services/<slug>`.
 //
 // WOW tokens consumed (all brand-derived via color-mix, see styles/app.css):
@@ -20,7 +20,7 @@ import type { ServiceAreaPageData } from '~/lib/types/page-types'
 // BRAND identity → the tr('common.explore') affordance uses text-brand-600. No literal hex.
 //
 // HONESTY: links are the real per-area relatedAreas. Returns null when there are none
-// — no empty section (matches ServiceAreaPageTemplate's `relatedAreas.length > 0`
+//, no empty section (matches ServiceAreaPageTemplate's `relatedAreas.length > 0`
 // guard). Reveal is applied by the shared SectionList, so no opacity-hider here.
 export function RelatedAreasBlock({
   area,

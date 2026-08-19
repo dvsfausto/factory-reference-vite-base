@@ -1,7 +1,7 @@
 import { SITE } from '~/data/site'
 import { tr } from '~/lib/i18n'
 
-// Story LAYOUT: 'narrative' — a large, centered editorial statement (ported from
+// Story LAYOUT: 'narrative', a large, centered editorial statement (ported from
 // the painter ManifestoBlock, DNA-tokened). Character-agnostic. Uses SITE.about as
 // the narrative, with an optional SITE.story { quote, attribution } override via
 // cast; renders from SITE.about so it is present on any built site.

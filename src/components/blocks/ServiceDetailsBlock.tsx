@@ -5,7 +5,7 @@ import { MapPin, Quote, Star } from 'lucide-react'
 import type { ServicePageData } from '~/lib/types/page-types'
 
 // SERVICE-DETAIL VARIANT (Arc 3 · Stage C): the rich, consolidated MIDDLE content of
-// a service page, driven per-item by `service` (ctx.service). It renders — in order —
+// a service page, driven per-item by `service` (ctx.service). It renders, in order -
 // howPrice, scenarios, pricing, coverage, localContext, and testimonial, EACH omitting
 // when its own data is empty. Consolidating them into one block keeps the
 // SERVICE_DETAIL_LAYOUT lean while preserving every field ServicePageTemplate rendered.
@@ -22,7 +22,7 @@ import type { ServicePageData } from '~/lib/types/page-types'
 //   · howPrice   → shown only when factors.length > 0
 //   · scenarios  → shown only when cards.length > 0
 //   · pricing    → shown only when ranges?.length or notes.length > 0 (ranges render
-//                  as a clean table WHEN present, else body + notes only — numbers are
+//                  as a clean table WHEN present, else body + notes only, numbers are
 //                  NEVER invented; a barbershop service with empty ranges shows none)
 //   · coverage   → shown only when areas.length > 0
 //   · localContext → shown only when present
@@ -183,7 +183,7 @@ export function ServiceDetailsBlock({
             {pricing.notes.map((n, i) => (
               <li key={i} className="flex items-start gap-3 leading-relaxed text-ink-700">
                 <span aria-hidden className="shrink-0 text-brand-600">
-                  —
+                  -
                 </span>
                 <span>{n}</span>
               </li>

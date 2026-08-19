@@ -3,7 +3,7 @@ import { tr } from '~/lib/i18n'
 import { ArrowUpRight, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 
-// CTA VARIANT: 'creative' — the signature color-forward statement: a full vivid
+// CTA VARIANT: 'creative', the signature color-forward statement: a full vivid
 // magenta color block (the DNA accent used as the whole surface field), an
 // oversized expressive headline, and a bold brand CTA. The boldest, most
 // design-led moment on the page. Identity copy from SITE.homeCta. Prop signature

@@ -1,7 +1,7 @@
 import type { ServiceAreaPageData } from '~/lib/types/page-types'
 
-// AREA-DETAIL VARIANT (Arc 3 · Stage D): renders THIS area's `about` section — the
-// "at a glance" lead copy — as a WOW composition: an eyebrow + headline over a soft
+// AREA-DETAIL VARIANT (Arc 3 · Stage D): renders THIS area's `about` section, the
+// "at a glance" lead copy, as a WOW composition: an eyebrow + headline over a soft
 // glass panel of paragraphs. Per-item content flows in via the `area` prop
 // (ctx.area from the route), so the SAME block serves every area page with its OWN
 // copy. This is the block analogue of ServiceAreaPageTemplate's "AT A GLANCE / ABOUT"

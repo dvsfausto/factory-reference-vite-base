@@ -5,10 +5,10 @@ import { SITE } from '~/data/site'
 import { HERO_ALT } from '~/data/images'
 import { imageSrc } from '~/lib/asset-url'
 
-// Hero VARIANT: 'editorial' — a magazine-style, typography-forward WOW hero. A
+// Hero VARIANT: 'editorial', a magazine-style, typography-forward WOW hero. A
 // huge headline reveals word-by-word above a thin brand hairline rule; a wide
 // image band carries a brand-gradient corner accent; a brand-gradient strip lists
-// the real trust items. Minimal and striking — the third distinct WOW mood
+// the real trust items. Minimal and striking, the third distinct WOW mood
 // alongside 'aurora' (cinematic/dark) and 'spotlight' (editorial split/light).
 //
 // WOW tokens consumed (all brand-derived, styles/app.css):
@@ -18,7 +18,7 @@ import { imageSrc } from '~/lib/asset-url'
 //   · --wow-ease-out    → entrance easing (+ staggered word reveal).
 // BRAND identity → the primary CTA uses bg-primary/text-primary-foreground.
 //
-// HONESTY: no invented figures — the strip is the real trust items only.
+// HONESTY: no invented figures, the strip is the real trust items only.
 // `decorativeAsset` accepted for parity, unused. Content is props with SITE fallback.
 export function HeroEditorialBlock({
   trustItems = ['Friendly service', 'Same-day quotes', 'Local team', '100% satisfaction'],
@@ -57,7 +57,7 @@ export function HeroEditorialBlock({
           {kicker}
         </motion.span>
 
-        {/* Oversized kinetic headline — reveals word by word (static under reduced motion). */}
+        {/* Oversized kinetic headline, reveals word by word (static under reduced motion). */}
         <motion.h1
           className="mt-6 max-w-5xl text-5xl leading-[0.95] tracking-tight sm:text-7xl lg:text-8xl"
           initial="hidden"
@@ -140,7 +140,7 @@ export function HeroEditorialBlock({
         </motion.div>
       </div>
 
-      {/* Brand-gradient trust strip — the real trust items. */}
+      {/* Brand-gradient trust strip, the real trust items. */}
       <div className="relative text-white" style={{ backgroundImage: 'var(--wow-grad-brand)' }}>
         <div className="container-x flex flex-wrap items-center gap-x-8 gap-y-2 py-4 text-sm font-semibold uppercase tracking-[0.12em]">
           {trustItems.map((t) => (

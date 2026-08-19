@@ -5,11 +5,11 @@ import { SITE } from '~/data/site'
 import { HERO_ALT } from '~/data/images'
 import { imageSrc } from '~/lib/asset-url'
 
-// Hero LAYOUT: 'centered' — the same modern, light-cool character as
+// Hero LAYOUT: 'centered', the same modern, light-cool character as
 // HeroModernBlock, re-laid as a single centered column instead of a left/right
 // split. Headline, subheadline, body, CTAs and trust row stack and center on a
 // constrained max-width measure; the hero image sits below as a full-width
-// framed banner rather than a side panel. This is the pilot's LAYOUT axis — a
+// framed banner rather than a side panel. This is the pilot's LAYOUT axis, a
 // composition variant, not a new character.
 //
 // TOKEN DISCIPLINE: primary CTA -> bg-primary / text-primary-foreground (BRAND-

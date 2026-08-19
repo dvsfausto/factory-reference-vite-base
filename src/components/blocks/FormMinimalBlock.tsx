@@ -4,7 +4,7 @@ import { SITE } from '~/data/site'
 import { submitLead, type LeadStatus } from './forms-submit'
 import { Field, Textarea, SubmitButton, SuccessCard } from './form-ui'
 
-// Forms LAYOUT: 'minimal' — a low-friction, few-field form (name, phone, a short
+// Forms LAYOUT: 'minimal', a low-friction, few-field form (name, phone, a short
 // note). Character-agnostic. The fastest path to a lead. Posts the confirmed
 // handle-website-lead envelope (source_page 'contact'); last_name is sent empty
 // (the contract allows it) to keep the form short.

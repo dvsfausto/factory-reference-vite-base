@@ -2,7 +2,7 @@ import type { VideoTestimonial } from './video-testimonials-variants'
 import { tr } from '~/lib/i18n'
 import { SITE } from '~/data/site'
 
-// Video Testimonials LAYOUT: 'grid' — a grid of native video players (poster +
+// Video Testimonials LAYOUT: 'grid', a grid of native video players (poster +
 // browser controls), author + quote beneath. Character-agnostic, SSR-safe.
 // OMIT-WHEN-ABSENT: SITE.videoTestimonials via cast; none -> null. Missing poster
 // degrades to a neutral slate frame (the player still works).

@@ -5,7 +5,7 @@ import { SITE } from '~/data/site'
 import { SERVICES } from '~/data/services-view'
 import { serviceImageUrl } from '~/data/images'
 
-// ServicesPreview LAYOUT: 'alternating-rows' — an Apple-style zigzag, one service
+// ServicesPreview LAYOUT: 'alternating-rows', an Apple-style zigzag, one service
 // per full-width row, image and text trading sides down the page with generous
 // vertical rhythm. Character-agnostic: cool-light surface, modern tokens.
 //

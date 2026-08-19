@@ -235,6 +235,31 @@ const HEADER_THEMES: Record<string, HeaderTheme> = {
     mobilePhone: "text-emerald-700",
     mobileCta: "inline-flex h-12 w-full items-center justify-center rounded-2xl bg-primary font-display text-sm font-bold text-primary-foreground",
   },
+  // 'clean' family (Swiss-minimal, cool light). Standard bar; the header analog of the footer's
+  // clean theme (bg #F7F8FA, hairline #E2E8F0, slate text, emerald accent) so a clean site's header
+  // and footer agree instead of the header falling to the navy default.
+  clean: {
+    shell: "bg-[#F7F8FA]",
+    scrolledShadow: "shadow-[0_1px_0_0_#E2E8F0,0_2px_14px_rgba(30,41,59,0.05)]",
+    skip: "focus:bg-emerald-600 focus:text-white",
+    navLink: "font-display text-[15px] font-medium text-[#64748B] hover:text-[#1E293B]",
+    cta: "inline-flex h-[42px] items-center rounded-lg bg-primary px-5 font-display text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90",
+    ctaLabel: "Free Quote",
+    dropdownSurface: "bg-white border border-[#E2E8F0] rounded-lg shadow-lg",
+    dropdownItem: "hover:bg-[#F1F5F9]",
+    dropdownTitle: "text-[#1E293B]",
+    dropdownSub: "text-[#64748B]",
+    areaAllLink: "text-emerald-700 hover:bg-[#F1F5F9]",
+    phoneLink: "text-[#64748B] hover:text-[#1E293B]",
+    menuIcon: "text-[#1E293B]",
+    logoLight: false,
+    mobilePanel: "bg-[#F7F8FA]",
+    mobileText: "text-[#1E293B]",
+    mobileLabel: "text-[#64748B]",
+    mobileBorder: "border-[#E2E8F0]",
+    mobilePhone: "text-emerald-700",
+    mobileCta: "inline-flex h-12 w-full items-center justify-center rounded-lg bg-primary font-display text-sm font-semibold text-primary-foreground",
+  },
   friendly: {
     shell: "bg-[#FFFBF5]",
     scrolledShadow: "shadow-[0_2px_16px_rgba(61,53,48,0.08)]",
@@ -269,12 +294,30 @@ export function Header() {
   // the brand-reactive glass chrome, independent of character. Absent/unknown →
   // the character logic below (byte-identical for builds that don't set it).
   const chrome = (SITE as { chromeStyle?: string }).chromeStyle ?? "";
+  // DESIGN-WAVE FAMILY (SITE.headerVariant) — the SAME emit path as SITE.footerVariant. Absent on every
+  // legacy character/vertical site, so those fall through to the character/chrome logic below and render
+  // byte-identically. When present it drives BOTH axes:
+  //   • STRUCTURE — a real structural difference, NOT a token swap (the footer lesson). elegant → a centred
+  //     two-tier editorial masthead; corporate → a utility strip (real fields only) above the main bar;
+  //     every other family → today's standard left-logo bar in its own colours.
+  //   • COLOUR THEME — the family's HEADER_THEMES entry (elegant maps to the light editorial palette).
+  const family = (SITE as { headerVariant?: string }).headerVariant ?? "";
+  const structure: "standard" | "editorial" | "utility" =
+    family === "elegant" ? "editorial" : family === "corporate" ? "utility" : "standard";
+  // Family → colour-theme key. Most families share their name; two remap: elegant → the LIGHT editorial
+  // palette (the dark espresso theme is opt-in via character+surface), and wow-glass → the brand-reactive
+  // 'wow' glass theme (keyed by name here since the design wave sets no chromeStyle). Keeps header theme
+  // coverage 1:1 with the footer's, so no family falls to the navy default while its footer is light/glass.
+  const familyThemeKey =
+    family === "elegant" ? "elegant-light" : family === "wow-glass" ? "wow" : family;
   const themeKey =
     chrome && HEADER_THEMES[chrome]
       ? chrome
-      : character === "elegant" && surface !== "dark"
-        ? "elegant-light"
-        : character;
+      : family && HEADER_THEMES[familyThemeKey]
+        ? familyThemeKey
+        : character === "elegant" && surface !== "dark"
+          ? "elegant-light"
+          : character;
   const t = HEADER_THEMES[themeKey] ?? HEADER_THEMES.default;
   // Header CTA reflects the business's TRANSACTION TYPE — booking businesses shouldn't
   // show "Free Quote". Infer it from the hero's primary CTA (set per-vertical/onboarding:
@@ -302,115 +345,207 @@ export function Header() {
     return () => { document.body.style.overflow = prev; };
   }, [open]);
 
+  // ── Shared primitives, composed differently per STRUCTURE ─────────────────────
+  // The desktop nav links (dropdowns + page links). `dropAlign` positions the
+  // dropdown panel — `left-0` under a left-aligned bar, centred under the editorial
+  // masthead's centred nav row so the panel doesn't hang off-screen.
+  const navLinks = (dropAlign = "left-0") => (
+    <>
+      {/* Services nav omitted when the site has no service pages (e.g. a
+          generic-vertical business whose owner supplied none) — no empty
+          dropdown, no dead /services link. Mirrors the AREAS guard below. */}
+      {SERVICES.length > 0 && (
+        <div
+          className="relative"
+          onMouseEnter={() => setOpenMenu("services")}
+          onMouseLeave={() => setOpenMenu(null)}
+        >
+          <button className={`flex items-center gap-1 px-3 py-2 ${t.navLink} focus-ring rounded-md`}>
+            {tr('nav.services')} <ChevronDown className="h-4 w-4" />
+          </button>
+          {openMenu === "services" && (
+            <div className={`absolute ${dropAlign} top-full pt-2`}>
+              <div className={`${t.dropdownSurface} p-2 w-72`}>
+                {SERVICES.map((s) => (
+                  <Link
+                    key={s.slug}
+                    to="/services/$slug"
+                    params={{ slug: s.slug }}
+                    className={`block px-3 py-2 rounded-lg text-sm ${t.dropdownItem}`}
+                  >
+                    <div className={`font-medium ${t.dropdownTitle}`}>{s.name}</div>
+                    {s.tagline && <div className={`text-xs ${t.dropdownSub}`}>{s.tagline}</div>}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Areas nav omitted when the site has no service-area pages (e.g. a
+          single-area business) — no empty dropdown, no dead /areas link. */}
+      {AREAS.length > 0 && (
+        <div
+          className="relative"
+          onMouseEnter={() => setOpenMenu("areas")}
+          onMouseLeave={() => setOpenMenu(null)}
+        >
+          <button className={`flex items-center gap-1 px-3 py-2 ${t.navLink} focus-ring rounded-md`}>
+            {tr('nav.areas')} <ChevronDown className="h-4 w-4" />
+          </button>
+          {openMenu === "areas" && (
+            <div className={`absolute ${dropAlign} top-full pt-2`}>
+              <div className={`${t.dropdownSurface} p-2 w-64`}>
+                {AREAS.map((a) => (
+                  <Link
+                    key={a.slug}
+                    to="/areas/$slug"
+                    params={{ slug: a.slug }}
+                    className={`block px-3 py-2 rounded-lg text-sm font-medium ${t.dropdownTitle} ${t.dropdownItem}`}
+                  >
+                    {a.name}
+                  </Link>
+                ))}
+                <Link to="/areas" className={`block px-3 py-2 rounded-lg text-sm font-medium ${t.areaAllLink}`}>
+                  {tr('nav.viewAllAreas')}
+                </Link>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {!HIDDEN_NAV.includes('pricing') && <Link to="/pricing" className={`px-3 py-2 ${t.navLink} focus-ring rounded-md`}>{tr('nav.pricing')}</Link>}
+      {!HIDDEN_NAV.includes('reviews') && <Link to="/reviews" className={`px-3 py-2 ${t.navLink} focus-ring rounded-md`}>{tr('nav.reviews')}</Link>}
+      {!HIDDEN_NAV.includes('about') && <Link to="/about" className={`px-3 py-2 ${t.navLink} focus-ring rounded-md`}>{tr('nav.about')}</Link>}
+      {!HIDDEN_NAV.includes('contact') && <Link to="/contact" className={`px-3 py-2 ${t.navLink} focus-ring rounded-md`}>{tr('nav.contact')}</Link>}
+      {/* Custom pages (Phase 2). Empty CUSTOM_PAGES → nothing renders (byte-identical). */}
+      {CUSTOM_PAGES.filter((p) => p.nav !== false).map((p) => (
+        <Link key={p.slug} to="/p/$slug" params={{ slug: p.slug }} className={`px-3 py-2 ${t.navLink} focus-ring rounded-md`}>{p.title}</Link>
+      ))}
+    </>
+  );
+
+  const phoneCluster = (
+    <a href={`tel:${SITE.phone}`} className={`flex items-center gap-1.5 text-sm font-semibold ${t.phoneLink} focus-ring rounded-md px-2 py-1`}>
+      <Phone className="h-4 w-4" />
+      {SITE.phoneDisplay}
+    </a>
+  );
+  const ctaButton = <PrimaryCta className={t.cta}>{headerCtaLabel}</PrimaryCta>;
+  const mobileTrigger = (
+    <button
+      className="lg:hidden p-2 focus-ring rounded-md"
+      onClick={() => setOpen(true)}
+      aria-label={tr('nav.openMenu')}
+    >
+      <Menu className={`h-6 w-6 ${t.menuIcon}`} />
+    </button>
+  );
+  const skipLink = (
+    <a href="#main" className={`sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 ${t.skip} focus:px-3 focus:py-1.5 focus:rounded-md`}>
+      {tr('nav.skipToContent')}
+    </a>
+  );
+
+  // Real, honest meta the utility strip / masthead can show — only fields that
+  // exist. No invented stats, no fake credential logos (the corporate honesty rail).
+  const cityLine = [SITE.address?.city, SITE.address?.state].filter(Boolean).join(", ");
+
   return (
     <>
       <header
+        data-header-structure={structure}
+        data-header-theme={themeKey || "default"}
         className={`sticky top-0 z-40 ${
           scrolled && t.shellScrolled ? t.shellScrolled : t.shell
         } backdrop-blur ${t.shellScrolled ? "transition-all" : "transition-shadow"} ${
           scrolled ? t.scrolledShadow : ""
         }`}
       >
-        <a href="#main" className={`sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 ${t.skip} focus:px-3 focus:py-1.5 focus:rounded-md`}>
-          {tr('nav.skipToContent')}
-        </a>
-        <div className="container-x flex items-center justify-between h-20">
-          <Link to="/" className="focus-ring rounded-md" aria-label={`${SITE.name} home`}>
-            <Logo src={SITE.logo_url} light={t.logoLight} height={44} alt={SITE.name} />
-          </Link>
+        {skipLink}
 
-          <nav className="hidden lg:flex items-center gap-1" aria-label={tr('nav.ariaPrimary')}>
-            {/* Services nav omitted when the site has no service pages (e.g. a
-                generic-vertical business whose owner supplied none) — no empty
-                dropdown, no dead /services link. Mirrors the AREAS guard below. */}
-            {SERVICES.length > 0 && (
-              <div
-                className="relative"
-                onMouseEnter={() => setOpenMenu("services")}
-                onMouseLeave={() => setOpenMenu(null)}
-              >
-                <button className={`flex items-center gap-1 px-3 py-2 ${t.navLink} focus-ring rounded-md`}>
-                  {tr('nav.services')} <ChevronDown className="h-4 w-4" />
-                </button>
-                {openMenu === "services" && (
-                  <div className="absolute left-0 top-full pt-2">
-                    <div className={`${t.dropdownSurface} p-2 w-72`}>
-                      {SERVICES.map((s) => (
-                        <Link
-                          key={s.slug}
-                          to="/services/$slug"
-                          params={{ slug: s.slug }}
-                          className={`block px-3 py-2 rounded-lg text-sm ${t.dropdownItem}`}
-                        >
-                          <div className={`font-medium ${t.dropdownTitle}`}>{s.name}</div>
-                          {s.tagline && <div className={`text-xs ${t.dropdownSub}`}>{s.tagline}</div>}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            )}
-
-            {/* Areas nav omitted when the site has no service-area pages (e.g. a
-                single-area business) — no empty dropdown, no dead /areas link. */}
-            {AREAS.length > 0 && (
-              <div
-                className="relative"
-                onMouseEnter={() => setOpenMenu("areas")}
-                onMouseLeave={() => setOpenMenu(null)}
-              >
-                <button className={`flex items-center gap-1 px-3 py-2 ${t.navLink} focus-ring rounded-md`}>
-                  {tr('nav.areas')} <ChevronDown className="h-4 w-4" />
-                </button>
-                {openMenu === "areas" && (
-                  <div className="absolute left-0 top-full pt-2">
-                    <div className={`${t.dropdownSurface} p-2 w-64`}>
-                      {AREAS.map((a) => (
-                        <Link
-                          key={a.slug}
-                          to="/areas/$slug"
-                          params={{ slug: a.slug }}
-                          className={`block px-3 py-2 rounded-lg text-sm font-medium ${t.dropdownTitle} ${t.dropdownItem}`}
-                        >
-                          {a.name}
-                        </Link>
-                      ))}
-                      <Link to="/areas" className={`block px-3 py-2 rounded-lg text-sm font-medium ${t.areaAllLink}`}>
-                        {tr('nav.viewAllAreas')}
-                      </Link>
-                    </div>
-                  </div>
-                )}
-              </div>
-            )}
-
-            {!HIDDEN_NAV.includes('pricing') && <Link to="/pricing" className={`px-3 py-2 ${t.navLink} focus-ring rounded-md`}>{tr('nav.pricing')}</Link>}
-            {!HIDDEN_NAV.includes('reviews') && <Link to="/reviews" className={`px-3 py-2 ${t.navLink} focus-ring rounded-md`}>{tr('nav.reviews')}</Link>}
-            {!HIDDEN_NAV.includes('about') && <Link to="/about" className={`px-3 py-2 ${t.navLink} focus-ring rounded-md`}>{tr('nav.about')}</Link>}
-            {!HIDDEN_NAV.includes('contact') && <Link to="/contact" className={`px-3 py-2 ${t.navLink} focus-ring rounded-md`}>{tr('nav.contact')}</Link>}
-            {/* Custom pages (Phase 2). Empty CUSTOM_PAGES → nothing renders (byte-identical). */}
-            {CUSTOM_PAGES.filter((p) => p.nav !== false).map((p) => (
-              <Link key={p.slug} to="/p/$slug" params={{ slug: p.slug }} className={`px-3 py-2 ${t.navLink} focus-ring rounded-md`}>{p.title}</Link>
-            ))}
-          </nav>
-
-          <div className="hidden lg:flex items-center gap-3">
-            <a href={`tel:${SITE.phone}`} className={`flex items-center gap-1.5 text-sm font-semibold ${t.phoneLink} focus-ring rounded-md px-2 py-1`}>
-              <Phone className="h-4 w-4" />
-              {SITE.phoneDisplay}
-            </a>
-            <PrimaryCta className={t.cta}>{headerCtaLabel}</PrimaryCta>
+        {structure === "standard" && (
+          <div className="container-x flex items-center justify-between h-20">
+            <Link to="/" className="focus-ring rounded-md" aria-label={`${SITE.name} home`}>
+              <Logo src={SITE.logo_url} light={t.logoLight} height={44} alt={SITE.name} />
+            </Link>
+            <nav className="hidden lg:flex items-center gap-1" aria-label={tr('nav.ariaPrimary')}>
+              {navLinks()}
+            </nav>
+            <div className="hidden lg:flex items-center gap-3">
+              {phoneCluster}
+              {ctaButton}
+            </div>
+            {mobileTrigger}
           </div>
+        )}
 
-          <button
-            className="lg:hidden p-2 focus-ring rounded-md"
-            onClick={() => setOpen(true)}
-            aria-label={tr('nav.openMenu')}
-          >
-            <Menu className={`h-6 w-6 ${t.menuIcon}`} />
-          </button>
-        </div>
+        {structure === "editorial" && (
+          // EDITORIAL MASTHEAD (elegant) — a genuinely different STRUCTURE, not a tighter nav: symmetric and
+          // centred, two tiers. Top tier is a 3-column masthead (place/hours flanking a CENTRED wordmark,
+          // actions on the right); a hairline separates a CENTRED nav row beneath. Collapses to a plain bar on
+          // mobile. Reads like a printed masthead, which no other family's header does.
+          <div className="container-x">
+            <div className="flex lg:hidden items-center justify-between h-20">
+              <Link to="/" className="focus-ring rounded-md" aria-label={`${SITE.name} home`}>
+                <Logo src={SITE.logo_url} light={t.logoLight} height={40} alt={SITE.name} />
+              </Link>
+              {mobileTrigger}
+            </div>
+            <div className="hidden lg:block">
+              <div className="grid grid-cols-3 items-center h-20">
+                <div className={`justify-self-start text-[11px] uppercase tracking-[0.22em] ${t.mobileLabel}`}>
+                  {cityLine || SITE.hours}
+                </div>
+                <Link to="/" className="justify-self-center focus-ring rounded-md" aria-label={`${SITE.name} home`}>
+                  <Logo src={SITE.logo_url} light={t.logoLight} height={46} alt={SITE.name} />
+                </Link>
+                <div className="justify-self-end flex items-center gap-4">
+                  {phoneCluster}
+                  {ctaButton}
+                </div>
+              </div>
+              <nav className={`flex items-center justify-center gap-7 border-t ${t.mobileBorder} h-12`} aria-label={tr('nav.ariaPrimary')}>
+                {navLinks("left-1/2 -translate-x-1/2")}
+              </nav>
+            </div>
+          </div>
+        )}
+
+        {structure === "utility" && (
+          // UTILITY BAR (corporate) — a thin top strip of REAL contact facts (hours · location · email ·
+          // phone) above the main nav bar. A structural device that reads "established / businesslike" and
+          // adds honest trust density without a single invented stat or fake credential logo. The strip is
+          // desktop-only; mobile collapses to the plain bar + drawer.
+          <>
+            <div className={`hidden lg:block border-b ${t.mobileBorder} bg-[#F4F6F9]`}>
+              <div className={`container-x flex items-center justify-between h-9 text-xs ${t.mobileLabel}`}>
+                <div className="flex items-center gap-6">
+                  {SITE.hours && <span>{SITE.hours}</span>}
+                  {cityLine && <span>{cityLine}</span>}
+                </div>
+                <div className="flex items-center gap-6">
+                  {SITE.email && <a href={`mailto:${SITE.email}`} className="hover:underline">{SITE.email}</a>}
+                  <a href={`tel:${SITE.phone}`} className={`font-semibold ${t.phoneLink}`}>{SITE.phoneDisplay}</a>
+                </div>
+              </div>
+            </div>
+            <div className="container-x flex items-center justify-between h-[72px]">
+              <Link to="/" className="focus-ring rounded-md" aria-label={`${SITE.name} home`}>
+                <Logo src={SITE.logo_url} light={t.logoLight} height={42} alt={SITE.name} />
+              </Link>
+              <nav className="hidden lg:flex items-center gap-1" aria-label={tr('nav.ariaPrimary')}>
+                {navLinks()}
+              </nav>
+              <div className="hidden lg:flex items-center gap-3">
+                {ctaButton}
+              </div>
+              {mobileTrigger}
+            </div>
+          </>
+        )}
       </header>
 
       {open && (

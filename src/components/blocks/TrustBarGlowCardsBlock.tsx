@@ -3,7 +3,7 @@ import { motion, useReducedMotion } from 'framer-motion'
 import type { ReactNode } from 'react'
 import { SITE } from '~/data/site'
 
-// TRUST BAR VARIANT: 'glow-cards' — the real trust items as frosted glass cards,
+// TRUST BAR VARIANT: 'glow-cards', the real trust items as frosted glass cards,
 // each with a brand-gradient icon badge, that lift and glow on hover and
 // stagger in as they enter the viewport. The rich, tactile counterpart to the
 // flat 'hairline-rows' variant.
@@ -15,7 +15,7 @@ import { SITE } from '~/data/site'
 //   · --wow-hairline     → the card hairline border.
 // BRAND identity stays on the gradient badge; neutrals are ink-*/white.
 //
-// HONESTY: renders ONLY the real trust items (title/description) — same resolve
+// HONESTY: renders ONLY the real trust items (title/description), same resolve
 // chain as the default (items ?? SITE.trustItems ?? DEFAULT_TRUST_ITEMS) and the
 // same fixed icon set zipped by index. Items are qualitative, NOT turned into
 // fake numeric stats. Empty items → returns null, exactly like the default.

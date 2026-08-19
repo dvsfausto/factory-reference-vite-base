@@ -5,14 +5,14 @@ import { SITE } from '~/data/site'
 import { HERO_ALT } from '~/data/images'
 import { imageSrc } from '~/lib/asset-url'
 
-// Hero LAYOUT: 'video' — a background video behind centered text, with a scrim for
+// Hero LAYOUT: 'video', a background video behind centered text, with a scrim for
 // legibility. The video source is DATA, not hardcoded: it is read from an OPTIONAL
 // SITE.hero.video_url consumed via the same inline-cast precedent the codebase
 // uses for SITE.surface (HeroElegantBlock). site.ts is never edited; the field is
 // emit-when-present (mirrors surface in the scaffolder), so every existing fixture
-// — none of which set it — renders the GRACEFUL fallback below, byte-identical.
+//, none of which set it, renders the GRACEFUL fallback below, byte-identical.
 //
-// FALLBACK: when no video_url is present, no <video> is mounted at all — the
+// FALLBACK: when no video_url is present, no <video> is mounted at all, the
 // existing hero.image_url is used as a still poster, so the layout degrades to a
 // clean centered photo hero instead of a black or broken frame. When a video IS
 // set, image_url is its poster (shown before the video paints / if it can't play).

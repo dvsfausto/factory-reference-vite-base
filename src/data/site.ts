@@ -32,7 +32,7 @@ export const SITE = {
     kicker: 'Cleaning · Cincinnati · Est. 2014',
     headline: 'The careful kind of cleaning.',
     subheadline: 'For Cincinnati homes that deserve it.',
-    body: 'Recurring, deep, and move-out cleaning — handled by a careful team and backed by a spotless-home guarantee.',
+    body: 'Recurring, deep, and move-out cleaning, handled by a careful team and backed by a spotless-home guarantee.',
     cta_primary_label: 'Request a quote',
     cta_secondary_label: 'Browse services',
     image_url: 'hero-reference.webp',
@@ -82,7 +82,7 @@ export const SITE = {
   // Section identity copy for the remapped serviceAreas/reviews variants + the global
   // header CTA. Variant components read these (cast + ?? neutral fallback) so character
   // sections carry the VERTICAL's copy when authored, and a vertical-NEUTRAL generic when
-  // not — never another vertical's baked demo copy. Overwritten per build when a vertical
+  // not, never another vertical's baked demo copy. Overwritten per build when a vertical
   // provides copy.homeAreas / copy.homeReviews / copy.headerCtaLabel.
   homeAreas: {
     label: 'Service areas',

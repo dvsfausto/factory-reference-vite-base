@@ -5,7 +5,7 @@ import { Quote, Star } from 'lucide-react'
 import { reviews } from '~/data/reviews'
 import { SectionHeader } from '~/components/SectionHeader'
 
-// Reviews VARIANT: 'glass-wall' — a masonry "wall" of frosted-glass cards of varied
+// Reviews VARIANT: 'glass-wall', a masonry "wall" of frosted-glass cards of varied
 // heights, the whole cluster held inside a brand-hairline frame with a faint brand tint.
 // Longer reviews naturally take more vertical space, giving an editorial pinboard feel.
 // Cards stagger in on scroll and lift + glow on hover.

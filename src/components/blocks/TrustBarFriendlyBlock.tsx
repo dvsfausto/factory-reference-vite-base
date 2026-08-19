@@ -1,6 +1,6 @@
 import { HeartHandshake, ShieldCheck, Sparkles } from 'lucide-react'
 
-// TrustBar VARIANT: 'friendly' — the 3 feature points under the hero, warm +
+// TrustBar VARIANT: 'friendly', the 3 feature points under the hero, warm +
 // bright. Soft rounded coral icon chips (NOT round icon-circles, NOT brand
 // color), rounded friendly headings, light-warm surface. Left-aligned.
 //
@@ -12,7 +12,7 @@ export function TrustBarFriendlyBlock({
   items = [
     {
       title: 'Free estimates',
-      description: 'Clear quotes up front — no surprises after the work.',
+      description: 'Clear quotes up front, no surprises after the work.',
     },
     {
       title: 'On schedule',

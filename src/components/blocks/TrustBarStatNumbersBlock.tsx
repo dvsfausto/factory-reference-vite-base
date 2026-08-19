@@ -1,6 +1,6 @@
-// TrustBar LAYOUT: 'stat-numbers' — the trust points rendered as a row of metric
+// TrustBar LAYOUT: 'stat-numbers', the trust points rendered as a row of metric
 // figures: a large display number over a compact label. Character-agnostic.
-// Real metric display, not decoration — the number leads and the eye reads the
+// Real metric display, not decoration, the number leads and the eye reads the
 // proof at a glance.
 //
 // The figure is DATA and OPTIONAL: each item may carry a `stat` (e.g. "500+",

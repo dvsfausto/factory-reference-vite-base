@@ -5,7 +5,7 @@ import { Quote, Star } from 'lucide-react'
 import { reviews, getAggregateRating } from '~/data/reviews'
 import { SectionHeader } from '~/components/SectionHeader'
 
-// Reviews VARIANT: 'pull-quote' — an editorial spotlight. One large featured review is
+// Reviews VARIANT: 'pull-quote', an editorial spotlight. One large featured review is
 // set as an oversized pull-quote beside a brand-gradient rule; when there are genuinely
 // enough reviews to compute one, the REAL aggregate rating sits alongside it. The
 // remaining reviews trail below as small frosted-glass chips. Typographic and restrained.
@@ -21,7 +21,7 @@ import { SectionHeader } from '~/components/SectionHeader'
 //
 // HONESTY: the featured quote and chips are real reviews only; stars come solely from
 // each review's `rating`. The aggregate badge renders ONLY when getAggregateRating()
-// is non-null (i.e. real reviews exist) — never a fabricated score. Empty reviews →
+// is non-null (i.e. real reviews exist), never a fabricated score. Empty reviews →
 // early-return null, matching the default ReviewsBlock.
 export function ReviewsPullQuoteBlock({
   label = tr('nav.reviews'),
@@ -104,7 +104,7 @@ export function ReviewsPullQuoteBlock({
             </div>
           </motion.figure>
 
-          {/* Aggregate rating — ONLY when real (getAggregateRating() non-null). */}
+          {/* Aggregate rating, ONLY when real (getAggregateRating() non-null). */}
           {rating && (
             <motion.div
               initial={reduce ? { opacity: 1 } : { opacity: 0, scale: 0.94 }}

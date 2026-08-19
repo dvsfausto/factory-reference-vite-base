@@ -2,7 +2,7 @@ import { TrendingUp } from 'lucide-react'
 import type { CaseStudy } from './case-studies-variants'
 import { SITE } from '~/data/site'
 
-// Case Studies LAYOUT: 'alternating-rows' — full-width zigzag rows, image (or an
+// Case Studies LAYOUT: 'alternating-rows', full-width zigzag rows, image (or an
 // outcome panel) trading sides with the narrative. Character-agnostic. OMIT-WHEN-
 // ABSENT: SITE.caseStudies via cast; none -> null. image/result/client graceful.
 //

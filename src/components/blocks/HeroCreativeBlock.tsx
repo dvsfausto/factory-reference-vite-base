@@ -6,10 +6,10 @@ import { SITE } from '~/data/site'
 import { HERO_ALT } from '~/data/images'
 import { imageSrc } from '~/lib/asset-url'
 
-// Hero VARIANT: 'creative' — expressive, color-forward, asymmetric-within-section.
+// Hero VARIANT: 'creative', expressive, color-forward, asymmetric-within-section.
 // An off-balance split (uneven columns), an oversized display headline, and an
 // image overlapped by a vivid magenta blob + a big rounded color field behind it.
-// The strongest creative the fixed-section skeleton allows — bold WITHIN the
+// The strongest creative the fixed-section skeleton allows, bold WITHIN the
 // section (page-level layout-breaking is a separate, future unlock).
 //
 // TOKEN DISCIPLINE: primary CTA → bg-primary / text-primary-foreground (BRAND-
@@ -40,7 +40,7 @@ export function HeroCreativeBlock({
 }) {
   return (
     <section className="relative isolate overflow-hidden bg-[#FBFAFC]">
-      {/* Big rounded magenta field, off-canvas right — color-forward backdrop. */}
+      {/* Big rounded magenta field, off-canvas right, color-forward backdrop. */}
       <div className="absolute -right-32 -top-24 -z-10 hidden h-[34rem] w-[34rem] rounded-3xl bg-emerald-50 lg:block" />
 
       <div className="container-x py-20 md:py-28">
@@ -93,7 +93,7 @@ export function HeroCreativeBlock({
             </div>
           </motion.div>
 
-          {/* Image overlapped by a vivid magenta block — layered, off-grid. */}
+          {/* Image overlapped by a vivid magenta block, layered, off-grid. */}
           <motion.div
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}

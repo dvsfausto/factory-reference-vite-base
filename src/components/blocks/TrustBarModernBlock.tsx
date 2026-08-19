@@ -1,6 +1,6 @@
 import { CalendarCheck, ShieldCheck, Sparkles } from 'lucide-react'
 
-// TrustBar VARIANT: 'modern' — the 3 feature points under the hero, clean +
+// TrustBar VARIANT: 'modern', the 3 feature points under the hero, clean +
 // minimal. Plain indigo line-icons (no round icon-circles, no brand color),
 // geometric-sans headings, generous whitespace, cool light surface. Left-aligned.
 //
@@ -11,7 +11,7 @@ export function TrustBarModernBlock({
   items = [
     {
       title: 'Free estimates',
-      description: 'Clear quotes up front — no surprises after the work.',
+      description: 'Clear quotes up front, no surprises after the work.',
     },
     {
       title: 'On schedule',

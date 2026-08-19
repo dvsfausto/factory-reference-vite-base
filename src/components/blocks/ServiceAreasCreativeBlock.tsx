@@ -5,7 +5,7 @@ import { ArrowUpRight } from 'lucide-react'
 import { SectionHeaderCreative } from '~/components/SectionHeaderCreative'
 import { AREAS } from '~/data/areas'
 
-// ServiceAreas VARIANT: 'creative' — bold, expressive area chips. SectionHeaderCreative
+// ServiceAreas VARIANT: 'creative', bold, expressive area chips. SectionHeaderCreative
 // (no script) + big rounded magenta-outline pills that fill magenta on hover.
 // Prop signature matches ServiceAreasBlock; returns Element | null.
 //

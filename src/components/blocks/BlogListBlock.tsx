@@ -2,7 +2,7 @@ import { ArrowUpRight } from 'lucide-react'
 import type { BlogPost } from './blog-variants'
 import { SITE } from '~/data/site'
 
-// Blog LAYOUT: 'list' — a clean hairline-separated list of posts (date + title +
+// Blog LAYOUT: 'list', a clean hairline-separated list of posts (date + title +
 // excerpt + arrow). Character-agnostic, no imagery needed, section/index only.
 // OMIT-WHEN-ABSENT: SITE.posts via cast; none -> null.
 //

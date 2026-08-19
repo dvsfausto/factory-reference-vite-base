@@ -1,10 +1,10 @@
 import { motion } from 'framer-motion'
 
-// Generic PROSE block (Phase 2 — custom pages). The one content-bearing primitive whose
+// Generic PROSE block (Phase 2, custom pages). The one content-bearing primitive whose
 // copy rides entirely in block.params (not a global data store), so a customer-created
 // page ("Financing", "Our Process", "Careers") can carry arbitrary supplied text and
 // always render with real content. Every other block either self-sources from global
-// site data or takes copy via params the same way — richText just makes multi-paragraph
+// site data or takes copy via params the same way, richText just makes multi-paragraph
 // body copy a first-class, per-section channel.
 //
 // HONESTY: renders ONLY the copy passed in; returns null when there is no heading AND no

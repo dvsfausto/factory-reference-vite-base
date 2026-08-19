@@ -8,11 +8,11 @@ import type { BlockType } from './layout'
 // + three new per-item area blocks.
 //
 // AreaDetailBlock reuses the homepage BlockType vocabulary (so it can compose any
-// existing section — hero, faq, cta, …) and adds three area-specific block types.
+// existing section, hero, faq, cta, …) and adds three area-specific block types.
 // Those blocks read THIS area's content from ctx.area (SectionContext), so the SAME
 // layout renders every area page with its own copy. This file is ADDITIVE — the
 // scaffolder never emits or overwrites it (it only emits src/data/layout.ts's
-// HOMEPAGE_LAYOUT array) — so block-composing the area page needs no scaffolder change
+// HOMEPAGE_LAYOUT array), so block-composing the area page needs no scaffolder change
 // and it ships verbatim with the reference.
 //
 // NOTE: areas carry no own image field; the shared renderer feeds the hero a fallback

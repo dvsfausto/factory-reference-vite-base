@@ -5,7 +5,7 @@ import { MapPin } from 'lucide-react'
 import { SectionHeaderFriendly } from '~/components/SectionHeaderFriendly'
 import { AREAS } from '~/data/areas'
 
-// ServiceAreas VARIANT: 'friendly' — warm, bright area list. SectionHeaderFriendly
+// ServiceAreas VARIANT: 'friendly', warm, bright area list. SectionHeaderFriendly
 // (no script) + soft rounded coral-hover area chips. Prop signature matches
 // ServiceAreasBlock; returns Element | null.
 //

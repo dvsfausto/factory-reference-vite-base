@@ -4,7 +4,7 @@ import { ArrowRight, Check } from 'lucide-react'
 import type { PricingPlan } from './pricing-variants'
 import { SITE } from '~/data/site'
 
-// Pricing VARIANT: 'spotlight-tier' — an asymmetric WOW composition: the real
+// Pricing VARIANT: 'spotlight-tier', an asymmetric WOW composition: the real
 // featured plan is spotlighted as a large brand-gradient card on the left, lit by
 // --wow-shadow-glow; the remaining plans stack as compact glass rows on the right.
 // The editorial counterpart to 'luxe-glass' (which is a symmetric glass row).
@@ -21,7 +21,7 @@ import { SITE } from '~/data/site'
 // HONESTY (hard): renders ONLY real data. Detects the case from the data:
 //   1. Real plans → spotlight the real featured (or first) plan; others as rows.
 //   2. NO plans but a prose `body` → a split panel with a brand-gradient accent
-//      rail and the prose + CTA — ZERO invented numbers.
+//      rail and the prose + CTA, ZERO invented numbers.
 //   3. No plans AND no prose → null (never fabricates pricing).
 export function PricingSpotlightTierBlock({
   label = 'Pricing',
@@ -70,7 +70,7 @@ export function PricingSpotlightTierBlock({
 
         {hasPlans && spotlight ? (
           <div className="mt-14 grid grid-cols-1 items-stretch gap-6 lg:grid-cols-12">
-            {/* Spotlight plan — brand-gradient hero card. */}
+            {/* Spotlight plan, brand-gradient hero card. */}
             <motion.div
               initial={reduce ? false : { opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -106,7 +106,7 @@ export function PricingSpotlightTierBlock({
               </Link>
             </motion.div>
 
-            {/* Remaining plans — compact glass rows. */}
+            {/* Remaining plans, compact glass rows. */}
             <div className="flex flex-col gap-6 lg:col-span-5">
               {rest.map((p, i) => (
                 <motion.div
@@ -147,7 +147,7 @@ export function PricingSpotlightTierBlock({
             </div>
           </div>
         ) : (
-          // Prose-only case — a split panel with a brand-gradient accent rail.
+          // Prose-only case, a split panel with a brand-gradient accent rail.
           <motion.div
             initial={reduce ? false : { opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -162,7 +162,7 @@ export function PricingSpotlightTierBlock({
             >
               <h3 className="font-display text-2xl font-semibold leading-tight">Pricing that fits your project</h3>
               <p className="mt-4 leading-relaxed text-white/85">
-                No two jobs are the same — so we quote each one on its own terms, with
+                No two jobs are the same, so we quote each one on its own terms, with
                 no surprises.
               </p>
             </div>

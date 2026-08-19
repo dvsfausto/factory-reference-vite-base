@@ -3,7 +3,7 @@ import { tr } from '~/lib/i18n'
 import type { VideoTestimonial } from './video-testimonials-variants'
 import { SITE } from '~/data/site'
 
-// Video Testimonials LAYOUT: 'spotlight' — one large feature video on a dark
+// Video Testimonials LAYOUT: 'spotlight', one large feature video on a dark
 // stage, with the remaining authors/quotes listed beside. Character-agnostic.
 // OMIT-WHEN-ABSENT: SITE.videoTestimonials via cast; none -> null. Missing poster
 // -> neutral frame.

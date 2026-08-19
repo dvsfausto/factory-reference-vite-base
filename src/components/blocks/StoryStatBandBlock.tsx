@@ -1,7 +1,7 @@
 import { SITE } from '~/data/site'
 import { tr } from '~/lib/i18n'
 
-// Story LAYOUT: 'stat-band' — a band of headline metrics (years in business, jobs
+// Story LAYOUT: 'stat-band', a band of headline metrics (years in business, jobs
 // done, rating, …). Character-agnostic. OMIT-WHEN-ABSENT: stats read from optional
 // SITE.stats via cast; no stats -> null, never fabricates numbers.
 //

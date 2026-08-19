@@ -3,10 +3,10 @@ import { tr } from '~/lib/i18n'
 import { Star } from 'lucide-react'
 import { reviews } from '~/data/reviews'
 
-// Reviews LAYOUT: 'stacked' — full-width testimonials stacked one per row at
+// Reviews LAYOUT: 'stacked', full-width testimonials stacked one per row at
 // display scale, hairline-separated, each a large pull-quote with the author set
 // to the side. Character-agnostic. Reads like a sequence of editorial statements
-// rather than a card grid — distinct because each review gets the whole width and
+// rather than a card grid, distinct because each review gets the whole width and
 // real type size.
 //
 // Considered rhythm (not stretched cards): an oversized quote column balanced

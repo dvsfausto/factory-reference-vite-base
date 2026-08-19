@@ -8,7 +8,7 @@ import { imageSrc } from '~/lib/asset-url'
 import leaves from '~/assets/decorative/cleaning-leaves.png'
 
 // Markup extracted VERBATIM from routes/index.tsx (the HERO section). Do not
-// restyle — block fidelity is pass/fail.
+// restyle, block fidelity is pass/fail.
 function splitScriptAccent(heading: string): { lead: string; accent: string } {
   const words = heading.trim().split(/\s+/)
   if (words.length < 2) return { lead: '', accent: heading }

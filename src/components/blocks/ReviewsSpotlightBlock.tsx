@@ -3,13 +3,13 @@ import { tr } from '~/lib/i18n'
 import { Star, Quote } from 'lucide-react'
 import { reviews } from '~/data/reviews'
 
-// Reviews LAYOUT: 'spotlight' — one featured review carries real editorial weight
+// Reviews LAYOUT: 'spotlight', one featured review carries real editorial weight
 // (a large pull-quote in a prominent panel with a big quote mark and the author),
 // flanked by a column of smaller supporting reviews. Character-agnostic.
 //
 // Editorial, not default-minus: the hero review is set at display scale with a
 // decorative Quote glyph and an emerald rule; supporting cards are deliberately
-// quieter so the eye lands on the spotlight first. Degrades gracefully — with a
+// quieter so the eye lands on the spotlight first. Degrades gracefully, with a
 // single review the supporting column simply omits.
 //
 // TOKEN DISCIPLINE: primary CTA -> bg-primary / text-primary-foreground (BRAND-

@@ -4,7 +4,7 @@ import { SITE } from '~/data/site'
 import { submitLead, type LeadStatus } from './forms-submit'
 import { Field, Textarea, SubmitButton, SuccessCard } from './form-ui'
 
-// Forms LAYOUT: 'booking' — an appointment-request form (preferred date + time).
+// Forms LAYOUT: 'booking', an appointment-request form (preferred date + time).
 // Character-agnostic. Posts the confirmed handle-website-lead envelope
 // (source_page 'booking'); the date/time are FOLDED INTO message (no new payload
 // keys, to keep the CRM contract exact).

@@ -5,7 +5,7 @@ import { Star } from 'lucide-react'
 import { SectionHeaderModern } from '~/components/SectionHeaderModern'
 import { reviews } from '~/data/reviews'
 
-// Reviews VARIANT: 'modern' — clean testimonials. SectionHeaderModern (no diamond,
+// Reviews VARIANT: 'modern', clean testimonials. SectionHeaderModern (no diamond,
 // no script) + sharp minimal white quote cards on white, indigo stars, generous
 // whitespace. Prop signature matches ReviewsBlock; returns Element | null.
 //

@@ -2,7 +2,7 @@ import { ArrowUpRight } from 'lucide-react'
 import type { CaseStudy } from './case-studies-variants'
 import { SITE } from '~/data/site'
 
-// Case Studies LAYOUT: 'list' — editorial hairline rows, outcome-forward: a big
+// Case Studies LAYOUT: 'list', editorial hairline rows, outcome-forward: a big
 // result figure beside the title + summary. Character-agnostic, no imagery needed.
 // OMIT-WHEN-ABSENT: SITE.caseStudies via cast; none -> null. result/client
 // graceful.

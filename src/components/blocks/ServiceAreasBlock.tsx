@@ -5,7 +5,7 @@ import { SectionHeader } from '~/components/SectionHeader'
 import { AREAS } from '~/data/areas'
 
 // Markup extracted VERBATIM from routes/index.tsx (the SERVICE AREAS section).
-// Self-omits when there are no areas — exactly today's `{AREAS.length > 0 && …}`.
+// Self-omits when there are no areas, exactly today's `{AREAS.length > 0 && …}`.
 export function ServiceAreasBlock({
   label = tr('section.serviceAreas'),
   heading = tr('section.whereWeHeading'),

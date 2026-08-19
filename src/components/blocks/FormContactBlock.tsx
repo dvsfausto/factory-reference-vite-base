@@ -4,9 +4,9 @@ import { SITE } from '~/data/site'
 import { submitLead, type LeadStatus } from './forms-submit'
 import { Field, Textarea, SubmitButton, SuccessCard } from './form-ui'
 
-// Forms LAYOUT: 'contact' — a clean, centered general contact form. Character-
+// Forms LAYOUT: 'contact', a clean, centered general contact form. Character-
 // agnostic. Posts the confirmed handle-website-lead envelope via submitLead
-// (source_page 'contact'). The conversion point — trustworthy, DNA-tokened.
+// (source_page 'contact'). The conversion point, trustworthy, DNA-tokened.
 //
 // TOKEN DISCIPLINE: primary CTA -> bg-primary. Accent -> emerald-* (DNA)
 // 50/100/600/700. Radius -> rounded-* (DNA). Font -> font-display (DNA). Light

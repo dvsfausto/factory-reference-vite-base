@@ -3,11 +3,11 @@ import { Clock, ArrowRight } from 'lucide-react'
 import type { Promotion } from './promotions-variants'
 import { SITE } from '~/data/site'
 
-// Promotions LAYOUT: 'countdown-band' — an urgency band for a time-limited offer,
+// Promotions LAYOUT: 'countdown-band', an urgency band for a time-limited offer,
 // leading with the real end date. Character-agnostic. OMIT-WHEN-ABSENT:
 // SITE.promotions via cast; none -> null, never fabricates an offer.
 //
-// HONESTY: this shows the real `expires` date as an urgency cue ("Ends {date}") —
+// HONESTY: this shows the real `expires` date as an urgency cue ("Ends {date}") -
 // NOT a fake live ticking timer counting toward an invented deadline. If a promo
 // has no expires, the band still renders without a countdown line.
 //
@@ -38,7 +38,7 @@ export function PromotionsCountdownBandBlock({
           <div className="flex shrink-0 flex-col items-start gap-3 md:items-end">
             {p.expires && (
               <span className="rounded-xl bg-white/10 px-5 py-3 text-center font-display backdrop-blur-sm">
-                <span className="block text-xs uppercase tracking-[0.16em] text-emerald-100">Hurry — ends</span>
+                <span className="block text-xs uppercase tracking-[0.16em] text-emerald-100">Hurry, ends</span>
                 <span className="mt-0.5 block text-lg font-semibold">{p.expires}</span>
               </span>
             )}

@@ -3,10 +3,10 @@ import { tr } from '~/lib/i18n'
 import { MapPin } from 'lucide-react'
 import { AREAS } from '~/data/areas'
 
-// Map LAYOUT: 'split-with-areas' — a stylized map panel beside the area list.
+// Map LAYOUT: 'split-with-areas', a stylized map panel beside the area list.
 // Character-agnostic. OMIT-WHEN-ABSENT: renders from AREAS; none -> null.
 //
-// HONESTY: stylized coverage panel, no real geography — decorative pin scatter +
+// HONESTY: stylized coverage panel, no real geography, decorative pin scatter +
 // real tier emphasis. Real embedded map is a later integration.
 //
 // TOKEN DISCIPLINE: primary CTA -> bg-primary. Accent -> emerald-* (DNA)

@@ -3,7 +3,7 @@ import { ArrowRight, Check } from 'lucide-react'
 import type { PricingPlan } from './pricing-variants'
 import { SITE } from '~/data/site'
 
-// Pricing LAYOUT: 'list' — compact hairline-separated rows, each plan a single
+// Pricing LAYOUT: 'list', compact hairline-separated rows, each plan a single
 // line of name + price + inline features + action. Character-agnostic. The
 // restrained, scannable option when there are several plans or the page is dense.
 //

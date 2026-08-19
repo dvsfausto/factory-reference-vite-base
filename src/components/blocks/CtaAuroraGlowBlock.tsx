@@ -4,7 +4,7 @@ import { motion, useReducedMotion } from 'framer-motion'
 import { ArrowRight, Phone, Sparkles } from 'lucide-react'
 import { SITE } from '~/data/site'
 
-// CTA VARIANT: 'aurora-glow' — a full-bleed brand-gradient band with a soft
+// CTA VARIANT: 'aurora-glow', a full-bleed brand-gradient band with a soft
 // ambient glow, an oversized display headline (last word set in the script
 // accent), and a glowing white primary pill. The cinematic, high-impact
 // counterpart to the boxed 'glass-panel' card.
@@ -18,7 +18,7 @@ import { SITE } from '~/data/site'
 // phone is an outline-white pill. The script accent uses text-brand-100.
 //
 // HONESTY: renders ONLY the real title/subtitle + the real phone (SITE.phone/
-// phoneDisplay) and the optional SITE.tagline badge — nothing invented. No
+// phoneDisplay) and the optional SITE.tagline badge, nothing invented. No
 // urgency stats, no fabricated numbers. Props mirror the default (title/subtitle
 // literals) so a no-prop render carries today's real copy.
 function splitScriptAccent(heading: string): { lead: string; accent: string } {
@@ -43,7 +43,7 @@ export function CtaAuroraGlowBlock({
       className="relative overflow-hidden text-white"
       style={{ backgroundImage: 'var(--wow-grad-brand)' }}
     >
-      {/* Ambient brand glow blobs — decorative, brand-derived, motion honors reduce. */}
+      {/* Ambient brand glow blobs, decorative, brand-derived, motion honors reduce. */}
       <motion.div
         aria-hidden
         className="pointer-events-none absolute -left-24 -top-24 h-80 w-80 rounded-full opacity-40"

@@ -5,7 +5,7 @@ import { ArrowRight, MapPin } from 'lucide-react'
 import { SectionHeader } from '~/components/SectionHeader'
 import { AREAS } from '~/data/areas'
 
-// ServiceAreas VARIANT: 'glow-pins' — the boutique, tactile take. Each real area
+// ServiceAreas VARIANT: 'glow-pins', the boutique, tactile take. Each real area
 // becomes a lifted GLASS card floating on a soft brand-tinted field; a gradient
 // pin badge anchors it and a brand glow blooms on hover. Cards stagger in as they
 // scroll into view. The lively counterpart to the flat default chip cloud.
@@ -19,7 +19,7 @@ import { AREAS } from '~/data/areas'
 // BRAND identity → the "more" CTA keeps the default's .btn-secondary; brand accents
 // (pin badge, hover ring) ride the brand ramp / --wow-grad-brand.
 //
-// HONESTY: renders ONLY the real AREAS (name + slug link) — no invented city
+// HONESTY: renders ONLY the real AREAS (name + slug link), no invented city
 // counts. Self-omits (returns null) when there are no areas, exactly like the
 // default. Content is props with the SITE-mirrored fallbacks.
 export function ServiceAreasGlowPinsBlock({

@@ -5,7 +5,7 @@ import { ArrowUpRight } from 'lucide-react'
 import { SectionHeaderCreative } from '~/components/SectionHeaderCreative'
 import { reviews } from '~/data/reviews'
 
-// Reviews VARIANT: 'creative' — expressive testimonials. SectionHeaderCreative
+// Reviews VARIANT: 'creative', expressive testimonials. SectionHeaderCreative
 // (no diamond, no script) + big magenta quote marks on bold off-white cards.
 // Prop signature matches ReviewsBlock; returns Element | null.
 //

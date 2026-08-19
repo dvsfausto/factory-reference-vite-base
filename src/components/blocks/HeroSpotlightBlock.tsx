@@ -6,7 +6,7 @@ import { HERO_ALT } from '~/data/images'
 import { getAggregateRating } from '~/data/reviews'
 import { imageSrc } from '~/lib/asset-url'
 
-// Hero VARIANT: 'spotlight' — a premium, editorial left/right split on a LIGHT
+// Hero VARIANT: 'spotlight', a premium, editorial left/right split on a LIGHT
 // surface. The business photo sits in a lifted, framed card over a radial brand
 // glow; glass trust chips float at its edges. The polished, boutique counterpart
 // to 'aurora' (which is dark + cinematic).
@@ -21,7 +21,7 @@ import { imageSrc } from '~/lib/asset-url'
 // (var(--primary)); the script accent uses text-brand-600 (brand ramp).
 //
 // HONESTY: the floating chips are the REAL trust items + (when present) the real
-// aggregate rating — nothing invented. No reviews → no rating chip. `decorativeAsset`
+// aggregate rating, nothing invented. No reviews → no rating chip. `decorativeAsset`
 // accepted for prop parity, unused. Content is props with SITE fallback (F.inner).
 function splitScriptAccent(heading: string): { lead: string; accent: string } {
   const words = heading.trim().split(/\s+/)
@@ -139,7 +139,7 @@ export function HeroSpotlightBlock({
               />
             </div>
 
-            {/* Floating rating chip — only when there are real reviews. */}
+            {/* Floating rating chip, only when there are real reviews. */}
             {rating && (
               <motion.div
                 initial={{ opacity: 0, y: 12 }}
@@ -154,7 +154,7 @@ export function HeroSpotlightBlock({
               </motion.div>
             )}
 
-            {/* Floating trust chip — the real first trust item. */}
+            {/* Floating trust chip, the real first trust item. */}
             {topChip && (
               <motion.div
                 initial={{ opacity: 0, y: 12 }}

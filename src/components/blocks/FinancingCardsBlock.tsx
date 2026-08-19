@@ -3,7 +3,7 @@ import { Wallet } from 'lucide-react'
 import type { Financing } from './financing-variants'
 import { SITE } from '~/data/site'
 
-// Financing LAYOUT: 'cards' — each financing option as its own card. Character-
+// Financing LAYOUT: 'cards', each financing option as its own card. Character-
 // agnostic. OMIT-WHEN-ABSENT: SITE.financing via cast; absent -> null, never
 // fabricates terms.
 //

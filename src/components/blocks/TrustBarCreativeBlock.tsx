@@ -1,4 +1,4 @@
-// TrustBar VARIANT: 'creative' — bold, expressive value points. Big magenta
+// TrustBar VARIANT: 'creative', bold, expressive value points. Big magenta
 // numerals + expressive headings on a light surface, off-balance and confident.
 // No round icon-circles, no brand color. Prop signature identical to TrustBarBlock;
 // returns an Element (NOT null).
@@ -10,7 +10,7 @@ export function TrustBarCreativeBlock({
   items = [
     {
       title: 'Free estimates',
-      description: 'Clear quotes up front — no surprises after the work.',
+      description: 'Clear quotes up front, no surprises after the work.',
     },
     {
       title: 'On schedule',

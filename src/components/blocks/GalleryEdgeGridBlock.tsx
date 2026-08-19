@@ -2,7 +2,7 @@ import { motion, useReducedMotion } from 'framer-motion'
 import { tr } from '~/lib/i18n'
 import { PROJECTS } from '~/data/projects'
 
-// Gallery VARIANT: 'edge-grid' — an edge-to-edge uniform grid of photos with a
+// Gallery VARIANT: 'edge-grid', an edge-to-edge uniform grid of photos with a
 // brand-gradient corner accent on each tile and a staggered scroll reveal; the
 // title/caption ride a brand-gradient band that slides up on hover. The bold,
 // architectural, brand-reactive counterpart to the flat 'grid' layout.
@@ -43,7 +43,7 @@ export function GalleryEdgeGridBlock({
         </div>
       </div>
 
-      {/* Edge-to-edge grid — no container padding, tiles butt the viewport edges. */}
+      {/* Edge-to-edge grid, no container padding, tiles butt the viewport edges. */}
       <div className="mt-12 grid grid-cols-2 gap-px bg-[var(--wow-hairline)] lg:grid-cols-3">
         {PROJECTS.map((p, i) => (
           <motion.figure

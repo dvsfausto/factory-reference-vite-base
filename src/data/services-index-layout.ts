@@ -4,7 +4,7 @@ import type { BlockType } from './layout'
 // The services-index route maps over this array via the shared renderer. Adds an
 // 'intro' block (the shared WOW page-intro) and a page-specific 'servicesIndex' block
 // that renders the FULL services list (ALL services) — NOT the homepage's 3-item
-// preview — so no content is dropped. ADDITIVE: the scaffolder never emits or
+// preview, so no content is dropped. ADDITIVE: the scaffolder never emits or
 // overwrites it.
 export type ServicesIndexBlockType = BlockType | 'intro' | 'servicesIndex'
 

@@ -4,7 +4,7 @@ import { SITE } from '~/data/site'
 import { HERO_ALT } from '~/data/images'
 import { imageSrc } from '~/lib/asset-url'
 
-// Story VARIANT: 'editorial-frame' — a WOW editorial split. The story prose sits
+// Story VARIANT: 'editorial-frame', a WOW editorial split. The story prose sits
 // beside a framed business photo that floats over a radial brand glow; a brand
 // hairline rule underlines the eyebrow, and the copy + frame reveal on scroll.
 // The premium, brand-reactive counterpart to the plain 'split-image' layout.
@@ -16,7 +16,7 @@ import { imageSrc } from '~/lib/asset-url'
 //   · --wow-ease-out    → entrance easing.
 // BRAND accents → the script accent + eyebrow use the brand-* ramp.
 //
-// HONESTY: renders only SITE.about (or the `body` prop) + SITE.name — no invented
+// HONESTY: renders only SITE.about (or the `body` prop) + SITE.name, no invented
 // figures. Uses the existing SITE.hero.image_url (optional SITE.story.image
 // override), never a fabricated photo. Early-returns null when there is no prose,
 // mirroring the default StoryNarrativeBlock's omit-when-empty behavior.

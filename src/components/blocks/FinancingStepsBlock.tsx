@@ -2,10 +2,10 @@ import { Link } from '@tanstack/react-router'
 import type { Financing } from './financing-variants'
 import { SITE } from '~/data/site'
 
-// Financing LAYOUT: 'steps' — the financing options presented as a numbered
+// Financing LAYOUT: 'steps', the financing options presented as a numbered
 // vertical sequence (a clear, walk-through read). Character-agnostic. OMIT-WHEN-
 // ABSENT: SITE.financing via cast; absent -> null, never fabricates terms. The
-// numbers index the real options — no invented process copy.
+// numbers index the real options, no invented process copy.
 //
 // TOKEN DISCIPLINE: primary CTA -> bg-primary. Accent -> emerald-* (DNA)
 // 50/100/600/700: emerald-600 numerals, emerald-100 rail. Radius -> rounded-*

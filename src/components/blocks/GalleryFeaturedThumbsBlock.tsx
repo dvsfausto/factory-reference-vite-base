@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { tr } from '~/lib/i18n'
 import { PROJECTS } from '~/data/projects'
 
-// Gallery LAYOUT: 'featured+thumbs' — one large featured photo with a thumbnail
+// Gallery LAYOUT: 'featured+thumbs', one large featured photo with a thumbnail
 // strip; clicking a thumb promotes it. Character-agnostic, interactive (renders
 // the first project featured on the server). PIPELINE-SEEDED: images from the
 // PROJECTS data field; renders populated from the seed.

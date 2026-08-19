@@ -53,9 +53,9 @@ export const VARIANT_MANIFEST: SectionVariants[] = [
     section: 'hero',
     label: 'Hero',
     variants: [
-      { id: 'modern', label: 'Modern split', description: 'Left copy / right image — the default split.', default: true },
+      { id: 'modern', label: 'Modern split', description: 'Left copy / right image, the default split.', default: true },
       { id: 'aurora', label: 'Aurora (cinematic)', description: 'Full-bleed photo with a drifting brand-colored aurora and a frosted glass panel.', wow: true },
-      { id: 'spotlight', label: 'Spotlight (editorial)', description: 'Light editorial split — a framed photo over a radial brand glow with floating trust chips.', wow: true },
+      { id: 'spotlight', label: 'Spotlight (editorial)', description: 'Light editorial split, a framed photo over a radial brand glow with floating trust chips.', wow: true },
       { id: 'editorial', label: 'Editorial (magazine)', description: 'Oversized headline revealed word by word, a brand hairline rule, and a wide image band.', wow: true },
       { id: 'bold-fullbleed', label: 'Bold full-bleed', description: 'Dark, industrial full-bleed image with a heavy uppercase headline and a trust band.' },
       { id: 'centered', label: 'Centered', description: 'Centered, full-width single-column hero.' },
@@ -70,7 +70,7 @@ export const VARIANT_MANIFEST: SectionVariants[] = [
     section: 'servicesPreview',
     label: 'Services',
     variants: [
-      { id: 'grid', label: 'Grid', description: 'Cards in a grid — the default.', default: true },
+      { id: 'grid', label: 'Grid', description: 'Cards in a grid, the default.', default: true },
       { id: 'luxe', label: 'Luxe glass', description: 'Frosted glass cards that lift and glow on hover, with a gradient index badge.', wow: true },
       { id: 'feature-rows', label: 'Feature rows', description: 'Large alternating rows with an oversized brand-gradient numeral and a lifted photo.', wow: true },
       { id: 'spotlight-tiles', label: 'Spotlight tiles', description: 'The lead service as a big brand-gradient spotlight tile; the rest as compact glass tiles.', wow: true },
@@ -86,7 +86,7 @@ export const VARIANT_MANIFEST: SectionVariants[] = [
     section: 'trustBar',
     label: 'Trust bar',
     variants: [
-      { id: 'icon-row', label: 'Icon row', description: 'A row of icon + label items — the default.', default: true },
+      { id: 'icon-row', label: 'Icon row', description: 'A row of icon + label items, the default.', default: true },
       { id: 'glow-cards', label: 'Glow cards', description: 'Glass cards with gradient icon badges that lift and glow on hover.', wow: true },
       { id: 'hairline-rows', label: 'Hairline row', description: 'A sleek row divided by brand hairlines over a faint brand tint.', wow: true },
       { id: 'stat-numbers', label: 'Stat numbers', description: 'Big-number stat cells.' },
@@ -99,7 +99,7 @@ export const VARIANT_MANIFEST: SectionVariants[] = [
     section: 'serviceAreas',
     label: 'Service areas',
     variants: [
-      { id: 'chips', label: 'Chips', description: 'A cloud of area chips — the default.', default: true },
+      { id: 'chips', label: 'Chips', description: 'A cloud of area chips, the default.', default: true },
       { id: 'glow-pins', label: 'Glow pins', description: 'Glass area cards on a brand field with gradient pins and hover glow.', wow: true },
       { id: 'brand-panel', label: 'Brand panel', description: 'A bold brand-gradient panel listing areas in tidy hairline-divided columns.', wow: true },
       { id: 'map-style', label: 'Map style', description: 'A map-styled area layout.' },
@@ -113,7 +113,7 @@ export const VARIANT_MANIFEST: SectionVariants[] = [
     section: 'reviews',
     label: 'Reviews',
     variants: [
-      { id: 'grid', label: 'Grid', description: 'Review cards in a grid — the default.', default: true },
+      { id: 'grid', label: 'Grid', description: 'Review cards in a grid, the default.', default: true },
       { id: 'luminous', label: 'Luminous', description: 'Frosted glass quote cards over a soft brand surface with a big gradient quote mark.', wow: true },
       { id: 'pull-quote', label: 'Pull quote', description: 'One large featured pull-quote beside a brand rule, with the real rating and small chips.', wow: true },
       { id: 'glass-wall', label: 'Glass wall', description: 'A masonry wall of varied-height glass cards in a brand hairline frame.', wow: true },
@@ -128,7 +128,7 @@ export const VARIANT_MANIFEST: SectionVariants[] = [
     section: 'cta',
     label: 'Call to action',
     variants: [
-      { id: 'band', label: 'Band', description: 'A full-width CTA band — the default.', default: true },
+      { id: 'band', label: 'Band', description: 'A full-width CTA band, the default.', default: true },
       { id: 'aurora-glow', label: 'Aurora glow', description: 'A full-bleed brand-gradient band with ambient glow and a glowing CTA.', wow: true },
       { id: 'glass-panel', label: 'Glass panel', description: 'A frosted glass CTA card floating over a soft brand surface.', wow: true },
       { id: 'color-block', label: 'Color block', description: 'A solid brand color block.' },
@@ -142,7 +142,7 @@ export const VARIANT_MANIFEST: SectionVariants[] = [
     section: 'faq',
     label: 'FAQ',
     variants: [
-      { id: 'accordion', label: 'Accordion', description: 'The standard FAQ accordion — the default.', default: true },
+      { id: 'accordion', label: 'Accordion', description: 'The standard FAQ accordion, the default.', default: true },
       { id: 'glass-accordion', label: 'Glass accordion', description: 'Glass cards with a gradient “+” that rotates open and a soft glow on the open item.', wow: true },
       { id: 'split-panel', label: 'Split panel', description: 'A brand-gradient side panel beside the Q&A list on a soft brand surface.', wow: true },
     ],
@@ -151,7 +151,7 @@ export const VARIANT_MANIFEST: SectionVariants[] = [
     section: 'story',
     label: 'About / Story',
     variants: [
-      { id: 'narrative', label: 'Narrative', description: 'A centered story narrative — the default.', default: true },
+      { id: 'narrative', label: 'Narrative', description: 'A centered story narrative, the default.', default: true },
       { id: 'editorial-frame', label: 'Editorial frame', description: 'Story copy beside a framed photo over a radial brand glow with a hairline rule.', wow: true },
       { id: 'manifesto-glow', label: 'Manifesto', description: 'A large centered narrative with an oversized brand-gradient quote mark and script accent.', wow: true },
       { id: 'split-image', label: 'Split image', description: 'Story copy beside an image.' },
@@ -163,7 +163,7 @@ export const VARIANT_MANIFEST: SectionVariants[] = [
     section: 'gallery',
     label: 'Gallery',
     variants: [
-      { id: 'masonry', label: 'Masonry', description: 'A masonry image wall — the default.', default: true },
+      { id: 'masonry', label: 'Masonry', description: 'A masonry image wall, the default.', default: true },
       { id: 'cinematic-masonry', label: 'Cinematic masonry', description: 'Rounded brand-framed masonry with hover zoom and a brand-gradient caption.', wow: true },
       { id: 'featured-film', label: 'Featured filmstrip', description: 'A large featured image over a brand glow, then a filmstrip of the rest with glass chips.', wow: true },
       { id: 'edge-grid', label: 'Edge grid', description: 'An edge-to-edge grid with brand-gradient corner accents and staggered reveal.', wow: true },
@@ -178,7 +178,7 @@ export const VARIANT_MANIFEST: SectionVariants[] = [
     section: 'pricing',
     label: 'Pricing',
     variants: [
-      { id: 'tiers', label: 'Tiers', description: 'Pricing tier cards — the default.', default: true },
+      { id: 'tiers', label: 'Tiers', description: 'Pricing tier cards, the default.', default: true },
       { id: 'luxe-glass', label: 'Luxe glass', description: 'Premium glass tier cards with the featured tier filled by the brand gradient and glow.', wow: true },
       { id: 'spotlight-tier', label: 'Spotlight tier', description: 'The featured plan spotlighted as a large brand-gradient card, the rest as glass rows.', wow: true },
       { id: 'comparison-table', label: 'Comparison table', description: 'A feature comparison table.' },
@@ -192,7 +192,7 @@ export const VARIANT_MANIFEST: SectionVariants[] = [
     section: 'process',
     label: 'Process',
     variants: [
-      { id: 'numbered-steps', label: 'Numbered steps', description: 'Numbered process steps — the default.', default: true },
+      { id: 'numbered-steps', label: 'Numbered steps', description: 'Numbered process steps, the default.', default: true },
       { id: 'glow-nodes', label: 'Glow timeline', description: 'A vertical timeline with a brand-gradient connector and glowing numbered nodes.', wow: true },
       { id: 'bold-numerals', label: 'Bold numerals', description: 'Big glass step cards watermarked with oversized brand-gradient index numerals.', wow: true },
       { id: 'timeline', label: 'Timeline', description: 'A horizontal timeline.' },
@@ -205,7 +205,7 @@ export const VARIANT_MANIFEST: SectionVariants[] = [
     section: 'forms',
     label: 'Contact form',
     variants: [
-      { id: 'contact', label: 'Contact', description: 'The standard contact form — the default.', default: true },
+      { id: 'contact', label: 'Contact', description: 'The standard contact form, the default.', default: true },
       { id: 'float-glass', label: 'Floating glass', description: 'The form as a frosted glass card floating over a soft brand surface with a brand hairline.', wow: true },
       { id: 'brand-split', label: 'Brand split', description: 'A brand-gradient side panel with real contact details beside the form card.', wow: true },
       { id: 'booking', label: 'Booking', description: 'A booking-style form.' },

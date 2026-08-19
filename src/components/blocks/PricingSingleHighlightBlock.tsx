@@ -3,7 +3,7 @@ import { Check } from 'lucide-react'
 import type { PricingPlan } from './pricing-variants'
 import { SITE } from '~/data/site'
 
-// Pricing LAYOUT: 'single-highlight' — one plan presented as a single wide, bold
+// Pricing LAYOUT: 'single-highlight', one plan presented as a single wide, bold
 // panel with the price and features laid out generously. Character-agnostic. The
 // right call for a business with one core offering (or a clear flagship plan).
 //

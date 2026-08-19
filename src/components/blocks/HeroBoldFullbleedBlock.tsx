@@ -5,11 +5,11 @@ import { SITE } from '~/data/site'
 import { HERO_ALT } from '~/data/images'
 import { imageSrc } from '~/lib/asset-url'
 
-// Hero VARIANT: 'bold-fullbleed' — a grounded, industrial composition for
+// Hero VARIANT: 'bold-fullbleed', a grounded, industrial composition for
 // trades (construction/remodel). Deliberately the OPPOSITE of the default
 // HeroBlock's split-grid + botanical leaf sprites + script-italic accent word.
 //
-// TOKEN DISCIPLINE — the reference every catalog variant patterns from. Each
+// TOKEN DISCIPLINE, the reference every catalog variant patterns from. Each
 // role pulls from the var its OWNER controls, so brand kit + DNA BOTH land
 // without fighting:
 //   · BRAND (customer identity) → the PRIMARY CTA uses bg-primary /
@@ -49,7 +49,7 @@ export function HeroBoldFullbleedBlock({
 }) {
   return (
     <section className="relative isolate flex flex-col overflow-hidden bg-ink-900 text-white">
-      {/* Full-bleed jobsite/build photo — "we build things", not a boutique. */}
+      {/* Full-bleed jobsite/build photo, "we build things", not a boutique. */}
       <img
         src={imageSrc(imageUrl)}
         alt={HERO_ALT}
@@ -65,13 +65,13 @@ export function HeroBoldFullbleedBlock({
           transition={{ duration: 0.5 }}
           className="max-w-2xl"
         >
-          {/* Eyebrow: a solid steel-blue block + the kicker — blocky, not dainty. */}
+          {/* Eyebrow: a solid steel-blue block + the kicker, blocky, not dainty. */}
           <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] text-ink-100">
             <span className="inline-block h-3 w-3 bg-emerald-600" />
             {kicker}
           </span>
 
-          {/* Heavy UPPERCASE Oswald headline — the whole line, no script split. */}
+          {/* Heavy UPPERCASE Oswald headline, the whole line, no script split. */}
           <h1 className="mt-5 font-display text-5xl font-bold uppercase leading-[0.95] tracking-tight text-white sm:text-6xl lg:text-7xl">
             {headline}
           </h1>
@@ -108,7 +108,7 @@ export function HeroBoldFullbleedBlock({
         </motion.div>
       </div>
 
-      {/* Full-width steel-blue trust band — a contractor's banner stripe. The
+      {/* Full-width steel-blue trust band, a contractor's banner stripe. The
           most unmistakable carrier of the DNA accent color. */}
       <div className="relative bg-emerald-600">
         <div className="container-x flex flex-wrap items-center gap-x-8 gap-y-2 py-3.5 text-xs font-semibold uppercase tracking-[0.14em] text-white">

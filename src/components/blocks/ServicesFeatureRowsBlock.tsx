@@ -6,7 +6,7 @@ import { SectionHeader } from '~/components/SectionHeader'
 import { SERVICES } from '~/data/services-view'
 import { serviceImageUrl } from '~/data/images'
 
-// Services VARIANT: 'feature-rows' — large, editorial feature ROWS that alternate
+// Services VARIANT: 'feature-rows', large, editorial feature ROWS that alternate
 // the photo left/right. An oversized brand-gradient index numeral anchors each
 // copy column above a brand-gradient hairline rule; rows reveal with a staggered
 // whileInView slide as they enter. The magazine counterpart to the compact grid.
@@ -69,7 +69,7 @@ export function ServicesFeatureRowsBlock({
                 }}
                 className="grid grid-cols-1 items-center gap-8 md:grid-cols-2 md:gap-14"
               >
-                {/* Photo — order flips on alternating rows (desktop only). */}
+                {/* Photo, order flips on alternating rows (desktop only). */}
                 <motion.div
                   initial={reduce ? false : { opacity: 0, x: flip ? 40 : -40 }}
                   whileInView={reduce ? undefined : { opacity: 1, x: 0 }}

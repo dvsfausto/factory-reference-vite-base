@@ -3,7 +3,7 @@ import { Check } from 'lucide-react'
 import type { PricingPlan } from './pricing-variants'
 import { SITE } from '~/data/site'
 
-// Pricing LAYOUT: 'cards' — standalone elevated plan cards in an airy grid, each
+// Pricing LAYOUT: 'cards', standalone elevated plan cards in an airy grid, each
 // with a thin accent rail and a soft shadow. Character-agnostic. Distinct from
 // 'tiers' (connected columns): these read as independent, equally-weighted offers
 // with room to breathe, good for 2-4 plans.

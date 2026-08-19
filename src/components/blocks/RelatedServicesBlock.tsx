@@ -5,7 +5,7 @@ import { ArrowRight } from 'lucide-react'
 import type { ServicePageData } from '~/lib/types/page-types'
 import { isRelatedServiceVisible } from '~/data/services-view'
 
-// SERVICE-DETAIL VARIANT (Arc 3 · Stage C): "you may also need" — THIS service's
+// SERVICE-DETAIL VARIANT (Arc 3 · Stage C): "you may also need", THIS service's
 // `relatedServices` cross-links, rendered as WOW glass cards that lift + glow. Per-item
 // via `service` (ctx.service). Replaces ServicePageTemplate's related-services section.
 //
@@ -18,7 +18,7 @@ import { isRelatedServiceVisible } from '~/data/services-view'
 //
 // HONESTY: links are the real per-service relatedServices, filtered through
 // isRelatedServiceVisible so an UNPUBLISHED target self-heals out (matches
-// ServicePageTemplate). Returns null when nothing remains — no empty section.
+// ServicePageTemplate). Returns null when nothing remains, no empty section.
 export function RelatedServicesBlock({
   service,
 }: {

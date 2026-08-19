@@ -5,7 +5,7 @@ import { SITE } from '~/data/site'
 import { HERO_ALT } from '~/data/images'
 import { imageSrc } from '~/lib/asset-url'
 
-// Hero VARIANT: 'friendly' — warm, bright, approachable (playful-but-credible).
+// Hero VARIANT: 'friendly', warm, bright, approachable (playful-but-credible).
 // The LIGHT counterpart to the dark bold/elegant heroes: a warm-white split
 // layout with a big rounded image card + soft shadow, a rounded friendly
 // headline, coral accents, and rounded pill trust chips. No leaf sprites, no
@@ -15,7 +15,7 @@ import { imageSrc } from '~/lib/asset-url'
 // owned). Accent → emerald-* (DNA → coral): eyebrow dot, trust chips, secondary
 // CTA. Radius → rounded-* (DNA, the softest scale). Font → font-display (DNA
 // rounded sans). The LIGHT-warm SURFACE is component-owned (warm-white #FFFBF5 /
-// charcoal #3D3530 / gray #7A6F66) — the inverse of the dark characters. Never
+// charcoal #3D3530 / gray #7A6F66), the inverse of the dark characters. Never
 // bg-brand-* / .btn-primary / .btn.
 //
 // Props identical to HeroBlock (uniform render path); decorativeAsset accepted
@@ -80,7 +80,7 @@ export function HeroFriendlyBlock({
               </a>
             </div>
 
-            {/* Friendly trust chips — soft rounded coral-tinted pills. */}
+            {/* Friendly trust chips, soft rounded coral-tinted pills. */}
             <div className="mt-9 flex flex-wrap gap-2.5">
               {trustItems.map((t) => (
                 <span
@@ -93,14 +93,14 @@ export function HeroFriendlyBlock({
             </div>
           </motion.div>
 
-          {/* Big rounded image card with a soft shadow — warm + welcoming. */}
+          {/* Big rounded image card with a soft shadow, warm + welcoming. */}
           <motion.div
             initial={{ opacity: 0, scale: 0.97 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.7, delay: 0.1 }}
             className="relative"
           >
-            <div className="overflow-hidden rounded-3xl border border-[#F0E6DA] shadow-xl">
+            <div className="zi-card zi-media overflow-hidden rounded-3xl border border-[#F0E6DA] shadow-xl">
               <img
                 src={imageSrc(imageUrl)}
                 alt={HERO_ALT}
