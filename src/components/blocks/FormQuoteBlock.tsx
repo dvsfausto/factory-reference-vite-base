@@ -31,6 +31,10 @@ export function FormQuoteBlock({
   const [status, setStatus] = useState<LeadStatus>('idle')
   const [error, setError] = useState<string | null>(null)
 
+  // Industry-aware details copy (emitted from the homepage-copy wave when it produced trade-specific
+  // guidance). Cast-read so a generated SITE without the field still type-checks; empty → tr() fallback.
+  const quoteForm = (SITE as { quoteForm?: { detailsLabel?: string; detailsPlaceholder?: string } }).quoteForm
+
   // The quotable services to offer: the block's own list (owner-chosen, editable) → else a LIVE read of
   // the business's quotable services (SSR = baked for SEO/instant; client reconciles so a service added
   // after the build shows with no rebuild; failure → baked). Options keyed by slug; submitted by id.
@@ -109,11 +113,11 @@ export function FormQuoteBlock({
                 )}
                 <div className="mt-5">
                   <Textarea
-                    label={tr('form.projectDetails')}
+                    label={quoteForm?.detailsLabel || tr('form.projectDetails')}
                     name="details"
                     required
                     rows={5}
-                    placeholder={tr('form.phQuote')}
+                    placeholder={quoteForm?.detailsPlaceholder || tr('form.phQuote')}
                   />
                 </div>
                 {/* Honeypot: hidden from humans, tempting to bots. request-quote silently drops when filled. */}
