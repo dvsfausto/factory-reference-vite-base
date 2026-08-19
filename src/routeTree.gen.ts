@@ -9,7 +9,6 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as ShowcaseRouteImport } from './routes/showcase'
 import { Route as ReviewsRouteImport } from './routes/reviews'
 import { Route as QuoteRouteImport } from './routes/quote'
 import { Route as PricingRouteImport } from './routes/pricing'
@@ -24,11 +23,6 @@ import { Route as PSlugRouteImport } from './routes/p.$slug'
 import { Route as InfoSlugRouteImport } from './routes/info.$slug'
 import { Route as AreasSlugRouteImport } from './routes/areas.$slug'
 
-const ShowcaseRoute = ShowcaseRouteImport.update({
-  id: '/showcase',
-  path: '/showcase',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ReviewsRoute = ReviewsRouteImport.update({
   id: '/reviews',
   path: '/reviews',
@@ -103,7 +97,6 @@ export interface FileRoutesByFullPath {
   '/pricing': typeof PricingRoute
   '/quote': typeof QuoteRoute
   '/reviews': typeof ReviewsRoute
-  '/showcase': typeof ShowcaseRoute
   '/areas/$slug': typeof AreasSlugRoute
   '/info/$slug': typeof InfoSlugRoute
   '/p/$slug': typeof PSlugRoute
@@ -119,7 +112,6 @@ export interface FileRoutesByTo {
   '/pricing': typeof PricingRoute
   '/quote': typeof QuoteRoute
   '/reviews': typeof ReviewsRoute
-  '/showcase': typeof ShowcaseRoute
   '/areas/$slug': typeof AreasSlugRoute
   '/info/$slug': typeof InfoSlugRoute
   '/p/$slug': typeof PSlugRoute
@@ -136,7 +128,6 @@ export interface FileRoutesById {
   '/pricing': typeof PricingRoute
   '/quote': typeof QuoteRoute
   '/reviews': typeof ReviewsRoute
-  '/showcase': typeof ShowcaseRoute
   '/areas/$slug': typeof AreasSlugRoute
   '/info/$slug': typeof InfoSlugRoute
   '/p/$slug': typeof PSlugRoute
@@ -154,7 +145,6 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/quote'
     | '/reviews'
-    | '/showcase'
     | '/areas/$slug'
     | '/info/$slug'
     | '/p/$slug'
@@ -170,7 +160,6 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/quote'
     | '/reviews'
-    | '/showcase'
     | '/areas/$slug'
     | '/info/$slug'
     | '/p/$slug'
@@ -186,7 +175,6 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/quote'
     | '/reviews'
-    | '/showcase'
     | '/areas/$slug'
     | '/info/$slug'
     | '/p/$slug'
@@ -203,7 +191,6 @@ export interface RootRouteChildren {
   PricingRoute: typeof PricingRoute
   QuoteRoute: typeof QuoteRoute
   ReviewsRoute: typeof ReviewsRoute
-  ShowcaseRoute: typeof ShowcaseRoute
   AreasSlugRoute: typeof AreasSlugRoute
   InfoSlugRoute: typeof InfoSlugRoute
   PSlugRoute: typeof PSlugRoute
@@ -214,13 +201,6 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/showcase': {
-      id: '/showcase'
-      path: '/showcase'
-      fullPath: '/showcase'
-      preLoaderRoute: typeof ShowcaseRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/reviews': {
       id: '/reviews'
       path: '/reviews'
@@ -323,7 +303,6 @@ const rootRouteChildren: RootRouteChildren = {
   PricingRoute: PricingRoute,
   QuoteRoute: QuoteRoute,
   ReviewsRoute: ReviewsRoute,
-  ShowcaseRoute: ShowcaseRoute,
   AreasSlugRoute: AreasSlugRoute,
   InfoSlugRoute: InfoSlugRoute,
   PSlugRoute: PSlugRoute,
