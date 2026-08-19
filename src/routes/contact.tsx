@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { tr } from '~/lib/i18n'
+import { tr, LANG } from '~/lib/i18n'
 import { buildMeta, breadcrumbLd } from '~/lib/seo'
 import { SITE } from '~/data/site'
 import { CONTACT_LAYOUT } from '~/data/contact-layout'
@@ -10,8 +10,12 @@ export const Route = createFileRoute('/contact')({
     ({ ...buildMeta({
       title: `${tr('contact.title')} ${SITE.name}`,
       description: (SITE as { ctaLabel?: string }).ctaLabel
-        ? `Contact ${SITE.name}. We'll reply within a business day.`
-        : `Get a free quote from ${SITE.name}.`,
+        ? (LANG === 'es'
+            ? `Contacta con ${SITE.name}. Te respondemos en un día hábil.`
+            : `Contact ${SITE.name}. We'll reply within a business day.`)
+        : (LANG === 'es'
+            ? `Solicita una cotización gratis de ${SITE.name}.`
+            : `Get a free quote from ${SITE.name}.`),
       path: '/contact',
     }), scripts: [{ type: 'application/ld+json', children: JSON.stringify(breadcrumbLd([{ name: tr('breadcrumb.home'), url: '/' }, { name: tr('nav.contact'), url: '/contact' }])) }] }),
   component: ContactPage,
