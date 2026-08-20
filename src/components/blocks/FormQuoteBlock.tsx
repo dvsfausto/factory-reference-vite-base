@@ -18,7 +18,7 @@ import { Field, Textarea, SubmitButton, SuccessCard } from './form-ui'
 export function FormQuoteBlock({
   label = tr('form.freeQuote'),
   heading = tr('form.requestQuote'),
-  body = tr('form.quoteBody'),
+  body,
   submitLabel = tr('form.requestMyQuote'),
   services,
 }: {
@@ -33,7 +33,9 @@ export function FormQuoteBlock({
 
   // Industry-aware details copy (emitted from the homepage-copy wave when it produced trade-specific
   // guidance). Cast-read so a generated SITE without the field still type-checks; empty → tr() fallback.
-  const quoteForm = (SITE as { quoteForm?: { detailsLabel?: string; detailsPlaceholder?: string } }).quoteForm
+  const quoteForm = (SITE as { quoteForm?: { detailsLabel?: string; detailsPlaceholder?: string; body?: string } }).quoteForm
+  // Precedence: an explicit param (owner / customPage) > the trade-specific body from the copy wave > tr().
+  const bodyText = body ?? quoteForm?.body ?? tr('form.quoteBody')
 
   // The quotable services to offer: the block's own list (owner-chosen, editable) → else a LIVE read of
   // the business's quotable services (SSR = baked for SEO/instant; client reconciles so a service added
@@ -78,7 +80,7 @@ export function FormQuoteBlock({
               {label}
             </span>
             <h2 className="mt-4 font-display text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">{heading}</h2>
-            {body && <p className="mt-3 max-w-xl leading-relaxed text-slate-300">{body}</p>}
+            {bodyText && <p className="mt-3 max-w-xl leading-relaxed text-slate-300">{bodyText}</p>}
           </div>
 
           <div className="p-8 md:p-12">
