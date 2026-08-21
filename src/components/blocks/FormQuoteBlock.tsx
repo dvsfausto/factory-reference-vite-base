@@ -17,7 +17,7 @@ import { Field, Textarea, SubmitButton, SuccessCard } from './form-ui'
 // Font -> font-display (DNA). Dark header panel component-owned. Never bg-brand-* / .btn.
 export function FormQuoteBlock({
   label = tr('form.freeQuote'),
-  heading = tr('form.requestQuote'),
+  heading,
   body,
   submitLabel = tr('form.requestMyQuote'),
   services,
@@ -33,9 +33,12 @@ export function FormQuoteBlock({
 
   // Industry-aware details copy (emitted from the homepage-copy wave when it produced trade-specific
   // guidance). Cast-read so a generated SITE without the field still type-checks; empty → tr() fallback.
-  const quoteForm = (SITE as { quoteForm?: { detailsLabel?: string; detailsPlaceholder?: string; body?: string } }).quoteForm
-  // Precedence: an explicit param (owner / customPage) > the trade-specific body from the copy wave > tr().
+  const quoteForm = (SITE as { quoteForm?: { detailsLabel?: string; detailsPlaceholder?: string; body?: string; heading?: string } }).quoteForm
+  // Precedence: an explicit param (owner / customPage) > the trade-specific copy from the wave > tr().
   const bodyText = body ?? quoteForm?.body ?? tr('form.quoteBody')
+  // Heading follows the SAME trade source as the CTA verb (quoteForm.heading = quote_cta_label), so the
+  // section title matches the button ("Start planning") instead of a generic "Request a quote".
+  const headingText = heading ?? quoteForm?.heading ?? tr('form.requestQuote')
 
   // The quotable services to offer: the block's own list (owner-chosen, editable) → else a LIVE read of
   // the business's quotable services (SSR = baked for SEO/instant; client reconciles so a service added
@@ -79,7 +82,7 @@ export function FormQuoteBlock({
               <span className="h-px w-6 bg-emerald-600" />
               {label}
             </span>
-            <h2 className="mt-4 font-display text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">{heading}</h2>
+            <h2 className="mt-4 font-display text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">{headingText}</h2>
             {bodyText && <p className="mt-3 max-w-xl leading-relaxed text-slate-300">{bodyText}</p>}
           </div>
 

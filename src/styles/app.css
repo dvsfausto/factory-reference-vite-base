@@ -136,6 +136,13 @@
   .font-sans-body { font-family: var(--font-sans); }
 }
 
+/* Script accent DROP, part 2 (2026-08-21): strip the accent word's brand COLOR too, so the dropped
+   accent matches its headline exactly — a lone coloured word on a list headline ("…Family Getaways")
+   is the same flaw one step down. UNLAYERED so it beats the @layer-utilities `.text-brand-*` those
+   accent spans still carry (same cascade trick the per-customer typography override uses). color:inherit
+   → the accent adopts whatever colour its headline uses, on light and dark sections alike. */
+.font-script { color: inherit; }
+
 @layer components {
   .container-x {
     width: 100%;

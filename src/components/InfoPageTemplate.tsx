@@ -6,6 +6,7 @@ import { FAQSection } from "./FAQSection";
 import { CTASection } from "./CTASection";
 import { SectionHeader } from "./SectionHeader";
 import { isRelatedServiceVisible } from "~/data/services-view";
+import { pageImageUrl, hasPageImage } from "~/data/images";
 import leaves from "~/assets/decorative/cleaning-leaves.png";
 import type { InfoPageData } from "~/lib/types/page-types";
 
@@ -23,6 +24,10 @@ export function InfoPageTemplate({ data }: Props) {
   const h1Parts = splitScriptAccent(data.hero.h1);
   // Drop related-service links to unpublished services (self-heals; identical when none unpublished).
   const relatedServices = data.relatedServices.filter((r) => isRelatedServiceVisible(r.href));
+  // Editorial banner — a distinct pool image (industry-anchored) for this content page. Rendered ONLY when
+  // it is genuinely different from the hero, so thin builds (no editorial/service pool) stay text-forward
+  // and unchanged; rich builds get a page image that never repeats the hero.
+  const bannerSrc = hasPageImage(data.slug) ? pageImageUrl(data.slug) : null;
 
   return (
     <>
@@ -43,6 +48,15 @@ export function InfoPageTemplate({ data }: Props) {
             <p className="mt-5 text-lg text-ink-700 leading-relaxed">
               {data.hero.subhead}
             </p>
+            {bannerSrc && (
+              <img
+                src={bannerSrc}
+                alt=""
+                aria-hidden
+                loading="lazy"
+                className="mt-8 aspect-[16/7] w-full rounded-2xl object-cover shadow-sm"
+              />
+            )}
           </div>
         </div>
       </section>

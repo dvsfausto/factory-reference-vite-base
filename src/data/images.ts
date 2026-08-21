@@ -9,9 +9,14 @@ import { imageSrc } from '~/lib/asset-url'
 
 export const HERO_ALT = 'Reference hero image'
 
+// Industry-anchored editorial photo (distinct from the hero). "" in the template → scaffolder overwrites.
+export const EDITORIAL_IMAGE = ''
+
 export const AREA_IMAGES: Record<string, string> = {}
 export const AREA_ALT: Record<string, string> = {}
 export const SERVICE_IMAGES: Record<string, string> = {}
+// Per-info-page images, spread across the editorial + service pool (scaffolder-emitted).
+export const PAGE_IMAGES: Record<string, string> = {}
 
 export function areaImage(slug: string): string {
   return AREA_IMAGES[slug] ?? SITE.hero.image_url
@@ -39,4 +44,18 @@ export function ogImageForService(slug: string): string {
 
 export function ogImageForArea(slug: string): string {
   return imageSrc(areaImage(slug))
+}
+
+export function pageImage(slug: string): string {
+  return PAGE_IMAGES[slug] ?? (EDITORIAL_IMAGE || SITE.hero.image_url)
+}
+
+export function pageImageUrl(slug: string): string {
+  return imageSrc(pageImage(slug))
+}
+
+// True only when a DISTINCT (non-hero) page image exists — the info banner renders only then, so
+// thin builds stay text-forward instead of repeating the hero.
+export function hasPageImage(slug: string): boolean {
+  return !!(PAGE_IMAGES[slug] || EDITORIAL_IMAGE)
 }
