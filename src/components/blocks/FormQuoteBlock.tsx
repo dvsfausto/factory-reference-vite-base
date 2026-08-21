@@ -16,10 +16,10 @@ import { Field, Textarea, SubmitButton, SuccessCard } from './form-ui'
 // TOKEN DISCIPLINE: primary CTA -> bg-primary. Accent -> emerald-* (DNA). Radius -> rounded-* (DNA).
 // Font -> font-display (DNA). Dark header panel component-owned. Never bg-brand-* / .btn.
 export function FormQuoteBlock({
-  label = tr('form.freeQuote'),
+  label,
   heading,
   body,
-  submitLabel = tr('form.requestMyQuote'),
+  submitLabel,
   services,
 }: {
   label?: string
@@ -31,14 +31,15 @@ export function FormQuoteBlock({
   const [status, setStatus] = useState<LeadStatus>('idle')
   const [error, setError] = useState<string | null>(null)
 
-  // Industry-aware details copy (emitted from the homepage-copy wave when it produced trade-specific
-  // guidance). Cast-read so a generated SITE without the field still type-checks; empty → tr() fallback.
-  const quoteForm = (SITE as { quoteForm?: { detailsLabel?: string; detailsPlaceholder?: string; body?: string; heading?: string } }).quoteForm
-  // Precedence: an explicit param (owner / customPage) > the trade-specific copy from the wave > tr().
+  // ONE TRADE SOURCE for the whole form. The copy wave emits SITE.quoteForm.{eyebrow,heading,body,
+  // submitLabel} in the trade's language so the eyebrow, heading, body AND submit button all speak it,
+  // instead of four scattered contractor strings ("FREE QUOTE" / "Request my quote"). Cast-read so a
+  // generated SITE without the field still type-checks; empty → tr() fallback. Owner/customPage param wins.
+  const quoteForm = (SITE as { quoteForm?: { detailsLabel?: string; detailsPlaceholder?: string; body?: string; heading?: string; eyebrow?: string; submitLabel?: string } }).quoteForm
   const bodyText = body ?? quoteForm?.body ?? tr('form.quoteBody')
-  // Heading follows the SAME trade source as the CTA verb (quoteForm.heading = quote_cta_label), so the
-  // section title matches the button ("Start planning") instead of a generic "Request a quote".
   const headingText = heading ?? quoteForm?.heading ?? tr('form.requestQuote')
+  const eyebrowText = label ?? quoteForm?.eyebrow ?? tr('form.freeQuote')
+  const submitText = submitLabel ?? quoteForm?.submitLabel ?? tr('form.requestMyQuote')
 
   // The quotable services to offer: the block's own list (owner-chosen, editable) → else a LIVE read of
   // the business's quotable services (SSR = baked for SEO/instant; client reconciles so a service added
@@ -80,7 +81,7 @@ export function FormQuoteBlock({
           <div className="bg-slate-950 px-8 py-10 text-white md:px-12">
             <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-100">
               <span className="h-px w-6 bg-emerald-600" />
-              {label}
+              {eyebrowText}
             </span>
             <h2 className="mt-4 font-display text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">{headingText}</h2>
             {bodyText && <p className="mt-3 max-w-xl leading-relaxed text-slate-300">{bodyText}</p>}
@@ -132,7 +133,7 @@ export function FormQuoteBlock({
                 </div>
                 {status === 'error' && error && <p className="mt-4 text-sm text-red-600">{error}</p>}
                 <div className="mt-8 flex flex-wrap items-center gap-4">
-                  <SubmitButton status={status} label={submitLabel} />
+                  <SubmitButton status={status} label={submitText} />
                   <span className="text-sm text-[#64748B]">
                     Or call{' '}
                     <a href={`tel:${SITE.phone}`} className="font-medium text-emerald-700 underline-offset-2 hover:underline">
