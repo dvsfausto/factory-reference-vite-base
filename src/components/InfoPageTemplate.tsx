@@ -6,7 +6,7 @@ import { FAQSection } from "./FAQSection";
 import { CTASection } from "./CTASection";
 import { SectionHeader } from "./SectionHeader";
 import { isRelatedServiceVisible } from "~/data/services-view";
-import { pageImageUrl, hasPageImage } from "~/data/images";
+import { pageImageUrl, hasPageImage, EDITORIAL_IMAGE, PAGE_IMAGES } from "~/data/images";
 import leaves from "~/assets/decorative/cleaning-leaves.png";
 import type { InfoPageData } from "~/lib/types/page-types";
 
@@ -31,6 +31,17 @@ export function InfoPageTemplate({ data }: Props) {
 
   return (
     <>
+      {/* TEMP #3 DIAGNOSTIC PROBE (revert after read): surfaces the runtime image values so we can see
+          why the editorial banner gates off. Hidden; read via data-attributes. */}
+      <div
+        id="banner-diag"
+        hidden
+        data-editorial={String(EDITORIAL_IMAGE)}
+        data-pageimages={JSON.stringify(PAGE_IMAGES)}
+        data-slug={String(data.slug)}
+        data-has={String(hasPageImage(data.slug))}
+        data-bannersrc={String(bannerSrc)}
+      />
       {/* HERO — simple single column */}
       <section className="relative overflow-hidden bg-gradient-to-b from-brand-50 via-white to-white">
         <img src={leaves} alt="" aria-hidden className="hidden md:block absolute -right-10 top-0 h-[60%] opacity-30 pointer-events-none select-none rotate-180" />
