@@ -99,6 +99,14 @@ export const SITE = {
 }
 
 export const BUSINESS_ID = '00000000-0000-0000-0000-000000000000'
+/**
+ * ★★ THE SITE'S OWN WRITE KEY — opaque, revocable, and NOT derivable from anything on the page.
+ * Empty here and in any build made before the trigger supplies one; the beacon and the lead form
+ * both fall back to BUSINESS_ID when it is empty, so an unkeyed build behaves exactly as it does
+ * today. ⚠️ A published site cannot receive a key without being rebuilt, and rebuilding overwrites
+ * the owner's edits — so already-live sites keep the fallback until they are next built, by design.
+ */
+export const SITE_KEY = ''
 export const SUPABASE_ENDPOINT =
   'https://nldfnnyhrovytkuvtuby.supabase.co/functions/v1/handle-website-lead'
 export const SITE_LANGUAGE: 'en' | 'es' = 'en'

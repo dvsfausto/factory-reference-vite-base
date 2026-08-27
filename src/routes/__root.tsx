@@ -12,7 +12,7 @@ import { Header } from '~/components/Header'
 import { Footer } from '~/components/Footer'
 import { JsonLd } from '~/components/JsonLd'
 import { localBusinessLd } from '~/lib/seo'
-import { SITE, BUSINESS_ID, SUPABASE_URL } from '~/data/site'
+import { SITE, BUSINESS_ID, SITE_KEY, SUPABASE_URL } from '~/data/site'
 import appCss from '~/styles/app.css?url'
 
 export const Route = createRootRoute({
@@ -77,11 +77,17 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <script
           dangerouslySetInnerHTML={{
             __html:
-              `(function(){var b=${JSON.stringify(BUSINESS_ID)},` +
+              `(function(){var b=${JSON.stringify(BUSINESS_ID)},k=${JSON.stringify(SITE_KEY)},` +
               `e=${JSON.stringify(SUPABASE_URL + '/functions/v1/collect-pageview')};` +
               `if(!b||b==='00000000-0000-0000-0000-000000000000')return;var last='';` +
+              /* ★★ THE KEY WHEN THERE IS ONE, THE BUSINESS ID WHEN THERE IS NOT.
+                 ⚠️ THE FALLBACK IS NOT A LEFTOVER — IT IS WHAT KEEPS THE ROLLOUT SAFE. A build that
+                 runs before the trigger supplies a key emits SITE_KEY as '' and posts exactly what
+                 it posts today, so the two sides can ship in either order and nothing depends on a
+                 key existing. The server records an unkeyed view with source NULL rather than
+                 guessing it is ours. */
               `function ping(){try{var p=location.pathname+location.search;if(p===last)return;last=p;` +
-              `var body=JSON.stringify({business_id:b,path:p,referrer:document.referrer||''});` +
+              `var body=JSON.stringify(k?{site_key:k,path:p,referrer:document.referrer||''}:{business_id:b,path:p,referrer:document.referrer||''});` +
               `if(navigator.sendBeacon){navigator.sendBeacon(e,body)}` +
               `else{fetch(e,{method:'POST',body:body,keepalive:true,headers:{'Content-Type':'application/json'}})}` +
               `}catch(_){}}` +

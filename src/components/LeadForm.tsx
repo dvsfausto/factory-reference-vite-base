@@ -1,6 +1,6 @@
 import { useState, useId } from 'react'
 import { tr } from '~/lib/i18n'
-import { BUSINESS_ID, SITE, SITE_LANGUAGE, SUPABASE_ENDPOINT } from '~/data/site'
+import { BUSINESS_ID, SITE, SITE_KEY, SITE_LANGUAGE, SUPABASE_ENDPOINT } from '~/data/site'
 
 interface Props {
   heading?: string
@@ -23,6 +23,8 @@ const INITIAL: FormState = { name: '', phone: '', email: '', message: '' }
 // Edit at peril; the receiving Edge Function (handle-website-lead) expects
 // these exact fields.
 interface LeadEnvelope {
+  /** Present only on builds made after site keys shipped; the server prefers it over business_id. */
+  site_key?: string
   business_id: string
   form_type: string
   first_name: string
@@ -70,6 +72,10 @@ export function LeadForm({
     const lastName = nameParts.slice(1).join(' ')
 
     const envelope: LeadEnvelope = {
+      /* ★ The key decides the business server-side when present; business_id stays for builds made
+         before keys existed, which is every already-published site. Sending both is harmless — the
+         endpoint ignores business_id whenever a valid key is supplied. */
+      ...(SITE_KEY ? { site_key: SITE_KEY } : {}),
       business_id: BUSINESS_ID,
       form_type: formType,
       first_name: firstName,
