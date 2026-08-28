@@ -468,7 +468,7 @@ export function Header() {
 
         {structure === "standard" && (
           <div className="container-x flex items-center justify-between h-20">
-            <Link to="/" className="focus-ring rounded-md" aria-label={`${SITE.name} home`}>
+            <Link to="/" className="focus-ring rounded-md" aria-label={`${SITE.name} ${tr('nav.homeLink')}`}>
               <Logo src={SITE.logo_url} light={t.logoLight} height={44} alt={SITE.name} />
             </Link>
             <nav className="hidden lg:flex items-center gap-1" aria-label={tr('nav.ariaPrimary')}>
@@ -489,7 +489,7 @@ export function Header() {
           // mobile. Reads like a printed masthead, which no other family's header does.
           <div className="container-x">
             <div className="flex lg:hidden items-center justify-between h-20">
-              <Link to="/" className="focus-ring rounded-md" aria-label={`${SITE.name} home`}>
+              <Link to="/" className="focus-ring rounded-md" aria-label={`${SITE.name} ${tr('nav.homeLink')}`}>
                 <Logo src={SITE.logo_url} light={t.logoLight} height={40} alt={SITE.name} />
               </Link>
               {mobileTrigger}
@@ -499,7 +499,7 @@ export function Header() {
                 <div className={`justify-self-start text-[11px] uppercase tracking-[0.22em] ${t.mobileLabel}`}>
                   {cityLine || SITE.hours}
                 </div>
-                <Link to="/" className="justify-self-center focus-ring rounded-md" aria-label={`${SITE.name} home`}>
+                <Link to="/" className="justify-self-center focus-ring rounded-md" aria-label={`${SITE.name} ${tr('nav.homeLink')}`}>
                   <Logo src={SITE.logo_url} light={t.logoLight} height={46} alt={SITE.name} />
                 </Link>
                 <div className="justify-self-end flex items-center gap-4">
@@ -533,7 +533,7 @@ export function Header() {
               </div>
             </div>
             <div className="container-x flex items-center justify-between h-[72px]">
-              <Link to="/" className="focus-ring rounded-md" aria-label={`${SITE.name} home`}>
+              <Link to="/" className="focus-ring rounded-md" aria-label={`${SITE.name} ${tr('nav.homeLink')}`}>
                 <Logo src={SITE.logo_url} light={t.logoLight} height={42} alt={SITE.name} />
               </Link>
               <nav className="hidden lg:flex items-center gap-1" aria-label={tr('nav.ariaPrimary')}>

@@ -25,6 +25,9 @@ const EN = {
   'nav.viewAllAreas': 'View all areas →',
   'nav.skipToContent': 'Skip to content',
   'nav.ariaPrimary': 'Primary',
+  /* ★ The logo link's label. Was hardcoded `${SITE.name} home` — English on every Spanish site. */
+  'nav.homeLink': 'home',
+  'cta.getPreQualified': 'Get pre-qualified',
   'nav.openMenu': 'Open menu',
   'nav.closeMenu': 'Close menu',
   // affordance CTA labels (primaryCta / header / floating)
@@ -244,6 +247,8 @@ const EN = {
 
 // Miami Spanish, natural, not literal. Same keys as EN.
 const ES: Record<keyof typeof EN, string> = {
+  'nav.homeLink': 'inicio',
+  'cta.getPreQualified': 'Precalifícate',
   'nav.services': 'Servicios',
   'nav.areas': 'Zonas',
   'nav.pricing': 'Precios',

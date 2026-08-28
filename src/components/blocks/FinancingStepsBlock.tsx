@@ -1,3 +1,4 @@
+import { tr } from '~/lib/i18n'
 import { Link } from '@tanstack/react-router'
 import type { Financing } from './financing-variants'
 import { SITE } from '~/data/site'
@@ -45,7 +46,7 @@ export function FinancingStepsBlock({
           })}
         </div>
         <div className="mt-10">
-          <Link to="/contact" className="inline-flex h-12 items-center rounded-xl bg-primary px-7 font-display text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90">Get pre-qualified</Link>
+          <Link to="/contact" className="inline-flex h-12 items-center rounded-xl bg-primary px-7 font-display text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90">{tr('cta.getPreQualified')}</Link>
         </div>
       </div>
     </section>
