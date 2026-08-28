@@ -12,7 +12,7 @@ import { Header } from '~/components/Header'
 import { Footer } from '~/components/Footer'
 import { JsonLd } from '~/components/JsonLd'
 import { localBusinessLd } from '~/lib/seo'
-import { SITE, BUSINESS_ID, SITE_KEY, SUPABASE_URL } from '~/data/site'
+import { SITE, SITE_LANGUAGE, BUSINESS_ID, SITE_KEY, SUPABASE_URL } from '~/data/site'
 import appCss from '~/styles/app.css?url'
 
 export const Route = createRootRoute({
@@ -55,7 +55,16 @@ export const Route = createRootRoute({
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
     <html
-      lang="en"
+      /**
+       * ★★ THE DOCUMENT'S OWN LANGUAGE, not a constant. This was hardcoded `lang="en"` and nothing
+       * downstream patched it, so EVERY generated site declared English — including a fully Spanish
+       * one, verified on a real build whose nav, CTAs and copy were all Spanish under `lang="en"`.
+       * ⚠️ It is not cosmetic: screen readers pick a voice from it, browsers offer the wrong
+       * translation, and search engines index the page as the wrong language.
+       * `SITE_LANGUAGE` is emitted by the scaffolder and already drives tr(); this makes the tag
+       * agree with the words on the page.
+       */
+      lang={SITE_LANGUAGE}
       // SITE.motionLevel='subtle' (restrained business types) → gentler scroll-reveal
       // (see .motion-subtle in app.css). Absent → full motion (byte-identical default).
       className={(SITE as { motionLevel?: string }).motionLevel === 'subtle' ? 'motion-subtle' : undefined}
