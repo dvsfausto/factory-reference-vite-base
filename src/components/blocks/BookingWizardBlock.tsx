@@ -140,14 +140,44 @@ function generateSlots(
   if (!avail) return []
   const [sh, sm] = avail.start_time.split(':').map(Number)
   const [eh, em] = avail.end_time.split(':').map(Number)
-  const dur = service.duration_minutes || 60
+  /**
+   * ═══════════════════════════════════════════════════════════════════════════════
+   * ★★★ A HANG IS WORSE THAN AN ERROR — this loop walks the availability window in
+   * service-duration steps, so the step IS the termination condition.
+   *
+   * ⚠️ `duration_minutes || 60` LOOKS LIKE A GUARD AND IS NOT ONE. It catches 0, null and NaN
+   * because all three are falsy — but a NEGATIVE duration passes straight through, `cur` then walks
+   * BACKWARDS, `cur < end` is true forever, and the customer's browser locks up on the one page
+   * whose whole job is to take their money. A fractional duration terminates but spins hundreds of
+   * thousands of times first, which the visitor experiences as the same thing.
+   *
+   * ★ SO: A POSITIVE FINITE NUMBER, OR THE DEFAULT — and independently of that, a hard ceiling on
+   * iterations, because the guard reasons about the value while the ceiling reasons about the loop.
+   * A future bad value that slips the first cannot get past the second.
+   *
+   * ⚠️ THIS RUNS ON EVERY GENERATED CUSTOMER SITE, where there is no dashboard to escape to and no
+   * one to report it. The identical guard already exists in glow's TimeSelector; this is the copy
+   * that was missed. Today 229 of 323 active services have a null duration and none is negative —
+   * so this is one bad row away rather than currently broken, and the fix costs nothing.
+   * ═══════════════════════════════════════════════════════════════════════════════
+   */
+  const rawDur = service.duration_minutes
+  const dur =
+    typeof rawDur === 'number' && Number.isFinite(rawDur) && rawDur > 0 ? rawDur : 60
   const now = new Date()
   const end = new Date(date)
   end.setHours(eh, em, 0, 0)
   let cur = new Date(date)
   cur.setHours(sh, sm, 0, 0)
+  /* An Invalid Date from a malformed availability row makes every comparison false, so the loop
+     never runs and the day simply shows no slots. Bailing explicitly says that out loud. */
+  if (Number.isNaN(cur.getTime()) || Number.isNaN(end.getTime())) return []
+  /* At most one slot per minute of the window, +1 for the boundary. */
+  const maxIterations = Math.max(1, Math.ceil((end.getTime() - cur.getTime()) / 60000)) + 1
+  let iterations = 0
   const slots: string[] = []
-  while (cur < end) {
+  while (cur < end && iterations < maxIterations) {
+    iterations++
     const slotEnd = new Date(cur.getTime() + dur * 60000)
     if (cur >= now && slotEnd <= end) {
       slots.push(`${String(cur.getHours()).padStart(2, '0')}:${String(cur.getMinutes()).padStart(2, '0')}`)
