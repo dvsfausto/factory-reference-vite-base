@@ -71,11 +71,31 @@ function RootDocument({ children }: { children: React.ReactNode }) {
     >
       <head>
         <HeadContent />
-        {/* WOW motion layer: mark JS-capable BEFORE first paint so scroll-reveal hides its start-state
-            without a flash. No-JS never sets this → content stays visible (SSR/SEO safe). */}
+        {/**
+          * WOW motion layer: mark JS-capable BEFORE first paint so scroll-reveal hides its
+          * start-state without a flash. No-JS never sets this → content stays visible (SSR/SEO safe).
+          *
+          * ★★★ AND A DEAD-MAN'S SWITCH, BECAUSE HIDING FIRST IS THE RISK. This class hides every
+          * section before anything knows whether React will hydrate. No-JS was already safe (the
+          * class is never added) — but PARTIAL failure was not: a chunk that 404s mid-deploy, or a
+          * hydration abort, leaves the class applied, no Reveal effect ever runs, nothing gets
+          * `.reveal-in`, and the visitor sees A WHITE PAGE whose links are still there and still
+          * hoverable. That is a real reported symptom.
+          *
+          * ⚠️ THE FIX CANNOT LIVE IN <Reveal>. If React never hydrates, that component never runs;
+          * a React timeout would be dead code in exactly the case it is meant to cover. So the same
+          * inline script that hides also schedules its own un-hide, in plain DOM.
+          *
+          * ★ CONDITIONAL, so a healthy page keeps its animation: React stamps `data-hydrated` on
+          * <html> once it mounts. If that stamp has not appeared within 2s, hydration is not coming
+          * and the hiding class is removed — the page renders plain and complete instead of blank.
+          * FAIL VISIBLE, NOT INVISIBLE.
+          */}
         <script
           dangerouslySetInnerHTML={{
-            __html: "try{document.documentElement.classList.add('js-reveal')}catch(e){}",
+            __html:
+              "try{var h=document.documentElement;h.classList.add('js-reveal');" +
+              "setTimeout(function(){try{if(!h.hasAttribute('data-hydrated'))h.classList.remove('js-reveal')}catch(e){}},2000)}catch(e){}",
           }}
         />
         {/* Own-beacon site analytics: dependency-free, fire-and-forget. Fires ONE sendBeacon on first
@@ -115,6 +135,21 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 }
 
 function RootComponent() {
+  /**
+   * ★ THE HYDRATION STAMP the inline script's dead-man's switch looks for. If React mounts, this
+   * runs well inside the 2s window and the reveal animation is left alone. If it never runs, the
+   * switch strips `.js-reveal` and the page renders visible-but-plain rather than blank.
+   * ⚠️ Set on <html>, the same element the script reads — not on a React-owned node, which would
+   * not exist in the failure case this guards.
+   */
+  React.useEffect(() => {
+    try {
+      document.documentElement.setAttribute('data-hydrated', '')
+    } catch {
+      /* never worth failing a render over */
+    }
+  }, [])
+
   return (
     <>
       <JsonLd data={localBusinessLd()} />

@@ -82,6 +82,9 @@ function AreasCol({ t }: { t: FooterTheme }) {
     </div>
   );
 }
+/** Owner-made pages that ARE a legal page, matched on the slug. Empty on almost every site today. */
+const LEGAL_PAGES = CUSTOM_PAGES.filter((p) => /privacy|terms|legal|aviso|privacidad|terminos/i.test(p.slug));
+
 function CompanyCol({ t }: { t: FooterTheme }) {
   return (
     <div>
@@ -91,9 +94,26 @@ function CompanyCol({ t }: { t: FooterTheme }) {
         {!HIDDEN_NAV.includes('pricing') && <li><Link to="/pricing" className={t.listHover}>{tr('footer.pricing')}</Link></li>}
         {!HIDDEN_NAV.includes('reviews') && <li><Link to="/reviews" className={t.listHover}>{tr('footer.reviews')}</Link></li>}
         {!HIDDEN_NAV.includes('contact') && <li><Link to="/contact" className={t.listHover}>{tr('footer.contact')}</Link></li>}
-        {INFO_PAGES.map((i) => (<li key={i.slug}><Link to="/info/$slug" params={{ slug: i.slug }} className={t.listHover}>{i.name}</Link></li>))}
+        {/**
+          * ⚠️ INFO PAGES ARE NOT COMPANY PAGES. They were listed here beside About / Pricing /
+          * Reviews / Contact, so "What to Expect When You Work With Us" and "Questions to Ask
+          * Before You Hire" read as corporate links — the reported "blog pages in the company
+          * section… it looks somehow". They are guides, so they get their own labelled group
+          * rather than a fifth column (the grid is already 5-up on desktop and 4-up on the
+          * compact variant; adding one would reflow both).
+          * ★ CUSTOM pages stay in Company: an owner-created page IS theirs, and they chose to
+          * put it in the nav.
+          */}
         {CUSTOM_PAGES.filter((p) => p.nav !== false).map((p) => (<li key={p.slug}><Link to="/p/$slug" params={{ slug: p.slug }} className={t.listHover}>{p.title}</Link></li>))}
       </ul>
+      {INFO_PAGES.length > 0 && (
+        <>
+          <h4 className={`text-sm font-semibold mt-6 mb-4 ${t.heading}`}>{tr('footer.guides')}</h4>
+          <ul className={`space-y-2 text-sm ${t.listText}`}>
+            {INFO_PAGES.map((i) => (<li key={i.slug}><Link to="/info/$slug" params={{ slug: i.slug }} className={t.listHover}>{i.name}</Link></li>))}
+          </ul>
+        </>
+      )}
     </div>
   );
 }
@@ -118,8 +138,17 @@ function BottomBar({ t }: { t: FooterTheme }) {
       <div className={`container-x py-5 flex flex-wrap items-center justify-between gap-3 text-xs ${t.bottomText}`}>
         <div>© {year} {SITE.name}</div>
         <div className="flex gap-4">
-          <Link to="/contact" className={t.bottomHover}>{tr('footer.privacy')}</Link>
-          <Link to="/contact" className={t.bottomHover}>{tr('footer.terms')}</Link>
+          {/**
+            * ⚠️ PRIVACY AND TERMS POINTED AT /contact ON EVERY GENERATED SITE. There is no privacy
+            * route and no terms route in this template — the links went to a contact form. A
+            * "Privacy" link that opens a contact form is worse than no link: it asserts a privacy
+            * policy exists and sends a visitor looking for it into a dead end.
+            * ★ So they render ONLY when the owner has actually made such a page (a custom page
+            * whose slug says so). No page, no link — nothing is lost, and nothing is claimed.
+            */}
+          {LEGAL_PAGES.map((p) => (
+            <Link key={p.slug} to="/p/$slug" params={{ slug: p.slug }} className={t.bottomHover}>{p.title}</Link>
+          ))}
           <a href="/sitemap.xml" className={t.bottomHover}>{tr('footer.sitemap')}</a>
         </div>
       </div>

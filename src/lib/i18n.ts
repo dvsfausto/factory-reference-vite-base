@@ -41,6 +41,7 @@ const EN = {
   'cta.requestQuote': 'Request a quote',
   // footer
   'footer.company': 'Company',
+  'footer.guides': 'Guides',
   'footer.services': 'Services',
   'footer.serviceAreas': 'Service Areas',
   'footer.viewAllAreas': 'View all areas',
@@ -247,6 +248,7 @@ const EN = {
 
 // Miami Spanish, natural, not literal. Same keys as EN.
 const ES: Record<keyof typeof EN, string> = {
+  'footer.guides': 'Guías',
   'nav.homeLink': 'inicio',
   'cta.getPreQualified': 'Precalifícate',
   'nav.services': 'Servicios',
