@@ -49,6 +49,22 @@ export function LeadForm({
     'idle',
   )
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  /**
+   * ═══════════════════════════════════════════════════════════════════════════════
+   * ★★★ `required` MEANT NOTHING UNTIL THIS EXISTED.
+   *
+   * ⚠️ THE FORM CARRIES `noValidate`, which switches off the browser's own enforcement of the
+   * `required` attributes below — and the submit handler never checked anything in its place. An
+   * empty form therefore POSTed an empty lead and showed the visitor a thank-you. Reproduced 3 of 3
+   * against the live site; `form.checkValidity()` returned false while the request went out anyway.
+   *
+   * ★ noValidate STAYS, deliberately. Native validation bubbles are written in the BROWSER's
+   * locale, not the site's — a Spanish site would show English messages to a Spanish visitor, and
+   * we cannot style or translate them. Owning the messages is the reason the attribute is there;
+   * the only thing missing was the validation it implies. See i18n form.err*.
+   * ═══════════════════════════════════════════════════════════════════════════════
+   */
+  const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({})
   const idPrefix = useId()
 
   const update =
@@ -59,11 +75,48 @@ export function LeadForm({
       >,
     ) => {
       setForm((prev) => ({ ...prev, [key]: e.target.value }))
+      /* ★ The error clears as they fix it — a message that stays put while the field is now correct
+         reads as the form being broken. */
+      setErrors((prev) => (prev[key] ? { ...prev, [key]: undefined } : prev))
     }
+
+  /**
+   * ★ WHAT COUNTS AS FILLED IN. Deliberately forgiving: a phone is any 7+ digits (international
+   * formats, spaces, dots and dashes all pass — the fleet's own records include "305.902.8345"),
+   * and email is only checked when one was actually typed, because the field is optional.
+   * ⚠️ It rejects EMPTY, not UNUSUAL. A real person with an odd number must never be turned away.
+   */
+  const validate = (v: FormState): Partial<Record<keyof FormState, string>> => {
+    const next: Partial<Record<keyof FormState, string>> = {}
+    if (!v.name.trim()) next.name = tr('form.errName')
+    const digits = v.phone.replace(/\D/g, '')
+    if (!v.phone.trim()) next.phone = tr('form.errPhone')
+    else if (digits.length < 7) next.phone = tr('form.errPhoneShort')
+    if (v.email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.email.trim()))
+      next.email = tr('form.errEmail')
+    return next
+  }
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (status === 'submitting') return
+
+    const found = validate(form)
+    if (Object.keys(found).length > 0) {
+      setErrors(found)
+      setErrorMessage(tr('form.errSummary'))
+      /* ⚠️ MOVE THE CURSOR TO THE PROBLEM. On a phone the invalid field is often off-screen, and a
+         summary line alone leaves the visitor tapping a button that appears to do nothing. */
+      const first = (['name', 'phone', 'email', 'message'] as const).find((k) => found[k])
+      if (first && typeof document !== 'undefined') {
+        const el = document.getElementById(`${idPrefix}-${first}`)
+        el?.focus()
+        el?.scrollIntoView({ block: 'center', behavior: 'smooth' })
+      }
+      return
+    }
+
+    setErrors({})
     setStatus('submitting')
     setErrorMessage(null)
 
@@ -142,6 +195,7 @@ export function LeadForm({
           required
           value={form.name}
           onChange={update('name')}
+          error={errors.name}
           autoComplete="name"
         />
         <Field
@@ -151,6 +205,7 @@ export function LeadForm({
           required
           value={form.phone}
           onChange={update('phone')}
+          error={errors.phone}
           autoComplete="tel"
           inputMode="tel"
         />
@@ -160,6 +215,7 @@ export function LeadForm({
           type="email"
           value={form.email}
           onChange={update('email')}
+          error={errors.email}
           autoComplete="email"
         />
         <div>
@@ -218,6 +274,7 @@ function Field({
   onChange,
   autoComplete,
   inputMode,
+  error,
 }: {
   id: string
   label: string
@@ -227,6 +284,8 @@ function Field({
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   autoComplete?: string
   inputMode?: 'tel' | 'numeric' | 'text'
+  /** The message for THIS field, or undefined. Drives the border, aria-invalid and the note. */
+  error?: string
 }) {
   return (
     <div>
@@ -243,8 +302,21 @@ function Field({
         autoComplete={autoComplete}
         inputMode={inputMode}
         maxLength={255}
-        className="mt-1 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-base text-slate-900 outline-none transition-colors focus:border-emerald-600 focus:ring-2 focus:ring-emerald-100"
+        /* ★ The error is ANNOUNCED, not just coloured — a red border alone says nothing to a
+           screen reader, and colour alone fails anyone who cannot distinguish it. */
+        aria-invalid={error ? true : undefined}
+        aria-describedby={error ? `${id}-error` : undefined}
+        className={`mt-1 w-full rounded-md border bg-white px-3 py-2 text-base text-slate-900 outline-none transition-colors ${
+          error
+            ? 'border-red-500 focus:border-red-600 focus:ring-2 focus:ring-red-100'
+            : 'border-slate-300 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-100'
+        }`}
       />
+      {error && (
+        <p id={`${id}-error`} className="mt-1 text-sm text-red-600">
+          {error}
+        </p>
+      )}
     </div>
   )
 }
