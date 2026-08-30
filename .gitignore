@@ -22,3 +22,6 @@ yarn.lock
 .agents/
 .claude/
 skills-lock.json
+
+# Supabase CLI local link state — machine-specific, not source.
+supabase/.temp/
