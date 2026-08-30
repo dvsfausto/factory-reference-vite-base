@@ -50,12 +50,23 @@ export interface ServiceRef {
    */
   action?: 'buy' | 'collect' | 'quote' | 'book' | 'inquire'
   /**
-   * Catalog service UUID — the REAL cross-boundary identity (not the fragile name), emitted by the
-   * scaffolder from the owner's catalog. Catalog widgets submit this so a rename never breaks the link
-   * and two same-named services never collide. Representative id for a folded tier-family. Absent
-   * (older builds) → the widget falls back to the service name.
+   * ★★★ THE CATALOG SERVICE UUID — REQUIRED, and that is the point.
+   *
+   * ⚠️ IT USED TO BE OPTIONAL, and optional identity is what made a wrong site REPRESENTABLE. The
+   * scaffolder emitted `id` only when its lookup hit; a miss produced a perfectly valid ServiceRef
+   * with no identity at all. So a service that was not the owner's — a demo fixture, a generated
+   * extra, a renamed artifact — could sit in this array indistinguishable from a real one, and no
+   * type, no check and no reader could tell. Six services for a business with four ids was a
+   * well-formed value.
+   *
+   * ★ REQUIRED, IT IS NOT. An entry without a catalog row cannot be constructed, so the failure
+   * moves from "detected afterwards" to "impossible to write". The scaffolder now resolves every
+   * emitted service to a real uuid or leaves it out entirely.
+   *
+   * Catalog widgets submit this, so a rename never breaks the link and two same-named services
+   * never collide. Representative id for a folded tier-family.
    */
-  id?: string
+  id: string
 }
 
 export interface AreaRef {
