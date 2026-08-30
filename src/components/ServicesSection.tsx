@@ -43,7 +43,7 @@ export function ServicesSection({ heading, intro, services }: Props) {
             const body = (
               <div className="p-5">
                 <p className="text-lg font-semibold text-slate-900 group-hover:text-emerald-700">
-                  {s.name}
+                  {s.displayName}
                 </p>
                 <p className="mt-2 text-sm leading-relaxed text-slate-600">{s.short}</p>
                 {paged && (

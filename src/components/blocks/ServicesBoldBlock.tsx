@@ -64,7 +64,7 @@ export function ServicesBoldBlock({
               </div>
               <div className="flex flex-1 flex-col p-6">
                 <h3 className="font-display text-xl font-semibold uppercase tracking-tight text-ink-900">
-                  {s.name}
+                  {s.displayName}
                 </h3>
                 <p className="mt-2 text-ink-500">{s.short}</p>
                 <div className="mt-5 flex items-center gap-1 font-display text-sm font-semibold uppercase tracking-wide text-emerald-700 transition-all group-hover:gap-2">

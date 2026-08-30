@@ -113,7 +113,7 @@ export function ServicesSpotlightTilesBlock({
                   {label}
                 </span>
                 <h3 className="mt-4 font-display text-3xl leading-tight text-white sm:text-4xl">
-                  {lead.name}
+                  {lead.displayName}
                 </h3>
                 <p className="mt-3 max-w-md text-white/90">{lead.short}</p>
                 <span className="mt-6 inline-flex items-center gap-1.5 font-semibold text-white transition-all group-hover:gap-2.5">
@@ -171,7 +171,7 @@ export function ServicesSpotlightTilesBlock({
                       />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <h3 className="font-display text-lg leading-snug">{s.name}</h3>
+                      <h3 className="font-display text-lg leading-snug">{s.displayName}</h3>
                       <p className="mt-1 line-clamp-2 text-sm text-ink-500">
                         {s.short}
                       </p>

@@ -69,7 +69,7 @@ function ServicesCol({ t }: { t: FooterTheme }) {
   return (
     <div>
       <h4 className={`text-sm font-semibold mb-4 ${t.heading}`}>{tr('footer.services')}</h4>
-      <ul className={`space-y-2 text-sm ${t.listText}`}>{SERVICES.map((s) => (<li key={s.slug}><Link to="/services/$slug" params={{ slug: s.slug }} className={t.listHover}>{s.name}</Link></li>))}</ul>
+      <ul className={`space-y-2 text-sm ${t.listText}`}>{SERVICES.map((s) => (<li key={s.slug}><Link to="/services/$slug" params={{ slug: s.slug }} className={t.listHover}>{s.displayName}</Link></li>))}</ul>
     </div>
   );
 }
@@ -208,7 +208,7 @@ function FooterEditorial({ t }: { t: FooterTheme }) {
           <nav className="lg:col-span-3">
             <h4 className={`${capLabel} mb-4 ${t.heading}`}>{tr('footer.company')}</h4>
             <ul className={`space-y-2.5 text-sm ${t.listText}`}>
-              {SERVICES.slice(0, 4).map((s) => (<li key={s.slug}><Link to="/services/$slug" params={{ slug: s.slug }} className={`${t.listHover} transition-colors`}>{s.name}</Link></li>))}
+              {SERVICES.slice(0, 4).map((s) => (<li key={s.slug}><Link to="/services/$slug" params={{ slug: s.slug }} className={`${t.listHover} transition-colors`}>{s.displayName}</Link></li>))}
               {!HIDDEN_NAV.includes('about') && <li><Link to="/about" className={t.listHover}>{tr('footer.about')}</Link></li>}
               {!HIDDEN_NAV.includes('reviews') && <li><Link to="/reviews" className={t.listHover}>{tr('footer.reviews')}</Link></li>}
             </ul>
@@ -268,7 +268,7 @@ function FooterMinimal({ t }: { t: FooterTheme }) {
             {SITE.tagline && <p className={`mt-3 max-w-xs text-sm ${t.tagline} leading-relaxed font-display italic`}>{SITE.tagline}</p>}
           </div>
           <nav className={`flex flex-wrap gap-x-7 gap-y-2 text-xs font-semibold uppercase tracking-[0.12em] ${t.listText}`}>
-            {SERVICES.slice(0, 3).map((s) => (<Link key={s.slug} to="/services/$slug" params={{ slug: s.slug }} className={`${t.listHover} transition-colors`}>{s.name}</Link>))}
+            {SERVICES.slice(0, 3).map((s) => (<Link key={s.slug} to="/services/$slug" params={{ slug: s.slug }} className={`${t.listHover} transition-colors`}>{s.displayName}</Link>))}
             {!HIDDEN_NAV.includes('pricing') && <Link to="/pricing" className={t.listHover}>{tr('footer.pricing')}</Link>}
             {!HIDDEN_NAV.includes('reviews') && <Link to="/reviews" className={t.listHover}>{tr('footer.reviews')}</Link>}
             {!HIDDEN_NAV.includes('contact') && <Link to="/contact" className={t.listHover}>{tr('footer.contact')}</Link>}

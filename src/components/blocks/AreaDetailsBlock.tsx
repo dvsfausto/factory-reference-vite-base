@@ -112,7 +112,7 @@ export function AreaDetailsBlock({
               </div>
               <div className="p-6">
                 <h3 className="font-display text-lg leading-snug text-[var(--fam-ink,var(--color-ink-900))]">
-                  {s.name}
+                  {s.displayName}
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-[var(--fam-ink-muted,var(--color-ink-500))]">{s.short}</p>
                 <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-brand-600 transition-all group-hover:gap-2">{tr('common.learnMore')}<ArrowRight className="h-4 w-4" />

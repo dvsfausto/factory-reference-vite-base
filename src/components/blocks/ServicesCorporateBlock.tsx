@@ -59,7 +59,7 @@ export function ServicesCorporateBlock({
               </div>
               <div className="flex flex-1 flex-col p-7">
                 <h3 className="font-display text-xl font-bold tracking-tight text-[#1A2433]">
-                  {s.name}
+                  {s.displayName}
                 </h3>
                 <p className="mt-2 text-[#5A6678]">{s.short}</p>
                 <div className="mt-5 flex items-center gap-1 font-display text-sm font-semibold text-emerald-700 transition-all group-hover:gap-2">

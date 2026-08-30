@@ -14,6 +14,8 @@ export const SERVICES: ServiceRef[] = Object.freeze([
     id: '00000000-0000-0000-0000-000000000000',
     slug: 'sample-service',
     name: 'Sample Service',
+    // Heading form of `name`; identical here because the placeholder is already title case.
+    displayName: 'Sample Service',
     short: 'Placeholder service entry.',
     tagline: 'Replaced by factory build.',
   },

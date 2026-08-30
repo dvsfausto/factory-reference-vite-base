@@ -121,7 +121,7 @@ export function ServicesLuxeBlock({
                   </span>
                 </div>
                 <div className="flex flex-1 flex-col p-6">
-                  <h3 className="font-display text-xl leading-snug">{s.name}</h3>
+                  <h3 className="font-display text-xl leading-snug">{s.displayName}</h3>
                   <p className="mt-2 flex-1 text-ink-500">{s.short}</p>
                   {/* Brand-gradient rule that widens on hover. */}
                   <span

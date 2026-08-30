@@ -73,7 +73,7 @@ export function ServicesAlternatingRowsBlock({
                   {String(i + 1).padStart(2, '0')}
                 </span>
                 <h3 className="mt-3 font-display text-3xl font-semibold tracking-tight text-[#0F172A] sm:text-4xl">
-                  {s.name}
+                  {s.displayName}
                 </h3>
                 <p className="mt-4 max-w-md text-lg leading-relaxed text-[#64748B]">{s.short}</p>
                 <Link

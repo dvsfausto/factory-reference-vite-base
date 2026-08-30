@@ -96,7 +96,7 @@ export function ServicesBentoBlock({
                 <div className="absolute inset-0 -z-10 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent" />
                 <div className="flex items-end justify-between gap-3 p-6">
                   <h3 className={`font-display font-semibold tracking-tight text-white drop-shadow-sm ${i === 0 ? 'text-2xl sm:text-3xl' : 'text-xl'}`}>
-                    {s.name}
+                    {s.displayName}
                   </h3>
                   <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/10 text-white backdrop-blur-sm transition-colors group-hover:bg-emerald-600">
                     <ArrowUpRight className="h-4 w-4" />

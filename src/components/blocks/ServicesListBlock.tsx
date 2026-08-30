@@ -65,7 +65,7 @@ export function ServicesListBlock({
                 {String(i + 1).padStart(2, '0')}
               </span>
               <h3 className="font-display text-2xl font-semibold tracking-tight text-[#0F172A] transition-colors group-hover:text-emerald-700 md:col-span-5 md:text-3xl">
-                {s.name}
+                {s.displayName}
               </h3>
               <p className="text-base leading-relaxed text-[#64748B] md:col-span-5">{s.short}</p>
               <span className="hidden items-center justify-end text-emerald-600 md:col-span-1 md:flex">

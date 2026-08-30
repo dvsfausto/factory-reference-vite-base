@@ -61,7 +61,7 @@ export function ServicesCreativeBlock({
               </div>
               <div className="flex flex-1 flex-col p-7">
                 <h3 className="font-display text-2xl font-bold tracking-tight text-[#18181B]">
-                  {s.name}
+                  {s.displayName}
                 </h3>
                 <p className="mt-2 text-[#71717A]">{s.short}</p>
                 <div className="mt-6 inline-flex items-center gap-1 font-display font-bold text-emerald-600 transition-all group-hover:gap-2">

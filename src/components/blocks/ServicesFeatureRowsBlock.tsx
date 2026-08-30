@@ -117,7 +117,7 @@ export function ServicesFeatureRowsBlock({
                     style={{ backgroundImage: 'var(--wow-grad-brand)' }}
                   />
                   <h3 className="mt-5 font-display text-2xl leading-snug sm:text-3xl">
-                    {s.name}
+                    {s.displayName}
                   </h3>
                   <p className="mt-3 max-w-xl text-lg leading-relaxed text-ink-500">
                     {s.short}

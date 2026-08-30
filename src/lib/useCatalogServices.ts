@@ -39,7 +39,13 @@ export function useCatalogServices(actions: ServiceRef['action'][]): ServiceRef[
         if (cancelled || !Array.isArray(rows)) return
         const live = rows
           .filter((s) => actions.includes(s.action))
-          .map<ServiceRef>((s) => ({ slug: kebab(s.name), name: s.name, short: '', id: s.id, action: s.action }))
+          /* ★ displayName = name, DELIBERATELY. The heading transform lives in the scaffolder and runs
+             at build time; there is no copy of it here and there must not be one — a second
+             implementation of a casing rule is exactly how the two drift apart. A service read live
+             after the build therefore presents its name exactly as typed, which is the safe
+             direction. It costs nothing today: the only consumer is the quote form, whose visible
+             label and submitted payload both use `name` by design. */
+          .map<ServiceRef>((s) => ({ slug: kebab(s.name), name: s.name, displayName: s.name, short: '', id: s.id, action: s.action }))
         // Only replace on a good, non-empty live read (a fresh service now appears). An empty or failed
         // read keeps the baked list so the form is never empty.
         if (live.length > 0) setServices(live)

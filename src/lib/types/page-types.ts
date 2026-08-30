@@ -23,7 +23,26 @@ export interface RelatedLink {
 
 export interface ServiceRef {
   slug: string
+  /**
+   * ★★★ THE OWNER'S EXACT WORDING. This is DATA: it is what they typed, it is what the catalog row
+   * holds, and it is what a form payload submits. Never render it as a heading — use `displayName`.
+   */
   name: string
+  /**
+   * ★★★ THE HEADING FORM OF `name`. PRESENTATION ONLY.
+   *
+   * "Standard home cleaning" is correct data and a poor heading. The scaffolder derives this once
+   * (factory/scaffolder/src/lib/display-name.ts) and it is often byte-identical to `name` — it is
+   * deliberately left untouched for Romance-language names, mixed-case brands and digit-led tokens,
+   * because the failure mode is mangling a real customer's heading.
+   *
+   * ⚠️ REQUIRED, so "which one does this render?" is a decision every call site has to make rather
+   * than a default it can drift away from. It must NEVER reach an alt attribute or a form payload:
+   * the quote form posts `serviceName: selected?.name` into a persisted lead, so using displayName
+   * there would write presentation into a customer record. scripts/check-display-name-seam.mjs
+   * enforces both rules at build time.
+   */
+  displayName: string
   short: string
   tagline?: string
   /**

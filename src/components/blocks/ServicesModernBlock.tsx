@@ -64,7 +64,7 @@ export function ServicesModernBlock({
                   <img src={serviceImageUrl(s.slug)} alt={s.name} loading="lazy" width={128} height={128} className="h-full w-full object-cover" />
                 </div>
                 <div className="min-w-0">
-                  <h3 className="truncate font-display text-base font-semibold tracking-tight text-[#0F172A]">{s.name}</h3>
+                  <h3 className="truncate font-display text-base font-semibold tracking-tight text-[#0F172A]">{s.displayName}</h3>
                   <p className="mt-0.5 line-clamp-2 text-sm text-[#64748B]">{s.short}</p>
                 </div>
                 <ArrowRight className="ml-auto h-4 w-4 shrink-0 text-[#94A3B8] transition-all group-hover:translate-x-0.5 group-hover:text-emerald-600" />

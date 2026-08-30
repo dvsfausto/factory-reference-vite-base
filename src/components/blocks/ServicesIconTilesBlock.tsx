@@ -96,7 +96,7 @@ export function ServicesIconTilesBlock({
                   <Icon className="h-6 w-6" />
                 </span>
                 <h3 className="mt-6 font-display text-xl font-semibold tracking-tight text-[#0F172A]">
-                  {s.name}
+                  {s.displayName}
                 </h3>
                 <p className="mt-2 flex-1 text-[#64748B]">{s.short}</p>
                 <span className="mt-6 inline-flex items-center gap-1 font-display text-sm font-semibold text-emerald-600 transition-all group-hover:gap-2">

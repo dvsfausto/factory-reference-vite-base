@@ -197,7 +197,7 @@ export function ServiceAreaPageTemplate({ data }: Props) {
                     />
                   </div>
                   <div className="p-6">
-                    <h4 className={hCls}>{s.name}</h4>
+                    <h4 className={hCls}>{s.displayName}</h4>
                     <p className={`mt-2 text-sm ${tMuted}`}>{s.short}</p>
                     <div className={`mt-3 ${T ? T.accent : "text-brand-600"} font-semibold flex items-center gap-1 group-hover:gap-2 transition-all text-sm`}>{tr('common.learnMore')}<ArrowRight className="h-4 w-4" />
                     </div>

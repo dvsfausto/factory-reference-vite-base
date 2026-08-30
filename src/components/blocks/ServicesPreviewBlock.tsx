@@ -62,7 +62,7 @@ export function ServicesPreviewBlock({
                 />
               </div>
               <div className="p-6">
-                <h3 className="text-xl">{s.name}</h3>
+                <h3 className="text-xl">{s.displayName}</h3>
                 <p className="mt-2 text-ink-500">{s.short}</p>
                 <div className="mt-5 text-brand-600 font-semibold flex items-center gap-1 group-hover:gap-2 transition-all">
                   {exploreLabel} <ArrowRight className="h-4 w-4" />

@@ -373,7 +373,7 @@ export function Header() {
                     params={{ slug: s.slug }}
                     className={`block px-3 py-2 rounded-lg text-sm ${t.dropdownItem}`}
                   >
-                    <div className={`font-medium ${t.dropdownTitle}`}>{s.name}</div>
+                    <div className={`font-medium ${t.dropdownTitle}`}>{s.displayName}</div>
                     {s.tagline && <div className={`text-xs ${t.dropdownSub}`}>{s.tagline}</div>}
                   </Link>
                 ))}
@@ -562,7 +562,7 @@ export function Header() {
                 <div className={`text-xs font-semibold ${t.mobileLabel} uppercase tracking-wider mb-2`}>{tr('nav.services')}</div>
                 {SERVICES.map((s) => (
                   <Link key={s.slug} to="/services/$slug" params={{ slug: s.slug }} onClick={() => setOpen(false)} className={`block py-2 text-base font-medium ${t.mobileText}`}>
-                    {s.name}
+                    {s.displayName}
                   </Link>
                 ))}
               </div>

@@ -59,7 +59,7 @@ export function ServicesFriendlyBlock({
               </div>
               <div className="flex flex-1 flex-col p-6">
                 <h3 className="font-display text-xl font-bold tracking-tight text-[#3D3530]">
-                  {s.name}
+                  {s.displayName}
                 </h3>
                 <p className="mt-2 text-[#7A6F66]">{s.short}</p>
                 <div className="mt-5 flex items-center gap-1 font-display font-semibold text-emerald-700 transition-all group-hover:gap-2">

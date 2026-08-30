@@ -57,7 +57,7 @@ export function ServicesElegantBlock({
               <div className="zi-media overflow-hidden rounded-2xl">
                 <img src={serviceImageUrl(lead.slug)} alt={lead.name} loading="lazy" className="aspect-[16/10] w-full object-cover" />
               </div>
-              <h3 className={`mt-6 font-display text-3xl font-medium tracking-tight ${s.text} transition-colors group-hover:text-emerald-800`}>{lead.name}</h3>
+              <h3 className={`mt-6 font-display text-3xl font-medium tracking-tight ${s.text} transition-colors group-hover:text-emerald-800`}>{lead.displayName}</h3>
               <p className={`mt-2 max-w-md ${s.muted}`}>{lead.short}</p>
             </Link>
           )}

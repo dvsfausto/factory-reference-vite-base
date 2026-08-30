@@ -79,7 +79,7 @@ export function ServicesCarouselBlock({
                 />
               </div>
               <div className="flex flex-1 flex-col p-7">
-                <h3 className="font-display text-xl font-semibold tracking-tight text-[#0F172A]">{s.name}</h3>
+                <h3 className="font-display text-xl font-semibold tracking-tight text-[#0F172A]">{s.displayName}</h3>
                 <p className="mt-2 flex-1 text-[#64748B]">{s.short}</p>
                 <span className="mt-6 inline-flex items-center gap-1 font-display text-sm font-semibold text-emerald-600 transition-all group-hover:gap-2">
                   {exploreLabel} <ArrowRight className="h-4 w-4" />
