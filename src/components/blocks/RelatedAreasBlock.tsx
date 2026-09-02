@@ -29,7 +29,8 @@ export function RelatedAreasBlock({
   variant?: string
 }) {
   const reduce = useReducedMotion()
-  const related = area.relatedAreas
+  // SEO-2: an area with no page (href null) gets no card — a card is a link.
+  const related = area.relatedAreas.filter((a): a is { href: string; label: string } => Boolean(a.href))
   if (related.length === 0) return null
 
   return (

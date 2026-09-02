@@ -284,15 +284,25 @@ export function ServicePageTemplate({ data }: Props) {
           <div className={`container-x ${tPad}`}>
             <Header heading={data.coverage.title} body={data.coverage.intro} />
             <div className="flex flex-wrap justify-center gap-2">
-              {data.coverage.areas.map((a) => (
-                <Link
-                  key={a.href}
-                  to={a.href}
-                  className={`badge-pill bg-white border ${T?.border ?? "border-ink-100"} ${tBody} ${T ? T.accentHover : "hover:border-brand-600 hover:text-brand-600"} normal-case tracking-normal text-sm`}
-                >
-                  <MapPin className="h-3.5 w-3.5" /> {a.label}
-                </Link>
-              ))}
+              {data.coverage.areas.map((a) =>
+                a.href ? (
+                  <Link
+                    key={a.href}
+                    to={a.href}
+                    className={`badge-pill bg-white border ${T?.border ?? "border-ink-100"} ${tBody} ${T ? T.accentHover : "hover:border-brand-600 hover:text-brand-600"} normal-case tracking-normal text-sm`}
+                  >
+                    <MapPin className="h-3.5 w-3.5" /> {a.label}
+                  </Link>
+                ) : (
+                  // No area page for this place (SEO-2): text chip, no dead link.
+                  <span
+                    key={a.label}
+                    className={`badge-pill bg-white border ${T?.border ?? "border-ink-100"} ${tBody} normal-case tracking-normal text-sm`}
+                  >
+                    <MapPin className="h-3.5 w-3.5" /> {a.label}
+                  </span>
+                ),
+              )}
             </div>
           </div>
         </section>

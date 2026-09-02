@@ -278,12 +278,13 @@ export function ServiceAreaPageTemplate({ data }: Props) {
       <FAQSection faqs={data.faqs} title={`Questions about ${data.name}`} />
 
       {/* RELATED AREAS */}
-      {data.relatedAreas.length > 0 && (
+      {data.relatedAreas.some((a) => a.href) && (
         <section className={secBand}>
           <div className={`container-x ${T ? T.spacingY.split(" ")[0] : "py-16"}`}>
             <Header heading={tr('tmpl.weAlsoServeNearby')} />
             <div className="flex flex-wrap justify-center gap-3">
-              {data.relatedAreas.map((a) => (
+              {/* SEO-2: an area with no page (href null) gets no card — a card is a link. */}
+              {data.relatedAreas.filter((a): a is { href: string; label: string } => Boolean(a.href)).map((a) => (
                 <Link
                   key={a.href}
                   to={a.href}

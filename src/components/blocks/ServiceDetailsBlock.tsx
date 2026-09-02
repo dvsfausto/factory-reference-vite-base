@@ -206,16 +206,27 @@ export function ServiceDetailsBlock({
           )}
         </div>
         <div className="mt-8 flex flex-wrap justify-center gap-2">
-          {coverage.areas.map((a) => (
-            <Link
-              key={a.href}
-              to={a.href}
-              className="inline-flex items-center gap-1.5 rounded-full border bg-white/85 px-4 py-2 text-sm text-[var(--fam-ink,var(--color-ink-700))] backdrop-blur-md transition-colors hover:text-brand-700"
-              style={{ borderColor: 'var(--fam-hairline, var(--wow-hairline))' }}
-            >
-              <MapPin className="h-3.5 w-3.5" /> {a.label}
-            </Link>
-          ))}
+          {coverage.areas.map((a) =>
+            a.href ? (
+              <Link
+                key={a.href}
+                to={a.href}
+                className="inline-flex items-center gap-1.5 rounded-full border bg-white/85 px-4 py-2 text-sm text-[var(--fam-ink,var(--color-ink-700))] backdrop-blur-md transition-colors hover:text-brand-700"
+                style={{ borderColor: 'var(--fam-hairline, var(--wow-hairline))' }}
+              >
+                <MapPin className="h-3.5 w-3.5" /> {a.label}
+              </Link>
+            ) : (
+              // No area page for this place (SEO-2): the coverage claim stays, the dead link goes.
+              <span
+                key={a.label}
+                className="inline-flex items-center gap-1.5 rounded-full border bg-white/85 px-4 py-2 text-sm text-[var(--fam-ink,var(--color-ink-700))] backdrop-blur-md"
+                style={{ borderColor: 'var(--fam-hairline, var(--wow-hairline))' }}
+              >
+                <MapPin className="h-3.5 w-3.5" /> {a.label}
+              </span>
+            ),
+          )}
         </div>
       </div>,
     )

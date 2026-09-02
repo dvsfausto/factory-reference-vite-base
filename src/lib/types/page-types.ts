@@ -21,6 +21,14 @@ export interface RelatedLink {
   label: string
 }
 
+// An area cross-link. `href` is null when the build emits NO page for that area (SEO-2): the
+// scaffolder unlinks a coverage chip instead of shipping the flat /areas-<city> that 404s on
+// every service page. Renderers show a null-href chip as plain text and skip null-href cards.
+export interface AreaLink {
+  href: string | null
+  label: string
+}
+
 export interface ServiceRef {
   slug: string
   /**
@@ -165,7 +173,7 @@ export interface ServicePageData {
   coverage: {
     title: string
     intro: string
-    areas: RelatedLink[]
+    areas: AreaLink[]
   }
   localContext?: {
     title?: string
@@ -207,7 +215,7 @@ export interface ServiceAreaPageData {
   }
   testimonial?: Testimonial
   faqs: FAQ[]
-  relatedAreas: RelatedLink[]
+  relatedAreas: AreaLink[]
 }
 
 export interface InfoPageSection {
