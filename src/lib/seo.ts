@@ -57,20 +57,33 @@ function openingHoursSpecification() {
   return spec.length > 0 ? { openingHoursSpecification: spec } : {}
 }
 
+// SEO-1: a LocalBusiness node that VALIDATES. Google's structured-data checker rejects empty
+// strings and a bare "+" telephone; four of six real fixtures have no phone (SITE.phone === "+")
+// and five have no street/zip. Every optional value is emitted only when it carries data —
+// omitting a key is valid, an empty one is not. name/url/address.locality are always present.
+const present = (v: string | undefined) => (typeof v === 'string' && v.trim() !== '' ? v : undefined)
+const telephone = (v: string | undefined) => (v && /\d/.test(v) ? v : undefined)
+function compact<T extends Record<string, unknown>>(o: T): Partial<T> {
+  const out: Record<string, unknown> = {}
+  for (const [k, v] of Object.entries(o)) if (v !== undefined) out[k] = v
+  return out as Partial<T>
+}
+
 export function localBusinessLd() {
   return {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
     name: SITE.name,
     url: SITE.domain,
-    telephone: SITE.phone,
-    email: SITE.email,
+    ...compact({ telephone: telephone(SITE.phone), email: present(SITE.email) }),
     address: {
       '@type': 'PostalAddress',
-      streetAddress: SITE.address.street,
-      addressLocality: SITE.address.city,
-      addressRegion: SITE.address.state,
-      postalCode: SITE.address.zip,
+      ...compact({
+        streetAddress: present(SITE.address.street),
+        addressLocality: present(SITE.address.city),
+        addressRegion: present(SITE.address.state),
+        postalCode: present(SITE.address.zip),
+      }),
       addressCountry: 'US',
     },
     priceRange: '$$',
