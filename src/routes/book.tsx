@@ -40,7 +40,7 @@ function BookPage() {
           { name: data.title, url: '/book' },
         ])}
       />
-      <SectionList blocks={data.layout} ctx={{ intro: data.intro, faqs: SITE.homeFaqs }} />
+      <SectionList blocks={data.layout} ctx={{ intro: data.intro, faqs: SITE.homeFaqs }} titleFromFirstBlock />
     </>
   )
 }

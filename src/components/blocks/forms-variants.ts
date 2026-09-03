@@ -17,6 +17,8 @@ export interface FormBlockProps {
   body?: string
   submitLabel?: string
   services?: { slug: string; name: string; id?: string }[]
+  /** 1 when this block is the page title (a custom page whose layout names no `intro` block). */
+  headingLevel?: 1 | 2
 }
 
 // Per-type variant map for the Forms (contact/booking/quote) section (additive, like HERO_VARIANTS),

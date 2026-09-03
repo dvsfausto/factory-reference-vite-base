@@ -38,7 +38,7 @@ function CustomPage() {
           { name: data.title, url: `/p/${data.slug}` },
         ])}
       />
-      <SectionList blocks={data.layout} ctx={{ intro: data.intro, faqs: SITE.homeFaqs }} />
+      <SectionList blocks={data.layout} ctx={{ intro: data.intro, faqs: SITE.homeFaqs }} titleFromFirstBlock />
     </>
   )
 }

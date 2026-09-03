@@ -15,13 +15,17 @@ export function FormContactBlock({
   site = SITE,
   label = tr('form.contactUs'),
   heading = tr('form.getInTouch'),
+  headingLevel = 2,
   body = tr('form.contactBody'),
 }: {
   site?: typeof SITE
   label?: string
   heading?: string
+  /** 1 when this block is the page title (a custom page whose layout has no `intro` block). */
+  headingLevel?: 1 | 2
   body?: string
 }) {
+  const Heading = headingLevel === 1 ? 'h1' : 'h2'
   const [status, setStatus] = useState<LeadStatus>('idle')
   const [error, setError] = useState<string | null>(null)
 
@@ -59,9 +63,9 @@ export function FormContactBlock({
               <span className="h-px w-6 bg-emerald-600" />
               {label}
             </span>
-            <h2 className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight text-[#0F172A] sm:text-5xl">
+            <Heading className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight text-[#0F172A] sm:text-5xl">
               {heading}
-            </h2>
+            </Heading>
             {body && <p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-[#64748B]">{body}</p>}
           </div>
 

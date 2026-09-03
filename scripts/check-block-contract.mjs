@@ -44,8 +44,29 @@ const kinds = [...tableBody('INTO_KIND').matchAll(/^\s*([A-Za-z][A-Za-z0-9]*)\s*
 check('into SITE key without INTO_KIND', diff(intoKeys, kinds))
 check('INTO_KIND key no block writes into', diff(kinds, intoKeys))
 
+// B1 (custom-page h1): every component a `forms` / `booking` / `richText` case can dispatch to
+// must honour `headingLevel` (SectionList passes 1 to the first block of a custom page whose
+// layout names no `intro`). The list is DERIVED from the variant maps + the richText case, so a
+// new form variant that renders a hard `<h2>` fails here rather than shipping a page with no h1.
+const formsSrc = readFileSync(new URL('../src/components/blocks/forms-variants.ts', import.meta.url), 'utf8')
+const headingBearing = [...new Set([
+  ...[...strip(formsSrc).matchAll(/^import \{ (\w+Block) \} from '\.\/(\w+)'/gm)].map((m) => m[2]),
+  ...[...(renderer.match(/const BOOKING_VARIANTS[^{]*\{([\s\S]*?)\n\}/)?.[1] ?? '').matchAll(/:\s*(\w+Block)/g)].map((m) => m[1]),
+  'BookingWizardBlock',
+  'RichTextBlock',
+])]
+const noHeadingLevel = headingBearing.filter((name) => {
+  const src = readFileSync(new URL(`../src/components/blocks/${name}.tsx`, import.meta.url), 'utf8')
+  return !(/headingLevel\s*=\s*2/.test(src) && /const Heading = headingLevel === 1 \? 'h1' : 'h2'/.test(src) && !/<h2\b/.test(src))
+})
+check('heading-bearing block without headingLevel → Heading (or a stray <h2>)', noHeadingLevel)
+check('headingLevel not passed by the renderer case', ['forms', 'booking', 'richText'].filter((t) => {
+  const body = sw.match(new RegExp(`case '${t}':([\\s\\S]*?)\\n    case '`))?.[1] ?? ''
+  return !body.includes('headingLevel={opts?.headingLevel}')
+}))
+
 if (problems.length) {
   console.error(`lint:blocks FAIL\n  ${problems.join('\n  ')}`)
   process.exit(1)
 }
-console.log(`lint:blocks ok — ${union.length} block types · ${cases.length} renderer cases · needs ${needs.length} · placement ${placement.length}`)
+console.log(`lint:blocks ok — ${union.length} block types · ${cases.length} renderer cases · needs ${needs.length} · placement ${placement.length} · headingLevel ${headingBearing.length} blocks`)

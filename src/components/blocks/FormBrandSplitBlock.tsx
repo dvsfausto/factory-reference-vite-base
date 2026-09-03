@@ -28,13 +28,17 @@ export function FormBrandSplitBlock({
   site = SITE,
   label = tr('form.contactUs'),
   heading = tr('form.letsTalk'),
+  headingLevel = 2,
   body = tr('form.replyBusinessDay'),
 }: {
   site?: typeof SITE
   label?: string
   heading?: string
+  /** 1 when this block is the page title (a custom page whose layout has no `intro` block). */
+  headingLevel?: 1 | 2
   body?: string
 }) {
+  const Heading = headingLevel === 1 ? 'h1' : 'h2'
   const reduce = useReducedMotion()
   const [status, setStatus] = useState<LeadStatus>('idle')
   const [error, setError] = useState<string | null>(null)
@@ -95,9 +99,9 @@ export function FormBrandSplitBlock({
               <span className="h-2.5 w-2.5 rounded-full bg-white/70" />
               {label}
             </span>
-            <h2 className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight text-white sm:text-5xl">
+            <Heading className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight text-white sm:text-5xl">
               {heading}
-            </h2>
+            </Heading>
             {body && <p className="mt-4 max-w-md leading-relaxed text-white/85">{body}</p>}
 
             <div className="mt-10 flex flex-col gap-5">

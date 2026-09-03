@@ -16,13 +16,17 @@ export function FormBookingBlock({
   site = SITE,
   label = tr('form.bookVisit'),
   heading = tr('form.requestAppointment'),
+  headingLevel = 2,
   body = tr('form.bookingBody'),
 }: {
   site?: typeof SITE
   label?: string
   heading?: string
+  /** 1 when this block is the page title (a custom page whose layout has no `intro` block). */
+  headingLevel?: 1 | 2
   body?: string
 }) {
+  const Heading = headingLevel === 1 ? 'h1' : 'h2'
   const [status, setStatus] = useState<LeadStatus>('idle')
   const [error, setError] = useState<string | null>(null)
 
@@ -66,9 +70,9 @@ export function FormBookingBlock({
               <span className="h-px w-6 bg-emerald-600" />
               {label}
             </span>
-            <h2 className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight text-[#0F172A] sm:text-5xl">
+            <Heading className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight text-[#0F172A] sm:text-5xl">
               {heading}
-            </h2>
+            </Heading>
             {body && <p className="mt-4 text-lg leading-relaxed text-[#64748B]">{body}</p>}
           </div>
 

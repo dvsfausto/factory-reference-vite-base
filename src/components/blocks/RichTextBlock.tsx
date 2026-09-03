@@ -13,12 +13,16 @@ import { motion } from 'framer-motion'
 export function RichTextBlock({
   eyebrow,
   heading,
+  headingLevel = 2,
   body,
 }: {
   eyebrow?: string
   heading?: string
+  /** 1 when this block is the page title (a custom page whose layout has no `intro` block). */
+  headingLevel?: 1 | 2
   body?: string
 }) {
+  const Heading = headingLevel === 1 ? 'h1' : 'h2'
   const paragraphs = (body ?? '')
     .split(/\n{2,}/)
     .map((p) => p.trim())
@@ -44,9 +48,9 @@ export function RichTextBlock({
             </span>
           )}
           {heading && (
-            <h2 className="mt-4 font-display text-3xl font-semibold leading-tight tracking-tight text-ink-900 sm:text-4xl">
+            <Heading className="mt-4 font-display text-3xl font-semibold leading-tight tracking-tight text-ink-900 sm:text-4xl">
               {heading}
-            </h2>
+            </Heading>
           )}
           {paragraphs.length > 0 && (
             <div className="mt-6 space-y-5">

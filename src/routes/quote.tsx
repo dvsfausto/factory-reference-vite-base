@@ -38,7 +38,7 @@ function QuotePage() {
           { name: data.title, url: '/quote' },
         ])}
       />
-      <SectionList blocks={data.layout} ctx={{ intro: data.intro, faqs: SITE.homeFaqs }} />
+      <SectionList blocks={data.layout} ctx={{ intro: data.intro, faqs: SITE.homeFaqs }} titleFromFirstBlock />
     </>
   )
 }

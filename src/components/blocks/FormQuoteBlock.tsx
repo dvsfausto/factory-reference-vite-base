@@ -19,6 +19,7 @@ export function FormQuoteBlock({
   site = SITE,
   label,
   heading,
+  headingLevel = 2,
   body,
   submitLabel,
   services,
@@ -26,10 +27,13 @@ export function FormQuoteBlock({
   site?: typeof SITE
   label?: string
   heading?: string
+  /** 1 when this block is the page title (a custom page whose layout has no `intro` block). */
+  headingLevel?: 1 | 2
   body?: string
   submitLabel?: string
   services?: { slug: string; name: string; id?: string }[]
 }) {
+  const Heading = headingLevel === 1 ? 'h1' : 'h2'
   const [status, setStatus] = useState<LeadStatus>('idle')
   const [error, setError] = useState<string | null>(null)
 
@@ -85,7 +89,7 @@ export function FormQuoteBlock({
               <span className="h-px w-6 bg-emerald-600" />
               {eyebrowText}
             </span>
-            <h2 className="mt-4 font-display text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">{headingText}</h2>
+            <Heading className="mt-4 font-display text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">{headingText}</Heading>
             {bodyText && <p className="mt-3 max-w-xl leading-relaxed text-slate-300">{bodyText}</p>}
           </div>
 

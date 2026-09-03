@@ -191,12 +191,15 @@ export function BookingWizardBlock({
   site = SITE,
   label = tr('booking.bookOnline'),
   heading = tr('booking.bookYourAppointment'),
+  headingLevel = 2,
   body = tr('booking.bookBody'),
   forceEnabled = false,
 }: {
   site?: typeof SITE
   label?: string
   heading?: string
+  /** 1 when this block is the page title (a custom page whose layout has no `intro` block). */
+  headingLevel?: 1 | 2
   body?: string
   // Render the wizard even when BOOKING.enabled is false. BOOKING.enabled gates the
   // AUTO-SPLICED homepage section (solo-typed builds); the dedicated /book customPage
@@ -205,6 +208,7 @@ export function BookingWizardBlock({
   // reads, same create-booking write, same honest fallback, only the gate differs.
   forceEnabled?: boolean
 }) {
+  const Heading = headingLevel === 1 ? 'h1' : 'h2'
   const enabled = BOOKING.enabled || forceEnabled
   const reduce = useReducedMotion()
   const [loading, setLoading] = useState(true)
@@ -338,9 +342,9 @@ export function BookingWizardBlock({
               />
               {label}
             </span>
-            <h2 className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight text-ink-900 sm:text-5xl">
+            <Heading className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight text-ink-900 sm:text-5xl">
               {heading}
-            </h2>
+            </Heading>
             {body && (
               <p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-ink-700">
                 {body}

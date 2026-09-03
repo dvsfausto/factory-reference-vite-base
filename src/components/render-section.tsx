@@ -511,7 +511,13 @@ export function resolveData(block: SectionBlock, ctx?: SectionContext): BlockDat
 // page's *_LAYOUT array; each block owns its own markup + data-conditional
 // auto-omit. The faq block receives params.faqs ?? ctx.faqs (page-supplied) ?? SITE.homeFaqs.
 // Every site-scoped case spreads `data` (resolveData, above): {} unless the block carries params.
-export function renderSection(block: SectionBlock, ctx?: SectionContext): ReactNode {
+/** Per-block render options (not page context): SectionList sets them for the ONE block they apply to. */
+export interface RenderOptions {
+  /** 1 → the block's own heading renders as the page's <h1> (a custom page whose layout names no `intro`). */
+  headingLevel?: 1 | 2
+}
+
+export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: RenderOptions): ReactNode {
   const data = resolveData(block, ctx)
   switch (block.type) {
     case 'intro':
@@ -526,6 +532,7 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext): ReactN
           eyebrow={block.params?.eyebrow as string | undefined}
           heading={block.params?.heading as string | undefined}
           body={block.params?.body as string | undefined}
+          headingLevel={opts?.headingLevel}
         />
       )
     case 'hero': {
@@ -791,6 +798,7 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext): ReactN
           services={
             block.params?.services as { slug: string; name: string }[] | undefined
           }
+          headingLevel={opts?.headingLevel}
         />
       )
     }
@@ -911,6 +919,7 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext): ReactN
           heading={block.params?.heading as string | undefined}
           body={block.params?.body as string | undefined}
           forceEnabled={block.params?.forceEnabled as boolean | undefined}
+          headingLevel={opts?.headingLevel}
         />
       )
     }
@@ -1004,14 +1013,23 @@ const SELF_REVEALING_BLOCKS: ReadonlySet<string> = new Set(['serviceDetails', 'a
 export function SectionList({
   blocks,
   ctx,
+  titleFromFirstBlock = false,
 }: {
   blocks: SectionBlock[]
   ctx?: SectionContext
+  /**
+   * Custom pages (/book, /quote, /p/$slug): when the layout names no `intro` block, the FIRST
+   * block's own heading is the page's <h1>. The seeded book/quote pages carry an intro record
+   * their layout never places, and rendering it above the wizard pushes the wizard below the
+   * fold on a phone — so the semantics move, not the layout. Factory pages never pass this.
+   */
+  titleFromFirstBlock?: boolean
 }): ReactNode {
+  const firstIsTitle = titleFromFirstBlock && !blocks.some((b) => b.type === 'intro')
   return (
     <>
       {blocks.map((block, i) => {
-        const rendered = renderSection(block, ctx)
+        const rendered = renderSection(block, ctx, firstIsTitle && i === 0 ? { headingLevel: 1 } : undefined)
         const scope = sectionStyleVars(block.params?.style)
         const scoped = scope ? <div data-zsec={block.type} style={scope}>{rendered}</div> : rendered
         if (SELF_REVEALING_BLOCKS.has(block.type)) return <Fragment key={i}>{scoped}</Fragment>

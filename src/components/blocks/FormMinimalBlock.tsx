@@ -16,13 +16,17 @@ export function FormMinimalBlock({
   site = SITE,
   label = tr('form.getInTouch'),
   heading = tr('form.readyToStart'),
+  headingLevel = 2,
   body = tr('form.minimalBody'),
 }: {
   site?: typeof SITE
   label?: string
   heading?: string
+  /** 1 when this block is the page title (a custom page whose layout has no `intro` block). */
+  headingLevel?: 1 | 2
   body?: string
 }) {
+  const Heading = headingLevel === 1 ? 'h1' : 'h2'
   const [status, setStatus] = useState<LeadStatus>('idle')
   const [error, setError] = useState<string | null>(null)
 
@@ -61,7 +65,7 @@ export function FormMinimalBlock({
                 <span className="h-px w-6 bg-emerald-600" />
                 {label}
               </span>
-              <h2 className="mt-4 font-display text-3xl font-semibold leading-tight tracking-tight text-[#0F172A]">{heading}</h2>
+              <Heading className="mt-4 font-display text-3xl font-semibold leading-tight tracking-tight text-[#0F172A]">{heading}</Heading>
               {body && <p className="mt-3 leading-relaxed text-[#64748B]">{body}</p>}
             </div>
 
