@@ -28,6 +28,16 @@ export function Reveal({
       setInView(true)
       return
     }
+    // ★★★ TALL-ELEMENT GUARD (2026-09-03). intersectionRatio = visible / element, so an element
+    // taller than (0.92 × viewport) / 0.12 — ≈5,090px on an iPhone (innerHeight 664) — can NEVER
+    // reach 0.12 and stays at opacity 0 forever. That blanked the lower half of every service page
+    // on 19 businesses. The designed fix is one Reveal per rendered section (SELF_REVEALING_BLOCKS
+    // in render-section.tsx); this guard keeps the primitive safe for any block that is still
+    // wrapped whole: the 0.12 entrance stays for every normal section, and only an element that
+    // cannot reach it is revealed once about half a viewport of it is on screen. Never threshold 0.
+    const rootH = window.innerHeight * 0.92
+    const cap = (rootH * 0.5) / Math.max(el.offsetHeight, 1)
+    const threshold = Math.min(0.12, cap)
     const io = new IntersectionObserver(
       (entries) =>
         entries.forEach((e) => {
@@ -36,7 +46,7 @@ export function Reveal({
             io.disconnect()
           }
         }),
-      { threshold: 0.12, rootMargin: '0px 0px -8% 0px' },
+      { threshold, rootMargin: '0px 0px -8% 0px' },
     )
     io.observe(el)
     return () => io.disconnect()

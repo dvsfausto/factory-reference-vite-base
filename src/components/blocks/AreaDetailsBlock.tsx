@@ -3,6 +3,7 @@ import { tr } from '~/lib/i18n'
 import { Link } from '@tanstack/react-router'
 import { ArrowRight, MapPin, Quote, Star } from 'lucide-react'
 import type { ServiceAreaPageData } from '~/lib/types/page-types'
+import { Reveal } from '~/components/Reveal'
 import { SERVICES } from '~/data/services-view'
 import { serviceImageUrl } from '~/data/images'
 
@@ -28,9 +29,14 @@ import { serviceImageUrl } from '~/data/images'
 //   · landmarks    → shown only when items.length > 0.
 //   · localContext → shown only when present.
 //   · testimonial  → shown only when present (real rating/text/author).
-// If every sub-section is empty the whole block returns null. Reveal is applied by
-// the shared SectionList, so this block adds no opacity-hider.
+// If every sub-section is empty the whole block returns null. Each SubSection carries its
+// own Reveal (SectionList skips its outer wrapper for this block).
 
+/**
+ * ★ One Reveal PER rendered section (SectionList skips its outer wrapper for this block — see
+ * SELF_REVEALING_BLOCKS). A single wrapper around all sub-sections could never reach Reveal's
+ * intersection threshold on a phone, leaving the whole block invisible.
+ */
 function SubSection({
   surface,
   children,
@@ -39,6 +45,7 @@ function SubSection({
   children: ReactNode
 }) {
   return (
+    <Reveal>
     <section
       className="relative overflow-hidden"
       style={
@@ -49,6 +56,7 @@ function SubSection({
     >
       <div className="container-x py-16 md:py-24">{children}</div>
     </section>
+    </Reveal>
   )
 }
 

@@ -374,3 +374,12 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* ─── NO-PHONE GUARD (see lib/phone.ts) ─────────────────────────────────────────────────────────────
+   The factory emits SITE.phone === "+" when the business has no number; every hero/CTA/header/footer
+   renders a `tel:` anchor unconditionally. A phone button that dials nothing is removed here, at ONE
+   point, rather than at 55 call sites. Rows whose icon/label sit outside the anchor use HAS_PHONE. */
+a[href="tel:+"],
+a[href="tel:"] {
+  display: none !important;
+}

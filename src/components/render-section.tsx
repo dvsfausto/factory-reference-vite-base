@@ -1,4 +1,5 @@
 import type { ComponentProps, ComponentType, CSSProperties, ReactNode } from 'react'
+import { Fragment } from 'react'
 import { tr } from '~/lib/i18n'
 import { Phone, Mail, MapPin, Clock } from 'lucide-react'
 import { Reveal } from '~/components/Reveal'
@@ -165,6 +166,7 @@ import { InfoArticleBlock } from '~/components/blocks/InfoArticleBlock'
 import { RelatedInfoBlock } from '~/components/blocks/RelatedInfoBlock'
 // Native self-service BOOKING wizard (Arc 4a · Stage 2) — self-gates on BOOKING.enabled.
 import { BookingWizardBlock } from '~/components/blocks/BookingWizardBlock'
+import { HAS_PHONE } from '~/lib/phone'
 
 // ─────────────────────────────────────────────────────────────────────────────
 // SHARED SECTION RENDERER (Arc 3 · Stage B).
@@ -391,7 +393,7 @@ function ContactFormSection() {
     .filter(Boolean)
     .join(', ')
   const rows = [
-    { Icon: Phone, label: SITE.phoneDisplay, href: `tel:${SITE.phone}` },
+    HAS_PHONE ? { Icon: Phone, label: SITE.phoneDisplay, href: `tel:${SITE.phone}` } : null,
     { Icon: Mail, label: SITE.email, href: `mailto:${SITE.email}` },
     addr ? { Icon: MapPin, label: addr } : null,
     SITE.hours ? { Icon: Clock, label: SITE.hours } : null,
@@ -905,6 +907,16 @@ function sectionStyleVars(style: unknown): CSSProperties | undefined {
   return out as CSSProperties
 }
 
+/**
+ * ★★★ Blocks that render SEVERAL <section>s reveal EACH section themselves (their SubSection wraps
+ * one <Reveal> per rendered section) and get NO outer wrapper here. One Reveal around five sections
+ * was 5,212 px on desktop and 9,551 px on a phone; Reveal's IntersectionObserver threshold (0.12 of
+ * the element) can never be met by an element ~11× the viewport, so the wrapper stayed at opacity 0
+ * and the lower ~58% of every service page was blank on phones and on desktop windows under ~690 px.
+ * Measured live on two sites (2026-09-03). Per-section is the shape the wrapper was designed for.
+ */
+const SELF_REVEALING_BLOCKS: ReadonlySet<string> = new Set(['serviceDetails', 'areaDetails', 'infoArticle'])
+
 export function SectionList({
   blocks,
   ctx,
@@ -917,9 +929,11 @@ export function SectionList({
       {blocks.map((block, i) => {
         const rendered = renderSection(block, ctx)
         const scope = sectionStyleVars(block.params?.style)
+        const scoped = scope ? <div data-zsec={block.type} style={scope}>{rendered}</div> : rendered
+        if (SELF_REVEALING_BLOCKS.has(block.type)) return <Fragment key={i}>{scoped}</Fragment>
         return (
           <Reveal key={i} disabled={i === 0 || block.type === 'hero'}>
-            {scope ? <div data-zsec={block.type} style={scope}>{rendered}</div> : rendered}
+            {scoped}
           </Reveal>
         )
       })}

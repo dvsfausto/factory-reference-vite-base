@@ -3,6 +3,7 @@ import { tr } from '~/lib/i18n'
 import { Link } from '@tanstack/react-router'
 import { MapPin, Quote, Star } from 'lucide-react'
 import type { ServicePageData } from '~/lib/types/page-types'
+import { Reveal } from '~/components/Reveal'
 
 // SERVICE-DETAIL VARIANT (Arc 3 · Stage C): the rich, consolidated MIDDLE content of
 // a service page, driven per-item by `service` (ctx.service). It renders, in order -
@@ -29,6 +30,11 @@ import type { ServicePageData } from '~/lib/types/page-types'
 //   · testimonial  → shown only when present (real rating/text/author)
 // If every sub-section is empty the whole block returns null.
 
+/**
+ * ★ One Reveal PER rendered section (SectionList skips its outer wrapper for this block — see
+ * SELF_REVEALING_BLOCKS). A single wrapper around all sub-sections could never reach Reveal's
+ * intersection threshold on a phone, leaving the whole block invisible.
+ */
 function SubSection({
   surface,
   children,
@@ -37,12 +43,14 @@ function SubSection({
   children: ReactNode
 }) {
   return (
+    <Reveal>
     <section
       className="relative overflow-hidden"
       style={surface === 'tint' ? { backgroundColor: 'var(--fam-surface, transparent)', backgroundImage: 'var(--fam-grad-surface, var(--wow-grad-surface))' } : { backgroundColor: 'var(--fam-surface-2, #fff)' }}
     >
       <div className="container-x py-16 md:py-24">{children}</div>
     </section>
+    </Reveal>
   )
 }
 

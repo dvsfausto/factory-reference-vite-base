@@ -1,4 +1,5 @@
 import { motion, useReducedMotion } from 'framer-motion'
+import { Reveal } from '~/components/Reveal'
 import type { InfoPageData } from '~/lib/types/page-types'
 
 // INFO-DETAIL VARIANT (Arc 3 · Stage E): the rich long-form MIDDLE content of an info
@@ -13,8 +14,10 @@ import type { InfoPageData } from '~/lib/types/page-types'
 //   · --wow-hairline   → the soft rule separating the intro lead from the sections.
 //   · --wow-ease-out is expressed inline as the [0.16,1,0.3,1] entrance curve.
 // BRAND identity stays on the ramp (brand-* accents) + --wow-*; no fabricated data.
-// Reveal on the outer wrapper is applied by the shared SectionList, so there is NO
-// opacity-hider here, the per-section whileInView is polish only.
+// REVEAL (2026-09-03): SectionList SKIPS its outer wrapper for this block (SELF_REVEALING_BLOCKS)
+// — one Reveal around a 5,000px+ article can never reach the observer threshold on a phone and
+// left the whole body at opacity 0. The intro lead carries its own <Reveal>; each section's
+// whileInView below IS the per-section reveal.
 //
 // HONESTY (mirrors InfoPageTemplate's per-field guards, per THIS info page):
 //   · intro    → the lead block shows only when intro.length > 0
@@ -39,13 +42,15 @@ export function InfoArticleBlock({
       <div className="container-x py-16 md:py-24">
         <div className="mx-auto max-w-2xl">
           {showIntro && (
-            <div className="space-y-5">
-              {intro.map((p, i) => (
-                <p key={i} className="text-lg leading-relaxed text-[var(--fam-ink,var(--color-ink-700))] md:text-xl">
-                  {p}
-                </p>
-              ))}
-            </div>
+            <Reveal>
+              <div className="space-y-5">
+                {intro.map((p, i) => (
+                  <p key={i} className="text-lg leading-relaxed text-[var(--fam-ink,var(--color-ink-700))] md:text-xl">
+                    {p}
+                  </p>
+                ))}
+              </div>
+            </Reveal>
           )}
 
           {showSections && (

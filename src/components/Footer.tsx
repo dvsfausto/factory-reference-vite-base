@@ -8,6 +8,7 @@ import { INFO_PAGES } from "~/data/info-pages";
 import { CUSTOM_PAGES } from "~/data/custom-pages";
 import defaultLeaves from "~/assets/decorative/cleaning-leaves.png";
 import { tr } from "~/lib/i18n";
+import { HAS_PHONE } from '~/lib/phone'
 
 const HIDDEN_NAV: string[] = (SITE as { hiddenNav?: string[] }).hiddenNav ?? [];
 
@@ -123,7 +124,7 @@ function ContactCol({ t }: { t: FooterTheme }) {
     <div>
       <h4 className={`text-sm font-semibold mb-4 ${t.heading}`}>{tr('footer.getInTouch')}</h4>
       <ul className={`space-y-3 text-sm ${t.listText}`}>
-        <li className="flex items-start gap-2"><Phone className="h-4 w-4 mt-0.5 shrink-0" /><a href={`tel:${SITE.phone}`} className={t.listHover}>{SITE.phoneDisplay}</a></li>
+        {HAS_PHONE && <li className="flex items-start gap-2"><Phone className="h-4 w-4 mt-0.5 shrink-0" /><a href={`tel:${SITE.phone}`} className={t.listHover}>{SITE.phoneDisplay}</a></li>}
         <li className="flex items-start gap-2"><Mail className="h-4 w-4 mt-0.5 shrink-0" /><a href={`mailto:${SITE.email}`} className={`${t.listHover} break-all`}>{SITE.email}</a></li>
         {loc && <li className="flex items-start gap-2"><MapPin className="h-4 w-4 mt-0.5 shrink-0" /><span>{loc}</span></li>}
         {SITE.hours && <li className="flex items-start gap-2"><Clock className="h-4 w-4 mt-0.5 shrink-0" /><span>{SITE.hours}</span></li>}
@@ -217,7 +218,7 @@ function FooterEditorial({ t }: { t: FooterTheme }) {
           <div className="lg:col-span-3">
             <h4 className={`${capLabel} mb-4 ${t.heading}`}>{tr('footer.getInTouch')}</h4>
             <ul className={`space-y-2.5 text-sm ${t.listText}`}>
-              <li><a href={`tel:${SITE.phone}`} className={t.listHover}>{SITE.phoneDisplay}</a></li>
+              {HAS_PHONE && <li><a href={`tel:${SITE.phone}`} className={t.listHover}>{SITE.phoneDisplay}</a></li>}
               <li><a href={`mailto:${SITE.email}`} className={`${t.listHover} break-all`}>{SITE.email}</a></li>
               {loc && <li>{loc}</li>}
               {SITE.hours && <li>{SITE.hours}</li>}

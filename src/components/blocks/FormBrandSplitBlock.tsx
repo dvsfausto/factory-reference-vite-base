@@ -5,6 +5,7 @@ import { Phone, Mail, MapPin, Clock } from 'lucide-react'
 import { SITE } from '~/data/site'
 import { submitLead, type LeadStatus } from './forms-submit'
 import { Field, Textarea, SubmitButton, SuccessCard } from './form-ui'
+import { HAS_PHONE } from '~/lib/phone'
 
 // Forms VARIANT: 'brand-split', a WOW split at the conversion point: a full
 // brand-gradient side panel (heading + the REAL business contact details) beside
@@ -63,7 +64,7 @@ export function FormBrandSplitBlock({
 
   const addr = [SITE.address.street, SITE.address.city, SITE.address.state].filter(Boolean).join(', ')
   const rows = [
-    { Icon: Phone, label: SITE.phoneDisplay, href: `tel:${SITE.phone}` },
+    HAS_PHONE ? { Icon: Phone, label: SITE.phoneDisplay, href: `tel:${SITE.phone}` } : null,
     { Icon: Mail, label: SITE.email, href: `mailto:${SITE.email}` },
     addr ? { Icon: MapPin, label: addr } : null,
     SITE.hours ? { Icon: Clock, label: SITE.hours } : null,
