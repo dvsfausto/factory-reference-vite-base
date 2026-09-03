@@ -12,15 +12,17 @@ import { SITE } from '~/data/site'
 // 50/100/600/700. Radius -> rounded-* (DNA). Font -> font-display (DNA). Light
 // surface component-owned (white / slate / hairline #E6E8EC). Never bg-brand-*.
 export function PackagesFeatureListBlock({
+  site = SITE,
   label = 'Packages',
   heading = "What's included",
   body,
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
 }) {
-  const packages = (SITE as { packages?: ServicePackage[] }).packages
+  const packages = (site as { packages?: ServicePackage[] }).packages
   if (!packages || packages.length === 0) return null
   return (
     <section className="bg-white">

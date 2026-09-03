@@ -25,8 +25,10 @@ const DEFAULT_TRUST_ITEMS = [
 ]
 
 export function TrustBarBlock({
+  site = SITE,
   items,
 }: {
+  site?: typeof SITE
   items?: { title: string; description: string }[]
 }) {
   // Prefer an explicit param, else the site's emitted trust copy (generic vertical), else the
@@ -34,7 +36,7 @@ export function TrustBarBlock({
   // character trust variant on a character site, else the default TrustBar (byte-identical).
   const resolved = (
     items ??
-    (SITE as { trustItems?: { title: string; description: string }[] }).trustItems ??
+    (site as { trustItems?: { title: string; description: string }[] }).trustItems ??
     DEFAULT_TRUST_ITEMS
   ).slice(0, 3) // cap at 3 — a 4th card wraps to a second line and reads as broken (generic vertical ships 4)
   const character = renderCharacterTrustBar({ items: resolved })

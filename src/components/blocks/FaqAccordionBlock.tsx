@@ -11,15 +11,17 @@ import { SITE } from '~/data/site'
 // Radius -> rounded-* (DNA). Font -> font-display (DNA). Light surface component-
 // owned (white / slate / hairline #E6E8EC). No CTA by design. Never bg-brand-*.
 export function FaqAccordionBlock({
+  site = SITE,
   label = tr('section.faqLabel'),
   heading = tr('section.faq'),
   body,
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
 }) {
-  const faqs = SITE.homeFaqs
+  const faqs = site.homeFaqs
   const [open, setOpen] = useState<number | null>(0)
   if (!faqs || faqs.length === 0) return null
   return (

@@ -9,15 +9,17 @@ import { tr } from '~/lib/i18n'
 // Radius -> rounded-* (DNA). Font -> font-display (DNA). Cool surface component-
 // owned (#F8FAFC / slate / #E6E8EC). No CTA by design. Never bg-brand-* / .btn.
 export function FaqTwoColumnBlock({
+  site = SITE,
   label = tr('section.faqLabel'),
   heading = tr('section.questionsAnswered'),
   body,
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
 }) {
-  const faqs = SITE.homeFaqs
+  const faqs = site.homeFaqs
   if (!faqs || faqs.length === 0) return null
   return (
     <section className="bg-[#F8FAFC]">

@@ -29,20 +29,22 @@ const SPOTS = [
 ]
 
 export function ServiceAreasMapStyleBlock({
+  areas = AREAS,
   label = tr('section.serviceAreas'),
   heading = tr('section.areasWeServe'),
   body = tr('section.proudlyCovering'),
   moreLink = tr('common.allAreas'),
 }: {
+  areas?: typeof AREAS
   label?: string
   heading?: string
   scriptAccent?: string
   body?: string
   moreLink?: string
 }) {
-  if (AREAS.length === 0) return null
-  const homeIndex = Math.max(0, AREAS.findIndex((a) => a.tier === 'home-base'))
-  const pins = AREAS.slice(0, 6)
+  if (areas.length === 0) return null
+  const homeIndex = Math.max(0, areas.findIndex((a) => a.tier === 'home-base'))
+  const pins = areas.slice(0, 6)
   return (
     <section className="bg-white">
       <div className="container-x py-20 md:py-28">
@@ -57,7 +59,7 @@ export function ServiceAreasMapStyleBlock({
             </h2>
             {body && <p className="mt-4 max-w-md text-lg leading-relaxed text-[#64748B]">{body}</p>}
             <div className="mt-7 flex flex-wrap gap-2">
-              {AREAS.slice(0, 8).map((a) => (
+              {areas.slice(0, 8).map((a) => (
                 <Link
                   key={a.slug}
                   to="/areas/$slug"

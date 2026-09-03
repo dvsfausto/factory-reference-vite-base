@@ -12,15 +12,17 @@ import { SITE } from '~/data/site'
 // 50/100/600/700: emerald-100 checks on dark. Radius -> rounded-* (DNA). Font ->
 // font-display (DNA). Dark panel (slate-950) component-owned. No bg-brand-*.
 export function MembershipSingleTierHighlightBlock({
+  site = SITE,
   label = 'Membership',
   heading = 'Join the membership',
   body,
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
 }) {
-  const memberships = (SITE as { memberships?: Membership[] }).memberships
+  const memberships = (site as { memberships?: Membership[] }).memberships
   if (!memberships || memberships.length === 0) return null
   const m = memberships.find((x) => x.highlighted) ?? memberships[0]!
   return (

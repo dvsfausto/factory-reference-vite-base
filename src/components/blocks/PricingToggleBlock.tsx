@@ -19,15 +19,17 @@ import { SITE } from '~/data/site'
 // rounded-* (DNA). Font -> font-display (DNA). Light surface component-owned. No
 // bg-brand-* / .btn.
 export function PricingToggleBlock({
+  site = SITE,
   label = 'Pricing',
   heading = 'Simple, transparent pricing',
   body,
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
 }) {
-  const plans = (SITE as { plans?: PricingPlan[] }).plans
+  const plans = (site as { plans?: PricingPlan[] }).plans
   const [annual, setAnnual] = useState(false)
   if (!plans || plans.length === 0) return null
   const hasAnnual = plans.some((p) => !!p.priceAnnual)

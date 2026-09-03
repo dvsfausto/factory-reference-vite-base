@@ -23,12 +23,16 @@ import { serviceImageUrl } from '~/data/images'
 // Identity copy read from SITE.homeServices via inline cast. Prop signature
 // identical to ServicesPreviewBlock; returns Element | null.
 export function ServicesCarouselBlock({
+  site = SITE,
+  services = SERVICES,
   label,
   heading,
   body,
   exploreLabel = tr('common.learnMore'),
   moreLink = tr('common.allServices'),
 }: {
+  site?: typeof SITE
+  services?: typeof SERVICES
   label?: string
   heading?: string
   scriptAccent?: string
@@ -36,8 +40,8 @@ export function ServicesCarouselBlock({
   exploreLabel?: string
   moreLink?: string
 }) {
-  const hs = (SITE as { homeServices?: { label?: string; heading?: string; body?: string } }).homeServices
-  const cards = SERVICES.slice(0, 10)
+  const hs = (site as { homeServices?: { label?: string; heading?: string; body?: string } }).homeServices
+  const cards = services.slice(0, 10)
   if (cards.length === 0) return null
   return (
     <section className="bg-white">
@@ -91,7 +95,7 @@ export function ServicesCarouselBlock({
         <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-16 bg-gradient-to-l from-white to-transparent md:block" />
       </div>
 
-      {SERVICES.length > cards.length && (
+      {services.length > cards.length && (
         <div className="container-x mt-8">
           <Link
             to="/services"

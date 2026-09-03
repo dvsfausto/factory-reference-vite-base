@@ -13,10 +13,12 @@ import { Field, Textarea, SubmitButton, SuccessCard } from './form-ui'
 // 50/100/600/700. Radius -> rounded-* (DNA). Font -> font-display (DNA). Light
 // surface component-owned (white / slate / #E6E8EC). Never bg-brand-* / .btn.
 export function FormBookingBlock({
+  site = SITE,
   label = tr('form.bookVisit'),
   heading = tr('form.requestAppointment'),
   body = tr('form.bookingBody'),
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
@@ -91,8 +93,8 @@ export function FormBookingBlock({
                   <SubmitButton status={status} />
                   <span className="text-sm text-[#64748B]">
                     Or call{' '}
-                    <a href={`tel:${SITE.phone}`} className="font-medium text-emerald-700 underline-offset-2 hover:underline">
-                      {SITE.phoneDisplay}
+                    <a href={`tel:${site.phone}`} className="font-medium text-emerald-700 underline-offset-2 hover:underline">
+                      {site.phoneDisplay}
                     </a>
                   </span>
                 </div>

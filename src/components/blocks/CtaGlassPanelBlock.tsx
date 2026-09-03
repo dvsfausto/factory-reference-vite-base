@@ -28,9 +28,11 @@ function splitScriptAccent(heading: string): { lead: string; accent: string } {
 }
 
 export function CtaGlassPanelBlock({
+  site = SITE,
   title: titleProp,
   subtitle: subtitleProp,
 }: {
+  site?: typeof SITE
   title?: string
   subtitle?: string
 }) {
@@ -38,11 +40,11 @@ export function CtaGlassPanelBlock({
   // SITE.homeCta (the persisted homepage-copy / an owner's edit) > today's literals. Absent
   // SITE.homeCta → byte-identical. Found S7b 2026-09-03: this WOW variant was the one place an
   // editable, durable homeCta.title never rendered.
-  const homeCta = (SITE as { homeCta?: { title?: string; subtitle?: string } }).homeCta
+  const homeCta = (site as { homeCta?: { title?: string; subtitle?: string } }).homeCta
   const title = titleProp ?? homeCta?.title ?? tr('cta.readyWhenYouAre')
   const subtitle = subtitleProp ?? homeCta?.subtitle ?? tr('cta.quote24')
   const parts = splitScriptAccent(title)
-  const label = (SITE as { ctaLabel?: string }).ctaLabel ?? 'Get Free Quote'
+  const label = (site as { ctaLabel?: string }).ctaLabel ?? 'Get Free Quote'
 
   return (
     <section
@@ -94,11 +96,11 @@ export function CtaGlassPanelBlock({
                 {label} <ArrowRight className="h-4 w-4" />
               </PrimaryCta>
               <a
-                href={`tel:${SITE.phone}`}
+                href={`tel:${site.phone}`}
                 className="inline-flex h-[52px] items-center gap-2 rounded-full border px-6 font-semibold text-brand-800 transition-colors hover:bg-brand-50"
                 style={{ borderColor: 'var(--wow-hairline)' }}
               >
-                <Phone className="h-4 w-4" /> {SITE.phoneDisplay}
+                <Phone className="h-4 w-4" /> {site.phoneDisplay}
               </a>
             </div>
           </div>

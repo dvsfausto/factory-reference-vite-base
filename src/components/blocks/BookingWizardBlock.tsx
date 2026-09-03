@@ -188,11 +188,13 @@ function generateSlots(
 }
 
 export function BookingWizardBlock({
+  site = SITE,
   label = tr('booking.bookOnline'),
   heading = tr('booking.bookYourAppointment'),
   body = tr('booking.bookBody'),
   forceEnabled = false,
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
@@ -520,10 +522,10 @@ export function BookingWizardBlock({
                           {tr('booking.noOpenTimes')} 
                           at{' '}
                           <a
-                            href={`tel:${SITE.phone}`}
+                            href={`tel:${site.phone}`}
                             className="font-semibold text-brand-700 hover:underline"
                           >
-                            {SITE.phoneDisplay}
+                            {site.phoneDisplay}
                           </a>
                           .
                         </p>
@@ -657,10 +659,10 @@ export function BookingWizardBlock({
                           <span className="text-sm text-ink-600">
                             or call{' '}
                             <a
-                              href={`tel:${SITE.phone}`}
+                              href={`tel:${site.phone}`}
                               className="font-medium text-brand-700 underline-offset-2 hover:underline"
                             >
-                              {SITE.phoneDisplay}
+                              {site.phoneDisplay}
                             </a>
                           </span>
                         </div>

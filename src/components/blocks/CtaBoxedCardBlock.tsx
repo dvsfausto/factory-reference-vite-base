@@ -20,23 +20,25 @@ import { SITE } from '~/data/site'
 // Identity copy read from SITE.homeCta via inline cast. Prop signature identical
 // to CtaBlock; returns an Element (no null).
 export function CtaBoxedCardBlock({
+  site = SITE,
   title,
   subtitle,
 }: {
+  site?: typeof SITE
   title?: string
   subtitle?: string
 }) {
-  const cta = (SITE as { homeCta?: { title?: string; subtitle?: string } }).homeCta
+  const cta = (site as { homeCta?: { title?: string; subtitle?: string } }).homeCta
   const headline = title ?? cta?.title ?? 'Ready when you are.'
   const sub = subtitle ?? cta?.subtitle ?? tr('cta.reachOutToday')
   return (
     <section className="bg-[#F8FAFC]">
       <div className="container-x py-20 md:py-28">
         <div className="relative isolate mx-auto max-w-4xl overflow-hidden rounded-3xl bg-slate-950 px-8 py-14 text-center shadow-xl md:px-16 md:py-20">
-          {SITE.tagline && (
+          {site.tagline && (
             <span className="inline-flex items-center justify-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] text-emerald-100">
               <span className="h-px w-7 bg-emerald-600" />
-              {SITE.tagline}
+              {site.tagline}
             </span>
           )}
           <h2 className="mt-6 font-display text-4xl font-semibold leading-[1.1] tracking-tight text-white sm:text-5xl">
@@ -51,10 +53,10 @@ export function CtaBoxedCardBlock({
             >{tr('section.getStarted')}<ArrowRight className="h-4 w-4" />
             </PrimaryCta>
             <a
-              href={`tel:${SITE.phone}`}
+              href={`tel:${site.phone}`}
               className="inline-flex h-[54px] items-center gap-2 rounded-xl border border-white/25 px-7 font-display font-semibold text-white transition-colors hover:border-emerald-600 hover:text-emerald-100"
             >
-              <Phone className="h-4 w-4 text-emerald-100" /> {SITE.phoneDisplay}
+              <Phone className="h-4 w-4 text-emerald-100" /> {site.phoneDisplay}
             </a>
           </div>
         </div>

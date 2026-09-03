@@ -2,7 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { tr } from '~/lib/i18n'
 import { motion, useReducedMotion } from 'framer-motion'
 import { Quote, Star } from 'lucide-react'
-import { reviews } from '~/data/reviews'
+import { reviews as REVIEWS } from '~/data/reviews'
 import { SectionHeader } from '~/components/SectionHeader'
 
 // Reviews VARIANT: 'glass-wall', a masonry "wall" of frosted-glass cards of varied
@@ -23,11 +23,13 @@ import { SectionHeader } from '~/components/SectionHeader'
 // No invented ratings, counts or authors. Empty reviews → early-return null, matching
 // the default ReviewsBlock's self-omit.
 export function ReviewsGlassWallBlock({
+  reviews = REVIEWS,
   label = tr('nav.reviews'),
   heading = tr('section.whatCustomersHeading'),
   scriptAccent = tr('section.sayAccent'),
   moreLink = tr('section.readAllReviewsArrow'),
 }: {
+  reviews?: typeof REVIEWS
   label?: string
   heading?: string
   scriptAccent?: string

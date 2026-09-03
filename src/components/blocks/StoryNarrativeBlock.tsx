@@ -10,15 +10,17 @@ import { tr } from '~/lib/i18n'
 // Radius -> rounded-* (DNA). Font -> font-display (DNA). Light surface component-
 // owned (white / slate). No CTA by design. Never bg-brand-* / .btn.
 export function StoryNarrativeBlock({
+  site = SITE,
   label = tr('section.ourStory'),
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
 }) {
-  const story = (SITE as { story?: { quote?: string; attribution?: string } }).story
-  const quote = story?.quote ?? SITE.about
-  const attribution = story?.attribution ?? SITE.name
+  const story = (site as { story?: { quote?: string; attribution?: string } }).story
+  const quote = story?.quote ?? site.about
+  const attribution = story?.attribution ?? site.name
   if (!quote) return null
   return (
     <section className="bg-white">

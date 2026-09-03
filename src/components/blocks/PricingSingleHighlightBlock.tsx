@@ -15,15 +15,17 @@ import { SITE } from '~/data/site'
 // Radius -> rounded-* (DNA). Font -> font-display (DNA). Dark panel (slate-950)
 // component-owned. Never bg-brand-* / .btn.
 export function PricingSingleHighlightBlock({
+  site = SITE,
   label = 'Pricing',
   heading = 'One simple plan',
   body,
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
 }) {
-  const plans = (SITE as { plans?: PricingPlan[] }).plans
+  const plans = (site as { plans?: PricingPlan[] }).plans
   if (!plans || plans.length === 0) return null
   const plan = plans.find((p) => p.highlighted) ?? plans[0]!
   return (

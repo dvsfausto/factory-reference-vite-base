@@ -9,6 +9,7 @@ import { serviceImageUrl } from '~/data/images'
 // section). Self-omits when there are no services, exactly today's
 // `{previewServices.length > 0 && …}`.
 export function ServicesPreviewBlock({
+  services = SERVICES,
   label = tr('section.ourServices'),
   heading = tr('section.whatWeHeading'),
   scriptAccent = tr('section.doAccent'),
@@ -16,6 +17,7 @@ export function ServicesPreviewBlock({
   exploreLabel = tr('common.explore'),
   moreLink = tr('section.viewAllServices'),
 }: {
+  services?: typeof SERVICES
   label?: string
   heading?: string
   scriptAccent?: string
@@ -23,7 +25,7 @@ export function ServicesPreviewBlock({
   exploreLabel?: string
   moreLink?: string
 }) {
-  const previewServices = SERVICES.slice(0, 3)
+  const previewServices = services.slice(0, 3)
   if (previewServices.length === 0) return null
   // Columns match the count so a lone (or paired) service, a single owner-service generic
   // build, doesn't strand in an otherwise-empty 3-col row. 3+ → md:grid-cols-3, byte-identical
@@ -71,7 +73,7 @@ export function ServicesPreviewBlock({
             </Link>
           ))}
         </div>
-        {SERVICES.length > previewServices.length && (
+        {services.length > previewServices.length && (
           <div className="mt-8 text-center">
             <Link to="/services" className="btn btn-md btn-secondary">{moreLink}</Link>
           </div>

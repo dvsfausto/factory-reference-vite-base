@@ -61,8 +61,10 @@ function SubSection({
 }
 
 export function AreaDetailsBlock({
+  services = SERVICES,
   area,
 }: {
+  services?: typeof SERVICES
   area: ServiceAreaPageData
   variant?: string
 }) {
@@ -70,7 +72,7 @@ export function AreaDetailsBlock({
 
   // Resolve featured service slugs against the published view (mirrors the template's
   // servicesMap lookup), drops unpublished/unknown slugs so an empty result omits.
-  const servicesMap = new Map(SERVICES.map((s) => [s.slug, s]))
+  const servicesMap = new Map(services.map((s) => [s.slug, s]))
   const featured = servicesHere.featured
     .map((slug) => servicesMap.get(slug))
     .filter((s): s is NonNullable<typeof s> => Boolean(s))

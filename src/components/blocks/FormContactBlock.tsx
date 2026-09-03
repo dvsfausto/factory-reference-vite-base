@@ -12,10 +12,12 @@ import { Field, Textarea, SubmitButton, SuccessCard } from './form-ui'
 // 50/100/600/700. Radius -> rounded-* (DNA). Font -> font-display (DNA). Light
 // surface component-owned (#F8FAFC / white card / #E6E8EC). Never bg-brand-*.
 export function FormContactBlock({
+  site = SITE,
   label = tr('form.contactUs'),
   heading = tr('form.getInTouch'),
   body = tr('form.contactBody'),
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
@@ -82,8 +84,8 @@ export function FormContactBlock({
                   <SubmitButton status={status} />
                   <span className="text-sm text-[#64748B]">
                     Or call{' '}
-                    <a href={`tel:${SITE.phone}`} className="font-medium text-emerald-700 underline-offset-2 hover:underline">
-                      {SITE.phoneDisplay}
+                    <a href={`tel:${site.phone}`} className="font-medium text-emerald-700 underline-offset-2 hover:underline">
+                      {site.phoneDisplay}
                     </a>
                   </span>
                 </div>

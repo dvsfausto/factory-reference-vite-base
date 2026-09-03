@@ -10,15 +10,17 @@ import { SITE } from '~/data/site'
 // (DNA). Font -> font-display (DNA). Light surface component-owned. No CTA by
 // design. Never bg-brand-* / .btn.
 export function VideoTestimonialsCarouselBlock({
+  site = SITE,
   label = tr('section.testimonials'),
   heading = tr('section.hearFromCustomers'),
   body,
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
 }) {
-  const vids = (SITE as { videoTestimonials?: VideoTestimonial[] }).videoTestimonials
+  const vids = (site as { videoTestimonials?: VideoTestimonial[] }).videoTestimonials
   if (!vids || vids.length === 0) return null
   return (
     <section className="bg-white">

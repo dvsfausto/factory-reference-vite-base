@@ -16,12 +16,14 @@ import { Field, Textarea, SubmitButton, SuccessCard } from './form-ui'
 // TOKEN DISCIPLINE: primary CTA -> bg-primary. Accent -> emerald-* (DNA). Radius -> rounded-* (DNA).
 // Font -> font-display (DNA). Dark header panel component-owned. Never bg-brand-* / .btn.
 export function FormQuoteBlock({
+  site = SITE,
   label,
   heading,
   body,
   submitLabel,
   services,
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
@@ -35,7 +37,7 @@ export function FormQuoteBlock({
   // submitLabel} in the trade's language so the eyebrow, heading, body AND submit button all speak it,
   // instead of four scattered contractor strings ("FREE QUOTE" / "Request my quote"). Cast-read so a
   // generated SITE without the field still type-checks; empty → tr() fallback. Owner/customPage param wins.
-  const quoteForm = (SITE as { quoteForm?: { detailsLabel?: string; detailsPlaceholder?: string; body?: string; heading?: string; eyebrow?: string; submitLabel?: string } }).quoteForm
+  const quoteForm = (site as { quoteForm?: { detailsLabel?: string; detailsPlaceholder?: string; body?: string; heading?: string; eyebrow?: string; submitLabel?: string } }).quoteForm
   const bodyText = body ?? quoteForm?.body ?? tr('form.quoteBody')
   const headingText = heading ?? quoteForm?.heading ?? tr('form.requestQuote')
   const eyebrowText = label ?? quoteForm?.eyebrow ?? tr('form.freeQuote')
@@ -136,8 +138,8 @@ export function FormQuoteBlock({
                   <SubmitButton status={status} label={submitText} />
                   <span className="text-sm text-[#64748B]">
                     Or call{' '}
-                    <a href={`tel:${SITE.phone}`} className="font-medium text-emerald-700 underline-offset-2 hover:underline">
-                      {SITE.phoneDisplay}
+                    <a href={`tel:${site.phone}`} className="font-medium text-emerald-700 underline-offset-2 hover:underline">
+                      {site.phoneDisplay}
                     </a>
                   </span>
                 </div>

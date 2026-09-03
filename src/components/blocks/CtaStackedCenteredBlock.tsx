@@ -19,23 +19,25 @@ import { SITE } from '~/data/site'
 // Identity copy read from SITE.homeCta via inline cast. Prop signature identical
 // to CtaBlock; returns an Element (no null).
 export function CtaStackedCenteredBlock({
+  site = SITE,
   title,
   subtitle,
 }: {
+  site?: typeof SITE
   title?: string
   subtitle?: string
 }) {
-  const cta = (SITE as { homeCta?: { title?: string; subtitle?: string } }).homeCta
+  const cta = (site as { homeCta?: { title?: string; subtitle?: string } }).homeCta
   const headline = title ?? cta?.title ?? 'Ready when you are.'
   const sub = subtitle ?? cta?.subtitle ?? tr('cta.reachOutToday')
   return (
     <section className="bg-white">
       <div className="container-x py-28 md:py-40">
         <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
-          {SITE.tagline && (
+          {site.tagline && (
             <span className="inline-flex items-center justify-center gap-3 text-xs font-semibold uppercase tracking-[0.25em] text-emerald-600">
               <span className="h-px w-10 bg-emerald-600" />
-              {SITE.tagline}
+              {site.tagline}
               <span className="h-px w-10 bg-emerald-600" />
             </span>
           )}
@@ -51,10 +53,10 @@ export function CtaStackedCenteredBlock({
             >{tr('section.getStarted')}<ArrowRight className="h-4 w-4" />
             </PrimaryCta>
             <a
-              href={`tel:${SITE.phone}`}
+              href={`tel:${site.phone}`}
               className="inline-flex h-[56px] items-center gap-2 rounded-xl px-6 font-display font-semibold text-[#0F172A] transition-colors hover:text-emerald-700"
             >
-              <Phone className="h-4 w-4 text-emerald-600" /> {SITE.phoneDisplay}
+              <Phone className="h-4 w-4 text-emerald-600" /> {site.phoneDisplay}
             </a>
           </div>
         </div>

@@ -2,12 +2,13 @@
 // One table that says, for every member of the ONE block vocabulary (layout.ts
 // BlockType), (a) where its content comes from today and (b) on which pages it may
 // be placed. P1a writes the table and proves it compiles; NOTHING reads it yet.
-//   · P1b makes the fixed-source blocks read `params.<key> → ctx.<key> → SITE.<key>`
-//     in the order this table names (the codemod's specification).
+//   · P1b (DONE): every data-bearing block component takes optional site/services/areas/
+//     reviews/projects props defaulting to the module read; render-section.tsx resolveData()
+//     fills them from `params.<params> → ctx.<ctx> → (nothing → module default)` using `into`.
 //   · P5 makes PLACEMENT the refusal point for an off-page block (the scaffolder's
 //     homepage guard accepts any union member now that the unions are one).
-// Type-only + data-only: no route, component or default layout imports this file, so
-// every emitted site is byte-identical to the pre-P1a reference (gate: test:ssr-identity).
+// Data-only: render-section.tsx reads BLOCK_NEEDS (P1b); no default layout names a params
+// slice, so every emitted site is byte-identical to the pre-P1a reference (gate: test:ssr-identity).
 import type { BlockType } from './layout'
 
 /** The routable page kinds a block can be placed on. `custom` = /p/$slug pages. */
@@ -57,37 +58,44 @@ export interface BlockNeed {
   ctx?: 'service' | 'area' | 'info' | 'intro' | 'faqs'
   /** The `params` key P1b resolves FIRST (the block-instance's own data). Absent = params-only knobs today. */
   params?: string
+  /**
+   * P1b · what `params.<params>` supplies. ONE entry → the param value replaces that SITE key
+   * (or, for SERVICES/AREAS/REVIEWS/PROJECTS, is passed as that array). Several entries (only
+   * `story`) → the param is an object whose listed keys overlay SITE. Absent → params-only knobs.
+   * Resolution order at render (render-section.tsx resolveData): params.<params> → ctx.<ctx> → SITE.
+   */
+  into?: readonly string[]
 }
 
 /** Every BlockType, exactly once (lint:blocks asserts the switch and this table agree). */
 export const BLOCK_NEEDS: Readonly<Record<BlockType, BlockNeed>> = {
   // homepage core
-  hero: { scope: 'site', site: ['hero', 'REVIEWS', 'IMAGES'], params: 'hero' },
+  hero: { scope: 'site', site: ['hero', 'REVIEWS', 'IMAGES'], params: 'hero', into: ['hero'] },
   taglineBar: { scope: 'chrome', site: ['tagline'] },
   localBar: { scope: 'chrome', site: ['address', 'hours', 'phone'] },
-  trustBar: { scope: 'site', site: ['trustItems'], params: 'items' },
-  servicesPreview: { scope: 'site', site: ['homeServices', 'SERVICES'], params: 'services' },
-  serviceAreas: { scope: 'site', site: ['AREAS'], params: 'areas' },
-  reviews: { scope: 'site', site: ['REVIEWS'], params: 'reviews' },
-  faq: { scope: 'page', site: ['homeFaqs'], ctx: 'faqs', params: 'faqs' },
-  cta: { scope: 'site', site: ['homeCta', 'hero'], params: 'cta' },
+  trustBar: { scope: 'site', site: ['trustItems'], params: 'items', into: ['trustItems'] },
+  servicesPreview: { scope: 'site', site: ['SERVICES', 'homeServices'], params: 'services', into: ['SERVICES'] },
+  serviceAreas: { scope: 'site', site: ['AREAS'], params: 'areas', into: ['AREAS'] },
+  reviews: { scope: 'site', site: ['REVIEWS'], params: 'reviews', into: ['REVIEWS'] },
+  faq: { scope: 'page', site: ['homeFaqs'], ctx: 'faqs', params: 'faqs', into: ['homeFaqs'] },
+  cta: { scope: 'site', site: ['homeCta', 'hero'], params: 'cta', into: ['homeCta'] },
   // composable content sections
-  team: { scope: 'site', site: ['team'], params: 'team' },
-  pricing: { scope: 'site', site: ['plans'], params: 'plans' },
-  gallery: { scope: 'site', site: ['PROJECTS'], params: 'projects' },
-  process: { scope: 'site', site: ['steps'], params: 'steps' },
-  faqSection: { scope: 'site', site: ['homeFaqs'], ctx: 'faqs', params: 'faqs' },
-  story: { scope: 'site', site: ['about', 'story', 'stats', 'milestones', 'IMAGES'], params: 'story' },
-  forms: { scope: 'site', site: ['quoteForm'], params: 'form' },
-  membership: { scope: 'site', site: ['memberships'], params: 'memberships' },
-  packages: { scope: 'site', site: ['packages'], params: 'packages' },
-  caseStudies: { scope: 'site', site: ['caseStudies'], params: 'caseStudies' },
-  videoTestimonials: { scope: 'site', site: ['videoTestimonials'], params: 'videoTestimonials' },
-  promotions: { scope: 'site', site: ['promotions'], params: 'promotions' },
-  financing: { scope: 'site', site: ['financing'], params: 'financing' },
-  partners: { scope: 'site', site: ['partners'], params: 'partners' },
-  map: { scope: 'site', site: ['AREAS'], params: 'areas' },
-  blog: { scope: 'site', site: ['posts'], params: 'posts' },
+  team: { scope: 'site', site: ['team'], params: 'team', into: ['team'] },
+  pricing: { scope: 'site', site: ['plans'], params: 'plans', into: ['plans'] },
+  gallery: { scope: 'site', site: ['PROJECTS'], params: 'projects', into: ['PROJECTS'] },
+  process: { scope: 'site', site: ['steps'], params: 'steps', into: ['steps'] },
+  faqSection: { scope: 'site', site: ['homeFaqs'], ctx: 'faqs', params: 'faqs', into: ['homeFaqs'] },
+  story: { scope: 'site', site: ['about', 'story', 'stats', 'milestones', 'IMAGES'], params: 'story', into: ['about', 'story', 'stats', 'milestones'] },
+  forms: { scope: 'site', site: ['quoteForm'], params: 'form', into: ['quoteForm'] },
+  membership: { scope: 'site', site: ['memberships'], params: 'memberships', into: ['memberships'] },
+  packages: { scope: 'site', site: ['packages'], params: 'packages', into: ['packages'] },
+  caseStudies: { scope: 'site', site: ['caseStudies'], params: 'caseStudies', into: ['caseStudies'] },
+  videoTestimonials: { scope: 'site', site: ['videoTestimonials'], params: 'videoTestimonials', into: ['videoTestimonials'] },
+  promotions: { scope: 'site', site: ['promotions'], params: 'promotions', into: ['promotions'] },
+  financing: { scope: 'site', site: ['financing'], params: 'financing', into: ['financing'] },
+  partners: { scope: 'site', site: ['partners'], params: 'partners', into: ['partners'] },
+  map: { scope: 'site', site: ['AREAS'], params: 'areas', into: ['AREAS'] },
+  blog: { scope: 'site', site: ['posts'], params: 'posts', into: ['posts'] },
   booking: { scope: 'params', site: [] },
   richText: { scope: 'params', site: [] },
   // page-record blocks (were the inner unions' own members)
@@ -101,8 +109,8 @@ export const BLOCK_NEEDS: Readonly<Record<BlockType, BlockNeed>> = {
   infoArticle: { scope: 'page', site: [], ctx: 'info' },
   relatedInfo: { scope: 'page', site: [], ctx: 'info' },
   // full-list index blocks
-  servicesIndex: { scope: 'site', site: ['SERVICES'] },
-  areasIndex: { scope: 'site', site: ['AREAS'] },
+  servicesIndex: { scope: 'site', site: ['SERVICES'], params: 'services', into: ['SERVICES'] },
+  areasIndex: { scope: 'site', site: ['AREAS'], params: 'areas', into: ['AREAS'] },
   reviewsIndex: { scope: 'site', site: ['REVIEWS'] },
   contactForm: { scope: 'chrome', site: ['phone', 'email', 'address', 'hours'] },
 }

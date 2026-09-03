@@ -17,15 +17,17 @@ import { SITE } from '~/data/site'
 // column wash. Radius -> rounded-* (DNA). Font -> font-display (DNA). Light surface
 // component-owned (white / slate / #E6E8EC). Never bg-brand-* / .btn.
 export function PricingComparisonTableBlock({
+  site = SITE,
   label = 'Pricing',
   heading = 'Compare plans',
   body,
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
 }) {
-  const plans = (SITE as { plans?: PricingPlan[] }).plans
+  const plans = (site as { plans?: PricingPlan[] }).plans
   if (!plans || plans.length === 0) return null
   const cols = plans.slice(0, 4)
   const allFeatures: string[] = []

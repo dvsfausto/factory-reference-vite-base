@@ -18,16 +18,18 @@ import { PROJECTS } from '~/data/projects'
 // null when PROJECTS is empty (and guards the featured item), mirroring the
 // default GalleryMasonryBlock's omit-when-empty behavior.
 export function GalleryFeaturedFilmBlock({
+  projects = PROJECTS,
   label = tr('section.ourWork'),
   heading = tr('section.recentProjects'),
   body,
 }: {
+  projects?: typeof PROJECTS
   label?: string
   heading?: string
   body?: string
 }) {
   const reduce = useReducedMotion()
-  const [featured, ...rest] = PROJECTS
+  const [featured, ...rest] = projects
   if (!featured) return null
 
   return (

@@ -17,13 +17,15 @@ function splitScriptAccent(heading: string): { lead: string; accent: string } {
 }
 
 export function HeroBlock({
+  site = SITE,
   trustItems = [tr('trust.friendlyService'), tr('trust.sameDayQuotes'), tr('trust.localTeam'), tr('trust.satisfaction100')],
   decorativeAsset = leaves,
 }: {
+  site?: typeof SITE
   trustItems?: string[]
   decorativeAsset?: string
 }) {
-  const heroParts = splitScriptAccent(SITE.hero.headline)
+  const heroParts = splitScriptAccent(site.hero.headline)
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-brand-50 via-white to-white">
       <img src={decorativeAsset} alt="" aria-hidden className="hidden md:block absolute -left-10 top-10 h-[80%] opacity-50 pointer-events-none select-none" />
@@ -38,10 +40,10 @@ export function HeroBlock({
             className="lg:col-span-6"
           >
             <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-brand-700">
-              <span className="h-px w-8 bg-brand-600" /> {SITE.hero.kicker}
+              <span className="h-px w-8 bg-brand-600" /> {site.hero.kicker}
             </span>
             <h1 className="mt-4">
-              {heroParts.lead || SITE.hero.headline}
+              {heroParts.lead || site.hero.headline}
               {heroParts.lead && (
                 <>
                   <br />
@@ -51,17 +53,17 @@ export function HeroBlock({
                 </>
               )}
             </h1>
-            {SITE.hero.subheadline && (
+            {site.hero.subheadline && (
               <p className="mt-3 font-display text-xl text-ink-700">
-                {SITE.hero.subheadline}
+                {site.hero.subheadline}
               </p>
             )}
             <p className="mt-6 text-lg text-ink-700 max-w-xl leading-relaxed">
-              {SITE.hero.body}
+              {site.hero.body}
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <PrimaryCta className="btn btn-lg btn-primary">
-                {SITE.hero.cta_primary_label} <ArrowRight className="h-4 w-4" />
+                {site.hero.cta_primary_label} <ArrowRight className="h-4 w-4" />
               </PrimaryCta>
               {/* NOTE: SITE.hero.cta_secondary_label exists for shape parity
                   with painter + scaffolder cleaning-english emit, but the
@@ -70,8 +72,8 @@ export function HeroBlock({
                   hero.cta_secondary_label via AI editor will not produce a
                   visible change. To wire it in, replace this phone button OR
                   add a third button row. */}
-              <a href={`tel:${SITE.phone}`} className="btn btn-lg btn-secondary">
-                <Phone className="h-4 w-4" /> {SITE.phoneDisplay}
+              <a href={`tel:${site.phone}`} className="btn btn-lg btn-secondary">
+                <Phone className="h-4 w-4" /> {site.phoneDisplay}
               </a>
             </div>
             <ul className="mt-8 grid grid-cols-2 sm:flex sm:flex-wrap gap-x-6 gap-y-2 text-sm text-ink-700">
@@ -90,7 +92,7 @@ export function HeroBlock({
             className="lg:col-span-6 relative"
           >
             <HeroSlideshow
-              images={[{ src: imageSrc(SITE.hero.image_url), alt: HERO_ALT }]}
+              images={[{ src: imageSrc(site.hero.image_url), alt: HERO_ALT }]}
             />
           </motion.div>
         </div>

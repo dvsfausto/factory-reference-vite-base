@@ -13,23 +13,25 @@ import { SITE } from '~/data/site'
 // band) + secondary; rounded-* (DNA, tight); font-display (DNA). The deep-navy
 // surface is component-owned. No bg-brand-*, no .btn.
 export function CtaCorporateBlock({
+  site = SITE,
   title,
   subtitle,
 }: {
+  site?: typeof SITE
   title?: string
   subtitle?: string
 }) {
-  const headline = title ?? ((SITE as { homeCta?: { title?: string; subtitle?: string } }).homeCta?.title ?? tr('cta.readyToStart'))
-  const sub = subtitle ?? ((SITE as { homeCta?: { title?: string; subtitle?: string } }).homeCta?.subtitle ?? 'Tell us what you need and we’ll take it from there.')
-  const ctaLabel = ((SITE as { headerCtaLabel?: string }).headerCtaLabel ?? tr('form.getFreeQuote'))
+  const headline = title ?? ((site as { homeCta?: { title?: string; subtitle?: string } }).homeCta?.title ?? tr('cta.readyToStart'))
+  const sub = subtitle ?? ((site as { homeCta?: { title?: string; subtitle?: string } }).homeCta?.subtitle ?? 'Tell us what you need and we’ll take it from there.')
+  const ctaLabel = ((site as { headerCtaLabel?: string }).headerCtaLabel ?? tr('form.getFreeQuote'))
   return (
     <section className="bg-[#142844] text-white">
       <div className="container-x py-16 md:py-20">
         <div className="max-w-3xl">
-          {SITE.tagline && (
+          {site.tagline && (
             <span className="inline-flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.16em] text-emerald-100">
               <span className="h-0.5 w-7 bg-emerald-100" />
-              {SITE.tagline}
+              {site.tagline}
             </span>
           )}
           <h2 className="mt-4 font-display text-3xl font-bold leading-tight tracking-tight text-white sm:text-4xl lg:text-5xl">
@@ -45,10 +47,10 @@ export function CtaCorporateBlock({
               {ctaLabel} <ArrowRight className="h-4 w-4" />
             </PrimaryCta>
             <a
-              href={`tel:${SITE.phone}`}
+              href={`tel:${site.phone}`}
               className="inline-flex h-[52px] items-center gap-2 rounded-md border border-white/30 px-6 font-display font-semibold text-white transition-colors hover:border-white hover:bg-white/10"
             >
-              <Phone className="h-4 w-4" /> {SITE.phoneDisplay}
+              <Phone className="h-4 w-4" /> {site.phoneDisplay}
             </a>
           </div>
         </div>

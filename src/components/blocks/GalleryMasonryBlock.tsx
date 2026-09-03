@@ -10,15 +10,17 @@ import { tr } from '~/lib/i18n'
 // (DNA). Font -> font-display (DNA). Light surface component-owned (white / slate /
 // #E6E8EC). No CTA in this section by design. Never bg-brand-* / .btn.
 export function GalleryMasonryBlock({
+  projects = PROJECTS,
   label = tr('section.ourWork'),
   heading = tr('section.recentProjects'),
   body,
 }: {
+  projects?: typeof PROJECTS
   label?: string
   heading?: string
   body?: string
 }) {
-  if (PROJECTS.length === 0) return null
+  if (projects.length === 0) return null
   return (
     <section className="bg-white">
       <div className="container-x py-20 md:py-28">
@@ -34,7 +36,7 @@ export function GalleryMasonryBlock({
         </div>
 
         <div className="mt-12 gap-5 [column-fill:_balance] sm:columns-2 lg:columns-3">
-          {PROJECTS.map((p, i) => (
+          {projects.map((p, i) => (
             <figure key={`${p.title}-${i}`} className="mb-5 break-inside-avoid overflow-hidden rounded-2xl border border-[#E6E8EC]">
               <img src={p.image} alt={p.alt ?? p.title} loading="lazy" className="w-full object-cover" />
               <figcaption className="flex items-center justify-between gap-3 p-4">

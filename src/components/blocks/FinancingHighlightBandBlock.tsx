@@ -11,13 +11,15 @@ import { SITE } from '~/data/site'
 // 50/100/600/700: emerald-50 icon, emerald-600 checks. Radius -> rounded-* (DNA).
 // Font -> font-display (DNA). Light surface component-owned. Never bg-brand-*.
 export function FinancingHighlightBandBlock({
+  site = SITE,
   label = 'Financing',
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
 }) {
-  const fin = (SITE as { financing?: Financing }).financing
+  const fin = (site as { financing?: Financing }).financing
   if (!fin) return null
   return (
     <section className="bg-[#F8FAFC]">

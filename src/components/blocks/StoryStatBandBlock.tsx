@@ -9,15 +9,17 @@ import { tr } from '~/lib/i18n'
 // Radius -> rounded-* (DNA). Font -> font-display (DNA). Dark band (slate-950)
 // component-owned. No CTA by design. Never bg-brand-* / .btn.
 export function StoryStatBandBlock({
+  site = SITE,
   label = tr('section.byTheNumbers'),
   heading,
   body,
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
 }) {
-  const stats = (SITE as { stats?: { value: string; label: string }[] }).stats
+  const stats = (site as { stats?: { value: string; label: string }[] }).stats
   if (!stats || stats.length === 0) return null
   return (
     <section className="bg-slate-950 text-white">

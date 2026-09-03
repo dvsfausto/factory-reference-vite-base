@@ -26,6 +26,7 @@ import { serviceImageUrl } from '~/data/images'
 // spotlight stands alone (no empty tiles). "View all" only shows when there are
 // genuinely more services than previewed. Nothing invented.
 export function ServicesSpotlightTilesBlock({
+  services = SERVICES,
   label = tr('section.ourServices'),
   heading = tr('section.whatWeHeading'),
   scriptAccent = tr('section.doAccent'),
@@ -33,6 +34,7 @@ export function ServicesSpotlightTilesBlock({
   exploreLabel = tr('common.explore'),
   moreLink = tr('section.viewAllServices'),
 }: {
+  services?: typeof SERVICES
   label?: string
   heading?: string
   scriptAccent?: string
@@ -41,7 +43,7 @@ export function ServicesSpotlightTilesBlock({
   moreLink?: string
 }) {
   const reduce = useReducedMotion()
-  const previewServices = SERVICES.slice(0, 3)
+  const previewServices = services.slice(0, 3)
   const [lead, ...rest] = previewServices
   if (!lead) return null
 
@@ -186,7 +188,7 @@ export function ServicesSpotlightTilesBlock({
             </div>
           )}
         </div>
-        {SERVICES.length > previewServices.length && (
+        {services.length > previewServices.length && (
           <div className="mt-10 text-center">
             <Link to="/services" className="btn btn-md btn-secondary">
               {moreLink}

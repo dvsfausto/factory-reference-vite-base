@@ -32,14 +32,16 @@ const DEFAULT_TRUST_ITEMS = [
 ]
 
 export function TrustBarHairlineRowsBlock({
+  site = SITE,
   items,
 }: {
+  site?: typeof SITE
   items?: { title: string; description: string }[]
 }) {
   const reduce = useReducedMotion()
   const resolved = (
     items ??
-    (SITE as { trustItems?: { title: string; description: string }[] }).trustItems ??
+    (site as { trustItems?: { title: string; description: string }[] }).trustItems ??
     DEFAULT_TRUST_ITEMS
   ).slice(0, 3) // cap at 3 — this variant's md:grid-cols-3 wraps a 4th item to a lone second row (generic vertical ships 4). Matches TrustBarBlock.
   if (resolved.length === 0) return null

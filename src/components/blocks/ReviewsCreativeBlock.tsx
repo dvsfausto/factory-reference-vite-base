@@ -3,7 +3,7 @@ import { tr } from '~/lib/i18n'
 import { SITE } from '~/data/site'
 import { ArrowUpRight } from 'lucide-react'
 import { SectionHeaderCreative } from '~/components/SectionHeaderCreative'
-import { reviews } from '~/data/reviews'
+import { reviews as REVIEWS } from '~/data/reviews'
 
 // Reviews VARIANT: 'creative', expressive testimonials. SectionHeaderCreative
 // (no diamond, no script) + big magenta quote marks on bold off-white cards.
@@ -12,11 +12,15 @@ import { reviews } from '~/data/reviews'
 // TOKEN DISCIPLINE: expressive light surfaces component-owned; emerald-* (DNA →
 // magenta) quote marks + the "read all" CTA; rounded-* (DNA, large); font-display.
 export function ReviewsCreativeBlock({
-  label = ((SITE as { homeReviews?: { label?: string; heading?: string; scriptAccent?: string } }).homeReviews?.label ?? tr('nav.reviews')),
-  heading = ((SITE as { homeReviews?: { label?: string; heading?: string; scriptAccent?: string } }).homeReviews?.heading ?? tr('section.whatCustomersHeading')),
-  scriptAccent = ((SITE as { homeReviews?: { label?: string; heading?: string; scriptAccent?: string } }).homeReviews?.scriptAccent ?? tr('section.sayAccent')),
+  site = SITE,
+  reviews = REVIEWS,
+  label = ((site as { homeReviews?: { label?: string; heading?: string; scriptAccent?: string } }).homeReviews?.label ?? tr('nav.reviews')),
+  heading = ((site as { homeReviews?: { label?: string; heading?: string; scriptAccent?: string } }).homeReviews?.heading ?? tr('section.whatCustomersHeading')),
+  scriptAccent = ((site as { homeReviews?: { label?: string; heading?: string; scriptAccent?: string } }).homeReviews?.scriptAccent ?? tr('section.sayAccent')),
   moreLink = tr('section.readAllReviews'),
 }: {
+  site?: typeof SITE
+  reviews?: typeof REVIEWS
   label?: string
   heading?: string
   scriptAccent?: string

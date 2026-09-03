@@ -48,12 +48,16 @@ const ICON_BY_NAME: Record<string, LucideIcon> = {
 const DEFAULT_ICONS: LucideIcon[] = [Sparkles, ShieldCheck, Leaf, Star, Clock, Wrench]
 
 export function ServicesIconTilesBlock({
+  site = SITE,
+  services = SERVICES,
   label,
   heading,
   body,
   exploreLabel = tr('common.learnMore'),
   moreLink = tr('common.allServices'),
 }: {
+  site?: typeof SITE
+  services?: typeof SERVICES
   label?: string
   heading?: string
   scriptAccent?: string
@@ -61,8 +65,8 @@ export function ServicesIconTilesBlock({
   exploreLabel?: string
   moreLink?: string
 }) {
-  const hs = (SITE as { homeServices?: { label?: string; heading?: string; body?: string } }).homeServices
-  const tiles = SERVICES.slice(0, 6)
+  const hs = (site as { homeServices?: { label?: string; heading?: string; body?: string } }).homeServices
+  const tiles = services.slice(0, 6)
   if (tiles.length === 0) return null
   return (
     <section className="bg-[#F8FAFC]">
@@ -107,7 +111,7 @@ export function ServicesIconTilesBlock({
           })}
         </div>
 
-        {SERVICES.length > tiles.length && (
+        {services.length > tiles.length && (
           <div className="mt-12">
             <Link
               to="/services"

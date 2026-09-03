@@ -19,17 +19,19 @@ import { SITE } from '~/data/site'
 // No invented figures. Early-returns null when there is no quote, mirroring the
 // default StoryNarrativeBlock's omit-when-empty behavior.
 export function StoryManifestoGlowBlock({
+  site = SITE,
   label = tr('section.ourStory'),
   body,
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
 }) {
   const reduce = useReducedMotion()
-  const story = (SITE as { story?: { quote?: string; attribution?: string } }).story
-  const quote = body ?? story?.quote ?? SITE.about
-  const attribution = story?.attribution ?? SITE.name
+  const story = (site as { story?: { quote?: string; attribution?: string } }).story
+  const quote = body ?? story?.quote ?? site.about
+  const attribution = story?.attribution ?? site.name
   if (!quote) return null
 
   return (

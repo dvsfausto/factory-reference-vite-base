@@ -20,16 +20,18 @@ import { SITE } from '~/data/site'
 // HONESTY: renders ONLY real SITE.steps. No steps → null (never fabricates a
 // process). The numeral is the step index, not an invented stat.
 export function ProcessBoldNumeralsBlock({
+  site = SITE,
   label = tr('section.howItWorks'),
   heading = tr('section.simpleProcess'),
   body,
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
 }) {
   const reduce = useReducedMotion()
-  const steps = (SITE as { steps?: ProcessStep[] }).steps
+  const steps = (site as { steps?: ProcessStep[] }).steps
   if (!steps || steps.length === 0) return null
   const items = steps.slice(0, 4)
 

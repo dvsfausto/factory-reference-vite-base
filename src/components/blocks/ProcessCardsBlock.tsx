@@ -11,15 +11,17 @@ import { SITE } from '~/data/site'
 // Radius -> rounded-* (DNA). Font -> font-display (DNA). Light surface component-
 // owned (white cards, #E6E8EC). No CTA by design. Never bg-brand-* / .btn.
 export function ProcessCardsBlock({
+  site = SITE,
   label = tr('section.howItWorks'),
   heading = tr('section.simpleProcess'),
   body,
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
 }) {
-  const steps = (SITE as { steps?: ProcessStep[] }).steps
+  const steps = (site as { steps?: ProcessStep[] }).steps
   if (!steps || steps.length === 0) return null
   return (
     <section className="bg-white">

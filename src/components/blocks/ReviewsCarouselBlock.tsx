@@ -1,7 +1,7 @@
 import { Link } from '@tanstack/react-router'
 import { tr } from '~/lib/i18n'
 import { Star } from 'lucide-react'
-import { reviews } from '~/data/reviews'
+import { reviews as REVIEWS } from '~/data/reviews'
 
 // Reviews LAYOUT: 'carousel', a horizontal, scroll-snap slider of review cards,
 // the right call when there are many testimonials. CSS-only (scroll-snap, no JS),
@@ -18,10 +18,12 @@ import { reviews } from '~/data/reviews'
 //
 // Prop signature identical to ReviewsBlock; returns Element | null.
 export function ReviewsCarouselBlock({
+  reviews = REVIEWS,
   label = tr('nav.reviews'),
   heading = tr('section.whatCustomersSay'),
   moreLink = tr('section.readAllReviews'),
 }: {
+  reviews?: typeof REVIEWS
   label?: string
   heading?: string
   scriptAccent?: string

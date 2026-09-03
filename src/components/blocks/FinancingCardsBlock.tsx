@@ -11,15 +11,17 @@ import { SITE } from '~/data/site'
 // 50/100/600/700: emerald-50 icon chip. Radius -> rounded-* (DNA). Font ->
 // font-display (DNA). Light surface component-owned. Never bg-brand-* / .btn.
 export function FinancingCardsBlock({
+  site = SITE,
   label = 'Financing',
   heading,
   body,
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
 }) {
-  const fin = (SITE as { financing?: Financing }).financing
+  const fin = (site as { financing?: Financing }).financing
   if (!fin) return null
   return (
     <section className="bg-white">

@@ -11,15 +11,17 @@ import { SITE } from '~/data/site'
 // 50/100/600/700: emerald-600 ring + checks, emerald-50 badge/icon. Radius ->
 // rounded-* (DNA). Font -> font-display (DNA). Light surface component-owned.
 export function PackagesBundleCardsBlock({
+  site = SITE,
   label = 'Packages',
   heading = 'Service packages',
   body,
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
 }) {
-  const packages = (SITE as { packages?: ServicePackage[] }).packages
+  const packages = (site as { packages?: ServicePackage[] }).packages
   if (!packages || packages.length === 0) return null
   return (
     <section className="bg-white">

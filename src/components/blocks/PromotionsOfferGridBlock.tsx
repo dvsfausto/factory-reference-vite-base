@@ -10,15 +10,17 @@ import { SITE } from '~/data/site'
 // rule + code, emerald-50 wash. Radius -> rounded-* (DNA). Font -> font-display
 // (DNA). Light surface component-owned. Never bg-brand-* / .btn.
 export function PromotionsOfferGridBlock({
+  site = SITE,
   label = 'Specials',
   heading = 'Offers & coupons',
   body,
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
 }) {
-  const promos = (SITE as { promotions?: Promotion[] }).promotions
+  const promos = (site as { promotions?: Promotion[] }).promotions
   if (!promos || promos.length === 0) return null
   return (
     <section className="bg-[#F8FAFC]">

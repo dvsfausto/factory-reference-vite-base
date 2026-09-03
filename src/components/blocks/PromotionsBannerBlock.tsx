@@ -11,13 +11,15 @@ import { SITE } from '~/data/site'
 // with an inverted white CTA. code chip on a dashed border. Radius -> rounded-*
 // (DNA). Font -> font-display (DNA). Never bg-brand-* / .btn.
 export function PromotionsBannerBlock({
+  site = SITE,
   label = 'Special offer',
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
 }) {
-  const promos = (SITE as { promotions?: Promotion[] }).promotions
+  const promos = (site as { promotions?: Promotion[] }).promotions
   if (!promos || promos.length === 0) return null
   const p = promos[0]!
   return (

@@ -16,15 +16,17 @@ import { SITE } from '~/data/site'
 // ring + checks, emerald-50 badge. Radius -> rounded-* (DNA). Font -> font-display
 // (DNA). Light surface component-owned (white / slate / #E6E8EC). Never bg-brand-*.
 export function PricingTiersBlock({
+  site = SITE,
   label = 'Pricing',
   heading = 'Simple, transparent pricing',
   body,
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
 }) {
-  const plans = (SITE as { plans?: PricingPlan[] }).plans
+  const plans = (site as { plans?: PricingPlan[] }).plans
   if (!plans || plans.length === 0) return null
   return (
     <section className="bg-white">

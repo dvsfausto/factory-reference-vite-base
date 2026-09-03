@@ -1,7 +1,7 @@
 import { Link } from '@tanstack/react-router'
 import { tr } from '~/lib/i18n'
 import { Star } from 'lucide-react'
-import { reviews } from '~/data/reviews'
+import { reviews as REVIEWS } from '~/data/reviews'
 
 // Reviews LAYOUT: 'masonry', a column-flow wall of quote cards with GENUINELY
 // varied heights: cards keep their natural length (short raves stay short, long
@@ -18,10 +18,12 @@ import { reviews } from '~/data/reviews'
 //
 // Prop signature identical to ReviewsBlock; returns Element | null.
 export function ReviewsMasonryBlock({
+  reviews = REVIEWS,
   label = tr('nav.reviews'),
   heading = tr('section.whatCustomersSay'),
   moreLink = tr('section.readAllReviews'),
 }: {
+  reviews?: typeof REVIEWS
   label?: string
   heading?: string
   scriptAccent?: string

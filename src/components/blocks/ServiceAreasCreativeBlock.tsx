@@ -12,25 +12,29 @@ import { AREAS } from '~/data/areas'
 // TOKEN DISCIPLINE: expressive light surface component-owned; emerald-* (DNA →
 // magenta) on the pills; rounded-* (DNA, large); font-display. No brand-* / .btn.
 export function ServiceAreasCreativeBlock({
-  label = ((SITE as { homeAreas?: { label?: string; heading?: string; scriptAccent?: string; body?: string } }).homeAreas?.label ?? tr('section.serviceAreas')),
-  heading = ((SITE as { homeAreas?: { label?: string; heading?: string; scriptAccent?: string; body?: string } }).homeAreas?.heading ?? tr('section.whereWeHeading')),
-  scriptAccent = ((SITE as { homeAreas?: { label?: string; heading?: string; scriptAccent?: string; body?: string } }).homeAreas?.scriptAccent ?? tr('section.workAccent')),
-  body = ((SITE as { homeAreas?: { label?: string; heading?: string; scriptAccent?: string; body?: string } }).homeAreas?.body ?? 'Local coverage, close to home.'),
+  site = SITE,
+  areas = AREAS,
+  label = ((site as { homeAreas?: { label?: string; heading?: string; scriptAccent?: string; body?: string } }).homeAreas?.label ?? tr('section.serviceAreas')),
+  heading = ((site as { homeAreas?: { label?: string; heading?: string; scriptAccent?: string; body?: string } }).homeAreas?.heading ?? tr('section.whereWeHeading')),
+  scriptAccent = ((site as { homeAreas?: { label?: string; heading?: string; scriptAccent?: string; body?: string } }).homeAreas?.scriptAccent ?? tr('section.workAccent')),
+  body = ((site as { homeAreas?: { label?: string; heading?: string; scriptAccent?: string; body?: string } }).homeAreas?.body ?? 'Local coverage, close to home.'),
   moreLink = tr('common.allAreas'),
 }: {
+  site?: typeof SITE
+  areas?: typeof AREAS
   label?: string
   heading?: string
   scriptAccent?: string
   body?: string
   moreLink?: string
 }) {
-  if (AREAS.length === 0) return null
+  if (areas.length === 0) return null
   return (
     <section className="bg-[#FBFAFC]">
       <div className="container-x py-20 md:py-28">
         <SectionHeaderCreative label={label} heading={heading} scriptAccent={scriptAccent} body={body} />
         <div className="flex flex-wrap gap-3">
-          {AREAS.map((a) => (
+          {areas.map((a) => (
             <Link
               key={a.slug}
               to="/areas/$slug"

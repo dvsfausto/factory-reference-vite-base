@@ -17,6 +17,9 @@ import { ReviewsSection } from '~/components/ReviewsSection'
 import { LeadForm } from '~/components/LeadForm'
 import { SERVICES } from '~/data/services-view'
 import { AREAS } from '~/data/areas'
+import { reviews as REVIEWS } from '~/data/reviews'
+import { PROJECTS } from '~/data/projects'
+import { BLOCK_NEEDS, type BlockNeed } from '~/data/block-contract'
 import { HeroBlock } from '~/components/blocks/HeroBlock'
 import { HeroBoldFullbleedBlock } from '~/components/blocks/HeroBoldFullbleedBlock'
 import { HeroElegantBlock } from '~/components/blocks/HeroElegantBlock'
@@ -448,10 +451,60 @@ function ContactFormSection() {
   )
 }
 
+/**
+ * Half B · P1b — the data a block instance renders from. Every data-bearing block component
+ * takes optional `site` / `services` / `areas` / `reviews` / `projects` props that default to
+ * the module read (SITE, SERVICES, …), so a block placed with no data params renders exactly
+ * what it rendered before P1b. This resolves, per BLOCK_NEEDS[type]:
+ *     params.<need.params>  →  ctx.<need.ctx>  →  (nothing: the component's own default)
+ * and shapes the winner by `need.into`: an array module name (SERVICES/AREAS/REVIEWS/PROJECTS)
+ * → that array prop; ONE SITE key → `site` is SITE with that key replaced; several SITE keys
+ * (story) → the value is an object whose listed keys overlay SITE. A value of the wrong shape
+ * (a non-array for an array slot, a non-object for an overlay) is ignored → default read.
+ * Returns {} when nothing was supplied, so the spread adds no prop and the render is byte-identical.
+ */
+export interface BlockData {
+  site?: typeof SITE
+  services?: typeof SERVICES
+  areas?: typeof AREAS
+  reviews?: typeof REVIEWS
+  projects?: typeof PROJECTS
+}
+const ARRAY_SLOT: Record<string, keyof BlockData> = {
+  SERVICES: 'services',
+  AREAS: 'areas',
+  REVIEWS: 'reviews',
+  PROJECTS: 'projects',
+}
+export function resolveData(block: SectionBlock, ctx?: SectionContext): BlockData {
+  const need = (BLOCK_NEEDS as Record<string, BlockNeed | undefined>)[block.type]
+  if (!need?.into || need.into.length === 0) return {}
+  const fromParams = need.params ? block.params?.[need.params] : undefined
+  const fromCtx = need.ctx ? (ctx as Record<string, unknown> | undefined)?.[need.ctx] : undefined
+  const value = fromParams ?? fromCtx
+  if (value === undefined || value === null) return {}
+  if (need.into.length === 1) {
+    const key = need.into[0]
+    const slot = ARRAY_SLOT[key]
+    if (slot) return Array.isArray(value) ? ({ [slot]: value } as BlockData) : {}
+    return { site: { ...SITE, [key]: value } as typeof SITE }
+  }
+  if (typeof value !== 'object' || Array.isArray(value)) return {}
+  const overlay: Record<string, unknown> = {}
+  for (const key of need.into) {
+    const v = (value as Record<string, unknown>)[key]
+    if (v !== undefined) overlay[key] = v
+  }
+  if (Object.keys(overlay).length === 0) return {}
+  return { site: { ...SITE, ...overlay } as typeof SITE }
+}
+
 // Map a layout block to its rendered section. Order/presence are driven by the
 // page's *_LAYOUT array; each block owns its own markup + data-conditional
-// auto-omit. The faq block receives ctx.faqs (page-supplied) ?? SITE.homeFaqs.
+// auto-omit. The faq block receives params.faqs ?? ctx.faqs (page-supplied) ?? SITE.homeFaqs.
+// Every site-scoped case spreads `data` (resolveData, above): {} unless the block carries params.
 export function renderSection(block: SectionBlock, ctx?: SectionContext): ReactNode {
+  const data = resolveData(block, ctx)
   switch (block.type) {
     case 'intro':
       return ctx?.intro ? <IntroBlock {...ctx.intro} /> : null
@@ -521,6 +574,7 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext): ReactN
       return (
         <HeroComponent
           key="hero"
+          {...data}
           trustItems={
             (block.params?.trustItems as string[] | undefined) ??
             (SITE as { trustItems?: { title: string }[] }).trustItems?.map((t) => t.title)
@@ -554,11 +608,12 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext): ReactN
     case 'relatedInfo':
       return ctx?.info ? <RelatedInfoBlock info={ctx.info} /> : null
     case 'taglineBar':
-      return <TaglineBarBlock key="taglineBar" />
+      return <TaglineBarBlock key="taglineBar" {...data} />
     case 'localBar':
       return (
         <LocalBarBlock
           key="localBar"
+          {...data}
           label={block.params?.label as string | undefined}
         />
       )
@@ -567,6 +622,7 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext): ReactN
       return (
         <TrustComponent
           key="trustBar"
+          {...data}
           items={
             (block.params?.items as
               | { title: string; description: string }[]
@@ -582,6 +638,7 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext): ReactN
       return (
         <ServicesComponent
           key="servicesPreview"
+          {...data}
           label={block.params?.label as string | undefined}
           heading={block.params?.heading as string | undefined}
           scriptAccent={block.params?.scriptAccent as string | undefined}
@@ -596,6 +653,7 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext): ReactN
       return (
         <AreasComponent
           key="serviceAreas"
+          {...data}
           label={block.params?.label as string | undefined}
           heading={block.params?.heading as string | undefined}
           scriptAccent={block.params?.scriptAccent as string | undefined}
@@ -609,6 +667,7 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext): ReactN
       return (
         <ReviewsComponent
           key="reviews"
+          {...data}
           label={block.params?.label as string | undefined}
           heading={block.params?.heading as string | undefined}
           scriptAccent={block.params?.scriptAccent as string | undefined}
@@ -621,7 +680,7 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext): ReactN
       return (
         <FaqComponent
           key="faq"
-          faqs={ctx?.faqs ?? SITE.homeFaqs}
+          faqs={(block.params?.faqs as FAQ[] | undefined) ?? ctx?.faqs ?? SITE.homeFaqs}
           title={block.params?.title as string | undefined}
         />
       )
@@ -631,6 +690,7 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext): ReactN
       return (
         <CtaComponent
           key="cta"
+          {...data}
           title={block.params?.title as string | undefined}
           subtitle={block.params?.subtitle as string | undefined}
         />
@@ -641,6 +701,7 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext): ReactN
       return (
         <TeamComponent
           key="team"
+          {...data}
           label={block.params?.label as string | undefined}
           heading={block.params?.heading as string | undefined}
           body={block.params?.body as string | undefined}
@@ -652,6 +713,7 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext): ReactN
       return (
         <PricingComponent
           key="pricing"
+          {...data}
           label={block.params?.label as string | undefined}
           heading={block.params?.heading as string | undefined}
           body={block.params?.body as string | undefined}
@@ -663,6 +725,7 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext): ReactN
       return (
         <GalleryComponent
           key="gallery"
+          {...data}
           label={block.params?.label as string | undefined}
           heading={block.params?.heading as string | undefined}
           body={block.params?.body as string | undefined}
@@ -674,6 +737,7 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext): ReactN
       return (
         <ProcessComponent
           key="process"
+          {...data}
           label={block.params?.label as string | undefined}
           heading={block.params?.heading as string | undefined}
           body={block.params?.body as string | undefined}
@@ -685,6 +749,7 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext): ReactN
       return (
         <FaqSectionComponent
           key="faqSection"
+          {...data}
           label={block.params?.label as string | undefined}
           heading={block.params?.heading as string | undefined}
           body={block.params?.body as string | undefined}
@@ -696,6 +761,7 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext): ReactN
       return (
         <StoryComponent
           key="story"
+          {...data}
           label={block.params?.label as string | undefined}
           heading={block.params?.heading as string | undefined}
           body={block.params?.body as string | undefined}
@@ -707,6 +773,7 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext): ReactN
       return (
         <FormsComponent
           key="forms"
+          {...data}
           label={block.params?.label as string | undefined}
           heading={block.params?.heading as string | undefined}
           body={block.params?.body as string | undefined}
@@ -724,6 +791,7 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext): ReactN
       return (
         <MembershipComponent
           key="membership"
+          {...data}
           label={block.params?.label as string | undefined}
           heading={block.params?.heading as string | undefined}
           body={block.params?.body as string | undefined}
@@ -735,6 +803,7 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext): ReactN
       return (
         <PackagesComponent
           key="packages"
+          {...data}
           label={block.params?.label as string | undefined}
           heading={block.params?.heading as string | undefined}
           body={block.params?.body as string | undefined}
@@ -746,6 +815,7 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext): ReactN
       return (
         <CaseStudiesComponent
           key="caseStudies"
+          {...data}
           label={block.params?.label as string | undefined}
           heading={block.params?.heading as string | undefined}
           body={block.params?.body as string | undefined}
@@ -757,6 +827,7 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext): ReactN
       return (
         <VideoTestimonialsComponent
           key="videoTestimonials"
+          {...data}
           label={block.params?.label as string | undefined}
           heading={block.params?.heading as string | undefined}
           body={block.params?.body as string | undefined}
@@ -768,6 +839,7 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext): ReactN
       return (
         <PromotionsComponent
           key="promotions"
+          {...data}
           label={block.params?.label as string | undefined}
           heading={block.params?.heading as string | undefined}
           body={block.params?.body as string | undefined}
@@ -779,6 +851,7 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext): ReactN
       return (
         <FinancingComponent
           key="financing"
+          {...data}
           label={block.params?.label as string | undefined}
           heading={block.params?.heading as string | undefined}
           body={block.params?.body as string | undefined}
@@ -790,6 +863,7 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext): ReactN
       return (
         <PartnersComponent
           key="partners"
+          {...data}
           label={block.params?.label as string | undefined}
           heading={block.params?.heading as string | undefined}
           body={block.params?.body as string | undefined}
@@ -801,6 +875,7 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext): ReactN
       return (
         <MapComponent
           key="map"
+          {...data}
           label={block.params?.label as string | undefined}
           heading={block.params?.heading as string | undefined}
           body={block.params?.body as string | undefined}
@@ -812,6 +887,7 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext): ReactN
       return (
         <BlogComponent
           key="blog"
+          {...data}
           label={block.params?.label as string | undefined}
           heading={block.params?.heading as string | undefined}
           body={block.params?.body as string | undefined}
@@ -839,7 +915,7 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext): ReactN
           key="servicesIndex"
           heading={(block.params?.heading as string | undefined) ?? 'Services'}
           intro={block.params?.intro as string | undefined}
-          services={SERVICES}
+          services={data.services ?? SERVICES}
         />
       )
     case 'areasIndex':
@@ -848,7 +924,7 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext): ReactN
           key="areasIndex"
           heading={(block.params?.heading as string | undefined) ?? 'Service areas'}
           intro={block.params?.intro as string | undefined}
-          areas={AREAS}
+          areas={data.areas ?? AREAS}
         />
       )
     case 'reviewsIndex':

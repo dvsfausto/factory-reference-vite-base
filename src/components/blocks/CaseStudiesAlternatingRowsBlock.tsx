@@ -10,15 +10,17 @@ import { SITE } from '~/data/site'
 // (DNA). Font -> font-display (DNA). Light surface component-owned. Never
 // bg-brand-* / .btn.
 export function CaseStudiesAlternatingRowsBlock({
+  site = SITE,
   label = 'Case studies',
   heading = 'How we help',
   body,
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
 }) {
-  const studies = (SITE as { caseStudies?: CaseStudy[] }).caseStudies
+  const studies = (site as { caseStudies?: CaseStudy[] }).caseStudies
   if (!studies || studies.length === 0) return null
   return (
     <section className="bg-white">

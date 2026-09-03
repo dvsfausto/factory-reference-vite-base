@@ -17,12 +17,16 @@ import { serviceImageUrl } from '~/data/images'
 // (DNA); font-display (DNA serif). Images via serviceImageUrl(slug). No bg-brand-*,
 // no .btn pill.
 export function ServicesElegantBlock({
+  site = SITE,
+  services = SERVICES,
   label,
   heading,
   body,
   exploreLabel = tr('common.viewService'),
   moreLink = tr('common.seeAllServices'),
 }: {
+  site?: typeof SITE
+  services?: typeof SERVICES
   label?: string
   heading?: string
   scriptAccent?: string
@@ -31,9 +35,9 @@ export function ServicesElegantBlock({
   moreLink?: string
 }) {
   const s = elegantSurface()
-  const previewServices = SERVICES.slice(0, 5)
+  const previewServices = services.slice(0, 5)
   if (previewServices.length === 0) return null
-  const hs = (SITE as { homeServices?: { label?: string; heading?: string; body?: string } }).homeServices
+  const hs = (site as { homeServices?: { label?: string; heading?: string; body?: string } }).homeServices
   const secHeading = heading ?? hs?.heading ?? tr('nav.services')
   const secBody = body ?? hs?.body ?? tr('section.servicesBody')
   void exploreLabel
@@ -77,7 +81,7 @@ export function ServicesElegantBlock({
           </div>
         </div>
 
-        {SERVICES.length > previewServices.length && (
+        {services.length > previewServices.length && (
           <div className={`mt-14 border-t ${s.border} pt-8`}>
             <Link to="/services" className="inline-flex items-center gap-2 font-display text-base font-medium text-emerald-800 underline-offset-4 transition-colors hover:underline">
               {moreLink} <ArrowRight className="h-4 w-4" />

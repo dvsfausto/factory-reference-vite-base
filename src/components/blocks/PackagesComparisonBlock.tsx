@@ -12,15 +12,17 @@ import { SITE } from '~/data/site'
 // 50/100/600/700: emerald-600 checks, emerald-50 popular column. Radius ->
 // rounded-* (DNA). Font -> font-display (DNA). Light surface component-owned.
 export function PackagesComparisonBlock({
+  site = SITE,
   label = 'Packages',
   heading = 'Compare packages',
   body,
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
 }) {
-  const packages = (SITE as { packages?: ServicePackage[] }).packages
+  const packages = (site as { packages?: ServicePackage[] }).packages
   if (!packages || packages.length === 0) return null
   const cols = packages.slice(0, 4)
   const allItems: string[] = []

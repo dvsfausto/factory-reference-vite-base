@@ -11,15 +11,17 @@ import { SITE } from '~/data/site'
 // 50/100/600/700. Radius -> rounded-* (DNA). Font -> font-display (DNA). Cool
 // surface component-owned (#F8FAFC / white cards / #E6E8EC). Never bg-brand-*.
 export function PackagesGridBlock({
+  site = SITE,
   label = 'Packages',
   heading = 'Browse packages',
   body,
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
 }) {
-  const packages = (SITE as { packages?: ServicePackage[] }).packages
+  const packages = (site as { packages?: ServicePackage[] }).packages
   if (!packages || packages.length === 0) return null
   return (
     <section className="bg-[#F8FAFC]">

@@ -22,10 +22,12 @@ import { Field, Textarea, SubmitButton, SuccessCard } from './form-ui'
 // the submitLead(..., 'contact') envelope are ported VERBATIM from FormContactBlock
 // via the shared form-ui + forms-submit modules. ONLY the shell is restyled.
 export function FormFloatGlassBlock({
+  site = SITE,
   label = tr('form.contactUs'),
   heading = tr('form.getInTouch'),
   body = tr('form.contactBody'),
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
@@ -115,8 +117,8 @@ export function FormFloatGlassBlock({
                   <SubmitButton status={status} />
                   <span className="text-sm text-ink-600">
                     Or call{' '}
-                    <a href={`tel:${SITE.phone}`} className="font-medium text-brand-700 underline-offset-2 hover:underline">
-                      {SITE.phoneDisplay}
+                    <a href={`tel:${site.phone}`} className="font-medium text-brand-700 underline-offset-2 hover:underline">
+                      {site.phoneDisplay}
                     </a>
                   </span>
                 </div>

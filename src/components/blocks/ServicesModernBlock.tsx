@@ -15,12 +15,16 @@ import { serviceImageUrl } from '~/data/images'
 // indigo) accent; rounded-* (DNA, restrained); font-display (DNA). Images via
 // serviceImageUrl(slug). No bg-brand-*, no .btn pill.
 export function ServicesModernBlock({
+  site = SITE,
+  services = SERVICES,
   label,
   heading,
   body,
   exploreLabel = tr('common.learnMore'),
   moreLink = tr('common.allServices'),
 }: {
+  site?: typeof SITE
+  services?: typeof SERVICES
   label?: string
   heading?: string
   scriptAccent?: string
@@ -28,9 +32,9 @@ export function ServicesModernBlock({
   exploreLabel?: string
   moreLink?: string
 }) {
-  const previewServices = SERVICES.slice(0, 6)
+  const previewServices = services.slice(0, 6)
   if (previewServices.length === 0) return null
-  const hs = (SITE as { homeServices?: { heading?: string; body?: string } }).homeServices
+  const hs = (site as { homeServices?: { heading?: string; body?: string } }).homeServices
   const secHeading = heading ?? hs?.heading ?? tr('nav.services')
   const secBody = body ?? hs?.body ?? tr('section.servicesBody')
   void label
@@ -46,7 +50,7 @@ export function ServicesModernBlock({
           <div className="lg:col-span-4">
             <h2 className="font-display text-3xl font-semibold tracking-tight text-[#0F172A] sm:text-4xl">{secHeading}</h2>
             <p className="mt-3 max-w-xs leading-relaxed text-[#64748B]">{secBody}</p>
-            {SERVICES.length > previewServices.length && (
+            {services.length > previewServices.length && (
               <Link to="/services" className="mt-6 inline-flex items-center gap-1.5 font-display text-sm font-semibold text-emerald-600 transition-all hover:gap-2.5">
                 {moreLink} <ArrowRight className="h-4 w-4" />
               </Link>

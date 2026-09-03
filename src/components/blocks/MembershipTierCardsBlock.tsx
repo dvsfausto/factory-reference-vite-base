@@ -11,15 +11,17 @@ import { SITE } from '~/data/site'
 // 50/100/600/700: emerald-600 ring + checks, emerald-50 badge. Radius -> rounded-*
 // (DNA). Font -> font-display (DNA). Light surface component-owned. No bg-brand-*.
 export function MembershipTierCardsBlock({
+  site = SITE,
   label = 'Membership',
   heading = 'Become a member',
   body,
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
 }) {
-  const memberships = (SITE as { memberships?: Membership[] }).memberships
+  const memberships = (site as { memberships?: Membership[] }).memberships
   if (!memberships || memberships.length === 0) return null
   return (
     <section className="bg-white">

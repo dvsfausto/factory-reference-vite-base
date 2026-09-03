@@ -10,13 +10,15 @@ import { SITE } from '~/data/site'
 // (DNA). Font -> font-display (DNA). Light surface component-owned (white / slate /
 // hairline #E6E8EC). No CTA by design. Never bg-brand-* / .btn.
 export function PartnersStripBlock({
+  site = SITE,
   label = tr('section.trustedBy'),
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
 }) {
-  const partners = (SITE as { partners?: Partner[] }).partners
+  const partners = (site as { partners?: Partner[] }).partners
   if (!partners || partners.length === 0) return null
   return (
     <section className="border-y border-[#E6E8EC] bg-white">

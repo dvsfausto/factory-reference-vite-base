@@ -16,12 +16,16 @@ import { serviceImageUrl } from '~/data/images'
 // emerald-* (DNA → navy) accent; rounded-* (DNA, tight); font-display (DNA).
 // Images via serviceImageUrl(slug). No bg-brand-*, no .btn pill.
 export function ServicesCorporateBlock({
+  site = SITE,
+  services = SERVICES,
   label,
   heading,
   body,
   exploreLabel = tr('common.learnMore'),
   moreLink = tr('section.allPracticeAreas'),
 }: {
+  site?: typeof SITE
+  services?: typeof SERVICES
   label?: string
   heading?: string
   scriptAccent?: string
@@ -29,15 +33,15 @@ export function ServicesCorporateBlock({
   exploreLabel?: string
   moreLink?: string
 }) {
-  const previewServices = SERVICES.slice(0, 3)
+  const previewServices = services.slice(0, 3)
   if (previewServices.length === 0) return null
   return (
     <section className="border-y border-[#D8DEE7] bg-[#F4F6F9]">
       <div className="container-x py-16 md:py-20">
         <SectionHeaderCorporate
-          label={label ?? ((SITE as { homeServices?: { label?: string; heading?: string; body?: string } }).homeServices?.label ?? tr('section.whatWeDo'))}
-          heading={heading ?? ((SITE as { homeServices?: { label?: string; heading?: string; body?: string } }).homeServices?.heading ?? tr('nav.services'))}
-          body={body ?? ((SITE as { homeServices?: { label?: string; heading?: string; body?: string } }).homeServices?.body ?? tr('section.servicesBody'))}
+          label={label ?? ((site as { homeServices?: { label?: string; heading?: string; body?: string } }).homeServices?.label ?? tr('section.whatWeDo'))}
+          heading={heading ?? ((site as { homeServices?: { label?: string; heading?: string; body?: string } }).homeServices?.heading ?? tr('nav.services'))}
+          body={body ?? ((site as { homeServices?: { label?: string; heading?: string; body?: string } }).homeServices?.body ?? tr('section.servicesBody'))}
         />
         <div className="grid grid-cols-1 gap-px overflow-hidden rounded-lg border border-[#D8DEE7] bg-[#D8DEE7] md:grid-cols-3">
           {previewServices.map((s) => (
@@ -69,7 +73,7 @@ export function ServicesCorporateBlock({
             </Link>
           ))}
         </div>
-        {SERVICES.length > previewServices.length && (
+        {services.length > previewServices.length && (
           <div className="mt-10">
             <Link
               to="/services"

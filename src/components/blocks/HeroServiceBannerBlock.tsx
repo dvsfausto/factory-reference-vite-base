@@ -18,11 +18,13 @@ import { primaryCta } from '~/lib/primaryCta'
 // in via headline / body / imageUrl / trustItems from the route (ctx.service|area|info). `subheadline` and
 // `decorativeAsset` are accepted for parity and unused here. CTA → the affordance-correct primaryCta().
 export function HeroServiceBannerBlock({
-  headline = SITE.hero.headline,
-  body = SITE.hero.body,
-  imageUrl = SITE.hero.image_url,
+  site = SITE,
+  headline = site.hero.headline,
+  body = site.hero.body,
+  imageUrl = site.hero.image_url,
   trustItems,
 }: {
+  site?: typeof SITE
   headline?: string
   body?: string
   subheadline?: string
@@ -31,7 +33,7 @@ export function HeroServiceBannerBlock({
   decorativeAsset?: string
 }) {
   const cta = primaryCta()
-  const place = [SITE.address?.city, SITE.address?.state].filter(Boolean).join(', ')
+  const place = [site.address?.city, site.address?.state].filter(Boolean).join(', ')
   return (
     <section className="bg-[var(--fam-surface,#fff)]">
       <div className="container-x py-12 md:py-16">
@@ -56,10 +58,10 @@ export function HeroServiceBannerBlock({
                 {cta.label} <ArrowRight className="h-4 w-4" />
               </PrimaryCta>
               <a
-                href={`tel:${SITE.phone}`}
+                href={`tel:${site.phone}`}
                 className="inline-flex h-12 items-center gap-2 rounded-lg border border-[var(--fam-hairline,var(--color-ink-100,#e5e7eb))] px-5 font-semibold text-[var(--fam-ink,var(--color-ink-900))] transition-colors hover:border-[var(--fam-accent,var(--color-brand-600))]"
               >
-                <Phone className="h-4 w-4 text-[var(--fam-accent,var(--color-brand-600))]" /> {SITE.phoneDisplay}
+                <Phone className="h-4 w-4 text-[var(--fam-accent,var(--color-brand-600))]" /> {site.phoneDisplay}
               </a>
             </div>
             {trustItems && trustItems.length > 0 && (

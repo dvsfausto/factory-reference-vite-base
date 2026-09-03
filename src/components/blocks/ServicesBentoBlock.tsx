@@ -25,11 +25,15 @@ import { serviceImageUrl } from '~/data/images'
 // Identity copy read from SITE.homeServices via inline cast. Prop signature
 // identical to ServicesPreviewBlock; returns Element | null.
 export function ServicesBentoBlock({
+  site = SITE,
+  services = SERVICES,
   label,
   heading,
   body,
   moreLink = tr('common.allServices'),
 }: {
+  site?: typeof SITE
+  services?: typeof SERVICES
   label?: string
   heading?: string
   scriptAccent?: string
@@ -37,8 +41,8 @@ export function ServicesBentoBlock({
   exploreLabel?: string
   moreLink?: string
 }) {
-  const hs = (SITE as { homeServices?: { label?: string; heading?: string; body?: string } }).homeServices
-  const tiles = SERVICES.slice(0, 5)
+  const hs = (site as { homeServices?: { label?: string; heading?: string; body?: string } }).homeServices
+  const tiles = services.slice(0, 5)
   if (tiles.length === 0) return null
 
   // Deterministic span pattern (col/row) keyed by position, the first tile is the
@@ -107,7 +111,7 @@ export function ServicesBentoBlock({
           })}
         </div>
 
-        {SERVICES.length > tiles.length && (
+        {services.length > tiles.length && (
           <div className="mt-12">
             <Link
               to="/services"

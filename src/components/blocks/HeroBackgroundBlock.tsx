@@ -25,15 +25,17 @@ import { imageSrc } from '~/lib/asset-url'
 // Props identical to HeroBlock; decorativeAsset accepted for parity but unused.
 // Returns an Element (no null), matching HeroBlock.
 export function HeroBackgroundBlock({
+  site = SITE,
   trustItems = [tr('trust.freeEstimates'), tr('trust.onSchedule'), tr('trust.localTeam'), tr('trust.satisfactionGuaranteed')],
 }: {
+  site?: typeof SITE
   trustItems?: string[]
   decorativeAsset?: string
 }) {
   return (
     <section className="relative isolate flex min-h-[34rem] flex-col overflow-hidden bg-slate-950 text-white md:min-h-[40rem]">
       <img
-        src={imageSrc(SITE.hero.image_url)}
+        src={imageSrc(site.hero.image_url)}
         alt={HERO_ALT}
         className="absolute inset-0 -z-20 h-full w-full object-cover"
       />
@@ -49,34 +51,34 @@ export function HeroBackgroundBlock({
         >
           <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] text-emerald-100">
             <span className="h-px w-7 bg-emerald-600" />
-            {SITE.hero.kicker}
+            {site.hero.kicker}
           </span>
 
           <h1 className="mt-6 font-display text-5xl font-semibold leading-[1.03] tracking-tight text-white drop-shadow-sm sm:text-6xl lg:text-7xl">
-            {SITE.hero.headline}
+            {site.hero.headline}
           </h1>
 
-          {SITE.hero.subheadline && (
+          {site.hero.subheadline && (
             <p className="mt-5 text-xl leading-relaxed text-slate-200">
-              {SITE.hero.subheadline}
+              {site.hero.subheadline}
             </p>
           )}
 
           <p className="mt-4 max-w-xl text-lg leading-relaxed text-slate-300">
-            {SITE.hero.body}
+            {site.hero.body}
           </p>
 
           <div className="mt-9 flex flex-wrap gap-4">
             <PrimaryCta
               className="inline-flex h-[52px] items-center gap-2 rounded-xl bg-primary px-7 font-display text-base font-semibold text-primary-foreground transition-opacity hover:opacity-90"
             >
-              {SITE.hero.cta_primary_label} <ArrowRight className="h-4 w-4" />
+              {site.hero.cta_primary_label} <ArrowRight className="h-4 w-4" />
             </PrimaryCta>
             <a
-              href={`tel:${SITE.phone}`}
+              href={`tel:${site.phone}`}
               className="inline-flex h-[52px] items-center gap-2 rounded-xl border border-white/30 bg-white/5 px-6 font-display font-semibold text-white backdrop-blur-sm transition-colors hover:border-emerald-600 hover:text-emerald-100"
             >
-              <Phone className="h-4 w-4 text-emerald-100" /> {SITE.phoneDisplay}
+              <Phone className="h-4 w-4 text-emerald-100" /> {site.phoneDisplay}
             </a>
           </div>
 

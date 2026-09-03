@@ -20,14 +20,16 @@ import { imageSrc } from '~/lib/asset-url'
 // Props identical to HeroBlock; decorativeAsset accepted for parity but unused.
 // Returns an Element (no null), matching HeroBlock.
 export function HeroModernBlock({
+  site = SITE,
   trustItems = [tr('trust.freeEstimates'), tr('trust.onSchedule'), tr('trust.localTeam'), tr('trust.satisfactionGuaranteed')],
-  headline = SITE.hero.headline,
-  body = SITE.hero.body,
-  imageUrl = SITE.hero.image_url,
-  kicker = SITE.hero.kicker,
-  subheadline = SITE.hero.subheadline,
-  ctaLabel = SITE.hero.cta_primary_label,
+  headline = site.hero.headline,
+  body = site.hero.body,
+  imageUrl = site.hero.image_url,
+  kicker = site.hero.kicker,
+  subheadline = site.hero.subheadline,
+  ctaLabel = site.hero.cta_primary_label,
 }: {
+  site?: typeof SITE
   trustItems?: string[]
   decorativeAsset?: string
   headline?: string
@@ -72,10 +74,10 @@ export function HeroModernBlock({
                 {ctaLabel} <ArrowRight className="h-4 w-4" />
               </PrimaryCta>
               <a
-                href={`tel:${SITE.phone}`}
+                href={`tel:${site.phone}`}
                 className="inline-flex h-[52px] items-center gap-2 rounded-xl border border-[#E6E8EC] px-6 font-display font-semibold text-[#0F172A] transition-colors hover:border-emerald-600 hover:text-emerald-700"
               >
-                <Phone className="h-4 w-4 text-emerald-600" /> {SITE.phoneDisplay}
+                <Phone className="h-4 w-4 text-emerald-600" /> {site.phoneDisplay}
               </a>
             </div>
 

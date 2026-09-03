@@ -12,25 +12,29 @@ import { AREAS } from '~/data/areas'
 // TOKEN DISCIPLINE: structured light surface component-owned; emerald-* (DNA →
 // navy) on hover + icons; rounded-* (DNA, tight); font-display. No brand-* / .btn.
 export function ServiceAreasCorporateBlock({
-  label = ((SITE as { homeAreas?: { label?: string; heading?: string; scriptAccent?: string; body?: string } }).homeAreas?.label ?? tr('section.serviceAreas')),
-  heading = ((SITE as { homeAreas?: { label?: string; heading?: string; scriptAccent?: string; body?: string } }).homeAreas?.heading ?? tr('section.whereWeHeading')),
-  scriptAccent = ((SITE as { homeAreas?: { label?: string; heading?: string; scriptAccent?: string; body?: string } }).homeAreas?.scriptAccent ?? tr('section.workAccent')),
-  body = ((SITE as { homeAreas?: { label?: string; heading?: string; scriptAccent?: string; body?: string } }).homeAreas?.body ?? 'Local coverage, close to home.'),
+  site = SITE,
+  areas = AREAS,
+  label = ((site as { homeAreas?: { label?: string; heading?: string; scriptAccent?: string; body?: string } }).homeAreas?.label ?? tr('section.serviceAreas')),
+  heading = ((site as { homeAreas?: { label?: string; heading?: string; scriptAccent?: string; body?: string } }).homeAreas?.heading ?? tr('section.whereWeHeading')),
+  scriptAccent = ((site as { homeAreas?: { label?: string; heading?: string; scriptAccent?: string; body?: string } }).homeAreas?.scriptAccent ?? tr('section.workAccent')),
+  body = ((site as { homeAreas?: { label?: string; heading?: string; scriptAccent?: string; body?: string } }).homeAreas?.body ?? 'Local coverage, close to home.'),
   moreLink = tr('common.allAreas'),
 }: {
+  site?: typeof SITE
+  areas?: typeof AREAS
   label?: string
   heading?: string
   scriptAccent?: string
   body?: string
   moreLink?: string
 }) {
-  if (AREAS.length === 0) return null
+  if (areas.length === 0) return null
   return (
     <section className="bg-white">
       <div className="container-x py-16 md:py-20">
         <SectionHeaderCorporate label={label} heading={heading} scriptAccent={scriptAccent} body={body} />
         <div className="grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-[#D8DEE7] bg-[#D8DEE7] sm:grid-cols-3 lg:grid-cols-4">
-          {AREAS.map((a) => (
+          {areas.map((a) => (
             <Link
               key={a.slug}
               to="/areas/$slug"

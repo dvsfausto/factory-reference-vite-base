@@ -8,13 +8,15 @@ import { SITE } from '~/data/site'
 // (the generated homepage-copy wave's CTA prose, or the vertical's identity copy) > today's literals.
 // Absent SITE.homeCta → byte-identical to before.
 export function CtaBlock({
+  site = SITE,
   title: titleProp,
   subtitle: subtitleProp,
 }: {
+  site?: typeof SITE
   title?: string
   subtitle?: string
 }) {
-  const homeCta = (SITE as { homeCta?: { title?: string; subtitle?: string } }).homeCta
+  const homeCta = (site as { homeCta?: { title?: string; subtitle?: string } }).homeCta
   const title = titleProp ?? homeCta?.title ?? 'Ready when you are.'
   const subtitle = subtitleProp ?? homeCta?.subtitle ?? 'Quote in 24 hours. No pressure.'
   // Character sites get the character CTA (elegant/bold/…); known verticals → null → the default

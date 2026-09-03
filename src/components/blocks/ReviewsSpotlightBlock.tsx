@@ -1,7 +1,7 @@
 import { Link } from '@tanstack/react-router'
 import { tr } from '~/lib/i18n'
 import { Star, Quote } from 'lucide-react'
-import { reviews } from '~/data/reviews'
+import { reviews as REVIEWS } from '~/data/reviews'
 
 // Reviews LAYOUT: 'spotlight', one featured review carries real editorial weight
 // (a large pull-quote in a prominent panel with a big quote mark and the author),
@@ -20,10 +20,12 @@ import { reviews } from '~/data/reviews'
 //
 // Prop signature identical to ReviewsBlock; returns Element | null.
 export function ReviewsSpotlightBlock({
+  reviews = REVIEWS,
   label = tr('nav.reviews'),
   heading = tr('section.whatCustomersSay'),
   moreLink = tr('section.readAllReviews'),
 }: {
+  reviews?: typeof REVIEWS
   label?: string
   heading?: string
   scriptAccent?: string

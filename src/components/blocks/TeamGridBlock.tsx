@@ -28,16 +28,18 @@ function initials(name: string): string {
 }
 
 export function TeamGridBlock({
+  site = SITE,
   label = tr('section.ourTeam'),
   heading = tr('section.meetTheTeam'),
   body,
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   scriptAccent?: string
   body?: string
 }) {
-  const team = (SITE as { team?: TeamMember[] }).team
+  const team = (site as { team?: TeamMember[] }).team
   if (!team || team.length === 0) return null
   const members = team.slice(0, 8)
   // Character surface tokens (null for known verticals → the literals below, byte-identical).

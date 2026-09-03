@@ -21,12 +21,16 @@ import { SERVICES } from '~/data/services-view'
 // Identity copy read from SITE.homeServices via inline cast. Prop signature
 // identical to ServicesPreviewBlock; returns Element | null.
 export function ServicesListBlock({
+  site = SITE,
+  services = SERVICES,
   label,
   heading,
   body,
   exploreLabel = tr('common.learnMore'),
   moreLink = tr('common.allServices'),
 }: {
+  site?: typeof SITE
+  services?: typeof SERVICES
   label?: string
   heading?: string
   scriptAccent?: string
@@ -34,8 +38,8 @@ export function ServicesListBlock({
   exploreLabel?: string
   moreLink?: string
 }) {
-  const hs = (SITE as { homeServices?: { label?: string; heading?: string; body?: string } }).homeServices
-  const rows = SERVICES.slice(0, 8)
+  const hs = (site as { homeServices?: { label?: string; heading?: string; body?: string } }).homeServices
+  const rows = services.slice(0, 8)
   if (rows.length === 0) return null
   return (
     <section className="bg-white">

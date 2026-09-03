@@ -19,16 +19,18 @@ import { SITE } from '~/data/site'
 // HONESTY: renders ONLY real SITE.steps. No steps → null (never fabricates a
 // process). Icon falls back to the step number, as the default does.
 export function ProcessGlowNodesBlock({
+  site = SITE,
   label = tr('section.howItWorks'),
   heading = tr('section.simpleProcess'),
   body,
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
 }) {
   const reduce = useReducedMotion()
-  const steps = (SITE as { steps?: ProcessStep[] }).steps
+  const steps = (site as { steps?: ProcessStep[] }).steps
   if (!steps || steps.length === 0) return null
   const items = steps.slice(0, 6)
 

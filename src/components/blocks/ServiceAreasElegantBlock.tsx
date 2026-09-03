@@ -15,12 +15,16 @@ import { AREAS } from '~/data/areas'
 // on the chips' hover + icons; rounded-* (DNA); font-display serif. No brand-* /
 // .btn.
 export function ServiceAreasElegantBlock({
-  label = ((SITE as { homeAreas?: { label?: string; heading?: string; scriptAccent?: string; body?: string } }).homeAreas?.label ?? tr('section.serviceAreas')),
-  heading = ((SITE as { homeAreas?: { label?: string; heading?: string; scriptAccent?: string; body?: string } }).homeAreas?.heading ?? tr('section.whereWeHeading')),
-  scriptAccent = ((SITE as { homeAreas?: { label?: string; heading?: string; scriptAccent?: string; body?: string } }).homeAreas?.scriptAccent ?? tr('section.workAccent')),
-  body = ((SITE as { homeAreas?: { label?: string; heading?: string; scriptAccent?: string; body?: string } }).homeAreas?.body ?? 'Local coverage, close to home.'),
+  site = SITE,
+  areas = AREAS,
+  label = ((site as { homeAreas?: { label?: string; heading?: string; scriptAccent?: string; body?: string } }).homeAreas?.label ?? tr('section.serviceAreas')),
+  heading = ((site as { homeAreas?: { label?: string; heading?: string; scriptAccent?: string; body?: string } }).homeAreas?.heading ?? tr('section.whereWeHeading')),
+  scriptAccent = ((site as { homeAreas?: { label?: string; heading?: string; scriptAccent?: string; body?: string } }).homeAreas?.scriptAccent ?? tr('section.workAccent')),
+  body = ((site as { homeAreas?: { label?: string; heading?: string; scriptAccent?: string; body?: string } }).homeAreas?.body ?? 'Local coverage, close to home.'),
   moreLink = tr('common.allAreas'),
 }: {
+  site?: typeof SITE
+  areas?: typeof AREAS
   label?: string
   heading?: string
   scriptAccent?: string
@@ -28,13 +32,13 @@ export function ServiceAreasElegantBlock({
   moreLink?: string
 }) {
   const s = elegantSurface()
-  if (AREAS.length === 0) return null
+  if (areas.length === 0) return null
   return (
     <section className={s.sectionAlt}>
       <div className="container-x py-20 md:py-28">
         <SectionHeaderElegant label={label} heading={heading} scriptAccent={scriptAccent} body={body} />
         <div className="flex flex-wrap gap-3">
-          {AREAS.map((a) => (
+          {areas.map((a) => (
             <Link
               key={a.slug}
               to="/areas/$slug"

@@ -26,16 +26,18 @@ function initials(name: string): string {
 }
 
 export function TeamSpotlightBlock({
+  site = SITE,
   label = tr('section.ourTeam'),
   heading = tr('section.meetTheTeam'),
   body,
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   scriptAccent?: string
   body?: string
 }) {
-  const team = (SITE as { team?: TeamMember[] }).team
+  const team = (site as { team?: TeamMember[] }).team
   if (!team || team.length === 0) return null
   const [lead, ...rest] = team
   const supporting = rest.slice(0, 5)

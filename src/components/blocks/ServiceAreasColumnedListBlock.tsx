@@ -18,19 +18,21 @@ import { AREAS } from '~/data/areas'
 //
 // Prop signature identical to ServiceAreasBlock; returns Element | null.
 export function ServiceAreasColumnedListBlock({
+  areas = AREAS,
   label = tr('section.serviceAreas'),
   heading = tr('section.areasWeServe'),
   body = tr('section.proudlyCovering'),
   moreLink = tr('common.allAreas'),
 }: {
+  areas?: typeof AREAS
   label?: string
   heading?: string
   scriptAccent?: string
   body?: string
   moreLink?: string
 }) {
-  if (AREAS.length === 0) return null
-  const areas = AREAS.slice(0, 16)
+  if (areas.length === 0) return null
+  const shown = areas.slice(0, 16)
   return (
     <section className="bg-white">
       <div className="container-x py-20 md:py-28">
@@ -46,7 +48,7 @@ export function ServiceAreasColumnedListBlock({
         </div>
 
         <div className="mt-12 gap-x-10 border-t border-[#E6E8EC] pt-4 [column-fill:_balance] sm:columns-2 lg:columns-3 xl:columns-4">
-          {areas.map((a) => (
+          {shown.map((a) => (
             <Link
               key={a.slug}
               to="/areas/$slug"

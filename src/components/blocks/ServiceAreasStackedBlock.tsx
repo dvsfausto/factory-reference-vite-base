@@ -25,19 +25,21 @@ const TIER_LABEL: Record<string, string> = {
 }
 
 export function ServiceAreasStackedBlock({
+  areas = AREAS,
   label = tr('section.serviceAreas'),
   heading = tr('section.areasWeServe'),
   body = tr('section.proudlyCovering'),
   moreLink = tr('common.allAreas'),
 }: {
+  areas?: typeof AREAS
   label?: string
   heading?: string
   scriptAccent?: string
   body?: string
   moreLink?: string
 }) {
-  if (AREAS.length === 0) return null
-  const rows = AREAS.slice(0, 8)
+  if (areas.length === 0) return null
+  const rows = areas.slice(0, 8)
   return (
     <section className="bg-white">
       <div className="container-x py-20 md:py-28">

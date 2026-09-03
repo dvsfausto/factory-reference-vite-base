@@ -31,14 +31,16 @@ import { imageSrc } from '~/lib/asset-url'
 // homepage's. SITE.phone/phoneDisplay stay site-level (same business everywhere).
 // `decorativeAsset` is accepted for prop parity but intentionally unused here.
 export function HeroBoldFullbleedBlock({
+  site = SITE,
   trustItems = [tr('trust.freeEstimates'), tr('trust.onSchedule'), tr('trust.localTeam'), tr('trust.satisfactionGuaranteed')],
-  headline = SITE.hero.headline,
-  body = SITE.hero.body,
-  imageUrl = SITE.hero.image_url,
-  kicker = SITE.hero.kicker,
-  subheadline = SITE.hero.subheadline,
-  ctaLabel = SITE.hero.cta_primary_label,
+  headline = site.hero.headline,
+  body = site.hero.body,
+  imageUrl = site.hero.image_url,
+  kicker = site.hero.kicker,
+  subheadline = site.hero.subheadline,
+  ctaLabel = site.hero.cta_primary_label,
 }: {
+  site?: typeof SITE
   trustItems?: string[]
   decorativeAsset?: string
   headline?: string
@@ -100,10 +102,10 @@ export function HeroBoldFullbleedBlock({
             </PrimaryCta>
             {/* Secondary CTA: outline phone, same square structural corners. */}
             <a
-              href={`tel:${SITE.phone}`}
+              href={`tel:${site.phone}`}
               className="inline-flex h-[54px] items-center gap-2 rounded-md border border-white/35 px-7 font-semibold text-white transition-colors hover:border-white hover:bg-white/10"
             >
-              <Phone className="h-4 w-4" /> {SITE.phoneDisplay}
+              <Phone className="h-4 w-4" /> {site.phoneDisplay}
             </a>
           </div>
         </motion.div>

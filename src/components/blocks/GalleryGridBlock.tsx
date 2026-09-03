@@ -10,15 +10,17 @@ import { tr } from '~/lib/i18n'
 // (DNA). Font -> font-display (DNA). Light surface component-owned (section
 // #F8FAFC, white cards, #E6E8EC). No CTA by design. Never bg-brand-* / .btn.
 export function GalleryGridBlock({
+  projects = PROJECTS,
   label = tr('section.ourWork'),
   heading = tr('section.recentProjects'),
   body,
 }: {
+  projects?: typeof PROJECTS
   label?: string
   heading?: string
   body?: string
 }) {
-  if (PROJECTS.length === 0) return null
+  if (projects.length === 0) return null
   return (
     <section className="bg-[#F8FAFC]">
       <div className="container-x py-20 md:py-28">
@@ -34,7 +36,7 @@ export function GalleryGridBlock({
         </div>
 
         <div className="mt-12 grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-4">
-          {PROJECTS.map((p, i) => (
+          {projects.map((p, i) => (
             <figure
               key={`${p.title}-${i}`}
               className="group overflow-hidden rounded-2xl border border-[#E6E8EC] bg-white"

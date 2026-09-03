@@ -37,14 +37,16 @@ function splitScriptAccent(heading: string): { lead: string; accent: string } {
 }
 
 export function HeroAuroraBlock({
+  site = SITE,
   trustItems = [tr('trust.friendlyService'), tr('trust.sameDayQuotes'), tr('trust.localTeam'), tr('trust.satisfaction100')],
-  headline = SITE.hero.headline,
-  body = SITE.hero.body,
-  imageUrl = SITE.hero.image_url,
-  kicker = SITE.hero.kicker,
-  subheadline = SITE.hero.subheadline,
-  ctaLabel = SITE.hero.cta_primary_label,
+  headline = site.hero.headline,
+  body = site.hero.body,
+  imageUrl = site.hero.image_url,
+  kicker = site.hero.kicker,
+  subheadline = site.hero.subheadline,
+  ctaLabel = site.hero.cta_primary_label,
 }: {
+  site?: typeof SITE
   trustItems?: string[]
   decorativeAsset?: string
   headline?: string
@@ -131,10 +133,10 @@ export function HeroAuroraBlock({
               {ctaLabel} <ArrowRight className="h-4 w-4" />
             </PrimaryCta>
             <a
-              href={`tel:${SITE.phone}`}
+              href={`tel:${site.phone}`}
               className="inline-flex h-[52px] items-center gap-2 rounded-full border border-white/30 px-6 font-semibold text-white backdrop-blur-sm transition-colors hover:border-white/70 hover:bg-white/10"
             >
-              <Phone className="h-4 w-4" /> {SITE.phoneDisplay}
+              <Phone className="h-4 w-4" /> {site.phoneDisplay}
             </a>
 
             {rating && (

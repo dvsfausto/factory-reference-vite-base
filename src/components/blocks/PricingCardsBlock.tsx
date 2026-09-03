@@ -16,15 +16,17 @@ import { SITE } from '~/data/site'
 // rounded-* (DNA). Font -> font-display (DNA). Light surface component-owned
 // (section #F8FAFC, white cards, #E6E8EC). Never bg-brand-* / .btn.
 export function PricingCardsBlock({
+  site = SITE,
   label = 'Pricing',
   heading = 'Pick the plan that fits',
   body,
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
 }) {
-  const plans = (SITE as { plans?: PricingPlan[] }).plans
+  const plans = (site as { plans?: PricingPlan[] }).plans
   if (!plans || plans.length === 0) return null
   const cards = plans.slice(0, 4)
   return (

@@ -11,15 +11,17 @@ import { SITE } from '~/data/site'
 // 50/100/600/700: emerald-600 checks, emerald-50 highlighted column. Radius ->
 // rounded-* (DNA). Font -> font-display (DNA). Light surface component-owned.
 export function MembershipComparisonBlock({
+  site = SITE,
   label = 'Membership',
   heading = 'Compare memberships',
   body,
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
 }) {
-  const memberships = (SITE as { memberships?: Membership[] }).memberships
+  const memberships = (site as { memberships?: Membership[] }).memberships
   if (!memberships || memberships.length === 0) return null
   const cols = memberships.slice(0, 4)
   const allPerks: string[] = []

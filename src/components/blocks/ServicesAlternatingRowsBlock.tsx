@@ -23,12 +23,16 @@ import { serviceImageUrl } from '~/data/images'
 // hero video_url precedent) so a missing field never breaks the type-check.
 // Prop signature identical to ServicesPreviewBlock; returns Element | null.
 export function ServicesAlternatingRowsBlock({
+  site = SITE,
+  services = SERVICES,
   label,
   heading,
   body,
   exploreLabel = tr('common.learnMore'),
   moreLink = tr('common.allServices'),
 }: {
+  site?: typeof SITE
+  services?: typeof SERVICES
   label?: string
   heading?: string
   scriptAccent?: string
@@ -36,8 +40,8 @@ export function ServicesAlternatingRowsBlock({
   exploreLabel?: string
   moreLink?: string
 }) {
-  const hs = (SITE as { homeServices?: { label?: string; heading?: string; body?: string } }).homeServices
-  const rows = SERVICES.slice(0, 6)
+  const hs = (site as { homeServices?: { label?: string; heading?: string; body?: string } }).homeServices
+  const rows = services.slice(0, 6)
   if (rows.length === 0) return null
   return (
     <section className="bg-white">
@@ -88,7 +92,7 @@ export function ServicesAlternatingRowsBlock({
           ))}
         </div>
 
-        {SERVICES.length > rows.length && (
+        {services.length > rows.length && (
           <div className="mt-16">
             <Link
               to="/services"

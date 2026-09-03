@@ -28,9 +28,11 @@ function splitScriptAccent(heading: string): { lead: string; accent: string } {
 }
 
 export function CtaAuroraGlowBlock({
+  site = SITE,
   title: titleProp,
   subtitle: subtitleProp,
 }: {
+  site?: typeof SITE
   title?: string
   subtitle?: string
 }) {
@@ -38,12 +40,12 @@ export function CtaAuroraGlowBlock({
   // SITE.homeCta (the persisted homepage-copy / an owner's edit) > today's literals. Absent
   // SITE.homeCta → byte-identical. Found S7b 2026-09-03: this WOW variant was the one place an
   // editable, durable homeCta.title never rendered.
-  const homeCta = (SITE as { homeCta?: { title?: string; subtitle?: string } }).homeCta
+  const homeCta = (site as { homeCta?: { title?: string; subtitle?: string } }).homeCta
   const title = titleProp ?? homeCta?.title ?? tr('cta.readyWhenYouAre')
   const subtitle = subtitleProp ?? homeCta?.subtitle ?? tr('cta.quote24')
   const reduce = useReducedMotion()
   const parts = splitScriptAccent(title)
-  const label = (SITE as { ctaLabel?: string }).ctaLabel ?? tr('cta.getFreeQuote')
+  const label = (site as { ctaLabel?: string }).ctaLabel ?? tr('cta.getFreeQuote')
 
   return (
     <section
@@ -65,7 +67,7 @@ export function CtaAuroraGlowBlock({
       />
 
       <div className="container-x relative py-20 text-center md:py-28">
-        {SITE.tagline && (
+        {site.tagline && (
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -73,7 +75,7 @@ export function CtaAuroraGlowBlock({
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] backdrop-blur-sm"
           >
-            <Sparkles className="h-3.5 w-3.5" /> {SITE.tagline}
+            <Sparkles className="h-3.5 w-3.5" /> {site.tagline}
           </motion.div>
         )}
 
@@ -118,10 +120,10 @@ export function CtaAuroraGlowBlock({
             {label} <ArrowRight className="h-4 w-4" />
           </PrimaryCta>
           <a
-            href={`tel:${SITE.phone}`}
+            href={`tel:${site.phone}`}
             className="inline-flex h-[52px] items-center gap-2 rounded-full border border-white/70 px-6 font-semibold text-white transition-colors hover:bg-white/10"
           >
-            <Phone className="h-4 w-4" /> {SITE.phoneDisplay}
+            <Phone className="h-4 w-4" /> {site.phoneDisplay}
           </a>
         </motion.div>
       </div>

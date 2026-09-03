@@ -3,7 +3,7 @@ import { tr } from '~/lib/i18n'
 import { SITE } from '~/data/site'
 import { Star } from 'lucide-react'
 import { SectionHeaderCorporate } from '~/components/SectionHeaderCorporate'
-import { reviews } from '~/data/reviews'
+import { reviews as REVIEWS } from '~/data/reviews'
 
 // Reviews VARIANT: 'corporate', formal client testimonials. SectionHeaderCorporate
 // (no diamond, no script) + boxed bordered quote cards on a cool blue-gray section.
@@ -12,11 +12,15 @@ import { reviews } from '~/data/reviews'
 // TOKEN DISCIPLINE: structured light surfaces component-owned; emerald-* (DNA →
 // navy) stars + the "read all" CTA; rounded-* (DNA, tight); font-display.
 export function ReviewsCorporateBlock({
-  label = ((SITE as { homeReviews?: { label?: string; heading?: string; scriptAccent?: string } }).homeReviews?.label ?? tr('nav.reviews')),
-  heading = ((SITE as { homeReviews?: { label?: string; heading?: string; scriptAccent?: string } }).homeReviews?.heading ?? tr('section.whatCustomersHeading')),
-  scriptAccent = ((SITE as { homeReviews?: { label?: string; heading?: string; scriptAccent?: string } }).homeReviews?.scriptAccent ?? tr('section.sayAccent')),
+  site = SITE,
+  reviews = REVIEWS,
+  label = ((site as { homeReviews?: { label?: string; heading?: string; scriptAccent?: string } }).homeReviews?.label ?? tr('nav.reviews')),
+  heading = ((site as { homeReviews?: { label?: string; heading?: string; scriptAccent?: string } }).homeReviews?.heading ?? tr('section.whatCustomersHeading')),
+  scriptAccent = ((site as { homeReviews?: { label?: string; heading?: string; scriptAccent?: string } }).homeReviews?.scriptAccent ?? tr('section.sayAccent')),
   moreLink = tr('section.readAllReviews'),
 }: {
+  site?: typeof SITE
+  reviews?: typeof REVIEWS
   label?: string
   heading?: string
   scriptAccent?: string

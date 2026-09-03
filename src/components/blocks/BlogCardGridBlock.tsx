@@ -9,15 +9,17 @@ import { SITE } from '~/data/site'
 // Radius -> rounded-* (DNA). Font -> font-display (DNA). Light surface component-
 // owned (white / slate / #E6E8EC). Never bg-brand-* / .btn.
 export function BlogCardGridBlock({
+  site = SITE,
   label = 'Blog',
   heading = 'From the blog',
   body,
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
 }) {
-  const posts = (SITE as { posts?: BlogPost[] }).posts
+  const posts = (site as { posts?: BlogPost[] }).posts
   if (!posts || posts.length === 0) return null
   return (
     <section className="bg-white">

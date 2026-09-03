@@ -7,8 +7,14 @@ import { AREAS } from '~/data/areas'
 // `{neighborhoodList && …}`.
 // `label` defaults to today's literal; the optional param is the override
 // channel (unused by the default layout), render stays byte-identical.
-export function LocalBarBlock({ label = tr('misc.nowServing') }: { label?: string }) {
-  const neighborhoodList = AREAS.slice(0, 8).map((a) => a.name).join(' · ')
+export function LocalBarBlock({
+  areas = AREAS,
+  label = tr('misc.nowServing'),
+}: {
+  areas?: typeof AREAS
+  label?: string
+}) {
+  const neighborhoodList = areas.slice(0, 8).map((a) => a.name).join(' · ')
   if (!neighborhoodList) return null
   return (
     <section className="bg-brand-50 border-y border-brand-100">

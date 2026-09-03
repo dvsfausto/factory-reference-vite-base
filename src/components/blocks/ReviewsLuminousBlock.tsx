@@ -2,7 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { tr } from '~/lib/i18n'
 import { motion, useReducedMotion } from 'framer-motion'
 import { Quote, Star } from 'lucide-react'
-import { reviews } from '~/data/reviews'
+import { reviews as REVIEWS } from '~/data/reviews'
 import { SectionHeader } from '~/components/SectionHeader'
 
 // Reviews VARIANT: 'luminous', a set of frosted-glass quote cards floating over a
@@ -24,11 +24,13 @@ import { SectionHeader } from '~/components/SectionHeader'
 // no counts, ratings or names are invented. Empty reviews → early-return null, exactly
 // as the default ReviewsBlock does. Content is props with the default component's literals.
 export function ReviewsLuminousBlock({
+  reviews = REVIEWS,
   label = tr('nav.reviews'),
   heading = tr('section.whatCustomersHeading'),
   scriptAccent = tr('section.sayAccent'),
   moreLink = tr('section.readAllReviewsArrow'),
 }: {
+  reviews?: typeof REVIEWS
   label?: string
   heading?: string
   scriptAccent?: string

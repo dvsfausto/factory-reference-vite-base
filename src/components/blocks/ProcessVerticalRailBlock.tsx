@@ -12,15 +12,17 @@ import { SITE } from '~/data/site'
 // emerald-100 rail. Radius -> rounded-* (DNA). Font -> font-display (DNA). Light
 // surface component-owned (white / slate / #E6E8EC). No CTA by design.
 export function ProcessVerticalRailBlock({
+  site = SITE,
   label = tr('section.howItWorks'),
   heading = tr('section.ourProcess'),
   body,
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
 }) {
-  const steps = (SITE as { steps?: ProcessStep[] }).steps
+  const steps = (site as { steps?: ProcessStep[] }).steps
   if (!steps || steps.length === 0) return null
   const items = steps.slice(0, 6)
   return (

@@ -13,16 +13,18 @@ import { AREAS } from '~/data/areas'
 // emerald-600 home label. Radius -> rounded-* (DNA). Font -> font-display (DNA).
 // Map field (slate-950) component-owned. No CTA by design. Never bg-brand-*.
 export function MapFullWidthBandBlock({
+  areas = AREAS,
   label = tr('section.coverage'),
   heading = tr('section.servingWholeArea'),
   body,
 }: {
+  areas?: typeof AREAS
   label?: string
   heading?: string
   body?: string
 }) {
-  if (AREAS.length === 0) return null
-  const homeIndex = Math.max(0, AREAS.findIndex((a) => a.tier === 'home-base'))
+  if (areas.length === 0) return null
+  const homeIndex = Math.max(0, areas.findIndex((a) => a.tier === 'home-base'))
   return (
     <section className="relative isolate overflow-hidden bg-slate-950 text-white">
       <div className="absolute inset-0 opacity-[0.16]" style={{ backgroundImage: 'linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)', backgroundSize: '52px 52px' }} />
@@ -37,7 +39,7 @@ export function MapFullWidthBandBlock({
           {body && <p className="mt-4 text-lg leading-relaxed text-slate-300">{body}</p>}
         </div>
         <div className="mt-10 flex flex-wrap gap-3">
-          {AREAS.slice(0, 12).map((a, i) => (
+          {areas.slice(0, 12).map((a, i) => (
             <span key={a.slug} className={`inline-flex items-center gap-1.5 rounded-full px-4 py-2 font-display text-sm font-semibold backdrop-blur-sm ${i === homeIndex ? 'bg-emerald-600 text-white' : 'bg-white/10 text-white'}`}>
               <MapPin className={`h-4 w-4 ${i === homeIndex ? 'text-white' : 'text-emerald-100'}`} /> {a.name}
             </span>

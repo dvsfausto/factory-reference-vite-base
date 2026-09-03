@@ -23,14 +23,16 @@ import { imageSrc } from '~/lib/asset-url'
 // → defaults to SITE.hero.* (byte-identical). Inner pages pass PER-PAGE content.
 // SITE.phone/phoneDisplay stay site-level.
 export function HeroElegantBlock({
+  site = SITE,
   trustItems = [tr('trust.freeEstimates'), tr('trust.onSchedule'), tr('trust.localTeam'), tr('trust.satisfactionGuaranteed')],
-  headline = SITE.hero.headline,
-  body = SITE.hero.body,
-  imageUrl = SITE.hero.image_url,
-  kicker = SITE.hero.kicker,
-  subheadline = SITE.hero.subheadline,
-  ctaLabel = SITE.hero.cta_primary_label,
+  headline = site.hero.headline,
+  body = site.hero.body,
+  imageUrl = site.hero.image_url,
+  kicker = site.hero.kicker,
+  subheadline = site.hero.subheadline,
+  ctaLabel = site.hero.cta_primary_label,
 }: {
+  site?: typeof SITE
   trustItems?: string[]
   decorativeAsset?: string
   headline?: string
@@ -40,7 +42,7 @@ export function HeroElegantBlock({
   subheadline?: string
   ctaLabel?: string
 }) {
-  const dark = (SITE as { surface?: string }).surface === 'dark'
+  const dark = (site as { surface?: string }).surface === 'dark'
 
   if (dark) {
     return (
@@ -87,10 +89,10 @@ export function HeroElegantBlock({
                 {ctaLabel} <ArrowRight className="h-4 w-4" />
               </PrimaryCta>
               <a
-                href={`tel:${SITE.phone}`}
+                href={`tel:${site.phone}`}
                 className="inline-flex h-[54px] items-center gap-2 rounded-lg border border-emerald-600/60 px-7 font-medium text-[#F2E8DC] transition-colors hover:border-emerald-600 hover:bg-emerald-600/10"
               >
-                <Phone className="h-4 w-4" /> {SITE.phoneDisplay}
+                <Phone className="h-4 w-4" /> {site.phoneDisplay}
               </a>
             </div>
 
@@ -112,7 +114,7 @@ export function HeroElegantBlock({
   // uses: a magazine masthead rule, an oversized full-width serif headline, an ASYMMETRIC offset lede + CTA
   // on a 12-column grid, then a wide cinematic image BAND beneath (not beside), a vertical editorial flow
   // with generous air. This is the elegant family's composition + rhythm, echoed in its services/reviews.
-  const metaLine = [SITE.address.city, SITE.address.state].filter(Boolean).join(', ')
+  const metaLine = [site.address.city, site.address.state].filter(Boolean).join(', ')
   return (
     <section className="bg-[#FBF7EF] text-[#2B2620]">
       <div className="container-x py-16 md:py-24">
@@ -124,9 +126,9 @@ export function HeroElegantBlock({
           className="flex flex-wrap items-end justify-between gap-4 border-b border-[#E7DCC9] pb-6"
         >
           <span className="text-xs font-medium uppercase tracking-[0.32em] text-emerald-700">{kicker}</span>
-          {(metaLine || SITE.phoneDisplay) && (
+          {(metaLine || site.phoneDisplay) && (
             <span className="text-xs uppercase tracking-[0.22em] text-[#9A8E7C]">
-              {[metaLine, SITE.phoneDisplay].filter(Boolean).join('  ·  ')}
+              {[metaLine, site.phoneDisplay].filter(Boolean).join('  ·  ')}
             </span>
           )}
         </motion.div>
@@ -159,8 +161,8 @@ export function HeroElegantBlock({
               <PrimaryCta className="inline-flex h-[54px] items-center gap-2 rounded-lg bg-primary px-8 font-display text-base font-medium tracking-wide text-primary-foreground transition-opacity hover:opacity-90">
                 {ctaLabel} <ArrowRight className="h-4 w-4" />
               </PrimaryCta>
-              <a href={`tel:${SITE.phone}`} className="inline-flex items-center gap-2 font-display font-medium text-[#2B2620] underline-offset-4 transition-colors hover:text-emerald-800 hover:underline">
-                <Phone className="h-4 w-4 text-emerald-700" /> {SITE.phoneDisplay}
+              <a href={`tel:${site.phone}`} className="inline-flex items-center gap-2 font-display font-medium text-[#2B2620] underline-offset-4 transition-colors hover:text-emerald-800 hover:underline">
+                <Phone className="h-4 w-4 text-emerald-700" /> {site.phoneDisplay}
               </a>
             </div>
           </div>

@@ -18,25 +18,27 @@ import { SITE } from '~/data/site'
 // IDENTITY COPY is DATA, title/subtitle read from SITE.homeCta (promoted out of
 // the JSX defaults by the scaffolder). Prop signature identical to CtaBlock.
 export function CtaBoldBlock({
+  site = SITE,
   title,
   subtitle,
 }: {
+  site?: typeof SITE
   title?: string
   subtitle?: string
 }) {
-  const headline = title ?? ((SITE as { homeCta?: { title?: string; subtitle?: string } }).homeCta?.title ?? tr('cta.readyToStart'))
-  const sub = subtitle ?? ((SITE as { homeCta?: { title?: string; subtitle?: string } }).homeCta?.subtitle ?? 'Tell us what you need and we’ll take it from there.')
-  const ctaLabel = ((SITE as { headerCtaLabel?: string }).headerCtaLabel ?? tr('form.getFreeQuote'))
+  const headline = title ?? ((site as { homeCta?: { title?: string; subtitle?: string } }).homeCta?.title ?? tr('cta.readyToStart'))
+  const sub = subtitle ?? ((site as { homeCta?: { title?: string; subtitle?: string } }).homeCta?.subtitle ?? 'Tell us what you need and we’ll take it from there.')
+  const ctaLabel = ((site as { headerCtaLabel?: string }).headerCtaLabel ?? tr('form.getFreeQuote'))
   return (
     <section className="relative isolate overflow-hidden bg-ink-900 text-white">
       {/* Emerald accent rule across the top, the DNA accent as a structural band. */}
       <div className="h-1.5 w-full bg-emerald-600" />
       <div className="container-x py-20 md:py-24">
         <div className="max-w-3xl">
-          {SITE.tagline && (
+          {site.tagline && (
             <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] text-ink-100">
               <span className="inline-block h-3 w-3 bg-emerald-600" />
-              {SITE.tagline}
+              {site.tagline}
             </span>
           )}
           <h2 className="mt-5 font-display text-4xl font-bold uppercase leading-[0.98] tracking-tight text-white sm:text-5xl lg:text-6xl">
@@ -52,10 +54,10 @@ export function CtaBoldBlock({
               {ctaLabel} <ArrowRight className="h-4 w-4" />
             </PrimaryCta>
             <a
-              href={`tel:${SITE.phone}`}
+              href={`tel:${site.phone}`}
               className="inline-flex h-[54px] items-center gap-2 rounded-md border border-white/35 px-7 font-semibold text-white transition-colors hover:border-white hover:bg-white/10"
             >
-              <Phone className="h-4 w-4" /> {SITE.phoneDisplay}
+              <Phone className="h-4 w-4" /> {site.phoneDisplay}
             </a>
           </div>
         </div>

@@ -26,19 +26,21 @@ const TIER_LABEL: Record<string, string> = {
 }
 
 export function ServiceAreasCardsBlock({
+  areas = AREAS,
   label = tr('section.serviceAreas'),
   heading = tr('section.areasWeServe'),
   body = tr('section.proudlyCovering'),
   moreLink = tr('common.allAreas'),
 }: {
+  areas?: typeof AREAS
   label?: string
   heading?: string
   scriptAccent?: string
   body?: string
   moreLink?: string
 }) {
-  if (AREAS.length === 0) return null
-  const cards = AREAS.slice(0, 6)
+  if (areas.length === 0) return null
+  const cards = areas.slice(0, 6)
   return (
     <section className="bg-[#F8FAFC]">
       <div className="container-x py-20 md:py-28">

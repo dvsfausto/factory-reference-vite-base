@@ -11,15 +11,17 @@ import { SITE } from '~/data/site'
 // line, emerald-100 track. Radius -> rounded-* (DNA). Font -> font-display (DNA).
 // Cool surface component-owned (#F8FAFC / slate). No CTA by design.
 export function ProcessTimelineBlock({
+  site = SITE,
   label = tr('section.howItWorks'),
   heading = tr('section.yourJourney'),
   body,
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
 }) {
-  const steps = (SITE as { steps?: ProcessStep[] }).steps
+  const steps = (site as { steps?: ProcessStep[] }).steps
   if (!steps || steps.length === 0) return null
   const items = steps.slice(0, 5)
   return (

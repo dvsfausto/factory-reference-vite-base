@@ -15,15 +15,17 @@ import { SITE } from '~/data/site'
 // Radius -> rounded-* (DNA). Font -> font-display (DNA). Light surface component-
 // owned (white / slate / hairline #E6E8EC). Never bg-brand-* / .btn.
 export function PricingListBlock({
+  site = SITE,
   label = 'Pricing',
   heading = 'Plans & pricing',
   body,
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
 }) {
-  const plans = (SITE as { plans?: PricingPlan[] }).plans
+  const plans = (site as { plans?: PricingPlan[] }).plans
   if (!plans || plans.length === 0) return null
   return (
     <section className="bg-white">

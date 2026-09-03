@@ -35,14 +35,16 @@ const DEFAULT_TRUST_ITEMS = [
 ]
 
 export function TrustBarGlowCardsBlock({
+  site = SITE,
   items,
 }: {
+  site?: typeof SITE
   items?: { title: string; description: string }[]
 }) {
   const reduce = useReducedMotion()
   const resolved = (
     items ??
-    (SITE as { trustItems?: { title: string; description: string }[] }).trustItems ??
+    (site as { trustItems?: { title: string; description: string }[] }).trustItems ??
     DEFAULT_TRUST_ITEMS
   ).slice(0, 3) // cap at 3 — only 3 icons exist and a 4th card wraps (generic vertical ships 4). Matches TrustBarBlock.
   if (resolved.length === 0) return null

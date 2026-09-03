@@ -10,15 +10,17 @@ import { SITE } from '~/data/site'
 // (DNA). Font -> font-display (DNA). Cool surface component-owned (#F8FAFC / white
 // cards / #E6E8EC). Never bg-brand-* / .btn.
 export function CaseStudiesGridBlock({
+  site = SITE,
   label = 'Case studies',
   heading = 'Selected work',
   body,
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
 }) {
-  const studies = (SITE as { caseStudies?: CaseStudy[] }).caseStudies
+  const studies = (site as { caseStudies?: CaseStudy[] }).caseStudies
   if (!studies || studies.length === 0) return null
   return (
     <section className="bg-[#F8FAFC]">

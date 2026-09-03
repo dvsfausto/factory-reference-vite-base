@@ -2,7 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { tr } from '~/lib/i18n'
 import { motion, useReducedMotion } from 'framer-motion'
 import { Quote, Star } from 'lucide-react'
-import { reviews, getAggregateRating } from '~/data/reviews'
+import { reviews as REVIEWS, getAggregateRating } from '~/data/reviews'
 import { SectionHeader } from '~/components/SectionHeader'
 
 // Reviews VARIANT: 'pull-quote', an editorial spotlight. One large featured review is
@@ -24,11 +24,13 @@ import { SectionHeader } from '~/components/SectionHeader'
 // is non-null (i.e. real reviews exist), never a fabricated score. Empty reviews →
 // early-return null, matching the default ReviewsBlock.
 export function ReviewsPullQuoteBlock({
+  reviews = REVIEWS,
   label = tr('nav.reviews'),
   heading = tr('section.whatCustomersHeading'),
   scriptAccent = tr('section.sayAccent'),
   moreLink = tr('section.readAllReviewsArrow'),
 }: {
+  reviews?: typeof REVIEWS
   label?: string
   heading?: string
   scriptAccent?: string

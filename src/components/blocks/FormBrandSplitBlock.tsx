@@ -25,10 +25,12 @@ import { HAS_PHONE } from '~/lib/phone'
 // forms-submit. ONLY the shell is restyled. HONESTY: the info rows are the REAL
 // SITE fields (phone/email/address/hours), each row omits when its field is empty.
 export function FormBrandSplitBlock({
+  site = SITE,
   label = tr('form.contactUs'),
   heading = tr('form.letsTalk'),
   body = tr('form.replyBusinessDay'),
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
@@ -62,12 +64,12 @@ export function FormBrandSplitBlock({
     }
   }
 
-  const addr = [SITE.address.street, SITE.address.city, SITE.address.state].filter(Boolean).join(', ')
+  const addr = [site.address.street, site.address.city, site.address.state].filter(Boolean).join(', ')
   const rows = [
-    HAS_PHONE ? { Icon: Phone, label: SITE.phoneDisplay, href: `tel:${SITE.phone}` } : null,
-    { Icon: Mail, label: SITE.email, href: `mailto:${SITE.email}` },
+    HAS_PHONE ? { Icon: Phone, label: site.phoneDisplay, href: `tel:${site.phone}` } : null,
+    { Icon: Mail, label: site.email, href: `mailto:${site.email}` },
     addr ? { Icon: MapPin, label: addr } : null,
-    SITE.hours ? { Icon: Clock, label: SITE.hours } : null,
+    site.hours ? { Icon: Clock, label: site.hours } : null,
   ].filter(Boolean) as { Icon: typeof Phone; label: string; href?: string }[]
 
   return (

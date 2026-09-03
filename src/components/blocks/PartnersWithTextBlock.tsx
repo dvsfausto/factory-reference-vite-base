@@ -11,15 +11,17 @@ import { SITE } from '~/data/site'
 // (DNA). Font -> font-display (DNA). Light surface component-owned (white / slate /
 // #E6E8EC). No CTA by design. Never bg-brand-* / .btn.
 export function PartnersWithTextBlock({
+  site = SITE,
   label = tr('section.partners'),
   heading = tr('section.betterTogether'),
   body = tr('section.partnersBody'),
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
 }) {
-  const partners = (SITE as { partners?: Partner[] }).partners
+  const partners = (site as { partners?: Partner[] }).partners
   if (!partners || partners.length === 0) return null
   return (
     <section className="bg-white">

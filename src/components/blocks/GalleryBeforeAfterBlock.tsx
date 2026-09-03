@@ -50,15 +50,17 @@ function Slider({ item }: { item: GalleryItem }) {
 }
 
 export function GalleryBeforeAfterBlock({
+  projects = PROJECTS,
   label = tr('section.beforeAfter'),
   heading = tr('section.seeTheDifference'),
   body,
 }: {
+  projects?: typeof PROJECTS
   label?: string
   heading?: string
   body?: string
 }) {
-  const pairs = PROJECTS.filter((p) => p.beforeImage && p.afterImage)
+  const pairs = projects.filter((p) => p.beforeImage && p.afterImage)
   if (pairs.length === 0) return null
   return (
     <section className="bg-white">

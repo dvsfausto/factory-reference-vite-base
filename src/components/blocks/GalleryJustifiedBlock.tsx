@@ -15,15 +15,17 @@ import { tr } from '~/lib/i18n'
 const GROW = [2, 3, 2, 3, 2, 2, 3, 2]
 
 export function GalleryJustifiedBlock({
+  projects = PROJECTS,
   label = tr('section.ourWork'),
   heading = tr('section.recentProjects'),
   body,
 }: {
+  projects?: typeof PROJECTS
   label?: string
   heading?: string
   body?: string
 }) {
-  if (PROJECTS.length === 0) return null
+  if (projects.length === 0) return null
   return (
     <section className="bg-white">
       <div className="container-x py-20 md:py-28">
@@ -39,7 +41,7 @@ export function GalleryJustifiedBlock({
         </div>
 
         <div className="mt-12 flex flex-wrap gap-4">
-          {PROJECTS.map((p, i) => (
+          {projects.map((p, i) => (
             <figure
               key={`${p.title}-${i}`}
               className="group relative h-56 min-w-[220px] grow overflow-hidden rounded-2xl border border-[#E6E8EC]"

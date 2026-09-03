@@ -17,16 +17,18 @@ import { PROJECTS } from '~/data/projects'
 // HONESTY: renders ONLY the real PROJECTS images/titles/captions. Early-returns
 // null when PROJECTS is empty, mirroring the default GalleryMasonryBlock.
 export function GalleryEdgeGridBlock({
+  projects = PROJECTS,
   label = tr('section.ourWork'),
   heading = tr('section.recentProjects'),
   body,
 }: {
+  projects?: typeof PROJECTS
   label?: string
   heading?: string
   body?: string
 }) {
   const reduce = useReducedMotion()
-  if (PROJECTS.length === 0) return null
+  if (projects.length === 0) return null
 
   return (
     <section className="bg-white">
@@ -45,7 +47,7 @@ export function GalleryEdgeGridBlock({
 
       {/* Edge-to-edge grid, no container padding, tiles butt the viewport edges. */}
       <div className="mt-12 grid grid-cols-2 gap-px bg-[var(--wow-hairline)] lg:grid-cols-3">
-        {PROJECTS.map((p, i) => (
+        {projects.map((p, i) => (
           <motion.figure
             key={`${p.title}-${i}`}
             initial={reduce ? undefined : { opacity: 0, y: 24 }}

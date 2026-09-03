@@ -9,15 +9,17 @@ import { tr } from '~/lib/i18n'
 // year, emerald-100 rail. Radius -> rounded-* (DNA). Font -> font-display (DNA).
 // Light surface component-owned (white / slate / #E6E8EC). No CTA by design.
 export function StoryMilestoneTimelineBlock({
+  site = SITE,
   label = tr('section.ourStory'),
   heading = tr('section.howWeGotHere'),
   body,
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
 }) {
-  const milestones = (SITE as { milestones?: { year: string; title: string; description?: string }[] }).milestones
+  const milestones = (site as { milestones?: { year: string; title: string; description?: string }[] }).milestones
   if (!milestones || milestones.length === 0) return null
   return (
     <section className="bg-white">

@@ -12,16 +12,18 @@ import { imageSrc } from '~/lib/asset-url'
 // Radius -> rounded-* (DNA). Font -> font-display (DNA). Light surface component-
 // owned (#F8FAFC / slate / #E6E8EC). No CTA by design. Never bg-brand-* / .btn.
 export function StorySplitImageBlock({
+  site = SITE,
   label = tr('section.ourStory'),
   heading,
   body,
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
 }) {
-  const storyImage = (SITE as { story?: { image?: string } }).story?.image
-  const prose = body ?? SITE.about
+  const storyImage = (site as { story?: { image?: string } }).story?.image
+  const prose = body ?? site.about
   if (!prose) return null
   return (
     <section className="bg-[#F8FAFC]">
@@ -33,13 +35,13 @@ export function StorySplitImageBlock({
               {label}
             </span>
             <h2 className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight text-[#0F172A] sm:text-5xl">
-              {heading ?? `About ${SITE.name}`}
+              {heading ?? `About ${site.name}`}
             </h2>
             <p className="mt-6 text-lg leading-relaxed text-[#475569]">{prose}</p>
           </div>
           <div className="overflow-hidden rounded-3xl border border-[#E6E8EC] shadow-sm">
             <img
-              src={imageSrc(storyImage ?? SITE.hero.image_url)}
+              src={imageSrc(storyImage ?? site.hero.image_url)}
               alt={HERO_ALT}
               loading="lazy"
               width={900}

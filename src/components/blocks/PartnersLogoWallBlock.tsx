@@ -10,15 +10,17 @@ import { SITE } from '~/data/site'
 // (DNA). Font -> font-display (DNA). Light surface component-owned (white / slate).
 // No CTA by design. Never bg-brand-* / .btn.
 export function PartnersLogoWallBlock({
+  site = SITE,
   label = tr('section.partners'),
   heading = tr('section.trustedPartners'),
   body,
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
 }) {
-  const partners = (SITE as { partners?: Partner[] }).partners
+  const partners = (site as { partners?: Partner[] }).partners
   if (!partners || partners.length === 0) return null
   return (
     <section className="bg-white">

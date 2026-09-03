@@ -11,15 +11,17 @@ import { SITE } from '~/data/site'
 // 50/100/600/700. Radius -> rounded-* (DNA). Font -> font-display (DNA). Dark
 // elevated column (slate-950) component-owned. Never bg-brand-* / .btn.
 export function PackagesTieredBlock({
+  site = SITE,
   label = 'Packages',
   heading = 'Pick your package',
   body,
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
 }) {
-  const packages = (SITE as { packages?: ServicePackage[] }).packages
+  const packages = (site as { packages?: ServicePackage[] }).packages
   if (!packages || packages.length === 0) return null
   return (
     <section className="bg-[#F8FAFC]">

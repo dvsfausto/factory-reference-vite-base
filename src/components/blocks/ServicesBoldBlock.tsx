@@ -21,12 +21,16 @@ import { serviceImageUrl } from '~/data/images'
 // Prop signature is identical to ServicesPreviewBlock (uniform render path); the
 // copy props are accepted as overrides and fall back to SITE.homeServices.
 export function ServicesBoldBlock({
+  site = SITE,
+  services = SERVICES,
   label,
   heading,
   body,
   exploreLabel = tr('common.viewService'),
   moreLink = tr('common.allServices'),
 }: {
+  site?: typeof SITE
+  services?: typeof SERVICES
   label?: string
   heading?: string
   scriptAccent?: string
@@ -34,15 +38,15 @@ export function ServicesBoldBlock({
   exploreLabel?: string
   moreLink?: string
 }) {
-  const previewServices = SERVICES.slice(0, 3)
+  const previewServices = services.slice(0, 3)
   if (previewServices.length === 0) return null
   return (
     <section className="bg-background border-y border-ink-100">
       <div className="container-x py-16 md:py-24">
         <SectionHeaderBold
-          label={label ?? ((SITE as { homeServices?: { label?: string; heading?: string; body?: string } }).homeServices?.label ?? tr('section.whatWeDo'))}
-          heading={heading ?? ((SITE as { homeServices?: { label?: string; heading?: string; body?: string } }).homeServices?.heading ?? tr('nav.services'))}
-          body={body ?? ((SITE as { homeServices?: { label?: string; heading?: string; body?: string } }).homeServices?.body ?? tr('section.servicesBody'))}
+          label={label ?? ((site as { homeServices?: { label?: string; heading?: string; body?: string } }).homeServices?.label ?? tr('section.whatWeDo'))}
+          heading={heading ?? ((site as { homeServices?: { label?: string; heading?: string; body?: string } }).homeServices?.heading ?? tr('nav.services'))}
+          body={body ?? ((site as { homeServices?: { label?: string; heading?: string; body?: string } }).homeServices?.body ?? tr('section.servicesBody'))}
         />
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {previewServices.map((s) => (
@@ -74,7 +78,7 @@ export function ServicesBoldBlock({
             </Link>
           ))}
         </div>
-        {SERVICES.length > previewServices.length && (
+        {services.length > previewServices.length && (
           <div className="mt-10">
             <Link
               to="/services"

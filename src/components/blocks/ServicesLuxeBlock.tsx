@@ -26,6 +26,7 @@ import { serviceImageUrl } from '~/data/images'
 // Zero services → returns null exactly like the default. The "view all" link only
 // shows when there are genuinely more services than previewed. Nothing invented.
 export function ServicesLuxeBlock({
+  services = SERVICES,
   label = tr('section.ourServices'),
   heading = tr('section.whatWeHeading'),
   scriptAccent = tr('section.doAccent'),
@@ -33,6 +34,7 @@ export function ServicesLuxeBlock({
   exploreLabel = tr('common.explore'),
   moreLink = tr('section.viewAllServices'),
 }: {
+  services?: typeof SERVICES
   label?: string
   heading?: string
   scriptAccent?: string
@@ -41,7 +43,7 @@ export function ServicesLuxeBlock({
   moreLink?: string
 }) {
   const reduce = useReducedMotion()
-  const previewServices = SERVICES.slice(0, 3)
+  const previewServices = services.slice(0, 3)
   if (previewServices.length === 0) return null
 
   const gridCols =
@@ -137,7 +139,7 @@ export function ServicesLuxeBlock({
             </motion.div>
           ))}
         </div>
-        {SERVICES.length > previewServices.length && (
+        {services.length > previewServices.length && (
           <div className="mt-10 text-center">
             <Link to="/services" className="btn btn-md btn-secondary">
               {moreLink}

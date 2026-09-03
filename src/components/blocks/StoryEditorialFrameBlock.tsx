@@ -21,17 +21,19 @@ import { imageSrc } from '~/lib/asset-url'
 // override), never a fabricated photo. Early-returns null when there is no prose,
 // mirroring the default StoryNarrativeBlock's omit-when-empty behavior.
 export function StoryEditorialFrameBlock({
+  site = SITE,
   label = tr('section.ourStory'),
   heading,
   body,
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
 }) {
   const reduce = useReducedMotion()
-  const storyImage = (SITE as { story?: { image?: string } }).story?.image
-  const prose = body ?? SITE.about
+  const storyImage = (site as { story?: { image?: string } }).story?.image
+  const prose = body ?? site.about
   if (!prose) return null
 
   return (
@@ -57,7 +59,7 @@ export function StoryEditorialFrameBlock({
               {heading ?? (
                 <>
                   About{' '}
-                  <span className="font-script font-normal text-brand-600">{SITE.name}</span>
+                  <span className="font-script font-normal text-brand-600">{site.name}</span>
                 </>
               )}
             </h2>
@@ -93,7 +95,7 @@ export function StoryEditorialFrameBlock({
               style={{ borderColor: 'var(--wow-hairline)', boxShadow: 'var(--wow-shadow-lift)' }}
             >
               <img
-                src={imageSrc(storyImage ?? SITE.hero.image_url)}
+                src={imageSrc(storyImage ?? site.hero.image_url)}
                 alt={HERO_ALT}
                 loading="lazy"
                 width={900}

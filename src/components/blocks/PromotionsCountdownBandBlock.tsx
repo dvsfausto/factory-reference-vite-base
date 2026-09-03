@@ -15,13 +15,15 @@ import { SITE } from '~/data/site'
 // primary CTA -> bg-primary. Radius -> rounded-* (DNA). Font -> font-display
 // (DNA). Dark band (slate-950) component-owned. Never bg-brand-* / .btn.
 export function PromotionsCountdownBandBlock({
+  site = SITE,
   label = 'Limited time',
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
 }) {
-  const promos = (SITE as { promotions?: Promotion[] }).promotions
+  const promos = (site as { promotions?: Promotion[] }).promotions
   if (!promos || promos.length === 0) return null
   const p = promos[0]!
   return (

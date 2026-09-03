@@ -20,17 +20,19 @@ const SPOTS = [
 ]
 
 export function MapEmbedStylePanelBlock({
+  areas = AREAS,
   label = tr('section.coverage'),
   heading = tr('section.whereWeWork'),
   body,
 }: {
+  areas?: typeof AREAS
   label?: string
   heading?: string
   body?: string
 }) {
-  if (AREAS.length === 0) return null
-  const homeIndex = Math.max(0, AREAS.findIndex((a) => a.tier === 'home-base'))
-  const pins = AREAS.slice(0, 6)
+  if (areas.length === 0) return null
+  const homeIndex = Math.max(0, areas.findIndex((a) => a.tier === 'home-base'))
+  const pins = areas.slice(0, 6)
   return (
     <section className="bg-white">
       <div className="container-x py-20 md:py-28">

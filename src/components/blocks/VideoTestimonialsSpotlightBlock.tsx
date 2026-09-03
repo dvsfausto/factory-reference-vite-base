@@ -12,15 +12,17 @@ import { SITE } from '~/data/site'
 // Radius -> rounded-* (DNA). Font -> font-display (DNA). Dark stage (slate-950)
 // component-owned. No CTA by design. Never bg-brand-* / .btn.
 export function VideoTestimonialsSpotlightBlock({
+  site = SITE,
   label = tr('section.testimonials'),
   heading = tr('section.realStories'),
   body,
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
 }) {
-  const vids = (SITE as { videoTestimonials?: VideoTestimonial[] }).videoTestimonials
+  const vids = (site as { videoTestimonials?: VideoTestimonial[] }).videoTestimonials
   if (!vids || vids.length === 0) return null
   const [lead, ...rest] = vids
   return (

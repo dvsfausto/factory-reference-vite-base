@@ -12,15 +12,17 @@ import { SITE } from '~/data/site'
 // 50/100/600/700: emerald-50 perk chips, emerald-600 icon. Radius -> rounded-*
 // (DNA). Font -> font-display (DNA). Light surface component-owned. No bg-brand-*.
 export function MembershipPerksGridBlock({
+  site = SITE,
   label = 'Membership',
   heading,
   body,
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
 }) {
-  const memberships = (SITE as { memberships?: Membership[] }).memberships
+  const memberships = (site as { memberships?: Membership[] }).memberships
   if (!memberships || memberships.length === 0) return null
   const m = memberships.find((x) => x.highlighted) ?? memberships[0]!
   const perks = m.perks ?? []

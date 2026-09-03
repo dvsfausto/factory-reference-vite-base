@@ -11,17 +11,19 @@ import { PROJECTS } from '~/data/projects'
 // ring. Radius -> rounded-* (DNA). Font -> font-display (DNA). Light surface
 // component-owned (white / slate / #E6E8EC). No CTA by design. Never bg-brand-*.
 export function GalleryFeaturedThumbsBlock({
+  projects = PROJECTS,
   label = tr('section.ourWork'),
   heading = tr('section.recentProjects'),
   body,
 }: {
+  projects?: typeof PROJECTS
   label?: string
   heading?: string
   body?: string
 }) {
   const [active, setActive] = useState(0)
-  if (PROJECTS.length === 0) return null
-  const featured = PROJECTS[active] ?? PROJECTS[0]!
+  if (projects.length === 0) return null
+  const featured = projects[active] ?? projects[0]!
   return (
     <section className="bg-white">
       <div className="container-x py-20 md:py-28">
@@ -48,7 +50,7 @@ export function GalleryFeaturedThumbsBlock({
           </figure>
 
           <div className="mt-5 grid grid-cols-4 gap-4 sm:grid-cols-6">
-            {PROJECTS.map((p, i) => (
+            {projects.map((p, i) => (
               <button
                 key={`${p.title}-${i}`}
                 type="button"

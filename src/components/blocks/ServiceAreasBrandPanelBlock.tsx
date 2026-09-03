@@ -21,12 +21,14 @@ import { AREAS } from '~/data/areas'
 // Self-omits (returns null) when there are no areas, like the default. Content is
 // props with the SITE-mirrored fallbacks.
 export function ServiceAreasBrandPanelBlock({
+  areas = AREAS,
   label = tr('section.serviceAreas'),
   heading = tr('section.whereWeHeading'),
   scriptAccent = tr('section.workAccent'),
   body = tr('section.localCrews'),
   moreLink = tr('nav.viewAllAreas'),
 }: {
+  areas?: typeof AREAS
   label?: string
   heading?: string
   scriptAccent?: string
@@ -34,7 +36,7 @@ export function ServiceAreasBrandPanelBlock({
   moreLink?: string
 }) {
   const reduce = useReducedMotion()
-  if (AREAS.length === 0) return null
+  if (areas.length === 0) return null
 
   return (
     <section className="bg-white">
@@ -88,7 +90,7 @@ export function ServiceAreasBrandPanelBlock({
                 },
               }}
             >
-              {AREAS.map((a) => (
+              {areas.map((a) => (
                 <motion.li
                   key={a.slug}
                   className="border-b border-white/15"

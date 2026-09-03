@@ -12,15 +12,17 @@ import { SITE } from '~/data/site'
 // 50/100/600/700: emerald-600 numerals, emerald-100 rail. Radius -> rounded-*
 // (DNA). Font -> font-display (DNA). Cool surface component-owned. Never bg-brand-*.
 export function FinancingStepsBlock({
+  site = SITE,
   label = 'Financing',
   heading,
   body,
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
 }) {
-  const fin = (SITE as { financing?: Financing }).financing
+  const fin = (site as { financing?: Financing }).financing
   if (!fin) return null
   return (
     <section className="bg-[#F8FAFC]">

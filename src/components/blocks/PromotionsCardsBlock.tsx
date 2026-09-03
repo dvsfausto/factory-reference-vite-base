@@ -12,15 +12,17 @@ import { SITE } from '~/data/site'
 // (DNA). Font -> font-display (DNA). Light surface component-owned. Never
 // bg-brand-* / .btn.
 export function PromotionsCardsBlock({
+  site = SITE,
   label = 'Specials',
   heading = 'Current offers',
   body,
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
 }) {
-  const promos = (SITE as { promotions?: Promotion[] }).promotions
+  const promos = (site as { promotions?: Promotion[] }).promotions
   if (!promos || promos.length === 0) return null
   return (
     <section className="bg-white">

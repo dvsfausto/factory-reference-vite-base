@@ -16,12 +16,16 @@ import { serviceImageUrl } from '~/data/images'
 // (DNA → magenta) accents; rounded-* (DNA, large); font-display (DNA). Images via
 // serviceImageUrl(slug). No bg-brand-*, no .btn pill.
 export function ServicesCreativeBlock({
+  site = SITE,
+  services = SERVICES,
   label,
   heading,
   body,
   exploreLabel = tr('section.seeTheWork'),
   moreLink = tr('section.everythingWeDo'),
 }: {
+  site?: typeof SITE
+  services?: typeof SERVICES
   label?: string
   heading?: string
   scriptAccent?: string
@@ -29,7 +33,7 @@ export function ServicesCreativeBlock({
   exploreLabel?: string
   moreLink?: string
 }) {
-  const previewServices = SERVICES.slice(0, 3)
+  const previewServices = services.slice(0, 3)
   if (previewServices.length === 0) return null
   // Staggered offsets give the grid an off-balance, editorial rhythm.
   const offsets = ['lg:mt-0', 'lg:mt-12', 'lg:mt-4']
@@ -37,9 +41,9 @@ export function ServicesCreativeBlock({
     <section className="bg-white">
       <div className="container-x py-20 md:py-28">
         <SectionHeaderCreative
-          label={label ?? ((SITE as { homeServices?: { label?: string; heading?: string; body?: string } }).homeServices?.label ?? tr('section.whatWeDo'))}
-          heading={heading ?? ((SITE as { homeServices?: { label?: string; heading?: string; body?: string } }).homeServices?.heading ?? tr('nav.services'))}
-          body={body ?? ((SITE as { homeServices?: { label?: string; heading?: string; body?: string } }).homeServices?.body ?? tr('section.servicesBody'))}
+          label={label ?? ((site as { homeServices?: { label?: string; heading?: string; body?: string } }).homeServices?.label ?? tr('section.whatWeDo'))}
+          heading={heading ?? ((site as { homeServices?: { label?: string; heading?: string; body?: string } }).homeServices?.heading ?? tr('nav.services'))}
+          body={body ?? ((site as { homeServices?: { label?: string; heading?: string; body?: string } }).homeServices?.body ?? tr('section.servicesBody'))}
         />
         <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
           {previewServices.map((s, i) => (
@@ -71,7 +75,7 @@ export function ServicesCreativeBlock({
             </Link>
           ))}
         </div>
-        {SERVICES.length > previewServices.length && (
+        {services.length > previewServices.length && (
           <div className="mt-14">
             <Link
               to="/services"

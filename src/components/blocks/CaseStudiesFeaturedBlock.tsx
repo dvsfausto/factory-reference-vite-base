@@ -12,15 +12,17 @@ import { SITE } from '~/data/site'
 // chip, emerald-600. Radius -> rounded-* (DNA). Font -> font-display (DNA). Light
 // surface component-owned (white / slate / #E6E8EC). Never bg-brand-* / .btn.
 export function CaseStudiesFeaturedBlock({
+  site = SITE,
   label = 'Case studies',
   heading = 'Results that speak',
   body,
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
 }) {
-  const studies = (SITE as { caseStudies?: CaseStudy[] }).caseStudies
+  const studies = (site as { caseStudies?: CaseStudy[] }).caseStudies
   if (!studies || studies.length === 0) return null
   const [hero, ...rest] = studies
   const supporting = rest.slice(0, 3)

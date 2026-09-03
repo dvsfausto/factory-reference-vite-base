@@ -3,7 +3,7 @@ import { tr } from '~/lib/i18n'
 import { SITE } from '~/data/site'
 import { ArrowRight } from 'lucide-react'
 import { elegantSurface } from '~/lib/elegant-surface'
-import { reviews } from '~/data/reviews'
+import { reviews as REVIEWS } from '~/data/reviews'
 
 // Reviews VARIANT: 'elegant', refined testimonials. SectionHeaderElegant (serif,
 // no ◆ diamond, no script) + quote cards whose surface comes from elegantSurface()
@@ -14,11 +14,15 @@ import { reviews } from '~/data/reviews'
 // TOKEN DISCIPLINE: surface neutrals from elegantSurface(); emerald-* (DNA accent)
 // for the stars + the "read all" border; rounded-* (DNA); font-display serif.
 export function ReviewsElegantBlock({
-  label = ((SITE as { homeReviews?: { label?: string; heading?: string; scriptAccent?: string } }).homeReviews?.label ?? tr('nav.reviews')),
-  heading = ((SITE as { homeReviews?: { label?: string; heading?: string; scriptAccent?: string } }).homeReviews?.heading ?? tr('section.whatCustomersHeading')),
-  scriptAccent = ((SITE as { homeReviews?: { label?: string; heading?: string; scriptAccent?: string } }).homeReviews?.scriptAccent ?? tr('section.sayAccent')),
+  site = SITE,
+  reviews = REVIEWS,
+  label = ((site as { homeReviews?: { label?: string; heading?: string; scriptAccent?: string } }).homeReviews?.label ?? tr('nav.reviews')),
+  heading = ((site as { homeReviews?: { label?: string; heading?: string; scriptAccent?: string } }).homeReviews?.heading ?? tr('section.whatCustomersHeading')),
+  scriptAccent = ((site as { homeReviews?: { label?: string; heading?: string; scriptAccent?: string } }).homeReviews?.scriptAccent ?? tr('section.sayAccent')),
   moreLink = tr('section.readAllReviews'),
 }: {
+  site?: typeof SITE
+  reviews?: typeof REVIEWS
   label?: string
   heading?: string
   scriptAccent?: string

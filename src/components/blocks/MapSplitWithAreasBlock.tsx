@@ -18,17 +18,19 @@ const SPOTS = [
 ]
 
 export function MapSplitWithAreasBlock({
+  areas = AREAS,
   label = tr('section.coverage'),
   heading = tr('section.areasWeServe'),
   body = tr('section.proudlyCovering'),
 }: {
+  areas?: typeof AREAS
   label?: string
   heading?: string
   body?: string
 }) {
-  if (AREAS.length === 0) return null
-  const homeIndex = Math.max(0, AREAS.findIndex((a) => a.tier === 'home-base'))
-  const pins = AREAS.slice(0, 6)
+  if (areas.length === 0) return null
+  const homeIndex = Math.max(0, areas.findIndex((a) => a.tier === 'home-base'))
+  const pins = areas.slice(0, 6)
   return (
     <section className="bg-white">
       <div className="container-x py-20 md:py-28">
@@ -41,7 +43,7 @@ export function MapSplitWithAreasBlock({
             <h2 className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight text-[#0F172A] sm:text-5xl">{heading}</h2>
             {body && <p className="mt-4 max-w-md text-lg leading-relaxed text-[#64748B]">{body}</p>}
             <div className="mt-7 flex flex-wrap gap-2">
-              {AREAS.slice(0, 10).map((a) => (
+              {areas.slice(0, 10).map((a) => (
                 <Link key={a.slug} to="/areas/$slug" params={{ slug: a.slug }} className="inline-flex items-center gap-1.5 rounded-lg border border-[#E6E8EC] px-3 py-1.5 text-sm font-medium text-[#0F172A] transition-colors hover:border-emerald-600 hover:text-emerald-700">
                   <MapPin className="h-3.5 w-3.5 text-emerald-600" /> {a.name}
                 </Link>

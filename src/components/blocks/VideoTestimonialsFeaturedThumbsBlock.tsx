@@ -12,15 +12,17 @@ import { SITE } from '~/data/site'
 // ring. Radius -> rounded-* (DNA). Font -> font-display (DNA). Light surface
 // component-owned. No CTA by design. Never bg-brand-* / .btn.
 export function VideoTestimonialsFeaturedThumbsBlock({
+  site = SITE,
   label = tr('section.testimonials'),
   heading = tr('section.inTheirWords'),
   body,
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
 }) {
-  const vids = (SITE as { videoTestimonials?: VideoTestimonial[] }).videoTestimonials
+  const vids = (site as { videoTestimonials?: VideoTestimonial[] }).videoTestimonials
   const [active, setActive] = useState(0)
   if (!vids || vids.length === 0) return null
   const f = vids[active] ?? vids[0]!

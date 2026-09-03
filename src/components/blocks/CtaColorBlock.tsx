@@ -21,23 +21,25 @@ import { SITE } from '~/data/site'
 // video_url precedent) so a missing field never breaks the type-check. Prop
 // signature identical to CtaBlock; returns an Element (no null).
 export function CtaColorBlock({
+  site = SITE,
   title,
   subtitle,
 }: {
+  site?: typeof SITE
   title?: string
   subtitle?: string
 }) {
-  const cta = (SITE as { homeCta?: { title?: string; subtitle?: string } }).homeCta
+  const cta = (site as { homeCta?: { title?: string; subtitle?: string } }).homeCta
   const headline = title ?? cta?.title ?? 'Ready when you are.'
   const sub = subtitle ?? cta?.subtitle ?? tr('cta.reachOutToday')
   return (
     <section className="bg-primary text-primary-foreground">
       <div className="container-x py-20 md:py-28">
         <div className="mx-auto max-w-3xl text-center">
-          {SITE.tagline && (
+          {site.tagline && (
             <span className="inline-flex items-center justify-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] text-primary-foreground/80">
               <span className="h-px w-7 bg-primary-foreground/50" />
-              {SITE.tagline}
+              {site.tagline}
             </span>
           )}
           <h2 className="mt-6 font-display text-4xl font-semibold leading-[1.08] tracking-tight sm:text-5xl">
@@ -52,10 +54,10 @@ export function CtaColorBlock({
             >{tr('section.getStarted')}<ArrowRight className="h-4 w-4" />
             </PrimaryCta>
             <a
-              href={`tel:${SITE.phone}`}
+              href={`tel:${site.phone}`}
               className="inline-flex h-[54px] items-center gap-2 rounded-xl border border-primary-foreground/40 px-7 font-display font-semibold text-primary-foreground transition-colors hover:bg-primary-foreground/10"
             >
-              <Phone className="h-4 w-4" /> {SITE.phoneDisplay}
+              <Phone className="h-4 w-4" /> {site.phoneDisplay}
             </a>
           </div>
         </div>

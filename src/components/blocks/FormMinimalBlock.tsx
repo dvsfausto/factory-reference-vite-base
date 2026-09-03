@@ -13,10 +13,12 @@ import { Field, Textarea, SubmitButton, SuccessCard } from './form-ui'
 // 50/100/600/700. Radius -> rounded-* (DNA). Font -> font-display (DNA). Light
 // surface component-owned (white / slate / #E6E8EC). Never bg-brand-* / .btn.
 export function FormMinimalBlock({
+  site = SITE,
   label = tr('form.getInTouch'),
   heading = tr('form.readyToStart'),
   body = tr('form.minimalBody'),
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
@@ -74,8 +76,8 @@ export function FormMinimalBlock({
                   {status === 'error' && error && <p className="text-sm text-red-600">{error}</p>}
                   <div className="mt-1 flex flex-wrap items-center gap-4">
                     <SubmitButton status={status} />
-                    <a href={`tel:${SITE.phone}`} className="text-sm font-medium text-emerald-700 underline-offset-2 hover:underline">
-                      Or call {SITE.phoneDisplay}
+                    <a href={`tel:${site.phone}`} className="text-sm font-medium text-emerald-700 underline-offset-2 hover:underline">
+                      Or call {site.phoneDisplay}
                     </a>
                   </div>
                 </form>

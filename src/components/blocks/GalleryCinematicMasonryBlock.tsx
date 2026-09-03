@@ -18,16 +18,18 @@ import { PROJECTS } from '~/data/projects'
 // stock, honestly labeled in the data). Early-returns null when PROJECTS is
 // empty, mirroring the default GalleryMasonryBlock.
 export function GalleryCinematicMasonryBlock({
+  projects = PROJECTS,
   label = tr('section.ourWork'),
   heading = tr('section.recentProjects'),
   body,
 }: {
+  projects?: typeof PROJECTS
   label?: string
   heading?: string
   body?: string
 }) {
   const reduce = useReducedMotion()
-  if (PROJECTS.length === 0) return null
+  if (projects.length === 0) return null
 
   return (
     <section className="bg-white">
@@ -44,7 +46,7 @@ export function GalleryCinematicMasonryBlock({
         </div>
 
         <div className="mt-12 gap-5 [column-fill:_balance] sm:columns-2 lg:columns-3">
-          {PROJECTS.map((p, i) => (
+          {projects.map((p, i) => (
             <motion.figure
               key={`${p.title}-${i}`}
               initial={reduce ? undefined : { opacity: 0, y: 24 }}

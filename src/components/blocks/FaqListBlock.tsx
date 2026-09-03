@@ -10,15 +10,17 @@ import { tr } from '~/lib/i18n'
 // Radius -> rounded-* (DNA). Font -> font-display (DNA). Light surface component-
 // owned (white / slate / hairline #E6E8EC). No CTA by design. Never bg-brand-*.
 export function FaqListBlock({
+  site = SITE,
   label = tr('section.faqLabel'),
   heading = tr('section.faq'),
   body,
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
 }) {
-  const faqs = SITE.homeFaqs
+  const faqs = site.homeFaqs
   if (!faqs || faqs.length === 0) return null
   return (
     <section className="bg-white">

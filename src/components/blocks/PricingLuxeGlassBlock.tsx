@@ -24,16 +24,18 @@ import { SITE } from '~/data/site'
 //      brand-framed "how pricing works" panel with a CTA and ZERO invented numbers.
 //   3. No plans AND no prose → null (never fabricates pricing).
 export function PricingLuxeGlassBlock({
+  site = SITE,
   label = tr('nav.pricing'),
   heading = 'Simple, transparent pricing',
   body,
 }: {
+  site?: typeof SITE
   label?: string
   heading?: string
   body?: string
 }) {
   const reduce = useReducedMotion()
-  const plans = (SITE as { plans?: PricingPlan[] }).plans
+  const plans = (site as { plans?: PricingPlan[] }).plans
   const hasPlans = Array.isArray(plans) && plans.length > 0
 
   // Honesty guard: no real tiers AND no prose to frame → omit entirely.

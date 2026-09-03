@@ -23,12 +23,14 @@ import { AREAS } from '~/data/areas'
 // counts. Self-omits (returns null) when there are no areas, exactly like the
 // default. Content is props with the SITE-mirrored fallbacks.
 export function ServiceAreasGlowPinsBlock({
+  areas = AREAS,
   label = tr('section.serviceAreas'),
   heading = tr('section.whereWeHeading'),
   scriptAccent = tr('section.workAccent'),
   body = tr('section.localCrews'),
   moreLink = tr('nav.viewAllAreas'),
 }: {
+  areas?: typeof AREAS
   label?: string
   heading?: string
   scriptAccent?: string
@@ -36,7 +38,7 @@ export function ServiceAreasGlowPinsBlock({
   moreLink?: string
 }) {
   const reduce = useReducedMotion()
-  if (AREAS.length === 0) return null
+  if (areas.length === 0) return null
 
   return (
     <section
@@ -63,7 +65,7 @@ export function ServiceAreasGlowPinsBlock({
             },
           }}
         >
-          {AREAS.map((a) => (
+          {areas.map((a) => (
             <motion.div
               key={a.slug}
               variants={{
