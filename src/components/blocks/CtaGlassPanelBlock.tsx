@@ -28,12 +28,19 @@ function splitScriptAccent(heading: string): { lead: string; accent: string } {
 }
 
 export function CtaGlassPanelBlock({
-  title = tr('cta.readyWhenYouAre'),
-  subtitle = tr('cta.quote24'),
+  title: titleProp,
+  subtitle: subtitleProp,
 }: {
   title?: string
   subtitle?: string
 }) {
+  // Copy precedence (same as CtaBlock and the 11 other CTA variants): a layout param override >
+  // SITE.homeCta (the persisted homepage-copy / an owner's edit) > today's literals. Absent
+  // SITE.homeCta → byte-identical. Found S7b 2026-09-03: this WOW variant was the one place an
+  // editable, durable homeCta.title never rendered.
+  const homeCta = (SITE as { homeCta?: { title?: string; subtitle?: string } }).homeCta
+  const title = titleProp ?? homeCta?.title ?? tr('cta.readyWhenYouAre')
+  const subtitle = subtitleProp ?? homeCta?.subtitle ?? tr('cta.quote24')
   const parts = splitScriptAccent(title)
   const label = (SITE as { ctaLabel?: string }).ctaLabel ?? 'Get Free Quote'
 
