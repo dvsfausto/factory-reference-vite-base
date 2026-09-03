@@ -36,6 +36,13 @@ check('in union but no renderSection case', diff(union, cases))
 const dup = (xs) => xs.filter((x, i) => xs.indexOf(x) !== i)
 check('duplicate BLOCK_NEEDS keys', dup(needs))
 check('duplicate PLACEMENT keys', dup(placement))
+// P1b: every `into` SITE key has an INTO_KIND entry (the four array modules are exempt), and no stale entry
+const ARRAY_MODULES = ['SERVICES', 'AREAS', 'REVIEWS', 'PROJECTS']
+const intoKeys = [...new Set([...tableBody('BLOCK_NEEDS').matchAll(/into:\s*\[([^\]]*)\]/g)].flatMap((m) => [...m[1].matchAll(/'([^']+)'/g)].map((k) => k[1])))]
+  .filter((k) => !ARRAY_MODULES.includes(k))
+const kinds = [...tableBody('INTO_KIND').matchAll(/^\s*([A-Za-z][A-Za-z0-9]*)\s*:\s*'(array|object|string)'/gm)].map((m) => m[1])
+check('into SITE key without INTO_KIND', diff(intoKeys, kinds))
+check('INTO_KIND key no block writes into', diff(kinds, intoKeys))
 
 if (problems.length) {
   console.error(`lint:blocks FAIL\n  ${problems.join('\n  ')}`)

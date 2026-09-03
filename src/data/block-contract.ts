@@ -63,8 +63,38 @@ export interface BlockNeed {
    * (or, for SERVICES/AREAS/REVIEWS/PROJECTS, is passed as that array). Several entries (only
    * `story`) → the param is an object whose listed keys overlay SITE. Absent → params-only knobs.
    * Resolution order at render (render-section.tsx resolveData): params.<params> → ctx.<ctx> → SITE.
+   * A supplied value whose JS kind differs from INTO_KIND[key] is ignored (→ default read).
    */
   into?: readonly string[]
+}
+
+/**
+ * P1b · the JS kind every `into` SITE key must have. resolveData drops a supplied value of any other
+ * kind instead of writing it into `site` — a string where a variant does `.slice().map()` is an SSR
+ * crash, not a fallback. The four array modules (SERVICES/AREAS/REVIEWS/PROJECTS) are always arrays
+ * and are not listed. lint:blocks asserts every `into` SITE key has an entry.
+ */
+export const INTO_KIND: Readonly<Record<string, 'array' | 'object' | 'string'>> = {
+  hero: 'object',
+  homeCta: 'object',
+  quoteForm: 'object',
+  financing: 'object',
+  story: 'object',
+  about: 'string',
+  homeFaqs: 'array',
+  trustItems: 'array',
+  team: 'array',
+  plans: 'array',
+  steps: 'array',
+  stats: 'array',
+  milestones: 'array',
+  posts: 'array',
+  memberships: 'array',
+  packages: 'array',
+  caseStudies: 'array',
+  videoTestimonials: 'array',
+  promotions: 'array',
+  partners: 'array',
 }
 
 /** Every BlockType, exactly once (lint:blocks asserts the switch and this table agree). */

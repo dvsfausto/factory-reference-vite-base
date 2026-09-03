@@ -19,7 +19,7 @@ import { SERVICES } from '~/data/services-view'
 import { AREAS } from '~/data/areas'
 import { reviews as REVIEWS } from '~/data/reviews'
 import { PROJECTS } from '~/data/projects'
-import { BLOCK_NEEDS, type BlockNeed } from '~/data/block-contract'
+import { BLOCK_NEEDS, INTO_KIND, type BlockNeed } from '~/data/block-contract'
 import { HeroBlock } from '~/components/blocks/HeroBlock'
 import { HeroBoldFullbleedBlock } from '~/components/blocks/HeroBoldFullbleedBlock'
 import { HeroElegantBlock } from '~/components/blocks/HeroElegantBlock'
@@ -459,8 +459,9 @@ function ContactFormSection() {
  *     params.<need.params>  →  ctx.<need.ctx>  →  (nothing: the component's own default)
  * and shapes the winner by `need.into`: an array module name (SERVICES/AREAS/REVIEWS/PROJECTS)
  * → that array prop; ONE SITE key → `site` is SITE with that key replaced; several SITE keys
- * (story) → the value is an object whose listed keys overlay SITE. A value of the wrong shape
- * (a non-array for an array slot, a non-object for an overlay) is ignored → default read.
+ * (story) → the value is an object whose listed keys overlay SITE. A value of the wrong kind
+ * (INTO_KIND: a non-array for an array key, a non-object for an object key or the overlay) is
+ * ignored → default read; it never reaches a variant's `.slice().map()`.
  * Returns {} when nothing was supplied, so the spread adds no prop and the render is byte-identical.
  */
 export interface BlockData {
@@ -476,6 +477,13 @@ const ARRAY_SLOT: Record<string, keyof BlockData> = {
   REVIEWS: 'reviews',
   PROJECTS: 'projects',
 }
+function kindOk(key: string, value: unknown): boolean {
+  const kind = INTO_KIND[key]
+  if (kind === 'array') return Array.isArray(value)
+  if (kind === 'object') return typeof value === 'object' && value !== null && !Array.isArray(value)
+  if (kind === 'string') return typeof value === 'string'
+  return false // unknown key: never written into site
+}
 export function resolveData(block: SectionBlock, ctx?: SectionContext): BlockData {
   const need = (BLOCK_NEEDS as Record<string, BlockNeed | undefined>)[block.type]
   if (!need?.into || need.into.length === 0) return {}
@@ -487,13 +495,13 @@ export function resolveData(block: SectionBlock, ctx?: SectionContext): BlockDat
     const key = need.into[0]
     const slot = ARRAY_SLOT[key]
     if (slot) return Array.isArray(value) ? ({ [slot]: value } as BlockData) : {}
-    return { site: { ...SITE, [key]: value } as typeof SITE }
+    return kindOk(key, value) ? { site: { ...SITE, [key]: value } as typeof SITE } : {}
   }
   if (typeof value !== 'object' || Array.isArray(value)) return {}
   const overlay: Record<string, unknown> = {}
   for (const key of need.into) {
     const v = (value as Record<string, unknown>)[key]
-    if (v !== undefined) overlay[key] = v
+    if (v !== undefined && kindOk(key, v)) overlay[key] = v
   }
   if (Object.keys(overlay).length === 0) return {}
   return { site: { ...SITE, ...overlay } as typeof SITE }
@@ -623,11 +631,11 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext): ReactN
         <TrustComponent
           key="trustBar"
           {...data}
+          // params.items rides resolveData (into: trustItems) so a wrong-shaped value falls back
+          // to SITE instead of throwing inside the variant (a string here took /about down in the
+          // P1b probe); an array param is the same value it was, byte-identical.
           items={
-            (block.params?.items as
-              | { title: string; description: string }[]
-              | undefined) ??
-            (SITE as { trustItems?: { title: string; description: string }[] }).trustItems
+            ((data.site ?? SITE) as { trustItems?: { title: string; description: string }[] }).trustItems
           }
         />
       )
