@@ -5,12 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
-    "build": "node scripts/check-display-name-seam.mjs && vite build && tsc --noEmit",
+    "build": "node scripts/check-display-name-seam.mjs && node scripts/check-image-transform.mjs && vite build && tsc --noEmit",
     "preview": "vite preview",
     "start": "node .output/server/index.mjs",
     "lint:honesty": "node scripts/check-no-credential-claims.mjs",
     "lint:palette": "node scripts/check-standalone-palette.mjs",
-    "lint:displayname": "node scripts/check-display-name-seam.mjs"
+    "lint:displayname": "node scripts/check-display-name-seam.mjs",
+    "lint:images": "node scripts/check-image-transform.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
