@@ -66,6 +66,13 @@ export interface BlockNeed {
    * A supplied value whose JS kind differs from INTO_KIND[key] is ignored (→ default read).
    */
   into?: readonly string[]
+  /**
+   * P5 · the block renders BUILT-IN copy when every key in `site` is empty (hero/cta/trustBar/forms
+   * default strings; contactForm's form; booking's live widget) — it never self-omits. Absent = the
+   * block returns null (or renders nothing visible) when its deciding key is empty. The editor's
+   * placement matrix offers a `fallback` block regardless of data; test:placement-probe proves it.
+   */
+  fallback?: true
 }
 
 /**
@@ -100,15 +107,16 @@ export const INTO_KIND: Readonly<Record<string, 'array' | 'object' | 'string'>> 
 /** Every BlockType, exactly once (lint:blocks asserts the switch and this table agree). */
 export const BLOCK_NEEDS: Readonly<Record<BlockType, BlockNeed>> = {
   // homepage core
-  hero: { scope: 'site', site: ['hero', 'REVIEWS', 'IMAGES'], params: 'hero', into: ['hero'] },
+  hero: { scope: 'site', site: ['hero', 'REVIEWS', 'IMAGES'], params: 'hero', into: ['hero'], fallback: true },
   taglineBar: { scope: 'chrome', site: ['tagline'] },
-  localBar: { scope: 'chrome', site: ['address', 'hours', 'phone'] },
-  trustBar: { scope: 'site', site: ['trustItems'], params: 'items', into: ['trustItems'] },
+  // reads AREAS (the neighbourhood strip), not the contact chrome — corrected in P5 by the placement probe
+  localBar: { scope: 'site', site: ['AREAS'], params: 'areas', into: ['AREAS'] },
+  trustBar: { scope: 'site', site: ['trustItems'], params: 'items', into: ['trustItems'], fallback: true },
   servicesPreview: { scope: 'site', site: ['SERVICES', 'homeServices'], params: 'services', into: ['SERVICES'] },
   serviceAreas: { scope: 'site', site: ['AREAS'], params: 'areas', into: ['AREAS'] },
   reviews: { scope: 'site', site: ['REVIEWS'], params: 'reviews', into: ['REVIEWS'] },
   faq: { scope: 'page', site: ['homeFaqs'], ctx: 'faqs', params: 'faqs', into: ['homeFaqs'] },
-  cta: { scope: 'site', site: ['homeCta', 'hero'], params: 'cta', into: ['homeCta'] },
+  cta: { scope: 'site', site: ['homeCta', 'hero'], params: 'cta', into: ['homeCta'], fallback: true },
   // composable content sections
   team: { scope: 'site', site: ['team'], params: 'team', into: ['team'] },
   pricing: { scope: 'site', site: ['plans'], params: 'plans', into: ['plans'] },
@@ -116,7 +124,7 @@ export const BLOCK_NEEDS: Readonly<Record<BlockType, BlockNeed>> = {
   process: { scope: 'site', site: ['steps'], params: 'steps', into: ['steps'] },
   faqSection: { scope: 'site', site: ['homeFaqs'], ctx: 'faqs', params: 'faqs', into: ['homeFaqs'] },
   story: { scope: 'site', site: ['about', 'story', 'stats', 'milestones', 'IMAGES'], params: 'story', into: ['about', 'story', 'stats', 'milestones'] },
-  forms: { scope: 'site', site: ['quoteForm'], params: 'form', into: ['quoteForm'] },
+  forms: { scope: 'site', site: ['quoteForm'], params: 'form', into: ['quoteForm'], fallback: true },
   membership: { scope: 'site', site: ['memberships'], params: 'memberships', into: ['memberships'] },
   packages: { scope: 'site', site: ['packages'], params: 'packages', into: ['packages'] },
   caseStudies: { scope: 'site', site: ['caseStudies'], params: 'caseStudies', into: ['caseStudies'] },
@@ -126,7 +134,7 @@ export const BLOCK_NEEDS: Readonly<Record<BlockType, BlockNeed>> = {
   partners: { scope: 'site', site: ['partners'], params: 'partners', into: ['partners'] },
   map: { scope: 'site', site: ['AREAS'], params: 'areas', into: ['AREAS'] },
   blog: { scope: 'site', site: ['posts'], params: 'posts', into: ['posts'] },
-  booking: { scope: 'params', site: [] },
+  booking: { scope: 'params', site: [], fallback: true },
   richText: { scope: 'params', site: [] },
   // page-record blocks (were the inner unions' own members)
   intro: { scope: 'page', site: [], ctx: 'intro' },
@@ -142,7 +150,7 @@ export const BLOCK_NEEDS: Readonly<Record<BlockType, BlockNeed>> = {
   servicesIndex: { scope: 'site', site: ['SERVICES'], params: 'services', into: ['SERVICES'] },
   areasIndex: { scope: 'site', site: ['AREAS'], params: 'areas', into: ['AREAS'] },
   reviewsIndex: { scope: 'site', site: ['REVIEWS'] },
-  contactForm: { scope: 'chrome', site: ['phone', 'email', 'address', 'hours'] },
+  contactForm: { scope: 'chrome', site: ['phone', 'email', 'address', 'hours'], fallback: true },
 }
 
 /**
