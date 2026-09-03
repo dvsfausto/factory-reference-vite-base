@@ -6,7 +6,9 @@ import { familyOr } from '~/lib/family-variant'
 // block (the shared WOW page-intro) and a page-specific 'areasIndex' block that
 // renders the FULL service-areas list (ALL areas) — NOT the homepage preview — so no
 // content is dropped. ADDITIVE: the scaffolder never emits or overwrites it.
-export type AreasIndexBlockType = BlockType | 'intro' | 'areasIndex'
+// Half B · P1a: alias of the ONE block vocabulary (src/data/layout.ts). This page's own
+// members live in that union now; placement is data in src/data/block-contract.ts.
+export type AreasIndexBlockType = BlockType
 
 export interface AreasIndexBlock {
   /**

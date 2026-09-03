@@ -60,6 +60,31 @@ export type BlockType =
   // { type: 'booking' } into the emitted layout ONLY for solo-appointment business
   // types (site.ts BOOKING.enabled), so no-booking builds stay byte-identical.
   | 'booking'
+  // Half B · P1a — ONE block vocabulary. The page-specific members that used to live
+  // in each inner *-layout.ts union (about/pricing/contact/reviews/services-index/
+  // areas-index/service-detail/area-detail/info-detail) are members of the base union
+  // now; every <Page>BlockType is an alias of BlockType. Type-only: no default layout
+  // changes, so every emitted layout.ts and every served page stays byte-identical.
+  // WHERE a block may be placed is DATA, not a type: see src/data/block-contract.ts
+  // (PLACEMENT). The scaffolder's homepage guard reads this union and therefore now
+  // accepts any block type on any page — the placement table is the refusal point.
+  | 'intro'
+  | 'serviceWhatWeCover'
+  | 'serviceDetails'
+  | 'relatedServices'
+  | 'areaAbout'
+  | 'areaDetails'
+  | 'relatedAreas'
+  | 'infoArticle'
+  | 'relatedInfo'
+  | 'servicesIndex'
+  | 'areasIndex'
+  | 'reviewsIndex'
+  | 'contactForm'
+  // richText: the params-only copy block custom pages (/p/$slug) compose; rendered by
+  // renderSection since Phase 2 but never a union member (custom layouts are typed
+  // `type: string`). Naming it here is what lets lint:blocks assert renderer ≡ vocabulary.
+  | 'richText'
 
 export interface LayoutBlock {
   /**

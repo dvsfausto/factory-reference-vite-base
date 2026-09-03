@@ -11,7 +11,8 @@
     "lint:honesty": "node scripts/check-no-credential-claims.mjs",
     "lint:palette": "node scripts/check-standalone-palette.mjs",
     "lint:displayname": "node scripts/check-display-name-seam.mjs",
-    "lint:images": "node scripts/check-image-transform.mjs"
+    "lint:images": "node scripts/check-image-transform.mjs",
+    "lint:blocks": "node scripts/check-block-contract.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

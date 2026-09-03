@@ -7,7 +7,9 @@ import { familyOr } from '~/lib/family-variant'
 // that renders the FULL services list (ALL services) — NOT the homepage's 3-item
 // preview, so no content is dropped. ADDITIVE: the scaffolder never emits or
 // overwrites it.
-export type ServicesIndexBlockType = BlockType | 'intro' | 'servicesIndex'
+// Half B · P1a: alias of the ONE block vocabulary (src/data/layout.ts). This page's own
+// members live in that union now; placement is data in src/data/block-contract.ts.
+export type ServicesIndexBlockType = BlockType
 
 export interface ServicesIndexBlock {
   /**

@@ -18,11 +18,9 @@ import { familyOr } from '~/lib/family-variant'
 //
 // NOTE: areas carry no own image field; the shared renderer feeds the hero a fallback
 // image, so the area blocks here never touch the hero.
-export type AreaDetailBlockType =
-  | BlockType
-  | 'areaAbout'
-  | 'areaDetails'
-  | 'relatedAreas'
+// Half B · P1a: alias of the ONE block vocabulary (src/data/layout.ts). This page's own
+// members live in that union now; placement is data in src/data/block-contract.ts.
+export type AreaDetailBlockType = BlockType
 
 export interface AreaDetailBlock {
   /**

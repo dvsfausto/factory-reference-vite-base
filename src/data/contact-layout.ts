@@ -6,7 +6,9 @@ import type { BlockType } from './layout'
 // renders the EXACT LeadForm (untouched fields + frozen Supabase envelope handler)
 // beside a brand-surfaced info card of the REAL contact details, each row omitting
 // when empty. ADDITIVE: the scaffolder never emits or overwrites it.
-export type ContactBlockType = BlockType | 'intro' | 'contactForm'
+// Half B · P1a: alias of the ONE block vocabulary (src/data/layout.ts). This page's own
+// members live in that union now; placement is data in src/data/block-contract.ts.
+export type ContactBlockType = BlockType
 
 export interface ContactBlock {
   /**

@@ -7,7 +7,9 @@ import { familyOr } from '~/lib/family-variant'
 // page-specific 'reviewsIndex' block that renders the FULL reviews list (ALL reviews,
 // count 50) — NOT the homepage's 6-item preview, so no content is dropped. ADDITIVE:
 // the scaffolder never emits or overwrites it.
-export type ReviewsBlockType = BlockType | 'intro' | 'reviewsIndex'
+// Half B · P1a: alias of the ONE block vocabulary (src/data/layout.ts). This page's own
+// members live in that union now; placement is data in src/data/block-contract.ts.
+export type ReviewsBlockType = BlockType
 
 export interface ReviewsBlock {
   /**

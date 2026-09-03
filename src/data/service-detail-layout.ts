@@ -14,11 +14,9 @@ import { familyOr } from '~/lib/family-variant'
 // the scaffolder never emits or overwrites it (it only emits src/data/layout.ts's
 // HOMEPAGE_LAYOUT array), so block-composing the service page needs no scaffolder
 // change and it ships verbatim with the reference.
-export type ServiceDetailBlockType =
-  | BlockType
-  | 'serviceWhatWeCover'
-  | 'serviceDetails'
-  | 'relatedServices'
+// Half B · P1a: alias of the ONE block vocabulary (src/data/layout.ts). This page's own
+// members live in that union now; placement is data in src/data/block-contract.ts.
+export type ServiceDetailBlockType = BlockType
 
 export interface ServiceDetailBlock {
   /**
