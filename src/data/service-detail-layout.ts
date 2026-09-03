@@ -21,6 +21,12 @@ export type ServiceDetailBlockType =
   | 'relatedServices'
 
 export interface ServiceDetailBlock {
+  /**
+   * C1a — stable block-instance identity. The factory emits it (persisted id, else `<type>` /
+   * `<type>-N` by ordinal) so the editor addresses a section by instance, not by type. Inert at
+   * render time; absent on carried (un-emitted) layouts.
+   */
+  id?: string
   type: ServiceDetailBlockType
   variant?: string
   params?: Record<string, unknown>

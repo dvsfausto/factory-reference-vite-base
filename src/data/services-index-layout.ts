@@ -10,6 +10,12 @@ import { familyOr } from '~/lib/family-variant'
 export type ServicesIndexBlockType = BlockType | 'intro' | 'servicesIndex'
 
 export interface ServicesIndexBlock {
+  /**
+   * C1a — stable block-instance identity. The factory emits it (persisted id, else `<type>` /
+   * `<type>-N` by ordinal) so the editor addresses a section by instance, not by type. Inert at
+   * render time; absent on carried (un-emitted) layouts.
+   */
+  id?: string
   type: ServicesIndexBlockType
   variant?: string
   params?: Record<string, unknown>
