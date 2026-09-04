@@ -41,7 +41,8 @@ export function GalleryGridBlock({
               key={`${p.title}-${i}`}
               className="group overflow-hidden rounded-2xl border border-[#E6E8EC] bg-white"
             >
-              <div className="aspect-square overflow-hidden">
+              {/* ★ 4:3, not square: real-work photos are mostly landscape; a square crop lost the sides of every one. */}
+              <div className="aspect-[4/3] overflow-hidden">
                 <img
                   src={p.image}
                   alt={p.alt ?? p.title}

@@ -58,11 +58,14 @@ export function GalleryCinematicMasonryBlock({
               whileHover={reduce ? undefined : { boxShadow: 'var(--wow-shadow-glow)' }}
             >
               <div className="overflow-hidden">
+                {/* ★ FIXED 4:3 FRAME. A gallery of real work mixes portrait, square and landscape uploads; at
+                    natural heights a square among landscapes ran its column taller and broke the row. Every
+                    tile now takes the same frame and the photo covers it, centred. */}
                 <img
                   src={p.image}
                   alt={p.alt ?? p.title}
                   loading="lazy"
-                  className="w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.06]"
+                  className="aspect-[4/3] w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.06]"
                 />
               </div>
               {/* Brand-gradient caption overlay, appears on hover. */}

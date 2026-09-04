@@ -38,7 +38,8 @@ export function GalleryMasonryBlock({
         <div className="mt-12 gap-5 [column-fill:_balance] sm:columns-2 lg:columns-3">
           {projects.map((p, i) => (
             <figure key={`${p.title}-${i}`} className="mb-5 break-inside-avoid overflow-hidden rounded-2xl border border-[#E6E8EC]">
-              <img src={p.image} alt={p.alt ?? p.title} loading="lazy" className="w-full object-cover" />
+              {/* ★ FIXED 4:3 FRAME — see GalleryCinematicMasonryBlock: mixed ratios no longer break the row. */}
+              <img src={p.image} alt={p.alt ?? p.title} loading="lazy" className="aspect-[4/3] w-full object-cover" />
               <figcaption className="flex items-center justify-between gap-3 p-4">
                 <span className="font-display text-sm font-semibold text-[#0F172A]">{p.title}</span>
                 {p.caption && <span className="text-xs italic text-[#94A3B8]">{p.caption}</span>}
