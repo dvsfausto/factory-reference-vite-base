@@ -7,8 +7,20 @@ import {
   ChevronLeft,
   Clock,
   Loader2,
+  MapPin,
   Phone,
 } from 'lucide-react'
+import {
+  EMPTY_ADDRESS,
+  addressComplete,
+  bookingLive,
+  formatAddress,
+  isVisit,
+  priceLine,
+  stepOrder,
+  type BookingFeatures,
+  type ServiceAddress,
+} from '~/lib/booking-shape'
 import {
   BOOKING,
   BUSINESS_ID,
@@ -34,10 +46,17 @@ import {
 //   · SINGLE-RESOURCE. The scheduler models one calendar; correct for a SOLO operator
 //     (barber, trainer, consultant). The scaffolder only enables this block for
 //     clearly-solo appointment business types (site.ts BOOKING.enabled).
-//   · NO conflict check. Anon cannot read the bookings table (RLS), and create-booking
-//     does not overlap-check either, so slots are generated from availability + the
-//     past-time filter ONLY, exactly what the glow page effectively does. Concurrent
-//     double-booking is possible; server-side conflict checking is Stage-3 hardening.
+//   · NO client-side conflict check. Anon cannot read the bookings table (RLS); slots are
+//     generated from availability + the past-time filter, and create-booking is the one
+//     place that refuses a full slot (per-service capacity; pooled across a visit crew).
+//   · LIVE GATE. The owner's switch (website_config.features_enabled.booking) AND their
+//     hours confirmation (features_enabled.hours_confirmed_at) must both be set, else the
+//     wizard shows "opens soon" + the phone. Hours are SEEDED at signup for every business
+//     (Mon–Fri 09:00–17:00), so an unconfirmed calendar must never take a booking.
+//   · VISIT WORK (services.booking_model = 'visit': cleaners, landscapers, movers, mobile
+//     detailing) happens at the customer's address: the wizard asks WHERE before the
+//     details, calls the time an arrival time, and says "price confirmed on site" when
+//     the service carries no price — never "$0". See ~/lib/booking-shape.ts.
 //   · Renders nothing unless BOOKING.enabled. If enabled but the business has no active
 //     services or no open availability, it shows an honest "call to book" fallback
 //     rather than an empty/broken picker, never a dead end.
@@ -49,6 +68,7 @@ interface BookableService {
   description: string | null
   duration_minutes: number | null
   price: number | null
+  booking_model: 'slot' | 'day' | 'visit' | null
 }
 
 interface Availability {
@@ -66,7 +86,7 @@ interface CustomerInfo {
   notes: string
 }
 
-type Step = 'service' | 'date' | 'time' | 'details' | 'confirmed'
+type Step = 'service' | 'date' | 'time' | 'address' | 'details' | 'confirmed'
 
 const REST = `${SUPABASE_URL}/rest/v1`
 const CREATE_BOOKING = `${SUPABASE_URL}/functions/v1/create-booking`
@@ -215,6 +235,8 @@ export function BookingWizardBlock({
   const [loadError, setLoadError] = useState(false)
   const [services, setServices] = useState<BookableService[]>([])
   const [availability, setAvailability] = useState<Availability[]>([])
+  // null = the business has no website_config row (→ not live); undefined = not loaded yet.
+  const [features, setFeatures] = useState<BookingFeatures | null | undefined>(undefined)
 
   const [step, setStep] = useState<Step>('service')
   const [service, setService] = useState<BookableService | null>(null)
@@ -227,6 +249,11 @@ export function BookingWizardBlock({
     phone: '',
     notes: '',
   })
+  const [address, setAddress] = useState<ServiceAddress>({
+    ...EMPTY_ADDRESS,
+    state: (site as { address?: { state?: string } }).address?.state ?? '',
+  })
+  const [addressError, setAddressError] = useState<string | null>(null)
   const [submitting, setSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
 
@@ -236,20 +263,26 @@ export function BookingWizardBlock({
     let cancelled = false
     ;(async () => {
       try {
-        const [svcRes, availRes] = await Promise.all([
+        const [svcRes, availRes, cfgRes] = await Promise.all([
           fetch(
-            `${REST}/services?business_id=eq.${BUSINESS_ID}&is_active=eq.true&order=display_order,name&select=id,name,description,duration_minutes,price`,
+            `${REST}/services?business_id=eq.${BUSINESS_ID}&is_active=eq.true&bookable=eq.true&order=display_order,name&select=id,name,description,duration_minutes,price,booking_model`,
             { headers: ANON_HEADERS },
           ),
           fetch(
             `${REST}/availability?business_id=eq.${BUSINESS_ID}&is_available=eq.true&select=day_of_week,start_time,end_time,is_available`,
             { headers: ANON_HEADERS },
           ),
+          fetch(
+            `${REST}/website_config?business_id=eq.${BUSINESS_ID}&select=features_enabled`,
+            { headers: ANON_HEADERS },
+          ),
         ])
-        if (!svcRes.ok || !availRes.ok) throw new Error('load_failed')
+        if (!svcRes.ok || !availRes.ok || !cfgRes.ok) throw new Error('load_failed')
         const svc = (await svcRes.json()) as BookableService[]
         const avail = (await availRes.json()) as Availability[]
+        const cfg = (await cfgRes.json()) as Array<{ features_enabled: BookingFeatures | null }>
         if (cancelled) return
+        setFeatures(cfg[0]?.features_enabled ?? null)
         setServices(
           svc.map((s) => ({
             ...s,
@@ -278,11 +311,21 @@ export function BookingWizardBlock({
 
   if (!enabled) return null
 
-  // Honest fallback: enabled but nothing to book yet → offer the phone, never a dead end.
-  const emptyConfig = !loading && !loadError && (services.length === 0 || days.length === 0)
+  // The owner's switch + hours confirmation. Not live → "opens soon" + the phone.
+  const gate = bookingLive(features)
+  const notLive = !loading && !loadError && !gate.live
+  // Honest fallback: live but nothing to book yet → offer the phone, never a dead end.
+  const emptyConfig =
+    !loading && !loadError && gate.live && (services.length === 0 || days.length === 0)
+  const visit = isVisit(service)
 
   const submit = async () => {
     if (!service || !date || !time) return
+    if (visit && !addressComplete(address)) {
+      setAddressError(tr('booking.errAddress'))
+      setStep('address')
+      return
+    }
     setSubmitting(true)
     setSubmitError(null)
     try {
@@ -300,7 +343,19 @@ export function BookingWizardBlock({
             email: customer.email.trim(),
             phone: customer.phone.trim(),
             notes: customer.notes.trim(),
+            ...(visit
+              ? {
+                  address: {
+                    line1: address.line1.trim(),
+                    line2: address.line2.trim(),
+                    city: address.city.trim(),
+                    state: address.state.trim(),
+                    zip: address.zip.trim(),
+                  },
+                }
+              : {}),
           },
+          serviceLocation: visit ? 'customer_address' : 'business',
         }),
       })
       const data = (await res.json().catch(() => ({}))) as {
@@ -322,7 +377,7 @@ export function BookingWizardBlock({
     }
   }
 
-  const STEP_ORDER: Step[] = ['service', 'date', 'time', 'details']
+  const STEP_ORDER: Step[] = stepOrder(visit)
   const stepIndex = STEP_ORDER.indexOf(step)
 
   return (
@@ -353,7 +408,7 @@ export function BookingWizardBlock({
           </div>
 
           {/* Progress rail (hidden on the confirmation + fallback states) */}
-          {step !== 'confirmed' && !emptyConfig && !loadError && (
+          {step !== 'confirmed' && !emptyConfig && !notLive && !loadError && (
             <div className="mx-auto mt-10 flex max-w-md items-center gap-2">
               {STEP_ORDER.map((s, i) => (
                 <div key={s} className="flex flex-1 items-center gap-2">
@@ -400,11 +455,17 @@ export function BookingWizardBlock({
               <FallbackCard message={tr('booking.couldNotLoad')} />
             )}
 
+            {notLive && (
+              <div data-booking-gate={gate.reason}>
+                <FallbackCard message={tr('booking.notOpenYet')} />
+              </div>
+            )}
+
             {emptyConfig && (
               <FallbackCard message={tr('booking.fallback')} />
             )}
 
-            {!loading && !loadError && !emptyConfig && (
+            {!loading && !loadError && !notLive && !emptyConfig && (
               <AnimatePresence mode="wait" initial={false}>
                 <motion.div
                   key={step}
@@ -426,10 +487,16 @@ export function BookingWizardBlock({
                           onClick={() => setStep('date')}
                         />
                       )}
-                      {time && step === 'details' && (
+                      {time && (step === 'details' || step === 'address') && (
                         <SummaryChip
                           label={to12h(time)}
                           onClick={() => setStep('time')}
+                        />
+                      )}
+                      {visit && step === 'details' && addressComplete(address) && (
+                        <SummaryChip
+                          label={formatAddress(address)}
+                          onClick={() => setStep('address')}
                         />
                       )}
                     </div>
@@ -464,11 +531,22 @@ export function BookingWizardBlock({
                                 )}
                               </span>
                             </span>
-                            {formatPrice(s.price) && (
-                              <span className="shrink-0 font-display text-base font-semibold text-brand-700">
-                                {formatPrice(s.price)}
-                              </span>
-                            )}
+                            {(() => {
+                              const pl = priceLine(s, formatPrice)
+                              if (pl.kind === 'amount')
+                                return (
+                                  <span className="shrink-0 font-display text-base font-semibold text-brand-700">
+                                    {pl.text}
+                                  </span>
+                                )
+                              if (pl.kind === 'on_site')
+                                return (
+                                  <span className="shrink-0 text-sm text-ink-600">
+                                    {tr('booking.priceOnSite')}
+                                  </span>
+                                )
+                              return null
+                            })()}
                           </button>
                         ))}
                       </div>
@@ -520,7 +598,10 @@ export function BookingWizardBlock({
 
                   {/* STEP: time */}
                   {step === 'time' && (
-                    <StepShell title={tr('booking.chooseTime')} onBack={() => setStep('date')}>
+                    <StepShell
+                      title={visit ? tr('booking.arrivalTime') : tr('booking.chooseTime')}
+                      onBack={() => setStep('date')}
+                    >
                       {slots.length === 0 ? (
                         <p className="rounded-2xl border border-dashed px-5 py-8 text-center text-sm text-ink-600" style={{ borderColor: 'var(--wow-hairline)' }}>
                           {tr('booking.noOpenTimes')} 
@@ -543,7 +624,7 @@ export function BookingWizardBlock({
                                 type="button"
                                 onClick={() => {
                                   setTime(s)
-                                  setStep('details')
+                                  setStep(visit ? 'address' : 'details')
                                 }}
                                 className="rounded-xl border px-3 py-2.5 text-sm font-medium transition-all hover:-translate-y-0.5"
                                 style={
@@ -565,11 +646,83 @@ export function BookingWizardBlock({
                     </StepShell>
                   )}
 
+                  {/* STEP: address (visit work only — where the crew should come) */}
+                  {step === 'address' && (
+                    <StepShell
+                      title={tr('booking.whereShouldWeCome')}
+                      onBack={() => setStep('time')}
+                    >
+                      <form
+                        onSubmit={(e) => {
+                          e.preventDefault()
+                          if (!addressComplete(address)) {
+                            setAddressError(tr('booking.errAddress'))
+                            return
+                          }
+                          setAddressError(null)
+                          setStep('details')
+                        }}
+                        className="grid gap-4"
+                        data-booking-step="address"
+                      >
+                        <WField
+                          label={tr('form.addressLine1')}
+                          required
+                          value={address.line1}
+                          autoComplete="address-line1"
+                          onChange={(v) => setAddress((a) => ({ ...a, line1: v }))}
+                        />
+                        <WField
+                          label={tr('form.addressLine2')}
+                          value={address.line2}
+                          autoComplete="address-line2"
+                          onChange={(v) => setAddress((a) => ({ ...a, line2: v }))}
+                        />
+                        <div className="grid gap-4 sm:grid-cols-3">
+                          <WField
+                            label={tr('form.city')}
+                            required
+                            value={address.city}
+                            autoComplete="address-level2"
+                            onChange={(v) => setAddress((a) => ({ ...a, city: v }))}
+                          />
+                          <WField
+                            label={tr('form.state')}
+                            value={address.state}
+                            autoComplete="address-level1"
+                            onChange={(v) => setAddress((a) => ({ ...a, state: v }))}
+                          />
+                          <WField
+                            label={tr('form.zip')}
+                            required
+                            value={address.zip}
+                            autoComplete="postal-code"
+                            onChange={(v) => setAddress((a) => ({ ...a, zip: v }))}
+                          />
+                        </div>
+                        {addressError && (
+                          <p role="alert" className="text-sm text-red-600">
+                            {addressError}
+                          </p>
+                        )}
+                        <div className="mt-2">
+                          <button
+                            type="submit"
+                            className="inline-flex h-12 items-center justify-center gap-2 rounded-xl px-7 font-display text-sm font-semibold text-white transition-opacity hover:opacity-90"
+                            style={{ backgroundImage: 'var(--wow-grad-brand)' }}
+                          >
+                            {tr('booking.continue')}
+                          </button>
+                        </div>
+                      </form>
+                    </StepShell>
+                  )}
+
                   {/* STEP: details */}
                   {step === 'details' && (
                     <StepShell
                       title={tr('booking.yourDetails')}
-                      onBack={() => setStep('time')}
+                      onBack={() => setStep(visit ? 'address' : 'time')}
                     >
                       <form
                         onSubmit={(e) => {
@@ -651,7 +804,7 @@ export function BookingWizardBlock({
                                 <Loader2 className="h-4 w-4 animate-spin" />{tr('booking.submitting')}</>
                             ) : (
                               <>
-                                Confirm booking
+                                {tr('booking.confirmBooking')}
                                 {date && time && (
                                   <span className="opacity-90">
                                     · {formatDateLong(date)}, {to12h(time)}
@@ -704,9 +857,15 @@ export function BookingWizardBlock({
                 >
                   <Row Icon={Calendar} label={`${formatDateLong(date)} · ${to12h(time)}`} />
                   <Row Icon={Clock} label={formatDuration(service.duration_minutes) || service.name} />
-                  {formatPrice(service.price) && (
-                    <Row Icon={Check} label={formatPrice(service.price)} />
+                  {visit && (
+                    <Row Icon={MapPin} label={formatAddress(address) || tr('booking.atYourAddress')} />
                   )}
+                  {(() => {
+                    const pl = priceLine(service, formatPrice)
+                    if (pl.kind === 'amount') return <Row Icon={Check} label={pl.text} />
+                    if (pl.kind === 'on_site') return <Row Icon={Check} label={tr('booking.priceOnSite')} />
+                    return null
+                  })()}
                 </div>
               </motion.div>
             )}
