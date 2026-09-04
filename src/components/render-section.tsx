@@ -171,6 +171,7 @@ import { RelatedInfoBlock } from '~/components/blocks/RelatedInfoBlock'
 // Native self-service BOOKING wizard (Arc 4a · Stage 2) — self-gates on BOOKING.enabled.
 import { BookingWizardBlock } from '~/components/blocks/BookingWizardBlock'
 import { HAS_PHONE } from '~/lib/phone'
+import { HAS_EMAIL } from '~/lib/email'
 
 // ─────────────────────────────────────────────────────────────────────────────
 // SHARED SECTION RENDERER (Arc 3 · Stage B).
@@ -398,7 +399,7 @@ function ContactFormSection() {
     .join(', ')
   const rows = [
     HAS_PHONE ? { Icon: Phone, label: SITE.phoneDisplay, href: `tel:${SITE.phone}` } : null,
-    { Icon: Mail, label: SITE.email, href: `mailto:${SITE.email}` },
+    HAS_EMAIL ? { Icon: Mail, label: SITE.email, href: `mailto:${SITE.email}` } : null,
     addr ? { Icon: MapPin, label: addr } : null,
     SITE.hours ? { Icon: Clock, label: SITE.hours } : null,
   ].filter(Boolean) as { Icon: typeof Phone; label: string; href?: string }[]

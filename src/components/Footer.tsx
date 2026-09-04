@@ -9,6 +9,7 @@ import { CUSTOM_PAGES } from "~/data/custom-pages";
 import defaultLeaves from "~/assets/decorative/cleaning-leaves.png";
 import { tr } from "~/lib/i18n";
 import { HAS_PHONE } from '~/lib/phone'
+import { HAS_EMAIL } from '~/lib/email'
 
 const HIDDEN_NAV: string[] = (SITE as { hiddenNav?: string[] }).hiddenNav ?? [];
 
@@ -125,7 +126,7 @@ function ContactCol({ t }: { t: FooterTheme }) {
       <h4 className={`text-sm font-semibold mb-4 ${t.heading}`}>{tr('footer.getInTouch')}</h4>
       <ul className={`space-y-3 text-sm ${t.listText}`}>
         {HAS_PHONE && <li className="flex items-start gap-2"><Phone className="h-4 w-4 mt-0.5 shrink-0" /><a href={`tel:${SITE.phone}`} className={t.listHover}>{SITE.phoneDisplay}</a></li>}
-        <li className="flex items-start gap-2"><Mail className="h-4 w-4 mt-0.5 shrink-0" /><a href={`mailto:${SITE.email}`} className={`${t.listHover} break-all`}>{SITE.email}</a></li>
+        {HAS_EMAIL && <li className="flex items-start gap-2"><Mail className="h-4 w-4 mt-0.5 shrink-0" /><a href={`mailto:${SITE.email}`} className={`${t.listHover} break-all`}>{SITE.email}</a></li>}
         {loc && <li className="flex items-start gap-2"><MapPin className="h-4 w-4 mt-0.5 shrink-0" /><span>{loc}</span></li>}
         {SITE.hours && <li className="flex items-start gap-2"><Clock className="h-4 w-4 mt-0.5 shrink-0" /><span>{SITE.hours}</span></li>}
       </ul>
@@ -219,7 +220,7 @@ function FooterEditorial({ t }: { t: FooterTheme }) {
             <h4 className={`${capLabel} mb-4 ${t.heading}`}>{tr('footer.getInTouch')}</h4>
             <ul className={`space-y-2.5 text-sm ${t.listText}`}>
               {HAS_PHONE && <li><a href={`tel:${SITE.phone}`} className={t.listHover}>{SITE.phoneDisplay}</a></li>}
-              <li><a href={`mailto:${SITE.email}`} className={`${t.listHover} break-all`}>{SITE.email}</a></li>
+              {HAS_EMAIL && <li><a href={`mailto:${SITE.email}`} className={`${t.listHover} break-all`}>{SITE.email}</a></li>}
               {loc && <li>{loc}</li>}
               {SITE.hours && <li>{SITE.hours}</li>}
             </ul>
@@ -239,7 +240,7 @@ function FooterCtaBand({ t, ctaTitle, rounded }: { t: FooterTheme; ctaTitle: str
         <div className={`flex flex-col items-start justify-between gap-6 ${rounded ? 'rounded-3xl' : 'rounded-xl'} border ${t.border} px-8 py-10 sm:flex-row sm:items-center`}>
           <div>
             <div className={`font-display text-2xl font-bold sm:text-3xl ${t.heading}`}>{ctaTitle}</div>
-            <div className={`mt-2 text-sm ${t.tagline}`}>{SITE.phoneDisplay} · {SITE.email}</div>
+            {(HAS_PHONE || HAS_EMAIL) && <div className={`mt-2 text-sm ${t.tagline}`}>{[HAS_PHONE ? SITE.phoneDisplay : "", HAS_EMAIL ? SITE.email : ""].filter(Boolean).join(" · ")}</div>}
           </div>
           {HAS_PHONE && (<a href={`tel:${SITE.phone}`} className={`inline-flex h-12 items-center gap-2 ${rounded ? 'rounded-2xl' : 'rounded-lg'} bg-primary px-7 font-display text-sm font-semibold text-primary-foreground shadow-lg transition-transform hover:-translate-y-0.5`}>
             {tr('cta.getInTouch')} <ArrowRight className="h-4 w-4" />
@@ -278,7 +279,7 @@ function FooterMinimal({ t }: { t: FooterTheme }) {
         </div>
         <div className={`mt-10 flex flex-wrap items-center gap-x-8 gap-y-2 text-sm ${t.listText}`}>
           {HAS_PHONE && (<a href={`tel:${SITE.phone}`} className={t.listHover}>{SITE.phoneDisplay}</a>)}
-          <a href={`mailto:${SITE.email}`} className={t.listHover}>{SITE.email}</a>
+          {HAS_EMAIL && <a href={`mailto:${SITE.email}`} className={t.listHover}>{SITE.email}</a>}
           {loc && <span>{loc}</span>}
           {SITE.hours && <span>{SITE.hours}</span>}
         </div>

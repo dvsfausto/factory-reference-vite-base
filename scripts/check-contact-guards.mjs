@@ -11,6 +11,7 @@ const walk = (d) => { for (const n of readdirSync(d)) { const p = join(d, n); st
 walk('src')
 const RULES = [
   { name: 'tel', re: /tel:\$\{(?:site|SITE)\.phone\}/g, guards: [/HAS_PHONE\s*(?:&&|\?)/, /hasPhone\([^)]*\)\s*(?:&&|\?)/] },
+  { name: 'mailto', re: /mailto:\$\{(?:site|SITE)\.email\}/g, guards: [/HAS_EMAIL\s*(?:&&|\?)/, /hasEmail\([^)]*\)\s*(?:&&|\?)/, /(?:site|SITE)\.email\s*(?:&&|\?)/] },
 ]
 const bad = []
 for (const f of files) {

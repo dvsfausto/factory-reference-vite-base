@@ -6,6 +6,7 @@ import { SITE } from '~/data/site'
 import { submitLead, type LeadStatus } from './forms-submit'
 import { Field, Textarea, SubmitButton, SuccessCard } from './form-ui'
 import { HAS_PHONE } from '~/lib/phone'
+import { hasEmail } from '~/lib/email'
 
 // Forms VARIANT: 'brand-split', a WOW split at the conversion point: a full
 // brand-gradient side panel (heading + the REAL business contact details) beside
@@ -71,7 +72,7 @@ export function FormBrandSplitBlock({
   const addr = [site.address.street, site.address.city, site.address.state].filter(Boolean).join(', ')
   const rows = [
     HAS_PHONE ? { Icon: Phone, label: site.phoneDisplay, href: `tel:${site.phone}` } : null,
-    { Icon: Mail, label: site.email, href: `mailto:${site.email}` },
+    hasEmail(site.email) ? { Icon: Mail, label: site.email, href: `mailto:${site.email}` } : null,
     addr ? { Icon: MapPin, label: addr } : null,
     site.hours ? { Icon: Clock, label: site.hours } : null,
   ].filter(Boolean) as { Icon: typeof Phone; label: string; href?: string }[]
