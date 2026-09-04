@@ -8,13 +8,18 @@ import { primaryCta } from "~/lib/primaryCta";
 import { PAGED_SERVICES as SERVICES } from "~/data/services-view";
 import { AREAS } from "~/data/areas";
 import { CUSTOM_PAGES } from "~/data/custom-pages";
+import { reviews as REVIEWS } from '~/data/reviews'
 import { tr } from "~/lib/i18n";
 
 import { HAS_PHONE } from '~/lib/phone'
 // PRAISE-61 — nav links a customer chose to hide from the menu (design_dna.chrome.nav.hidden →
 // SITE.hiddenNav). ABSENT/empty → nothing filtered → byte-identical to today. Filtering only; the
 // pages still exist and are reachable by URL. Keys: pricing/reviews/about/contact.
-const HIDDEN_NAV: string[] = (SITE as { hiddenNav?: string[] }).hiddenNav ?? [];
+const HIDDEN_NAV: string[] = [
+  ...((SITE as { hiddenNav?: string[] }).hiddenNav ?? []),
+  // 2026-09-04: /reviews 404s with no reviews (routes/reviews.tsx), so the link goes with it.
+  ...(REVIEWS.length === 0 ? ['reviews'] : []),
+];
 
 // Character-aware root header. The shell sees SITE (not the homepage layout), so
 // it picks its treatment from SITE.character (emitted by the scaffolder only for

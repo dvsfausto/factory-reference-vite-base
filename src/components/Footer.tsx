@@ -10,8 +10,12 @@ import defaultLeaves from "~/assets/decorative/cleaning-leaves.png";
 import { tr } from "~/lib/i18n";
 import { HAS_PHONE } from '~/lib/phone'
 import { HAS_EMAIL } from '~/lib/email'
+import { reviews as REVIEWS } from '~/data/reviews'
 
-const HIDDEN_NAV: string[] = (SITE as { hiddenNav?: string[] }).hiddenNav ?? [];
+const HIDDEN_NAV: string[] = [
+  ...((SITE as { hiddenNav?: string[] }).hiddenNav ?? []),
+  ...(REVIEWS.length === 0 ? ['reviews'] : []), // /reviews 404s with no reviews (routes/reviews.tsx)
+];
 
 // ─── FOOTER = family-differentiated CHROME. ───────────────────────────────────────────────────────────
 // The footer was ONE 5-column grid with per-character COLOR themes — so under the style-family system (which

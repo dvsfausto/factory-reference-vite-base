@@ -1,4 +1,5 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, notFound } from '@tanstack/react-router'
+import { reviews as REVIEWS } from '~/data/reviews'
 import { tr } from '~/lib/i18n'
 import { buildMeta, breadcrumbLd } from '~/lib/seo'
 import { SITE } from '~/data/site'
@@ -6,6 +7,13 @@ import { REVIEWS_LAYOUT } from '~/data/reviews-layout'
 import { SectionList } from '~/components/render-section'
 
 export const Route = createFileRoute('/reviews')({
+  // ★ DATA-GATED (2026-09-04): with no reviews the page is a heading above nothing ("Verified customer
+  //   reviews…" on 57 of 61 live sites). Like /services and /areas on an empty list, it does not exist:
+  //   404 here, no nav link (Header/Footer read the same list), no sitemap entry (the emitter drops it).
+  //   The first real review the owner pastes brings all three back — every gate reads REVIEWS.
+  loader: () => {
+    if (REVIEWS.length === 0) throw notFound()
+  },
   head: () =>
     ({ ...buildMeta({
       title: `${tr('nav.reviews')} | ${SITE.name}`,
