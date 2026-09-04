@@ -4,6 +4,7 @@ import { SITE } from '~/data/site'
 import { submitLead, type LeadStatus } from './forms-submit'
 import { Field, Textarea, SubmitButton, SuccessCard } from './form-ui'
 
+import { hasPhone } from '~/lib/phone'
 // Forms LAYOUT: 'booking', an appointment-request form (preferred date + time).
 // Character-agnostic. Posts the confirmed handle-website-lead envelope
 // (source_page 'booking'); the date/time are FOLDED INTO message (no new payload
@@ -95,12 +96,12 @@ export function FormBookingBlock({
                 {status === 'error' && error && <p className="mt-4 text-sm text-red-600">{error}</p>}
                 <div className="mt-8 flex flex-wrap items-center gap-4">
                   <SubmitButton status={status} />
-                  <span className="text-sm text-[#64748B]">
+                  {hasPhone(site.phone) && (<span className="text-sm text-[#64748B]">
                     Or call{' '}
                     <a href={`tel:${site.phone}`} className="font-medium text-emerald-700 underline-offset-2 hover:underline">
                       {site.phoneDisplay}
                     </a>
-                  </span>
+                  </span>)}
                 </div>
               </form>
             )}

@@ -4,6 +4,7 @@ import { ArrowRight, Phone } from 'lucide-react'
 import { elegantSurface } from '~/lib/elegant-surface'
 import { SITE } from '~/data/site'
 
+import { hasPhone } from '~/lib/phone'
 // CTA VARIANT: 'elegant', refined close. Identity copy from SITE.homeCta. Surface
 // from elegantSurface(): LIGHT by default (warm ivory band), DARK on opt-in
 // (espresso band, the original, byte-identical). A thin emerald rule, a refined
@@ -49,12 +50,12 @@ export function CtaElegantBlock({
             >
               {ctaLabel} <ArrowRight className="h-4 w-4" />
             </PrimaryCta>
-            <a
+            {hasPhone(site.phone) && (<a
               href={`tel:${site.phone}`}
               className={`inline-flex h-[54px] items-center gap-2 rounded-lg border border-emerald-600/60 px-7 font-medium ${s.text} transition-colors hover:border-emerald-600 hover:bg-emerald-600/10`}
             >
               <Phone className="h-4 w-4" /> {site.phoneDisplay}
-            </a>
+            </a>)}
           </div>
         </div>
       </div>

@@ -3,6 +3,7 @@ import { tr } from '~/lib/i18n'
 import { ArrowRight, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 
+import { hasPhone } from '~/lib/phone'
 // CTA VARIANT: 'modern', clean, restrained close. Identity copy from SITE.homeCta.
 // A simple centered block with generous whitespace on white, a large geometric-
 // sans headline, a brand CTA. No script, no leaf sprites, no brand gradient.
@@ -46,12 +47,12 @@ export function CtaModernBlock({
             >
               {ctaLabel} <ArrowRight className="h-4 w-4" />
             </PrimaryCta>
-            <a
+            {hasPhone(site.phone) && (<a
               href={`tel:${site.phone}`}
               className="inline-flex h-[52px] items-center gap-2 rounded-xl border border-[#E6E8EC] px-6 font-display font-semibold text-[#0F172A] transition-colors hover:border-emerald-600 hover:text-emerald-700"
             >
               <Phone className="h-4 w-4 text-emerald-600" /> {site.phoneDisplay}
-            </a>
+            </a>)}
           </div>
         </div>
       </div>

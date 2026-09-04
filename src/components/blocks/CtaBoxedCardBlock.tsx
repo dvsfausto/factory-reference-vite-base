@@ -3,6 +3,7 @@ import { tr } from '~/lib/i18n'
 import { ArrowRight, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 
+import { hasPhone } from '~/lib/phone'
 // CTA LAYOUT: 'boxed-card', the close lives inside a single elevated dark card
 // floating on a light section, rather than spanning a full-width band. Character-
 // agnostic. The contained, shadowed card reads as a deliberate object on the page
@@ -52,12 +53,12 @@ export function CtaBoxedCardBlock({
               className="inline-flex h-[54px] items-center gap-2 rounded-xl bg-primary px-8 font-display text-base font-semibold text-primary-foreground transition-opacity hover:opacity-90"
             >{tr('section.getStarted')}<ArrowRight className="h-4 w-4" />
             </PrimaryCta>
-            <a
+            {hasPhone(site.phone) && (<a
               href={`tel:${site.phone}`}
               className="inline-flex h-[54px] items-center gap-2 rounded-xl border border-white/25 px-7 font-display font-semibold text-white transition-colors hover:border-emerald-600 hover:text-emerald-100"
             >
               <Phone className="h-4 w-4 text-emerald-100" /> {site.phoneDisplay}
-            </a>
+            </a>)}
           </div>
         </div>
       </div>

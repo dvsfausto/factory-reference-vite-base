@@ -4,6 +4,7 @@ import { SITE } from '~/data/site'
 import { submitLead, type LeadStatus } from './forms-submit'
 import { Field, Textarea, SubmitButton, SuccessCard } from './form-ui'
 
+import { hasPhone } from '~/lib/phone'
 // Forms LAYOUT: 'contact', a clean, centered general contact form. Character-
 // agnostic. Posts the confirmed handle-website-lead envelope via submitLead
 // (source_page 'contact'). The conversion point, trustworthy, DNA-tokened.
@@ -86,12 +87,12 @@ export function FormContactBlock({
                 {status === 'error' && error && <p className="mt-4 text-sm text-red-600">{error}</p>}
                 <div className="mt-8 flex flex-wrap items-center gap-4">
                   <SubmitButton status={status} />
-                  <span className="text-sm text-[#64748B]">
+                  {hasPhone(site.phone) && (<span className="text-sm text-[#64748B]">
                     Or call{' '}
                     <a href={`tel:${site.phone}`} className="font-medium text-emerald-700 underline-offset-2 hover:underline">
                       {site.phoneDisplay}
                     </a>
-                  </span>
+                  </span>)}
                 </div>
               </form>
             )}

@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { ArrowRight, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 
+import { hasPhone } from '~/lib/phone'
 // CTA VARIANT: 'glass-panel', a boxed, frosted-glass CTA card that floats over
 // a soft radial brand-tinted section. A brand hairline frames the card, a deep
 // lift shadow raises it off the surface, and a gradient accent rule tops the copy.
@@ -95,13 +96,13 @@ export function CtaGlassPanelBlock({
               >
                 {label} <ArrowRight className="h-4 w-4" />
               </PrimaryCta>
-              <a
+              {hasPhone(site.phone) && (<a
                 href={`tel:${site.phone}`}
                 className="inline-flex h-[52px] items-center gap-2 rounded-full border px-6 font-semibold text-brand-800 transition-colors hover:bg-brand-50"
                 style={{ borderColor: 'var(--wow-hairline)' }}
               >
                 <Phone className="h-4 w-4" /> {site.phoneDisplay}
-              </a>
+              </a>)}
             </div>
           </div>
         </motion.div>

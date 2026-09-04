@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
-    "build": "node scripts/check-display-name-seam.mjs && node scripts/check-image-transform.mjs && node scripts/check-booking-shape.mjs && vite build && tsc --noEmit",
+    "build": "node scripts/check-display-name-seam.mjs && node scripts/check-image-transform.mjs && node scripts/check-booking-shape.mjs && node scripts/check-contact-guards.mjs && vite build && tsc --noEmit",
     "preview": "vite preview",
     "start": "node .output/server/index.mjs",
     "lint:honesty": "node scripts/check-no-credential-claims.mjs",

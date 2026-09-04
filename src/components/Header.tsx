@@ -10,6 +10,7 @@ import { AREAS } from "~/data/areas";
 import { CUSTOM_PAGES } from "~/data/custom-pages";
 import { tr } from "~/lib/i18n";
 
+import { HAS_PHONE } from '~/lib/phone'
 // PRAISE-61 — nav links a customer chose to hide from the menu (design_dna.chrome.nav.hidden →
 // SITE.hiddenNav). ABSENT/empty → nothing filtered → byte-identical to today. Filtering only; the
 // pages still exist and are reachable by URL. Keys: pricing/reviews/about/contact.
@@ -427,7 +428,7 @@ export function Header() {
     </>
   );
 
-  const phoneCluster = (
+  const phoneCluster = HAS_PHONE && (
     <a href={`tel:${SITE.phone}`} className={`flex items-center gap-1.5 text-sm font-semibold ${t.phoneLink} focus-ring rounded-md px-2 py-1`}>
       <Phone className="h-4 w-4" />
       {SITE.phoneDisplay}
@@ -528,7 +529,7 @@ export function Header() {
                 </div>
                 <div className="flex items-center gap-6">
                   {SITE.email && <a href={`mailto:${SITE.email}`} className="hover:underline">{SITE.email}</a>}
-                  <a href={`tel:${SITE.phone}`} className={`font-semibold ${t.phoneLink}`}>{SITE.phoneDisplay}</a>
+                  {HAS_PHONE && (<a href={`tel:${SITE.phone}`} className={`font-semibold ${t.phoneLink}`}>{SITE.phoneDisplay}</a>)}
                 </div>
               </div>
             </div>
@@ -587,9 +588,9 @@ export function Header() {
               ))}
             </div>
             <div className={`pt-4 border-t ${t.mobileBorder} space-y-3`}>
-              <a href={`tel:${SITE.phone}`} className={`flex items-center gap-2 text-base font-semibold ${t.mobilePhone}`}>
+              {HAS_PHONE && (<a href={`tel:${SITE.phone}`} className={`flex items-center gap-2 text-base font-semibold ${t.mobilePhone}`}>
                 <Phone className="h-5 w-5" /> {SITE.phoneDisplay}
-              </a>
+              </a>)}
               <PrimaryCta onClick={() => setOpen(false)} className={t.mobileCta}>
                 {headerCtaLabel}
               </PrimaryCta>

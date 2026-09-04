@@ -6,6 +6,7 @@ import { SITE } from '~/data/site'
 import { HERO_ALT } from '~/data/images'
 import { imageSrc } from '~/lib/asset-url'
 
+import { hasPhone } from '~/lib/phone'
 // Hero VARIANT: 'elegant'. Two compositions by surface mode (the scrim-over-photo
 // dark hero can't simply go light, light needs its own layout):
 //   · DARK (opt-in, design_dna.surface='dark'), a full-bleed photo under a warm
@@ -88,12 +89,12 @@ export function HeroElegantBlock({
               >
                 {ctaLabel} <ArrowRight className="h-4 w-4" />
               </PrimaryCta>
-              <a
+              {hasPhone(site.phone) && (<a
                 href={`tel:${site.phone}`}
                 className="inline-flex h-[54px] items-center gap-2 rounded-lg border border-emerald-600/60 px-7 font-medium text-[#F2E8DC] transition-colors hover:border-emerald-600 hover:bg-emerald-600/10"
               >
                 <Phone className="h-4 w-4" /> {site.phoneDisplay}
-              </a>
+              </a>)}
             </div>
 
             {/* Refined trust row, a thin amber-ruled line, not a loud banner. */}
@@ -161,9 +162,9 @@ export function HeroElegantBlock({
               <PrimaryCta className="inline-flex h-[54px] items-center gap-2 rounded-lg bg-primary px-8 font-display text-base font-medium tracking-wide text-primary-foreground transition-opacity hover:opacity-90">
                 {ctaLabel} <ArrowRight className="h-4 w-4" />
               </PrimaryCta>
-              <a href={`tel:${site.phone}`} className="inline-flex items-center gap-2 font-display font-medium text-[#2B2620] underline-offset-4 transition-colors hover:text-emerald-800 hover:underline">
+              {hasPhone(site.phone) && (<a href={`tel:${site.phone}`} className="inline-flex items-center gap-2 font-display font-medium text-[#2B2620] underline-offset-4 transition-colors hover:text-emerald-800 hover:underline">
                 <Phone className="h-4 w-4 text-emerald-700" /> {site.phoneDisplay}
-              </a>
+              </a>)}
             </div>
           </div>
         </div>

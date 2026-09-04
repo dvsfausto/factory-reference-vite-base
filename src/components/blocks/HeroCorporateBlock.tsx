@@ -6,6 +6,7 @@ import { SITE } from '~/data/site'
 import { HERO_ALT } from '~/data/images'
 import { imageSrc } from '~/lib/asset-url'
 
+import { hasPhone } from '~/lib/phone'
 // Hero VARIANT: 'corporate', formal, structured, authoritative. A dense split
 // with a heavy grotesque headline, a framed image, and a foregrounded
 // CREDENTIALS strip (bordered cells, not pills), trust signals up front, the
@@ -75,12 +76,12 @@ export function HeroCorporateBlock({
               >
                 {ctaLabel} <ArrowRight className="h-4 w-4" />
               </PrimaryCta>
-              <a
+              {hasPhone(site.phone) && (<a
                 href={`tel:${site.phone}`}
                 className="inline-flex h-[52px] items-center gap-2 rounded-md border border-[#D8DEE7] px-6 font-display font-semibold text-[#1A2433] transition-colors hover:border-emerald-600 hover:text-emerald-700"
               >
                 <Phone className="h-4 w-4 text-emerald-600" /> {site.phoneDisplay}
-              </a>
+              </a>)}
             </div>
           </motion.div>
 

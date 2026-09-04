@@ -3,6 +3,7 @@ import { tr } from '~/lib/i18n'
 import { ArrowRight, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 
+import { hasPhone } from '~/lib/phone'
 // CTA LAYOUT: 'color-block', a bold, intentional field of the brand color filling
 // the full section, with the close set in inverted type on top. Character-agnostic.
 // The saturated brand band is the design: high-contrast, confident, impossible to
@@ -53,12 +54,12 @@ export function CtaColorBlock({
               className="inline-flex h-[54px] items-center gap-2 rounded-xl bg-white px-8 font-display text-base font-semibold text-[#0F172A] transition-transform hover:-translate-y-0.5"
             >{tr('section.getStarted')}<ArrowRight className="h-4 w-4" />
             </PrimaryCta>
-            <a
+            {hasPhone(site.phone) && (<a
               href={`tel:${site.phone}`}
               className="inline-flex h-[54px] items-center gap-2 rounded-xl border border-primary-foreground/40 px-7 font-display font-semibold text-primary-foreground transition-colors hover:bg-primary-foreground/10"
             >
               <Phone className="h-4 w-4" /> {site.phoneDisplay}
-            </a>
+            </a>)}
           </div>
         </div>
       </div>

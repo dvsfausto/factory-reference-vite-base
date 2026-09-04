@@ -3,6 +3,7 @@ import { tr } from '~/lib/i18n'
 import { ArrowRight, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 
+import { hasPhone } from '~/lib/phone'
 // CTA VARIANT: 'friendly', warm, inviting close. Identity copy from SITE.homeCta.
 // A soft coral-tinted rounded panel (centered, welcoming), rounded friendly type,
 // a rounded brand CTA. No script, no leaf sprites, no brand gradient. Prop
@@ -40,12 +41,12 @@ export function CtaFriendlyBlock({
             >
               {ctaLabel} <ArrowRight className="h-4 w-4" />
             </PrimaryCta>
-            <a
+            {hasPhone(site.phone) && (<a
               href={`tel:${site.phone}`}
               className="inline-flex h-[54px] items-center gap-2 rounded-2xl border-2 border-emerald-600/40 bg-white px-7 font-display font-semibold text-[#3D3530] transition-colors hover:border-emerald-600 hover:bg-emerald-50"
             >
               <Phone className="h-4 w-4 text-emerald-600" /> {site.phoneDisplay}
-            </a>
+            </a>)}
           </div>
         </div>
       </div>

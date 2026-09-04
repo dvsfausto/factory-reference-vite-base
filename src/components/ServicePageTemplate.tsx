@@ -13,6 +13,7 @@ import { isRelatedServiceVisible } from "~/data/services-view";
 import leaves from "~/assets/decorative/cleaning-leaves.png";
 import type { ServicePageData } from "~/lib/types/page-types";
 
+import { HAS_PHONE } from '~/lib/phone'
 interface Props {
   data: ServicePageData;
 }
@@ -126,9 +127,9 @@ export function ServicePageTemplate({ data }: Props) {
                 <Link to="/contact" className="btn btn-lg btn-primary">
                   {((SITE as { ctaLabel?: string }).ctaLabel ?? tr('cta.getFreeQuote')) + " "}<ArrowRight className="h-4 w-4" />
                 </Link>
-                <a href={`tel:${SITE.phone}`} className="btn btn-lg btn-secondary">
+                {HAS_PHONE && (<a href={`tel:${SITE.phone}`} className="btn btn-lg btn-secondary">
                   <Phone className="h-4 w-4" /> {SITE.phoneDisplay}
-                </a>
+                </a>)}
               </div>
             </div>
             <div className="lg:col-span-5">

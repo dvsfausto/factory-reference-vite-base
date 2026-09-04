@@ -6,6 +6,7 @@ import { SITE } from '~/data/site'
 import { HERO_ALT } from '~/data/images'
 import { imageSrc } from '~/lib/asset-url'
 
+import { hasPhone } from '~/lib/phone'
 // Hero LAYOUT: 'centered', the same modern, light-cool character as
 // HeroModernBlock, re-laid as a single centered column instead of a left/right
 // split. Headline, subheadline, body, CTAs and trust row stack and center on a
@@ -64,12 +65,12 @@ export function HeroCenteredBlock({
             >
               {site.hero.cta_primary_label} <ArrowRight className="h-4 w-4" />
             </PrimaryCta>
-            <a
+            {hasPhone(site.phone) && (<a
               href={`tel:${site.phone}`}
               className="inline-flex h-[52px] items-center gap-2 rounded-xl border border-[#E6E8EC] px-6 font-display font-semibold text-[#0F172A] transition-colors hover:border-emerald-600 hover:text-emerald-700"
             >
               <Phone className="h-4 w-4 text-emerald-600" /> {site.phoneDisplay}
-            </a>
+            </a>)}
           </div>
 
           <div className="mt-10 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-[#64748B]">

@@ -3,6 +3,7 @@ import { tr } from '~/lib/i18n'
 import { ArrowUpRight, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 
+import { hasPhone } from '~/lib/phone'
 // CTA VARIANT: 'creative', the signature color-forward statement: a full vivid
 // magenta color block (the DNA accent used as the whole surface field), an
 // oversized expressive headline, and a bold brand CTA. The boldest, most
@@ -45,12 +46,12 @@ export function CtaCreativeBlock({
               className="inline-flex h-[56px] items-center gap-2 rounded-2xl bg-primary px-8 font-display text-base font-bold text-primary-foreground transition-transform hover:-translate-y-0.5"
             >{tr('cta.startProject')}<ArrowUpRight className="h-5 w-5" />
             </PrimaryCta>
-            <a
+            {hasPhone(site.phone) && (<a
               href={`tel:${site.phone}`}
               className="inline-flex h-[56px] items-center gap-2 rounded-2xl border-2 border-white px-7 font-display font-bold text-white transition-colors hover:bg-white hover:text-emerald-700"
             >
               <Phone className="h-4 w-4" /> {site.phoneDisplay}
-            </a>
+            </a>)}
           </div>
         </div>
       </div>

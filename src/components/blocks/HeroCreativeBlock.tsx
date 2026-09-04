@@ -6,6 +6,7 @@ import { SITE } from '~/data/site'
 import { HERO_ALT } from '~/data/images'
 import { imageSrc } from '~/lib/asset-url'
 
+import { hasPhone } from '~/lib/phone'
 // Hero VARIANT: 'creative', expressive, color-forward, asymmetric-within-section.
 // An off-balance split (uneven columns), an oversized display headline, and an
 // image overlapped by a vivid magenta blob + a big rounded color field behind it.
@@ -78,12 +79,12 @@ export function HeroCreativeBlock({
               >
                 {ctaLabel} <ArrowRight className="h-4 w-4" />
               </PrimaryCta>
-              <a
+              {hasPhone(site.phone) && (<a
                 href={`tel:${site.phone}`}
                 className="inline-flex h-[56px] items-center gap-2 rounded-2xl border-2 border-[#18181B] px-7 font-display font-bold text-[#18181B] transition-colors hover:bg-emerald-600 hover:border-emerald-600 hover:text-white"
               >
                 <Phone className="h-4 w-4" /> {site.phoneDisplay}
-              </a>
+              </a>)}
             </div>
 
             <div className="mt-10 flex flex-wrap gap-x-6 gap-y-2 text-sm font-medium text-[#71717A]">

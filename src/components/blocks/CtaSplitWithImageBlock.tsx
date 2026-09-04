@@ -5,6 +5,7 @@ import { SITE } from '~/data/site'
 import { HERO_ALT } from '~/data/images'
 import { imageSrc } from '~/lib/asset-url'
 
+import { hasPhone } from '~/lib/phone'
 // CTA LAYOUT: 'split-with-image', the close set beside a supporting photo: text
 // and actions in one column, a framed image in the other. Character-agnostic. The
 // image gives the final ask a human, concrete anchor instead of a bare band.
@@ -53,12 +54,12 @@ export function CtaSplitWithImageBlock({
                 className="inline-flex h-[52px] items-center gap-2 rounded-xl bg-primary px-7 font-display text-base font-semibold text-primary-foreground transition-opacity hover:opacity-90"
               >{tr('section.getStarted')}<ArrowRight className="h-4 w-4" />
               </PrimaryCta>
-              <a
+              {hasPhone(site.phone) && (<a
                 href={`tel:${site.phone}`}
                 className="inline-flex h-[52px] items-center gap-2 rounded-xl border border-[#E6E8EC] bg-white px-6 font-display font-semibold text-[#0F172A] transition-colors hover:border-emerald-600 hover:text-emerald-700"
               >
                 <Phone className="h-4 w-4 text-emerald-600" /> {site.phoneDisplay}
-              </a>
+              </a>)}
             </div>
           </div>
           <div className="overflow-hidden rounded-3xl border border-[#E6E8EC] shadow-sm">

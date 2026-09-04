@@ -3,6 +3,7 @@ import { tr } from '~/lib/i18n'
 import { ArrowRight, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 
+import { hasPhone } from '~/lib/phone'
 // CTA VARIANT: 'corporate', a formal, authoritative close on a deep navy band.
 // Identity copy from SITE.homeCta. Heavy grotesque headline, structured, a brand
 // CTA. No script, no leaf sprites, no soft gradient. Prop signature identical to
@@ -46,12 +47,12 @@ export function CtaCorporateBlock({
             >
               {ctaLabel} <ArrowRight className="h-4 w-4" />
             </PrimaryCta>
-            <a
+            {hasPhone(site.phone) && (<a
               href={`tel:${site.phone}`}
               className="inline-flex h-[52px] items-center gap-2 rounded-md border border-white/30 px-6 font-display font-semibold text-white transition-colors hover:border-white hover:bg-white/10"
             >
               <Phone className="h-4 w-4" /> {site.phoneDisplay}
-            </a>
+            </a>)}
           </div>
         </div>
       </div>

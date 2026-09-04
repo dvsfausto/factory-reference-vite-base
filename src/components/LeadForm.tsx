@@ -2,6 +2,7 @@ import { useState, useId } from 'react'
 import { tr } from '~/lib/i18n'
 import { BUSINESS_ID, SITE, SITE_KEY, SITE_LANGUAGE, SUPABASE_ENDPOINT } from '~/data/site'
 
+import { HAS_PHONE } from '~/lib/phone'
 interface Props {
   heading?: string
   sublabel?: string
@@ -154,7 +155,9 @@ export function LeadForm({
     } catch {
       setStatus('error')
       setErrorMessage(
-        `We couldn't send your request. Please call us directly at ${SITE.phoneDisplay}.`,
+        HAS_PHONE
+          ? `We couldn't send your request. Please call us directly at ${SITE.phoneDisplay}.`
+          : `We couldn't send your request. Please try again in a moment.`,
       )
     }
   }
@@ -164,15 +167,17 @@ export function LeadForm({
       <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-8 text-center">
         <h3 className="text-2xl font-bold text-slate-900">Thanks, we got it.</h3>
         <p className="mt-3 text-base leading-relaxed text-slate-700">
-          We&apos;ll be in touch within a business day. If it&apos;s urgent,
-          call us at{' '}
-          <a
-            href={`tel:${SITE.phone}`}
-            className="font-semibold text-emerald-700 hover:underline"
-          >
-            {SITE.phoneDisplay}
-          </a>
-          .
+          We&apos;ll be in touch within a business day.
+          {HAS_PHONE && (<>
+            {' '}If it&apos;s urgent, call us at{' '}
+            <a
+              href={`tel:${SITE.phone}`}
+              className="font-semibold text-emerald-700 hover:underline"
+            >
+              {SITE.phoneDisplay}
+            </a>
+            .
+          </>)}
         </p>
       </div>
     )

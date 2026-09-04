@@ -5,6 +5,7 @@ import { useCatalogServices } from '~/lib/useCatalogServices'
 import { submitQuoteRequest, type LeadStatus } from './forms-submit'
 import { Field, Textarea, SubmitButton, SuccessCard } from './form-ui'
 
+import { hasPhone } from '~/lib/phone'
 // Forms LAYOUT: 'quote', the CATALOG quote-request widget (the pattern booking/cart copy). It lists
 // only the owner's QUOTABLE services (services.action === 'quote', forwarded by the scaffolder) and
 // files a STRUCTURED quote_request via request-quote → the owner's Requests tab (not a generic lead).
@@ -148,12 +149,12 @@ export function FormQuoteBlock({
                 {status === 'error' && error && <p className="mt-4 text-sm text-red-600">{error}</p>}
                 <div className="mt-8 flex flex-wrap items-center gap-4">
                   <SubmitButton status={status} label={submitText} />
-                  <span className="text-sm text-[#64748B]">
+                  {hasPhone(site.phone) && (<span className="text-sm text-[#64748B]">
                     Or call{' '}
                     <a href={`tel:${site.phone}`} className="font-medium text-emerald-700 underline-offset-2 hover:underline">
                       {site.phoneDisplay}
                     </a>
-                  </span>
+                  </span>)}
                 </div>
               </form>
             )}

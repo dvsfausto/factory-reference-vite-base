@@ -6,6 +6,7 @@ import { SITE } from '~/data/site'
 import { HERO_ALT } from '~/data/images'
 import { imageSrc } from '~/lib/asset-url'
 
+import { hasPhone } from '~/lib/phone'
 // Hero LAYOUT: 'split-reversed', the modern split, mirrored: the framed image
 // sits on the LEFT and the headline/CTA column on the RIGHT (the default split
 // is image-right). Same light-cool modern character + tokens as HeroModernBlock;
@@ -65,12 +66,12 @@ export function HeroSplitReversedBlock({
               >
                 {site.hero.cta_primary_label} <ArrowRight className="h-4 w-4" />
               </PrimaryCta>
-              <a
+              {hasPhone(site.phone) && (<a
                 href={`tel:${site.phone}`}
                 className="inline-flex h-[52px] items-center gap-2 rounded-xl border border-[#E6E8EC] px-6 font-display font-semibold text-[#0F172A] transition-colors hover:border-emerald-600 hover:text-emerald-700"
               >
                 <Phone className="h-4 w-4 text-emerald-600" /> {site.phoneDisplay}
-              </a>
+              </a>)}
             </div>
 
             <div className="mt-10 flex flex-wrap gap-x-6 gap-y-2 text-sm text-[#64748B]">

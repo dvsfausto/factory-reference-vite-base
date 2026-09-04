@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { ArrowRight, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 
+import { hasPhone } from '~/lib/phone'
 // Hero LAYOUT: 'minimal', type-only, NO image. An oversized headline, a large
 // subhead, and the CTAs set in a deep field of whitespace, left-aligned on a
 // constrained measure. Stripe/Linear-caliber restraint: the layout is distinct
@@ -64,12 +65,12 @@ export function HeroMinimalBlock({
             >
               {site.hero.cta_primary_label} <ArrowRight className="h-4 w-4" />
             </PrimaryCta>
-            <a
+            {hasPhone(site.phone) && (<a
               href={`tel:${site.phone}`}
               className="inline-flex h-[56px] items-center gap-2 rounded-xl px-5 font-display font-semibold text-[#0F172A] transition-colors hover:text-emerald-700"
             >
               <Phone className="h-4 w-4 text-emerald-600" /> {site.phoneDisplay}
-            </a>
+            </a>)}
           </div>
 
           <div className="mt-16 flex flex-wrap gap-x-8 gap-y-2 border-t border-[#E6E8EC] pt-8 text-sm text-[#64748B]">

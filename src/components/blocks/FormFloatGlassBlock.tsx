@@ -5,6 +5,7 @@ import { SITE } from '~/data/site'
 import { submitLead, type LeadStatus } from './forms-submit'
 import { Field, Textarea, SubmitButton, SuccessCard } from './form-ui'
 
+import { hasPhone } from '~/lib/phone'
 // Forms VARIANT: 'float-glass', a WOW re-skin of the default contact form. The
 // SAME form (identical fields, names, and submitLead handler) now floats as a
 // frosted glass card over a soft --wow-grad-surface, framed by a brand hairline
@@ -119,12 +120,12 @@ export function FormFloatGlassBlock({
                 {status === 'error' && error && <p className="mt-4 text-sm text-red-600">{error}</p>}
                 <div className="mt-8 flex flex-wrap items-center gap-4">
                   <SubmitButton status={status} />
-                  <span className="text-sm text-ink-600">
+                  {hasPhone(site.phone) && (<span className="text-sm text-ink-600">
                     Or call{' '}
                     <a href={`tel:${site.phone}`} className="font-medium text-brand-700 underline-offset-2 hover:underline">
                       {site.phoneDisplay}
                     </a>
-                  </span>
+                  </span>)}
                 </div>
               </form>
             )}

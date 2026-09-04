@@ -241,9 +241,9 @@ function FooterCtaBand({ t, ctaTitle, rounded }: { t: FooterTheme; ctaTitle: str
             <div className={`font-display text-2xl font-bold sm:text-3xl ${t.heading}`}>{ctaTitle}</div>
             <div className={`mt-2 text-sm ${t.tagline}`}>{SITE.phoneDisplay} · {SITE.email}</div>
           </div>
-          <a href={`tel:${SITE.phone}`} className={`inline-flex h-12 items-center gap-2 ${rounded ? 'rounded-2xl' : 'rounded-lg'} bg-primary px-7 font-display text-sm font-semibold text-primary-foreground shadow-lg transition-transform hover:-translate-y-0.5`}>
+          {HAS_PHONE && (<a href={`tel:${SITE.phone}`} className={`inline-flex h-12 items-center gap-2 ${rounded ? 'rounded-2xl' : 'rounded-lg'} bg-primary px-7 font-display text-sm font-semibold text-primary-foreground shadow-lg transition-transform hover:-translate-y-0.5`}>
             {tr('cta.getInTouch')} <ArrowRight className="h-4 w-4" />
-          </a>
+          </a>)}
         </div>
       </div>
       <div className="container-x py-14 grid grid-cols-2 gap-8 md:grid-cols-4 relative">
@@ -277,7 +277,7 @@ function FooterMinimal({ t }: { t: FooterTheme }) {
           <SocialRow t={t} />
         </div>
         <div className={`mt-10 flex flex-wrap items-center gap-x-8 gap-y-2 text-sm ${t.listText}`}>
-          <a href={`tel:${SITE.phone}`} className={t.listHover}>{SITE.phoneDisplay}</a>
+          {HAS_PHONE && (<a href={`tel:${SITE.phone}`} className={t.listHover}>{SITE.phoneDisplay}</a>)}
           <a href={`mailto:${SITE.email}`} className={t.listHover}>{SITE.email}</a>
           {loc && <span>{loc}</span>}
           {SITE.hours && <span>{SITE.hours}</span>}

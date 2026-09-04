@@ -5,6 +5,7 @@ import { HERO_ALT } from '~/data/images'
 import { imageSrc } from '~/lib/asset-url'
 import { primaryCta } from '~/lib/primaryCta'
 
+import { hasPhone } from '~/lib/phone'
 // INNER-PAGE HERO VARIANT: 'banner' — a COMPACT, FAMILY-AWARE banner for service / area / info DETAIL pages
 // (Phase 2 opener). It replaces the WOW `aurora` inner hero, which was two problems at once: (1) 100vh, so a
 // service page opened with a full-screen poster and pushed the actual content below the fold — a homepage hero
@@ -60,12 +61,12 @@ export function HeroServiceBannerBlock({
               <PrimaryCta to={ctaOverride ? cta.href : undefined} className="btn btn-lg btn-primary">
                 {cta.label} <ArrowRight className="h-4 w-4" />
               </PrimaryCta>
-              <a
+              {hasPhone(site.phone) && (<a
                 href={`tel:${site.phone}`}
                 className="inline-flex h-12 items-center gap-2 rounded-lg border border-[var(--fam-hairline,var(--color-ink-100,#e5e7eb))] px-5 font-semibold text-[var(--fam-ink,var(--color-ink-900))] transition-colors hover:border-[var(--fam-accent,var(--color-brand-600))]"
               >
                 <Phone className="h-4 w-4 text-[var(--fam-accent,var(--color-brand-600))]" /> {site.phoneDisplay}
-              </a>
+              </a>)}
             </div>
             {trustItems && trustItems.length > 0 && (
               <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-[var(--fam-ink-muted,var(--color-ink-500))]">

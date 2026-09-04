@@ -4,6 +4,7 @@ import { SITE } from "~/data/site";
 import { PrimaryCta } from "~/components/blocks/PrimaryCta";
 import defaultLeaves from "~/assets/decorative/cleaning-leaves.png";
 
+import { HAS_PHONE } from '~/lib/phone'
 interface Props {
   title?: string;
   subtitle?: string;
@@ -43,9 +44,9 @@ export function CTASection({
         )}
         <div className="mt-9 flex flex-wrap justify-center gap-3">
           <PrimaryCta to={to} className="btn btn-lg btn-white">{label}</PrimaryCta>
-          <a href={`tel:${SITE.phone}`} className="btn btn-lg btn-outline-white">
+          {HAS_PHONE && (<a href={`tel:${SITE.phone}`} className="btn btn-lg btn-outline-white">
             <Phone className="h-4 w-4" /> {SITE.phoneDisplay}
-          </a>
+          </a>)}
         </div>
       </div>
     </section>

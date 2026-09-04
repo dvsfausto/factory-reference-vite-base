@@ -6,6 +6,7 @@ import { SITE } from '~/data/site'
 import { HERO_ALT } from '~/data/images'
 import { imageSrc } from '~/lib/asset-url'
 
+import { hasPhone } from '~/lib/phone'
 // Hero LAYOUT: 'background', a full-bleed photo with the headline, sub, CTAs and
 // trust row set directly on top, anchored bottom-left for an editorial, magazine-
 // cover feel. Harvested from HeroElegantBlock's DARK branch (the scrim-over-photo
@@ -74,12 +75,12 @@ export function HeroBackgroundBlock({
             >
               {site.hero.cta_primary_label} <ArrowRight className="h-4 w-4" />
             </PrimaryCta>
-            <a
+            {hasPhone(site.phone) && (<a
               href={`tel:${site.phone}`}
               className="inline-flex h-[52px] items-center gap-2 rounded-xl border border-white/30 bg-white/5 px-6 font-display font-semibold text-white backdrop-blur-sm transition-colors hover:border-emerald-600 hover:text-emerald-100"
             >
               <Phone className="h-4 w-4 text-emerald-100" /> {site.phoneDisplay}
-            </a>
+            </a>)}
           </div>
 
           <div className="mt-10 flex flex-wrap gap-x-6 gap-y-2 text-sm text-slate-200">

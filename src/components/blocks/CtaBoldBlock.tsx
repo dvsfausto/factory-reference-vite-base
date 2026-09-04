@@ -3,6 +3,7 @@ import { tr } from '~/lib/i18n'
 import { ArrowRight, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 
+import { hasPhone } from '~/lib/phone'
 // CTA VARIANT: 'bold', matches the hero's weight. The default CtaBlock/
 // CTASection uses a brand-gradient band + a font-script accent word + leaf
 // sprites + .btn-white/.btn-outline-white pills, all soft/wellness signals.
@@ -53,12 +54,12 @@ export function CtaBoldBlock({
             >
               {ctaLabel} <ArrowRight className="h-4 w-4" />
             </PrimaryCta>
-            <a
+            {hasPhone(site.phone) && (<a
               href={`tel:${site.phone}`}
               className="inline-flex h-[54px] items-center gap-2 rounded-md border border-white/35 px-7 font-semibold text-white transition-colors hover:border-white hover:bg-white/10"
             >
               <Phone className="h-4 w-4" /> {site.phoneDisplay}
-            </a>
+            </a>)}
           </div>
         </div>
       </div>

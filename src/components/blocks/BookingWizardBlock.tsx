@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { tr, MONTHS_SHORT, DAYS_SHORT, LANG } from '~/lib/i18n'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
+import { HAS_PHONE, hasPhone } from '~/lib/phone'
 import {
   Calendar,
   Check,
@@ -616,14 +617,16 @@ export function BookingWizardBlock({
                     >
                       {slots.length === 0 ? (
                         <p className="rounded-2xl border border-dashed px-5 py-8 text-center text-sm text-ink-600" style={{ borderColor: 'var(--wow-hairline)' }}>
-                          {tr('booking.noOpenTimes')} 
-                          at{' '}
-                          <a
-                            href={`tel:${site.phone}`}
-                            className="font-semibold text-brand-700 hover:underline"
-                          >
-                            {site.phoneDisplay}
-                          </a>
+                          {tr('booking.noOpenTimes')}
+                          {hasPhone(site.phone) && (<>
+                            {' '}at{' '}
+                            <a
+                              href={`tel:${site.phone}`}
+                              className="font-semibold text-brand-700 hover:underline"
+                            >
+                              {site.phoneDisplay}
+                            </a>
+                          </>)}
                           .
                         </p>
                       ) : (
@@ -825,7 +828,7 @@ export function BookingWizardBlock({
                               </>
                             )}
                           </button>
-                          <span className="text-sm text-ink-600">
+                          {hasPhone(site.phone) && (<span className="text-sm text-ink-600">
                             or call{' '}
                             <a
                               href={`tel:${site.phone}`}
@@ -833,7 +836,7 @@ export function BookingWizardBlock({
                             >
                               {site.phoneDisplay}
                             </a>
-                          </span>
+                          </span>)}
                         </div>
                       </form>
                     </StepShell>
@@ -992,14 +995,14 @@ function FallbackCard({ message }: { message: string }) {
   return (
     <div className="py-10 text-center">
       <p className="mx-auto max-w-md leading-relaxed text-ink-700">{message}</p>
-      <a
+      {HAS_PHONE && (<a
         href={`tel:${SITE.phone}`}
         className="mt-6 inline-flex h-12 items-center justify-center gap-2 rounded-xl px-7 font-display text-sm font-semibold text-white transition-opacity hover:opacity-90"
         style={{ backgroundImage: 'var(--wow-grad-brand)' }}
       >
         <Phone className="h-4 w-4" />
         Call {SITE.phoneDisplay}
-      </a>
+      </a>)}
     </div>
   )
 }

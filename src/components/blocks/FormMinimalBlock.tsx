@@ -4,6 +4,7 @@ import { SITE } from '~/data/site'
 import { submitLead, type LeadStatus } from './forms-submit'
 import { Field, Textarea, SubmitButton, SuccessCard } from './form-ui'
 
+import { hasPhone } from '~/lib/phone'
 // Forms LAYOUT: 'minimal', a low-friction, few-field form (name, phone, a short
 // note). Character-agnostic. The fastest path to a lead. Posts the confirmed
 // handle-website-lead envelope (source_page 'contact'); last_name is sent empty
@@ -80,9 +81,9 @@ export function FormMinimalBlock({
                   {status === 'error' && error && <p className="text-sm text-red-600">{error}</p>}
                   <div className="mt-1 flex flex-wrap items-center gap-4">
                     <SubmitButton status={status} />
-                    <a href={`tel:${site.phone}`} className="text-sm font-medium text-emerald-700 underline-offset-2 hover:underline">
+                    {hasPhone(site.phone) && (<a href={`tel:${site.phone}`} className="text-sm font-medium text-emerald-700 underline-offset-2 hover:underline">
                       Or call {site.phoneDisplay}
-                    </a>
+                    </a>)}
                   </div>
                 </form>
               )}

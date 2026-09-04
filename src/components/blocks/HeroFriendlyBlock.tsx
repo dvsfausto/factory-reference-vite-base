@@ -6,6 +6,7 @@ import { SITE } from '~/data/site'
 import { HERO_ALT } from '~/data/images'
 import { imageSrc } from '~/lib/asset-url'
 
+import { hasPhone } from '~/lib/phone'
 // Hero VARIANT: 'friendly', warm, bright, approachable (playful-but-credible).
 // The LIGHT counterpart to the dark bold/elegant heroes: a warm-white split
 // layout with a big rounded image card + soft shadow, a rounded friendly
@@ -75,12 +76,12 @@ export function HeroFriendlyBlock({
               >
                 {ctaLabel} <ArrowRight className="h-4 w-4" />
               </PrimaryCta>
-              <a
+              {hasPhone(site.phone) && (<a
                 href={`tel:${site.phone}`}
                 className="inline-flex h-[54px] items-center gap-2 rounded-2xl border-2 border-emerald-600/40 px-7 font-display font-semibold text-[#3D3530] transition-colors hover:border-emerald-600 hover:bg-emerald-50"
               >
                 <Phone className="h-4 w-4 text-emerald-600" /> {site.phoneDisplay}
-              </a>
+              </a>)}
             </div>
 
             {/* Friendly trust chips, soft rounded coral-tinted pills. */}

@@ -4,6 +4,7 @@ import { motion, useReducedMotion } from 'framer-motion'
 import { ArrowRight, Phone, Sparkles } from 'lucide-react'
 import { SITE } from '~/data/site'
 
+import { hasPhone } from '~/lib/phone'
 // CTA VARIANT: 'aurora-glow', a full-bleed brand-gradient band with a soft
 // ambient glow, an oversized display headline (last word set in the script
 // accent), and a glowing white primary pill. The cinematic, high-impact
@@ -119,12 +120,12 @@ export function CtaAuroraGlowBlock({
           >
             {label} <ArrowRight className="h-4 w-4" />
           </PrimaryCta>
-          <a
+          {hasPhone(site.phone) && (<a
             href={`tel:${site.phone}`}
             className="inline-flex h-[52px] items-center gap-2 rounded-full border border-white/70 px-6 font-semibold text-white transition-colors hover:bg-white/10"
           >
             <Phone className="h-4 w-4" /> {site.phoneDisplay}
-          </a>
+          </a>)}
         </motion.div>
       </div>
     </section>

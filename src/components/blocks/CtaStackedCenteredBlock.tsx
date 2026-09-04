@@ -3,6 +3,7 @@ import { tr } from '~/lib/i18n'
 import { ArrowRight, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 
+import { hasPhone } from '~/lib/phone'
 // CTA LAYOUT: 'stacked-centered', a single, oversized centered close in a deep
 // field of whitespace: eyebrow, display-scale headline, sub, and a centered action
 // stack. Character-agnostic. Distinct through restraint and type drama, the final
@@ -52,12 +53,12 @@ export function CtaStackedCenteredBlock({
               className="inline-flex h-[56px] items-center gap-2 rounded-xl bg-primary px-8 font-display text-base font-semibold text-primary-foreground transition-opacity hover:opacity-90"
             >{tr('section.getStarted')}<ArrowRight className="h-4 w-4" />
             </PrimaryCta>
-            <a
+            {hasPhone(site.phone) && (<a
               href={`tel:${site.phone}`}
               className="inline-flex h-[56px] items-center gap-2 rounded-xl px-6 font-display font-semibold text-[#0F172A] transition-colors hover:text-emerald-700"
             >
               <Phone className="h-4 w-4 text-emerald-600" /> {site.phoneDisplay}
-            </a>
+            </a>)}
           </div>
         </div>
       </div>

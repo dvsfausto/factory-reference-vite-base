@@ -6,6 +6,7 @@ import { SITE } from '~/data/site'
 import { HERO_ALT } from '~/data/images'
 import { imageSrc } from '~/lib/asset-url'
 
+import { hasPhone } from '~/lib/phone'
 // Hero VARIANT: 'bold-fullbleed', a grounded, industrial composition for
 // trades (construction/remodel). Deliberately the OPPOSITE of the default
 // HeroBlock's split-grid + botanical leaf sprites + script-italic accent word.
@@ -101,12 +102,12 @@ export function HeroBoldFullbleedBlock({
               {ctaLabel} <ArrowRight className="h-4 w-4" />
             </PrimaryCta>
             {/* Secondary CTA: outline phone, same square structural corners. */}
-            <a
+            {hasPhone(site.phone) && (<a
               href={`tel:${site.phone}`}
               className="inline-flex h-[54px] items-center gap-2 rounded-md border border-white/35 px-7 font-semibold text-white transition-colors hover:border-white hover:bg-white/10"
             >
               <Phone className="h-4 w-4" /> {site.phoneDisplay}
-            </a>
+            </a>)}
           </div>
         </motion.div>
       </div>
