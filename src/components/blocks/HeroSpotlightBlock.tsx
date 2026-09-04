@@ -7,6 +7,7 @@ import { HERO_ALT } from '~/data/images'
 import { getAggregateRating } from '~/data/reviews'
 import { imageSrc } from '~/lib/asset-url'
 
+import { hasPhone } from '~/lib/phone'
 // Hero VARIANT: 'spotlight', a premium, editorial left/right split on a LIGHT
 // surface. The business photo sits in a lifted, framed card over a radial brand
 // glow; glass trust chips float at its edges. The polished, boutique counterpart
@@ -80,6 +81,7 @@ export function HeroSpotlightBlock({
 
             <h1 className="mt-4 text-5xl leading-[0.98] tracking-tight sm:text-6xl">
               {heroParts.lead || headline}
+              {heroParts.lead && ' '}
               {heroParts.lead && (
                 <span className="mt-1 block font-script text-[1.15em] leading-[1.05] text-brand-600">
                   {heroParts.accent}
@@ -100,13 +102,13 @@ export function HeroSpotlightBlock({
               >
                 {ctaLabel} <ArrowRight className="h-4 w-4" />
               </PrimaryCta>
-              <a
+              {hasPhone(site.phone) && (<a
                 href={`tel:${site.phone}`}
                 className="inline-flex h-[52px] items-center gap-2 rounded-full border px-6 font-semibold text-brand-800 transition-colors hover:bg-brand-50"
                 style={{ borderColor: 'var(--wow-hairline)' }}
               >
                 <Phone className="h-4 w-4" /> {site.phoneDisplay}
-              </a>
+              </a>)}
             </div>
 
             <ul className="mt-8 grid grid-cols-2 gap-x-6 gap-y-2 text-sm text-ink-700 sm:flex sm:flex-wrap">

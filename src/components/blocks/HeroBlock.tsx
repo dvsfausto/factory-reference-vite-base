@@ -8,6 +8,7 @@ import { HERO_ALT } from '~/data/images'
 import { imageSrc } from '~/lib/asset-url'
 import leaves from '~/assets/decorative/cleaning-leaves.png'
 
+import { hasPhone } from '~/lib/phone'
 // Markup extracted VERBATIM from routes/index.tsx (the HERO section). Do not
 // restyle, block fidelity is pass/fail.
 function splitScriptAccent(heading: string): { lead: string; accent: string } {
@@ -44,6 +45,7 @@ export function HeroBlock({
             </span>
             <h1 className="mt-4">
               {heroParts.lead || site.hero.headline}
+              {heroParts.lead && ' '}
               {heroParts.lead && (
                 <>
                   <br />
@@ -72,9 +74,9 @@ export function HeroBlock({
                   hero.cta_secondary_label via AI editor will not produce a
                   visible change. To wire it in, replace this phone button OR
                   add a third button row. */}
-              <a href={`tel:${site.phone}`} className="btn btn-lg btn-secondary">
+              {hasPhone(site.phone) && (<a href={`tel:${site.phone}`} className="btn btn-lg btn-secondary">
                 <Phone className="h-4 w-4" /> {site.phoneDisplay}
-              </a>
+              </a>)}
             </div>
             <ul className="mt-8 grid grid-cols-2 sm:flex sm:flex-wrap gap-x-6 gap-y-2 text-sm text-ink-700">
               {trustItems.map((t) => (

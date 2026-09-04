@@ -7,6 +7,7 @@ import { HERO_ALT } from '~/data/images'
 import { getAggregateRating } from '~/data/reviews'
 import { imageSrc } from '~/lib/asset-url'
 
+import { hasPhone } from '~/lib/phone'
 // Hero VARIANT: 'aurora', a cinematic, full-bleed WOW composition. The business
 // photo fills the frame; a slow brand-colored aurora drifts over it (screen
 // blend); the content sits in a frosted-glass panel lit by a brand glow. Built
@@ -112,6 +113,7 @@ export function HeroAuroraBlock({
 
           <h1 className="mt-5 text-5xl leading-[0.98] tracking-tight text-white sm:text-6xl">
             {heroParts.lead || headline}
+            {heroParts.lead && ' '}
             {heroParts.lead && (
               <span className="mt-1 block font-script text-[1.15em] leading-[1.05] text-white/95">
                 {heroParts.accent}
@@ -132,12 +134,12 @@ export function HeroAuroraBlock({
             >
               {ctaLabel} <ArrowRight className="h-4 w-4" />
             </PrimaryCta>
-            <a
+            {hasPhone(site.phone) && (<a
               href={`tel:${site.phone}`}
               className="inline-flex h-[52px] items-center gap-2 rounded-full border border-white/30 px-6 font-semibold text-white backdrop-blur-sm transition-colors hover:border-white/70 hover:bg-white/10"
             >
               <Phone className="h-4 w-4" /> {site.phoneDisplay}
-            </a>
+            </a>)}
 
             {rating && (
               <span className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/5 px-3.5 py-2 text-sm text-white/90 backdrop-blur-sm">
