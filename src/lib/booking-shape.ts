@@ -92,6 +92,33 @@ export function formatAddress(a: ServiceAddress | null | undefined): string {
   return [street, cityLine].filter(Boolean).join(', ')
 }
 
+/**
+ * PER-SERVICE CTA (a mixed catalogue): a service's own action decides its button, the site-wide
+ * affordance stays the hero's. Only pages that EXIST are targeted: book → /book?service=<id> when the
+ * page exists (else the homepage wizard anchor when it is enabled), quote → /quote?service=<slug>
+ * when that page exists, buy → the contact form as an order request (no shop route exists yet).
+ * Anything else → null, meaning "use the site-wide CTA".
+ */
+export type ServiceAction = 'buy' | 'collect' | 'quote' | 'book' | 'inquire' | null | undefined
+export function serviceCtaTarget(
+  ref: { id: string; slug: string; action?: ServiceAction },
+  pages: { book: boolean; quote: boolean; bookingWidget: boolean },
+): { href: string; label: 'bookNow' | 'getQuote' | 'order' } | null {
+  switch (ref.action) {
+    case 'book':
+      if (pages.book) return { href: `/book?service=${encodeURIComponent(ref.id)}`, label: 'bookNow' }
+      if (pages.bookingWidget) return { href: `/#book`, label: 'bookNow' }
+      return null
+    case 'quote':
+    case 'collect':
+      return pages.quote ? { href: `/quote?service=${encodeURIComponent(ref.slug)}`, label: 'getQuote' } : null
+    case 'buy':
+      return { href: '/contact', label: 'order' }
+    default:
+      return null
+  }
+}
+
 /** The wizard's step order: a visit asks WHERE before the details. */
 export function stepOrder(visit: boolean): Array<'service' | 'date' | 'time' | 'address' | 'details'> {
   return visit ? ['service', 'date', 'time', 'address', 'details'] : ['service', 'date', 'time', 'details']

@@ -1,6 +1,27 @@
 import { customPagesData } from '~/data/custom-pages'
 import { BOOKING, SITE } from '~/data/site'
+import { SERVICES } from '~/data/services'
 import { tr } from '~/lib/i18n'
+import { serviceCtaTarget } from '~/lib/booking-shape'
+
+/**
+ * A SERVICE PAGE's own CTA (mixed catalogues): the service's `action` decides — book → /book?service=,
+ * quote → /quote?service=, buy → /contact "Order" — and only pages that exist are targeted. No action, or
+ * no page for it → the site-wide primaryCta(). See booking-shape.serviceCtaTarget.
+ */
+export function serviceCta(slug: string): { href: string; label: string } {
+  const ref = SERVICES.find((s) => s.slug === slug)
+  const site = primaryCta()
+  if (!ref) return site
+  const t = serviceCtaTarget(ref, {
+    book: !!customPagesData['book'],
+    quote: !!customPagesData['quote'],
+    bookingWidget: BOOKING.enabled,
+  })
+  if (!t) return site
+  const label = t.label === 'bookNow' ? tr('cta.bookNow') : t.label === 'getQuote' ? tr('cta.getQuote') : tr('cta.order')
+  return { href: t.href, label }
+}
 
 // ─────────────────────────────────────────────────────────────────────────────
 // THE PRIMARY CTA — the single source of truth for the one-click front door's TARGET and LABEL, so

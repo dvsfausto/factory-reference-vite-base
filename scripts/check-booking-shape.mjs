@@ -2,7 +2,7 @@
 // native type stripping — no build step. Every case is a rule a customer would feel.
 import assert from 'node:assert/strict'
 import {
-  isVisit, bookingLive, realPrice, priceLine, addressComplete, formatAddress, stepOrder, EMPTY_ADDRESS,
+  isVisit, bookingLive, realPrice, priceLine, addressComplete, formatAddress, stepOrder, EMPTY_ADDRESS, serviceCtaTarget,
 } from '../src/lib/booking-shape.ts'
 
 const fmt = (n) => `$${n}`
@@ -55,5 +55,18 @@ t('address formats on one line without empty parts', () => {
 t('a visit asks where before the details', () => {
   assert.deepEqual(stepOrder(true), ['service', 'date', 'time', 'address', 'details'])
   assert.deepEqual(stepOrder(false), ['service', 'date', 'time', 'details'])
+})
+t('per-service CTA: each service follows its own action, only to pages that exist', () => {
+  const pages = { book: true, quote: true, bookingWidget: false }
+  assert.deepEqual(serviceCtaTarget({ id: 'a1', slug: 'deep-cleaning', action: 'book' }, pages), { href: '/book?service=a1', label: 'bookNow' })
+  assert.deepEqual(serviceCtaTarget({ id: 'b2', slug: 'full-remodel', action: 'quote' }, pages), { href: '/quote?service=full-remodel', label: 'getQuote' })
+  assert.deepEqual(serviceCtaTarget({ id: 'c3', slug: 'gift-card', action: 'buy' }, pages), { href: '/contact', label: 'order' })
+  assert.equal(serviceCtaTarget({ id: 'd4', slug: 'x', action: 'inquire' }, pages), null)
+  assert.equal(serviceCtaTarget({ id: 'e5', slug: 'x' }, pages), null)
+})
+t('per-service CTA never targets a missing page (falls back to the site-wide CTA)', () => {
+  assert.equal(serviceCtaTarget({ id: 'a1', slug: 's', action: 'book' }, { book: false, quote: false, bookingWidget: false }), null)
+  assert.deepEqual(serviceCtaTarget({ id: 'a1', slug: 's', action: 'book' }, { book: false, quote: false, bookingWidget: true }), { href: '/#book', label: 'bookNow' })
+  assert.equal(serviceCtaTarget({ id: 'a1', slug: 's', action: 'quote' }, { book: true, quote: false, bookingWidget: false }), null)
 })
 console.log(`booking-shape: ${n}/${n} checks passed`)

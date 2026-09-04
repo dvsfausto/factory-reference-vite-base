@@ -23,6 +23,7 @@ export function HeroServiceBannerBlock({
   body = site.hero.body,
   imageUrl = site.hero.image_url,
   trustItems,
+  cta: ctaOverride,
 }: {
   site?: typeof SITE
   headline?: string
@@ -31,8 +32,10 @@ export function HeroServiceBannerBlock({
   imageUrl?: string
   trustItems?: string[]
   decorativeAsset?: string
+  /** A per-service CTA (the service-detail route passes serviceCta(slug)); absent → the site-wide one. */
+  cta?: { href: string; label: string }
 }) {
-  const cta = primaryCta()
+  const cta = ctaOverride ?? primaryCta()
   const place = [site.address?.city, site.address?.state].filter(Boolean).join(', ')
   return (
     <section className="bg-[var(--fam-surface,#fff)]">
@@ -54,7 +57,7 @@ export function HeroServiceBannerBlock({
               </p>
             )}
             <div className="mt-7 flex flex-wrap items-center gap-3">
-              <PrimaryCta className="btn btn-lg btn-primary">
+              <PrimaryCta to={ctaOverride ? cta.href : undefined} className="btn btn-lg btn-primary">
                 {cta.label} <ArrowRight className="h-4 w-4" />
               </PrimaryCta>
               <a

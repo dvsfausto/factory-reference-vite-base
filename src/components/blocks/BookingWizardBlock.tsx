@@ -292,6 +292,18 @@ export function BookingWizardBlock({
           })),
         )
         setAvailability(avail)
+        // /book?service=<id> (a service page's own "Book now"): land on that service's calendar.
+        const pre =
+          typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('service') : null
+        const hit = pre ? svc.find((s) => s.id === pre) : undefined
+        if (hit) {
+          setService({
+            ...hit,
+            price: hit.price == null ? null : Number(hit.price),
+            duration_minutes: hit.duration_minutes == null ? null : Number(hit.duration_minutes),
+          })
+          setStep('date')
+        }
       } catch {
         if (!cancelled) setLoadError(true)
       } finally {

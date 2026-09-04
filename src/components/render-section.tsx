@@ -38,6 +38,7 @@ import { HeroAuroraBlock } from '~/components/blocks/HeroAuroraBlock'
 import { HeroSpotlightBlock } from '~/components/blocks/HeroSpotlightBlock'
 import { HeroEditorialBlock } from '~/components/blocks/HeroEditorialBlock'
 import { HeroServiceBannerBlock } from '~/components/blocks/HeroServiceBannerBlock'
+import { serviceCta } from '~/lib/primaryCta'
 // WOW Stage 2 — additional section variants (brand-reactive + motion, consume --wow-*).
 // Additive map keys only; unknown variant → the section's default component.
 import { ServicesLuxeBlock } from '~/components/blocks/ServicesLuxeBlock'
@@ -547,6 +548,10 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
         const trustItems = svc.hero.trustLine
           ? svc.hero.trustLine.split('·').map((s) => s.trim()).filter(Boolean)
           : undefined
+        // PER-SERVICE CTA (mixed catalogues): the banner takes this service's own target — book →
+        // /book?service=, quote → /quote?service=, buy → order — from serviceCta(slug). Other hero variants
+        // keep the site-wide CTA (they have no cta prop); the banner is the default detail hero.
+        const perService = ServiceHero === HeroServiceBannerBlock ? { cta: serviceCta(svc.slug) } : {}
         return (
           <ServiceHero
             key="hero"
@@ -555,6 +560,7 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
             subheadline=""
             imageUrl={serviceImageUrl(svc.slug)}
             trustItems={trustItems}
+            {...(perService as Record<string, never>)}
           />
         )
       }

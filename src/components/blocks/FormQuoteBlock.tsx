@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react'
+import { useEffect, useState, type FormEvent } from 'react'
 import { tr } from '~/lib/i18n'
 import { SITE } from '~/data/site'
 import { useCatalogServices } from '~/lib/useCatalogServices'
@@ -35,6 +35,13 @@ export function FormQuoteBlock({
 }) {
   const Heading = headingLevel === 1 ? 'h1' : 'h2'
   const [status, setStatus] = useState<LeadStatus>('idle')
+  // /quote?service=<slug> (a service page's own "Get a quote"): preselect it. Set after mount so the
+  // server-rendered markup stays identical (no hydration mismatch).
+  const [preselected, setPreselected] = useState<string>('')
+  useEffect(() => {
+    const p = new URLSearchParams(window.location.search).get('service')
+    if (p) setPreselected(p)
+  }, [])
   const [error, setError] = useState<string | null>(null)
 
   // ONE TRADE SOURCE for the whole form. The copy wave emits SITE.quoteForm.{eyebrow,heading,body,
@@ -113,7 +120,8 @@ export function FormQuoteBlock({
                     <select
                       id="quote-service"
                       name="service"
-                      defaultValue={options.length === 1 ? options[0].slug : ''}
+                      key={preselected || 'none'}
+                      defaultValue={preselected || (options.length === 1 ? options[0].slug : '')}
                       className="mt-1.5 w-full rounded-xl border border-[#D5D9DF] bg-white px-4 py-3 text-ink-900 outline-none focus:border-emerald-600 focus:ring-2 focus:ring-emerald-100"
                     >
                       {options.length !== 1 && <option value="">Select a service…</option>}
