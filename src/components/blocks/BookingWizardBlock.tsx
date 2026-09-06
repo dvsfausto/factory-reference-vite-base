@@ -470,12 +470,12 @@ export function BookingWizardBlock({
 
             {notLive && (
               <div data-booking-gate={gate.reason}>
-                <FallbackCard message={tr('booking.notOpenYet')} />
+                <FallbackCard message={tr(HAS_PHONE ? 'booking.notOpenYet' : 'booking.notOpenYetNoPhone')} features={features} />
               </div>
             )}
 
             {emptyConfig && (
-              <FallbackCard message={tr('booking.fallback')} />
+              <FallbackCard message={tr(HAS_PHONE ? 'booking.fallback' : 'booking.fallbackNoPhone')} features={features} />
             )}
 
             {!loading && !loadError && !notLive && !emptyConfig && (
@@ -991,10 +991,27 @@ function Row({
   )
 }
 
-function FallbackCard({ message }: { message: string }) {
+/**
+ * ★ NEVER A DEAD END (2026-09-06). With a phone, the fallback offers the call. WITHOUT one it must not say
+ * "call us" — a live site did, with no number anywhere. It says what is true and offers the path that
+ * exists: the hosted quote request when the config carries one, else the site's own contact page.
+ */
+function FallbackCard({ message, features }: { message: string; features?: BookingFeatures | null }) {
+  const quoteUrl = (features as { quote_url?: unknown } | null | undefined)?.quote_url
+  const quoteHref = typeof quoteUrl === 'string' && /^https?:\/\//.test(quoteUrl) ? quoteUrl : null
   return (
     <div className="py-10 text-center">
       <p className="mx-auto max-w-md leading-relaxed text-ink-700">{message}</p>
+      {!HAS_PHONE && (
+        <a
+          href={quoteHref ?? '/contact'}
+          data-booking-fallback={quoteHref ? 'quote' : 'contact'}
+          className="mt-6 inline-flex h-12 items-center justify-center gap-2 rounded-xl px-7 font-display text-sm font-semibold text-white transition-opacity hover:opacity-90"
+          style={{ backgroundImage: 'var(--wow-grad-brand)' }}
+        >
+          {quoteHref ? tr('booking.requestQuote') : tr('booking.sendMessage')}
+        </a>
+      )}
       {HAS_PHONE && (<a
         href={`tel:${SITE.phone}`}
         className="mt-6 inline-flex h-12 items-center justify-center gap-2 rounded-xl px-7 font-display text-sm font-semibold text-white transition-opacity hover:opacity-90"
