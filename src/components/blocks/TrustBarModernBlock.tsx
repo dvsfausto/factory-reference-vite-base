@@ -29,7 +29,7 @@ export function TrustBarModernBlock({
   return (
     <section className="bg-[#F6F7F9]">
       <div className="container-x py-14 md:py-16">
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
+        <div className={`grid grid-cols-1 gap-10 ${items.length === 2 ? "md:grid-cols-2" : "md:grid-cols-3"}`}>
           {items.map((item, i) => {
             const Icon = icons[i] ?? ShieldCheck
             return (

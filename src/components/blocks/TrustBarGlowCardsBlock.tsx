@@ -61,7 +61,7 @@ export function TrustBarGlowCardsBlock({
       style={{ backgroundImage: 'var(--wow-grad-surface)' }}
     >
       <div className="container-x py-14 md:py-20">
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+        <div className={`grid grid-cols-1 gap-6 ${(items?.length ?? 3) === 2 ? "md:grid-cols-2" : "md:grid-cols-3"}`}>
           {resolved.map((item, i) => (
             <motion.div
               key={i}

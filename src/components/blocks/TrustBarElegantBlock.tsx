@@ -36,7 +36,7 @@ export function TrustBarElegantBlock({
   return (
     <section className={s.sectionAlt}>
       <div className="container-x py-16 md:py-20">
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
+        <div className={`grid grid-cols-1 gap-10 ${items.length === 2 ? "md:grid-cols-2" : "md:grid-cols-3"}`}>
           {items.map((item, i) => {
             const Icon = icons[i] ?? Flame
             return (

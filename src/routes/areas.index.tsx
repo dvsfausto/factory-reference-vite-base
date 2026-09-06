@@ -1,4 +1,5 @@
 import { createFileRoute, redirect } from '@tanstack/react-router'
+import { routeDescriptions } from '~/lib/route-descriptions'
 import { tr, LANG } from '~/lib/i18n'
 import { buildMeta, breadcrumbLd } from '~/lib/seo'
 import { AREAS } from '~/data/areas'
@@ -18,7 +19,7 @@ export const Route = createFileRoute('/areas/')({
   head: () =>
     ({ ...buildMeta({
       title: `${tr('section.serviceAreas')} | ${SITE.name}`,
-      description: (LANG==='es' ? `Dónde trabaja ${SITE.name}.` : `Where ${SITE.name} works.`),
+      description: routeDescriptions.areas(),
       path: '/areas',
     }), scripts: [{ type: 'application/ld+json', children: JSON.stringify(breadcrumbLd([{ name: tr('breadcrumb.home'), url: '/' }, { name: tr('section.serviceAreas'), url: '/areas' }])) }] }),
   component: AreasIndex,

@@ -31,7 +31,7 @@ export function TrustBarBoldBlock({
   const icons = [ShieldCheck, Clock, Heart]
   return (
     <section className="container-x py-14 md:py-20">
-      <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+      <div className={`grid grid-cols-1 gap-8 ${items.length === 2 ? "md:grid-cols-2" : "md:grid-cols-3"}`}>
         {items.map((item, i) => {
           const Icon = icons[i] ?? ShieldCheck
           return (

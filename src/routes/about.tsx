@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { routeDescriptions } from '~/lib/route-descriptions'
 import { tr } from '~/lib/i18n'
 import { buildMeta, breadcrumbLd } from '~/lib/seo'
 import { SITE } from '~/data/site'
@@ -9,7 +10,7 @@ export const Route = createFileRoute('/about')({
   head: () =>
     ({ ...buildMeta({
       title: `${tr('route.about')} ${SITE.name}`,
-      description: `${tr('route.aboutDesc')} ${SITE.tagline}`,
+      description: routeDescriptions.about(),
       path: '/about',
     }), scripts: [{ type: 'application/ld+json', children: JSON.stringify(breadcrumbLd([{ name: tr('breadcrumb.home'), url: '/' }, { name: tr('nav.about'), url: '/about' }])) }] }),
   component: AboutPage,
