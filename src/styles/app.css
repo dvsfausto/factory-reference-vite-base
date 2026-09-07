@@ -66,7 +66,7 @@
      emerald-* utility any more (scripts/check-no-literal-colours.mjs fails the build on one); they read
      these, and the scaffolder sets the underlying --fam-* vars per site: from the design family, and on
      a branded site DERIVED from the owner's palette (factory-build family-theme.ts). The fallbacks are
-     the generic ('modern') palette + the emerald ramp the blocks used to paint — a site with no family
+     the generic ('modern') palette + Tailwind's own oklch emerald ramp the blocks used to paint (the exact values, not the v3 hexes) — a site with no family
      and no brand renders exactly as before.
 
      Roles:  surface / surface-2  section grounds        card  panel ground
@@ -87,14 +87,14 @@
   --color-fam-ink: var(--fam-ink, #0F172A);
   --color-fam-ink-muted: var(--fam-ink-muted, #64748B);
   --color-fam-ink-faint: var(--fam-ink-faint, #94A3B8);
-  --color-fam-accent: var(--fam-accent, var(--accent-ramp-base, #059669));
-  --color-fam-accent-text: var(--fam-accent-text, var(--accent-ramp-base, #059669));
-  --color-fam-accent-text-strong: var(--fam-accent-text-strong, var(--accent-ramp-dark, #047857));
-  --color-fam-accent-soft: var(--fam-accent-soft, var(--accent-ramp-tint, #ECFDF5));
-  --color-fam-accent-soft-2: var(--fam-accent-soft-2, var(--accent-ramp-light, #D1FAE5));
-  --color-fam-accent-tint: var(--fam-accent-tint, #A7F3D0);
-  --color-fam-accent-deep: var(--fam-accent-deep, var(--accent-ramp-dark, #047857));
-  --color-fam-accent-on-dark: var(--fam-accent-on-dark, var(--accent-ramp-light, #D1FAE5));
+  --color-fam-accent: var(--fam-accent, var(--accent-ramp-base, oklch(59.6% 0.145 163.225)));
+  --color-fam-accent-text: var(--fam-accent-text, var(--accent-ramp-base, oklch(59.6% 0.145 163.225)));
+  --color-fam-accent-text-strong: var(--fam-accent-text-strong, var(--accent-ramp-dark, oklch(50.8% 0.118 165.612)));
+  --color-fam-accent-soft: var(--fam-accent-soft, var(--accent-ramp-tint, oklch(97.9% 0.021 166.113)));
+  --color-fam-accent-soft-2: var(--fam-accent-soft-2, var(--accent-ramp-light, oklch(95% 0.052 163.051)));
+  --color-fam-accent-tint: var(--fam-accent-tint, oklch(90.5% 0.093 164.15));
+  --color-fam-accent-deep: var(--fam-accent-deep, var(--accent-ramp-dark, oklch(50.8% 0.118 165.612)));
+  --color-fam-accent-on-dark: var(--fam-accent-on-dark, var(--accent-ramp-light, oklch(95% 0.052 163.051)));
 }
 
 :root {
