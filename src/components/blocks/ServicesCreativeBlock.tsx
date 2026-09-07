@@ -39,7 +39,7 @@ export function ServicesCreativeBlock({
   const offsets = ['lg:mt-0', 'lg:mt-12', 'lg:mt-4']
   return (
     <section className="bg-white">
-      <div className="container-x py-20 md:py-28">
+      <div className="container-x py-section">
         <SectionHeaderCreative
           label={label ?? ((site as { homeServices?: { label?: string; heading?: string; body?: string } }).homeServices?.label ?? tr('section.whatWeDo'))}
           heading={heading ?? ((site as { homeServices?: { label?: string; heading?: string; body?: string } }).homeServices?.heading ?? tr('nav.services'))}
@@ -51,7 +51,7 @@ export function ServicesCreativeBlock({
               key={s.slug}
               to="/services/$slug"
               params={{ slug: s.slug }}
-              className={`group flex flex-col overflow-hidden rounded-3xl bg-[#FBFAFC] transition-transform hover:-translate-y-1.5 ${offsets[i] ?? ''}`}
+              className={`group flex flex-col overflow-hidden rounded-3xl bg-fam-surface-2 transition-transform hover:-translate-y-1.5 ${offsets[i] ?? ''}`}
             >
               <div className="aspect-[4/3] overflow-hidden">
                 <img
@@ -64,11 +64,11 @@ export function ServicesCreativeBlock({
                 />
               </div>
               <div className="flex flex-1 flex-col p-7">
-                <h3 className="font-display text-2xl font-bold tracking-tight text-[#18181B]">
+                <h3 className="font-display text-2xl font-bold tracking-tight text-fam-ink">
                   {s.displayName}
                 </h3>
-                <p className="mt-2 text-[#71717A]">{s.short}</p>
-                <div className="mt-6 inline-flex items-center gap-1 font-display font-bold text-emerald-600 transition-all group-hover:gap-2">
+                <p className="mt-2 text-fam-ink-muted">{s.short}</p>
+                <div className="mt-6 inline-flex items-center gap-1 font-display font-bold text-fam-accent-text transition-all group-hover:gap-2">
                   {exploreLabel} <ArrowUpRight className="h-5 w-5" />
                 </div>
               </div>

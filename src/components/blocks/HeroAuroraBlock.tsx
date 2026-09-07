@@ -91,7 +91,7 @@ export function HeroAuroraBlock({
         }
       />
 
-      <div className="container-x relative flex flex-1 items-center py-20 md:py-28">
+      <div className="container-x relative flex flex-1 items-center py-section">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}

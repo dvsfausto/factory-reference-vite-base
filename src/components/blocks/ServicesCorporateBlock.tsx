@@ -36,14 +36,14 @@ export function ServicesCorporateBlock({
   const previewServices = services.slice(0, 3)
   if (previewServices.length === 0) return null
   return (
-    <section className="border-y border-[#D8DEE7] bg-[#F4F6F9]">
-      <div className="container-x py-16 md:py-20">
+    <section className="border-y border-fam-hairline bg-fam-surface-2">
+      <div className="container-x py-section">
         <SectionHeaderCorporate
           label={label ?? ((site as { homeServices?: { label?: string; heading?: string; body?: string } }).homeServices?.label ?? tr('section.whatWeDo'))}
           heading={heading ?? ((site as { homeServices?: { label?: string; heading?: string; body?: string } }).homeServices?.heading ?? tr('nav.services'))}
           body={body ?? ((site as { homeServices?: { label?: string; heading?: string; body?: string } }).homeServices?.body ?? tr('section.servicesBody'))}
         />
-        <div className="grid grid-cols-1 gap-px overflow-hidden rounded-lg border border-[#D8DEE7] bg-[#D8DEE7] md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-px overflow-hidden rounded-lg border border-fam-hairline bg-fam-hairline md:grid-cols-3">
           {previewServices.map((s) => (
             <Link
               key={s.slug}
@@ -51,7 +51,7 @@ export function ServicesCorporateBlock({
               params={{ slug: s.slug }}
               className="group flex flex-col bg-white transition-colors hover:bg-[#FAFBFC]"
             >
-              <div className="aspect-[16/9] overflow-hidden border-b border-[#D8DEE7]">
+              <div className="aspect-[16/9] overflow-hidden border-b border-fam-hairline">
                 <img
                   src={serviceImageUrl(s.slug)}
                   alt={s.name}
@@ -62,11 +62,11 @@ export function ServicesCorporateBlock({
                 />
               </div>
               <div className="flex flex-1 flex-col p-7">
-                <h3 className="font-display text-xl font-bold tracking-tight text-[#1A2433]">
+                <h3 className="font-display text-xl font-bold tracking-tight text-fam-ink">
                   {s.displayName}
                 </h3>
-                <p className="mt-2 text-[#5A6678]">{s.short}</p>
-                <div className="mt-5 flex items-center gap-1 font-display text-sm font-semibold text-emerald-700 transition-all group-hover:gap-2">
+                <p className="mt-2 text-fam-ink-muted">{s.short}</p>
+                <div className="mt-5 flex items-center gap-1 font-display text-sm font-semibold text-fam-accent-text transition-all group-hover:gap-2">
                   {exploreLabel} <ArrowRight className="h-4 w-4" />
                 </div>
               </div>

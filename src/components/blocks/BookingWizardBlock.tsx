@@ -399,7 +399,7 @@ export function BookingWizardBlock({
       className="relative overflow-hidden scroll-mt-24"
       style={{ backgroundImage: 'var(--wow-grad-surface)' }}
     >
-      <div className="container-x py-20 md:py-28">
+      <div className="container-x py-section">
         <div className="mx-auto max-w-3xl">
           {/* Header */}
           <div className="text-center">

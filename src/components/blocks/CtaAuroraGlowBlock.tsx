@@ -67,7 +67,7 @@ export function CtaAuroraGlowBlock({
         style={{ backgroundColor: 'rgba(255,255,255,0.14)', filter: 'blur(100px)' }}
       />
 
-      <div className="container-x relative py-20 text-center md:py-28">
+      <div className="container-x relative py-section text-center">
         {site.tagline && (
           <motion.div
             initial={{ opacity: 0, y: 12 }}

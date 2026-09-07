@@ -6,7 +6,7 @@ import { tr } from '~/lib/i18n'
 // the narrative, with an optional SITE.story { quote, attribution } override via
 // cast; renders from SITE.about so it is present on any built site.
 //
-// TOKEN DISCIPLINE: accent -> emerald-* (DNA) 50/100/600/700: emerald-600 rule.
+// TOKEN DISCIPLINE: accent -> fam-accent-* (DNA) 50/100/600/700: fam-accent rule.
 // Radius -> rounded-* (DNA). Font -> font-display (DNA). Light surface component-
 // owned (white / slate). No CTA by design. Never bg-brand-* / .btn.
 export function StoryNarrativeBlock({
@@ -24,17 +24,17 @@ export function StoryNarrativeBlock({
   if (!quote) return null
   return (
     <section className="bg-white">
-      <div className="container-x py-24 md:py-36">
+      <div className="container-x py-section">
         <div className="mx-auto max-w-4xl text-center">
-          <span className="inline-flex items-center justify-center gap-3 text-xs font-semibold uppercase tracking-[0.25em] text-emerald-600">
-            <span className="h-px w-10 bg-emerald-600" />
+          <span className="inline-flex items-center justify-center gap-3 text-xs font-semibold uppercase tracking-[0.25em] text-fam-accent-text">
+            <span className="h-px w-10 bg-fam-accent" />
             {label}
-            <span className="h-px w-10 bg-emerald-600" />
+            <span className="h-px w-10 bg-fam-accent" />
           </span>
-          <p className="mt-8 font-display text-3xl font-medium leading-snug tracking-tight text-[#0F172A] sm:text-4xl">
+          <p className="mt-8 font-display text-3xl font-medium leading-snug tracking-tight text-fam-ink sm:text-4xl">
             {quote}
           </p>
-          <p className="mt-8 font-display text-sm font-semibold uppercase tracking-[0.18em] text-[#64748B]">
+          <p className="mt-8 font-display text-sm font-semibold uppercase tracking-[0.18em] text-fam-ink-muted">
             {attribution}
           </p>
         </div>

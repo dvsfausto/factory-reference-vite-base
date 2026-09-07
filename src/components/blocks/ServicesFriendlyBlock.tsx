@@ -36,8 +36,8 @@ export function ServicesFriendlyBlock({
   const previewServices = services.slice(0, 3)
   if (previewServices.length === 0) return null
   return (
-    <section className="bg-[#FFF6EC]">
-      <div className="container-x py-16 md:py-24">
+    <section className="bg-fam-surface-2">
+      <div className="container-x py-section">
         <SectionHeaderFriendly
           label={label ?? ((site as { homeServices?: { label?: string; heading?: string; body?: string } }).homeServices?.label ?? tr('section.whatWeDo'))}
           heading={heading ?? ((site as { homeServices?: { label?: string; heading?: string; body?: string } }).homeServices?.heading ?? tr('nav.services'))}
@@ -49,7 +49,7 @@ export function ServicesFriendlyBlock({
               key={s.slug}
               to="/services/$slug"
               params={{ slug: s.slug }}
-              className="group flex flex-col overflow-hidden rounded-3xl border border-[#F0E6DA] bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl"
+              className="group flex flex-col overflow-hidden rounded-3xl border border-fam-hairline bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl"
             >
               <div className="aspect-[4/3] overflow-hidden">
                 <img
@@ -62,11 +62,11 @@ export function ServicesFriendlyBlock({
                 />
               </div>
               <div className="flex flex-1 flex-col p-6">
-                <h3 className="font-display text-xl font-bold tracking-tight text-[#3D3530]">
+                <h3 className="font-display text-xl font-bold tracking-tight text-fam-ink">
                   {s.displayName}
                 </h3>
-                <p className="mt-2 text-[#7A6F66]">{s.short}</p>
-                <div className="mt-5 flex items-center gap-1 font-display font-semibold text-emerald-700 transition-all group-hover:gap-2">
+                <p className="mt-2 text-fam-ink-muted">{s.short}</p>
+                <div className="mt-5 flex items-center gap-1 font-display font-semibold text-fam-accent-text transition-all group-hover:gap-2">
                   {exploreLabel} <ArrowRight className="h-4 w-4" />
                 </div>
               </div>

@@ -101,7 +101,7 @@ export function RelatedInfoBlock({
       className="relative overflow-hidden"
       style={{ backgroundImage: 'var(--wow-grad-surface)' }}
     >
-      <div className="container-x py-16 md:py-24">
+      <div className="container-x py-section">
         <h2 className="text-center font-display text-3xl leading-tight text-[var(--fam-ink,var(--color-ink-900))] sm:text-4xl">{tr('related.keepExploring')}</h2>
         <div className="mx-auto mt-10 max-w-4xl space-y-12">
           {showInfo && <LinkGroup heading={tr('related.moreResources')} links={relatedInfo} />}

@@ -30,13 +30,13 @@ export function TrustBarBoldBlock({
 }) {
   const icons = [ShieldCheck, Clock, Heart]
   return (
-    <section className="container-x py-14 md:py-20">
+    <section className="container-x py-band">
       <div className={`grid grid-cols-1 gap-8 ${items.length === 2 ? "md:grid-cols-2" : "md:grid-cols-3"}`}>
         {items.map((item, i) => {
           const Icon = icons[i] ?? ShieldCheck
           return (
             <div key={i} className="flex flex-col items-start">
-              <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-emerald-50 text-emerald-700">
+              <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-fam-accent-soft text-fam-accent-text">
                 <Icon className="h-7 w-7" strokeWidth={2} />
               </div>
               <h3 className="mt-5 font-display text-xl font-semibold uppercase tracking-tight text-ink-900">

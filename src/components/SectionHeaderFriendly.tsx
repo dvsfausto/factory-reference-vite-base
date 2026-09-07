@@ -32,11 +32,11 @@ export function SectionHeaderFriendly({
   void label;
   return (
     <div className={`flex flex-col ${alignClass} mb-12`}>
-      <h2 className="font-display text-4xl font-bold leading-tight tracking-tight text-[#3D3530] sm:text-5xl">
+      <h2 className="font-display text-4xl font-bold leading-tight tracking-tight text-fam-ink sm:text-5xl">
         {fullHeading}
       </h2>
       {body && (
-        <p className="mt-4 max-w-xl text-lg leading-relaxed text-[#7A6F66]">{body}</p>
+        <p className="mt-4 max-w-xl text-lg leading-relaxed text-fam-ink-muted">{body}</p>
       )}
     </div>
   );

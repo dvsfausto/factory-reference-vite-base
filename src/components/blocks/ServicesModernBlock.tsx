@@ -44,14 +44,14 @@ export function ServicesModernBlock({
   // horizontal cards on the right — small radius, tight gaps, edge-aligned. No eyebrow. The right column is a
   // visual grid (not filler text), so this is not the banned split-header.
   return (
-    <section className="bg-[#F6F7F9]">
-      <div className="container-x py-20 md:py-28">
+    <section className="bg-fam-surface-2">
+      <div className="container-x py-section">
         <div className="grid grid-cols-1 gap-x-12 gap-y-8 lg:grid-cols-12">
           <div className="lg:col-span-4">
-            <h2 className="font-display text-3xl font-semibold tracking-tight text-[#0F172A] sm:text-4xl">{secHeading}</h2>
-            <p className="mt-3 max-w-xs leading-relaxed text-[#64748B]">{secBody}</p>
+            <h2 className="font-display text-3xl font-semibold tracking-tight text-fam-ink sm:text-4xl">{secHeading}</h2>
+            <p className="mt-3 max-w-xs leading-relaxed text-fam-ink-muted">{secBody}</p>
             {services.length > previewServices.length && (
-              <Link to="/services" className="mt-6 inline-flex items-center gap-1.5 font-display text-sm font-semibold text-emerald-600 transition-all hover:gap-2.5">
+              <Link to="/services" className="mt-6 inline-flex items-center gap-1.5 font-display text-sm font-semibold text-fam-accent-text transition-all hover:gap-2.5">
                 {moreLink} <ArrowRight className="h-4 w-4" />
               </Link>
             )}
@@ -62,16 +62,16 @@ export function ServicesModernBlock({
                 key={s.slug}
                 to="/services/$slug"
                 params={{ slug: s.slug }}
-                className="zi-rise group flex items-center gap-4 rounded-lg border border-[#E6E8EC] bg-white p-3 transition-colors hover:border-emerald-500"
+                className="zi-rise group flex items-center gap-4 rounded-lg border border-fam-hairline bg-white p-3 transition-colors hover:border-fam-accent"
               >
                 <div className="zi-media h-16 w-16 shrink-0 overflow-hidden rounded-md">
                   <img src={serviceImageUrl(s.slug)} alt={s.name} loading="lazy" width={128} height={128} className="h-full w-full object-cover" />
                 </div>
                 <div className="min-w-0">
-                  <h3 className="truncate font-display text-base font-semibold tracking-tight text-[#0F172A]">{s.displayName}</h3>
-                  <p className="mt-0.5 line-clamp-2 text-sm text-[#64748B]">{s.short}</p>
+                  <h3 className="truncate font-display text-base font-semibold tracking-tight text-fam-ink">{s.displayName}</h3>
+                  <p className="mt-0.5 line-clamp-2 text-sm text-fam-ink-muted">{s.short}</p>
                 </div>
-                <ArrowRight className="ml-auto h-4 w-4 shrink-0 text-[#94A3B8] transition-all group-hover:translate-x-0.5 group-hover:text-emerald-600" />
+                <ArrowRight className="ml-auto h-4 w-4 shrink-0 text-fam-ink-faint transition-all group-hover:translate-x-0.5 group-hover:text-fam-accent-text" />
               </Link>
             ))}
           </div>

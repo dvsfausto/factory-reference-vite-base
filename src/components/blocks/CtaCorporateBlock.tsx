@@ -27,11 +27,11 @@ export function CtaCorporateBlock({
   const ctaLabel = ((site as { headerCtaLabel?: string }).headerCtaLabel ?? tr('form.getFreeQuote'))
   return (
     <section className="bg-[#142844] text-white">
-      <div className="container-x py-16 md:py-20">
+      <div className="container-x py-section">
         <div className="max-w-3xl">
           {site.tagline && (
-            <span className="inline-flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.16em] text-emerald-100">
-              <span className="h-0.5 w-7 bg-emerald-100" />
+            <span className="inline-flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.16em] text-fam-accent-on-dark">
+              <span className="h-0.5 w-7 bg-fam-accent-soft-2" />
               {site.tagline}
             </span>
           )}

@@ -39,7 +39,7 @@ export function StoryManifestoGlowBlock({
       className="relative overflow-hidden"
       style={{ backgroundImage: 'var(--wow-grad-surface)' }}
     >
-      <div className="container-x py-24 md:py-36">
+      <div className="container-x py-section">
         <motion.div
           initial={reduce ? undefined : { opacity: 0, y: 24 }}
           whileInView={reduce ? undefined : { opacity: 1, y: 0 }}

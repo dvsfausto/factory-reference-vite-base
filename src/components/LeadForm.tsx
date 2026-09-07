@@ -164,7 +164,7 @@ export function LeadForm({
 
   if (status === 'ok') {
     return (
-      <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-8 text-center">
+      <div className="rounded-2xl border border-fam-accent-tint bg-fam-accent-soft p-8 text-center">
         <h3 className="text-2xl font-bold text-slate-900">Thanks, we got it.</h3>
         <p className="mt-3 text-base leading-relaxed text-slate-700">
           We&apos;ll be in touch within a business day.
@@ -172,7 +172,7 @@ export function LeadForm({
             {' '}If it&apos;s urgent, call us at{' '}
             <a
               href={`tel:${SITE.phone}`}
-              className="font-semibold text-emerald-700 hover:underline"
+              className="font-semibold text-fam-accent-text hover:underline"
             >
               {SITE.phoneDisplay}
             </a>
@@ -231,7 +231,7 @@ export function LeadForm({
             value={form.message}
             onChange={update('message')}
             maxLength={1000}
-            className="mt-1 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-base text-slate-900 outline-none transition-colors focus:border-emerald-600 focus:ring-2 focus:ring-emerald-100"
+            className="mt-1 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-base text-slate-900 outline-none transition-colors focus:border-fam-accent focus:ring-2 focus:ring-fam-accent-soft-2"
           />
         </div>
       </div>
@@ -239,7 +239,7 @@ export function LeadForm({
       <button
         type="submit"
         disabled={status === 'submitting'}
-        className="mt-6 inline-flex w-full items-center justify-center rounded-md bg-emerald-600 px-6 py-3 font-semibold text-white shadow-sm transition-colors hover:bg-emerald-700 disabled:opacity-60"
+        className="mt-6 inline-flex w-full items-center justify-center rounded-md bg-fam-accent px-6 py-3 font-semibold text-white shadow-sm transition-colors hover:bg-fam-accent-deep disabled:opacity-60"
       >
         {status === 'submitting' ? tr('form.sending') : submitLabel}
       </button>
@@ -314,7 +314,7 @@ function Field({
         className={`mt-1 w-full rounded-md border bg-white px-3 py-2 text-base text-slate-900 outline-none transition-colors ${
           error
             ? 'border-red-500 focus:border-red-600 focus:ring-2 focus:ring-red-100'
-            : 'border-slate-300 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-100'
+            : 'border-slate-300 focus:border-fam-accent focus:ring-2 focus:ring-fam-accent-soft-2'
         }`}
       />
       {error && (

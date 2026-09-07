@@ -30,19 +30,19 @@ export function SectionHeaderCorporate({
     <div className={`flex flex-col ${alignClass} mb-10`}>
       {label && (
         <span
-          className={`inline-flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.16em] text-emerald-600 ${
+          className={`inline-flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.16em] text-fam-accent-text ${
             align === "center" ? "justify-center" : ""
           }`}
         >
-          <span className="h-0.5 w-7 bg-emerald-600" />
+          <span className="h-0.5 w-7 bg-fam-accent" />
           {label}
         </span>
       )}
-      <h2 className="mt-3 font-display text-3xl font-bold leading-tight tracking-tight text-[#1A2433] sm:text-4xl">
+      <h2 className="mt-3 font-display text-3xl font-bold leading-tight tracking-tight text-fam-ink sm:text-4xl">
         {fullHeading}
       </h2>
       {body && (
-        <p className="mt-3 max-w-2xl text-lg leading-relaxed text-[#5A6678]">{body}</p>
+        <p className="mt-3 max-w-2xl text-lg leading-relaxed text-fam-ink-muted">{body}</p>
       )}
     </div>
   );

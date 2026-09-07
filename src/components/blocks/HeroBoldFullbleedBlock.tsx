@@ -62,7 +62,7 @@ export function HeroBoldFullbleedBlock({
       {/* Dark structural scrim for legibility + industrial mood. */}
       <div className="absolute inset-0 -z-10 bg-gradient-to-r from-ink-900 via-ink-900/90 to-ink-900/45" />
 
-      <div className="container-x relative flex flex-1 items-center py-20 md:py-28">
+      <div className="container-x relative flex flex-1 items-center py-section">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
@@ -71,7 +71,7 @@ export function HeroBoldFullbleedBlock({
         >
           {/* Eyebrow: a solid steel-blue block + the kicker, blocky, not dainty. */}
           <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] text-ink-100">
-            <span className="inline-block h-3 w-3 bg-emerald-600" />
+            <span className="inline-block h-3 w-3 bg-fam-accent" />
             {kicker}
           </span>
 
@@ -81,7 +81,7 @@ export function HeroBoldFullbleedBlock({
           </h1>
 
           {subheadline && (
-            <p className="mt-5 font-display text-xl uppercase tracking-wide text-emerald-100">
+            <p className="mt-5 font-display text-xl uppercase tracking-wide text-fam-accent-on-dark">
               {subheadline}
             </p>
           )}
@@ -114,7 +114,7 @@ export function HeroBoldFullbleedBlock({
 
       {/* Full-width steel-blue trust band, a contractor's banner stripe. The
           most unmistakable carrier of the DNA accent color. */}
-      <div className="relative bg-emerald-600">
+      <div className="relative bg-fam-accent">
         <div className="container-x flex flex-wrap items-center gap-x-8 gap-y-2 py-3.5 text-xs font-semibold uppercase tracking-[0.14em] text-white">
           {trustItems.map((t) => (
             <span key={t} className="inline-flex items-center gap-2">

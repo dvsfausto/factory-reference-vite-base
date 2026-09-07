@@ -29,25 +29,25 @@ export function ReviewsCorporateBlock({
   const previewReviews = reviews.slice(0, 6)
   if (previewReviews.length === 0) return null
   return (
-    <section className="border-y border-[#D8DEE7] bg-[#F4F6F9]">
-      <div className="container-x py-16 md:py-20">
+    <section className="border-y border-fam-hairline bg-fam-surface-2">
+      <div className="container-x py-section">
         <SectionHeaderCorporate label={label} heading={heading} scriptAccent={scriptAccent} />
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {previewReviews.map((r) => (
             <figure
               key={r.id}
-              className="flex flex-col rounded-lg border border-[#D8DEE7] bg-white p-7"
+              className="flex flex-col rounded-lg border border-fam-hairline bg-white p-7"
             >
               <div className="flex gap-0.5">
                 {Array.from({ length: r.rating ?? 5 }).map((_, i) => (
-                  <Star key={i} className="h-4 w-4 fill-emerald-600 text-emerald-600" />
+                  <Star key={i} className="h-4 w-4 fill-fam-accent text-fam-accent-text" />
                 ))}
               </div>
-              <blockquote className="mt-4 flex-1 text-lg leading-relaxed text-[#1A2433]">
+              <blockquote className="mt-4 flex-1 text-lg leading-relaxed text-fam-ink">
                 {r.text}
               </blockquote>
-              <figcaption className="mt-6 border-t border-[#D8DEE7] pt-4 text-sm text-[#5A6678]">
-                <span className="font-display font-semibold text-[#1A2433]">{r.author}</span>
+              <figcaption className="mt-6 border-t border-fam-hairline pt-4 text-sm text-fam-ink-muted">
+                <span className="font-display font-semibold text-fam-ink">{r.author}</span>
                 {r.location && <span> · {r.location}</span>}
               </figcaption>
             </figure>
@@ -57,7 +57,7 @@ export function ReviewsCorporateBlock({
           <div className="mt-10">
             <Link
               to="/reviews"
-              className="inline-flex h-12 items-center rounded-md border border-[#D8DEE7] bg-white px-6 font-display text-sm font-semibold text-[#1A2433] transition-colors hover:border-emerald-600 hover:text-emerald-700"
+              className="inline-flex h-12 items-center rounded-md border border-fam-hairline bg-white px-6 font-display text-sm font-semibold text-fam-ink transition-colors hover:border-fam-accent hover:text-fam-accent-text"
             >
               {moreLink}
             </Link>

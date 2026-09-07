@@ -32,11 +32,11 @@ export function SectionHeaderModern({
   void label;
   return (
     <div className={`flex flex-col ${alignClass} mb-14`}>
-      <h2 className="font-display text-4xl font-semibold leading-[1.1] tracking-tight text-[#0F172A] sm:text-5xl">
+      <h2 className="font-display text-4xl font-semibold leading-[1.1] tracking-tight text-fam-ink sm:text-5xl">
         {fullHeading}
       </h2>
       {body && (
-        <p className="mt-4 max-w-xl text-lg leading-relaxed text-[#64748B]">{body}</p>
+        <p className="mt-4 max-w-xl text-lg leading-relaxed text-fam-ink-muted">{body}</p>
       )}
     </div>
   );

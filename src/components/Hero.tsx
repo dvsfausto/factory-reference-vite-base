@@ -38,7 +38,7 @@ export function Hero({
             <ul className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-sm text-slate-600">
               {badges.map((b) => (
                 <li key={b} className="inline-flex items-center gap-1.5">
-                  <span aria-hidden className="text-emerald-600">
+                  <span aria-hidden className="text-fam-accent-text">
                     ✓
                   </span>
                   {b}
@@ -81,7 +81,7 @@ function CtaButton({
 }) {
   const className =
     variant === 'primary'
-      ? 'inline-flex items-center justify-center rounded-md bg-emerald-600 px-6 py-3 font-semibold text-white shadow-sm hover:bg-emerald-700 transition-colors'
+      ? 'inline-flex items-center justify-center rounded-md bg-fam-accent px-6 py-3 font-semibold text-white shadow-sm hover:bg-fam-accent-deep transition-colors'
       : 'inline-flex items-center justify-center rounded-md border border-slate-300 bg-white px-6 py-3 font-semibold text-slate-900 hover:bg-slate-50 transition-colors'
   if (link.href.startsWith('http') || link.href.startsWith('tel:') || link.href.startsWith('mailto:')) {
     return (

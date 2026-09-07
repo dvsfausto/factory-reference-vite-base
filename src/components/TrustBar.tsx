@@ -13,7 +13,7 @@ interface Props {
 export function TrustBar({ items }: Props) {
   if (items.length === 0) return null;
   return (
-    <section className="container-x py-14 md:py-20">
+    <section className="container-x py-band">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {items.map((item, i) => (
           <div key={i} className="text-center">

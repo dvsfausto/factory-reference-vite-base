@@ -41,7 +41,7 @@ export function ReviewsGlassWallBlock({
 
   return (
     <section className="relative overflow-hidden bg-white">
-      <div className="container-x py-16 md:py-24">
+      <div className="container-x py-section">
         <SectionHeader label={label} heading={heading} scriptAccent={scriptAccent} />
 
         {/* Brand-hairline frame with a faint brand tint wash. */}

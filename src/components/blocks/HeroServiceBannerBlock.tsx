@@ -40,7 +40,7 @@ export function HeroServiceBannerBlock({
   const place = [site.address?.city, site.address?.state].filter(Boolean).join(', ')
   return (
     <section className="bg-[var(--fam-surface,#fff)]">
-      <div className="container-x py-12 md:py-16">
+      <div className="container-x py-section">
         <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-12">
           <div className="lg:col-span-7">
             {place && (

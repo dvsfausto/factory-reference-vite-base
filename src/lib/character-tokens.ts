@@ -86,12 +86,12 @@ export interface CharacterTokens {
 }
 
 const CHARACTER_ACCENT = {
-  accent: 'text-emerald-600',
-  accentStrong: 'text-emerald-700',
-  accentFaint: 'text-emerald-200',
-  accentBg: 'bg-emerald-50',
-  accentBorder: 'border-emerald-100',
-  accentHover: 'hover:border-emerald-600 hover:text-emerald-600',
+  accent: 'text-fam-accent-text',
+  accentStrong: 'text-fam-accent-text',
+  accentFaint: 'text-fam-accent-tint',
+  accentBg: 'bg-fam-accent-soft',
+  accentBorder: 'border-fam-accent-soft-2',
+  accentHover: 'hover:border-fam-accent hover:text-fam-accent-text',
 } as const
 
 const BOLD: CharacterTokens = {
@@ -107,7 +107,7 @@ const BOLD: CharacterTokens = {
   // dark footer, bg-ink-900) with light text — not the white section that produced the white band.
   crumb: { surface: 'bg-ink-900', text: 'text-white', muted: 'text-white/70' },
   cardRadius: 'rounded-lg',
-  cardElevation: 'transition-all hover:-translate-y-1 hover:border-emerald-600 hover:shadow-xl',
+  cardElevation: 'transition-all hover:-translate-y-1 hover:border-fam-accent hover:shadow-xl',
   buttonRadius: 'rounded-lg',
   headingCase: 'uppercase',
   spacingY: 'py-16 md:py-24',
@@ -116,14 +116,14 @@ const BOLD: CharacterTokens = {
 
 const ELEGANT_LIGHT: CharacterTokens = {
   ...CHARACTER_ACCENT,
-  section: 'bg-[#FBF7EF]',
-  sectionAlt: 'bg-[#F3ECDE]',
+  section: 'bg-fam-surface',
+  sectionAlt: 'bg-fam-surface-2',
   card: 'bg-white',
-  border: 'border-[#E7DCC9]',
-  text: 'text-[#2B2620]',
-  muted: 'text-[#8A7E6E]',
+  border: 'border-fam-hairline',
+  text: 'text-fam-ink',
+  muted: 'text-fam-ink-muted',
   cardRadius: 'rounded-xl',
-  cardElevation: 'transition-all hover:-translate-y-1 hover:border-emerald-600',
+  cardElevation: 'transition-all hover:-translate-y-1 hover:border-fam-accent',
   buttonRadius: 'rounded-lg',
   headingCase: '',
   spacingY: 'py-20 md:py-28',
@@ -142,12 +142,12 @@ const ELEGANT_DARK: CharacterTokens = {
 
 const FRIENDLY: CharacterTokens = {
   ...CHARACTER_ACCENT,
-  section: 'bg-[#FFF6EC]',
-  sectionAlt: 'bg-[#FFFBF5]',
+  section: 'bg-fam-surface-2',
+  sectionAlt: 'bg-fam-surface',
   card: 'bg-white',
-  border: 'border-[#F0E6DA]',
-  text: 'text-[#3D3530]',
-  muted: 'text-[#7A6F66]',
+  border: 'border-fam-hairline',
+  text: 'text-fam-ink',
+  muted: 'text-fam-ink-muted',
   cardRadius: 'rounded-3xl',
   cardElevation: 'shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl',
   buttonRadius: 'rounded-2xl',
@@ -158,14 +158,14 @@ const FRIENDLY: CharacterTokens = {
 
 const MODERN: CharacterTokens = {
   ...CHARACTER_ACCENT,
-  section: 'bg-[#F6F7F9]',
+  section: 'bg-fam-surface-2',
   sectionAlt: 'bg-white',
   card: 'bg-white',
-  border: 'border-[#E6E8EC]',
-  text: 'text-[#0F172A]',
-  muted: 'text-[#64748B]',
+  border: 'border-fam-hairline',
+  text: 'text-fam-ink',
+  muted: 'text-fam-ink-muted',
   cardRadius: 'rounded-2xl',
-  cardElevation: 'transition-all hover:-translate-y-1 hover:border-emerald-600',
+  cardElevation: 'transition-all hover:-translate-y-1 hover:border-fam-accent',
   buttonRadius: 'rounded-2xl',
   headingCase: '',
   spacingY: 'py-16 md:py-24',
@@ -174,12 +174,12 @@ const MODERN: CharacterTokens = {
 
 const CORPORATE: CharacterTokens = {
   ...CHARACTER_ACCENT,
-  section: 'bg-[#F4F6F9]',
+  section: 'bg-fam-surface-2',
   sectionAlt: 'bg-white',
   card: 'bg-white',
-  border: 'border-[#D8DEE7]',
-  text: 'text-[#1A2433]',
-  muted: 'text-[#5A6678]',
+  border: 'border-fam-hairline',
+  text: 'text-fam-ink',
+  muted: 'text-fam-ink-muted',
   cardRadius: 'rounded-lg',
   cardElevation: 'transition-all hover:-translate-y-1 hover:shadow-md',
   buttonRadius: 'rounded-md',
@@ -191,11 +191,11 @@ const CORPORATE: CharacterTokens = {
 const CREATIVE: CharacterTokens = {
   ...CHARACTER_ACCENT,
   section: 'bg-white',
-  sectionAlt: 'bg-[#FBFAFC]',
-  card: 'bg-[#FBFAFC]',
+  sectionAlt: 'bg-fam-surface-2',
+  card: 'bg-fam-surface-2',
   border: 'border-transparent', // creative cards are borderless (derived)
-  text: 'text-[#18181B]',
-  muted: 'text-[#71717A]',
+  text: 'text-fam-ink',
+  muted: 'text-fam-ink-muted',
   cardRadius: 'rounded-2xl',
   cardElevation: 'transition-transform hover:-translate-y-1.5',
   buttonRadius: 'rounded-2xl',

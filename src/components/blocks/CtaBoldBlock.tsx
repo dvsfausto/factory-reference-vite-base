@@ -33,12 +33,12 @@ export function CtaBoldBlock({
   return (
     <section className="relative isolate overflow-hidden bg-ink-900 text-white">
       {/* Emerald accent rule across the top, the DNA accent as a structural band. */}
-      <div className="h-1.5 w-full bg-emerald-600" />
-      <div className="container-x py-20 md:py-24">
+      <div className="h-1.5 w-full bg-fam-accent" />
+      <div className="container-x py-section">
         <div className="max-w-3xl">
           {site.tagline && (
             <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] text-ink-100">
-              <span className="inline-block h-3 w-3 bg-emerald-600" />
+              <span className="inline-block h-3 w-3 bg-fam-accent" />
               {site.tagline}
             </span>
           )}

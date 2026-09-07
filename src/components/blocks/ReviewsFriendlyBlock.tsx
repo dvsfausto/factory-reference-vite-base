@@ -29,25 +29,25 @@ export function ReviewsFriendlyBlock({
   const previewReviews = reviews.slice(0, 6)
   if (previewReviews.length === 0) return null
   return (
-    <section className="bg-[#FFF6EC]">
-      <div className="container-x py-16 md:py-24">
+    <section className="bg-fam-surface-2">
+      <div className="container-x py-section">
         <SectionHeaderFriendly label={label} heading={heading} scriptAccent={scriptAccent} />
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
           {previewReviews.map((r) => (
             <figure
               key={r.id}
-              className="flex flex-col rounded-3xl border border-[#F0E6DA] bg-white p-6 shadow-sm"
+              className="flex flex-col rounded-3xl border border-fam-hairline bg-white p-6 shadow-sm"
             >
               <div className="flex gap-0.5">
                 {Array.from({ length: r.rating ?? 5 }).map((_, i) => (
-                  <Star key={i} className="h-4 w-4 fill-emerald-500 text-emerald-500" />
+                  <Star key={i} className="h-4 w-4 fill-fam-accent text-fam-accent-text" />
                 ))}
               </div>
-              <blockquote className="mt-4 flex-1 text-lg leading-relaxed text-[#3D3530]">
+              <blockquote className="mt-4 flex-1 text-lg leading-relaxed text-fam-ink">
                 “{r.text}”
               </blockquote>
-              <figcaption className="mt-5 text-sm text-[#7A6F66]">
-                <span className="font-display font-semibold text-[#3D3530]">{r.author}</span>
+              <figcaption className="mt-5 text-sm text-fam-ink-muted">
+                <span className="font-display font-semibold text-fam-ink">{r.author}</span>
                 {r.location && <span> · {r.location}</span>}
               </figcaption>
             </figure>
@@ -57,7 +57,7 @@ export function ReviewsFriendlyBlock({
           <div className="mt-10">
             <Link
               to="/reviews"
-              className="inline-flex h-12 items-center rounded-2xl border-2 border-emerald-600/40 bg-white px-6 font-display text-sm font-semibold text-[#3D3530] transition-colors hover:border-emerald-600 hover:bg-emerald-50"
+              className="inline-flex h-12 items-center rounded-2xl border-2 border-fam-accent/40 bg-white px-6 font-display text-sm font-semibold text-fam-ink transition-colors hover:border-fam-accent hover:bg-fam-accent-soft"
             >
               {moreLink}
             </Link>

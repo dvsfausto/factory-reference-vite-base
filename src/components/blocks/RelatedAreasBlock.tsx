@@ -38,7 +38,7 @@ export function RelatedAreasBlock({
       className="relative overflow-hidden"
       style={{ backgroundColor: 'var(--fam-surface, transparent)', backgroundImage: 'var(--fam-grad-surface, var(--wow-grad-surface))' }}
     >
-      <div className="container-x py-16 md:py-24">
+      <div className="container-x py-section">
         <h2 className="text-center font-display text-3xl leading-tight text-[var(--fam-ink,var(--color-ink-900))] sm:text-4xl">{tr('tmpl.weAlsoServeNearby')}</h2>
         <div className="mx-auto mt-10 grid max-w-3xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {related.map((a, i) => (

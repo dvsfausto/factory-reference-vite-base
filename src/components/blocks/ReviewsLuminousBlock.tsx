@@ -45,7 +45,7 @@ export function ReviewsLuminousBlock({
       className="relative overflow-hidden"
       style={{ backgroundImage: 'var(--wow-grad-surface)' }}
     >
-      <div className="container-x py-16 md:py-24">
+      <div className="container-x py-section">
         <SectionHeader label={label} heading={heading} scriptAccent={scriptAccent} />
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">

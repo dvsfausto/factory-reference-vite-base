@@ -5,7 +5,7 @@ import { tr } from '~/lib/i18n'
 // done, rating, …). Character-agnostic. OMIT-WHEN-ABSENT: stats read from optional
 // SITE.stats via cast; no stats -> null, never fabricates numbers.
 //
-// TOKEN DISCIPLINE: accent -> emerald-* (DNA) 50/100/600/700: emerald-600 figures.
+// TOKEN DISCIPLINE: accent -> fam-accent-* (DNA) 50/100/600/700: fam-accent figures.
 // Radius -> rounded-* (DNA). Font -> font-display (DNA). Dark band (slate-950)
 // component-owned. No CTA by design. Never bg-brand-* / .btn.
 export function StoryStatBandBlock({
@@ -23,11 +23,11 @@ export function StoryStatBandBlock({
   if (!stats || stats.length === 0) return null
   return (
     <section className="bg-slate-950 text-white">
-      <div className="container-x py-20 md:py-28">
+      <div className="container-x py-section">
         {(heading || body) && (
           <div className="mx-auto mb-14 max-w-2xl text-center">
-            <span className="inline-flex items-center justify-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-100">
-              <span className="h-px w-6 bg-emerald-600" />
+            <span className="inline-flex items-center justify-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-on-dark">
+              <span className="h-px w-6 bg-fam-accent" />
               {label}
             </span>
             {heading && (
@@ -39,7 +39,7 @@ export function StoryStatBandBlock({
         <div className="grid grid-cols-2 gap-10 lg:grid-cols-4">
           {stats.slice(0, 4).map((s, i) => (
             <div key={`${s.label}-${i}`} className="text-center">
-              <div className="font-display text-5xl font-semibold tracking-tight text-emerald-100 sm:text-6xl">{s.value}</div>
+              <div className="font-display text-5xl font-semibold tracking-tight text-fam-accent-on-dark sm:text-6xl">{s.value}</div>
               <div className="mt-3 text-sm uppercase tracking-[0.14em] text-slate-300">{s.label}</div>
             </div>
           ))}

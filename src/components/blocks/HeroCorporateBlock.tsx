@@ -43,7 +43,7 @@ export function HeroCorporateBlock({
 }) {
   return (
     <section className="bg-white">
-      <div className="container-x py-16 md:py-20">
+      <div className="container-x py-section">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-14">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
@@ -51,22 +51,22 @@ export function HeroCorporateBlock({
             transition={{ duration: 0.5 }}
             className="lg:col-span-7"
           >
-            <span className="inline-flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.16em] text-emerald-600">
-              <span className="h-0.5 w-7 bg-emerald-600" />
+            <span className="inline-flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.16em] text-fam-accent-text">
+              <span className="h-0.5 w-7 bg-fam-accent" />
               {kicker}
             </span>
 
-            <h1 className="mt-4 font-display text-4xl font-bold leading-[1.08] tracking-tight text-[#1A2433] sm:text-5xl lg:text-6xl">
+            <h1 className="mt-4 font-display text-4xl font-bold leading-[1.08] tracking-tight text-fam-ink sm:text-5xl lg:text-6xl">
               {headline}
             </h1>
 
             {subheadline && (
-              <p className="mt-4 text-xl leading-relaxed text-[#5A6678]">
+              <p className="mt-4 text-xl leading-relaxed text-fam-ink-muted">
                 {subheadline}
               </p>
             )}
 
-            <p className="mt-4 max-w-xl text-lg leading-relaxed text-[#5A6678]">
+            <p className="mt-4 max-w-xl text-lg leading-relaxed text-fam-ink-muted">
               {body}
             </p>
 
@@ -78,9 +78,9 @@ export function HeroCorporateBlock({
               </PrimaryCta>
               {hasPhone(site.phone) && (<a
                 href={`tel:${site.phone}`}
-                className="inline-flex h-[52px] items-center gap-2 rounded-md border border-[#D8DEE7] px-6 font-display font-semibold text-[#1A2433] transition-colors hover:border-emerald-600 hover:text-emerald-700"
+                className="inline-flex h-[52px] items-center gap-2 rounded-md border border-fam-hairline px-6 font-display font-semibold text-fam-ink transition-colors hover:border-fam-accent hover:text-fam-accent-text"
               >
-                <Phone className="h-4 w-4 text-emerald-600" /> {site.phoneDisplay}
+                <Phone className="h-4 w-4 text-fam-accent-text" /> {site.phoneDisplay}
               </a>)}
             </div>
           </motion.div>
@@ -92,7 +92,7 @@ export function HeroCorporateBlock({
             transition={{ duration: 0.6, delay: 0.1 }}
             className="lg:col-span-5"
           >
-            <div className="zi-card zi-media overflow-hidden rounded-lg border border-[#D8DEE7] shadow-sm">
+            <div className="zi-card zi-media overflow-hidden rounded-lg border border-fam-hairline shadow-sm">
               <img
                 src={imageSrc(imageUrl)}
                 alt={HERO_ALT}
@@ -103,10 +103,10 @@ export function HeroCorporateBlock({
         </div>
 
         {/* Credentials strip, foregrounded trust signals in bordered cells. */}
-        <div className="mt-12 grid grid-cols-2 divide-x divide-[#D8DEE7] border-y border-[#D8DEE7] md:grid-cols-4">
+        <div className="mt-12 grid grid-cols-2 divide-x divide-fam-hairline border-y border-fam-hairline md:grid-cols-4">
           {trustItems.map((t) => (
-            <div key={t} className="px-5 py-5 text-sm font-semibold text-[#1A2433]">
-              <span className="mb-1 block h-0.5 w-5 bg-emerald-600" />
+            <div key={t} className="px-5 py-5 text-sm font-semibold text-fam-ink">
+              <span className="mb-1 block h-0.5 w-5 bg-fam-accent" />
               {t}
             </div>
           ))}

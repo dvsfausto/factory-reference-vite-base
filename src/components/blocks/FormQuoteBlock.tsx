@@ -14,7 +14,7 @@ import { hasPhone } from '~/lib/phone'
 // these ride in design_dna.customPages → the owner edits them AND they survive a rebuild. `services`
 // lets the owner choose which quotable services appear; absent → all quotable (never a dead form).
 //
-// TOKEN DISCIPLINE: primary CTA -> bg-primary. Accent -> emerald-* (DNA). Radius -> rounded-* (DNA).
+// TOKEN DISCIPLINE: primary CTA -> bg-primary. Accent -> fam-accent-* (DNA). Radius -> rounded-* (DNA).
 // Font -> font-display (DNA). Dark header panel component-owned. Never bg-brand-* / .btn.
 export function FormQuoteBlock({
   site = SITE,
@@ -90,11 +90,11 @@ export function FormQuoteBlock({
 
   return (
     <section className="bg-white">
-      <div className="container-x py-20 md:py-28">
-        <div className="mx-auto max-w-3xl overflow-hidden rounded-3xl border border-[#E6E8EC] bg-white shadow-sm">
+      <div className="container-x py-section">
+        <div className="mx-auto max-w-3xl overflow-hidden rounded-3xl border border-fam-hairline bg-white shadow-sm">
           <div className="bg-slate-950 px-8 py-10 text-white md:px-12">
-            <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-100">
-              <span className="h-px w-6 bg-emerald-600" />
+            <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-on-dark">
+              <span className="h-px w-6 bg-fam-accent" />
               {eyebrowText}
             </span>
             <Heading className="mt-4 font-display text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">{headingText}</Heading>
@@ -123,7 +123,7 @@ export function FormQuoteBlock({
                       name="service"
                       key={preselected || 'none'}
                       defaultValue={preselected || (options.length === 1 ? options[0].slug : '')}
-                      className="mt-1.5 w-full rounded-xl border border-[#D5D9DF] bg-white px-4 py-3 text-ink-900 outline-none focus:border-emerald-600 focus:ring-2 focus:ring-emerald-100"
+                      className="mt-1.5 w-full rounded-xl border border-[#D5D9DF] bg-white px-4 py-3 text-ink-900 outline-none focus:border-fam-accent focus:ring-2 focus:ring-fam-accent-soft-2"
                     >
                       {options.length !== 1 && <option value="">Select a service…</option>}
                       {options.map((s) => (
@@ -149,9 +149,9 @@ export function FormQuoteBlock({
                 {status === 'error' && error && <p className="mt-4 text-sm text-red-600">{error}</p>}
                 <div className="mt-8 flex flex-wrap items-center gap-4">
                   <SubmitButton status={status} label={submitText} />
-                  {hasPhone(site.phone) && (<span className="text-sm text-[#64748B]">
+                  {hasPhone(site.phone) && (<span className="text-sm text-fam-ink-muted">
                     Or call{' '}
-                    <a href={`tel:${site.phone}`} className="font-medium text-emerald-700 underline-offset-2 hover:underline">
+                    <a href={`tel:${site.phone}`} className="font-medium text-fam-accent-text underline-offset-2 hover:underline">
                       {site.phoneDisplay}
                     </a>
                   </span>)}

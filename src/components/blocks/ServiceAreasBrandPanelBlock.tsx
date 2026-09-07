@@ -40,7 +40,7 @@ export function ServiceAreasBrandPanelBlock({
 
   return (
     <section className="bg-white">
-      <div className="container-x py-16 md:py-24">
+      <div className="container-x py-section">
         <div
           className="relative overflow-hidden rounded-[1.75rem] text-white"
           style={{

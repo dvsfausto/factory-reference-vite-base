@@ -11,8 +11,8 @@ import { ShieldCheck, Clock, Heart, Award, BadgeCheck, Star, type LucideIcon } f
 // fixed line-icon plus the title as a monochrome badge, a clean text strip rather
 // than a broken image.
 //
-// TOKEN DISCIPLINE: accent -> emerald-* (DNA) restricted to 50/100/600/700:
-// emerald-600 icon. Radius -> rounded-* (DNA). Font -> font-display (DNA). Cool
+// TOKEN DISCIPLINE: accent -> fam-accent-* (DNA) restricted to 50/100/600/700:
+// fam-accent icon. Radius -> rounded-* (DNA). Font -> font-display (DNA). Cool
 // light surface component-owned (white / slate / hairline #E6E8EC). No CTA by
 // design. Never bg-brand-* / .btn.
 //
@@ -29,8 +29,8 @@ export function TrustBarLogoStripBlock({
   items?: { title: string; description: string }[]
 }) {
   return (
-    <section className="border-y border-[#E6E8EC] bg-white">
-      <div className="container-x py-8 md:py-10">
+    <section className="border-y border-fam-hairline bg-white">
+      <div className="container-x py-band">
         <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-6 md:justify-between">
           {items.map((item, i) => {
             const logo = (item as { logo?: string }).logo
@@ -46,9 +46,9 @@ export function TrustBarLogoStripBlock({
             ) : (
               <span
                 key={i}
-                className="inline-flex items-center gap-2.5 font-display text-sm font-semibold uppercase tracking-[0.12em] text-[#64748B]"
+                className="inline-flex items-center gap-2.5 font-display text-sm font-semibold uppercase tracking-[0.12em] text-fam-ink-muted"
               >
-                <Icon className="h-5 w-5 text-emerald-600" strokeWidth={1.75} />
+                <Icon className="h-5 w-5 text-fam-accent-text" strokeWidth={1.75} />
                 {item.title}
               </span>
             )

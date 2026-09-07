@@ -9,8 +9,8 @@ import { AREAS } from '~/data/areas'
 // HONESTY: stylized coverage band, no real geography, decorative labels + real
 // tier emphasis. Real embedded map is a later integration.
 //
-// TOKEN DISCIPLINE: accent -> emerald-* (DNA) 50/100/600/700: emerald-100 eyebrow,
-// emerald-600 home label. Radius -> rounded-* (DNA). Font -> font-display (DNA).
+// TOKEN DISCIPLINE: accent -> fam-accent-* (DNA) 50/100/600/700: fam-accent-soft-2 eyebrow,
+// fam-accent home label. Radius -> rounded-* (DNA). Font -> font-display (DNA).
 // Map field (slate-950) component-owned. No CTA by design. Never bg-brand-*.
 export function MapFullWidthBandBlock({
   areas = AREAS,
@@ -29,10 +29,10 @@ export function MapFullWidthBandBlock({
     <section className="relative isolate overflow-hidden bg-slate-950 text-white">
       <div className="absolute inset-0 opacity-[0.16]" style={{ backgroundImage: 'linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)', backgroundSize: '52px 52px' }} />
       <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/70 to-slate-950/40" />
-      <div className="container-x relative py-20 md:py-28">
+      <div className="container-x relative py-section">
         <div className="max-w-2xl">
-          <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-100">
-            <span className="h-px w-6 bg-emerald-600" />
+          <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-on-dark">
+            <span className="h-px w-6 bg-fam-accent" />
             {label}
           </span>
           <h2 className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight text-white sm:text-5xl">{heading}</h2>
@@ -40,8 +40,8 @@ export function MapFullWidthBandBlock({
         </div>
         <div className="mt-10 flex flex-wrap gap-3">
           {areas.slice(0, 12).map((a, i) => (
-            <span key={a.slug} className={`inline-flex items-center gap-1.5 rounded-full px-4 py-2 font-display text-sm font-semibold backdrop-blur-sm ${i === homeIndex ? 'bg-emerald-600 text-white' : 'bg-white/10 text-white'}`}>
-              <MapPin className={`h-4 w-4 ${i === homeIndex ? 'text-white' : 'text-emerald-100'}`} /> {a.name}
+            <span key={a.slug} className={`inline-flex items-center gap-1.5 rounded-full px-4 py-2 font-display text-sm font-semibold backdrop-blur-sm ${i === homeIndex ? 'bg-fam-accent text-white' : 'bg-white/10 text-white'}`}>
+              <MapPin className={`h-4 w-4 ${i === homeIndex ? 'text-white' : 'text-fam-accent-on-dark'}`} /> {a.name}
             </span>
           ))}
         </div>

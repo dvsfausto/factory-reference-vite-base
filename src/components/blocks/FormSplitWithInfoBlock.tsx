@@ -12,8 +12,8 @@ import { hasEmail } from '~/lib/email'
 // the conversion point. Character-agnostic. Posts the confirmed handle-website-
 // lead envelope (source_page 'contact').
 //
-// TOKEN DISCIPLINE: primary CTA -> bg-primary. Accent -> emerald-* (DNA)
-// 50/100/600/700: emerald-50 icon chips. Radius -> rounded-* (DNA). Font ->
+// TOKEN DISCIPLINE: primary CTA -> bg-primary. Accent -> fam-accent-* (DNA)
+// 50/100/600/700: fam-accent-soft icon chips. Radius -> rounded-* (DNA). Font ->
 // font-display (DNA). Light surface component-owned. Never bg-brand-* / .btn.
 export function FormSplitWithInfoBlock({
   site = SITE,
@@ -68,27 +68,27 @@ export function FormSplitWithInfoBlock({
 
   return (
     <section className="bg-white">
-      <div className="container-x py-20 md:py-28">
+      <div className="container-x py-section">
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
           <div>
-            <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600">
-              <span className="h-px w-6 bg-emerald-600" />
+            <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">
+              <span className="h-px w-6 bg-fam-accent" />
               {label}
             </span>
-            <Heading className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight text-[#0F172A] sm:text-5xl">
+            <Heading className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight text-fam-ink sm:text-5xl">
               {heading}
             </Heading>
-            {body && <p className="mt-4 text-lg leading-relaxed text-[#64748B]">{body}</p>}
+            {body && <p className="mt-4 text-lg leading-relaxed text-fam-ink-muted">{body}</p>}
             <div className="mt-10 flex flex-col gap-5">
               {rows.map((r, i) => (
                 <div key={i} className="flex items-center gap-4">
-                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-emerald-50 text-emerald-600">
+                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-fam-accent-soft text-fam-accent-text">
                     <r.Icon className="h-5 w-5" />
                   </span>
                   {r.href ? (
-                    <a href={r.href} className="font-display font-medium text-[#0F172A] hover:text-emerald-700">{r.label}</a>
+                    <a href={r.href} className="font-display font-medium text-fam-ink hover:text-fam-accent-text">{r.label}</a>
                   ) : (
-                    <span className="font-display font-medium text-[#0F172A]">{r.label}</span>
+                    <span className="font-display font-medium text-fam-ink">{r.label}</span>
                   )}
                 </div>
               ))}
@@ -99,7 +99,7 @@ export function FormSplitWithInfoBlock({
             {status === 'success' ? (
               <SuccessCard />
             ) : (
-              <form onSubmit={onSubmit} className="rounded-2xl border border-[#E6E8EC] bg-[#F8FAFC] p-8 md:p-10">
+              <form onSubmit={onSubmit} className="rounded-2xl border border-fam-hairline bg-fam-surface-2 p-8 md:p-10">
                 <div className="grid gap-5 md:grid-cols-2">
                   <Field label={tr('form.firstName')} name="first_name" required autoComplete="given-name" />
                   <Field label={tr('form.lastName')} name="last_name" required autoComplete="family-name" />

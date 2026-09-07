@@ -31,24 +31,24 @@ export function ServiceAreasCorporateBlock({
   if (areas.length === 0) return null
   return (
     <section className="bg-white">
-      <div className="container-x py-16 md:py-20">
+      <div className="container-x py-section">
         <SectionHeaderCorporate label={label} heading={heading} scriptAccent={scriptAccent} body={body} />
-        <div className="grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-[#D8DEE7] bg-[#D8DEE7] sm:grid-cols-3 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-fam-hairline bg-fam-hairline sm:grid-cols-3 lg:grid-cols-4">
           {areas.map((a) => (
             <Link
               key={a.slug}
               to="/areas/$slug"
               params={{ slug: a.slug }}
-              className="group inline-flex items-center gap-2 bg-white px-5 py-4 text-sm font-semibold text-[#1A2433] transition-colors hover:bg-[#FAFBFC] hover:text-emerald-700"
+              className="group inline-flex items-center gap-2 bg-white px-5 py-4 text-sm font-semibold text-fam-ink transition-colors hover:bg-[#FAFBFC] hover:text-fam-accent-text"
             >
-              <MapPin className="h-4 w-4 text-emerald-600" /> {a.name}
+              <MapPin className="h-4 w-4 text-fam-accent-text" /> {a.name}
             </Link>
           ))}
         </div>
         <div className="mt-8">
           <Link
             to="/areas"
-            className="inline-flex h-12 items-center rounded-md border border-[#D8DEE7] px-6 font-display text-sm font-semibold text-[#1A2433] transition-colors hover:border-emerald-600 hover:text-emerald-700"
+            className="inline-flex h-12 items-center rounded-md border border-fam-hairline px-6 font-display text-sm font-semibold text-fam-ink transition-colors hover:border-fam-accent hover:text-fam-accent-text"
           >
             {moreLink}
           </Link>

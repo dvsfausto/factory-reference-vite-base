@@ -60,6 +60,37 @@
   --color-success-100: #DCFCE7;
   --color-warning-600: #D97706;
   --color-warning-100: #FFFBEB;
+
+  /* ═══════════════════════════════════════════════════════════════════════════════════════════════
+     ★★★ THE FAMILY TOKENS (2026-09-07) — the colours every block reads. No block paints a hex or an
+     emerald-* utility any more (scripts/check-no-literal-colours.mjs fails the build on one); they read
+     these, and the scaffolder sets the underlying --fam-* vars per site: from the design family, and on
+     a branded site DERIVED from the owner's palette (factory-build family-theme.ts). The fallbacks are
+     the generic ('modern') palette + the emerald ramp the blocks used to paint — a site with no family
+     and no brand renders exactly as before.
+
+     Roles:  surface / surface-2  section grounds        card  panel ground
+             hairline             rules + borders        ink / ink-muted / ink-faint  text
+             accent               marks, fills           accent-text  the accent as READABLE text (floored)
+             accent-soft/-soft-2  tinted grounds         accent-tint  tinted borders
+             accent-deep          pressed fills          accent-on-dark  the accent on a dark ground
+     Opacity modifiers work (bg-fam-accent/10) — Tailwind mixes the var in oklab, the same mix the
+     scaffolder used to emit. The dark-statement surfaces (elegant hero / header, corporate band) are still
+     component-owned literals: the niche arc defines their --fam-dark / --fam-on-dark pair per niche. */
+  --color-fam-surface: var(--fam-surface, #FFFFFF);
+  --color-fam-surface-2: var(--fam-surface-2, #F6F7F9);
+  --color-fam-card: var(--fam-card, #FFFFFF);
+  --color-fam-hairline: var(--fam-hairline, #E6E8EC);
+  --color-fam-ink: var(--fam-ink, #0F172A);
+  --color-fam-ink-muted: var(--fam-ink-muted, #64748B);
+  --color-fam-ink-faint: var(--fam-ink-faint, #94A3B8);
+  --color-fam-accent: var(--fam-accent, #059669);
+  --color-fam-accent-text: var(--fam-accent-text, #047857);
+  --color-fam-accent-soft: var(--fam-accent-soft, #ECFDF5);
+  --color-fam-accent-soft-2: var(--fam-accent-soft-2, #D1FAE5);
+  --color-fam-accent-tint: var(--fam-accent-tint, #A7F3D0);
+  --color-fam-accent-deep: var(--fam-accent-deep, #047857);
+  --color-fam-accent-on-dark: var(--fam-accent-on-dark, #D1FAE5);
 }
 
 :root {
@@ -142,6 +173,29 @@
    accent spans still carry (same cascade trick the per-customer typography override uses). color:inherit
    → the accent adopts whatever colour its headline uses, on light and dark sections alike. */
 .font-script { color: inherit; }
+
+/* ═══════════════════════════════════════════════════════════════════════════════════════════════
+   ★★ THE RHYTHM (2026-09-07). Every section's vertical padding is ONE token: 96 px on desktop, 64 on a
+   phone. Measured before this on a live site: nine homepage sections padded 64 → 253 px with no rule
+   (hero 140/180, services 96/253, story 201/144 …). A band — trust bar, promotion strip, partner logos —
+   is thinner on purpose and has its own token. Blocks use `py-section` / `py-band` on their container;
+   a raw `py-N md:py-M` pair on a container fails the build (scripts/check-no-literal-colours.mjs). */
+:root {
+  --rhythm-section: 64px;
+  --rhythm-band: 40px;
+}
+@media (min-width: 768px) {
+  :root {
+    --rhythm-section: 96px;
+    --rhythm-band: 56px;
+  }
+}
+@utility py-section {
+  padding-block: var(--rhythm-section);
+}
+@utility py-band {
+  padding-block: var(--rhythm-band);
+}
 
 @layer components {
   .container-x {

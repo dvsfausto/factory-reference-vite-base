@@ -10,7 +10,7 @@ import { hasPhone } from '~/lib/phone'
 // handle-website-lead envelope (source_page 'contact'); last_name is sent empty
 // (the contract allows it) to keep the form short.
 //
-// TOKEN DISCIPLINE: primary CTA -> bg-primary. Accent -> emerald-* (DNA)
+// TOKEN DISCIPLINE: primary CTA -> bg-primary. Accent -> fam-accent-* (DNA)
 // 50/100/600/700. Radius -> rounded-* (DNA). Font -> font-display (DNA). Light
 // surface component-owned (white / slate / #E6E8EC). Never bg-brand-* / .btn.
 export function FormMinimalBlock({
@@ -57,17 +57,17 @@ export function FormMinimalBlock({
   }
 
   return (
-    <section className="bg-[#F8FAFC]">
-      <div className="container-x py-20 md:py-28">
-        <div className="mx-auto max-w-3xl rounded-3xl border border-[#E6E8EC] bg-white p-8 md:p-12">
+    <section className="bg-fam-surface-2">
+      <div className="container-x py-section">
+        <div className="mx-auto max-w-3xl rounded-3xl border border-fam-hairline bg-white p-8 md:p-12">
           <div className="grid items-center gap-8 md:grid-cols-5">
             <div className="md:col-span-2">
-              <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600">
-                <span className="h-px w-6 bg-emerald-600" />
+              <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">
+                <span className="h-px w-6 bg-fam-accent" />
                 {label}
               </span>
-              <Heading className="mt-4 font-display text-3xl font-semibold leading-tight tracking-tight text-[#0F172A]">{heading}</Heading>
-              {body && <p className="mt-3 leading-relaxed text-[#64748B]">{body}</p>}
+              <Heading className="mt-4 font-display text-3xl font-semibold leading-tight tracking-tight text-fam-ink">{heading}</Heading>
+              {body && <p className="mt-3 leading-relaxed text-fam-ink-muted">{body}</p>}
             </div>
 
             <div className="md:col-span-3">
@@ -81,7 +81,7 @@ export function FormMinimalBlock({
                   {status === 'error' && error && <p className="text-sm text-red-600">{error}</p>}
                   <div className="mt-1 flex flex-wrap items-center gap-4">
                     <SubmitButton status={status} />
-                    {hasPhone(site.phone) && (<a href={`tel:${site.phone}`} className="text-sm font-medium text-emerald-700 underline-offset-2 hover:underline">
+                    {hasPhone(site.phone) && (<a href={`tel:${site.phone}`} className="text-sm font-medium text-fam-accent-text underline-offset-2 hover:underline">
                       Or call {site.phoneDisplay}
                     </a>)}
                   </div>

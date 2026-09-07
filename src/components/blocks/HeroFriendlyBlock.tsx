@@ -43,30 +43,30 @@ export function HeroFriendlyBlock({
   ctaLabel?: string
 }) {
   return (
-    <section className="bg-[#FFFBF5]">
-      <div className="container-x py-16 md:py-24">
+    <section className="bg-fam-surface">
+      <div className="container-x py-section">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <span className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.14em] text-emerald-700">
-              <span className="h-2.5 w-2.5 rounded-full bg-emerald-600" />
+            <span className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.14em] text-fam-accent-text">
+              <span className="h-2.5 w-2.5 rounded-full bg-fam-accent" />
               {kicker}
             </span>
 
-            <h1 className="mt-5 font-display text-5xl font-bold leading-[1.05] tracking-tight text-[#3D3530] sm:text-6xl">
+            <h1 className="mt-5 font-display text-5xl font-bold leading-[1.05] tracking-tight text-fam-ink sm:text-6xl">
               {headline}
             </h1>
 
             {subheadline && (
-              <p className="mt-4 font-display text-2xl font-medium text-emerald-700">
+              <p className="mt-4 font-display text-2xl font-medium text-fam-accent-text">
                 {subheadline}
               </p>
             )}
 
-            <p className="mt-5 max-w-xl text-lg leading-relaxed text-[#7A6F66]">
+            <p className="mt-5 max-w-xl text-lg leading-relaxed text-fam-ink-muted">
               {body}
             </p>
 
@@ -78,9 +78,9 @@ export function HeroFriendlyBlock({
               </PrimaryCta>
               {hasPhone(site.phone) && (<a
                 href={`tel:${site.phone}`}
-                className="inline-flex h-[54px] items-center gap-2 rounded-2xl border-2 border-emerald-600/40 px-7 font-display font-semibold text-[#3D3530] transition-colors hover:border-emerald-600 hover:bg-emerald-50"
+                className="inline-flex h-[54px] items-center gap-2 rounded-2xl border-2 border-fam-accent/40 px-7 font-display font-semibold text-fam-ink transition-colors hover:border-fam-accent hover:bg-fam-accent-soft"
               >
-                <Phone className="h-4 w-4 text-emerald-600" /> {site.phoneDisplay}
+                <Phone className="h-4 w-4 text-fam-accent-text" /> {site.phoneDisplay}
               </a>)}
             </div>
 
@@ -89,7 +89,7 @@ export function HeroFriendlyBlock({
               {trustItems.map((t) => (
                 <span
                   key={t}
-                  className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3.5 py-1.5 text-sm font-medium text-emerald-700"
+                  className="inline-flex items-center gap-1.5 rounded-full bg-fam-accent-soft px-3.5 py-1.5 text-sm font-medium text-fam-accent-text"
                 >
                   <Check className="h-4 w-4" /> {t}
                 </span>
@@ -104,7 +104,7 @@ export function HeroFriendlyBlock({
             transition={{ duration: 0.7, delay: 0.1 }}
             className="relative"
           >
-            <div className="zi-card zi-media overflow-hidden rounded-3xl border border-[#F0E6DA] shadow-xl">
+            <div className="zi-card zi-media overflow-hidden rounded-3xl border border-fam-hairline shadow-xl">
               <img
                 src={imageSrc(imageUrl)}
                 alt={HERO_ALT}

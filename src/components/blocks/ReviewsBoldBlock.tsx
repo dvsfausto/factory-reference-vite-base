@@ -29,7 +29,7 @@ export function ReviewsBoldBlock({
   if (previewReviews.length === 0) return null
   return (
     <section className="bg-background border-y border-ink-100">
-      <div className="container-x py-16 md:py-24">
+      <div className="container-x py-section">
         <SectionHeaderBold label={label} heading={heading} scriptAccent={scriptAccent} />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {previewReviews.map((r) => (
@@ -40,7 +40,7 @@ export function ReviewsBoldBlock({
           <div className="mt-10">
             <Link
               to="/reviews"
-              className="inline-flex h-12 items-center rounded-md border border-ink-300 px-6 font-display text-sm font-semibold uppercase tracking-wide text-ink-900 transition-colors hover:border-emerald-600 hover:text-emerald-700"
+              className="inline-flex h-12 items-center rounded-md border border-ink-300 px-6 font-display text-sm font-semibold uppercase tracking-wide text-ink-900 transition-colors hover:border-fam-accent hover:text-fam-accent-text"
             >
               {moreLink}
             </Link>

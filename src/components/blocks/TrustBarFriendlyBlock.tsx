@@ -28,20 +28,20 @@ export function TrustBarFriendlyBlock({
 }) {
   const icons = [ShieldCheck, HeartHandshake, Sparkles]
   return (
-    <section className="bg-[#FFFBF5]">
-      <div className="container-x py-14 md:py-16">
+    <section className="bg-fam-surface">
+      <div className="container-x py-band">
         <div className={`grid grid-cols-1 gap-8 ${items.length === 2 ? "md:grid-cols-2" : "md:grid-cols-3"}`}>
           {items.map((item, i) => {
             const Icon = icons[i] ?? ShieldCheck
             return (
               <div key={i} className="flex flex-col items-start">
-                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600">
+                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-fam-accent-soft text-fam-accent-text">
                   <Icon className="h-7 w-7" strokeWidth={2} />
                 </div>
-                <h3 className="mt-4 font-display text-xl font-bold tracking-tight text-[#3D3530]">
+                <h3 className="mt-4 font-display text-xl font-bold tracking-tight text-fam-ink">
                   {item.title}
                 </h3>
-                <p className="mt-2 text-[#7A6F66]">{item.description}</p>
+                <p className="mt-2 text-fam-ink-muted">{item.description}</p>
               </div>
             )
           })}

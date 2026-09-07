@@ -9,8 +9,8 @@ import { ShieldCheck, Clock, Heart, Award, BadgeCheck, Star, type LucideIcon } f
 // supporting line per cell, with shared hairline dividers that knit the cells into
 // one object. Icons are fixed visual identity (zipped by index), not copy.
 //
-// TOKEN DISCIPLINE: accent -> emerald-* (DNA) restricted to 50/100/600/700:
-// emerald-50 icon chip, emerald-600 icon. Radius -> rounded-* (DNA). Font ->
+// TOKEN DISCIPLINE: accent -> fam-accent-* (DNA) restricted to 50/100/600/700:
+// fam-accent-soft icon chip, fam-accent icon. Radius -> rounded-* (DNA). Font ->
 // font-display (DNA). Cool light surface component-owned (section #F6F7F9, white
 // cells, hairline #E6E8EC, slate text). No CTA by design. Never bg-brand-* / .btn.
 //
@@ -27,20 +27,20 @@ export function TrustBarCredentialCellsBlock({
   items?: { title: string; description: string }[]
 }) {
   return (
-    <section className="bg-[#F6F7F9]">
-      <div className="container-x py-14 md:py-16">
-        <div className="grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-[#E6E8EC] bg-[#E6E8EC] sm:grid-cols-3">
+    <section className="bg-fam-surface-2">
+      <div className="container-x py-band">
+        <div className="grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-fam-hairline bg-fam-hairline sm:grid-cols-3">
           {items.map((item, i) => {
             const Icon = ICONS[i % ICONS.length]!
             return (
               <div key={i} className="flex flex-col bg-white p-7">
-                <span className="grid h-11 w-11 place-items-center rounded-xl bg-emerald-50 text-emerald-600">
+                <span className="grid h-11 w-11 place-items-center rounded-xl bg-fam-accent-soft text-fam-accent-text">
                   <Icon className="h-5 w-5" strokeWidth={1.9} />
                 </span>
-                <h3 className="mt-5 font-display text-lg font-semibold tracking-tight text-[#0F172A]">
+                <h3 className="mt-5 font-display text-lg font-semibold tracking-tight text-fam-ink">
                   {item.title}
                 </h3>
-                <p className="mt-2 text-sm leading-relaxed text-[#64748B]">{item.description}</p>
+                <p className="mt-2 text-sm leading-relaxed text-fam-ink-muted">{item.description}</p>
               </div>
             )
           })}

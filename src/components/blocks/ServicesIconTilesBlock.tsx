@@ -28,8 +28,8 @@ import { SERVICES } from '~/data/services-view'
 // every existing service renders a sensible icon.
 //
 // TOKEN DISCIPLINE: primary CTA -> bg-primary / text-primary-foreground (BRAND-
-// owned). Accent -> emerald-* (DNA) restricted to 50/100/600/700: emerald-50 chip,
-// emerald-600 icon/accent. Radius -> rounded-* (DNA). Font -> font-display (DNA).
+// owned). Accent -> fam-accent-* (DNA) restricted to 50/100/600/700: fam-accent-soft chip,
+// fam-accent icon/accent. Radius -> rounded-* (DNA). Font -> font-display (DNA).
 // Light surface component-owned (white / slate / border #E6E8EC). Never
 // bg-brand-* / .btn.
 //
@@ -69,18 +69,18 @@ export function ServicesIconTilesBlock({
   const tiles = services.slice(0, 6)
   if (tiles.length === 0) return null
   return (
-    <section className="bg-[#F8FAFC]">
-      <div className="container-x py-20 md:py-28">
+    <section className="bg-fam-surface-2">
+      <div className="container-x py-section">
         <div className="max-w-2xl">
-          <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600">
-            <span className="h-px w-6 bg-emerald-600" />
+          <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">
+            <span className="h-px w-6 bg-fam-accent" />
             {label ?? hs?.label ?? 'Our services'}
           </span>
-          <h2 className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight text-[#0F172A] sm:text-5xl">
+          <h2 className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight text-fam-ink sm:text-5xl">
             {heading ?? hs?.heading ?? 'What we do'}
           </h2>
           {(body ?? hs?.body) && (
-            <p className="mt-4 text-lg leading-relaxed text-[#64748B]">{body ?? hs?.body}</p>
+            <p className="mt-4 text-lg leading-relaxed text-fam-ink-muted">{body ?? hs?.body}</p>
           )}
         </div>
 
@@ -94,16 +94,16 @@ export function ServicesIconTilesBlock({
                 key={s.slug}
                 to="/services/$slug"
                 params={{ slug: s.slug }}
-                className="group flex flex-col rounded-2xl border border-[#E6E8EC] bg-white p-7 transition-all hover:border-emerald-600 hover:shadow-md"
+                className="group flex flex-col rounded-2xl border border-fam-hairline bg-white p-7 transition-all hover:border-fam-accent hover:shadow-md"
               >
-                <span className="grid h-12 w-12 place-items-center rounded-xl bg-emerald-50 text-emerald-600 transition-colors group-hover:bg-emerald-100">
+                <span className="grid h-12 w-12 place-items-center rounded-xl bg-fam-accent-soft text-fam-accent-text transition-colors group-hover:bg-fam-accent-soft-2">
                   <Icon className="h-6 w-6" />
                 </span>
-                <h3 className="mt-6 font-display text-xl font-semibold tracking-tight text-[#0F172A]">
+                <h3 className="mt-6 font-display text-xl font-semibold tracking-tight text-fam-ink">
                   {s.displayName}
                 </h3>
-                <p className="mt-2 flex-1 text-[#64748B]">{s.short}</p>
-                <span className="mt-6 inline-flex items-center gap-1 font-display text-sm font-semibold text-emerald-600 transition-all group-hover:gap-2">
+                <p className="mt-2 flex-1 text-fam-ink-muted">{s.short}</p>
+                <span className="mt-6 inline-flex items-center gap-1 font-display text-sm font-semibold text-fam-accent-text transition-all group-hover:gap-2">
                   {exploreLabel} <ArrowRight className="h-4 w-4" />
                 </span>
               </Link>

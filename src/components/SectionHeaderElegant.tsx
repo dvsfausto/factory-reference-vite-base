@@ -37,11 +37,11 @@ export function SectionHeaderElegant({
     <div className={`flex flex-col ${alignClass} mb-12`}>
       {label && (
         <span
-          className={`inline-flex items-center gap-3 text-xs font-medium uppercase tracking-[0.3em] text-emerald-600 ${
+          className={`inline-flex items-center gap-3 text-xs font-medium uppercase tracking-[0.3em] text-fam-accent-text ${
             align === "center" ? "justify-center" : ""
           }`}
         >
-          <span className="h-px w-8 bg-emerald-600" />
+          <span className="h-px w-8 bg-fam-accent" />
           {label}
         </span>
       )}

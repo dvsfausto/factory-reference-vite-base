@@ -48,7 +48,7 @@ export function ServicesElegantBlock({
   const [lead, ...rest] = previewServices
   return (
     <section className={s.section}>
-      <div className="container-x py-20 md:py-28">
+      <div className="container-x py-section">
         <div className="max-w-2xl">
           <h2 className={`font-display text-4xl font-medium leading-tight tracking-tight ${s.text} sm:text-5xl`}>{secHeading}</h2>
           <p className={`mt-4 text-lg leading-relaxed ${s.muted}`}>{secBody}</p>
@@ -61,7 +61,7 @@ export function ServicesElegantBlock({
               <div className="zi-media overflow-hidden rounded-2xl">
                 <img src={serviceImageUrl(lead.slug)} alt={lead.name} loading="lazy" className="aspect-[16/10] w-full object-cover" />
               </div>
-              <h3 className={`mt-6 font-display text-3xl font-medium tracking-tight ${s.text} transition-colors group-hover:text-emerald-800`}>{lead.displayName}</h3>
+              <h3 className={`mt-6 font-display text-3xl font-medium tracking-tight ${s.text} transition-colors group-hover:text-fam-accent-text`}>{lead.displayName}</h3>
               <p className={`mt-2 max-w-md ${s.muted}`}>{lead.short}</p>
             </Link>
           )}
@@ -73,7 +73,7 @@ export function ServicesElegantBlock({
                   <img src={serviceImageUrl(sv.slug)} alt={sv.name} loading="lazy" className="h-full w-full object-cover" />
                 </div>
                 <div>
-                  <h3 className={`font-display text-xl font-medium tracking-tight ${s.text} transition-colors group-hover:text-emerald-800`}>{sv.name}</h3>
+                  <h3 className={`font-display text-xl font-medium tracking-tight ${s.text} transition-colors group-hover:text-fam-accent-text`}>{sv.name}</h3>
                   <p className={`mt-1 text-sm ${s.muted}`}>{sv.short}</p>
                 </div>
               </Link>
@@ -83,7 +83,7 @@ export function ServicesElegantBlock({
 
         {services.length > previewServices.length && (
           <div className={`mt-14 border-t ${s.border} pt-8`}>
-            <Link to="/services" className="inline-flex items-center gap-2 font-display text-base font-medium text-emerald-800 underline-offset-4 transition-colors hover:underline">
+            <Link to="/services" className="inline-flex items-center gap-2 font-display text-base font-medium text-fam-accent-text underline-offset-4 transition-colors hover:underline">
               {moreLink} <ArrowRight className="h-4 w-4" />
             </Link>
           </div>

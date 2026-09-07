@@ -29,17 +29,17 @@ export function TrustBarCorporateBlock({
   const icons = [Scale, ShieldCheck, Award]
   return (
     <section className="bg-white">
-      <div className="container-x py-14 md:py-16">
-        <div className="grid grid-cols-1 divide-y divide-[#D8DEE7] overflow-hidden rounded-lg border border-[#D8DEE7] md:grid-cols-3 md:divide-x md:divide-y-0">
+      <div className="container-x py-band">
+        <div className="grid grid-cols-1 divide-y divide-fam-hairline overflow-hidden rounded-lg border border-fam-hairline md:grid-cols-3 md:divide-x md:divide-y-0">
           {items.map((item, i) => {
             const Icon = icons[i] ?? ShieldCheck
             return (
               <div key={i} className="flex flex-col items-start p-7">
-                <Icon className="h-7 w-7 text-emerald-600" strokeWidth={1.75} />
-                <h3 className="mt-4 font-display text-lg font-bold tracking-tight text-[#1A2433]">
+                <Icon className="h-7 w-7 text-fam-accent-text" strokeWidth={1.75} />
+                <h3 className="mt-4 font-display text-lg font-bold tracking-tight text-fam-ink">
                   {item.title}
                 </h3>
-                <p className="mt-2 text-[#5A6678]">{item.description}</p>
+                <p className="mt-2 text-fam-ink-muted">{item.description}</p>
               </div>
             )
           })}

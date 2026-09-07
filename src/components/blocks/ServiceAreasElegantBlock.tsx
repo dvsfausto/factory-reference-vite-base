@@ -35,7 +35,7 @@ export function ServiceAreasElegantBlock({
   if (areas.length === 0) return null
   return (
     <section className={s.sectionAlt}>
-      <div className="container-x py-20 md:py-28">
+      <div className="container-x py-section">
         <SectionHeaderElegant label={label} heading={heading} scriptAccent={scriptAccent} body={body} />
         <div className="flex flex-wrap gap-3">
           {areas.map((a) => (
@@ -43,16 +43,16 @@ export function ServiceAreasElegantBlock({
               key={a.slug}
               to="/areas/$slug"
               params={{ slug: a.slug }}
-              className={`inline-flex items-center gap-2 rounded-lg border ${s.border} px-4 py-2.5 text-sm ${s.text} transition-colors hover:border-emerald-600 hover:text-emerald-100`}
+              className={`inline-flex items-center gap-2 rounded-lg border ${s.border} px-4 py-2.5 text-sm ${s.text} transition-colors hover:border-fam-accent hover:text-fam-accent-on-dark`}
             >
-              <MapPin className="h-3.5 w-3.5 text-emerald-600" /> {a.name}
+              <MapPin className="h-3.5 w-3.5 text-fam-accent-text" /> {a.name}
             </Link>
           ))}
         </div>
         <div className="mt-8">
           <Link
             to="/areas"
-            className={`inline-flex h-12 items-center rounded-lg border border-emerald-600/60 px-6 font-display text-sm font-medium uppercase tracking-[0.18em] ${s.text} transition-colors hover:border-emerald-600 hover:bg-emerald-600/10`}
+            className={`inline-flex h-12 items-center rounded-lg border border-fam-accent/60 px-6 font-display text-sm font-medium uppercase tracking-[0.18em] ${s.text} transition-colors hover:border-fam-accent hover:bg-fam-accent/10`}
           >
             {moreLink}
           </Link>

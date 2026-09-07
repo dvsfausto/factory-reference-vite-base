@@ -8,7 +8,7 @@ import { SITE } from '~/data/site'
 // OMIT-WHEN-ABSENT: SITE.videoTestimonials via cast; none -> null. Missing poster
 // -> neutral frame.
 //
-// TOKEN DISCIPLINE: accent -> emerald-* (DNA) 50/100/600/700: emerald-100 on dark.
+// TOKEN DISCIPLINE: accent -> fam-accent-* (DNA) 50/100/600/700: fam-accent-soft-2 on dark.
 // Radius -> rounded-* (DNA). Font -> font-display (DNA). Dark stage (slate-950)
 // component-owned. No CTA by design. Never bg-brand-* / .btn.
 export function VideoTestimonialsSpotlightBlock({
@@ -27,10 +27,10 @@ export function VideoTestimonialsSpotlightBlock({
   const [lead, ...rest] = vids
   return (
     <section className="bg-slate-950 text-white">
-      <div className="container-x py-20 md:py-28">
+      <div className="container-x py-section">
         <div className="max-w-2xl">
-          <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-100">
-            <span className="h-px w-6 bg-emerald-600" />
+          <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-on-dark">
+            <span className="h-px w-6 bg-fam-accent" />
             {label}
           </span>
           <h2 className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight text-white sm:text-5xl">{heading}</h2>
@@ -44,13 +44,13 @@ export function VideoTestimonialsSpotlightBlock({
               </video>
             </div>
             {lead.quote && <blockquote className="mt-6 font-display text-2xl leading-snug">“{lead.quote}”</blockquote>}
-            <figcaption className="mt-3 font-display text-sm font-semibold text-emerald-100">{lead.author}</figcaption>
+            <figcaption className="mt-3 font-display text-sm font-semibold text-fam-accent-on-dark">{lead.author}</figcaption>
           </figure>
           {rest.length > 0 && (
             <div className="flex flex-col divide-y divide-white/10">
               {rest.slice(0, 4).map((v, i) => (
                 <div key={`${v.author}-${i}`} className="py-5 first:pt-0">
-                  <Quote className="h-5 w-5 text-emerald-100" />
+                  <Quote className="h-5 w-5 text-fam-accent-on-dark" />
                   {v.quote && <p className="mt-2 leading-relaxed text-slate-200">{v.quote}</p>}
                   <p className="mt-2 font-display text-sm font-semibold text-white">{v.author}</p>
                 </div>

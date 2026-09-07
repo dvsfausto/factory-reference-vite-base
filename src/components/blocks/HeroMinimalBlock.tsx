@@ -16,8 +16,8 @@ import { hasPhone } from '~/lib/phone'
 // eyebrow, and a single understated trust line, every element earns its place.
 //
 // TOKEN DISCIPLINE: primary CTA -> bg-primary / text-primary-foreground (BRAND-
-// owned). Accent -> emerald-* (DNA) restricted to 50/100/600/700: emerald-600
-// rule + dot, emerald-700 hover. Radius -> rounded-* (DNA). Font -> font-display
+// owned). Accent -> fam-accent-* (DNA) restricted to 50/100/600/700: fam-accent
+// rule + dot, fam-accent-text hover. Radius -> rounded-* (DNA). Font -> font-display
 // (DNA). Light surface component-owned (white / slate #0F172A / #64748B). Never
 // bg-brand-* / .btn-primary / .btn.
 //
@@ -33,29 +33,29 @@ export function HeroMinimalBlock({
 }) {
   return (
     <section className="bg-white">
-      <div className="container-x py-28 md:py-44">
+      <div className="container-x py-section">
         <motion.div
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           className="max-w-4xl"
         >
-          <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.25em] text-emerald-600">
-            <span className="h-px w-10 bg-emerald-600" />
+          <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.25em] text-fam-accent-text">
+            <span className="h-px w-10 bg-fam-accent" />
             {site.hero.kicker}
           </span>
 
-          <h1 className="mt-8 font-display text-6xl font-semibold leading-[0.95] tracking-tight text-[#0F172A] sm:text-7xl lg:text-8xl">
+          <h1 className="mt-8 font-display text-6xl font-semibold leading-[0.95] tracking-tight text-fam-ink sm:text-7xl lg:text-8xl">
             {site.hero.headline}
           </h1>
 
           {site.hero.subheadline && (
-            <p className="mt-8 max-w-2xl text-2xl leading-snug text-[#64748B] sm:text-3xl">
+            <p className="mt-8 max-w-2xl text-2xl leading-snug text-fam-ink-muted sm:text-3xl">
               {site.hero.subheadline}
             </p>
           )}
 
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-[#64748B]">
+          <p className="mt-6 max-w-xl text-lg leading-relaxed text-fam-ink-muted">
             {site.hero.body}
           </p>
 
@@ -67,16 +67,16 @@ export function HeroMinimalBlock({
             </PrimaryCta>
             {hasPhone(site.phone) && (<a
               href={`tel:${site.phone}`}
-              className="inline-flex h-[56px] items-center gap-2 rounded-xl px-5 font-display font-semibold text-[#0F172A] transition-colors hover:text-emerald-700"
+              className="inline-flex h-[56px] items-center gap-2 rounded-xl px-5 font-display font-semibold text-fam-ink transition-colors hover:text-fam-accent-text"
             >
-              <Phone className="h-4 w-4 text-emerald-600" /> {site.phoneDisplay}
+              <Phone className="h-4 w-4 text-fam-accent-text" /> {site.phoneDisplay}
             </a>)}
           </div>
 
-          <div className="mt-16 flex flex-wrap gap-x-8 gap-y-2 border-t border-[#E6E8EC] pt-8 text-sm text-[#64748B]">
+          <div className="mt-16 flex flex-wrap gap-x-8 gap-y-2 border-t border-fam-hairline pt-8 text-sm text-fam-ink-muted">
             {trustItems.map((t) => (
               <span key={t} className="inline-flex items-center gap-2">
-                <span className="h-1 w-1 rounded-full bg-emerald-600" /> {t}
+                <span className="h-1 w-1 rounded-full bg-fam-accent" /> {t}
               </span>
             ))}
           </div>

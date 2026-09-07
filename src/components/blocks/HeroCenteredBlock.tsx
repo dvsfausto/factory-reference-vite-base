@@ -32,30 +32,30 @@ export function HeroCenteredBlock({
 }) {
   return (
     <section className="bg-white">
-      <div className="container-x py-20 md:py-28">
+      <div className="container-x py-section">
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           className="mx-auto flex max-w-3xl flex-col items-center text-center"
         >
-          <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600">
-            <span className="h-px w-6 bg-emerald-600" />
+          <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">
+            <span className="h-px w-6 bg-fam-accent" />
             {site.hero.kicker}
-            <span className="h-px w-6 bg-emerald-600" />
+            <span className="h-px w-6 bg-fam-accent" />
           </span>
 
-          <h1 className="mt-6 font-display text-5xl font-semibold leading-[1.05] tracking-tight text-[#0F172A] sm:text-6xl">
+          <h1 className="mt-6 font-display text-5xl font-semibold leading-[1.05] tracking-tight text-fam-ink sm:text-6xl">
             {site.hero.headline}
           </h1>
 
           {site.hero.subheadline && (
-            <p className="mt-5 text-xl leading-relaxed text-[#64748B]">
+            <p className="mt-5 text-xl leading-relaxed text-fam-ink-muted">
               {site.hero.subheadline}
             </p>
           )}
 
-          <p className="mt-5 max-w-2xl text-lg leading-relaxed text-[#64748B]">
+          <p className="mt-5 max-w-2xl text-lg leading-relaxed text-fam-ink-muted">
             {site.hero.body}
           </p>
 
@@ -67,16 +67,16 @@ export function HeroCenteredBlock({
             </PrimaryCta>
             {hasPhone(site.phone) && (<a
               href={`tel:${site.phone}`}
-              className="inline-flex h-[52px] items-center gap-2 rounded-xl border border-[#E6E8EC] px-6 font-display font-semibold text-[#0F172A] transition-colors hover:border-emerald-600 hover:text-emerald-700"
+              className="inline-flex h-[52px] items-center gap-2 rounded-xl border border-fam-hairline px-6 font-display font-semibold text-fam-ink transition-colors hover:border-fam-accent hover:text-fam-accent-text"
             >
-              <Phone className="h-4 w-4 text-emerald-600" /> {site.phoneDisplay}
+              <Phone className="h-4 w-4 text-fam-accent-text" /> {site.phoneDisplay}
             </a>)}
           </div>
 
-          <div className="mt-10 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-[#64748B]">
+          <div className="mt-10 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-fam-ink-muted">
             {trustItems.map((t) => (
               <span key={t} className="inline-flex items-center gap-1.5">
-                <Check className="h-4 w-4 text-emerald-600" /> {t}
+                <Check className="h-4 w-4 text-fam-accent-text" /> {t}
               </span>
             ))}
           </div>
@@ -88,7 +88,7 @@ export function HeroCenteredBlock({
           transition={{ duration: 0.6, delay: 0.1 }}
           className="mx-auto mt-14 max-w-5xl"
         >
-          <div className="overflow-hidden rounded-2xl border border-[#E6E8EC] shadow-sm">
+          <div className="overflow-hidden rounded-2xl border border-fam-hairline shadow-sm">
             <img
               src={imageSrc(site.hero.image_url)}
               alt={HERO_ALT}

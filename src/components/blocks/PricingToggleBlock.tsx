@@ -15,7 +15,7 @@ import { SITE } from '~/data/site'
 // discount). The annual control hides entirely if no plan offers an annual price.
 //
 // TOKEN DISCIPLINE: primary CTA -> bg-primary / text-primary-foreground. Accent ->
-// emerald-* (DNA) 50/100/600/700: emerald-600 active toggle + checks. Radius ->
+// fam-accent-* (DNA) 50/100/600/700: fam-accent active toggle + checks. Radius ->
 // rounded-* (DNA). Font -> font-display (DNA). Light surface component-owned. No
 // bg-brand-* / .btn.
 export function PricingToggleBlock({
@@ -36,24 +36,24 @@ export function PricingToggleBlock({
 
   return (
     <section className="bg-white">
-      <div className="container-x py-20 md:py-28">
+      <div className="container-x py-section">
         <div className="flex flex-col items-center text-center">
-          <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600">
-            <span className="h-px w-6 bg-emerald-600" />
+          <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">
+            <span className="h-px w-6 bg-fam-accent" />
             {label}
           </span>
-          <h2 className="mt-5 max-w-2xl font-display text-4xl font-semibold leading-tight tracking-tight text-[#0F172A] sm:text-5xl">
+          <h2 className="mt-5 max-w-2xl font-display text-4xl font-semibold leading-tight tracking-tight text-fam-ink sm:text-5xl">
             {heading}
           </h2>
-          {body && <p className="mt-4 max-w-xl text-lg leading-relaxed text-[#64748B]">{body}</p>}
+          {body && <p className="mt-4 max-w-xl text-lg leading-relaxed text-fam-ink-muted">{body}</p>}
 
           {hasAnnual && (
-            <div className="mt-8 inline-flex items-center rounded-full border border-[#E6E8EC] bg-[#F8FAFC] p-1">
+            <div className="mt-8 inline-flex items-center rounded-full border border-fam-hairline bg-fam-surface-2 p-1">
               <button
                 type="button"
                 onClick={() => setAnnual(false)}
                 className={`rounded-full px-5 py-2 font-display text-sm font-semibold transition-colors ${
-                  !annual ? 'bg-emerald-600 text-white' : 'text-[#64748B]'
+                  !annual ? 'bg-fam-accent text-white' : 'text-fam-ink-muted'
                 }`}
               >
                 Monthly
@@ -62,7 +62,7 @@ export function PricingToggleBlock({
                 type="button"
                 onClick={() => setAnnual(true)}
                 className={`rounded-full px-5 py-2 font-display text-sm font-semibold transition-colors ${
-                  annual ? 'bg-emerald-600 text-white' : 'text-[#64748B]'
+                  annual ? 'bg-fam-accent text-white' : 'text-fam-ink-muted'
                 }`}
               >
                 Annual
@@ -76,21 +76,21 @@ export function PricingToggleBlock({
             <div
               key={`${p.name}-${i}`}
               className={`flex flex-col rounded-3xl border p-8 ${
-                p.highlighted ? 'border-emerald-600 ring-1 ring-emerald-600' : 'border-[#E6E8EC]'
+                p.highlighted ? 'border-fam-accent ring-1 ring-fam-accent' : 'border-fam-hairline'
               } bg-white`}
             >
-              <h3 className="font-display text-lg font-semibold text-[#0F172A]">{p.name}</h3>
+              <h3 className="font-display text-lg font-semibold text-fam-ink">{p.name}</h3>
               <div className="mt-4 flex items-baseline gap-1">
-                <span className="font-display text-4xl font-semibold tracking-tight text-[#0F172A]">
+                <span className="font-display text-4xl font-semibold tracking-tight text-fam-ink">
                   {annual ? p.priceAnnual ?? p.price : p.price}
                 </span>
-                <span className="text-[#64748B]">{annual ? '/yr' : p.period ?? ''}</span>
+                <span className="text-fam-ink-muted">{annual ? '/yr' : p.period ?? ''}</span>
               </div>
               {p.features && p.features.length > 0 && (
                 <ul className="mt-7 flex flex-1 flex-col gap-3 text-sm">
                   {p.features.map((f) => (
-                    <li key={f} className="flex items-start gap-2.5 text-[#475569]">
-                      <Check className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" /> {f}
+                    <li key={f} className="flex items-start gap-2.5 text-fam-ink-muted">
+                      <Check className="mt-0.5 h-4 w-4 shrink-0 text-fam-accent-text" /> {f}
                     </li>
                   ))}
                 </ul>
@@ -100,7 +100,7 @@ export function PricingToggleBlock({
                 className={`mt-8 inline-flex h-12 items-center justify-center rounded-xl px-6 font-display text-sm font-semibold transition-opacity hover:opacity-90 ${
                   p.highlighted
                     ? 'bg-primary text-primary-foreground'
-                    : 'border border-[#E6E8EC] text-[#0F172A] hover:border-emerald-600 hover:text-emerald-700'
+                    : 'border border-fam-hairline text-fam-ink hover:border-fam-accent hover:text-fam-accent-text'
                 }`}
               >
                 Get started

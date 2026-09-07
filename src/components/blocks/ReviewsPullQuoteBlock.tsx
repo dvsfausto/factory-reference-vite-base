@@ -49,7 +49,7 @@ export function ReviewsPullQuoteBlock({
       className="relative overflow-hidden"
       style={{ backgroundImage: 'var(--wow-grad-surface)' }}
     >
-      <div className="container-x py-16 md:py-24">
+      <div className="container-x py-section">
         <SectionHeader label={label} heading={heading} scriptAccent={scriptAccent} align="left" />
 
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-14">

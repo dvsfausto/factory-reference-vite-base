@@ -12,7 +12,7 @@ import { hasPhone } from '~/lib/phone'
 // Prop signature identical to CtaBlock; returns an Element (no null).
 //
 // TOKEN DISCIPLINE: primary CTA → bg-primary / text-primary-foreground (brand-
-// owned); accent → emerald-* (DNA) rule + eyebrow; rounded-* (DNA); font-display
+// owned); accent → fam-accent-* (DNA) rule + eyebrow; rounded-* (DNA); font-display
 // (DNA serif); surface neutrals from elegantSurface(). No bg-brand-*, no .btn.
 export function CtaElegantBlock({
   site = SITE,
@@ -29,12 +29,12 @@ export function CtaElegantBlock({
   const ctaLabel = ((site as { headerCtaLabel?: string }).headerCtaLabel ?? tr('form.getFreeQuote'))
   return (
     <section className={`relative isolate overflow-hidden ${s.section} ${s.text}`}>
-      <div className="h-px w-full bg-emerald-600/50" />
-      <div className="container-x py-24 md:py-28">
+      <div className="h-px w-full bg-fam-accent/50" />
+      <div className="container-x py-section">
         <div className="max-w-3xl">
           {site.tagline && (
-            <span className="inline-flex items-center gap-3 text-xs font-medium uppercase tracking-[0.3em] text-emerald-600">
-              <span className="h-px w-8 bg-emerald-600" />
+            <span className="inline-flex items-center gap-3 text-xs font-medium uppercase tracking-[0.3em] text-fam-accent-text">
+              <span className="h-px w-8 bg-fam-accent" />
               {site.tagline}
             </span>
           )}
@@ -52,7 +52,7 @@ export function CtaElegantBlock({
             </PrimaryCta>
             {hasPhone(site.phone) && (<a
               href={`tel:${site.phone}`}
-              className={`inline-flex h-[54px] items-center gap-2 rounded-lg border border-emerald-600/60 px-7 font-medium ${s.text} transition-colors hover:border-emerald-600 hover:bg-emerald-600/10`}
+              className={`inline-flex h-[54px] items-center gap-2 rounded-lg border border-fam-accent/60 px-7 font-medium ${s.text} transition-colors hover:border-fam-accent hover:bg-fam-accent/10`}
             >
               <Phone className="h-4 w-4" /> {site.phoneDisplay}
             </a>)}

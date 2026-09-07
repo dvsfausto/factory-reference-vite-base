@@ -24,7 +24,7 @@ export function ReviewsBlock({
   if (previewReviews.length === 0) return null
   return (
     <section className="bg-brand-50 border-y border-brand-100">
-      <div className="container-x py-16 md:py-24">
+      <div className="container-x py-section">
         <SectionHeader
           label={label}
           heading={heading}

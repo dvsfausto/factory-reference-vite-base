@@ -30,7 +30,7 @@ export function RichTextBlock({
   if (!heading && paragraphs.length === 0) return null
   return (
     <section className="relative">
-      <div className="container-x py-16 md:py-24">
+      <div className="container-x py-section">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

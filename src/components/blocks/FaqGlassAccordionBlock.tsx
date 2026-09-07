@@ -35,7 +35,7 @@ export function FaqGlassAccordionBlock({
       className="relative overflow-hidden"
       style={{ backgroundImage: 'var(--wow-grad-surface)' }}
     >
-      <div className="container-x py-16 md:py-24">
+      <div className="container-x py-section">
         <div className="mx-auto max-w-3xl">
           <div className="divider-diamond mb-4 text-center"><span>◆</span></div>
           <h2 className="text-center">{title}</h2>

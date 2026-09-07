@@ -54,7 +54,7 @@ function SubSection({
           : { backgroundColor: '#fff' }
       }
     >
-      <div className="container-x py-16 md:py-24">{children}</div>
+      <div className="container-x py-section">{children}</div>
     </section>
     </Reveal>
   )

@@ -48,7 +48,7 @@ function SubSection({
       className="relative overflow-hidden"
       style={surface === 'tint' ? { backgroundColor: 'var(--fam-surface, transparent)', backgroundImage: 'var(--fam-grad-surface, var(--wow-grad-surface))' } : { backgroundColor: 'var(--fam-surface-2, #fff)' }}
     >
-      <div className="container-x py-16 md:py-24">{children}</div>
+      <div className="container-x py-section">{children}</div>
     </section>
     </Reveal>
   )

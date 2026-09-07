@@ -14,8 +14,8 @@ import { resolveCharacterTokens } from '~/lib/character-tokens'
 // Real team data later: the scaffolder emits SITE.team from intake, exactly as it
 // emits homeServices / about.
 //
-// TOKEN DISCIPLINE: accent -> emerald-* (DNA) restricted to 50/100/600/700:
-// emerald-50 avatar chip, emerald-600 role. Radius -> rounded-* (DNA). Font ->
+// TOKEN DISCIPLINE: accent -> fam-accent-* (DNA) restricted to 50/100/600/700:
+// fam-accent-soft avatar chip, fam-accent role. Radius -> rounded-* (DNA). Font ->
 // font-display (DNA). Light surface component-owned (white / slate / #E6E8EC). No
 // CTA in this section by design. Never bg-brand-* / .btn.
 function initials(name: string): string {
@@ -46,22 +46,22 @@ export function TeamGridBlock({
   const T = resolveCharacterTokens()
   return (
     <section className={T?.section ?? "bg-white"}>
-      <div className="container-x py-20 md:py-28">
+      <div className="container-x py-section">
         <div className="max-w-2xl">
-          <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600">
-            <span className="h-px w-6 bg-emerald-600" />
+          <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">
+            <span className="h-px w-6 bg-fam-accent" />
             {label}
           </span>
-          <h2 className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight text-[#0F172A] sm:text-5xl">
+          <h2 className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight text-fam-ink sm:text-5xl">
             {heading}
           </h2>
-          {body && <p className="mt-4 text-lg leading-relaxed text-[#64748B]">{body}</p>}
+          {body && <p className="mt-4 text-lg leading-relaxed text-fam-ink-muted">{body}</p>}
         </div>
 
         <div className="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {members.map((m, i) => (
             <div key={`${m.name}-${i}`} className="flex flex-col">
-              <div className={T ? `aspect-[4/5] overflow-hidden ${T.cardRadius} border ${T.border} ${T.card}` : "aspect-[4/5] overflow-hidden rounded-2xl border border-[#E6E8EC] bg-[#F8FAFC]"}>
+              <div className={T ? `aspect-[4/5] overflow-hidden ${T.cardRadius} border ${T.border} ${T.card}` : "aspect-[4/5] overflow-hidden rounded-2xl border border-fam-hairline bg-fam-surface-2"}>
                 {m.photo ? (
                   <img
                     src={m.photo}
@@ -72,14 +72,14 @@ export function TeamGridBlock({
                     className="h-full w-full object-cover"
                   />
                 ) : (
-                  <div className="grid h-full w-full place-items-center bg-emerald-50">
-                    <span className="font-display text-4xl font-semibold text-emerald-600">{initials(m.name)}</span>
+                  <div className="grid h-full w-full place-items-center bg-fam-accent-soft">
+                    <span className="font-display text-4xl font-semibold text-fam-accent-text">{initials(m.name)}</span>
                   </div>
                 )}
               </div>
-              <h3 className="mt-5 font-display text-xl font-semibold tracking-tight text-[#0F172A]">{m.name}</h3>
-              {m.role && <p className="mt-1 font-display text-sm font-semibold text-emerald-600">{m.role}</p>}
-              {m.bio && <p className="mt-3 text-sm leading-relaxed text-[#64748B]">{m.bio}</p>}
+              <h3 className="mt-5 font-display text-xl font-semibold tracking-tight text-fam-ink">{m.name}</h3>
+              {m.role && <p className="mt-1 font-display text-sm font-semibold text-fam-accent-text">{m.role}</p>}
+              {m.bio && <p className="mt-3 text-sm leading-relaxed text-fam-ink-muted">{m.bio}</p>}
             </div>
           ))}
         </div>

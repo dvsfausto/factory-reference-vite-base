@@ -28,7 +28,7 @@ export function FAQSection({ faqs, title = tr('section.faq'), intro }: Props) {
 
   return (
     <section className={secPlain}>
-      <div className="container-x py-16 md:py-24">
+      <div className="container-x py-section">
         <div className="max-w-3xl mx-auto">
           <h2 className={tStrong}>{title}</h2>
           {intro && (

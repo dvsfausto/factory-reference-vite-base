@@ -23,8 +23,8 @@ import { hasPhone } from '~/lib/phone'
 // keeps centered text readable over moving footage of any brightness.
 //
 // TOKEN DISCIPLINE: primary CTA -> bg-primary / text-primary-foreground (BRAND-
-// owned). Accent -> emerald-* (DNA) restricted to 50/100/600/700: emerald-100 on
-// dark, emerald-600 rule + dots. Radius -> rounded-* (DNA). Font -> font-display
+// owned). Accent -> fam-accent-* (DNA) restricted to 50/100/600/700: fam-accent-soft-2 on
+// dark, fam-accent rule + dots. Radius -> rounded-* (DNA). Font -> font-display
 // (DNA). Cool surface (slate-950) component-owned. Never bg-brand-* / .btn.
 //
 // Props identical to HeroBlock; decorativeAsset accepted for parity but unused.
@@ -62,17 +62,17 @@ export function HeroVideoBlock({
       )}
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-slate-950/85 via-slate-950/50 to-slate-950/85" />
 
-      <div className="container-x relative flex flex-1 items-center justify-center py-24 md:py-28">
+      <div className="container-x relative flex flex-1 items-center justify-center py-section">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           className="mx-auto flex max-w-3xl flex-col items-center text-center"
         >
-          <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] text-emerald-100">
-            <span className="h-px w-7 bg-emerald-600" />
+          <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] text-fam-accent-on-dark">
+            <span className="h-px w-7 bg-fam-accent" />
             {site.hero.kicker}
-            <span className="h-px w-7 bg-emerald-600" />
+            <span className="h-px w-7 bg-fam-accent" />
           </span>
 
           <h1 className="mt-6 font-display text-5xl font-semibold leading-[1.03] tracking-tight text-white drop-shadow-sm sm:text-6xl lg:text-7xl">
@@ -97,16 +97,16 @@ export function HeroVideoBlock({
             </PrimaryCta>
             {hasPhone(site.phone) && (<a
               href={`tel:${site.phone}`}
-              className="inline-flex h-[52px] items-center gap-2 rounded-xl border border-white/30 bg-white/5 px-6 font-display font-semibold text-white backdrop-blur-sm transition-colors hover:border-emerald-600 hover:text-emerald-100"
+              className="inline-flex h-[52px] items-center gap-2 rounded-xl border border-white/30 bg-white/5 px-6 font-display font-semibold text-white backdrop-blur-sm transition-colors hover:border-fam-accent hover:text-fam-accent-on-dark"
             >
-              <Phone className="h-4 w-4 text-emerald-100" /> {site.phoneDisplay}
+              <Phone className="h-4 w-4 text-fam-accent-on-dark" /> {site.phoneDisplay}
             </a>)}
           </div>
 
           <div className="mt-10 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-slate-200">
             {trustItems.map((t) => (
               <span key={t} className="inline-flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-600" /> {t}
+                <span className="h-1.5 w-1.5 rounded-full bg-fam-accent" /> {t}
               </span>
             ))}
           </div>

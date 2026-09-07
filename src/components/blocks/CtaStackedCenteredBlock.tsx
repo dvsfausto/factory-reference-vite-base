@@ -13,7 +13,7 @@ import { hasPhone } from '~/lib/phone'
 // leading) and very deep vertical padding so the close lands with weight.
 //
 // TOKEN DISCIPLINE: primary CTA -> bg-primary / text-primary-foreground (BRAND-
-// owned). Accent -> emerald-* (DNA) restricted to 50/100/600/700. Radius ->
+// owned). Accent -> fam-accent-* (DNA) restricted to 50/100/600/700. Radius ->
 // rounded-* (DNA). Font -> font-display (DNA). Light surface component-owned
 // (white / slate). Never bg-brand-* / .btn.
 //
@@ -33,20 +33,20 @@ export function CtaStackedCenteredBlock({
   const sub = subtitle ?? cta?.subtitle ?? tr('cta.reachOutToday')
   return (
     <section className="bg-white">
-      <div className="container-x py-28 md:py-40">
+      <div className="container-x py-section">
         <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
           {site.tagline && (
-            <span className="inline-flex items-center justify-center gap-3 text-xs font-semibold uppercase tracking-[0.25em] text-emerald-600">
-              <span className="h-px w-10 bg-emerald-600" />
+            <span className="inline-flex items-center justify-center gap-3 text-xs font-semibold uppercase tracking-[0.25em] text-fam-accent-text">
+              <span className="h-px w-10 bg-fam-accent" />
               {site.tagline}
-              <span className="h-px w-10 bg-emerald-600" />
+              <span className="h-px w-10 bg-fam-accent" />
             </span>
           )}
-          <h2 className="mt-8 font-display text-5xl font-semibold leading-[0.98] tracking-tight text-[#0F172A] sm:text-6xl lg:text-7xl">
+          <h2 className="mt-8 font-display text-5xl font-semibold leading-[0.98] tracking-tight text-fam-ink sm:text-6xl lg:text-7xl">
             {headline}
           </h2>
           {sub && (
-            <p className="mt-7 max-w-xl text-xl leading-relaxed text-[#64748B]">{sub}</p>
+            <p className="mt-7 max-w-xl text-xl leading-relaxed text-fam-ink-muted">{sub}</p>
           )}
           <div className="mt-12 flex flex-wrap justify-center gap-4">
             <PrimaryCta
@@ -55,9 +55,9 @@ export function CtaStackedCenteredBlock({
             </PrimaryCta>
             {hasPhone(site.phone) && (<a
               href={`tel:${site.phone}`}
-              className="inline-flex h-[56px] items-center gap-2 rounded-xl px-6 font-display font-semibold text-[#0F172A] transition-colors hover:text-emerald-700"
+              className="inline-flex h-[56px] items-center gap-2 rounded-xl px-6 font-display font-semibold text-fam-ink transition-colors hover:text-fam-accent-text"
             >
-              <Phone className="h-4 w-4 text-emerald-600" /> {site.phoneDisplay}
+              <Phone className="h-4 w-4 text-fam-accent-text" /> {site.phoneDisplay}
             </a>)}
           </div>
         </div>

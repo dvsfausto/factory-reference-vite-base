@@ -48,7 +48,7 @@ export function TrustBarHairlineRowsBlock({
 
   return (
     <section className="relative" style={{ backgroundColor: 'var(--wow-tint)' }}>
-      <div className="container-x py-14 md:py-20">
+      <div className="container-x py-band">
         <div className="grid grid-cols-1 md:grid-cols-3">
           {resolved.map((item, i) => (
             <motion.div

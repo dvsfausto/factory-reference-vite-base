@@ -12,7 +12,7 @@ import { SITE } from '~/data/site'
 // never fabricates pricing.
 //
 // TOKEN DISCIPLINE: primary CTA -> bg-primary / text-primary-foreground. Accent ->
-// emerald-* (DNA) 50/100/600/700: emerald-600 accent rail + checks. Radius ->
+// fam-accent-* (DNA) 50/100/600/700: fam-accent accent rail + checks. Radius ->
 // rounded-* (DNA). Font -> font-display (DNA). Light surface component-owned
 // (section #F8FAFC, white cards, #E6E8EC). Never bg-brand-* / .btn.
 export function PricingCardsBlock({
@@ -30,17 +30,17 @@ export function PricingCardsBlock({
   if (!plans || plans.length === 0) return null
   const cards = plans.slice(0, 4)
   return (
-    <section className="bg-[#F8FAFC]">
-      <div className="container-x py-20 md:py-28">
+    <section className="bg-fam-surface-2">
+      <div className="container-x py-section">
         <div className="max-w-2xl">
-          <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600">
-            <span className="h-px w-6 bg-emerald-600" />
+          <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">
+            <span className="h-px w-6 bg-fam-accent" />
             {label}
           </span>
-          <h2 className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight text-[#0F172A] sm:text-5xl">
+          <h2 className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight text-fam-ink sm:text-5xl">
             {heading}
           </h2>
-          {body && <p className="mt-4 text-lg leading-relaxed text-[#64748B]">{body}</p>}
+          {body && <p className="mt-4 text-lg leading-relaxed text-fam-ink-muted">{body}</p>}
         </div>
 
         <div className="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
@@ -48,28 +48,28 @@ export function PricingCardsBlock({
             <div
               key={`${p.name}-${i}`}
               className={`group flex flex-col overflow-hidden rounded-3xl border bg-white shadow-sm transition-all hover:shadow-md ${
-                p.highlighted ? 'border-emerald-600' : 'border-[#E6E8EC]'
+                p.highlighted ? 'border-fam-accent' : 'border-fam-hairline'
               }`}
             >
-              <div className={`h-1.5 w-full ${p.highlighted ? 'bg-emerald-600' : 'bg-[#E6E8EC]'}`} />
+              <div className={`h-1.5 w-full ${p.highlighted ? 'bg-fam-accent' : 'bg-fam-hairline'}`} />
               <div className="flex flex-1 flex-col p-8">
                 <div className="flex items-center justify-between gap-3">
-                  <h3 className="font-display text-lg font-semibold text-[#0F172A]">{p.name}</h3>
+                  <h3 className="font-display text-lg font-semibold text-fam-ink">{p.name}</h3>
                   {p.highlighted && (
-                    <span className="rounded-full bg-emerald-50 px-3 py-1 font-display text-xs font-semibold text-emerald-700">
+                    <span className="rounded-full bg-fam-accent-soft px-3 py-1 font-display text-xs font-semibold text-fam-accent-text">
                       Popular
                     </span>
                   )}
                 </div>
                 <div className="mt-5 flex items-baseline gap-1">
-                  <span className="font-display text-4xl font-semibold tracking-tight text-[#0F172A]">{p.price}</span>
-                  {p.period && <span className="text-[#64748B]">{p.period}</span>}
+                  <span className="font-display text-4xl font-semibold tracking-tight text-fam-ink">{p.price}</span>
+                  {p.period && <span className="text-fam-ink-muted">{p.period}</span>}
                 </div>
                 {p.features && p.features.length > 0 && (
                   <ul className="mt-7 flex flex-1 flex-col gap-3 text-sm">
                     {p.features.map((f) => (
-                      <li key={f} className="flex items-start gap-2.5 text-[#475569]">
-                        <Check className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" /> {f}
+                      <li key={f} className="flex items-start gap-2.5 text-fam-ink-muted">
+                        <Check className="mt-0.5 h-4 w-4 shrink-0 text-fam-accent-text" /> {f}
                       </li>
                     ))}
                   </ul>

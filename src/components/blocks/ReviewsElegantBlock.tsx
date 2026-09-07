@@ -39,10 +39,10 @@ export function ReviewsElegantBlock({
   // supporting quotes as two hairline-divided columns (a letters-to-the-editor page), NOT a card grid.
   return (
     <section className={s.section}>
-      <div className="container-x py-20 md:py-28">
+      <div className="container-x py-section">
         {featured && (
           <figure className="max-w-4xl">
-            <div className="font-display text-7xl leading-none text-emerald-700/30" aria-hidden>“</div>
+            <div className="font-display text-7xl leading-none text-fam-accent/30" aria-hidden>“</div>
             <blockquote className={`-mt-8 font-display text-3xl font-medium italic leading-snug ${s.text} sm:text-[2.5rem] sm:leading-[1.15]`}>
               {featured.text}
             </blockquote>
@@ -67,7 +67,7 @@ export function ReviewsElegantBlock({
         )}
         {reviews.length > previewReviews.length && (
           <div className="mt-12">
-            <Link to="/reviews" className="inline-flex items-center gap-2 font-display text-sm font-medium uppercase tracking-[0.18em] text-emerald-800 underline-offset-4 transition-colors hover:underline">
+            <Link to="/reviews" className="inline-flex items-center gap-2 font-display text-sm font-medium uppercase tracking-[0.18em] text-fam-accent-text underline-offset-4 transition-colors hover:underline">
               {moreLink} <ArrowRight className="h-4 w-4" />
             </Link>
           </div>

@@ -18,8 +18,8 @@ import { hasPhone } from '~/lib/phone'
 // brightest where the type sits and softest over the image's focal area.
 //
 // TOKEN DISCIPLINE: primary CTA -> bg-primary / text-primary-foreground (BRAND-
-// owned). Accent -> emerald-* (DNA) restricted to 50/100/600/700: emerald-100
-// kicker + trust label on dark, emerald-600 rule + dots. Radius -> rounded-*
+// owned). Accent -> fam-accent-* (DNA) restricted to 50/100/600/700: fam-accent-soft-2
+// kicker + trust label on dark, fam-accent rule + dots. Radius -> rounded-*
 // (DNA). Font -> font-display (DNA). The cool surface (slate-950) is component-
 // owned. Never bg-brand-* / .btn-primary / .btn.
 //
@@ -43,15 +43,15 @@ export function HeroBackgroundBlock({
       <div className="absolute inset-0 -z-10 bg-gradient-to-t from-slate-950 via-slate-950/70 to-slate-950/25" />
       <div className="absolute inset-0 -z-10 bg-gradient-to-tr from-slate-950/85 via-slate-950/35 to-transparent" />
 
-      <div className="container-x relative flex flex-1 items-end py-20 md:py-24">
+      <div className="container-x relative flex flex-1 items-end py-section">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           className="max-w-2xl"
         >
-          <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] text-emerald-100">
-            <span className="h-px w-7 bg-emerald-600" />
+          <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] text-fam-accent-on-dark">
+            <span className="h-px w-7 bg-fam-accent" />
             {site.hero.kicker}
           </span>
 
@@ -77,16 +77,16 @@ export function HeroBackgroundBlock({
             </PrimaryCta>
             {hasPhone(site.phone) && (<a
               href={`tel:${site.phone}`}
-              className="inline-flex h-[52px] items-center gap-2 rounded-xl border border-white/30 bg-white/5 px-6 font-display font-semibold text-white backdrop-blur-sm transition-colors hover:border-emerald-600 hover:text-emerald-100"
+              className="inline-flex h-[52px] items-center gap-2 rounded-xl border border-white/30 bg-white/5 px-6 font-display font-semibold text-white backdrop-blur-sm transition-colors hover:border-fam-accent hover:text-fam-accent-on-dark"
             >
-              <Phone className="h-4 w-4 text-emerald-100" /> {site.phoneDisplay}
+              <Phone className="h-4 w-4 text-fam-accent-on-dark" /> {site.phoneDisplay}
             </a>)}
           </div>
 
           <div className="mt-10 flex flex-wrap gap-x-6 gap-y-2 text-sm text-slate-200">
             {trustItems.map((t) => (
               <span key={t} className="inline-flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-600" /> {t}
+                <span className="h-1.5 w-1.5 rounded-full bg-fam-accent" /> {t}
               </span>
             ))}
           </div>

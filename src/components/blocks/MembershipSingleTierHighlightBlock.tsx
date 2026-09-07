@@ -8,8 +8,8 @@ import { SITE } from '~/data/site'
 // SITE.memberships via cast; none -> null. Picks the highlighted membership else
 // the first.
 //
-// TOKEN DISCIPLINE: primary CTA -> bg-primary. Accent -> emerald-* (DNA)
-// 50/100/600/700: emerald-100 checks on dark. Radius -> rounded-* (DNA). Font ->
+// TOKEN DISCIPLINE: primary CTA -> bg-primary. Accent -> fam-accent-* (DNA)
+// 50/100/600/700: fam-accent-soft-2 checks on dark. Radius -> rounded-* (DNA). Font ->
 // font-display (DNA). Dark panel (slate-950) component-owned. No bg-brand-*.
 export function MembershipSingleTierHighlightBlock({
   site = SITE,
@@ -27,14 +27,14 @@ export function MembershipSingleTierHighlightBlock({
   const m = memberships.find((x) => x.highlighted) ?? memberships[0]!
   return (
     <section className="bg-white">
-      <div className="container-x py-20 md:py-28">
+      <div className="container-x py-section">
         <div className="mx-auto max-w-3xl text-center">
-          <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600">
-            <span className="h-px w-6 bg-emerald-600" />
+          <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">
+            <span className="h-px w-6 bg-fam-accent" />
             {label}
           </span>
-          <h2 className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight text-[#0F172A] sm:text-5xl">{heading}</h2>
-          {body && <p className="mt-4 text-lg leading-relaxed text-[#64748B]">{body}</p>}
+          <h2 className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight text-fam-ink sm:text-5xl">{heading}</h2>
+          {body && <p className="mt-4 text-lg leading-relaxed text-fam-ink-muted">{body}</p>}
         </div>
         <div className="mt-12 overflow-hidden rounded-3xl bg-slate-950 text-white shadow-xl">
           <div className="grid gap-8 p-8 md:grid-cols-5 md:p-12">
@@ -52,7 +52,7 @@ export function MembershipSingleTierHighlightBlock({
               <ul className="grid gap-3 text-sm md:col-span-3 md:grid-cols-2">
                 {m.perks.map((p) => (
                   <li key={p} className="flex items-start gap-2.5 text-slate-200">
-                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-emerald-100" /> {p}
+                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-fam-accent-on-dark" /> {p}
                   </li>
                 ))}
               </ul>

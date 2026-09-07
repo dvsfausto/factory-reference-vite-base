@@ -42,7 +42,7 @@ export function ServicesBoldBlock({
   if (previewServices.length === 0) return null
   return (
     <section className="bg-background border-y border-ink-100">
-      <div className="container-x py-16 md:py-24">
+      <div className="container-x py-section">
         <SectionHeaderBold
           label={label ?? ((site as { homeServices?: { label?: string; heading?: string; body?: string } }).homeServices?.label ?? tr('section.whatWeDo'))}
           heading={heading ?? ((site as { homeServices?: { label?: string; heading?: string; body?: string } }).homeServices?.heading ?? tr('nav.services'))}
@@ -54,7 +54,7 @@ export function ServicesBoldBlock({
               key={s.slug}
               to="/services/$slug"
               params={{ slug: s.slug }}
-              className="group flex flex-col overflow-hidden rounded-lg border border-ink-100 bg-white transition-all hover:-translate-y-1 hover:border-emerald-600 hover:shadow-xl"
+              className="group flex flex-col overflow-hidden rounded-lg border border-ink-100 bg-white transition-all hover:-translate-y-1 hover:border-fam-accent hover:shadow-xl"
             >
               <div className="aspect-[4/3] overflow-hidden">
                 <img
@@ -71,7 +71,7 @@ export function ServicesBoldBlock({
                   {s.displayName}
                 </h3>
                 <p className="mt-2 text-ink-500">{s.short}</p>
-                <div className="mt-5 flex items-center gap-1 font-display text-sm font-semibold uppercase tracking-wide text-emerald-700 transition-all group-hover:gap-2">
+                <div className="mt-5 flex items-center gap-1 font-display text-sm font-semibold uppercase tracking-wide text-fam-accent-text transition-all group-hover:gap-2">
                   {exploreLabel} <ArrowRight className="h-4 w-4" />
                 </div>
               </div>

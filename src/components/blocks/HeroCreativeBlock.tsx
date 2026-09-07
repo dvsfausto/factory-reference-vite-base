@@ -42,11 +42,11 @@ export function HeroCreativeBlock({
   ctaLabel?: string
 }) {
   return (
-    <section className="relative isolate overflow-hidden bg-[#FBFAFC]">
+    <section className="relative isolate overflow-hidden bg-fam-surface-2">
       {/* Big rounded magenta field, off-canvas right, color-forward backdrop. */}
-      <div className="absolute -right-32 -top-24 -z-10 hidden h-[34rem] w-[34rem] rounded-3xl bg-emerald-50 lg:block" />
+      <div className="absolute -right-32 -top-24 -z-10 hidden h-[34rem] w-[34rem] rounded-3xl bg-fam-accent-soft lg:block" />
 
-      <div className="container-x py-20 md:py-28">
+      <div className="container-x py-section">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-10">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
@@ -54,22 +54,22 @@ export function HeroCreativeBlock({
             transition={{ duration: 0.55 }}
             className="lg:col-span-7"
           >
-            <span className="inline-flex items-center gap-2.5 text-sm font-bold uppercase tracking-[0.14em] text-[#18181B]">
-              <span className="inline-block h-4 w-4 rounded bg-emerald-600" />
+            <span className="inline-flex items-center gap-2.5 text-sm font-bold uppercase tracking-[0.14em] text-fam-ink">
+              <span className="inline-block h-4 w-4 rounded bg-fam-accent" />
               {kicker}
             </span>
 
-            <h1 className="mt-5 font-display text-6xl font-extrabold leading-[0.95] tracking-tight text-[#18181B] sm:text-7xl lg:text-8xl">
+            <h1 className="mt-5 font-display text-6xl font-extrabold leading-[0.95] tracking-tight text-fam-ink sm:text-7xl lg:text-8xl">
               {headline}
             </h1>
 
             {subheadline && (
-              <p className="mt-6 max-w-lg text-2xl font-medium leading-snug text-emerald-700">
+              <p className="mt-6 max-w-lg text-2xl font-medium leading-snug text-fam-accent-text">
                 {subheadline}
               </p>
             )}
 
-            <p className="mt-5 max-w-xl text-lg leading-relaxed text-[#71717A]">
+            <p className="mt-5 max-w-xl text-lg leading-relaxed text-fam-ink-muted">
               {body}
             </p>
 
@@ -81,16 +81,16 @@ export function HeroCreativeBlock({
               </PrimaryCta>
               {hasPhone(site.phone) && (<a
                 href={`tel:${site.phone}`}
-                className="inline-flex h-[56px] items-center gap-2 rounded-2xl border-2 border-[#18181B] px-7 font-display font-bold text-[#18181B] transition-colors hover:bg-emerald-600 hover:border-emerald-600 hover:text-white"
+                className="inline-flex h-[56px] items-center gap-2 rounded-2xl border-2 border-fam-ink px-7 font-display font-bold text-fam-ink transition-colors hover:bg-fam-accent hover:border-fam-accent hover:text-white"
               >
                 <Phone className="h-4 w-4" /> {site.phoneDisplay}
               </a>)}
             </div>
 
-            <div className="mt-10 flex flex-wrap gap-x-6 gap-y-2 text-sm font-medium text-[#71717A]">
+            <div className="mt-10 flex flex-wrap gap-x-6 gap-y-2 text-sm font-medium text-fam-ink-muted">
               {trustItems.map((t) => (
                 <span key={t} className="inline-flex items-center gap-1.5">
-                  <span className="inline-block h-2 w-2 rounded-full bg-emerald-600" /> {t}
+                  <span className="inline-block h-2 w-2 rounded-full bg-fam-accent" /> {t}
                 </span>
               ))}
             </div>
@@ -103,7 +103,7 @@ export function HeroCreativeBlock({
             transition={{ duration: 0.7, delay: 0.1 }}
             className="relative lg:col-span-5"
           >
-            <div className="absolute -left-5 -top-5 -z-10 h-32 w-32 rounded-2xl bg-emerald-600" />
+            <div className="absolute -left-5 -top-5 -z-10 h-32 w-32 rounded-2xl bg-fam-accent" />
             <div className="overflow-hidden rounded-3xl shadow-2xl">
               <img
                 src={imageSrc(imageUrl)}
@@ -111,7 +111,7 @@ export function HeroCreativeBlock({
                 className="aspect-[4/5] w-full object-cover"
               />
             </div>
-            <div className="absolute -bottom-6 -right-4 rounded-2xl bg-emerald-600 px-5 py-4 font-display text-sm font-bold text-white shadow-xl">{tr('hero.letsMake')}<br />something.
+            <div className="absolute -bottom-6 -right-4 rounded-2xl bg-fam-accent px-5 py-4 font-display text-sm font-bold text-white shadow-xl">{tr('hero.letsMake')}<br />something.
             </div>
           </motion.div>
         </div>

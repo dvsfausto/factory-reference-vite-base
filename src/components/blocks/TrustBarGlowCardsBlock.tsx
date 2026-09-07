@@ -60,7 +60,7 @@ export function TrustBarGlowCardsBlock({
       className="relative overflow-hidden"
       style={{ backgroundImage: 'var(--wow-grad-surface)' }}
     >
-      <div className="container-x py-14 md:py-20">
+      <div className="container-x py-band">
         <div className={`grid grid-cols-1 gap-6 ${(items?.length ?? 3) === 2 ? "md:grid-cols-2" : "md:grid-cols-3"}`}>
           {resolved.map((item, i) => (
             <motion.div

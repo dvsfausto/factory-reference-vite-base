@@ -12,7 +12,7 @@ import { AREAS } from '~/data/areas'
 // coverage index of a well-set brochure.
 //
 // TOKEN DISCIPLINE: primary CTA -> bg-primary / text-primary-foreground (BRAND-
-// owned). Accent -> emerald-* (DNA) restricted to 50/100/600/700: emerald-600 pin.
+// owned). Accent -> fam-accent-* (DNA) restricted to 50/100/600/700: fam-accent pin.
 // Radius -> rounded-* (DNA). Font -> font-display (DNA). Light surface component-
 // owned (white / slate / hairline #E6E8EC). Never bg-brand-* / .btn.
 //
@@ -35,27 +35,27 @@ export function ServiceAreasColumnedListBlock({
   const shown = areas.slice(0, 16)
   return (
     <section className="bg-white">
-      <div className="container-x py-20 md:py-28">
+      <div className="container-x py-section">
         <div className="max-w-2xl">
-          <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600">
-            <span className="h-px w-6 bg-emerald-600" />
+          <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">
+            <span className="h-px w-6 bg-fam-accent" />
             {label}
           </span>
-          <h2 className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight text-[#0F172A] sm:text-5xl">
+          <h2 className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight text-fam-ink sm:text-5xl">
             {heading}
           </h2>
-          {body && <p className="mt-4 text-lg leading-relaxed text-[#64748B]">{body}</p>}
+          {body && <p className="mt-4 text-lg leading-relaxed text-fam-ink-muted">{body}</p>}
         </div>
 
-        <div className="mt-12 gap-x-10 border-t border-[#E6E8EC] pt-4 [column-fill:_balance] sm:columns-2 lg:columns-3 xl:columns-4">
+        <div className="mt-12 gap-x-10 border-t border-fam-hairline pt-4 [column-fill:_balance] sm:columns-2 lg:columns-3 xl:columns-4">
           {shown.map((a) => (
             <Link
               key={a.slug}
               to="/areas/$slug"
               params={{ slug: a.slug }}
-              className="group flex break-inside-avoid items-center gap-2 border-b border-[#E6E8EC] py-3 text-[#0F172A] transition-colors hover:text-emerald-700"
+              className="group flex break-inside-avoid items-center gap-2 border-b border-fam-hairline py-3 text-fam-ink transition-colors hover:text-fam-accent-text"
             >
-              <MapPin className="h-4 w-4 shrink-0 text-emerald-600" />
+              <MapPin className="h-4 w-4 shrink-0 text-fam-accent-text" />
               <span className="font-display text-base font-medium">{a.name}</span>
             </Link>
           ))}

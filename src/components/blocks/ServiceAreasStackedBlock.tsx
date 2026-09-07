@@ -13,8 +13,8 @@ import { AREAS } from '~/data/areas'
 // and zipCodes are the canonical optional AreaRef fields, shown only when present.
 //
 // TOKEN DISCIPLINE: primary CTA -> bg-primary / text-primary-foreground (BRAND-
-// owned). Accent -> emerald-* (DNA) restricted to 50/100/600/700: emerald-600 pin,
-// emerald-700 hover. Radius -> rounded-* (DNA). Font -> font-display (DNA). Light
+// owned). Accent -> fam-accent-* (DNA) restricted to 50/100/600/700: fam-accent pin,
+// fam-accent-text hover. Radius -> rounded-* (DNA). Font -> font-display (DNA). Light
 // surface component-owned (white / slate / hairline #E6E8EC). Never bg-brand-*/.btn.
 //
 // Prop signature identical to ServiceAreasBlock; returns Element | null.
@@ -42,19 +42,19 @@ export function ServiceAreasStackedBlock({
   const rows = areas.slice(0, 8)
   return (
     <section className="bg-white">
-      <div className="container-x py-20 md:py-28">
+      <div className="container-x py-section">
         <div className="max-w-2xl">
-          <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600">
-            <span className="h-px w-6 bg-emerald-600" />
+          <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">
+            <span className="h-px w-6 bg-fam-accent" />
             {label}
           </span>
-          <h2 className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight text-[#0F172A] sm:text-5xl">
+          <h2 className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight text-fam-ink sm:text-5xl">
             {heading}
           </h2>
-          {body && <p className="mt-4 text-lg leading-relaxed text-[#64748B]">{body}</p>}
+          {body && <p className="mt-4 text-lg leading-relaxed text-fam-ink-muted">{body}</p>}
         </div>
 
-        <div className="mt-12 border-t border-[#E6E8EC]">
+        <div className="mt-12 border-t border-fam-hairline">
           {rows.map((a) => {
             const tier = a.tier ? TIER_LABEL[a.tier] : undefined
             const zips = a.zipCodes?.length ?? 0
@@ -63,17 +63,17 @@ export function ServiceAreasStackedBlock({
                 key={a.slug}
                 to="/areas/$slug"
                 params={{ slug: a.slug }}
-                className="group flex items-center justify-between gap-6 border-b border-[#E6E8EC] py-7 transition-colors md:py-9"
+                className="group flex items-center justify-between gap-6 border-b border-fam-hairline py-7 transition-colors md:py-9"
               >
-                <h3 className="flex items-center gap-3 font-display text-2xl font-semibold tracking-tight text-[#0F172A] transition-colors group-hover:text-emerald-700 md:text-3xl">
-                  <MapPin className="h-5 w-5 shrink-0 text-emerald-600" /> {a.name}
+                <h3 className="flex items-center gap-3 font-display text-2xl font-semibold tracking-tight text-fam-ink transition-colors group-hover:text-fam-accent-text md:text-3xl">
+                  <MapPin className="h-5 w-5 shrink-0 text-fam-accent-text" /> {a.name}
                 </h3>
                 <div className="flex items-center gap-6">
-                  <span className="hidden text-right text-sm text-[#64748B] sm:block">
-                    {tier && <span className="block font-display font-semibold text-[#0F172A]">{tier}</span>}
+                  <span className="hidden text-right text-sm text-fam-ink-muted sm:block">
+                    {tier && <span className="block font-display font-semibold text-fam-ink">{tier}</span>}
                     {zips > 0 && <span>{zips} ZIP codes</span>}
                   </span>
-                  <ArrowRight className="h-5 w-5 shrink-0 text-emerald-600 transition-transform group-hover:translate-x-1" />
+                  <ArrowRight className="h-5 w-5 shrink-0 text-fam-accent-text transition-transform group-hover:translate-x-1" />
                 </div>
               </Link>
             )

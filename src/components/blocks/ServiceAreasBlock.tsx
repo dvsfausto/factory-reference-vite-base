@@ -24,7 +24,7 @@ export function ServiceAreasBlock({
   if (areas.length === 0) return null
   return (
     <section className="bg-white">
-      <div className="container-x py-16 md:py-24">
+      <div className="container-x py-section">
         <SectionHeader
           label={label}
           heading={heading}

@@ -9,8 +9,8 @@
 // cell GRACEFULLY falls back to its title at display scale (an emphasis figure,
 // never a fabricated number).
 //
-// TOKEN DISCIPLINE: accent -> emerald-* (DNA) restricted to 50/100/600/700:
-// emerald-600 figure. Radius -> rounded-* (DNA). Font -> font-display (DNA). Cool
+// TOKEN DISCIPLINE: accent -> fam-accent-* (DNA) restricted to 50/100/600/700:
+// fam-accent figure. Radius -> rounded-* (DNA). Font -> font-display (DNA). Cool
 // light surface component-owned (#F6F7F9 / slate / hairline #E6E8EC). No CTA in
 // this block by design. Never bg-brand-* / .btn.
 //
@@ -25,27 +25,27 @@ export function TrustBarStatNumbersBlock({
   items?: { title: string; description: string }[]
 }) {
   return (
-    <section className="bg-[#F6F7F9]">
-      <div className="container-x py-14 md:py-16">
-        <div className="grid grid-cols-1 divide-y divide-[#E6E8EC] sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+    <section className="bg-fam-surface-2">
+      <div className="container-x py-band">
+        <div className="grid grid-cols-1 divide-y divide-fam-hairline sm:grid-cols-3 sm:divide-x sm:divide-y-0">
           {items.map((item, i) => {
             const stat = (item as { stat?: string }).stat
             return (
               <div key={i} className="flex flex-col items-center px-6 py-6 text-center sm:py-2">
                 {stat ? (
                   <>
-                    <span className="font-display text-5xl font-semibold tracking-tight text-emerald-600 sm:text-6xl">
+                    <span className="font-display text-5xl font-semibold tracking-tight text-fam-accent-text sm:text-6xl">
                       {stat}
                     </span>
-                    <span className="mt-3 font-display text-base font-semibold text-[#0F172A]">{item.title}</span>
-                    <span className="mt-1 text-sm text-[#64748B]">{item.description}</span>
+                    <span className="mt-3 font-display text-base font-semibold text-fam-ink">{item.title}</span>
+                    <span className="mt-1 text-sm text-fam-ink-muted">{item.description}</span>
                   </>
                 ) : (
                   <>
-                    <span className="font-display text-2xl font-semibold tracking-tight text-[#0F172A] sm:text-3xl">
+                    <span className="font-display text-2xl font-semibold tracking-tight text-fam-ink sm:text-3xl">
                       {item.title}
                     </span>
-                    <span className="mt-2 text-sm text-[#64748B]">{item.description}</span>
+                    <span className="mt-2 text-sm text-fam-ink-muted">{item.description}</span>
                   </>
                 )}
               </div>

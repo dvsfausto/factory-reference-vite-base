@@ -62,7 +62,7 @@ export function HeroSpotlightBlock({
       className="relative overflow-hidden"
       style={{ backgroundImage: 'var(--wow-grad-surface)' }}
     >
-      <div className="container-x relative py-16 md:py-24">
+      <div className="container-x relative py-section">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-16">
           {/* Copy column */}
           <motion.div

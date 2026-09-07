@@ -52,7 +52,7 @@ export function CtaGlassPanelBlock({
       className="relative overflow-hidden"
       style={{ backgroundImage: 'var(--wow-grad-surface)' }}
     >
-      <div className="container-x relative py-16 md:py-24">
+      <div className="container-x relative py-section">
         <motion.div
           initial={{ opacity: 0, y: 24, scale: 0.98 }}
           whileInView={{ opacity: 1, y: 0, scale: 1 }}

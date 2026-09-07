@@ -104,7 +104,7 @@ export function ServicePageTemplate({ data }: Props) {
       <section className="relative overflow-hidden bg-gradient-to-b from-brand-50 via-white to-white">
         <img src={leaves} alt="" aria-hidden className="hidden md:block absolute -left-10 top-10 h-[80%] opacity-50 pointer-events-none select-none" />
         <img src={leaves} alt="" aria-hidden className="hidden md:block absolute -right-10 bottom-0 h-[60%] opacity-40 pointer-events-none select-none rotate-180" />
-        <div className="container-x py-12 md:py-16 relative">
+        <div className="container-x py-section relative">
           <Breadcrumbs items={[
             { label: tr('breadcrumb.home'), to: "/" },
             { label: tr('nav.services'), to: "/services" },

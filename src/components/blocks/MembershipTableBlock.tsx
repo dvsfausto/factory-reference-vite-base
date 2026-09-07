@@ -7,8 +7,8 @@ import { SITE } from '~/data/site'
 // price + inline perks + a join action. Character-agnostic. The dense, scannable
 // option. OMIT-WHEN-ABSENT: SITE.memberships via cast; none -> null.
 //
-// TOKEN DISCIPLINE: primary CTA -> bg-primary. Accent -> emerald-* (DNA)
-// 50/100/600/700: emerald-600 checks, emerald-50 highlighted row. Radius ->
+// TOKEN DISCIPLINE: primary CTA -> bg-primary. Accent -> fam-accent-* (DNA)
+// 50/100/600/700: fam-accent checks, fam-accent-soft highlighted row. Radius ->
 // rounded-* (DNA). Font -> font-display (DNA). Light surface component-owned.
 export function MembershipTableBlock({
   site = SITE,
@@ -25,31 +25,31 @@ export function MembershipTableBlock({
   if (!memberships || memberships.length === 0) return null
   return (
     <section className="bg-white">
-      <div className="container-x py-20 md:py-28">
+      <div className="container-x py-section">
         <div className="max-w-2xl">
-          <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600">
-            <span className="h-px w-6 bg-emerald-600" />
+          <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">
+            <span className="h-px w-6 bg-fam-accent" />
             {label}
           </span>
-          <h2 className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight text-[#0F172A] sm:text-5xl">{heading}</h2>
-          {body && <p className="mt-4 text-lg leading-relaxed text-[#64748B]">{body}</p>}
+          <h2 className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight text-fam-ink sm:text-5xl">{heading}</h2>
+          {body && <p className="mt-4 text-lg leading-relaxed text-fam-ink-muted">{body}</p>}
         </div>
-        <div className="mt-12 overflow-hidden rounded-2xl border border-[#E6E8EC]">
+        <div className="mt-12 overflow-hidden rounded-2xl border border-fam-hairline">
           {memberships.map((m, i) => (
-            <div key={`${m.name}-${i}`} className={`grid grid-cols-1 items-center gap-4 border-b border-[#E6E8EC] p-6 last:border-0 md:grid-cols-12 md:gap-6 ${m.highlighted ? 'bg-emerald-50' : 'bg-white'}`}>
+            <div key={`${m.name}-${i}`} className={`grid grid-cols-1 items-center gap-4 border-b border-fam-hairline p-6 last:border-0 md:grid-cols-12 md:gap-6 ${m.highlighted ? 'bg-fam-accent-soft' : 'bg-white'}`}>
               <div className="md:col-span-3">
-                <h3 className="font-display text-lg font-semibold text-[#0F172A]">{m.name}</h3>
+                <h3 className="font-display text-lg font-semibold text-fam-ink">{m.name}</h3>
                 <div className="mt-1 flex items-baseline gap-1">
-                  <span className="font-display text-2xl font-semibold tracking-tight text-[#0F172A]">{m.price}</span>
-                  <span className="text-sm text-[#64748B]">{m.period ?? '/mo'}</span>
+                  <span className="font-display text-2xl font-semibold tracking-tight text-fam-ink">{m.price}</span>
+                  <span className="text-sm text-fam-ink-muted">{m.period ?? '/mo'}</span>
                 </div>
               </div>
               <div className="md:col-span-7">
                 {m.perks && m.perks.length > 0 && (
-                  <ul className="flex flex-wrap gap-x-5 gap-y-2 text-sm text-[#475569]">
+                  <ul className="flex flex-wrap gap-x-5 gap-y-2 text-sm text-fam-ink-muted">
                     {m.perks.map((p) => (
                       <li key={p} className="inline-flex items-center gap-1.5">
-                        <Check className="h-4 w-4 shrink-0 text-emerald-600" /> {p}
+                        <Check className="h-4 w-4 shrink-0 text-fam-accent-text" /> {p}
                       </li>
                     ))}
                   </ul>

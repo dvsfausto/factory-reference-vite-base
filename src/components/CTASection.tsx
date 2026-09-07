@@ -30,7 +30,7 @@ export function CTASection({
     <section className="relative overflow-hidden bg-gradient-to-br from-brand-800 via-brand-700 to-brand-900 text-white">
       <img src={decorativeAsset} alt="" aria-hidden className="absolute -left-12 top-6 h-[140%] opacity-25 pointer-events-none select-none" />
       <img src={decorativeAsset} alt="" aria-hidden className="absolute -right-12 -bottom-12 h-[140%] opacity-20 pointer-events-none select-none rotate-180" />
-      <div className="container-x py-20 md:py-24 text-center relative">
+      <div className="container-x py-section text-center relative">
         {showSparkleBadge && SITE.tagline && (
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-xs font-semibold uppercase tracking-widest mb-6">
             <Sparkles className="h-3.5 w-3.5" /> {SITE.tagline}

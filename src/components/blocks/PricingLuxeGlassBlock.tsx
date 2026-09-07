@@ -46,7 +46,7 @@ export function PricingLuxeGlassBlock({
       className="relative overflow-hidden"
       style={{ backgroundImage: 'var(--wow-grad-surface)' }}
     >
-      <div className="container-x py-20 md:py-28">
+      <div className="container-x py-section">
         <div className="mx-auto max-w-2xl text-center">
           <span className="inline-flex items-center justify-center gap-2.5 text-xs font-bold uppercase tracking-[0.2em] text-brand-700">
             <span

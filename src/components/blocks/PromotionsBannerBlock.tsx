@@ -24,7 +24,7 @@ export function PromotionsBannerBlock({
   const p = promos[0]!
   return (
     <section className="bg-primary text-primary-foreground">
-      <div className="container-x py-12 md:py-16">
+      <div className="container-x py-band">
         <div className="flex flex-col items-start gap-6 md:flex-row md:items-center md:justify-between">
           <div className="max-w-2xl">
             <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.22em] text-primary-foreground/80">
@@ -40,7 +40,7 @@ export function PromotionsBannerBlock({
                 Code: {p.code}
               </span>
             )}
-            <Link to="/contact" className="inline-flex h-12 items-center gap-2 rounded-xl bg-white px-7 font-display text-sm font-semibold text-[#0F172A] transition-transform hover:-translate-y-0.5">
+            <Link to="/contact" className="inline-flex h-12 items-center gap-2 rounded-xl bg-white px-7 font-display text-sm font-semibold text-fam-ink transition-transform hover:-translate-y-0.5">
               Claim offer <ArrowRight className="h-4 w-4" />
             </Link>
           </div>

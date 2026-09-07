@@ -32,12 +32,12 @@ const DARK: ElegantSurface = {
 };
 
 const LIGHT: ElegantSurface = {
-  section: 'bg-[#FBF7EF]',
-  sectionAlt: 'bg-[#F3ECDE]',
+  section: 'bg-fam-surface',
+  sectionAlt: 'bg-fam-surface-2',
   card: 'bg-white',
-  border: 'border-[#E7DCC9]',
-  text: 'text-[#2B2620]',
-  muted: 'text-[#8A7E6E]',
+  border: 'border-fam-hairline',
+  text: 'text-fam-ink',
+  muted: 'text-fam-ink-muted',
 };
 
 export function elegantSurface(): ElegantSurface {

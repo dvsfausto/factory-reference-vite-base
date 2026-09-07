@@ -409,7 +409,7 @@ function ContactFormSection() {
       className="relative overflow-hidden"
       style={{ backgroundImage: 'var(--wow-grad-surface)' }}
     >
-      <div className="container-x relative py-16 md:py-24">
+      <div className="container-x relative py-section">
         <div className="grid gap-10 lg:grid-cols-3 lg:gap-12">
           <div className="lg:col-span-2">
             <LeadForm />

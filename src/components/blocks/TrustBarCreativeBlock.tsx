@@ -25,18 +25,18 @@ export function TrustBarCreativeBlock({
   items?: { title: string; description: string }[]
 }) {
   return (
-    <section className="bg-[#FBFAFC]">
-      <div className="container-x py-16 md:py-20">
+    <section className="bg-fam-surface-2">
+      <div className="container-x py-section">
         <div className={`grid grid-cols-1 gap-10 ${items.length === 2 ? "md:grid-cols-2" : "md:grid-cols-3"}`}>
           {items.map((item, i) => (
             <div key={i} className="flex flex-col items-start">
-              <span className="font-display text-5xl font-extrabold leading-none text-emerald-600">
+              <span className="font-display text-5xl font-extrabold leading-none text-fam-accent-text">
                 {String(i + 1).padStart(2, '0')}
               </span>
-              <h3 className="mt-4 font-display text-2xl font-bold tracking-tight text-[#18181B]">
+              <h3 className="mt-4 font-display text-2xl font-bold tracking-tight text-fam-ink">
                 {item.title}
               </h3>
-              <p className="mt-2 text-[#71717A]">{item.description}</p>
+              <p className="mt-2 text-fam-ink-muted">{item.description}</p>
             </div>
           ))}
         </div>

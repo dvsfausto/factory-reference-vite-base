@@ -35,13 +35,13 @@ export function TrustBarElegantBlock({
   // raised, cta deep) rather than a flat wall of one tone.
   return (
     <section className={s.sectionAlt}>
-      <div className="container-x py-16 md:py-20">
+      <div className="container-x py-section">
         <div className={`grid grid-cols-1 gap-10 ${items.length === 2 ? "md:grid-cols-2" : "md:grid-cols-3"}`}>
           {items.map((item, i) => {
             const Icon = icons[i] ?? Flame
             return (
               <div key={i} className={`flex flex-col items-start border-t ${s.border} pt-6`}>
-                <Icon className="h-7 w-7 text-emerald-600" strokeWidth={1.5} />
+                <Icon className="h-7 w-7 text-fam-accent-text" strokeWidth={1.5} />
                 <h3 className={`mt-4 font-display text-xl font-medium tracking-tight ${s.text}`}>
                   {item.title}
                 </h3>

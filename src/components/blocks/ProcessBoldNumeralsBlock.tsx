@@ -37,7 +37,7 @@ export function ProcessBoldNumeralsBlock({
 
   return (
     <section className="relative overflow-hidden bg-white">
-      <div className="container-x py-20 md:py-28">
+      <div className="container-x py-section">
         <div className="max-w-2xl">
           <span className="inline-flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.2em] text-brand-700">
             <span

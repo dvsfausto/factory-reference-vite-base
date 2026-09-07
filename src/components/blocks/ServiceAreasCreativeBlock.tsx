@@ -30,8 +30,8 @@ export function ServiceAreasCreativeBlock({
 }) {
   if (areas.length === 0) return null
   return (
-    <section className="bg-[#FBFAFC]">
-      <div className="container-x py-20 md:py-28">
+    <section className="bg-fam-surface-2">
+      <div className="container-x py-section">
         <SectionHeaderCreative label={label} heading={heading} scriptAccent={scriptAccent} body={body} />
         <div className="flex flex-wrap gap-3">
           {areas.map((a) => (
@@ -39,7 +39,7 @@ export function ServiceAreasCreativeBlock({
               key={a.slug}
               to="/areas/$slug"
               params={{ slug: a.slug }}
-              className="inline-flex items-center gap-2 rounded-full border-2 border-emerald-600 px-5 py-2.5 font-display text-sm font-bold text-emerald-700 transition-colors hover:bg-emerald-600 hover:text-white"
+              className="inline-flex items-center gap-2 rounded-full border-2 border-fam-accent px-5 py-2.5 font-display text-sm font-bold text-fam-accent-text transition-colors hover:bg-fam-accent hover:text-white"
             >
               {a.name}
             </Link>

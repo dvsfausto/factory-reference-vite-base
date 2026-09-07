@@ -14,8 +14,8 @@ import { areaImageUrl } from '~/data/images'
 // AreaRef fields, shown only when present, never fabricated.
 //
 // TOKEN DISCIPLINE: primary CTA -> bg-primary / text-primary-foreground (BRAND-
-// owned). Accent -> emerald-* (DNA) restricted to 50/100/600/700: emerald-50 badge,
-// emerald-600 accent. Radius -> rounded-* (DNA). Font -> font-display (DNA). Light
+// owned). Accent -> fam-accent-* (DNA) restricted to 50/100/600/700: fam-accent-soft badge,
+// fam-accent accent. Radius -> rounded-* (DNA). Font -> font-display (DNA). Light
 // surface component-owned (white / slate / #E6E8EC). Never bg-brand-* / .btn.
 //
 // Prop signature identical to ServiceAreasBlock; returns Element | null.
@@ -42,17 +42,17 @@ export function ServiceAreasCardsBlock({
   if (areas.length === 0) return null
   const cards = areas.slice(0, 6)
   return (
-    <section className="bg-[#F8FAFC]">
-      <div className="container-x py-20 md:py-28">
+    <section className="bg-fam-surface-2">
+      <div className="container-x py-section">
         <div className="max-w-2xl">
-          <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600">
-            <span className="h-px w-6 bg-emerald-600" />
+          <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">
+            <span className="h-px w-6 bg-fam-accent" />
             {label}
           </span>
-          <h2 className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight text-[#0F172A] sm:text-5xl">
+          <h2 className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight text-fam-ink sm:text-5xl">
             {heading}
           </h2>
-          {body && <p className="mt-4 text-lg leading-relaxed text-[#64748B]">{body}</p>}
+          {body && <p className="mt-4 text-lg leading-relaxed text-fam-ink-muted">{body}</p>}
         </div>
 
         <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -64,7 +64,7 @@ export function ServiceAreasCardsBlock({
                 key={a.slug}
                 to="/areas/$slug"
                 params={{ slug: a.slug }}
-                className="group flex flex-col overflow-hidden rounded-2xl border border-[#E6E8EC] bg-white transition-all hover:border-emerald-600 hover:shadow-md"
+                className="group flex flex-col overflow-hidden rounded-2xl border border-fam-hairline bg-white transition-all hover:border-fam-accent hover:shadow-md"
               >
                 <div className="relative aspect-[16/10] overflow-hidden">
                   <img
@@ -76,21 +76,21 @@ export function ServiceAreasCardsBlock({
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   {tier && (
-                    <span className="absolute left-3 top-3 rounded-full bg-emerald-50 px-3 py-1 font-display text-xs font-semibold text-emerald-700">
+                    <span className="absolute left-3 top-3 rounded-full bg-fam-accent-soft px-3 py-1 font-display text-xs font-semibold text-fam-accent-text">
                       {tier}
                     </span>
                   )}
                 </div>
                 <div className="flex flex-1 items-center justify-between gap-3 p-6">
                   <div>
-                    <h3 className="flex items-center gap-1.5 font-display text-lg font-semibold tracking-tight text-[#0F172A]">
-                      <MapPin className="h-4 w-4 text-emerald-600" /> {a.name}
+                    <h3 className="flex items-center gap-1.5 font-display text-lg font-semibold tracking-tight text-fam-ink">
+                      <MapPin className="h-4 w-4 text-fam-accent-text" /> {a.name}
                     </h3>
                     {zips > 0 && (
-                      <p className="mt-1 text-sm text-[#64748B]">{zips} ZIP codes covered</p>
+                      <p className="mt-1 text-sm text-fam-ink-muted">{zips} ZIP codes covered</p>
                     )}
                   </div>
-                  <ArrowRight className="h-5 w-5 shrink-0 text-emerald-600 transition-transform group-hover:translate-x-1" />
+                  <ArrowRight className="h-5 w-5 shrink-0 text-fam-accent-text transition-transform group-hover:translate-x-1" />
                 </div>
               </Link>
             )

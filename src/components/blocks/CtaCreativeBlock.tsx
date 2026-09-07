@@ -26,8 +26,8 @@ export function CtaCreativeBlock({
   const headline = title ?? ((site as { homeCta?: { title?: string; subtitle?: string } }).homeCta?.title ?? tr('cta.readyToStart'))
   const sub = subtitle ?? ((site as { homeCta?: { title?: string; subtitle?: string } }).homeCta?.subtitle ?? 'Tell us what you need and we’ll take it from there.')
   return (
-    <section className="bg-emerald-600 text-white">
-      <div className="container-x py-24 md:py-32">
+    <section className="bg-fam-accent text-white">
+      <div className="container-x py-section">
         <div className="max-w-3xl">
           {site.tagline && (
             <span className="inline-flex items-center gap-2.5 text-sm font-bold uppercase tracking-[0.14em] text-white">
@@ -48,7 +48,7 @@ export function CtaCreativeBlock({
             </PrimaryCta>
             {hasPhone(site.phone) && (<a
               href={`tel:${site.phone}`}
-              className="inline-flex h-[56px] items-center gap-2 rounded-2xl border-2 border-white px-7 font-display font-bold text-white transition-colors hover:bg-white hover:text-emerald-700"
+              className="inline-flex h-[56px] items-center gap-2 rounded-2xl border-2 border-white px-7 font-display font-bold text-white transition-colors hover:bg-white hover:text-fam-accent-text"
             >
               <Phone className="h-4 w-4" /> {site.phoneDisplay}
             </a>)}

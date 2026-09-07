@@ -33,7 +33,7 @@ export function AreaAboutBlock({
       className="relative overflow-hidden"
       style={{ backgroundColor: 'var(--fam-surface, transparent)', backgroundImage: 'var(--fam-grad-surface, var(--wow-grad-surface))' }}
     >
-      <div className="container-x py-16 md:py-24">
+      <div className="container-x py-section">
         <div
           className="mx-auto max-w-3xl rounded-3xl border bg-white/85 p-8 backdrop-blur-md md:p-10"
           style={{

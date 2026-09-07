@@ -18,7 +18,7 @@ import { serviceImageUrl } from '~/data/images'
 // hero fallback) so a photo-less business still renders.
 //
 // TOKEN DISCIPLINE: primary CTA -> bg-primary / text-primary-foreground (BRAND-
-// owned). Accent -> emerald-* (DNA) restricted to 50/100/600/700. Radius ->
+// owned). Accent -> fam-accent-* (DNA) restricted to 50/100/600/700. Radius ->
 // rounded-* (DNA). Font -> font-display (DNA). Dark scrim (slate-950) component-
 // owned for legibility over any photo. Never bg-brand-* / .btn.
 //
@@ -64,17 +64,17 @@ export function ServicesBentoBlock({
 
   return (
     <section className="bg-white">
-      <div className="container-x py-20 md:py-28">
+      <div className="container-x py-section">
         <div className="max-w-2xl">
-          <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600">
-            <span className="h-px w-6 bg-emerald-600" />
+          <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">
+            <span className="h-px w-6 bg-fam-accent" />
             {label ?? hs?.label ?? 'Our services'}
           </span>
-          <h2 className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight text-[#0F172A] sm:text-5xl">
+          <h2 className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight text-fam-ink sm:text-5xl">
             {heading ?? hs?.heading ?? 'What we do'}
           </h2>
           {(body ?? hs?.body) && (
-            <p className="mt-4 text-lg leading-relaxed text-[#64748B]">{body ?? hs?.body}</p>
+            <p className="mt-4 text-lg leading-relaxed text-fam-ink-muted">{body ?? hs?.body}</p>
           )}
         </div>
 
@@ -102,7 +102,7 @@ export function ServicesBentoBlock({
                   <h3 className={`font-display font-semibold tracking-tight text-white drop-shadow-sm ${i === 0 ? 'text-2xl sm:text-3xl' : 'text-xl'}`}>
                     {s.displayName}
                   </h3>
-                  <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/10 text-white backdrop-blur-sm transition-colors group-hover:bg-emerald-600">
+                  <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/10 text-white backdrop-blur-sm transition-colors group-hover:bg-fam-accent">
                     <ArrowUpRight className="h-4 w-4" />
                   </span>
                 </div>

@@ -82,7 +82,7 @@ export function FormBrandSplitBlock({
       className="relative overflow-hidden"
       style={{ backgroundImage: 'var(--wow-grad-surface)' }}
     >
-      <div className="container-x py-20 md:py-28">
+      <div className="container-x py-section">
         <motion.div
           initial={reduce ? false : { opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}

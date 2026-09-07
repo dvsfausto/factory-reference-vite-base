@@ -55,7 +55,7 @@ export function ServicesSpotlightTilesBlock({
         borderColor: 'var(--wow-hairline)',
       }}
     >
-      <div className="container-x py-16 md:py-24">
+      <div className="container-x py-section">
         <SectionHeader
           label={label}
           heading={heading}

@@ -26,14 +26,14 @@ export function CtaFriendlyBlock({
   const sub = subtitle ?? ((site as { homeCta?: { title?: string; subtitle?: string } }).homeCta?.subtitle ?? 'Tell us what you need and we’ll take it from there.')
   const ctaLabel = ((site as { headerCtaLabel?: string }).headerCtaLabel ?? tr('form.getFreeQuote'))
   return (
-    <section className="bg-[#FFFBF5]">
-      <div className="container-x py-16 md:py-20">
-        <div className="rounded-3xl border border-[#F0E6DA] bg-emerald-50 px-8 py-14 text-center shadow-sm md:px-16">
-          <h2 className="mx-auto max-w-2xl font-display text-3xl font-bold leading-tight tracking-tight text-[#3D3530] sm:text-4xl">
+    <section className="bg-fam-surface">
+      <div className="container-x py-section">
+        <div className="rounded-3xl border border-fam-hairline bg-fam-accent-soft px-8 py-14 text-center shadow-sm md:px-16">
+          <h2 className="mx-auto max-w-2xl font-display text-3xl font-bold leading-tight tracking-tight text-fam-ink sm:text-4xl">
             {headline}
           </h2>
           {sub && (
-            <p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-[#7A6F66]">{sub}</p>
+            <p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-fam-ink-muted">{sub}</p>
           )}
           <div className="mt-8 flex flex-wrap justify-center gap-4">
             <PrimaryCta
@@ -43,9 +43,9 @@ export function CtaFriendlyBlock({
             </PrimaryCta>
             {hasPhone(site.phone) && (<a
               href={`tel:${site.phone}`}
-              className="inline-flex h-[54px] items-center gap-2 rounded-2xl border-2 border-emerald-600/40 bg-white px-7 font-display font-semibold text-[#3D3530] transition-colors hover:border-emerald-600 hover:bg-emerald-50"
+              className="inline-flex h-[54px] items-center gap-2 rounded-2xl border-2 border-fam-accent/40 bg-white px-7 font-display font-semibold text-fam-ink transition-colors hover:border-fam-accent hover:bg-fam-accent-soft"
             >
-              <Phone className="h-4 w-4 text-emerald-600" /> {site.phoneDisplay}
+              <Phone className="h-4 w-4 text-fam-accent-text" /> {site.phoneDisplay}
             </a>)}
           </div>
         </div>

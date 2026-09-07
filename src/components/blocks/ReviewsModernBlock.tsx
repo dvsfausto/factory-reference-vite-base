@@ -30,24 +30,24 @@ export function ReviewsModernBlock({
   if (previewReviews.length === 0) return null
   return (
     <section className="bg-white">
-      <div className="container-x py-20 md:py-28">
+      <div className="container-x py-section">
         <SectionHeaderModern label={label} heading={heading} scriptAccent={scriptAccent} />
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {previewReviews.map((r) => (
             <figure
               key={r.id}
-              className="flex flex-col rounded-2xl border border-[#E6E8EC] bg-white p-7"
+              className="flex flex-col rounded-2xl border border-fam-hairline bg-white p-7"
             >
               <div className="flex gap-0.5">
                 {Array.from({ length: r.rating ?? 5 }).map((_, i) => (
-                  <Star key={i} className="h-4 w-4 fill-emerald-600 text-emerald-600" />
+                  <Star key={i} className="h-4 w-4 fill-fam-accent text-fam-accent-text" />
                 ))}
               </div>
-              <blockquote className="mt-4 flex-1 text-lg leading-relaxed text-[#0F172A]">
+              <blockquote className="mt-4 flex-1 text-lg leading-relaxed text-fam-ink">
                 {r.text}
               </blockquote>
-              <figcaption className="mt-6 text-sm text-[#64748B]">
-                <span className="font-display font-semibold text-[#0F172A]">{r.author}</span>
+              <figcaption className="mt-6 text-sm text-fam-ink-muted">
+                <span className="font-display font-semibold text-fam-ink">{r.author}</span>
                 {r.location && <span> · {r.location}</span>}
               </figcaption>
             </figure>
@@ -57,7 +57,7 @@ export function ReviewsModernBlock({
           <div className="mt-12">
             <Link
               to="/reviews"
-              className="inline-flex h-12 items-center rounded-xl border border-[#E6E8EC] px-6 font-display text-sm font-semibold text-[#0F172A] transition-colors hover:border-emerald-600 hover:text-emerald-700"
+              className="inline-flex h-12 items-center rounded-xl border border-fam-hairline px-6 font-display text-sm font-semibold text-fam-ink transition-colors hover:border-fam-accent hover:text-fam-accent-text"
             >
               {moreLink}
             </Link>

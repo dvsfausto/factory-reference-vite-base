@@ -47,7 +47,7 @@ export function HeroEditorialBlock({
 
   return (
     <section className="relative overflow-hidden bg-white">
-      <div className="container-x py-14 md:py-20">
+      <div className="container-x py-section">
         <motion.span
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

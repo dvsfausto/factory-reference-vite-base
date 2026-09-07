@@ -45,7 +45,7 @@ export function ServiceAreasGlowPinsBlock({
       className="relative overflow-hidden"
       style={{ backgroundImage: 'var(--wow-grad-surface)' }}
     >
-      <div className="container-x py-16 md:py-24">
+      <div className="container-x py-section">
         <SectionHeader
           label={label}
           heading={heading}

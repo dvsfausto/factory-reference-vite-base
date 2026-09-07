@@ -30,20 +30,20 @@ export function ReviewsCreativeBlock({
   if (previewReviews.length === 0) return null
   return (
     <section className="bg-white">
-      <div className="container-x py-20 md:py-28">
+      <div className="container-x py-section">
         <SectionHeaderCreative label={label} heading={heading} scriptAccent={scriptAccent} />
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {previewReviews.map((r) => (
             <figure
               key={r.id}
-              className="flex flex-col rounded-3xl bg-[#FBFAFC] p-8"
+              className="flex flex-col rounded-3xl bg-fam-surface-2 p-8"
             >
-              <span className="font-display text-6xl font-extrabold leading-none text-emerald-600">“</span>
-              <blockquote className="-mt-3 flex-1 font-display text-xl font-semibold leading-snug text-[#18181B]">
+              <span className="font-display text-6xl font-extrabold leading-none text-fam-accent-text">“</span>
+              <blockquote className="-mt-3 flex-1 font-display text-xl font-semibold leading-snug text-fam-ink">
                 {r.text}
               </blockquote>
-              <figcaption className="mt-6 text-sm text-[#71717A]">
-                <span className="font-display font-bold text-[#18181B]">{r.author}</span>
+              <figcaption className="mt-6 text-sm text-fam-ink-muted">
+                <span className="font-display font-bold text-fam-ink">{r.author}</span>
                 {r.location && <span> · {r.location}</span>}
               </figcaption>
             </figure>
@@ -53,7 +53,7 @@ export function ReviewsCreativeBlock({
           <div className="mt-14">
             <Link
               to="/reviews"
-              className="inline-flex h-14 items-center gap-2 rounded-2xl border-2 border-[#18181B] px-7 font-display text-base font-bold text-[#18181B] transition-colors hover:bg-emerald-600 hover:border-emerald-600 hover:text-white"
+              className="inline-flex h-14 items-center gap-2 rounded-2xl border-2 border-fam-ink px-7 font-display text-base font-bold text-fam-ink transition-colors hover:bg-fam-accent hover:border-fam-accent hover:text-white"
             >
               {moreLink} <ArrowUpRight className="h-5 w-5" />
             </Link>

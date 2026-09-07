@@ -27,18 +27,18 @@ export function TrustBarModernBlock({
 }) {
   const icons = [CalendarCheck, ShieldCheck, Sparkles]
   return (
-    <section className="bg-[#F6F7F9]">
-      <div className="container-x py-14 md:py-16">
+    <section className="bg-fam-surface-2">
+      <div className="container-x py-band">
         <div className={`grid grid-cols-1 gap-10 ${items.length === 2 ? "md:grid-cols-2" : "md:grid-cols-3"}`}>
           {items.map((item, i) => {
             const Icon = icons[i] ?? ShieldCheck
             return (
               <div key={i} className="flex flex-col items-start">
-                <Icon className="h-7 w-7 text-emerald-600" strokeWidth={1.75} />
-                <h3 className="mt-4 font-display text-lg font-semibold tracking-tight text-[#0F172A]">
+                <Icon className="h-7 w-7 text-fam-accent-text" strokeWidth={1.75} />
+                <h3 className="mt-4 font-display text-lg font-semibold tracking-tight text-fam-ink">
                   {item.title}
                 </h3>
-                <p className="mt-2 text-[#64748B]">{item.description}</p>
+                <p className="mt-2 text-fam-ink-muted">{item.description}</p>
               </div>
             )
           })}

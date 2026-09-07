@@ -33,7 +33,7 @@ export function GalleryCinematicMasonryBlock({
 
   return (
     <section className="bg-white">
-      <div className="container-x py-20 md:py-28">
+      <div className="container-x py-section">
         <div className="max-w-2xl">
           <span className="inline-flex items-center gap-3 text-xs font-bold uppercase tracking-[0.2em] text-brand-700">
             <span className="h-px w-8" style={{ backgroundImage: 'var(--wow-grad-brand)' }} />

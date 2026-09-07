@@ -34,7 +34,7 @@ export function InfoPageTemplate({ data }: Props) {
       {/* HERO — simple single column */}
       <section className="relative overflow-hidden bg-gradient-to-b from-brand-50 via-white to-white">
         <img src={leaves} alt="" aria-hidden className="hidden md:block absolute -right-10 top-0 h-[60%] opacity-30 pointer-events-none select-none rotate-180" />
-        <div className="container-x py-12 md:py-16 relative">
+        <div className="container-x py-section relative">
           <div className="max-w-3xl">
             <Breadcrumbs items={[
               { label: tr('breadcrumb.home'), to: "/" },

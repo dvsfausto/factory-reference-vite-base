@@ -10,7 +10,7 @@ export function TrustBadges({ items }: Props) {
         <ul className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm text-slate-700">
           {items.map((item) => (
             <li key={item} className="inline-flex items-center gap-2">
-              <span aria-hidden className="text-emerald-600">
+              <span aria-hidden className="text-fam-accent-text">
                 ✓
               </span>
               <span>{item}</span>

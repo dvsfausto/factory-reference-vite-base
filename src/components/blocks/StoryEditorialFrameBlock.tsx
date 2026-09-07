@@ -38,7 +38,7 @@ export function StoryEditorialFrameBlock({
 
   return (
     <section className="bg-white">
-      <div className="container-x py-20 md:py-28">
+      <div className="container-x py-section">
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
           {/* Copy column */}
           <motion.div

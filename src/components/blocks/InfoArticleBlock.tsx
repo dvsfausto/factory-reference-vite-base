@@ -39,7 +39,7 @@ export function InfoArticleBlock({
 
   return (
     <section className="relative overflow-hidden bg-[var(--fam-surface,#fff)]">
-      <div className="container-x py-16 md:py-24">
+      <div className="container-x py-section">
         <div className="mx-auto max-w-2xl">
           {showIntro && (
             <Reveal>

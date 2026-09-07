@@ -10,7 +10,7 @@ import { hasPhone } from '~/lib/phone'
 // (source_page 'booking'); the date/time are FOLDED INTO message (no new payload
 // keys, to keep the CRM contract exact).
 //
-// TOKEN DISCIPLINE: primary CTA -> bg-primary. Accent -> emerald-* (DNA)
+// TOKEN DISCIPLINE: primary CTA -> bg-primary. Accent -> fam-accent-* (DNA)
 // 50/100/600/700. Radius -> rounded-* (DNA). Font -> font-display (DNA). Light
 // surface component-owned (white / slate / #E6E8EC). Never bg-brand-* / .btn.
 export function FormBookingBlock({
@@ -64,24 +64,24 @@ export function FormBookingBlock({
 
   return (
     <section className="bg-white">
-      <div className="container-x py-20 md:py-28">
+      <div className="container-x py-section">
         <div className="mx-auto max-w-2xl">
           <div>
-            <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600">
-              <span className="h-px w-6 bg-emerald-600" />
+            <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">
+              <span className="h-px w-6 bg-fam-accent" />
               {label}
             </span>
-            <Heading className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight text-[#0F172A] sm:text-5xl">
+            <Heading className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight text-fam-ink sm:text-5xl">
               {heading}
             </Heading>
-            {body && <p className="mt-4 text-lg leading-relaxed text-[#64748B]">{body}</p>}
+            {body && <p className="mt-4 text-lg leading-relaxed text-fam-ink-muted">{body}</p>}
           </div>
 
           <div className="mt-10">
             {status === 'success' ? (
               <SuccessCard />
             ) : (
-              <form onSubmit={onSubmit} className="rounded-2xl border border-[#E6E8EC] bg-white p-8 md:p-10">
+              <form onSubmit={onSubmit} className="rounded-2xl border border-fam-hairline bg-white p-8 md:p-10">
                 <div className="grid gap-5 md:grid-cols-2">
                   <Field label={tr('form.firstName')} name="first_name" required autoComplete="given-name" />
                   <Field label={tr('form.lastName')} name="last_name" required autoComplete="family-name" />
@@ -96,9 +96,9 @@ export function FormBookingBlock({
                 {status === 'error' && error && <p className="mt-4 text-sm text-red-600">{error}</p>}
                 <div className="mt-8 flex flex-wrap items-center gap-4">
                   <SubmitButton status={status} />
-                  {hasPhone(site.phone) && (<span className="text-sm text-[#64748B]">
+                  {hasPhone(site.phone) && (<span className="text-sm text-fam-ink-muted">
                     Or call{' '}
-                    <a href={`tel:${site.phone}`} className="font-medium text-emerald-700 underline-offset-2 hover:underline">
+                    <a href={`tel:${site.phone}`} className="font-medium text-fam-accent-text underline-offset-2 hover:underline">
                       {site.phoneDisplay}
                     </a>
                   </span>)}
