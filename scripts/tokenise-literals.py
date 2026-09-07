@@ -6,7 +6,7 @@ colours after the seam is removed. Kept in the repo as the record of what was ma
 import re, glob, sys, collections
 
 EMERALD = {  # utility → token utility (the seam's map; variants prefixes are preserved by the regex)
-  'text-emerald-500': 'text-fam-accent-text', 'text-emerald-600': 'text-fam-accent-text', 'text-emerald-700': 'text-fam-accent-text', 'text-emerald-800': 'text-fam-accent-text',
+  'text-emerald-500': 'text-fam-accent-text', 'text-emerald-600': 'text-fam-accent-text', 'text-emerald-700': 'text-fam-accent-text-strong', 'text-emerald-800': 'text-fam-accent-text-strong',
   'text-emerald-100': 'text-fam-accent-on-dark', 'text-emerald-50': 'text-fam-accent-on-dark',
   'text-emerald-700/30': 'text-fam-accent/30',
   'bg-emerald-500': 'bg-fam-accent', 'bg-emerald-600': 'bg-fam-accent', 'bg-emerald-700': 'bg-fam-accent-deep',
@@ -70,7 +70,7 @@ def rewrite(path):
   # 4. comments that named the emerald ramp: keep them truthful
   s = re.sub(r'emerald-\* \(DNA\)', 'fam-accent-* (DNA)', s)
   s = re.sub(r'(//.*?)emerald-600', lambda m: m.group(1) + 'fam-accent', s)
-  s = re.sub(r'(//.*?)emerald-700', lambda m: m.group(1) + 'fam-accent-text', s)
+  s = re.sub(r'(//.*?)emerald-700', lambda m: m.group(1) + 'fam-accent-text-strong', s)
   s = re.sub(r'(//.*?)emerald-50\b', lambda m: m.group(1) + 'fam-accent-soft', s)
   s = re.sub(r'(//.*?)emerald-100', lambda m: m.group(1) + 'fam-accent-soft-2', s)
   if s != o: open(path, 'w').write(s)

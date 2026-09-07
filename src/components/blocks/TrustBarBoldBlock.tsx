@@ -36,7 +36,7 @@ export function TrustBarBoldBlock({
           const Icon = icons[i] ?? ShieldCheck
           return (
             <div key={i} className="flex flex-col items-start">
-              <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-fam-accent-soft text-fam-accent-text">
+              <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-fam-accent-soft text-fam-accent-text-strong">
                 <Icon className="h-7 w-7" strokeWidth={2} />
               </div>
               <h3 className="mt-5 font-display text-xl font-semibold uppercase tracking-tight text-ink-900">

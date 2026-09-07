@@ -46,7 +46,7 @@ export function MembershipTierCardsBlock({
               }`}
             >
               {m.highlighted && (
-                <span className="mb-4 inline-flex w-fit items-center gap-1.5 rounded-full bg-fam-accent-soft px-3 py-1 font-display text-xs font-semibold text-fam-accent-text">
+                <span className="mb-4 inline-flex w-fit items-center gap-1.5 rounded-full bg-fam-accent-soft px-3 py-1 font-display text-xs font-semibold text-fam-accent-text-strong">
                   <Star className="h-3.5 w-3.5" /> Best value
                 </span>
               )}
@@ -67,7 +67,7 @@ export function MembershipTierCardsBlock({
               <Link
                 to="/contact"
                 className={`mt-8 inline-flex h-12 items-center justify-center rounded-xl px-6 font-display text-sm font-semibold transition-opacity hover:opacity-90 ${
-                  m.highlighted ? 'bg-primary text-primary-foreground' : 'border border-fam-hairline text-fam-ink hover:border-fam-accent hover:text-fam-accent-text'
+                  m.highlighted ? 'bg-primary text-primary-foreground' : 'border border-fam-hairline text-fam-ink hover:border-fam-accent hover:text-fam-accent-text-strong'
                 }`}
               >
                 Become a member

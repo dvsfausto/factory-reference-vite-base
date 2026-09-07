@@ -44,7 +44,7 @@ export function MapSplitWithAreasBlock({
             {body && <p className="mt-4 max-w-md text-lg leading-relaxed text-fam-ink-muted">{body}</p>}
             <div className="mt-7 flex flex-wrap gap-2">
               {areas.slice(0, 10).map((a) => (
-                <Link key={a.slug} to="/areas/$slug" params={{ slug: a.slug }} className="inline-flex items-center gap-1.5 rounded-lg border border-fam-hairline px-3 py-1.5 text-sm font-medium text-fam-ink transition-colors hover:border-fam-accent hover:text-fam-accent-text">
+                <Link key={a.slug} to="/areas/$slug" params={{ slug: a.slug }} className="inline-flex items-center gap-1.5 rounded-lg border border-fam-hairline px-3 py-1.5 text-sm font-medium text-fam-ink transition-colors hover:border-fam-accent hover:text-fam-accent-text-strong">
                   <MapPin className="h-3.5 w-3.5 text-fam-accent-text" /> {a.name}
                 </Link>
               ))}

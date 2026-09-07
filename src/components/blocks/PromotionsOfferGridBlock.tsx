@@ -43,7 +43,7 @@ export function PromotionsOfferGridBlock({
                 <p className="text-sm leading-relaxed text-fam-ink-muted">{p.detail}</p>
                 <div className="mt-5 flex items-center justify-between gap-3 border-t border-dashed border-fam-hairline pt-4">
                   {p.code ? (
-                    <span className="inline-flex items-center gap-1.5 font-display text-sm font-semibold tracking-wider text-fam-accent-text"><Scissors className="h-4 w-4" /> {p.code}</span>
+                    <span className="inline-flex items-center gap-1.5 font-display text-sm font-semibold tracking-wider text-fam-accent-text-strong"><Scissors className="h-4 w-4" /> {p.code}</span>
                   ) : <span />}
                   {p.expires && <span className="text-xs text-fam-ink-faint">Ends {p.expires}</span>}
                 </div>

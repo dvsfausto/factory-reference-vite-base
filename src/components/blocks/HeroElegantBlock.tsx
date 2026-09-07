@@ -126,7 +126,7 @@ export function HeroElegantBlock({
           transition={{ duration: 0.6 }}
           className="flex flex-wrap items-end justify-between gap-4 border-b border-fam-hairline pb-6"
         >
-          <span className="text-xs font-medium uppercase tracking-[0.32em] text-fam-accent-text">{kicker}</span>
+          <span className="text-xs font-medium uppercase tracking-[0.32em] text-fam-accent-text-strong">{kicker}</span>
           {(metaLine || site.phoneDisplay) && (
             <span className="text-xs uppercase tracking-[0.22em] text-[#9A8E7C]">
               {[metaLine, site.phoneDisplay].filter(Boolean).join('  ·  ')}
@@ -151,7 +151,7 @@ export function HeroElegantBlock({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.7, delay: 0.15 }}
-              className="font-display text-2xl italic leading-snug text-fam-accent-text lg:col-span-6"
+              className="font-display text-2xl italic leading-snug text-fam-accent-text-strong lg:col-span-6"
             >
               {subheadline}
             </motion.p>
@@ -162,8 +162,8 @@ export function HeroElegantBlock({
               <PrimaryCta className="inline-flex h-[54px] items-center gap-2 rounded-lg bg-primary px-8 font-display text-base font-medium tracking-wide text-primary-foreground transition-opacity hover:opacity-90">
                 {ctaLabel} <ArrowRight className="h-4 w-4" />
               </PrimaryCta>
-              {hasPhone(site.phone) && (<a href={`tel:${site.phone}`} className="inline-flex items-center gap-2 font-display font-medium text-fam-ink underline-offset-4 transition-colors hover:text-fam-accent-text hover:underline">
-                <Phone className="h-4 w-4 text-fam-accent-text" /> {site.phoneDisplay}
+              {hasPhone(site.phone) && (<a href={`tel:${site.phone}`} className="inline-flex items-center gap-2 font-display font-medium text-fam-ink underline-offset-4 transition-colors hover:text-fam-accent-text-strong hover:underline">
+                <Phone className="h-4 w-4 text-fam-accent-text-strong" /> {site.phoneDisplay}
               </a>)}
             </div>
           </div>

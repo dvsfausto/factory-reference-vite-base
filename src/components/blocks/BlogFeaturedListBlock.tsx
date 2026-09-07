@@ -41,7 +41,7 @@ export function BlogFeaturedListBlock({
             )}
             <div className="p-8">
               {lead.date && <span className="text-xs font-semibold uppercase tracking-[0.12em] text-fam-ink-faint">{lead.date}</span>}
-              <h3 className="mt-2 font-display text-2xl font-semibold tracking-tight text-fam-ink group-hover:text-fam-accent-text">{lead.title}</h3>
+              <h3 className="mt-2 font-display text-2xl font-semibold tracking-tight text-fam-ink group-hover:text-fam-accent-text-strong">{lead.title}</h3>
               {lead.excerpt && <p className="mt-3 leading-relaxed text-fam-ink-muted">{lead.excerpt}</p>}
             </div>
           </a>
@@ -51,7 +51,7 @@ export function BlogFeaturedListBlock({
                 {p.image && <span className="h-20 w-28 shrink-0 overflow-hidden rounded-xl"><img src={p.image} alt={p.title} loading="lazy" className="h-full w-full object-cover" /></span>}
                 <span className="min-w-0">
                   {p.date && <span className="text-xs font-semibold uppercase tracking-[0.12em] text-fam-ink-faint">{p.date}</span>}
-                  <span className="block font-display text-base font-semibold leading-snug tracking-tight text-fam-ink group-hover:text-fam-accent-text">{p.title}</span>
+                  <span className="block font-display text-base font-semibold leading-snug tracking-tight text-fam-ink group-hover:text-fam-accent-text-strong">{p.title}</span>
                   {p.excerpt && <span className="mt-1 line-clamp-2 block text-sm text-fam-ink-muted">{p.excerpt}</span>}
                 </span>
               </a>

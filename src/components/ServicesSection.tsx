@@ -42,12 +42,12 @@ export function ServicesSection({ heading, intro, services }: Props) {
             )
             const body = (
               <div className="p-5">
-                <p className="text-lg font-semibold text-slate-900 group-hover:text-fam-accent-text">
+                <p className="text-lg font-semibold text-slate-900 group-hover:text-fam-accent-text-strong">
                   {s.displayName}
                 </p>
                 <p className="mt-2 text-sm leading-relaxed text-slate-600">{s.short}</p>
                 {paged && (
-                  <p className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-fam-accent-text">{tr('common.learnMore')}<span aria-hidden className="transition-transform group-hover:translate-x-0.5">
+                  <p className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-fam-accent-text-strong">{tr('common.learnMore')}<span aria-hidden className="transition-transform group-hover:translate-x-0.5">
                       →
                     </span>
                   </p>

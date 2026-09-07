@@ -51,7 +51,7 @@ export function HeroFriendlyBlock({
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <span className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.14em] text-fam-accent-text">
+            <span className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.14em] text-fam-accent-text-strong">
               <span className="h-2.5 w-2.5 rounded-full bg-fam-accent" />
               {kicker}
             </span>
@@ -61,7 +61,7 @@ export function HeroFriendlyBlock({
             </h1>
 
             {subheadline && (
-              <p className="mt-4 font-display text-2xl font-medium text-fam-accent-text">
+              <p className="mt-4 font-display text-2xl font-medium text-fam-accent-text-strong">
                 {subheadline}
               </p>
             )}
@@ -89,7 +89,7 @@ export function HeroFriendlyBlock({
               {trustItems.map((t) => (
                 <span
                   key={t}
-                  className="inline-flex items-center gap-1.5 rounded-full bg-fam-accent-soft px-3.5 py-1.5 text-sm font-medium text-fam-accent-text"
+                  className="inline-flex items-center gap-1.5 rounded-full bg-fam-accent-soft px-3.5 py-1.5 text-sm font-medium text-fam-accent-text-strong"
                 >
                   <Check className="h-4 w-4" /> {t}
                 </span>

@@ -7,7 +7,7 @@ import { SITE } from '~/data/site'
 // OMIT-WHEN-ABSENT: SITE.caseStudies via cast; none -> null. result/client
 // graceful.
 //
-// TOKEN DISCIPLINE: accent -> fam-accent-* (DNA) 50/100/600/700: fam-accent-text result.
+// TOKEN DISCIPLINE: accent -> fam-accent-* (DNA) 50/100/600/700: fam-accent-text-strong result.
 // Radius -> rounded-* (DNA). Font -> font-display (DNA). Light surface component-
 // owned (white / slate / hairline #E6E8EC). Never bg-brand-* / .btn.
 export function CaseStudiesListBlock({
@@ -38,7 +38,7 @@ export function CaseStudiesListBlock({
           {studies.slice(0, 8).map((s, i) => (
             <div key={`${s.title}-${i}`} className="grid grid-cols-1 gap-3 border-b border-fam-hairline py-8 md:grid-cols-12 md:gap-8">
               <div className="md:col-span-3">
-                {s.result && <div className="font-display text-3xl font-semibold tracking-tight text-fam-accent-text">{s.result}</div>}
+                {s.result && <div className="font-display text-3xl font-semibold tracking-tight text-fam-accent-text-strong">{s.result}</div>}
                 {s.client && <div className="mt-1 text-sm font-medium text-fam-ink-muted">{s.client}</div>}
               </div>
               <div className="md:col-span-9">

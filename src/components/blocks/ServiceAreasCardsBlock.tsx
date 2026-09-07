@@ -76,7 +76,7 @@ export function ServiceAreasCardsBlock({
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   {tier && (
-                    <span className="absolute left-3 top-3 rounded-full bg-fam-accent-soft px-3 py-1 font-display text-xs font-semibold text-fam-accent-text">
+                    <span className="absolute left-3 top-3 rounded-full bg-fam-accent-soft px-3 py-1 font-display text-xs font-semibold text-fam-accent-text-strong">
                       {tier}
                     </span>
                   )}

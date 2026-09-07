@@ -87,7 +87,7 @@ export interface CharacterTokens {
 
 const CHARACTER_ACCENT = {
   accent: 'text-fam-accent-text',
-  accentStrong: 'text-fam-accent-text',
+  accentStrong: 'text-fam-accent-text-strong',
   accentFaint: 'text-fam-accent-tint',
   accentBg: 'bg-fam-accent-soft',
   accentBorder: 'border-fam-accent-soft-2',

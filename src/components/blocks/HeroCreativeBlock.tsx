@@ -64,7 +64,7 @@ export function HeroCreativeBlock({
             </h1>
 
             {subheadline && (
-              <p className="mt-6 max-w-lg text-2xl font-medium leading-snug text-fam-accent-text">
+              <p className="mt-6 max-w-lg text-2xl font-medium leading-snug text-fam-accent-text-strong">
                 {subheadline}
               </p>
             )}

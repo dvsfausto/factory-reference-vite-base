@@ -57,7 +57,7 @@ export function ReviewsModernBlock({
           <div className="mt-12">
             <Link
               to="/reviews"
-              className="inline-flex h-12 items-center rounded-xl border border-fam-hairline px-6 font-display text-sm font-semibold text-fam-ink transition-colors hover:border-fam-accent hover:text-fam-accent-text"
+              className="inline-flex h-12 items-center rounded-xl border border-fam-hairline px-6 font-display text-sm font-semibold text-fam-ink transition-colors hover:border-fam-accent hover:text-fam-accent-text-strong"
             >
               {moreLink}
             </Link>

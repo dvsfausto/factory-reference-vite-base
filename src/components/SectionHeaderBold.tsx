@@ -34,7 +34,7 @@ export function SectionHeaderBold({
     <div className={`flex flex-col ${alignClass} mb-12`}>
       {label && (
         <span
-          className={`inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] text-fam-accent-text ${
+          className={`inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] text-fam-accent-text-strong ${
             align === "center" ? "justify-center" : ""
           }`}
         >

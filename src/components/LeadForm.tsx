@@ -172,7 +172,7 @@ export function LeadForm({
             {' '}If it&apos;s urgent, call us at{' '}
             <a
               href={`tel:${SITE.phone}`}
-              className="font-semibold text-fam-accent-text hover:underline"
+              className="font-semibold text-fam-accent-text-strong hover:underline"
             >
               {SITE.phoneDisplay}
             </a>

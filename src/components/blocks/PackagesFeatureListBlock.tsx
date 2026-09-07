@@ -41,10 +41,10 @@ export function PackagesFeatureListBlock({
               <div className="md:col-span-4">
                 <div className="flex items-center gap-2">
                   <h3 className="font-display text-2xl font-semibold tracking-tight text-fam-ink">{p.name}</h3>
-                  {p.popular && <span className="rounded-full bg-fam-accent-soft px-2.5 py-0.5 font-display text-xs font-semibold text-fam-accent-text">Popular</span>}
+                  {p.popular && <span className="rounded-full bg-fam-accent-soft px-2.5 py-0.5 font-display text-xs font-semibold text-fam-accent-text-strong">Popular</span>}
                 </div>
-                <div className="mt-2 font-display text-3xl font-semibold tracking-tight text-fam-accent-text">{p.price}</div>
-                <Link to="/contact" className="group mt-5 inline-flex items-center gap-2 font-display text-sm font-semibold text-fam-accent-text hover:text-fam-accent-text">
+                <div className="mt-2 font-display text-3xl font-semibold tracking-tight text-fam-accent-text-strong">{p.price}</div>
+                <Link to="/contact" className="group mt-5 inline-flex items-center gap-2 font-display text-sm font-semibold text-fam-accent-text hover:text-fam-accent-text-strong">
                   Choose this package <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Link>
               </div>

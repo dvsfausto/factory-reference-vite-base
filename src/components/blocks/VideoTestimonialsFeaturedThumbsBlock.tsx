@@ -45,7 +45,7 @@ export function VideoTestimonialsFeaturedThumbsBlock({
               </video>
             </div>
             {f.quote && <blockquote className="mt-5 font-display text-xl leading-snug text-fam-ink">“{f.quote}”</blockquote>}
-            <figcaption className="mt-3 font-display text-sm font-semibold text-fam-accent-text">{f.author}</figcaption>
+            <figcaption className="mt-3 font-display text-sm font-semibold text-fam-accent-text-strong">{f.author}</figcaption>
           </figure>
           <div className="flex flex-row gap-3 overflow-x-auto lg:flex-col lg:overflow-visible">
             {vids.map((v, i) => (

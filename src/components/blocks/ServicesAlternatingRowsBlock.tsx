@@ -83,7 +83,7 @@ export function ServicesAlternatingRowsBlock({
                 <Link
                   to="/services/$slug"
                   params={{ slug: s.slug }}
-                  className="group mt-6 inline-flex items-center gap-2 font-display text-base font-semibold text-fam-accent-text transition-all hover:text-fam-accent-text"
+                  className="group mt-6 inline-flex items-center gap-2 font-display text-base font-semibold text-fam-accent-text transition-all hover:text-fam-accent-text-strong"
                 >
                   {exploreLabel} <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Link>

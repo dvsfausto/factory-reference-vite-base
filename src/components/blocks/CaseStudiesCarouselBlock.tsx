@@ -44,7 +44,7 @@ export function CaseStudiesCarouselBlock({
               {s.image ? (
                 <div className="aspect-[16/10] overflow-hidden"><img src={s.image} alt={s.title} loading="lazy" className="h-full w-full object-cover" /></div>
               ) : (
-                s.result && <div className="flex items-center gap-2 border-b border-fam-hairline bg-fam-accent-soft px-6 py-5"><TrendingUp className="h-5 w-5 text-fam-accent-text" /><span className="font-display text-2xl font-semibold tracking-tight text-fam-accent-text">{s.result}</span></div>
+                s.result && <div className="flex items-center gap-2 border-b border-fam-hairline bg-fam-accent-soft px-6 py-5"><TrendingUp className="h-5 w-5 text-fam-accent-text" /><span className="font-display text-2xl font-semibold tracking-tight text-fam-accent-text-strong">{s.result}</span></div>
               )}
               <div className="flex flex-1 flex-col p-6">
                 <h3 className="font-display text-lg font-semibold tracking-tight text-fam-ink">{s.title}</h3>

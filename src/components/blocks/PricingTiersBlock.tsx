@@ -53,7 +53,7 @@ export function PricingTiersBlock({
               }`}
             >
               {p.highlighted && (
-                <span className="mb-4 inline-flex w-fit rounded-full bg-fam-accent-soft px-3 py-1 font-display text-xs font-semibold text-fam-accent-text">
+                <span className="mb-4 inline-flex w-fit rounded-full bg-fam-accent-soft px-3 py-1 font-display text-xs font-semibold text-fam-accent-text-strong">
                   Most popular
                 </span>
               )}
@@ -80,7 +80,7 @@ export function PricingTiersBlock({
                 className={`mt-8 inline-flex h-12 items-center justify-center rounded-xl px-6 font-display text-sm font-semibold transition-opacity hover:opacity-90 ${
                   p.highlighted
                     ? 'bg-primary text-primary-foreground'
-                    : 'border border-fam-hairline text-fam-ink hover:border-fam-accent hover:text-fam-accent-text'
+                    : 'border border-fam-hairline text-fam-ink hover:border-fam-accent hover:text-fam-accent-text-strong'
                 }`}
               >
                 Get started

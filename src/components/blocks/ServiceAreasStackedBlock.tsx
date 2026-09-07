@@ -14,7 +14,7 @@ import { AREAS } from '~/data/areas'
 //
 // TOKEN DISCIPLINE: primary CTA -> bg-primary / text-primary-foreground (BRAND-
 // owned). Accent -> fam-accent-* (DNA) restricted to 50/100/600/700: fam-accent pin,
-// fam-accent-text hover. Radius -> rounded-* (DNA). Font -> font-display (DNA). Light
+// fam-accent-text-strong hover. Radius -> rounded-* (DNA). Font -> font-display (DNA). Light
 // surface component-owned (white / slate / hairline #E6E8EC). Never bg-brand-*/.btn.
 //
 // Prop signature identical to ServiceAreasBlock; returns Element | null.
@@ -65,7 +65,7 @@ export function ServiceAreasStackedBlock({
                 params={{ slug: a.slug }}
                 className="group flex items-center justify-between gap-6 border-b border-fam-hairline py-7 transition-colors md:py-9"
               >
-                <h3 className="flex items-center gap-3 font-display text-2xl font-semibold tracking-tight text-fam-ink transition-colors group-hover:text-fam-accent-text md:text-3xl">
+                <h3 className="flex items-center gap-3 font-display text-2xl font-semibold tracking-tight text-fam-ink transition-colors group-hover:text-fam-accent-text-strong md:text-3xl">
                   <MapPin className="h-5 w-5 shrink-0 text-fam-accent-text" /> {a.name}
                 </h3>
                 <div className="flex items-center gap-6">

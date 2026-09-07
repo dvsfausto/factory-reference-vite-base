@@ -39,7 +39,7 @@ export function PackagesBundleCardsBlock({
             <div key={`${p.name}-${i}`} className={`flex flex-col rounded-3xl border bg-white p-8 ${p.popular ? 'border-fam-accent ring-1 ring-fam-accent' : 'border-fam-hairline'}`}>
               <div className="flex items-center justify-between gap-3">
                 <span className="grid h-11 w-11 place-items-center rounded-xl bg-fam-accent-soft text-fam-accent-text"><Package className="h-5 w-5" /></span>
-                {p.popular && <span className="rounded-full bg-fam-accent-soft px-3 py-1 font-display text-xs font-semibold text-fam-accent-text">Most popular</span>}
+                {p.popular && <span className="rounded-full bg-fam-accent-soft px-3 py-1 font-display text-xs font-semibold text-fam-accent-text-strong">Most popular</span>}
               </div>
               <h3 className="mt-6 font-display text-xl font-semibold tracking-tight text-fam-ink">{p.name}</h3>
               <div className="mt-2 font-display text-3xl font-semibold tracking-tight text-fam-ink">{p.price}</div>
@@ -50,7 +50,7 @@ export function PackagesBundleCardsBlock({
                   ))}
                 </ul>
               )}
-              <Link to="/contact" className={`mt-8 inline-flex h-12 items-center justify-center rounded-xl px-6 font-display text-sm font-semibold transition-opacity hover:opacity-90 ${p.popular ? 'bg-primary text-primary-foreground' : 'border border-fam-hairline text-fam-ink hover:border-fam-accent hover:text-fam-accent-text'}`}>Choose package</Link>
+              <Link to="/contact" className={`mt-8 inline-flex h-12 items-center justify-center rounded-xl px-6 font-display text-sm font-semibold transition-opacity hover:opacity-90 ${p.popular ? 'bg-primary text-primary-foreground' : 'border border-fam-hairline text-fam-ink hover:border-fam-accent hover:text-fam-accent-text-strong'}`}>Choose package</Link>
             </div>
           ))}
         </div>

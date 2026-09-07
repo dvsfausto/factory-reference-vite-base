@@ -66,7 +66,7 @@ export function ServicesCorporateBlock({
                   {s.displayName}
                 </h3>
                 <p className="mt-2 text-fam-ink-muted">{s.short}</p>
-                <div className="mt-5 flex items-center gap-1 font-display text-sm font-semibold text-fam-accent-text transition-all group-hover:gap-2">
+                <div className="mt-5 flex items-center gap-1 font-display text-sm font-semibold text-fam-accent-text-strong transition-all group-hover:gap-2">
                   {exploreLabel} <ArrowRight className="h-4 w-4" />
                 </div>
               </div>

@@ -39,7 +39,7 @@ export function ServiceAreasBoldBlock({
               key={a.slug}
               to="/areas/$slug"
               params={{ slug: a.slug }}
-              className="inline-flex items-center gap-1.5 rounded-md border border-ink-100 px-3 py-2 text-sm text-ink-700 transition-colors hover:border-fam-accent hover:text-fam-accent-text"
+              className="inline-flex items-center gap-1.5 rounded-md border border-ink-100 px-3 py-2 text-sm text-ink-700 transition-colors hover:border-fam-accent hover:text-fam-accent-text-strong"
             >
               <MapPin className="h-3.5 w-3.5" /> {a.name}
             </Link>
@@ -48,7 +48,7 @@ export function ServiceAreasBoldBlock({
         <div className="mt-8">
           <Link
             to="/areas"
-            className="inline-flex h-12 items-center rounded-md border border-ink-300 px-6 font-display text-sm font-semibold uppercase tracking-wide text-ink-900 transition-colors hover:border-fam-accent hover:text-fam-accent-text"
+            className="inline-flex h-12 items-center rounded-md border border-ink-300 px-6 font-display text-sm font-semibold uppercase tracking-wide text-ink-900 transition-colors hover:border-fam-accent hover:text-fam-accent-text-strong"
           >
             {moreLink}
           </Link>

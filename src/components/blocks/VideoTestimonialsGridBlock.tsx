@@ -44,7 +44,7 @@ export function VideoTestimonialsGridBlock({
               </div>
               <figcaption className="p-6">
                 {v.quote && <blockquote className="leading-relaxed text-fam-ink">“{v.quote}”</blockquote>}
-                <span className="mt-3 block font-display text-sm font-semibold text-fam-accent-text">{v.author}</span>
+                <span className="mt-3 block font-display text-sm font-semibold text-fam-accent-text-strong">{v.author}</span>
               </figcaption>
             </figure>
           ))}

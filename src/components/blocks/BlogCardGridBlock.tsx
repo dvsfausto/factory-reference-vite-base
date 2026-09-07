@@ -42,7 +42,7 @@ export function BlogCardGridBlock({
               )}
               <div className="flex flex-1 flex-col p-6">
                 {p.date && <span className="text-xs font-semibold uppercase tracking-[0.12em] text-fam-ink-faint">{p.date}</span>}
-                <h3 className="mt-2 font-display text-lg font-semibold tracking-tight text-fam-ink group-hover:text-fam-accent-text">{p.title}</h3>
+                <h3 className="mt-2 font-display text-lg font-semibold tracking-tight text-fam-ink group-hover:text-fam-accent-text-strong">{p.title}</h3>
                 {p.excerpt && <p className="mt-2 flex-1 text-sm leading-relaxed text-fam-ink-muted">{p.excerpt}</p>}
                 <span className="mt-4 font-display text-sm font-semibold text-fam-accent-text">Read more →</span>
               </div>

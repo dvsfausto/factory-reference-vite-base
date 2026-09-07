@@ -86,7 +86,7 @@ export function FormSplitWithInfoBlock({
                     <r.Icon className="h-5 w-5" />
                   </span>
                   {r.href ? (
-                    <a href={r.href} className="font-display font-medium text-fam-ink hover:text-fam-accent-text">{r.label}</a>
+                    <a href={r.href} className="font-display font-medium text-fam-ink hover:text-fam-accent-text-strong">{r.label}</a>
                   ) : (
                     <span className="font-display font-medium text-fam-ink">{r.label}</span>
                   )}

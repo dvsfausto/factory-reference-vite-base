@@ -53,7 +53,7 @@ export function ServiceAreasColumnedListBlock({
               key={a.slug}
               to="/areas/$slug"
               params={{ slug: a.slug }}
-              className="group flex break-inside-avoid items-center gap-2 border-b border-fam-hairline py-3 text-fam-ink transition-colors hover:text-fam-accent-text"
+              className="group flex break-inside-avoid items-center gap-2 border-b border-fam-hairline py-3 text-fam-ink transition-colors hover:text-fam-accent-text-strong"
             >
               <MapPin className="h-4 w-4 shrink-0 text-fam-accent-text" />
               <span className="font-display text-base font-medium">{a.name}</span>

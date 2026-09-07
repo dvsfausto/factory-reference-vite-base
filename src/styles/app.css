@@ -71,7 +71,7 @@
 
      Roles:  surface / surface-2  section grounds        card  panel ground
              hairline             rules + borders        ink / ink-muted / ink-faint  text
-             accent               marks, fills           accent-text  the accent as READABLE text (floored)
+             accent               marks, fills           accent-text / -text-strong  the accent as text
              accent-soft/-soft-2  tinted grounds         accent-tint  tinted borders
              accent-deep          pressed fills          accent-on-dark  the accent on a dark ground
      Opacity modifiers work (bg-fam-accent/10) — Tailwind mixes the var in oklab, the same mix the
@@ -85,7 +85,8 @@
   --color-fam-ink-muted: var(--fam-ink-muted, #64748B);
   --color-fam-ink-faint: var(--fam-ink-faint, #94A3B8);
   --color-fam-accent: var(--fam-accent, #059669);
-  --color-fam-accent-text: var(--fam-accent-text, #047857);
+  --color-fam-accent-text: var(--fam-accent-text, #059669);
+  --color-fam-accent-text-strong: var(--fam-accent-text-strong, #047857);
   --color-fam-accent-soft: var(--fam-accent-soft, #ECFDF5);
   --color-fam-accent-soft-2: var(--fam-accent-soft-2, #D1FAE5);
   --color-fam-accent-tint: var(--fam-accent-tint, #A7F3D0);

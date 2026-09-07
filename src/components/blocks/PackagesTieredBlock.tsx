@@ -37,7 +37,7 @@ export function PackagesTieredBlock({
         <div className="mt-12 grid grid-cols-1 items-start gap-6 md:grid-cols-3">
           {packages.slice(0, 3).map((p, i) => (
             <div key={`${p.name}-${i}`} className={`flex flex-col rounded-3xl p-8 ${p.popular ? 'bg-slate-950 text-white ring-1 ring-fam-accent md:-mt-4 md:pb-12' : 'border border-fam-hairline bg-white'}`}>
-              {p.popular && <span className="mb-4 inline-flex w-fit rounded-full bg-fam-accent-soft px-3 py-1 font-display text-xs font-semibold text-fam-accent-text">Most popular</span>}
+              {p.popular && <span className="mb-4 inline-flex w-fit rounded-full bg-fam-accent-soft px-3 py-1 font-display text-xs font-semibold text-fam-accent-text-strong">Most popular</span>}
               <h3 className={`font-display text-lg font-semibold ${p.popular ? 'text-white' : 'text-fam-ink'}`}>{p.name}</h3>
               <div className={`mt-3 font-display text-4xl font-semibold tracking-tight ${p.popular ? 'text-white' : 'text-fam-ink'}`}>{p.price}</div>
               {p.includes && p.includes.length > 0 && (
@@ -47,7 +47,7 @@ export function PackagesTieredBlock({
                   ))}
                 </ul>
               )}
-              <Link to="/contact" className={`mt-8 inline-flex h-12 items-center justify-center rounded-xl px-6 font-display text-sm font-semibold transition-opacity hover:opacity-90 ${p.popular ? 'bg-primary text-primary-foreground' : 'border border-fam-hairline text-fam-ink hover:border-fam-accent hover:text-fam-accent-text'}`}>Choose</Link>
+              <Link to="/contact" className={`mt-8 inline-flex h-12 items-center justify-center rounded-xl px-6 font-display text-sm font-semibold transition-opacity hover:opacity-90 ${p.popular ? 'bg-primary text-primary-foreground' : 'border border-fam-hairline text-fam-ink hover:border-fam-accent hover:text-fam-accent-text-strong'}`}>Choose</Link>
             </div>
           ))}
         </div>

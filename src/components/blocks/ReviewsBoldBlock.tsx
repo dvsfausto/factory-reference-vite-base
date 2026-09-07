@@ -40,7 +40,7 @@ export function ReviewsBoldBlock({
           <div className="mt-10">
             <Link
               to="/reviews"
-              className="inline-flex h-12 items-center rounded-md border border-ink-300 px-6 font-display text-sm font-semibold uppercase tracking-wide text-ink-900 transition-colors hover:border-fam-accent hover:text-fam-accent-text"
+              className="inline-flex h-12 items-center rounded-md border border-ink-300 px-6 font-display text-sm font-semibold uppercase tracking-wide text-ink-900 transition-colors hover:border-fam-accent hover:text-fam-accent-text-strong"
             >
               {moreLink}
             </Link>

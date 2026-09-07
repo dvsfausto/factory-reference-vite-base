@@ -78,7 +78,7 @@ export function HeroCorporateBlock({
               </PrimaryCta>
               {hasPhone(site.phone) && (<a
                 href={`tel:${site.phone}`}
-                className="inline-flex h-[52px] items-center gap-2 rounded-md border border-fam-hairline px-6 font-display font-semibold text-fam-ink transition-colors hover:border-fam-accent hover:text-fam-accent-text"
+                className="inline-flex h-[52px] items-center gap-2 rounded-md border border-fam-hairline px-6 font-display font-semibold text-fam-ink transition-colors hover:border-fam-accent hover:text-fam-accent-text-strong"
               >
                 <Phone className="h-4 w-4 text-fam-accent-text" /> {site.phoneDisplay}
               </a>)}

@@ -47,7 +47,7 @@ export function CaseStudiesAlternatingRowsBlock({
                 )}
               </div>
               <div className={i % 2 === 1 ? 'lg:order-1' : ''}>
-                {s.result && <span className="inline-flex items-center gap-1.5 rounded-full bg-fam-accent-soft px-3 py-1 font-display text-xs font-semibold text-fam-accent-text"><TrendingUp className="h-3.5 w-3.5" /> {s.result}</span>}
+                {s.result && <span className="inline-flex items-center gap-1.5 rounded-full bg-fam-accent-soft px-3 py-1 font-display text-xs font-semibold text-fam-accent-text-strong"><TrendingUp className="h-3.5 w-3.5" /> {s.result}</span>}
                 <h3 className="mt-4 font-display text-3xl font-semibold tracking-tight text-fam-ink">{s.title}</h3>
                 <p className="mt-4 max-w-md text-lg leading-relaxed text-fam-ink-muted">{s.summary}</p>
                 {s.client && <p className="mt-5 font-display text-sm font-semibold uppercase tracking-[0.12em] text-fam-ink-faint">{s.client}</p>}

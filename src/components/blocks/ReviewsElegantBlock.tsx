@@ -67,7 +67,7 @@ export function ReviewsElegantBlock({
         )}
         {reviews.length > previewReviews.length && (
           <div className="mt-12">
-            <Link to="/reviews" className="inline-flex items-center gap-2 font-display text-sm font-medium uppercase tracking-[0.18em] text-fam-accent-text underline-offset-4 transition-colors hover:underline">
+            <Link to="/reviews" className="inline-flex items-center gap-2 font-display text-sm font-medium uppercase tracking-[0.18em] text-fam-accent-text-strong underline-offset-4 transition-colors hover:underline">
               {moreLink} <ArrowRight className="h-4 w-4" />
             </Link>
           </div>

@@ -56,7 +56,7 @@ export function PricingCardsBlock({
                 <div className="flex items-center justify-between gap-3">
                   <h3 className="font-display text-lg font-semibold text-fam-ink">{p.name}</h3>
                   {p.highlighted && (
-                    <span className="rounded-full bg-fam-accent-soft px-3 py-1 font-display text-xs font-semibold text-fam-accent-text">
+                    <span className="rounded-full bg-fam-accent-soft px-3 py-1 font-display text-xs font-semibold text-fam-accent-text-strong">
                       Popular
                     </span>
                   )}

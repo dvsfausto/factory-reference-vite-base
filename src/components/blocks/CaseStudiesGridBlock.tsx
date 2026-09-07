@@ -39,10 +39,10 @@ export function CaseStudiesGridBlock({
               {s.image ? (
                 <div className="aspect-[16/10] overflow-hidden"><img src={s.image} alt={s.title} loading="lazy" className="h-full w-full object-cover" /></div>
               ) : (
-                s.result && <div className="flex items-center gap-2 border-b border-fam-hairline bg-fam-accent-soft px-6 py-5"><TrendingUp className="h-5 w-5 text-fam-accent-text" /><span className="font-display text-2xl font-semibold tracking-tight text-fam-accent-text">{s.result}</span></div>
+                s.result && <div className="flex items-center gap-2 border-b border-fam-hairline bg-fam-accent-soft px-6 py-5"><TrendingUp className="h-5 w-5 text-fam-accent-text" /><span className="font-display text-2xl font-semibold tracking-tight text-fam-accent-text-strong">{s.result}</span></div>
               )}
               <div className="flex flex-1 flex-col p-6">
-                {s.image && s.result && <span className="mb-2 w-fit rounded-full bg-fam-accent-soft px-2.5 py-0.5 font-display text-xs font-semibold text-fam-accent-text">{s.result}</span>}
+                {s.image && s.result && <span className="mb-2 w-fit rounded-full bg-fam-accent-soft px-2.5 py-0.5 font-display text-xs font-semibold text-fam-accent-text-strong">{s.result}</span>}
                 <h3 className="font-display text-lg font-semibold tracking-tight text-fam-ink">{s.title}</h3>
                 <p className="mt-2 flex-1 text-sm leading-relaxed text-fam-ink-muted">{s.summary}</p>
                 {s.client && <p className="mt-4 text-xs font-semibold uppercase tracking-[0.12em] text-fam-ink-faint">{s.client}</p>}

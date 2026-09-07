@@ -151,7 +151,7 @@ export function FormQuoteBlock({
                   <SubmitButton status={status} label={submitText} />
                   {hasPhone(site.phone) && (<span className="text-sm text-fam-ink-muted">
                     Or call{' '}
-                    <a href={`tel:${site.phone}`} className="font-medium text-fam-accent-text underline-offset-2 hover:underline">
+                    <a href={`tel:${site.phone}`} className="font-medium text-fam-accent-text-strong underline-offset-2 hover:underline">
                       {site.phoneDisplay}
                     </a>
                   </span>)}

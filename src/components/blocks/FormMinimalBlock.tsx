@@ -81,7 +81,7 @@ export function FormMinimalBlock({
                   {status === 'error' && error && <p className="text-sm text-red-600">{error}</p>}
                   <div className="mt-1 flex flex-wrap items-center gap-4">
                     <SubmitButton status={status} />
-                    {hasPhone(site.phone) && (<a href={`tel:${site.phone}`} className="text-sm font-medium text-fam-accent-text underline-offset-2 hover:underline">
+                    {hasPhone(site.phone) && (<a href={`tel:${site.phone}`} className="text-sm font-medium text-fam-accent-text-strong underline-offset-2 hover:underline">
                       Or call {site.phoneDisplay}
                     </a>)}
                   </div>

@@ -39,7 +39,7 @@ export function PackagesGridBlock({
             <Link key={`${p.name}-${i}`} to="/contact" className={`group flex flex-col rounded-2xl border bg-white p-6 transition-all hover:shadow-md ${p.popular ? 'border-fam-accent' : 'border-fam-hairline hover:border-fam-accent'}`}>
               <div className="flex items-center justify-between gap-3">
                 <h3 className="font-display text-base font-semibold text-fam-ink">{p.name}</h3>
-                <span className="font-display text-lg font-semibold text-fam-accent-text">{p.price}</span>
+                <span className="font-display text-lg font-semibold text-fam-accent-text-strong">{p.price}</span>
               </div>
               {p.includes && p.includes.length > 0 && (
                 <ul className="mt-4 flex flex-1 flex-col gap-2 text-sm text-fam-ink-muted">
@@ -48,7 +48,7 @@ export function PackagesGridBlock({
                   ))}
                 </ul>
               )}
-              {p.popular && <span className="mt-4 w-fit rounded-full bg-fam-accent-soft px-2.5 py-0.5 font-display text-xs font-semibold text-fam-accent-text">Popular</span>}
+              {p.popular && <span className="mt-4 w-fit rounded-full bg-fam-accent-soft px-2.5 py-0.5 font-display text-xs font-semibold text-fam-accent-text-strong">Popular</span>}
             </Link>
           ))}
         </div>

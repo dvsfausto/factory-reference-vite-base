@@ -48,7 +48,7 @@ export function CtaCreativeBlock({
             </PrimaryCta>
             {hasPhone(site.phone) && (<a
               href={`tel:${site.phone}`}
-              className="inline-flex h-[56px] items-center gap-2 rounded-2xl border-2 border-white px-7 font-display font-bold text-white transition-colors hover:bg-white hover:text-fam-accent-text"
+              className="inline-flex h-[56px] items-center gap-2 rounded-2xl border-2 border-white px-7 font-display font-bold text-white transition-colors hover:bg-white hover:text-fam-accent-text-strong"
             >
               <Phone className="h-4 w-4" /> {site.phoneDisplay}
             </a>)}

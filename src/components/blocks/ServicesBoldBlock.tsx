@@ -71,7 +71,7 @@ export function ServicesBoldBlock({
                   {s.displayName}
                 </h3>
                 <p className="mt-2 text-ink-500">{s.short}</p>
-                <div className="mt-5 flex items-center gap-1 font-display text-sm font-semibold uppercase tracking-wide text-fam-accent-text transition-all group-hover:gap-2">
+                <div className="mt-5 flex items-center gap-1 font-display text-sm font-semibold uppercase tracking-wide text-fam-accent-text-strong transition-all group-hover:gap-2">
                   {exploreLabel} <ArrowRight className="h-4 w-4" />
                 </div>
               </div>

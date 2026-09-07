@@ -40,7 +40,7 @@ export function BlogListBlock({
                 {p.date && <span className="font-display text-sm font-semibold text-fam-accent-text">{p.date}</span>}
               </div>
               <div className="md:col-span-9">
-                <h3 className="flex items-start gap-2 font-display text-xl font-semibold tracking-tight text-fam-ink transition-colors group-hover:text-fam-accent-text">
+                <h3 className="flex items-start gap-2 font-display text-xl font-semibold tracking-tight text-fam-ink transition-colors group-hover:text-fam-accent-text-strong">
                   {p.title} <ArrowUpRight className="mt-1 h-4 w-4 shrink-0 text-fam-accent-text" />
                 </h3>
                 {p.excerpt && <p className="mt-2 leading-relaxed text-fam-ink-muted">{p.excerpt}</p>}

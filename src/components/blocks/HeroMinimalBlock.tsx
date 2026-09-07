@@ -17,7 +17,7 @@ import { hasPhone } from '~/lib/phone'
 //
 // TOKEN DISCIPLINE: primary CTA -> bg-primary / text-primary-foreground (BRAND-
 // owned). Accent -> fam-accent-* (DNA) restricted to 50/100/600/700: fam-accent
-// rule + dot, fam-accent-text hover. Radius -> rounded-* (DNA). Font -> font-display
+// rule + dot, fam-accent-text-strong hover. Radius -> rounded-* (DNA). Font -> font-display
 // (DNA). Light surface component-owned (white / slate #0F172A / #64748B). Never
 // bg-brand-* / .btn-primary / .btn.
 //
@@ -67,7 +67,7 @@ export function HeroMinimalBlock({
             </PrimaryCta>
             {hasPhone(site.phone) && (<a
               href={`tel:${site.phone}`}
-              className="inline-flex h-[56px] items-center gap-2 rounded-xl px-5 font-display font-semibold text-fam-ink transition-colors hover:text-fam-accent-text"
+              className="inline-flex h-[56px] items-center gap-2 rounded-xl px-5 font-display font-semibold text-fam-ink transition-colors hover:text-fam-accent-text-strong"
             >
               <Phone className="h-4 w-4 text-fam-accent-text" /> {site.phoneDisplay}
             </a>)}
