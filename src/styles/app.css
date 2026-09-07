@@ -74,6 +74,9 @@
              accent               marks, fills           accent-text / -text-strong  the accent as text
              accent-soft/-soft-2  tinted grounds         accent-tint  tinted borders
              accent-deep          pressed fills          accent-on-dark  the accent on a dark ground
+     The accent slots fall back through the scaffolder's --accent-ramp-* (the design-DNA accent, recoloured
+     to the brand hue on a site without a design family) before the emerald default, so an inner page's
+     own `var(--fam-accent, var(--color-brand-600))` keeps its brand fallback there.
      Opacity modifiers work (bg-fam-accent/10) — Tailwind mixes the var in oklab, the same mix the
      scaffolder used to emit. The dark-statement surfaces (elegant hero / header, corporate band) are still
      component-owned literals: the niche arc defines their --fam-dark / --fam-on-dark pair per niche. */
@@ -84,14 +87,14 @@
   --color-fam-ink: var(--fam-ink, #0F172A);
   --color-fam-ink-muted: var(--fam-ink-muted, #64748B);
   --color-fam-ink-faint: var(--fam-ink-faint, #94A3B8);
-  --color-fam-accent: var(--fam-accent, #059669);
-  --color-fam-accent-text: var(--fam-accent-text, #059669);
-  --color-fam-accent-text-strong: var(--fam-accent-text-strong, #047857);
-  --color-fam-accent-soft: var(--fam-accent-soft, #ECFDF5);
-  --color-fam-accent-soft-2: var(--fam-accent-soft-2, #D1FAE5);
+  --color-fam-accent: var(--fam-accent, var(--accent-ramp-base, #059669));
+  --color-fam-accent-text: var(--fam-accent-text, var(--accent-ramp-base, #059669));
+  --color-fam-accent-text-strong: var(--fam-accent-text-strong, var(--accent-ramp-dark, #047857));
+  --color-fam-accent-soft: var(--fam-accent-soft, var(--accent-ramp-tint, #ECFDF5));
+  --color-fam-accent-soft-2: var(--fam-accent-soft-2, var(--accent-ramp-light, #D1FAE5));
   --color-fam-accent-tint: var(--fam-accent-tint, #A7F3D0);
-  --color-fam-accent-deep: var(--fam-accent-deep, #047857);
-  --color-fam-accent-on-dark: var(--fam-accent-on-dark, #D1FAE5);
+  --color-fam-accent-deep: var(--fam-accent-deep, var(--accent-ramp-dark, #047857));
+  --color-fam-accent-on-dark: var(--fam-accent-on-dark, var(--accent-ramp-light, #D1FAE5));
 }
 
 :root {
