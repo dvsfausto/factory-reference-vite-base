@@ -75,7 +75,7 @@ export function HeroCreativeBlock({
 
             <div className="mt-9 flex flex-wrap gap-4">
               <PrimaryCta
-                className="inline-flex h-[56px] items-center gap-2 rounded-2xl bg-primary px-8 font-display text-base font-bold text-primary-foreground transition-transform hover:-translate-y-0.5"
+                className="inline-flex h-[56px] items-center gap-2 rounded-2xl bg-cta px-8 font-display text-base font-bold text-cta-foreground transition-transform hover:-translate-y-0.5"
               >
                 {ctaLabel} <ArrowRight className="h-4 w-4" />
               </PrimaryCta>

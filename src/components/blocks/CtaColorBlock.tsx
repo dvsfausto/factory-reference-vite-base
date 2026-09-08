@@ -56,7 +56,7 @@ export function CtaColorBlock({
             </PrimaryCta>
             {hasPhone(site.phone) && (<a
               href={`tel:${site.phone}`}
-              className="inline-flex h-[54px] items-center gap-2 rounded-xl border border-primary-foreground/40 px-7 font-display font-semibold text-primary-foreground transition-colors hover:bg-primary-foreground/10"
+              className="inline-flex h-[54px] items-center gap-2 rounded-xl border border-primary-foreground/40 px-7 font-display font-semibold text-cta-foreground transition-colors hover:bg-cta-foreground/10"
             >
               <Phone className="h-4 w-4" /> {site.phoneDisplay}
             </a>)}

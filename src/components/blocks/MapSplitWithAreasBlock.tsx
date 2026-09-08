@@ -49,7 +49,7 @@ export function MapSplitWithAreasBlock({
                 </Link>
               ))}
             </div>
-            <Link to="/areas" className="mt-8 inline-flex h-12 items-center rounded-xl bg-primary px-7 font-display text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90">{tr('common.allAreas')}</Link>
+            <Link to="/areas" className="mt-8 inline-flex h-12 items-center rounded-xl bg-cta px-7 font-display text-sm font-semibold text-cta-foreground transition-opacity hover:opacity-90">{tr('common.allAreas')}</Link>
           </div>
           <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-fam-hairline bg-slate-900">
             <div className="absolute inset-0 opacity-[0.18]" style={{ backgroundImage: 'linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)', backgroundSize: '38px 38px' }} />

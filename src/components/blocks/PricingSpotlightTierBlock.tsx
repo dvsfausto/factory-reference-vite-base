@@ -176,7 +176,7 @@ export function PricingSpotlightTierBlock({
               </p>
               <Link
                 to="/contact"
-                className="mt-7 inline-flex h-[52px] w-fit items-center gap-2 rounded-full bg-primary px-8 font-semibold text-primary-foreground transition-transform hover:-translate-y-0.5"
+                className="mt-7 inline-flex h-[52px] w-fit items-center gap-2 rounded-full bg-cta px-8 font-semibold text-cta-foreground transition-transform hover:-translate-y-0.5"
                 style={{ boxShadow: 'var(--wow-shadow-glow)' }}
               >
                 Request a quote <ArrowRight className="h-4 w-4" />

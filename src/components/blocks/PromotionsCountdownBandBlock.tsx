@@ -44,7 +44,7 @@ export function PromotionsCountdownBandBlock({
                 <span className="mt-0.5 block text-lg font-semibold">{p.expires}</span>
               </span>
             )}
-            <Link to="/contact" className="inline-flex h-12 items-center gap-2 rounded-xl bg-primary px-7 font-display text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90">
+            <Link to="/contact" className="inline-flex h-12 items-center gap-2 rounded-xl bg-cta px-7 font-display text-sm font-semibold text-cta-foreground transition-opacity hover:opacity-90">
               Claim now <ArrowRight className="h-4 w-4" />
             </Link>
           </div>

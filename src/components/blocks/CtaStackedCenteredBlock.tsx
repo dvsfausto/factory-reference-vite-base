@@ -50,7 +50,7 @@ export function CtaStackedCenteredBlock({
           )}
           <div className="mt-12 flex flex-wrap justify-center gap-4">
             <PrimaryCta
-              className="inline-flex h-[56px] items-center gap-2 rounded-xl bg-primary px-8 font-display text-base font-semibold text-primary-foreground transition-opacity hover:opacity-90"
+              className="inline-flex h-[56px] items-center gap-2 rounded-xl bg-cta px-8 font-display text-base font-semibold text-cta-foreground transition-opacity hover:opacity-90"
             >{tr('section.getStarted')}<ArrowRight className="h-4 w-4" />
             </PrimaryCta>
             {hasPhone(site.phone) && (<a

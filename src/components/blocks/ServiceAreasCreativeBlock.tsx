@@ -48,7 +48,7 @@ export function ServiceAreasCreativeBlock({
         <div className="mt-10">
           <Link
             to="/areas"
-            className="inline-flex h-14 items-center gap-2 rounded-2xl bg-primary px-7 font-display text-base font-bold text-primary-foreground transition-transform hover:-translate-y-0.5"
+            className="inline-flex h-14 items-center gap-2 rounded-2xl bg-cta px-7 font-display text-base font-bold text-cta-foreground transition-transform hover:-translate-y-0.5"
           >
             {moreLink} <ArrowUpRight className="h-5 w-5" />
           </Link>

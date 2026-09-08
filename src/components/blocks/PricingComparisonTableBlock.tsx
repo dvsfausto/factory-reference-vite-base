@@ -86,7 +86,7 @@ export function PricingComparisonTableBlock({
                       to="/contact"
                       className={`inline-flex h-11 items-center justify-center rounded-xl px-5 font-display text-sm font-semibold transition-opacity hover:opacity-90 ${
                         p.highlighted
-                          ? 'bg-primary text-primary-foreground'
+                          ? 'bg-cta text-cta-foreground'
                           : 'border border-fam-hairline text-fam-ink hover:border-fam-accent'
                       }`}
                     >

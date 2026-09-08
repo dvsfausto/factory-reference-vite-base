@@ -43,7 +43,7 @@ export function CtaCorporateBlock({
           )}
           <div className="mt-8 flex flex-wrap gap-3">
             <PrimaryCta
-              className="inline-flex h-[52px] items-center gap-2 rounded-md bg-primary px-7 font-display text-base font-semibold text-primary-foreground transition-opacity hover:opacity-90"
+              className="inline-flex h-[52px] items-center gap-2 rounded-md bg-cta px-7 font-display text-base font-semibold text-cta-foreground transition-opacity hover:opacity-90"
             >
               {ctaLabel} <ArrowRight className="h-4 w-4" />
             </PrimaryCta>

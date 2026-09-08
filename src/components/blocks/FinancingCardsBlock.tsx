@@ -43,7 +43,7 @@ export function FinancingCardsBlock({
           ))}
         </div>
         <div className="mt-10">
-          <Link to="/contact" className="inline-flex h-12 items-center rounded-xl bg-primary px-7 font-display text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90">Apply for financing</Link>
+          <Link to="/contact" className="inline-flex h-12 items-center rounded-xl bg-cta px-7 font-display text-sm font-semibold text-cta-foreground transition-opacity hover:opacity-90">Apply for financing</Link>
         </div>
       </div>
     </section>

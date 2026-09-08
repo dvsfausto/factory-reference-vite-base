@@ -72,7 +72,7 @@ export function HeroFriendlyBlock({
 
             <div className="mt-8 flex flex-wrap gap-4">
               <PrimaryCta
-                className="inline-flex h-[54px] items-center gap-2 rounded-2xl bg-primary px-8 font-display text-base font-semibold text-primary-foreground shadow-lg transition-opacity hover:opacity-90"
+                className="inline-flex h-[54px] items-center gap-2 rounded-2xl bg-cta px-8 font-display text-base font-semibold text-cta-foreground shadow-lg transition-opacity hover:opacity-90"
               >
                 {ctaLabel} <ArrowRight className="h-4 w-4" />
               </PrimaryCta>

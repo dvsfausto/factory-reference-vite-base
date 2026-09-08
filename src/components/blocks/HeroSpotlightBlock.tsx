@@ -97,7 +97,7 @@ export function HeroSpotlightBlock({
 
             <div className="mt-8 flex flex-wrap gap-3.5">
               <PrimaryCta
-                className="inline-flex h-[52px] items-center gap-2 rounded-full bg-primary px-8 font-semibold text-primary-foreground transition-transform hover:-translate-y-0.5"
+                className="inline-flex h-[52px] items-center gap-2 rounded-full bg-cta px-8 font-semibold text-cta-foreground transition-transform hover:-translate-y-0.5"
                 style={{ boxShadow: 'var(--wow-shadow-glow)' }}
               >
                 {ctaLabel} <ArrowRight className="h-4 w-4" />

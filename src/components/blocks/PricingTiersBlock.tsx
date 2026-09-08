@@ -79,7 +79,7 @@ export function PricingTiersBlock({
                 to="/contact"
                 className={`mt-8 inline-flex h-12 items-center justify-center rounded-xl px-6 font-display text-sm font-semibold transition-opacity hover:opacity-90 ${
                   p.highlighted
-                    ? 'bg-primary text-primary-foreground'
+                    ? 'bg-cta text-cta-foreground'
                     : 'border border-fam-hairline text-fam-ink hover:border-fam-accent hover:text-fam-accent-text-strong'
                 }`}
               >

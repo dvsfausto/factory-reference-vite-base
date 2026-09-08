@@ -33,7 +33,7 @@ export function FinancingHighlightBandBlock({
               </span>
               <h2 className="mt-4 font-display text-3xl font-semibold leading-tight tracking-tight text-fam-ink sm:text-4xl">{fin.headline}</h2>
               {fin.partner && <p className="mt-3 text-fam-ink-muted">In partnership with <span className="font-display font-semibold text-fam-ink">{fin.partner}</span></p>}
-              <Link to="/contact" className="mt-7 inline-flex h-12 items-center rounded-xl bg-primary px-7 font-display text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90">Check your options</Link>
+              <Link to="/contact" className="mt-7 inline-flex h-12 items-center rounded-xl bg-cta px-7 font-display text-sm font-semibold text-cta-foreground transition-opacity hover:opacity-90">Check your options</Link>
             </div>
             {fin.options.length > 0 && (
               <ul className="grid gap-4 sm:grid-cols-2">

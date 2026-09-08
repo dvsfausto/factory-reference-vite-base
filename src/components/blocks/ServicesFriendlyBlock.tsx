@@ -77,7 +77,7 @@ export function ServicesFriendlyBlock({
           <div className="mt-10">
             <Link
               to="/services"
-              className="inline-flex h-12 items-center gap-2 rounded-2xl bg-primary px-7 font-display text-sm font-semibold text-primary-foreground shadow-md transition-opacity hover:opacity-90"
+              className="inline-flex h-12 items-center gap-2 rounded-2xl bg-cta px-7 font-display text-sm font-semibold text-cta-foreground shadow-md transition-opacity hover:opacity-90"
             >
               {moreLink} <ArrowRight className="h-4 w-4" />
             </Link>
