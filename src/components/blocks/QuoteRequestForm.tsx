@@ -32,12 +32,15 @@ export function QuoteRequestForm({
   services,
   submitLabel,
   compact = false,
+  selectId = 'quote-service',
 }: {
   site?: typeof SITE
   /** Owner-chosen quotable services (editable); absent → a LIVE read of the business's quotable services. */
   services?: { slug: string; name: string; id?: string }[]
   submitLabel?: string
   compact?: boolean
+  /** The service select's id — one per form on the page (the hero's and the forms block's can coexist). */
+  selectId?: string
 }) {
   const [status, setStatus] = useState<LeadStatus>('idle')
   // /quote?service=<slug> (a service page's own "Get a quote"): preselect it. Set after mount so the
@@ -100,9 +103,9 @@ export function QuoteRequestForm({
       </div>
       {options.length > 0 && (
         <div className={gap}>
-          <label htmlFor="quote-service" className="block text-sm font-medium text-ink-800">{tr('form.serviceNeeded')}</label>
+          <label htmlFor={selectId} className="block text-sm font-medium text-ink-800">{tr('form.serviceNeeded')}</label>
           <select
-            id="quote-service"
+            id={selectId}
             name="service"
             key={preselected || 'none'}
             defaultValue={preselected || (options.length === 1 ? options[0].slug : '')}

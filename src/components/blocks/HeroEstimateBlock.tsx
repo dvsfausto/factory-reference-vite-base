@@ -101,7 +101,7 @@ export function HeroEstimateBlock({
               </h2>
               {bodyText && <p className="mt-2 text-sm leading-relaxed text-fam-ink-muted">{bodyText}</p>}
               <div className="mt-6">
-                <QuoteRequestForm site={site} compact />
+                <QuoteRequestForm site={site} compact selectId="hero-quote-service" />
               </div>
             </div>
           </motion.div>
