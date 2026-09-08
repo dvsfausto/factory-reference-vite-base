@@ -111,7 +111,9 @@ export const BLOCK_NEEDS: Readonly<Record<BlockType, BlockNeed>> = {
   taglineBar: { scope: 'chrome', site: ['tagline'] },
   // reads AREAS (the neighbourhood strip), not the contact chrome — corrected in P5 by the placement probe
   localBar: { scope: 'site', site: ['AREAS'], params: 'areas', into: ['AREAS'] },
-  trustBar: { scope: 'site', site: ['trustItems'], params: 'items', into: ['trustItems'], fallback: true },
+  // niche arc 2b: no built-in copy any more — an empty trustItems renders nothing (never an invented card),
+  // so the editor refuses to place it without data instead of offering a section that would be empty.
+  trustBar: { scope: 'site', site: ['trustItems'], params: 'items', into: ['trustItems'] },
   servicesPreview: { scope: 'site', site: ['SERVICES', 'homeServices'], params: 'services', into: ['SERVICES'] },
   serviceAreas: { scope: 'site', site: ['AREAS'], params: 'areas', into: ['AREAS'] },
   reviews: { scope: 'site', site: ['REVIEWS'], params: 'reviews', into: ['REVIEWS'] },
