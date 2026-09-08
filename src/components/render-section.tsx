@@ -663,7 +663,8 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
           {...data}
           label={block.params?.label as string | undefined}
           heading={block.params?.heading as string | undefined}
-          scriptAccent={block.params?.scriptAccent as string | undefined}
+          // a heading supplied as a param (the section-copy wave, an owner edit) is a whole sentence: no accent word after it
+          scriptAccent={block.params?.heading ? '' : (block.params?.scriptAccent as string | undefined)}
           body={block.params?.body as string | undefined}
           exploreLabel={block.params?.exploreLabel as string | undefined}
           moreLink={block.params?.moreLink as string | undefined}
@@ -678,7 +679,8 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
           {...data}
           label={block.params?.label as string | undefined}
           heading={block.params?.heading as string | undefined}
-          scriptAccent={block.params?.scriptAccent as string | undefined}
+          // a heading supplied as a param (the section-copy wave, an owner edit) is a whole sentence: no accent word after it
+          scriptAccent={block.params?.heading ? '' : (block.params?.scriptAccent as string | undefined)}
           body={block.params?.body as string | undefined}
           moreLink={block.params?.moreLink as string | undefined}
         />
@@ -692,7 +694,8 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
           {...data}
           label={block.params?.label as string | undefined}
           heading={block.params?.heading as string | undefined}
-          scriptAccent={block.params?.scriptAccent as string | undefined}
+          // a heading supplied as a param (the section-copy wave, an owner edit) is a whole sentence: no accent word after it
+          scriptAccent={block.params?.heading ? '' : (block.params?.scriptAccent as string | undefined)}
           moreLink={block.params?.moreLink as string | undefined}
         />
       )
