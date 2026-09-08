@@ -68,7 +68,7 @@ export function ProductGridBlock({
                   )}
                   {p.price && p.compareAtPrice && <span className="text-sm tabular-nums text-fam-ink-faint line-through">{p.compareAtPrice}</span>}
                 </div>
-                <div className="mt-5">
+                <div className="mt-auto pt-5">
                   {p.buyUrl && p.stock !== 'out' ? (
                     <a
                       href={p.buyUrl}
