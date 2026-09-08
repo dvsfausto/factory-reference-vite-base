@@ -86,16 +86,23 @@ export function GalleryFeaturedFilmBlock({
           </div>
         </motion.div>
 
-        {/* Filmstrip of the remaining photos. */}
+        {/* Filmstrip of the remaining photos. The STRIP reveals as one unit and staggers its figures: a
+            figure past the viewport's right edge never intersects on its own (the strip scrolls
+            horizontally), so a per-figure whileInView left every thumbnail beyond the fold at opacity 0
+            forever — found by the render check the first time a fixture carried five photos (Stage 4). */}
         {rest.length > 0 && (
-          <div className="mt-6 flex gap-5 overflow-x-auto pb-3">
+          <motion.div
+            className="mt-6 flex gap-5 overflow-x-auto pb-3"
+            initial={reduce ? undefined : 'hidden'}
+            whileInView={reduce ? undefined : 'show'}
+            viewport={{ once: true, margin: '-10%' }}
+            variants={{ show: { transition: { staggerChildren: 0.06 } } }}
+          >
             {rest.map((p, i) => (
               <motion.figure
                 key={`${p.title}-${i}`}
-                initial={reduce ? undefined : { opacity: 0, y: 20 }}
-                whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-10%' }}
-                transition={{ duration: 0.5, delay: reduce ? 0 : i * 0.06, ease: [0.16, 1, 0.3, 1] }}
+                variants={reduce ? undefined : { hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}
+                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                 className="relative w-64 flex-none overflow-hidden rounded-2xl border sm:w-72"
                 style={{ borderColor: 'var(--wow-hairline)' }}
               >
@@ -113,7 +120,7 @@ export function GalleryFeaturedFilmBlock({
                 </figcaption>
               </motion.figure>
             ))}
-          </div>
+          </motion.div>
         )}
       </div>
     </section>
