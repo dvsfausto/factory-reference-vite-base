@@ -9,23 +9,11 @@ import { HeartHandshake, ShieldCheck, Sparkles } from 'lucide-react'
 // display. No brand-* literals, no .btn. Prop signature identical to
 // TrustBarBlock; returns an Element (NOT null) to match the default's signature.
 export function TrustBarFriendlyBlock({
-  items = [
-    {
-      title: 'Free estimates',
-      description: 'Clear quotes up front, no surprises after the work.',
-    },
-    {
-      title: 'On schedule',
-      description: 'We show up when we say we will, and keep you posted.',
-    },
-    {
-      title: 'Local team',
-      description: 'Familiar faces and real accountability, close to home.',
-    },
-  ],
+  items = [],
 }: {
   items?: { title: string; description: string }[]
 }) {
+  if (!items.length) return null // no trust facts → no section; never an invented one (niche arc 2b)
   const icons = [ShieldCheck, HeartHandshake, Sparkles]
   return (
     <section className="bg-fam-surface">

@@ -20,14 +20,11 @@ import { ShieldCheck, Clock, Heart, Award, BadgeCheck, Star, type LucideIcon } f
 const ICONS: LucideIcon[] = [ShieldCheck, Award, BadgeCheck, Star, Clock, Heart]
 
 export function TrustBarLogoStripBlock({
-  items = [
-    { title: 'Reliable local team', description: 'Dependable service you can count on.' },
-    { title: 'Same-day quotes', description: 'A reply within a business day.' },
-    { title: 'Local team', description: 'Familiar faces and real accountability.' },
-  ],
+  items = [],
 }: {
   items?: { title: string; description: string }[]
 }) {
+  if (!items.length) return null // no trust facts → no section; never an invented one (niche arc 2b)
   return (
     <section className="border-y border-fam-hairline bg-white">
       <div className="container-x py-band">

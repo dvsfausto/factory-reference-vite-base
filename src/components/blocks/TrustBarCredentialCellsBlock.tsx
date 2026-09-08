@@ -18,14 +18,11 @@ import { ShieldCheck, Clock, Heart, Award, BadgeCheck, Star, type LucideIcon } f
 const ICONS: LucideIcon[] = [ShieldCheck, Clock, Heart, Award, BadgeCheck, Star]
 
 export function TrustBarCredentialCellsBlock({
-  items = [
-    { title: 'Reliable local team', description: 'Real people who take pride in their work.' },
-    { title: 'Same-day quotes', description: 'We reply within a business day, often the same day.' },
-    { title: 'Local team', description: 'Familiar faces, familiar streets, real accountability.' },
-  ],
+  items = [],
 }: {
   items?: { title: string; description: string }[]
 }) {
+  if (!items.length) return null // no trust facts → no section; never an invented one (niche arc 2b)
   return (
     <section className="bg-fam-surface-2">
       <div className="container-x py-band">

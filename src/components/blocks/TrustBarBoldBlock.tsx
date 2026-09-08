@@ -11,23 +11,11 @@ import { Clock, Heart, ShieldCheck } from 'lucide-react'
 // literals, no .btn pill. Prop signature identical to TrustBarBlock (icons stay
 // fixed in the component, zipped by index, visual identity, not copy).
 export function TrustBarBoldBlock({
-  items = [
-    {
-      title: 'Reliable local crew',
-      description: 'A team that shows up and stands behind its work.',
-    },
-    {
-      title: 'Same-day quotes',
-      description: 'We reply within a business day, often the same day.',
-    },
-    {
-      title: 'Local team',
-      description: 'Familiar faces, familiar streets, real accountability.',
-    },
-  ],
+  items = [],
 }: {
   items?: { title: string; description: string }[]
 }) {
+  if (!items.length) return null // no trust facts → no section; never an invented one (niche arc 2b)
   const icons = [ShieldCheck, Clock, Heart]
   return (
     <section className="container-x py-band">

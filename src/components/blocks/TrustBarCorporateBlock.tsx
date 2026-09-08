@@ -9,23 +9,11 @@ import { Scale, ShieldCheck, Award } from 'lucide-react'
 // font-display. No brand-* literals, no .btn. Prop signature identical to
 // TrustBarBlock; returns an Element (NOT null).
 export function TrustBarCorporateBlock({
-  items = [
-    {
-      title: 'Free estimates',
-      description: 'Clear quotes up front, no surprises after the work.',
-    },
-    {
-      title: 'On schedule',
-      description: 'We show up when we say we will, and keep you posted.',
-    },
-    {
-      title: 'Local team',
-      description: 'Familiar faces and real accountability, close to home.',
-    },
-  ],
+  items = [],
 }: {
   items?: { title: string; description: string }[]
 }) {
+  if (!items.length) return null // no trust facts → no section; never an invented one (niche arc 2b)
   const icons = [Scale, ShieldCheck, Award]
   return (
     <section className="bg-white">

@@ -19,20 +19,7 @@ import { SITE } from '~/data/site'
 // chain as the default (items ?? SITE.trustItems ?? DEFAULT_TRUST_ITEMS) and the
 // same fixed icon set zipped by index. Items are qualitative, NOT turned into
 // fake numeric stats. Empty items → returns null, exactly like the default.
-const DEFAULT_TRUST_ITEMS = [
-  {
-    title: 'Friendly local team',
-    description: 'Real people who take pride in their work and stand behind it.',
-  },
-  {
-    title: 'Same-day quotes',
-    description: 'We reply within a business day, often the same day.',
-  },
-  {
-    title: 'Local team',
-    description: 'Familiar faces, familiar streets, real accountability.',
-  },
-]
+const DEFAULT_TRUST_ITEMS: { title: string; description: string }[] = []
 
 export function TrustBarGlowCardsBlock({
   site = SITE,

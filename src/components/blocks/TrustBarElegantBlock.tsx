@@ -10,23 +10,11 @@ import { elegantSurface } from '~/lib/elegant-surface'
 // elegantSurface(); rounded-* (DNA); font-display (serif). No brand-* literals, no
 // .btn. Prop signature identical to TrustBarBlock; returns an Element (NOT null).
 export function TrustBarElegantBlock({
-  items = [
-    {
-      title: 'Free estimates',
-      description: 'Clear quotes up front, no surprises after the work.',
-    },
-    {
-      title: 'On schedule',
-      description: 'We show up when we say we will, and keep you posted.',
-    },
-    {
-      title: 'Local team',
-      description: 'Familiar faces and real accountability, close to home.',
-    },
-  ],
+  items = [],
 }: {
   items?: { title: string; description: string }[]
 }) {
+  if (!items.length) return null // no trust facts → no section; never an invented one (niche arc 2b)
   const s = elegantSurface()
   const icons = [Flame, GlassWater, Award]
   // Tonal rhythm (elegant only): this band LIFTS to the raised tone, a shelf of

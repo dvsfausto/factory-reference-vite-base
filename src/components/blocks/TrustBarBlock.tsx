@@ -9,20 +9,7 @@ import { renderCharacterTrustBar } from '~/components/CharacterHero'
 // override channel; the icons stay fixed in the component (visual identity,
 // not copy) and are zipped by index. Default layout sets no param → byte-
 // identical render.
-const DEFAULT_TRUST_ITEMS = [
-  {
-    title: 'Friendly local team',
-    description: 'Real people who take pride in their work and stand behind it.',
-  },
-  {
-    title: 'Same-day quotes',
-    description: 'We reply within a business day, often the same day.',
-  },
-  {
-    title: 'Local team',
-    description: 'Familiar faces, familiar streets, real accountability.',
-  },
-]
+const DEFAULT_TRUST_ITEMS: { title: string; description: string }[] = []
 
 export function TrustBarBlock({
   site = SITE,
@@ -39,6 +26,7 @@ export function TrustBarBlock({
     (site as { trustItems?: { title: string; description: string }[] }).trustItems ??
     DEFAULT_TRUST_ITEMS
   ).slice(0, 3) // cap at 3 — a 4th card wraps to a second line and reads as broken (generic vertical ships 4)
+  if (resolved.length === 0) return null // no trust facts → no section; never an invented one (niche arc 2b)
   const character = renderCharacterTrustBar({ items: resolved })
   if (character) return character
   const icons = [

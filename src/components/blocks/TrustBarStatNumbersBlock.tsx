@@ -16,14 +16,11 @@
 //
 // Prop signature identical to TrustBarBlock; returns an Element (no null).
 export function TrustBarStatNumbersBlock({
-  items = [
-    { title: 'Reliable local team', description: 'Dependable service you can count on.' },
-    { title: 'Same-day quotes', description: 'A reply within a business day.' },
-    { title: 'Local team', description: 'Familiar faces and real accountability.' },
-  ],
+  items = [],
 }: {
   items?: { title: string; description: string }[]
 }) {
+  if (!items.length) return null // no trust facts → no section; never an invented one (niche arc 2b)
   return (
     <section className="bg-fam-surface-2">
       <div className="container-x py-band">
