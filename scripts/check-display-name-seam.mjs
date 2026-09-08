@@ -39,6 +39,8 @@ const NAME_ONLY_FILES = new Set([
   'src/components/blocks/FormQuoteBlock.tsx',
   // The quote form's fields moved here (niche arc Stage 4); the option label still equals what it submits.
   'src/components/blocks/QuoteRequestForm.tsx',
+  // A menu item is the dish as the owner typed it (data, and the live read carries no displayName).
+  'src/components/blocks/MenuListBlock.tsx',
   'src/components/blocks/BookingWizardBlock.tsx',
   'src/components/blocks/TeamSpotlightBlock.tsx',
 ])

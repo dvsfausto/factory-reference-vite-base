@@ -23,6 +23,10 @@ export type BlockType =
   | 'localBar'
   // Emergency call bar (niche arc Stage 4): phone-first strip, self-omits without a phone.
   | 'emergencyBar'
+  // Menu (niche arc Stage 4): LIVE-READ over the services rows grouped by category; null with no items.
+  | 'menu'
+  // Product grid (niche arc Stage 4): LIVE-READ over the products table (SSR from SITE.products); null with none.
+  | 'productGrid'
   | 'trustBar'
   | 'servicesPreview'
   | 'serviceAreas'

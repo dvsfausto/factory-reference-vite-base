@@ -333,6 +333,20 @@ export const VARIANT_MANIFEST: SectionVariants[] = [
     ],
   },
   {
+    section: 'menu',
+    label: 'Menu',
+    variants: [
+      { id: 'list', label: 'List', description: 'Categories as headings; each item with a dotted leader to its price and its description underneath.', default: true },
+    ],
+  },
+  {
+    section: 'productGrid',
+    label: 'Products',
+    variants: [
+      { id: 'cards', label: 'Cards', description: 'Photo, name, price and one action per product; a stock note when the owner set one.', default: true },
+    ],
+  },
+  {
     section: 'booking',
     label: 'Booking',
     variants: [

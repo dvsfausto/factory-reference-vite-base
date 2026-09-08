@@ -102,6 +102,7 @@ export const INTO_KIND: Readonly<Record<string, 'array' | 'object' | 'string'>> 
   videoTestimonials: 'array',
   promotions: 'array',
   partners: 'array',
+  products: 'array',
 }
 
 /** Every BlockType, exactly once (lint:blocks asserts the switch and this table agree). */
@@ -113,6 +114,10 @@ export const BLOCK_NEEDS: Readonly<Record<BlockType, BlockNeed>> = {
   localBar: { scope: 'site', site: ['AREAS'], params: 'areas', into: ['AREAS'] },
   // chrome-scoped: the phone decides (null without one); hours are the second line. Text = block params.
   emergencyBar: { scope: 'chrome', site: ['phone', 'hours'] },
+  // live-read on the booking-widget model: SSR from SERVICES, the client reads the rows (price, category).
+  menu: { scope: 'site', site: ['SERVICES'] },
+  // live-read on the booking-widget model: SSR from SITE.products (the table at build), the client re-reads it.
+  productGrid: { scope: 'site', site: ['products'], params: 'products', into: ['products'] },
   // niche arc 2b: no built-in copy any more — an empty trustItems renders nothing (never an invented card),
   // so the editor refuses to place it without data instead of offering a section that would be empty.
   trustBar: { scope: 'site', site: ['trustItems'], params: 'items', into: ['trustItems'] },
@@ -163,7 +168,7 @@ export const BLOCK_NEEDS: Readonly<Record<BlockType, BlockNeed>> = {
  * index blocks and contactForm stay on their own page. P5 reads this to refuse.
  */
 export const PLACEMENT: Readonly<Record<BlockType, 'any' | readonly PageKind[]>> = {
-  hero: 'any', taglineBar: 'any', localBar: 'any', emergencyBar: 'any', trustBar: 'any', servicesPreview: 'any',
+  hero: 'any', taglineBar: 'any', localBar: 'any', emergencyBar: 'any', menu: 'any', productGrid: 'any', trustBar: 'any', servicesPreview: 'any',
   serviceAreas: 'any', reviews: 'any', faq: 'any', cta: 'any', team: 'any', pricing: 'any',
   gallery: 'any', process: 'any', faqSection: 'any', story: 'any', forms: 'any',
   membership: 'any', packages: 'any', caseStudies: 'any', videoTestimonials: 'any',

@@ -41,6 +41,10 @@ import { HeroServiceBannerBlock } from '~/components/blocks/HeroServiceBannerBlo
 import { HeroEstimateBlock } from '~/components/blocks/HeroEstimateBlock'
 import { EmergencyBarBlock } from '~/components/blocks/EmergencyBarBlock'
 import { EMERGENCY_BAR_VARIANTS } from '~/components/blocks/emergency-bar-variants'
+import { MenuListBlock } from '~/components/blocks/MenuListBlock'
+import { MENU_VARIANTS } from '~/components/blocks/menu-variants'
+import { ProductGridBlock } from '~/components/blocks/ProductGridBlock'
+import { PRODUCT_GRID_VARIANTS } from '~/components/blocks/product-grid-variants'
 import { serviceCta } from '~/lib/primaryCta'
 // WOW Stage 2 — additional section variants (brand-reactive + motion, consume --wow-*).
 // Additive map keys only; unknown variant → the section's default component.
@@ -652,6 +656,28 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
         <EmergencyComponent
           key="emergencyBar"
           {...data}
+          heading={block.params?.heading as string | undefined}
+          body={block.params?.body as string | undefined}
+        />
+      )
+    }
+    case 'menu': {
+      const MenuComponent = MENU_VARIANTS[block.variant ?? ''] ?? MenuListBlock
+      return (
+        <MenuComponent
+          key="menu"
+          label={block.params?.label as string | undefined}
+          heading={block.params?.heading as string | undefined}
+          body={block.params?.body as string | undefined}
+        />
+      )
+    }
+    case 'productGrid': {
+      const ProductGridComponent = PRODUCT_GRID_VARIANTS[block.variant ?? ''] ?? ProductGridBlock
+      return (
+        <ProductGridComponent
+          key="productGrid"
+          label={block.params?.label as string | undefined}
           heading={block.params?.heading as string | undefined}
           body={block.params?.body as string | undefined}
         />
