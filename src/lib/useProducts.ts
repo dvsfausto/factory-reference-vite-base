@@ -4,8 +4,9 @@ import { BUSINESS_ID, SITE, SUPABASE_ANON_KEY, SUPABASE_URL } from '~/data/site'
 // THE PRODUCTS READ (niche arc Stage 4) — the booking-widget model over the products table (the dashboard's
 // own CRUD; RLS "Public can view active products" gates the read). SSR / first paint = SITE.products, baked
 // by the scaffolder from the same table at build time (names, prices, photos in the HTML). The client then
-// reconciles LIVE so a product added, repriced or sold out after the build shows with no rebuild; a failed
-// or empty read keeps the baked list. Nothing to persist for the editor: a rebuild re-reads the table.
+// reconciles LIVE (when SITE.productsLive is set) so a product added, repriced or sold out after the build shows
+// with no rebuild; a failed or empty read keeps the baked list. Nothing to persist for the editor: a rebuild
+// re-reads the table.
 export interface Product {
   id: string
   name: string
@@ -43,9 +44,17 @@ function firstImage(r: { photo_url?: string | null; images?: unknown }): string 
   return ''
 }
 
+/** The client re-read runs only when the build says so (SITE.productsLive — the PRODUCTS_LIVE_READ flag): the
+ *  products table's anon read needs the RLS fix (migration 20260908130000) first, and a 401 on every page is
+ *  worse than a list that refreshes on rebuild. */
+export function productsLiveRead(site: typeof SITE = SITE): boolean {
+  return (site as { productsLive?: boolean }).productsLive === true
+}
+
 export function useProducts(): Product[] {
   const [products, setProducts] = useState<Product[]>(readBakedProducts)
   useEffect(() => {
+    if (!productsLiveRead()) return
     let cancelled = false
     const url =
       `${SUPABASE_URL}/rest/v1/products?business_id=eq.${BUSINESS_ID}&is_active=eq.true` +
