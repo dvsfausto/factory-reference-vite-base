@@ -63,10 +63,15 @@ function SubSection({
 export function AreaDetailsBlock({
   services = SERVICES,
   area,
+  servicesLayout = 'cards',
 }: {
   services?: typeof SERVICES
   area: ServiceAreaPageData
   variant?: string
+  /** The homepage's services treatment, stamped by the factory's fit (niche arc 2b): 'list' when the
+   *  homepage shows the numbered index (many services), else the photo cards. An inner page must feel
+   *  like the homepage, so the same decision reaches this grid. */
+  servicesLayout?: 'cards' | 'list'
 }) {
   const { servicesHere, landmarks, localContext, testimonial } = area
 
@@ -98,6 +103,25 @@ export function AreaDetailsBlock({
             </p>
           )}
         </div>
+        {servicesLayout === 'list' ? (
+          <div className="mt-10 border-t border-fam-hairline">
+            {featured.map((s, i) => (
+              <Link
+                key={s.slug}
+                to="/services/$slug"
+                params={{ slug: s.slug }}
+                className="group grid grid-cols-1 items-baseline gap-2 border-b border-fam-hairline py-8 transition-colors md:grid-cols-12 md:gap-8 md:py-10"
+              >
+                <span className="font-display text-sm font-semibold text-fam-accent-text md:col-span-1">{String(i + 1).padStart(2, '0')}</span>
+                <h3 className="font-display text-2xl font-semibold tracking-tight text-fam-ink transition-colors group-hover:text-fam-accent-text-strong md:col-span-5">{s.displayName}</h3>
+                <p className="text-base leading-relaxed text-fam-ink-muted md:col-span-5">{s.short}</p>
+                <span className="hidden items-center justify-end text-fam-accent-text md:col-span-1 md:flex">
+                  <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+                </span>
+              </Link>
+            ))}
+          </div>
+        ) : (
         <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {featured.map((s) => (
             <Link
@@ -131,6 +155,7 @@ export function AreaDetailsBlock({
             </Link>
           ))}
         </div>
+        )}
       </div>,
     )
   }

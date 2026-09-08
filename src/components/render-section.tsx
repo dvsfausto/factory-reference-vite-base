@@ -621,7 +621,7 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
     case 'areaAbout':
       return ctx?.area ? <AreaAboutBlock area={ctx.area} variant={block.variant} /> : null
     case 'areaDetails':
-      return ctx?.area ? <AreaDetailsBlock area={ctx.area} /> : null
+      return ctx?.area ? <AreaDetailsBlock area={ctx.area} servicesLayout={block.params?.servicesLayout === 'list' ? 'list' : 'cards'} /> : null
     case 'relatedAreas':
       return ctx?.area ? <RelatedAreasBlock area={ctx.area} /> : null
     // ── INFO-page per-item cases (Arc 3 · Stage E) — via ctx.info, else null ──
