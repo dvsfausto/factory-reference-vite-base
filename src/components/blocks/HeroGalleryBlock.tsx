@@ -19,7 +19,8 @@ import { hasPhone } from '~/lib/phone'
 //
 // TOKEN DISCIPLINE: CTA -> bg-cta / text-cta-foreground. Accent -> fam-accent-* (DNA). Radius -> rounded-*
 // (DNA). Font -> font-display (DNA). Same motion as the split heroes. Props identical to HeroBlock.
-const MOSAIC_MAX = 5
+// One big photo and two stacked beside it — what a 6×2 grid holds without spilling into a third row.
+const MOSAIC_MAX = 3
 
 export function HeroGalleryBlock({
   site = SITE,
@@ -83,10 +84,10 @@ export function HeroGalleryBlock({
                     key={p.image + i}
                     className={
                       i === 0
-                        ? 'col-span-4 row-span-2 overflow-hidden rounded-2xl border border-fam-hairline'
+                        ? 'col-span-4 row-span-2 aspect-[4/3] overflow-hidden rounded-2xl border border-fam-hairline'
                         : photos.length === 2
                           ? 'col-span-2 row-span-2 overflow-hidden rounded-2xl border border-fam-hairline'
-                          : 'col-span-2 overflow-hidden rounded-2xl border border-fam-hairline'
+                          : 'col-span-2 row-span-1 overflow-hidden rounded-2xl border border-fam-hairline'
                     }
                   >
                     <img
