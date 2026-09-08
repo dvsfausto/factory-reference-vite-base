@@ -39,6 +39,7 @@ import { HeroSpotlightBlock } from '~/components/blocks/HeroSpotlightBlock'
 import { HeroEditorialBlock } from '~/components/blocks/HeroEditorialBlock'
 import { HeroServiceBannerBlock } from '~/components/blocks/HeroServiceBannerBlock'
 import { HeroEstimateBlock } from '~/components/blocks/HeroEstimateBlock'
+import { HeroGalleryBlock } from '~/components/blocks/HeroGalleryBlock'
 import { EmergencyBarBlock } from '~/components/blocks/EmergencyBarBlock'
 import { EMERGENCY_BAR_VARIANTS } from '~/components/blocks/emergency-bar-variants'
 import { MenuListBlock } from '~/components/blocks/MenuListBlock'
@@ -224,6 +225,9 @@ const HERO_VARIANTS: Record<string, typeof HeroBlock> = {
   // (instant-estimate, logistics-quote) or the editor; never seeded by the design wave (it is a
   // conversion object, not a look). Homepage only — inner pages keep their banner.
   estimate: HeroEstimateBlock,
+  // LOOK variant (niche arc Stage 4): the owner's gallery as a mosaic beside the headline; the single
+  // hero image when there are fewer than two photos. Placed by beauty-portfolio / project-showcase rows.
+  gallery: HeroGalleryBlock,
 }
 
 // SERVICE-DETAIL hero variants (Arc 3 · Stage C). The WOW heroes (aurora/spotlight/
