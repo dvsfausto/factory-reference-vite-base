@@ -13,6 +13,7 @@
     "lint:displayname": "node scripts/check-display-name-seam.mjs",
     "lint:images": "node scripts/check-image-transform.mjs",
     "lint:blocks": "node scripts/check-block-contract.mjs",
+    "lint:manifest": "node scripts/check-variant-manifest.mjs",
     "lint:booking": "node scripts/check-booking-shape.mjs"
   },
   "dependencies": {

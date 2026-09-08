@@ -63,6 +63,7 @@ export const VARIANT_MANIFEST: SectionVariants[] = [
       { id: 'split-reversed', label: 'Split (reversed)', description: 'Image left / copy right.' },
       { id: 'minimal', label: 'Minimal', description: 'Sparse, type-first hero.' },
       { id: 'video', label: 'Video', description: 'Hero with a video background.' },
+      { id: 'banner', label: 'Banner', description: 'A short full-width banner hero, headline and CTA on a brand band.' },
       ...CHARACTER_VARIANTS.filter((v) => v.id !== 'bold' && v.id !== 'modern'),
     ],
   },
@@ -212,6 +213,122 @@ export const VARIANT_MANIFEST: SectionVariants[] = [
       { id: 'quote', label: 'Quote', description: 'A request-a-quote form.' },
       { id: 'split-with-info', label: 'Split with info', description: 'The form beside a contact-info panel.' },
       { id: 'minimal', label: 'Minimal', description: 'A minimal inline form.' },
+    ],
+  },
+  // niche arc 2b (2026-09-08): every section with a *_VARIANTS map is in the manifest, so the editor can
+  // name what exists. A block whose data is empty is still refused by the editor's content guard; being
+  // listed here is REACH, not a promise of content. Ids mirror the *-variants.ts maps (lint:blocks checks).
+  {
+    section: 'team',
+    label: 'Team',
+    variants: [
+      { id: 'grid', label: 'Grid', description: 'A grid of team cards.', default: true },
+      { id: 'spotlight', label: 'Spotlight', description: 'One featured person, the rest in a row.' },
+    ],
+  },
+  {
+    section: 'map',
+    label: 'Map',
+    variants: [
+      { id: 'embed-style-panel', label: 'Embed style panel', description: 'A map-styled panel with the areas listed beside it.', default: true },
+      { id: 'split-with-areas', label: 'Split with areas', description: 'Map on one side, the area list on the other.' },
+      { id: 'full-width-band', label: 'Full width band', description: 'A full-width map band.' },
+    ],
+  },
+  {
+    section: 'faqSection',
+    label: 'FAQ section',
+    variants: [
+      { id: 'accordion', label: 'Accordion', description: 'Collapsible questions, one column.', default: true },
+      { id: 'two-column', label: 'Two column', description: 'Questions in two columns.' },
+      { id: 'list', label: 'List', description: 'A plain question-and-answer list.' },
+    ],
+  },
+  {
+    section: 'membership',
+    label: 'Memberships',
+    variants: [
+      { id: 'tier-cards', label: 'Tier cards', description: 'One card per membership tier.', default: true },
+      { id: 'comparison', label: 'Comparison', description: 'A comparison table across tiers.' },
+      { id: 'single-tier-highlight', label: 'Single tier highlight', description: 'One tier, highlighted.' },
+      { id: 'perks-grid', label: 'Perks grid', description: 'Perks laid out as a grid.' },
+      { id: 'table', label: 'Table', description: 'A plain table of tiers.' },
+    ],
+  },
+  {
+    section: 'packages',
+    label: 'Packages',
+    variants: [
+      { id: 'bundle-cards', label: 'Bundle cards', description: 'One card per package.', default: true },
+      { id: 'tiered', label: 'Tiered', description: 'Packages as ascending tiers.' },
+      { id: 'feature-list', label: 'Feature list', description: 'Each package with its feature list.' },
+      { id: 'grid', label: 'Grid', description: 'A grid of packages.' },
+      { id: 'comparison', label: 'Comparison', description: 'A comparison table across packages.' },
+    ],
+  },
+  {
+    section: 'caseStudies',
+    label: 'Case studies',
+    variants: [
+      { id: 'featured', label: 'Featured', description: 'One featured case, the rest below.', default: true },
+      { id: 'grid', label: 'Grid', description: 'A grid of cases.' },
+      { id: 'alternating-rows', label: 'Alternating rows', description: 'Cases as alternating image and text rows.' },
+      { id: 'carousel', label: 'Carousel', description: 'Cases in a carousel.' },
+      { id: 'list', label: 'List', description: 'A plain list of cases.' },
+    ],
+  },
+  {
+    section: 'videoTestimonials',
+    label: 'Video reviews',
+    variants: [
+      { id: 'grid', label: 'Grid', description: 'A grid of video reviews.', default: true },
+      { id: 'featured-thumbs', label: 'Featured thumbs', description: 'One large video with thumbnails.' },
+      { id: 'carousel', label: 'Carousel', description: 'Video reviews in a carousel.' },
+      { id: 'spotlight', label: 'Spotlight', description: 'One video review, spotlit.' },
+    ],
+  },
+  {
+    section: 'promotions',
+    label: 'Promotions',
+    variants: [
+      { id: 'banner', label: 'Banner', description: 'A single offer banner.', default: true },
+      { id: 'cards', label: 'Cards', description: 'Offers as cards.' },
+      { id: 'offer-grid', label: 'Offer grid', description: 'A grid of offers.' },
+      { id: 'countdown-band', label: 'Countdown band', description: 'An offer band with its end date.' },
+    ],
+  },
+  {
+    section: 'financing',
+    label: 'Financing',
+    variants: [
+      { id: 'highlight-band', label: 'Highlight band', description: 'A financing band with the provider.', default: true },
+      { id: 'cards', label: 'Cards', description: 'Financing options as cards.' },
+      { id: 'steps', label: 'Steps', description: 'How financing works, in steps.' },
+    ],
+  },
+  {
+    section: 'partners',
+    label: 'Partners',
+    variants: [
+      { id: 'logo-wall', label: 'Logo wall', description: 'A wall of partner logos.', default: true },
+      { id: 'strip', label: 'Strip', description: 'A single strip of logos.' },
+      { id: 'grid', label: 'Grid', description: 'A grid of partners with names.' },
+      { id: 'with-text', label: 'With text', description: 'Partners with a line of text each.' },
+    ],
+  },
+  {
+    section: 'blog',
+    label: 'Blog',
+    variants: [
+      { id: 'card-grid', label: 'Card grid', description: 'Posts as cards.', default: true },
+      { id: 'list', label: 'List', description: 'Posts as a list.' },
+    ],
+  },
+  {
+    section: 'booking',
+    label: 'Booking',
+    variants: [
+      { id: 'wizard', label: 'Wizard', description: 'Service, date, time, confirmed — the on-page scheduler.', default: true },
     ],
   },
 ]
