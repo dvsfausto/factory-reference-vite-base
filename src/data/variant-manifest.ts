@@ -326,6 +326,13 @@ export const VARIANT_MANIFEST: SectionVariants[] = [
     ],
   },
   {
+    section: 'emergencyBar',
+    label: 'Emergency call bar',
+    variants: [
+      { id: 'strip', label: 'Strip', description: 'A dark phone-first strip: live dot, heading, hours, and the number as the one button; a bottom call button on phones.', default: true },
+    ],
+  },
+  {
     section: 'booking',
     label: 'Booking',
     variants: [

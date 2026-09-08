@@ -39,6 +39,8 @@ import { HeroSpotlightBlock } from '~/components/blocks/HeroSpotlightBlock'
 import { HeroEditorialBlock } from '~/components/blocks/HeroEditorialBlock'
 import { HeroServiceBannerBlock } from '~/components/blocks/HeroServiceBannerBlock'
 import { HeroEstimateBlock } from '~/components/blocks/HeroEstimateBlock'
+import { EmergencyBarBlock } from '~/components/blocks/EmergencyBarBlock'
+import { EMERGENCY_BAR_VARIANTS } from '~/components/blocks/emergency-bar-variants'
 import { serviceCta } from '~/lib/primaryCta'
 // WOW Stage 2 — additional section variants (brand-reactive + motion, consume --wow-*).
 // Additive map keys only; unknown variant → the section's default component.
@@ -644,6 +646,17 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
           label={block.params?.label as string | undefined}
         />
       )
+    case 'emergencyBar': {
+      const EmergencyComponent = EMERGENCY_BAR_VARIANTS[block.variant ?? ''] ?? EmergencyBarBlock
+      return (
+        <EmergencyComponent
+          key="emergencyBar"
+          {...data}
+          heading={block.params?.heading as string | undefined}
+          body={block.params?.body as string | undefined}
+        />
+      )
+    }
     case 'trustBar': {
       const TrustComponent = TRUST_VARIANTS[block.variant ?? ''] ?? TrustBarBlock
       return (

@@ -21,6 +21,8 @@ export type BlockType =
   | 'hero'
   | 'taglineBar'
   | 'localBar'
+  // Emergency call bar (niche arc Stage 4): phone-first strip, self-omits without a phone.
+  | 'emergencyBar'
   | 'trustBar'
   | 'servicesPreview'
   | 'serviceAreas'
