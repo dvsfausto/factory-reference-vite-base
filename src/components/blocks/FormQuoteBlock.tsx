@@ -1,11 +1,7 @@
-import { useEffect, useState, type FormEvent } from 'react'
 import { tr } from '~/lib/i18n'
 import { SITE } from '~/data/site'
-import { useCatalogServices } from '~/lib/useCatalogServices'
-import { submitQuoteRequest, type LeadStatus } from './forms-submit'
-import { Field, Textarea, SubmitButton, SuccessCard } from './form-ui'
+import { QuoteRequestForm, readQuoteFormCopy } from './QuoteRequestForm'
 
-import { hasPhone } from '~/lib/phone'
 // Forms LAYOUT: 'quote', the CATALOG quote-request widget (the pattern booking/cart copy). It lists
 // only the owner's QUOTABLE services (services.action === 'quote', forwarded by the scaffolder) and
 // files a STRUCTURED quote_request via request-quote → the owner's Requests tab (not a generic lead).
@@ -13,6 +9,9 @@ import { hasPhone } from '~/lib/phone'
 // EDITABLE surface = block params (heading/body/label/submitLabel/services). On the /quote customPage
 // these ride in design_dna.customPages → the owner edits them AND they survive a rebuild. `services`
 // lets the owner choose which quotable services appear; absent → all quotable (never a dead form).
+//
+// The form itself (fields, live services, envelope) is QuoteRequestForm, shared with the 'estimate'
+// hero (niche arc Stage 4); this block owns the section, the card and the dark header panel.
 //
 // TOKEN DISCIPLINE: primary CTA -> bg-primary. Accent -> fam-accent-* (DNA). Radius -> rounded-* (DNA).
 // Font -> font-display (DNA). Dark header panel component-owned. Never bg-brand-* / .btn.
@@ -35,58 +34,13 @@ export function FormQuoteBlock({
   services?: { slug: string; name: string; id?: string }[]
 }) {
   const Heading = headingLevel === 1 ? 'h1' : 'h2'
-  const [status, setStatus] = useState<LeadStatus>('idle')
-  // /quote?service=<slug> (a service page's own "Get a quote"): preselect it. Set after mount so the
-  // server-rendered markup stays identical (no hydration mismatch).
-  const [preselected, setPreselected] = useState<string>('')
-  useEffect(() => {
-    const p = new URLSearchParams(window.location.search).get('service')
-    if (p) setPreselected(p)
-  }, [])
-  const [error, setError] = useState<string | null>(null)
-
   // ONE TRADE SOURCE for the whole form. The copy wave emits SITE.quoteForm.{eyebrow,heading,body,
   // submitLabel} in the trade's language so the eyebrow, heading, body AND submit button all speak it,
-  // instead of four scattered contractor strings ("FREE QUOTE" / "Request my quote"). Cast-read so a
-  // generated SITE without the field still type-checks; empty → tr() fallback. Owner/customPage param wins.
-  const quoteForm = (site as { quoteForm?: { detailsLabel?: string; detailsPlaceholder?: string; body?: string; heading?: string; eyebrow?: string; submitLabel?: string } }).quoteForm
+  // instead of four scattered contractor strings ("FREE QUOTE" / "Request my quote"). Owner/customPage param wins.
+  const quoteForm = readQuoteFormCopy(site)
   const bodyText = body ?? quoteForm?.body ?? tr('form.quoteBody')
   const headingText = heading ?? quoteForm?.heading ?? tr('form.requestQuote')
   const eyebrowText = label ?? quoteForm?.eyebrow ?? tr('form.freeQuote')
-  const submitText = submitLabel ?? quoteForm?.submitLabel ?? tr('form.requestMyQuote')
-
-  // The quotable services to offer: the block's own list (owner-chosen, editable) → else a LIVE read of
-  // the business's quotable services (SSR = baked for SEO/instant; client reconciles so a service added
-  // after the build shows with no rebuild; failure → baked). Options keyed by slug; submitted by id.
-  const liveServices = useCatalogServices(['collect', 'quote'])
-  const options = services && services.length > 0 ? services : liveServices
-
-  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const form = e.currentTarget
-    const fd = new FormData(form)
-    setStatus('submitting')
-    setError(null)
-    const serviceSlug = String(fd.get('service') ?? '').trim()
-    const selected = options.find((s) => s.slug === serviceSlug)
-    try {
-      await submitQuoteRequest({
-        first_name: String(fd.get('first_name') ?? ''),
-        last_name: String(fd.get('last_name') ?? ''),
-        phone: String(fd.get('phone') ?? ''),
-        email: String(fd.get('email') ?? '') || undefined,
-        serviceId: selected?.id,
-        serviceName: selected?.name,
-        details: String(fd.get('details') ?? ''),
-        hp: String(fd.get('company_site') ?? ''),
-      })
-      setStatus('success')
-      form.reset()
-    } catch (err) {
-      setStatus('error')
-      setError(err instanceof Error ? err.message : tr('form.somethingWrong'))
-    }
-  }
 
   return (
     <section className="bg-white">
@@ -102,62 +56,7 @@ export function FormQuoteBlock({
           </div>
 
           <div className="p-8 md:p-12">
-            {status === 'success' ? (
-              <SuccessCard
-                title={tr('form.quoteSuccessTitle')}
-                body={tr('form.quoteSuccessBody')}
-              />
-            ) : (
-              <form onSubmit={onSubmit}>
-                <div className="grid gap-5 md:grid-cols-2">
-                  <Field label={tr('form.firstName')} name="first_name" required autoComplete="given-name" />
-                  <Field label={tr('form.lastName')} name="last_name" required autoComplete="family-name" />
-                  <Field label={tr('form.phone')} name="phone" type="tel" required autoComplete="tel" />
-                  <Field label={tr('form.email')} name="email" type="email" autoComplete="email" />
-                </div>
-                {options.length > 0 && (
-                  <div className="mt-5">
-                    <label htmlFor="quote-service" className="block text-sm font-medium text-ink-800">{tr('form.serviceNeeded')}</label>
-                    <select
-                      id="quote-service"
-                      name="service"
-                      key={preselected || 'none'}
-                      defaultValue={preselected || (options.length === 1 ? options[0].slug : '')}
-                      className="mt-1.5 w-full rounded-xl border border-[#D5D9DF] bg-white px-4 py-3 text-ink-900 outline-none focus:border-fam-accent focus:ring-2 focus:ring-fam-accent-soft-2"
-                    >
-                      {options.length !== 1 && <option value="">Select a service…</option>}
-                      {options.map((s) => (
-                        <option key={s.slug} value={s.slug}>{s.name}</option>
-                      ))}
-                    </select>
-                  </div>
-                )}
-                <div className="mt-5">
-                  <Textarea
-                    label={quoteForm?.detailsLabel || tr('form.projectDetails')}
-                    name="details"
-                    required
-                    rows={5}
-                    placeholder={quoteForm?.detailsPlaceholder || tr('form.phQuote')}
-                  />
-                </div>
-                {/* Honeypot: hidden from humans, tempting to bots. request-quote silently drops when filled. */}
-                <div aria-hidden="true" className="absolute left-[-9999px] h-0 w-0 overflow-hidden">
-                  <label>{tr('form.companyWebsite')}<input type="text" name="company_site" tabIndex={-1} autoComplete="off" />
-                  </label>
-                </div>
-                {status === 'error' && error && <p className="mt-4 text-sm text-red-600">{error}</p>}
-                <div className="mt-8 flex flex-wrap items-center gap-4">
-                  <SubmitButton status={status} label={submitText} />
-                  {hasPhone(site.phone) && (<span className="text-sm text-fam-ink-muted">
-                    Or call{' '}
-                    <a href={`tel:${site.phone}`} className="font-medium text-fam-accent-text-strong underline-offset-2 hover:underline">
-                      {site.phoneDisplay}
-                    </a>
-                  </span>)}
-                </div>
-              </form>
-            )}
+            <QuoteRequestForm site={site} services={services} submitLabel={submitLabel} />
           </div>
         </div>
       </div>

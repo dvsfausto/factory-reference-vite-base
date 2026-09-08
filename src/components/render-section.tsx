@@ -38,6 +38,7 @@ import { HeroAuroraBlock } from '~/components/blocks/HeroAuroraBlock'
 import { HeroSpotlightBlock } from '~/components/blocks/HeroSpotlightBlock'
 import { HeroEditorialBlock } from '~/components/blocks/HeroEditorialBlock'
 import { HeroServiceBannerBlock } from '~/components/blocks/HeroServiceBannerBlock'
+import { HeroEstimateBlock } from '~/components/blocks/HeroEstimateBlock'
 import { serviceCta } from '~/lib/primaryCta'
 // WOW Stage 2 — additional section variants (brand-reactive + motion, consume --wow-*).
 // Additive map keys only; unknown variant → the section's default component.
@@ -213,6 +214,10 @@ const HERO_VARIANTS: Record<string, typeof HeroBlock> = {
   editorial: HeroEditorialBlock,
   // Compact, family-aware inner-page banner (Phase 2) — the DEFAULT for detail heroes now.
   banner: HeroServiceBannerBlock,
+  // STRUCTURAL variant (niche arc Stage 4): the estimate form in the hero. Placed by a template row
+  // (instant-estimate, logistics-quote) or the editor; never seeded by the design wave (it is a
+  // conversion object, not a look). Homepage only — inner pages keep their banner.
+  estimate: HeroEstimateBlock,
 }
 
 // SERVICE-DETAIL hero variants (Arc 3 · Stage C). The WOW heroes (aurora/spotlight/

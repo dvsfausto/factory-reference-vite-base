@@ -30,7 +30,8 @@ const ALLOW = {
   'components/blocks/ProcessCardsBlock.tsx': ['#EEF2F6'],
   'components/blocks/ServicesCorporateBlock.tsx': ['#FAFBFC'],
   'components/blocks/ServiceAreasCorporateBlock.tsx': ['#FAFBFC'],
-  'components/blocks/FormQuoteBlock.tsx': ['#D5D9DF'],
+  // moved with the form (niche arc Stage 4): the select's border, kept so the served markup is identical
+  'components/blocks/QuoteRequestForm.tsx': ['#D5D9DF'],
 };
 const files = [];
 (function walk(d) { for (const n of readdirSync(d)) { const p = join(d, n); if (statSync(p).isDirectory()) walk(p); else if (/\.tsx?$/.test(n)) files.push(p); } })(ROOT);

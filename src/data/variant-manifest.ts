@@ -64,6 +64,7 @@ export const VARIANT_MANIFEST: SectionVariants[] = [
       { id: 'minimal', label: 'Minimal', description: 'Sparse, type-first hero.' },
       { id: 'video', label: 'Video', description: 'Hero with a video background.' },
       { id: 'banner', label: 'Banner', description: 'A short full-width banner hero, headline and CTA on a brand band.' },
+      { id: 'estimate', label: 'Estimate form', description: 'The estimate request form in the hero, beside the headline (no photo).' },
       ...CHARACTER_VARIANTS.filter((v) => v.id !== 'bold' && v.id !== 'modern'),
     ],
   },

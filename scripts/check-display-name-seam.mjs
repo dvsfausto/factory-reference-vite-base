@@ -37,6 +37,8 @@ const note = (f, line, msg) => errors.push(`${f}:${line}  ${msg}`)
    record rather than an accident of which file someone happened to edit. */
 const NAME_ONLY_FILES = new Set([
   'src/components/blocks/FormQuoteBlock.tsx',
+  // The quote form's fields moved here (niche arc Stage 4); the option label still equals what it submits.
+  'src/components/blocks/QuoteRequestForm.tsx',
   'src/components/blocks/BookingWizardBlock.tsx',
   'src/components/blocks/TeamSpotlightBlock.tsx',
 ])
