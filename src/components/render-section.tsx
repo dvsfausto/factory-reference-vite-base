@@ -48,6 +48,8 @@ import { ProductGridBlock } from '~/components/blocks/ProductGridBlock'
 import { PRODUCT_GRID_VARIANTS } from '~/components/blocks/product-grid-variants'
 import { ClassScheduleWeekBlock } from '~/components/blocks/ClassScheduleWeekBlock'
 import { CLASS_SCHEDULE_VARIANTS } from '~/components/blocks/class-schedule-variants'
+import { CustomFormInline } from '~/components/blocks/FormCustomBlock'
+import { useCustomForm } from '~/lib/useCustomForm'
 import { serviceCta } from '~/lib/primaryCta'
 // WOW Stage 2 — additional section variants (brand-reactive + motion, consume --wow-*).
 // Additive map keys only; unknown variant → the section's default component.
@@ -411,6 +413,7 @@ interface SectionBlock {
 // the REAL SITE contact fields, each omitting when empty. Replaces contact.tsx's old
 // bg-slate JSX with brand/ink tokens + --wow-* surfaces.
 function ContactFormSection() {
+  const customForm = useCustomForm()
   const addr = [SITE.address.city, SITE.address.state, SITE.address.zip]
     .filter(Boolean)
     .join(', ')
@@ -429,7 +432,8 @@ function ContactFormSection() {
       <div className="container-x relative py-section">
         <div className="grid gap-10 lg:grid-cols-3 lg:gap-12">
           <div className="lg:col-span-2">
-            <LeadForm />
+            {/* Stage 5: the trade's questions here too, so the contact page asks what the homepage asks; no list → the LeadForm, untouched. */}
+            {customForm ? <CustomFormInline form={customForm} /> : <LeadForm />}
           </div>
           <aside className="lg:col-span-1">
             <div

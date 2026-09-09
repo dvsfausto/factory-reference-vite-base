@@ -38,6 +38,11 @@ export function FormCustomBlock(props: {
   return <CustomForm form={form} {...props} />
 }
 
+/** The bare custom form (fields + submit), for surfaces that own their chrome — the contact page's section. */
+export function CustomFormInline({ form, site = SITE }: { form: NonNullable<ReturnType<typeof useCustomForm>>; site?: typeof SITE }) {
+  return <CustomForm form={form} site={site} inline />
+}
+
 function CustomForm({
   form,
   site = SITE,
@@ -46,6 +51,7 @@ function CustomForm({
   body,
   submitLabel,
   headingLevel = 2,
+  inline = false,
 }: {
   form: NonNullable<ReturnType<typeof useCustomForm>>
   site?: typeof SITE
@@ -54,6 +60,8 @@ function CustomForm({
   body?: string
   submitLabel?: string
   headingLevel?: 1 | 2
+  /** Fields + submit only (the contact page owns the heading and the card). */
+  inline?: boolean
 }) {
   const Heading = headingLevel === 1 ? 'h1' : 'h2'
   const [status, setStatus] = useState<Status>('idle')
@@ -126,6 +134,31 @@ function CustomForm({
     }
   }
 
+  const formMarkup = status === 'success' ? (
+    <SuccessCard title={tr('form.customSuccessTitle')} body={form.successMessage ?? tr('form.customSuccessBody')} />
+  ) : (
+    <form onSubmit={onSubmit}>
+      <div className="grid gap-5 md:grid-cols-2">
+        {shown.map((f) => (
+          <div key={f.name} className={f.type === 'textarea' || f.type === 'checkbox' ? 'md:col-span-2' : ''} onChangeCapture={(e) => { const t = e.target as HTMLInputElement; if (t?.name === f.name && f.type !== 'checkbox' && f.type !== 'select' && f.type !== 'yesno') set(f.name, t.value) }}>
+            {control(f)}
+          </div>
+        ))}
+      </div>
+      <div aria-hidden="true" className="absolute left-[-9999px] h-0 w-0 overflow-hidden">
+        <label>{tr('form.companyWebsite')}<input type="text" name="company_site" tabIndex={-1} autoComplete="off" /></label>
+      </div>
+      {status === 'error' && error && <p className="mt-4 text-sm text-red-600">{error}</p>}
+      <div className="mt-8 flex flex-wrap items-center gap-4">
+        <SubmitButton status={status} label={submitLabel ?? tr('form.send')} />
+        {!inline && hasPhone(site.phone) && (<span className="text-sm text-fam-ink-muted">
+          Or call{' '}
+          <a href={`tel:${site.phone}`} className="font-medium text-fam-accent-text-strong underline-offset-2 hover:underline">{site.phoneDisplay}</a>
+        </span>)}
+      </div>
+    </form>
+  )
+  if (inline) return formMarkup
   return (
     <section className="bg-white">
       <div className="container-x py-section">
@@ -139,30 +172,7 @@ function CustomForm({
             {(body ?? form.description) && <p className="mt-3 max-w-xl leading-relaxed text-fam-ink-muted">{body ?? form.description}</p>}
           </div>
           <div className="p-8 md:p-12">
-            {status === 'success' ? (
-              <SuccessCard title={tr('form.customSuccessTitle')} body={form.successMessage ?? tr('form.customSuccessBody')} />
-            ) : (
-              <form onSubmit={onSubmit}>
-                <div className="grid gap-5 md:grid-cols-2">
-                  {shown.map((f) => (
-                    <div key={f.name} className={f.type === 'textarea' || f.type === 'checkbox' ? 'md:col-span-2' : ''} onChangeCapture={(e) => { const t = e.target as HTMLInputElement; if (t?.name === f.name && f.type !== 'checkbox' && f.type !== 'select' && f.type !== 'yesno') set(f.name, t.value) }}>
-                      {control(f)}
-                    </div>
-                  ))}
-                </div>
-                <div aria-hidden="true" className="absolute left-[-9999px] h-0 w-0 overflow-hidden">
-                  <label>{tr('form.companyWebsite')}<input type="text" name="company_site" tabIndex={-1} autoComplete="off" /></label>
-                </div>
-                {status === 'error' && error && <p className="mt-4 text-sm text-red-600">{error}</p>}
-                <div className="mt-8 flex flex-wrap items-center gap-4">
-                  <SubmitButton status={status} label={submitLabel ?? tr('form.send')} />
-                  {hasPhone(site.phone) && (<span className="text-sm text-fam-ink-muted">
-                    Or call{' '}
-                    <a href={`tel:${site.phone}`} className="font-medium text-fam-accent-text-strong underline-offset-2 hover:underline">{site.phoneDisplay}</a>
-                  </span>)}
-                </div>
-              </form>
-            )}
+            {formMarkup}
           </div>
         </div>
       </div>
