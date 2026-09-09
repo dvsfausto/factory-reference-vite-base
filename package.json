@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
-    "build": "node scripts/check-no-literal-colours.mjs && node scripts/check-display-name-seam.mjs && node scripts/check-image-transform.mjs && node scripts/check-booking-shape.mjs && node scripts/check-contact-guards.mjs && vite build && tsc --noEmit",
+    "build": "node scripts/check-no-literal-colours.mjs && node scripts/check-display-name-seam.mjs && node scripts/check-image-transform.mjs && node scripts/check-booking-shape.mjs && node scripts/check-shared-decor.mjs && node scripts/check-contact-guards.mjs && vite build && tsc --noEmit",
     "preview": "vite preview",
     "start": "node .output/server/index.mjs",
     "lint:honesty": "node scripts/check-no-credential-claims.mjs",
@@ -15,7 +15,8 @@
     "lint:blocks": "node scripts/check-block-contract.mjs",
     "lint:manifest": "node scripts/check-variant-manifest.mjs",
     "lint:booking": "node scripts/check-booking-shape.mjs",
-    "test:contrast-sweep": "tsx scripts/test-contrast-sweep.ts"
+    "test:contrast-sweep": "tsx scripts/test-contrast-sweep.ts",
+    "lint:decor": "node scripts/check-shared-decor.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

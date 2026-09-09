@@ -2,7 +2,7 @@ import { Phone, Sparkles } from "lucide-react";
 import { tr } from '~/lib/i18n'
 import { SITE } from "~/data/site";
 import { PrimaryCta } from "~/components/blocks/PrimaryCta";
-import defaultLeaves from "~/assets/decorative/cleaning-leaves.png";
+import { siteDecor } from "~/lib/decor";
 
 import { HAS_PHONE } from '~/lib/phone'
 interface Props {
@@ -19,7 +19,7 @@ export function CTASection({
   subtitle,
   to = "/contact",
   label = (SITE as { ctaLabel?: string }).ctaLabel ?? tr('cta.getFreeQuote'),
-  decorativeAsset = defaultLeaves,
+  decorativeAsset = siteDecor(),
   showSparkleBadge = true,
 }: Props) {
   const words = title.split(" ");
@@ -28,8 +28,8 @@ export function CTASection({
 
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-brand-800 via-brand-700 to-brand-900 text-fam-on-dark">
-      <img src={decorativeAsset} alt="" aria-hidden className="absolute -left-12 top-6 h-[140%] opacity-25 pointer-events-none select-none" />
-      <img src={decorativeAsset} alt="" aria-hidden className="absolute -right-12 -bottom-12 h-[140%] opacity-20 pointer-events-none select-none rotate-180" />
+      {decorativeAsset && <img src={decorativeAsset} alt="" aria-hidden className="absolute -left-12 top-6 h-[140%] opacity-25 pointer-events-none select-none" />}
+      {decorativeAsset && <img src={decorativeAsset} alt="" aria-hidden className="absolute -right-12 -bottom-12 h-[140%] opacity-20 pointer-events-none select-none rotate-180" />}
       <div className="container-x py-section text-center relative">
         {showSparkleBadge && SITE.tagline && (
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-fam-card/10 border border-fam-card/20 text-xs font-semibold uppercase tracking-widest mb-6">

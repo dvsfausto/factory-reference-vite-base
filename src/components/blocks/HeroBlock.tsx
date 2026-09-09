@@ -6,7 +6,7 @@ import { HeroSlideshow } from '~/components/HeroSlideshow'
 import { SITE } from '~/data/site'
 import { HERO_ALT } from '~/data/images'
 import { imageSrc } from '~/lib/asset-url'
-import leaves from '~/assets/decorative/cleaning-leaves.png'
+import { siteDecor } from '~/lib/decor'
 
 import { hasPhone } from '~/lib/phone'
 // Markup extracted VERBATIM from routes/index.tsx (the HERO section). Do not
@@ -20,7 +20,7 @@ function splitScriptAccent(heading: string): { lead: string; accent: string } {
 export function HeroBlock({
   site = SITE,
   trustItems = [tr('trust.friendlyService'), tr('trust.sameDayQuotes'), tr('trust.localTeam'), tr('trust.satisfaction100')],
-  decorativeAsset = leaves,
+  decorativeAsset = siteDecor(),
 }: {
   site?: typeof SITE
   trustItems?: string[]
@@ -29,8 +29,8 @@ export function HeroBlock({
   const heroParts = splitScriptAccent(site.hero.headline)
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-brand-50 via-fam-card to-fam-card">
-      <img src={decorativeAsset} alt="" aria-hidden className="hidden md:block absolute -left-10 top-10 h-[80%] opacity-50 pointer-events-none select-none" />
-      <img src={decorativeAsset} alt="" aria-hidden className="hidden md:block absolute -right-10 bottom-0 h-[60%] opacity-40 pointer-events-none select-none rotate-180" />
+      {decorativeAsset && <img src={decorativeAsset} alt="" aria-hidden className="hidden md:block absolute -left-10 top-10 h-[80%] opacity-50 pointer-events-none select-none" />}
+      {decorativeAsset && <img src={decorativeAsset} alt="" aria-hidden className="hidden md:block absolute -right-10 bottom-0 h-[60%] opacity-40 pointer-events-none select-none rotate-180" />}
 
       <div className="container-x py-section relative">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">

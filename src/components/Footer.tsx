@@ -6,7 +6,7 @@ import { PAGED_SERVICES as SERVICES } from "~/data/services-view";
 import { AREAS } from "~/data/areas";
 import { INFO_PAGES } from "~/data/info-pages";
 import { CUSTOM_PAGES } from "~/data/custom-pages";
-import defaultLeaves from "~/assets/decorative/cleaning-leaves.png";
+import { siteDecor } from "~/lib/decor";
 import { tr } from "~/lib/i18n";
 import { HAS_PHONE } from '~/lib/phone'
 import { HAS_EMAIL } from '~/lib/email'
@@ -306,7 +306,7 @@ function resolveFooter(variantOverride?: string): { structure: FooterStructure; 
   return { structure: "columns", theme: "default" }; // byte-identical default
 }
 
-export function Footer({ decorativeAsset = defaultLeaves, variant }: { decorativeAsset?: string; variant?: string } = {}) {
+export function Footer({ decorativeAsset = siteDecor(), variant }: { decorativeAsset?: string; variant?: string } = {}) {
   const { structure, theme } = resolveFooter(variant);
   const t = FOOTER_THEMES[theme] ?? FOOTER_THEMES.default!;
   const isWow = theme === "wow";

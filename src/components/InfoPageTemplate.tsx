@@ -7,7 +7,8 @@ import { CTASection } from "./CTASection";
 import { SectionHeader } from "./SectionHeader";
 import { isRelatedServiceVisible } from "~/data/services-view";
 import { pageImageUrl, hasPageImage } from "~/data/images";
-import leaves from "~/assets/decorative/cleaning-leaves.png";
+import { siteDecor } from "~/lib/decor";
+const leaves = siteDecor();
 import type { InfoPageData } from "~/lib/types/page-types";
 
 interface Props {
@@ -33,7 +34,7 @@ export function InfoPageTemplate({ data }: Props) {
     <>
       {/* HERO — simple single column */}
       <section className="relative overflow-hidden bg-gradient-to-b from-brand-50 via-fam-card to-fam-card">
-        <img src={leaves} alt="" aria-hidden className="hidden md:block absolute -right-10 top-0 h-[60%] opacity-30 pointer-events-none select-none rotate-180" />
+        {leaves && <img src={leaves} alt="" aria-hidden className="hidden md:block absolute -right-10 top-0 h-[60%] opacity-30 pointer-events-none select-none rotate-180" />}
         <div className="container-x py-section relative">
           <div className="max-w-3xl">
             <Breadcrumbs items={[

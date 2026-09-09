@@ -12,7 +12,8 @@ import { areaImageUrl, areaAlt, serviceImageUrl } from "~/data/images";
 import { SERVICES } from "~/data/services-view";
 import { reviews } from "~/data/reviews";
 import { SITE } from "~/data/site";
-import leaves from "~/assets/decorative/cleaning-leaves.png";
+import { siteDecor } from "~/lib/decor";
+const leaves = siteDecor();
 import type { ServiceAreaPageData } from "~/lib/types/page-types";
 
 import { HAS_PHONE } from '~/lib/phone'
@@ -100,8 +101,8 @@ export function ServiceAreaPageTemplate({ data }: Props) {
         </>
       ) : (
       <section className="relative overflow-hidden bg-gradient-to-b from-brand-50 via-fam-card to-fam-card">
-        <img src={leaves} alt="" aria-hidden className="hidden md:block absolute -left-10 top-10 h-[80%] opacity-50 pointer-events-none select-none" />
-        <img src={leaves} alt="" aria-hidden className="hidden md:block absolute -right-10 bottom-0 h-[60%] opacity-40 pointer-events-none select-none rotate-180" />
+        {leaves && <img src={leaves} alt="" aria-hidden className="hidden md:block absolute -left-10 top-10 h-[80%] opacity-50 pointer-events-none select-none" />}
+        {leaves && <img src={leaves} alt="" aria-hidden className="hidden md:block absolute -right-10 bottom-0 h-[60%] opacity-40 pointer-events-none select-none rotate-180" />}
         <div className="container-x py-section relative">
           <Breadcrumbs items={[
             { label: tr('breadcrumb.home'), to: "/" },
