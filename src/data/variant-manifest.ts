@@ -215,6 +215,7 @@ export const VARIANT_MANIFEST: SectionVariants[] = [
       { id: 'quote', label: 'Quote', description: 'A request-a-quote form.' },
       { id: 'split-with-info', label: 'Split with info', description: 'The form beside a contact-info panel.' },
       { id: 'minimal', label: 'Minimal', description: 'A minimal inline form.' },
+      { id: 'custom', label: 'Custom fields', description: 'Your own field list — the questions your trade needs answered (edit them under Settings → Forms).' },
     ],
   },
   // niche arc 2b (2026-09-08): every section with a *_VARIANTS map is in the manifest, so the editor can

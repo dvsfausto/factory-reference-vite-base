@@ -6,6 +6,7 @@ import { FormSplitWithInfoBlock } from './FormSplitWithInfoBlock'
 import { FormMinimalBlock } from './FormMinimalBlock'
 import { FormFloatGlassBlock } from './FormFloatGlassBlock'
 import { FormBrandSplitBlock } from './FormBrandSplitBlock'
+import { FormCustomBlock } from './FormCustomBlock'
 
 // The props every Forms variant may receive from its block.params (all optional → each variant reads
 // the subset it needs). label/heading/body/submitLabel are editable copy; `services` is the catalog
@@ -34,4 +35,7 @@ export const FORMS_VARIANTS: Record<string, ComponentType<FormBlockProps>> = {
   // WOW Stage 2 (brand-reactive + motion; same submitLead handler/fields, restyled shell only).
   'float-glass': FormFloatGlassBlock,
   'brand-split': FormBrandSplitBlock,
+  // niche arc Stage 5: the form rendered from its field list (the owner's forms row / the trade's default);
+  // no list → the fixed contact form, unchanged.
+  custom: FormCustomBlock,
 }
