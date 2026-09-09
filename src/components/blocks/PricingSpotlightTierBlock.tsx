@@ -79,23 +79,23 @@ export function PricingSpotlightTierBlock({
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-10%' }}
               transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-              className="relative flex flex-col justify-between overflow-hidden rounded-[1.75rem] p-9 text-white lg:col-span-7 md:p-11"
+              className="relative flex flex-col justify-between overflow-hidden rounded-[1.75rem] p-9 text-fam-on-dark lg:col-span-7 md:p-11"
               style={{ backgroundImage: 'var(--wow-grad-brand)', boxShadow: 'var(--wow-shadow-glow)' }}
             >
               <div>
-                <span className="inline-flex w-fit rounded-full bg-white/20 px-3 py-1 font-display text-xs font-semibold text-white backdrop-blur-sm">
+                <span className="inline-flex w-fit rounded-full bg-fam-card/20 px-3 py-1 font-display text-xs font-semibold text-fam-on-dark backdrop-blur-sm">
                   Most popular
                 </span>
                 <h3 className="mt-5 font-display text-2xl font-semibold">{spotlight.name}</h3>
                 <div className="mt-4 flex items-baseline gap-1.5">
                   <span className="font-display text-6xl font-semibold tracking-tight">{spotlight.price}</span>
-                  {spotlight.period && <span className="text-white/75">{spotlight.period}</span>}
+                  {spotlight.period && <span className="text-fam-on-dark/75">{spotlight.period}</span>}
                 </div>
                 {spotlight.features && spotlight.features.length > 0 && (
                   <ul className="mt-8 grid gap-3 text-sm sm:grid-cols-2">
                     {spotlight.features.map((f) => (
-                      <li key={f} className="flex items-start gap-2.5 text-white/90">
-                        <Check className="mt-0.5 h-4 w-4 shrink-0 text-white" /> {f}
+                      <li key={f} className="flex items-start gap-2.5 text-fam-on-dark/90">
+                        <Check className="mt-0.5 h-4 w-4 shrink-0 text-fam-on-dark" /> {f}
                       </li>
                     ))}
                   </ul>
@@ -103,7 +103,7 @@ export function PricingSpotlightTierBlock({
               </div>
               <Link
                 to="/contact"
-                className="mt-9 inline-flex h-[52px] w-fit items-center gap-2 rounded-full bg-white px-8 font-semibold text-ink-900 transition-transform hover:-translate-y-0.5"
+                className="mt-9 inline-flex h-[52px] w-fit items-center gap-2 rounded-full bg-fam-card px-8 font-semibold text-ink-900 transition-transform hover:-translate-y-0.5"
               >
                 Get started <ArrowRight className="h-4 w-4" />
               </Link>
@@ -119,7 +119,7 @@ export function PricingSpotlightTierBlock({
                   viewport={{ once: true, margin: '-10%' }}
                   transition={{ duration: 0.55, delay: reduce ? 0 : 0.1 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
                   whileHover={reduce ? undefined : { y: -4 }}
-                  className="flex flex-1 flex-col justify-between rounded-[1.5rem] border bg-white/70 p-7 backdrop-blur-md"
+                  className="flex flex-1 flex-col justify-between rounded-[1.5rem] border bg-fam-card/70 p-7 backdrop-blur-md"
                   style={{ borderColor: 'var(--wow-hairline)', boxShadow: 'var(--wow-shadow-soft)' }}
                 >
                   <div className="flex items-baseline justify-between gap-3">
@@ -156,15 +156,15 @@ export function PricingSpotlightTierBlock({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-10%' }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-12 grid grid-cols-1 overflow-hidden rounded-[1.75rem] border bg-white/70 backdrop-blur-md md:grid-cols-5"
+            className="mt-12 grid grid-cols-1 overflow-hidden rounded-[1.75rem] border bg-fam-card/70 backdrop-blur-md md:grid-cols-5"
             style={{ borderColor: 'var(--wow-hairline)', boxShadow: 'var(--wow-shadow-soft)' }}
           >
             <div
-              className="flex flex-col justify-center p-9 text-white md:col-span-2 md:p-11"
+              className="flex flex-col justify-center p-9 text-fam-on-dark md:col-span-2 md:p-11"
               style={{ backgroundImage: 'var(--wow-grad-brand)' }}
             >
               <h3 className="font-display text-2xl font-semibold leading-tight">Pricing that fits your project</h3>
-              <p className="mt-4 leading-relaxed text-white/85">
+              <p className="mt-4 leading-relaxed text-fam-on-dark/85">
                 No two jobs are the same, so we quote each one on its own terms, with
                 no surprises.
               </p>

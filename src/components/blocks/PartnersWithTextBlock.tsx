@@ -24,7 +24,7 @@ export function PartnersWithTextBlock({
   const partners = (site as { partners?: Partner[] }).partners
   if (!partners || partners.length === 0) return null
   return (
-    <section className="bg-white">
+    <section className="bg-fam-card">
       <div className="container-x py-section">
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
           <div>
@@ -37,7 +37,7 @@ export function PartnersWithTextBlock({
           </div>
           <div className="grid grid-cols-2 gap-6 sm:grid-cols-3">
             {partners.map((p, i) => (
-              <div key={`${p.name}-${i}`} className="flex h-20 items-center justify-center rounded-2xl border border-fam-hairline bg-white p-5">
+              <div key={`${p.name}-${i}`} className="flex h-20 items-center justify-center rounded-2xl border border-fam-hairline bg-fam-card p-5">
                 {p.logo ? (
                   <img src={p.logo} alt={p.name} loading="lazy" className="h-9 w-auto opacity-70 grayscale transition-all hover:opacity-100 hover:grayscale-0" />
                 ) : (

@@ -19,7 +19,7 @@ import { QuoteRequestForm, readQuoteFormCopy } from './QuoteRequestForm'
 // select hides, as in the quote block) — an estimate request without a service is still a request.
 //
 // TOKEN DISCIPLINE: CTA -> bg-cta / text-cta-foreground (through SubmitButton). Accent -> fam-accent-*
-// (DNA). Surfaces -> fam-surface / bg-white. Radius -> rounded-* (DNA). Font -> font-display (DNA).
+// (DNA). Surfaces -> fam-surface / bg-fam-card. Radius -> rounded-* (DNA). Font -> font-display (DNA).
 // Same motion as the split heroes (one 0.5 s rise per column), so the page reads as one piece.
 //
 // Props identical to HeroBlock; decorativeAsset accepted for parity but unused.
@@ -68,7 +68,7 @@ export function HeroEstimateBlock({
               <div className="mt-9 flex flex-wrap gap-4">
                 <a
                   href={`tel:${site.phone}`}
-                  className="inline-flex h-[52px] items-center gap-2 rounded-xl border border-fam-hairline bg-white px-6 font-display font-semibold text-fam-ink transition-colors hover:border-fam-accent hover:text-fam-accent-text-strong"
+                  className="inline-flex h-[52px] items-center gap-2 rounded-xl border border-fam-hairline bg-fam-card px-6 font-display font-semibold text-fam-ink transition-colors hover:border-fam-accent hover:text-fam-accent-text-strong"
                 >
                   <Phone className="h-4 w-4 text-fam-accent-text" /> {site.phoneDisplay}
                 </a>
@@ -91,7 +91,7 @@ export function HeroEstimateBlock({
             className="relative"
           >
             <div aria-hidden="true" className="absolute -inset-4 -z-10 rounded-[2rem] bg-fam-accent-soft blur-2xl" />
-            <div className="relative rounded-3xl border border-fam-hairline bg-white p-6 shadow-sm md:p-8">
+            <div className="relative rounded-3xl border border-fam-hairline bg-fam-card p-6 shadow-sm md:p-8">
               <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">
                 <span className="h-px w-6 bg-fam-accent" />
                 {eyebrowText}

@@ -61,14 +61,14 @@ export function ServiceWhatWeCoverBlock({
                   delay: reduce ? 0 : Math.min(i * 0.06, 0.36),
                   ease: [0.16, 1, 0.3, 1],
                 }}
-                className="flex items-start gap-3.5 rounded-2xl border bg-white/80 p-5 backdrop-blur-md"
+                className="flex items-start gap-3.5 rounded-2xl border bg-fam-card/80 p-5 backdrop-blur-md"
                 style={{
                   borderColor: 'var(--fam-hairline, var(--wow-hairline))',
                   boxShadow: 'var(--wow-shadow-soft)',
                 }}
               >
                 <span
-                  className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-lg text-white"
+                  className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-lg text-fam-on-dark"
                   style={{ backgroundImage: 'var(--wow-grad-brand)' }}
                 >
                   <Check className="h-4 w-4" />

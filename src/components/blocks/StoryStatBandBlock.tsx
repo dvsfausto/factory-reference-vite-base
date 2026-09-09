@@ -22,7 +22,7 @@ export function StoryStatBandBlock({
   const stats = (site as { stats?: { value: string; label: string }[] }).stats
   if (!stats || stats.length === 0) return null
   return (
-    <section className="bg-slate-950 text-white">
+    <section className="bg-slate-950 text-fam-on-dark">
       <div className="container-x py-section">
         {(heading || body) && (
           <div className="mx-auto mb-14 max-w-2xl text-center">

@@ -32,7 +32,7 @@ export function InfoPageTemplate({ data }: Props) {
   return (
     <>
       {/* HERO — simple single column */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-brand-50 via-white to-white">
+      <section className="relative overflow-hidden bg-gradient-to-b from-brand-50 via-fam-card to-fam-card">
         <img src={leaves} alt="" aria-hidden className="hidden md:block absolute -right-10 top-0 h-[60%] opacity-30 pointer-events-none select-none rotate-180" />
         <div className="container-x py-section relative">
           <div className="max-w-3xl">
@@ -62,7 +62,7 @@ export function InfoPageTemplate({ data }: Props) {
       </section>
 
       {/* ARTICLE BODY */}
-      <article className="bg-white">
+      <article className="bg-fam-card">
         <div className="container-x py-16">
           <div className="max-w-3xl mx-auto">
             {data.intro.length > 0 && (
@@ -108,7 +108,7 @@ export function InfoPageTemplate({ data }: Props) {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-4xl mx-auto">
               {relatedServices.length > 0 && (
                 <div>
-                  <p className="badge-pill bg-white border border-brand-100 text-brand-600">{tr('related.relatedServices')}</p>
+                  <p className="badge-pill bg-fam-card border border-brand-100 text-brand-600">{tr('related.relatedServices')}</p>
                   <ul className="mt-4 space-y-3">
                     {relatedServices.map((r) => (
                       <li key={r.href}>
@@ -126,7 +126,7 @@ export function InfoPageTemplate({ data }: Props) {
               )}
               {data.relatedInfo.length > 0 && (
                 <div>
-                  <p className="badge-pill bg-white border border-brand-100 text-brand-600">{tr('common.readMore')}</p>
+                  <p className="badge-pill bg-fam-card border border-brand-100 text-brand-600">{tr('common.readMore')}</p>
                   <ul className="mt-4 space-y-3">
                     {data.relatedInfo.map((r) => (
                       <li key={r.href}>

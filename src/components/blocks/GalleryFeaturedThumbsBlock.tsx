@@ -25,7 +25,7 @@ export function GalleryFeaturedThumbsBlock({
   if (projects.length === 0) return null
   const featured = projects[active] ?? projects[0]!
   return (
-    <section className="bg-white">
+    <section className="bg-fam-card">
       <div className="container-x py-section">
         <div className="max-w-2xl">
           <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">
@@ -39,7 +39,7 @@ export function GalleryFeaturedThumbsBlock({
         </div>
 
         <div className="mt-12">
-          <figure className="overflow-hidden rounded-3xl border border-fam-hairline bg-white">
+          <figure className="overflow-hidden rounded-3xl border border-fam-hairline bg-fam-card">
             <div className="aspect-[16/9] overflow-hidden">
               <img src={featured.image} alt={featured.alt ?? featured.title} className="h-full w-full object-cover" />
             </div>

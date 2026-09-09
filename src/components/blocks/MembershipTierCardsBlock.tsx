@@ -24,7 +24,7 @@ export function MembershipTierCardsBlock({
   const memberships = (site as { memberships?: Membership[] }).memberships
   if (!memberships || memberships.length === 0) return null
   return (
-    <section className="bg-white">
+    <section className="bg-fam-card">
       <div className="container-x py-section">
         <div className="max-w-2xl">
           <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">
@@ -42,7 +42,7 @@ export function MembershipTierCardsBlock({
             <div
               key={`${m.name}-${i}`}
               className={`flex flex-col rounded-3xl p-8 ${
-                m.highlighted ? 'bg-slate-950 text-white ring-1 ring-fam-accent md:-mt-4 md:pb-12' : 'border border-fam-hairline bg-white'
+                m.highlighted ? 'bg-slate-950 text-fam-on-dark ring-1 ring-fam-accent md:-mt-4 md:pb-12' : 'border border-fam-hairline bg-fam-card'
               }`}
             >
               {m.highlighted && (
@@ -50,9 +50,9 @@ export function MembershipTierCardsBlock({
                   <Star className="h-3.5 w-3.5" /> Best value
                 </span>
               )}
-              <h3 className={`font-display text-lg font-semibold ${m.highlighted ? 'text-white' : 'text-fam-ink'}`}>{m.name}</h3>
+              <h3 className={`font-display text-lg font-semibold ${m.highlighted ? 'text-fam-on-dark' : 'text-fam-ink'}`}>{m.name}</h3>
               <div className="mt-4 flex items-baseline gap-1">
-                <span className={`font-display text-4xl font-semibold tracking-tight ${m.highlighted ? 'text-white' : 'text-fam-ink'}`}>{m.price}</span>
+                <span className={`font-display text-4xl font-semibold tracking-tight ${m.highlighted ? 'text-fam-on-dark' : 'text-fam-ink'}`}>{m.price}</span>
                 <span className={m.highlighted ? 'text-slate-300' : 'text-fam-ink-muted'}>{m.period ?? '/month'}</span>
               </div>
               {m.perks && m.perks.length > 0 && (

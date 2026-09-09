@@ -45,7 +45,7 @@ export function TeamGridBlock({
   // Character surface tokens (null for known verticals → the literals below, byte-identical).
   const T = resolveCharacterTokens()
   return (
-    <section className={T?.section ?? "bg-white"}>
+    <section className={T?.section ?? "bg-fam-card"}>
       <div className="container-x py-section">
         <div className="max-w-2xl">
           <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">

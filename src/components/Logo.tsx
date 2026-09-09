@@ -50,7 +50,7 @@ export function Logo({ src, alt = "Logo", className = "", light = false, height 
     return (
       <span
         className={`font-display font-semibold tracking-tight leading-none ${
-          light ? "text-white" : "text-ink-900"
+          light ? "text-fam-on-dark" : "text-ink-900"
         } ${className}`}
         style={{ fontSize: Math.round(height * 0.5) }}
       >

@@ -34,7 +34,7 @@ export function HeroGalleryBlock({
 }) {
   const photos = projects.filter((p) => p.image).slice(0, MOSAIC_MAX)
   return (
-    <section className="bg-white">
+    <section className="bg-fam-card">
       <div className="container-x py-section">
         <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-2 lg:gap-20">
           <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>

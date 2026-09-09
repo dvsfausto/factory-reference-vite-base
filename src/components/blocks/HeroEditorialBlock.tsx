@@ -46,7 +46,7 @@ export function HeroEditorialBlock({
   const words = headline.trim().split(/\s+/)
 
   return (
-    <section className="relative overflow-hidden bg-white">
+    <section className="relative overflow-hidden bg-fam-card">
       <div className="container-x py-section">
         <motion.span
           initial={{ opacity: 0 }}
@@ -145,11 +145,11 @@ export function HeroEditorialBlock({
       </div>
 
       {/* Brand-gradient trust strip, the real trust items. */}
-      <div className="relative text-white" style={{ backgroundImage: 'var(--wow-grad-brand)' }}>
+      <div className="relative text-fam-on-dark" style={{ backgroundImage: 'var(--wow-grad-brand)' }}>
         <div className="container-x flex flex-wrap items-center gap-x-8 gap-y-2 py-4 text-sm font-semibold uppercase tracking-[0.12em]">
           {trustItems.map((t) => (
             <span key={t} className="inline-flex items-center gap-2">
-              <span className="h-1.5 w-1.5 rounded-full bg-white/70" /> {t}
+              <span className="h-1.5 w-1.5 rounded-full bg-fam-card/70" /> {t}
             </span>
           ))}
         </div>

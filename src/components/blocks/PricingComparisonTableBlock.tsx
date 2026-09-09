@@ -47,7 +47,7 @@ export function PricingComparisonTableBlock({
           {body && <p className="mt-4 text-lg leading-relaxed text-fam-ink-muted">{body}</p>}
         </div>
 
-        <div className="mt-12 overflow-x-auto rounded-2xl border border-fam-hairline bg-white">
+        <div className="mt-12 overflow-x-auto rounded-2xl border border-fam-hairline bg-fam-card">
           <table className="w-full min-w-[640px] border-collapse text-left">
             <thead>
               <tr className="border-b border-fam-hairline">
@@ -72,7 +72,7 @@ export function PricingComparisonTableBlock({
                       {(p.features ?? []).includes(f) ? (
                         <Check className="h-5 w-5 text-fam-accent-text" />
                       ) : (
-                        <Minus className="h-5 w-5 text-[#CBD5E1]" />
+                        <Minus className="h-5 w-5 text-fam-line-2" />
                       )}
                     </td>
                   ))}

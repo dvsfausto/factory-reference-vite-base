@@ -32,7 +32,7 @@ export function HeroSplitReversedBlock({
   decorativeAsset?: string
 }) {
   return (
-    <section className="bg-white">
+    <section className="bg-fam-card">
       <div className="container-x py-section">
         <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-2 lg:gap-20">
           <motion.div

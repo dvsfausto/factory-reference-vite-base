@@ -47,7 +47,7 @@ export function PricingCardsBlock({
           {cards.map((p, i) => (
             <div
               key={`${p.name}-${i}`}
-              className={`group flex flex-col overflow-hidden rounded-3xl border bg-white shadow-sm transition-all hover:shadow-md ${
+              className={`group flex flex-col overflow-hidden rounded-3xl border bg-fam-card shadow-sm transition-all hover:shadow-md ${
                 p.highlighted ? 'border-fam-accent' : 'border-fam-hairline'
               }`}
             >

@@ -64,7 +64,7 @@ export function ServiceAreasCardsBlock({
                 key={a.slug}
                 to="/areas/$slug"
                 params={{ slug: a.slug }}
-                className="group flex flex-col overflow-hidden rounded-2xl border border-fam-hairline bg-white transition-all hover:border-fam-accent hover:shadow-md"
+                className="group flex flex-col overflow-hidden rounded-2xl border border-fam-hairline bg-fam-card transition-all hover:border-fam-accent hover:shadow-md"
               >
                 <div className="relative aspect-[16/10] overflow-hidden">
                   <img

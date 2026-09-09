@@ -134,7 +134,7 @@ export function HeroSpotlightBlock({
               style={{ backgroundImage: 'var(--wow-grad-brand)', filter: 'blur(56px)' }}
             />
             <div
-              className="overflow-hidden rounded-[1.75rem] border bg-white"
+              className="overflow-hidden rounded-[1.75rem] border bg-fam-card"
               style={{ borderColor: 'var(--wow-hairline)', boxShadow: 'var(--wow-shadow-lift)' }}
             >
               <img
@@ -150,7 +150,7 @@ export function HeroSpotlightBlock({
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: reduce ? 0 : 0.5 }}
-                className="absolute -left-4 top-8 flex items-center gap-2 rounded-2xl border bg-white/90 px-4 py-3 backdrop-blur-md"
+                className="absolute -left-4 top-8 flex items-center gap-2 rounded-2xl border bg-fam-card/90 px-4 py-3 backdrop-blur-md"
                 style={{ borderColor: 'var(--wow-hairline)', boxShadow: 'var(--wow-shadow-glow)' }}
               >
                 <Star className="h-5 w-5 fill-current text-amber-400" />
@@ -165,11 +165,11 @@ export function HeroSpotlightBlock({
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: reduce ? 0 : 0.62 }}
-                className="absolute -right-3 bottom-10 flex items-center gap-2 rounded-2xl border bg-white/90 px-4 py-3 backdrop-blur-md"
+                className="absolute -right-3 bottom-10 flex items-center gap-2 rounded-2xl border bg-fam-card/90 px-4 py-3 backdrop-blur-md"
                 style={{ borderColor: 'var(--wow-hairline)', boxShadow: 'var(--wow-shadow-glow)' }}
               >
                 <span
-                  className="flex h-7 w-7 items-center justify-center rounded-full text-white"
+                  className="flex h-7 w-7 items-center justify-center rounded-full text-fam-on-dark"
                   style={{ backgroundImage: 'var(--wow-grad-brand)' }}
                 >
                   <Check className="h-4 w-4" />

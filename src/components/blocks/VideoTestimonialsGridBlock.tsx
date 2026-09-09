@@ -24,7 +24,7 @@ export function VideoTestimonialsGridBlock({
   const vids = (site as { videoTestimonials?: VideoTestimonial[] }).videoTestimonials
   if (!vids || vids.length === 0) return null
   return (
-    <section className="bg-white">
+    <section className="bg-fam-card">
       <div className="container-x py-section">
         <div className="max-w-2xl">
           <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">
@@ -36,7 +36,7 @@ export function VideoTestimonialsGridBlock({
         </div>
         <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {vids.slice(0, 6).map((v, i) => (
-            <figure key={`${v.author}-${i}`} className="flex flex-col overflow-hidden rounded-2xl border border-fam-hairline bg-white">
+            <figure key={`${v.author}-${i}`} className="flex flex-col overflow-hidden rounded-2xl border border-fam-hairline bg-fam-card">
               <div className="aspect-video overflow-hidden bg-slate-900">
                 <video controls preload="none" poster={v.poster} className="h-full w-full object-cover">
                   <source src={v.videoUrl} />

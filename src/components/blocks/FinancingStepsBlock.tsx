@@ -41,7 +41,7 @@ export function FinancingStepsBlock({
             return (
               <div key={`${o}-${i}`} className="relative flex gap-6 pb-8 last:pb-0">
                 {!last && <span className="absolute left-[1.375rem] top-12 h-[calc(100%-2rem)] w-0.5 bg-fam-accent-soft-2" />}
-                <span className="relative z-10 grid h-11 w-11 shrink-0 place-items-center rounded-full bg-fam-accent font-display text-sm font-semibold text-white">{i + 1}</span>
+                <span className="relative z-10 grid h-11 w-11 shrink-0 place-items-center rounded-full bg-fam-accent font-display text-sm font-semibold text-fam-on-dark">{i + 1}</span>
                 <p className="pt-2.5 font-display text-lg font-medium text-fam-ink">{o}</p>
               </div>
             )

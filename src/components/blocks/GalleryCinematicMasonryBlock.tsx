@@ -32,7 +32,7 @@ export function GalleryCinematicMasonryBlock({
   if (projects.length === 0) return null
 
   return (
-    <section className="bg-white">
+    <section className="bg-fam-card">
       <div className="container-x py-section">
         <div className="max-w-2xl">
           <span className="inline-flex items-center gap-3 text-xs font-bold uppercase tracking-[0.2em] text-brand-700">
@@ -70,11 +70,11 @@ export function GalleryCinematicMasonryBlock({
               </div>
               {/* Brand-gradient caption overlay, appears on hover. */}
               <figcaption
-                className="pointer-events-none absolute inset-x-0 bottom-0 flex flex-col gap-0.5 p-4 text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                className="pointer-events-none absolute inset-x-0 bottom-0 flex flex-col gap-0.5 p-4 text-fam-on-dark opacity-0 transition-opacity duration-300 group-hover:opacity-100"
                 style={{ backgroundImage: 'var(--wow-grad-brand)' }}
               >
                 <span className="font-display text-sm font-semibold">{p.title}</span>
-                {p.caption && <span className="text-xs italic text-white/80">{p.caption}</span>}
+                {p.caption && <span className="text-xs italic text-fam-on-dark/80">{p.caption}</span>}
               </figcaption>
             </motion.figure>
           ))}

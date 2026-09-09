@@ -34,7 +34,7 @@ export function ServiceAreasColumnedListBlock({
   if (areas.length === 0) return null
   const shown = areas.slice(0, 16)
   return (
-    <section className="bg-white">
+    <section className="bg-fam-card">
       <div className="container-x py-section">
         <div className="max-w-2xl">
           <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">

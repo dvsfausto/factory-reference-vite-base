@@ -33,7 +33,7 @@ export function ReviewsStackedBlock({
   const rows = reviews.slice(0, 5)
   if (rows.length === 0) return null
   return (
-    <section className="bg-white">
+    <section className="bg-fam-card">
       <div className="container-x py-section">
         <div className="max-w-2xl">
           <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">

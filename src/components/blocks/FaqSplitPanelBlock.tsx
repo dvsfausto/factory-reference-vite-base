@@ -40,7 +40,7 @@ export function FaqSplitPanelBlock({
           {/* Brand-gradient side panel. */}
           <div className="lg:col-span-4">
             <div
-              className="relative overflow-hidden rounded-[1.5rem] p-8 text-white lg:sticky lg:top-24"
+              className="relative overflow-hidden rounded-[1.5rem] p-8 text-fam-on-dark lg:sticky lg:top-24"
               style={{
                 backgroundImage: 'var(--wow-grad-brand)',
                 boxShadow: 'var(--wow-shadow-lift)',
@@ -48,13 +48,13 @@ export function FaqSplitPanelBlock({
             >
               <div
                 aria-hidden
-                className="pointer-events-none absolute -left-12 -top-12 h-48 w-48 rounded-full bg-white/15 blur-3xl"
+                className="pointer-events-none absolute -left-12 -top-12 h-48 w-48 rounded-full bg-fam-card/15 blur-3xl"
               />
-              <span className="relative flex h-11 w-11 items-center justify-center rounded-full bg-white/15">
+              <span className="relative flex h-11 w-11 items-center justify-center rounded-full bg-fam-card/15">
                 <HelpCircle className="h-5 w-5" />
               </span>
-              <h2 className="relative mt-5 text-white">{title}</h2>
-              <p className="relative mt-3 text-sm text-white/80">{tr('faq.everythingYouNeed')}</p>
+              <h2 className="relative mt-5 text-fam-on-dark">{title}</h2>
+              <p className="relative mt-3 text-sm text-fam-on-dark/80">{tr('faq.everythingYouNeed')}</p>
             </div>
           </div>
 

@@ -55,7 +55,7 @@ export function RelatedAreasBlock({
             >
               <Link
                 to={a.href}
-                className="group flex h-full flex-col justify-between rounded-2xl border bg-white/85 p-7 backdrop-blur-md transition-transform duration-500 hover:-translate-y-1"
+                className="group flex h-full flex-col justify-between rounded-2xl border bg-fam-card/85 p-7 backdrop-blur-md transition-transform duration-500 hover:-translate-y-1"
                 style={{
                   borderColor: 'var(--fam-hairline, var(--wow-hairline))',
                   boxShadow: 'var(--wow-shadow-soft)',

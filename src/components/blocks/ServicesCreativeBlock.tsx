@@ -38,7 +38,7 @@ export function ServicesCreativeBlock({
   // Staggered offsets give the grid an off-balance, editorial rhythm.
   const offsets = ['lg:mt-0', 'lg:mt-12', 'lg:mt-4']
   return (
-    <section className="bg-white">
+    <section className="bg-fam-card">
       <div className="container-x py-section">
         <SectionHeaderCreative
           label={label ?? ((site as { homeServices?: { label?: string; heading?: string; body?: string } }).homeServices?.label ?? tr('section.whatWeDo'))}

@@ -31,7 +31,7 @@ export function Field({
         required={required}
         autoComplete={autoComplete}
         placeholder={placeholder}
-        className="mt-2 w-full rounded-xl border border-fam-hairline bg-white px-4 py-3 text-base text-fam-ink outline-none transition-colors placeholder:text-fam-ink-faint focus:border-fam-accent focus:ring-1 focus:ring-fam-accent"
+        className="mt-2 w-full rounded-xl border border-fam-hairline bg-fam-card px-4 py-3 text-base text-fam-ink outline-none transition-colors placeholder:text-fam-ink-faint focus:border-fam-accent focus:ring-1 focus:ring-fam-accent"
       />
     </label>
   )
@@ -60,7 +60,7 @@ export function Textarea({
         required={required}
         rows={rows}
         placeholder={placeholder}
-        className="mt-2 w-full rounded-xl border border-fam-hairline bg-white px-4 py-3 text-base text-fam-ink outline-none transition-colors placeholder:text-fam-ink-faint focus:border-fam-accent focus:ring-1 focus:ring-fam-accent"
+        className="mt-2 w-full rounded-xl border border-fam-hairline bg-fam-card px-4 py-3 text-base text-fam-ink outline-none transition-colors placeholder:text-fam-ink-faint focus:border-fam-accent focus:ring-1 focus:ring-fam-accent"
       />
     </label>
   )
@@ -94,7 +94,7 @@ export function SuccessCard({
 } = {}) {
   return (
     <div className="rounded-2xl border border-fam-accent bg-fam-accent-soft p-10 text-center">
-      <span className="mx-auto grid h-12 w-12 place-items-center rounded-full bg-fam-accent text-white">
+      <span className="mx-auto grid h-12 w-12 place-items-center rounded-full bg-fam-accent text-fam-on-dark">
         <Check className="h-6 w-6" />
       </span>
       <h3 className="mt-5 font-display text-2xl font-semibold tracking-tight text-fam-ink">{title}</h3>

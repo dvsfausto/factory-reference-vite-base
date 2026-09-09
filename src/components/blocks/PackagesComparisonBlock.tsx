@@ -28,7 +28,7 @@ export function PackagesComparisonBlock({
   const allItems: string[] = []
   for (const p of cols) for (const it of p.includes ?? []) if (!allItems.includes(it)) allItems.push(it)
   return (
-    <section className="bg-white">
+    <section className="bg-fam-card">
       <div className="container-x py-section">
         <div className="max-w-2xl">
           <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">
@@ -57,7 +57,7 @@ export function PackagesComparisonBlock({
                   <td className="p-5 text-sm font-medium text-fam-ink-muted">{it}</td>
                   {cols.map((p, i) => (
                     <td key={`${p.name}-${i}`} className={`p-5 ${p.popular ? 'bg-fam-accent-soft' : ''}`}>
-                      {(p.includes ?? []).includes(it) ? <Check className="h-5 w-5 text-fam-accent-text" /> : <Minus className="h-5 w-5 text-[#CBD5E1]" />}
+                      {(p.includes ?? []).includes(it) ? <Check className="h-5 w-5 text-fam-accent-text" /> : <Minus className="h-5 w-5 text-fam-line-2" />}
                     </td>
                   ))}
                 </tr>

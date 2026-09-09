@@ -18,7 +18,7 @@ import { serviceImageUrl } from '~/data/images'
 //   · --wow-shadow-soft / --wow-shadow-glow → compact tiles resting / hover glow.
 //   · --wow-hairline     → tile hairline borders.
 //   · --wow-ease-out     → entrance / hover easing.
-// BRAND identity → the spotlight CTA uses bg-white/text ink on the brand wash;
+// BRAND identity → the spotlight CTA uses bg-fam-card/text ink on the brand wash;
 // the "more" CTA uses .btn utilities; script accent uses text-brand-600. No hex.
 //
 // HONESTY: renders ONLY the first 3 real published services (name/short/photo).
@@ -111,14 +111,14 @@ export function ServicesSpotlightTilesBlock({
                 }}
               />
               <div className="relative">
-                <span className="badge-pill bg-white/20 text-white backdrop-blur-sm">
+                <span className="badge-pill bg-fam-card/20 text-fam-on-dark backdrop-blur-sm">
                   {label}
                 </span>
-                <h3 className="mt-4 font-display text-3xl leading-tight text-white sm:text-4xl">
+                <h3 className="mt-4 font-display text-3xl leading-tight text-fam-on-dark sm:text-4xl">
                   {lead.displayName}
                 </h3>
-                <p className="mt-3 max-w-md text-white/90">{lead.short}</p>
-                <span className="mt-6 inline-flex items-center gap-1.5 font-semibold text-white transition-all group-hover:gap-2.5">
+                <p className="mt-3 max-w-md text-fam-on-dark/90">{lead.short}</p>
+                <span className="mt-6 inline-flex items-center gap-1.5 font-semibold text-fam-on-dark transition-all group-hover:gap-2.5">
                   {exploreLabel} <ArrowRight className="h-4 w-4" />
                 </span>
               </div>
@@ -144,7 +144,7 @@ export function ServicesSpotlightTilesBlock({
                   <Link
                     to="/services/$slug"
                     params={{ slug: s.slug }}
-                    className="group flex h-full items-center gap-5 overflow-hidden rounded-[1.5rem] border bg-white/85 p-4 backdrop-blur-md transition-all duration-500 hover:-translate-y-1 sm:p-5"
+                    className="group flex h-full items-center gap-5 overflow-hidden rounded-[1.5rem] border bg-fam-card/85 p-4 backdrop-blur-md transition-all duration-500 hover:-translate-y-1 sm:p-5"
                     style={{
                       borderColor: 'var(--wow-hairline)',
                       boxShadow: 'var(--wow-shadow-soft)',

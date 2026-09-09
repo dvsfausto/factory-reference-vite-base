@@ -17,22 +17,10 @@ import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
 
 const ROOT = new URL('../src/', import.meta.url).pathname;
-const ALLOW = {
-  'lib/elegant-surface.ts': ['#1A1410', '#241C16', '#3A2E24', '#F2E8DC', '#B8A893'],
-  'lib/character-tokens.ts': ['#1A1410', '#241C16', '#2C221B', '#3A2E24', '#F2E8DC', '#B8A893'],
-  'components/blocks/HeroElegantBlock.tsx': ['#1A1410', '#F2E8DC', '#B8A893', '#3A2E24', '#9A8E7C'],
-  'components/Header.tsx': ['#1A1410', '#241C16', '#3A2E24', '#B8A893', '#F2E8DC', '#F1F5F9'],
-  'components/Footer.tsx': ['#142844'],
-  'components/blocks/CtaCorporateBlock.tsx': ['#142844'],
-  'components/blocks/PricingComparisonTableBlock.tsx': ['#CBD5E1'],
-  'components/blocks/PackagesComparisonBlock.tsx': ['#CBD5E1'],
-  'components/blocks/MembershipComparisonBlock.tsx': ['#CBD5E1'],
-  'components/blocks/ProcessCardsBlock.tsx': ['#EEF2F6'],
-  'components/blocks/ServicesCorporateBlock.tsx': ['#FAFBFC'],
-  'components/blocks/ServiceAreasCorporateBlock.tsx': ['#FAFBFC'],
-  // moved with the form (niche arc Stage 4): the select's border, kept so the served markup is identical
-  'components/blocks/QuoteRequestForm.tsx': ['#D5D9DF'],
-};
+// Stage 6 (2026-09-09): the allowlist is EMPTY. The elegant/corporate dark-statement literals became the
+// --fam-statement / --fam-on-statement set, the comparison-table and corporate greys became fam-line-2/-3 and
+// fam-surface-3/-4/-5, the quote select's border fam-line-3. Every colour a component paints is a token.
+const ALLOW = {};
 const files = [];
 (function walk(d) { for (const n of readdirSync(d)) { const p = join(d, n); if (statSync(p).isDirectory()) walk(p); else if (/\.tsx?$/.test(n)) files.push(p); } })(ROOT);
 

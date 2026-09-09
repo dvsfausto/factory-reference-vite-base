@@ -42,7 +42,7 @@ export function HeroCorporateBlock({
   ctaLabel?: string
 }) {
   return (
-    <section className="bg-white">
+    <section className="bg-fam-card">
       <div className="container-x py-section">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-14">
           <motion.div

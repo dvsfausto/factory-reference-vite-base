@@ -36,7 +36,7 @@ export function ReviewsFriendlyBlock({
           {previewReviews.map((r) => (
             <figure
               key={r.id}
-              className="flex flex-col rounded-3xl border border-fam-hairline bg-white p-6 shadow-sm"
+              className="flex flex-col rounded-3xl border border-fam-hairline bg-fam-card p-6 shadow-sm"
             >
               <div className="flex gap-0.5">
                 {Array.from({ length: r.rating ?? 5 }).map((_, i) => (
@@ -57,7 +57,7 @@ export function ReviewsFriendlyBlock({
           <div className="mt-10">
             <Link
               to="/reviews"
-              className="inline-flex h-12 items-center rounded-2xl border-2 border-fam-accent/40 bg-white px-6 font-display text-sm font-semibold text-fam-ink transition-colors hover:border-fam-accent hover:bg-fam-accent-soft"
+              className="inline-flex h-12 items-center rounded-2xl border-2 border-fam-accent/40 bg-fam-card px-6 font-display text-sm font-semibold text-fam-ink transition-colors hover:border-fam-accent hover:bg-fam-accent-soft"
             >
               {moreLink}
             </Link>

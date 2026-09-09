@@ -29,7 +29,7 @@ export function PricingTiersBlock({
   const plans = (site as { plans?: PricingPlan[] }).plans
   if (!plans || plans.length === 0) return null
   return (
-    <section className="bg-white">
+    <section className="bg-fam-card">
       <div className="container-x py-section">
         <div className="max-w-2xl">
           <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">
@@ -48,8 +48,8 @@ export function PricingTiersBlock({
               key={`${p.name}-${i}`}
               className={`flex flex-col rounded-3xl p-8 ${
                 p.highlighted
-                  ? 'bg-slate-950 text-white shadow-xl ring-1 ring-fam-accent md:-mt-4 md:pb-12'
-                  : 'border border-fam-hairline bg-white'
+                  ? 'bg-slate-950 text-fam-on-dark shadow-xl ring-1 ring-fam-accent md:-mt-4 md:pb-12'
+                  : 'border border-fam-hairline bg-fam-card'
               }`}
             >
               {p.highlighted && (
@@ -57,11 +57,11 @@ export function PricingTiersBlock({
                   Most popular
                 </span>
               )}
-              <h3 className={`font-display text-lg font-semibold ${p.highlighted ? 'text-white' : 'text-fam-ink'}`}>
+              <h3 className={`font-display text-lg font-semibold ${p.highlighted ? 'text-fam-on-dark' : 'text-fam-ink'}`}>
                 {p.name}
               </h3>
               <div className="mt-4 flex items-baseline gap-1">
-                <span className={`font-display text-4xl font-semibold tracking-tight ${p.highlighted ? 'text-white' : 'text-fam-ink'}`}>
+                <span className={`font-display text-4xl font-semibold tracking-tight ${p.highlighted ? 'text-fam-on-dark' : 'text-fam-ink'}`}>
                   {p.price}
                 </span>
                 {p.period && <span className={p.highlighted ? 'text-slate-300' : 'text-fam-ink-muted'}>{p.period}</span>}

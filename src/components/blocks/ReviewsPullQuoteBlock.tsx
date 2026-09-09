@@ -116,7 +116,7 @@ export function ReviewsPullQuoteBlock({
               className="lg:col-span-4"
             >
               <div
-                className="flex h-full flex-col justify-center rounded-[1.5rem] border bg-white/75 p-8 text-center backdrop-blur-md"
+                className="flex h-full flex-col justify-center rounded-[1.5rem] border bg-fam-card/75 p-8 text-center backdrop-blur-md"
                 style={{ borderColor: 'var(--wow-hairline)', boxShadow: 'var(--wow-shadow-glow)' }}
               >
                 <span className="text-5xl font-bold tracking-tight text-ink-900">
@@ -149,7 +149,7 @@ export function ReviewsPullQuoteBlock({
                   delay: reduce ? 0 : Math.min(i * 0.07, 0.35),
                   ease: [0.16, 1, 0.3, 1],
                 }}
-                className="rounded-2xl border bg-white/65 p-5 backdrop-blur-md"
+                className="rounded-2xl border bg-fam-card/65 p-5 backdrop-blur-md"
                 style={{ borderColor: 'var(--wow-hairline)', boxShadow: 'var(--wow-shadow-soft)' }}
               >
                 <div className="flex gap-0.5">

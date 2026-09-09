@@ -26,7 +26,7 @@ export function ProductGridBlock({
   const products = useProducts()
   if (products.length === 0) return null
   return (
-    <section className="bg-white">
+    <section className="bg-fam-card">
       <div className="container-x py-section">
         <div className="max-w-2xl">
           <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">
@@ -41,7 +41,7 @@ export function ProductGridBlock({
 
         <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {products.map((p) => (
-            <li key={p.id} className="flex flex-col overflow-hidden rounded-2xl border border-fam-hairline bg-white transition-shadow hover:shadow-md">
+            <li key={p.id} className="flex flex-col overflow-hidden rounded-2xl border border-fam-hairline bg-fam-card transition-shadow hover:shadow-md">
               <div className="relative aspect-square bg-fam-surface-2">
                 {p.image ? (
                   <img src={imageSrc(p.image)} alt={p.name} loading="lazy" className="h-full w-full object-cover" />
@@ -51,7 +51,7 @@ export function ProductGridBlock({
                   </div>
                 )}
                 {p.stock === 'out' && (
-                  <span className="absolute left-3 top-3 rounded-full bg-fam-ink px-3 py-1 text-xs font-semibold text-white">{tr('products.soldOut')}</span>
+                  <span className="absolute left-3 top-3 rounded-full bg-fam-ink px-3 py-1 text-xs font-semibold text-fam-on-dark">{tr('products.soldOut')}</span>
                 )}
                 {p.stock === 'low' && (
                   <span className="absolute left-3 top-3 rounded-full bg-fam-accent-soft px-3 py-1 text-xs font-semibold text-fam-accent-text-strong">{tr('products.lowStock')}</span>

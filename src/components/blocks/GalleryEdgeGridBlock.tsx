@@ -31,7 +31,7 @@ export function GalleryEdgeGridBlock({
   if (projects.length === 0) return null
 
   return (
-    <section className="bg-white">
+    <section className="bg-fam-card">
       <div className="container-x pt-20 md:pt-28">
         <div className="max-w-2xl">
           <span className="inline-flex items-center gap-3 text-xs font-bold uppercase tracking-[0.2em] text-brand-700">
@@ -54,7 +54,7 @@ export function GalleryEdgeGridBlock({
             whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-10%' }}
             transition={{ duration: 0.6, delay: reduce ? 0 : (i % 3) * 0.08, ease: [0.16, 1, 0.3, 1] }}
-            className="group relative overflow-hidden bg-white transition-shadow duration-300"
+            className="group relative overflow-hidden bg-fam-card transition-shadow duration-300"
             whileHover={reduce ? undefined : { boxShadow: 'var(--wow-shadow-glow)' }}
           >
             <img
@@ -74,11 +74,11 @@ export function GalleryEdgeGridBlock({
             />
             {/* Caption band slides up on hover. */}
             <figcaption
-              className="absolute inset-x-0 bottom-0 translate-y-full p-4 text-white transition-transform duration-300 ease-out group-hover:translate-y-0"
+              className="absolute inset-x-0 bottom-0 translate-y-full p-4 text-fam-on-dark transition-transform duration-300 ease-out group-hover:translate-y-0"
               style={{ backgroundImage: 'var(--wow-grad-brand)' }}
             >
               <span className="block font-display text-sm font-semibold">{p.title}</span>
-              {p.caption && <span className="text-xs italic text-white/80">{p.caption}</span>}
+              {p.caption && <span className="text-xs italic text-fam-on-dark/80">{p.caption}</span>}
             </figcaption>
           </motion.figure>
         ))}

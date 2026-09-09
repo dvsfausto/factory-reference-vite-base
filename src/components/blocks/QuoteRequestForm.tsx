@@ -109,7 +109,7 @@ export function QuoteRequestForm({
             name="service"
             key={preselected || 'none'}
             defaultValue={preselected || (options.length === 1 ? options[0].slug : '')}
-            className="mt-1.5 w-full rounded-xl border border-[#D5D9DF] bg-white px-4 py-3 text-ink-900 outline-none focus:border-fam-accent focus:ring-2 focus:ring-fam-accent-soft-2"
+            className="mt-1.5 w-full rounded-xl border border-fam-line-3 bg-fam-card px-4 py-3 text-ink-900 outline-none focus:border-fam-accent focus:ring-2 focus:ring-fam-accent-soft-2"
           >
             {options.length !== 1 && <option value="">Select a service…</option>}
             {options.map((s) => (

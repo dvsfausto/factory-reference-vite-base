@@ -52,7 +52,7 @@ export function HeroSlideshow({
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <div className="relative rounded-[28px] overflow-hidden shadow-2xl shadow-brand-900/20 border-4 border-white aspect-[4/3] bg-brand-50">
+      <div className="relative rounded-[28px] overflow-hidden shadow-2xl shadow-brand-900/20 border-4 border-fam-card aspect-[4/3] bg-brand-50">
         {!isSlideshow || !mounted ? (
           <img
             src={images[0].src}
@@ -86,7 +86,7 @@ export function HeroSlideshow({
                 onClick={() => setIndex(i)}
                 aria-label={`Show slide ${i + 1}`}
                 className={`h-2 rounded-full transition-all ${
-                  i === index ? "w-8 bg-white" : "w-2 bg-white/60 hover:bg-white/90"
+                  i === index ? "w-8 bg-fam-card" : "w-2 bg-fam-card/60 hover:bg-fam-card/90"
                 }`}
               />
             ))}
@@ -95,7 +95,7 @@ export function HeroSlideshow({
       </div>
 
       {reviewBadge && (
-        <div className="absolute -bottom-6 -left-4 lg:left-auto lg:-right-4 card-stead p-4 max-w-[260px] z-20 bg-white">
+        <div className="absolute -bottom-6 -left-4 lg:left-auto lg:-right-4 card-stead p-4 max-w-[260px] z-20 bg-fam-card">
           <div className="flex items-center gap-1 mb-1">
             {Array.from({ length: 5 }).map((_, i) => (
               <Star key={i} className="h-4 w-4 text-yellow-400 fill-yellow-400" />

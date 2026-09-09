@@ -32,7 +32,7 @@ export function HeroMinimalBlock({
   decorativeAsset?: string
 }) {
   return (
-    <section className="bg-white">
+    <section className="bg-fam-card">
       <div className="container-x py-section">
         <motion.div
           initial={{ opacity: 0, y: 14 }}

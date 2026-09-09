@@ -27,7 +27,7 @@ export function PromotionsCountdownBandBlock({
   if (!promos || promos.length === 0) return null
   const p = promos[0]!
   return (
-    <section className="bg-slate-950 text-white">
+    <section className="bg-slate-950 text-fam-on-dark">
       <div className="container-x py-band">
         <div className="flex flex-col items-start gap-6 md:flex-row md:items-center md:justify-between">
           <div className="max-w-2xl">
@@ -39,7 +39,7 @@ export function PromotionsCountdownBandBlock({
           </div>
           <div className="flex shrink-0 flex-col items-start gap-3 md:items-end">
             {p.expires && (
-              <span className="rounded-xl bg-white/10 px-5 py-3 text-center font-display backdrop-blur-sm">
+              <span className="rounded-xl bg-fam-card/10 px-5 py-3 text-center font-display backdrop-blur-sm">
                 <span className="block text-xs uppercase tracking-[0.16em] text-fam-accent-on-dark">Hurry, ends</span>
                 <span className="mt-0.5 block text-lg font-semibold">{p.expires}</span>
               </span>

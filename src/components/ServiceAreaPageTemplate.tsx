@@ -60,7 +60,7 @@ export function ServiceAreaPageTemplate({ data }: Props) {
   // script accents, numerals, links, icons) adopts T.accent* on character sites; brand
   // color stays only on the primary CTA (revised 2026-07-22).
   const T = resolveCharacterTokens();
-  const secPlain = T?.section ?? "bg-white";
+  const secPlain = T?.section ?? "bg-fam-card";
   const secBand = T ? `${T.sectionAlt} border-y ${T.border}` : "bg-brand-50 border-y border-brand-100";
   const tPad = T?.spacingY ?? "py-16 md:py-24";
   const tBody = T?.text ?? "text-ink-700";
@@ -79,7 +79,7 @@ export function ServiceAreaPageTemplate({ data }: Props) {
         <>
           {/* Character breadcrumb band — same as ServicePageTemplate: needs the character
               surface (secPlain) so it doesn't render on the page's default white. secPlain =
-              T?.section ?? "bg-white" → known verticals byte-identical (and never hit this branch). */}
+              T?.section ?? "bg-fam-card" → known verticals byte-identical (and never hit this branch). */}
           <div className={T?.crumb?.surface ?? secPlain}>
             <nav aria-label={tr('breadcrumb.aria')} className="container-x pt-8 md:pt-10">
               <Breadcrumbs items={[
@@ -92,14 +92,14 @@ export function ServiceAreaPageTemplate({ data }: Props) {
           {characterHero}
           {data.zipCodes && data.zipCodes.length > 0 && (
             <div className="container-x">
-              <span className={T ? `badge-pill bg-white border ${T.accentBorder} ${T.accent}` : "badge-pill bg-white border border-brand-100 text-brand-600"}>
+              <span className={T ? `badge-pill bg-fam-card border ${T.accentBorder} ${T.accent}` : "badge-pill bg-fam-card border border-brand-100 text-brand-600"}>
                 <MapPin className="h-3.5 w-3.5" /> {data.zipCodes.join(" · ")}
               </span>
             </div>
           )}
         </>
       ) : (
-      <section className="relative overflow-hidden bg-gradient-to-b from-brand-50 via-white to-white">
+      <section className="relative overflow-hidden bg-gradient-to-b from-brand-50 via-fam-card to-fam-card">
         <img src={leaves} alt="" aria-hidden className="hidden md:block absolute -left-10 top-10 h-[80%] opacity-50 pointer-events-none select-none" />
         <img src={leaves} alt="" aria-hidden className="hidden md:block absolute -right-10 bottom-0 h-[60%] opacity-40 pointer-events-none select-none rotate-180" />
         <div className="container-x py-section relative">
@@ -111,7 +111,7 @@ export function ServiceAreaPageTemplate({ data }: Props) {
           <div className="mt-6 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             <div className="lg:col-span-7">
               {data.zipCodes && data.zipCodes.length > 0 && (
-                <span className="badge-pill bg-white border border-brand-100 text-brand-600">
+                <span className="badge-pill bg-fam-card border border-brand-100 text-brand-600">
                   <MapPin className="h-3.5 w-3.5" /> {data.zipCodes.join(" · ")}
                 </span>
               )}
@@ -133,7 +133,7 @@ export function ServiceAreaPageTemplate({ data }: Props) {
               </div>
             </div>
             <div className="lg:col-span-5">
-              <div className="aspect-[4/3] rounded-2xl border-4 border-white shadow-xl overflow-hidden bg-brand-50">
+              <div className="aspect-[4/3] rounded-2xl border-4 border-fam-card shadow-xl overflow-hidden bg-brand-50">
                 <img
                   src={areaImageUrl(data.slug)}
                   alt={areaAlt(data.slug)}
@@ -235,7 +235,7 @@ export function ServiceAreaPageTemplate({ data }: Props) {
       {data.localContext && (
         <section className={secBand}>
           <div className={`container-x ${T ? T.spacingY.split(" ")[0] : "py-16"}`}>
-            <div className={T ? `${T.card} ${T.cardRadius} border ${T.border} p-8 md:p-10 max-w-3xl mx-auto` : "card-soft p-8 md:p-10 max-w-3xl mx-auto bg-white"}>
+            <div className={T ? `${T.card} ${T.cardRadius} border ${T.border} p-8 md:p-10 max-w-3xl mx-auto` : "card-soft p-8 md:p-10 max-w-3xl mx-auto bg-fam-card"}>
               <span className={T ? `badge-pill ${T.accentBg} ${T.accent}` : "badge-pill bg-brand-50 text-brand-600"}>{tr('tmpl.localInsight')}</span>
               <h2 className={`mt-3 ${T ? T.text : ""}`.trimEnd()}>
                 {localTitleParts ? (

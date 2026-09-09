@@ -67,7 +67,7 @@ export function FormSplitWithInfoBlock({
   ].filter(Boolean) as { Icon: typeof Phone; label: string; href?: string }[]
 
   return (
-    <section className="bg-white">
+    <section className="bg-fam-card">
       <div className="container-x py-section">
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
           <div>

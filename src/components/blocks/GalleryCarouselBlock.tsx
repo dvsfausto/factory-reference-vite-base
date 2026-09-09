@@ -21,7 +21,7 @@ export function GalleryCarouselBlock({
 }) {
   if (projects.length === 0) return null
   return (
-    <section className="bg-white">
+    <section className="bg-fam-card">
       <div className="container-x py-section">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div className="max-w-2xl">
@@ -43,7 +43,7 @@ export function GalleryCarouselBlock({
           {projects.map((p, i) => (
             <figure
               key={`${p.title}-${i}`}
-              className="w-[300px] shrink-0 snap-start overflow-hidden rounded-2xl border border-fam-hairline bg-white md:w-[380px]"
+              className="w-[300px] shrink-0 snap-start overflow-hidden rounded-2xl border border-fam-hairline bg-fam-card md:w-[380px]"
             >
               <div className="aspect-[4/3] overflow-hidden">
                 <img src={p.image} alt={p.alt ?? p.title} loading="lazy" className="h-full w-full object-cover" />
@@ -55,7 +55,7 @@ export function GalleryCarouselBlock({
             </figure>
           ))}
         </div>
-        <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-16 bg-gradient-to-l from-white to-transparent md:block" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-16 bg-gradient-to-l from-fam-card to-transparent md:block" />
       </div>
     </section>
   )

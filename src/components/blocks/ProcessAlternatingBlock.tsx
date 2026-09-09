@@ -25,7 +25,7 @@ export function ProcessAlternatingBlock({
   if (!steps || steps.length === 0) return null
   const items = steps.slice(0, 6)
   return (
-    <section className="bg-white">
+    <section className="bg-fam-card">
       <div className="container-x py-section">
         <div className="mx-auto max-w-2xl text-center">
           <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">
@@ -46,7 +46,7 @@ export function ProcessAlternatingBlock({
               const right = i % 2 === 1
               return (
                 <div key={`${s.title}-${i}`} className="relative grid grid-cols-1 items-center gap-4 md:grid-cols-2 md:gap-12">
-                  <span className="absolute left-6 top-1 z-10 grid h-7 w-7 -translate-x-1/2 place-items-center rounded-full bg-fam-accent font-display text-xs font-semibold text-white md:left-1/2">
+                  <span className="absolute left-6 top-1 z-10 grid h-7 w-7 -translate-x-1/2 place-items-center rounded-full bg-fam-accent font-display text-xs font-semibold text-fam-on-dark md:left-1/2">
                     {i + 1}
                   </span>
                   <div className={`pl-16 md:pl-0 ${right ? 'md:order-2 md:pl-12' : 'md:pr-12 md:text-right'}`}>

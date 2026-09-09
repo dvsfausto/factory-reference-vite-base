@@ -35,7 +35,7 @@ export function PromotionsOfferGridBlock({
         </div>
         <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {promos.slice(0, 6).map((p, i) => (
-            <div key={`${p.title}-${i}`} className="overflow-hidden rounded-2xl border-2 border-dashed border-fam-accent bg-white">
+            <div key={`${p.title}-${i}`} className="overflow-hidden rounded-2xl border-2 border-dashed border-fam-accent bg-fam-card">
               <div className="bg-fam-accent-soft px-6 py-4">
                 <h3 className="font-display text-lg font-semibold tracking-tight text-fam-ink">{p.title}</h3>
               </div>

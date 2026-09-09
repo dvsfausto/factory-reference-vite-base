@@ -26,7 +26,7 @@ export function ProcessVerticalRailBlock({
   if (!steps || steps.length === 0) return null
   const items = steps.slice(0, 6)
   return (
-    <section className="bg-white">
+    <section className="bg-fam-card">
       <div className="container-x py-section">
         <div className="max-w-2xl">
           <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">
@@ -46,7 +46,7 @@ export function ProcessVerticalRailBlock({
             return (
               <div key={`${s.title}-${i}`} className="relative flex gap-6 pb-10 last:pb-0">
                 {!last && <span className="absolute left-[1.375rem] top-12 h-[calc(100%-2rem)] w-0.5 bg-fam-accent-soft-2" />}
-                <span className="relative z-10 grid h-11 w-11 shrink-0 place-items-center rounded-full bg-fam-accent font-display text-sm font-semibold text-white">
+                <span className="relative z-10 grid h-11 w-11 shrink-0 place-items-center rounded-full bg-fam-accent font-display text-sm font-semibold text-fam-on-dark">
                   {Icon ? <Icon className="h-5 w-5" /> : i + 1}
                 </span>
                 <div className="pt-1.5">

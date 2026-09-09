@@ -44,7 +44,7 @@ export function ServicesCarouselBlock({
   const cards = services.slice(0, 10)
   if (cards.length === 0) return null
   return (
-    <section className="bg-white">
+    <section className="bg-fam-card">
       <div className="container-x py-section">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div className="max-w-2xl">
@@ -70,7 +70,7 @@ export function ServicesCarouselBlock({
               key={s.slug}
               to="/services/$slug"
               params={{ slug: s.slug }}
-              className="group flex w-[280px] shrink-0 snap-start flex-col overflow-hidden rounded-2xl border border-fam-hairline bg-white transition-all hover:border-fam-accent hover:shadow-md md:w-[340px]"
+              className="group flex w-[280px] shrink-0 snap-start flex-col overflow-hidden rounded-2xl border border-fam-hairline bg-fam-card transition-all hover:border-fam-accent hover:shadow-md md:w-[340px]"
             >
               <div className="aspect-[4/3] overflow-hidden">
                 <img
@@ -92,7 +92,7 @@ export function ServicesCarouselBlock({
             </Link>
           ))}
         </div>
-        <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-16 bg-gradient-to-l from-white to-transparent md:block" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-16 bg-gradient-to-l from-fam-card to-transparent md:block" />
       </div>
 
       {services.length > cards.length && (

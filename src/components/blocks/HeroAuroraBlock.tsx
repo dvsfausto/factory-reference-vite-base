@@ -62,7 +62,7 @@ export function HeroAuroraBlock({
   const rating = getAggregateRating()
 
   return (
-    <section className="relative isolate flex min-h-[calc(100vh-4rem)] flex-col overflow-hidden bg-ink-900 text-white">
+    <section className="relative isolate flex min-h-[calc(100vh-4rem)] flex-col overflow-hidden bg-ink-900 text-fam-on-dark">
       {/* Full-bleed business photo. */}
       <img
         src={imageSrc(imageUrl)}
@@ -103,7 +103,7 @@ export function HeroAuroraBlock({
             boxShadow: 'var(--wow-shadow-glow)',
           }}
         >
-          <span className="inline-flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.2em] text-white/80">
+          <span className="inline-flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.2em] text-fam-on-dark/80">
             <span
               className="h-2.5 w-2.5 rounded-full"
               style={{ backgroundImage: 'var(--wow-grad-brand)' }}
@@ -111,21 +111,21 @@ export function HeroAuroraBlock({
             {kicker}
           </span>
 
-          <h1 className="mt-5 text-5xl leading-[0.98] tracking-tight text-white sm:text-6xl">
+          <h1 className="mt-5 text-5xl leading-[0.98] tracking-tight text-fam-on-dark sm:text-6xl">
             {heroParts.lead || headline}
             {heroParts.lead && ' '}
             {heroParts.lead && (
-              <span className="mt-1 block font-script text-[1.15em] leading-[1.05] text-white/95">
+              <span className="mt-1 block font-script text-[1.15em] leading-[1.05] text-fam-on-dark/95">
                 {heroParts.accent}
               </span>
             )}
           </h1>
 
           {subheadline && (
-            <p className="mt-4 font-display text-xl text-white/85">{subheadline}</p>
+            <p className="mt-4 font-display text-xl text-fam-on-dark/85">{subheadline}</p>
           )}
 
-          <p className="mt-5 max-w-xl text-lg leading-relaxed text-white/75">{body}</p>
+          <p className="mt-5 max-w-xl text-lg leading-relaxed text-fam-on-dark/75">{body}</p>
 
           <div className="mt-8 flex flex-wrap items-center gap-3.5">
             <PrimaryCta
@@ -136,24 +136,24 @@ export function HeroAuroraBlock({
             </PrimaryCta>
             {hasPhone(site.phone) && (<a
               href={`tel:${site.phone}`}
-              className="inline-flex h-[52px] items-center gap-2 rounded-full border border-white/30 px-6 font-semibold text-white backdrop-blur-sm transition-colors hover:border-white/70 hover:bg-white/10"
+              className="inline-flex h-[52px] items-center gap-2 rounded-full border border-fam-card/30 px-6 font-semibold text-fam-on-dark backdrop-blur-sm transition-colors hover:border-fam-card/70 hover:bg-fam-card/10"
             >
               <Phone className="h-4 w-4" /> {site.phoneDisplay}
             </a>)}
 
             {rating && (
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/5 px-3.5 py-2 text-sm text-white/90 backdrop-blur-sm">
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-fam-card/20 bg-fam-card/5 px-3.5 py-2 text-sm text-fam-on-dark/90 backdrop-blur-sm">
                 <Star className="h-4 w-4 fill-current text-amber-300" />
                 <span className="font-semibold">{rating.value.toFixed(1)}</span>
-                <span className="text-white/60">({rating.count})</span>
+                <span className="text-fam-on-dark/60">({rating.count})</span>
               </span>
             )}
           </div>
 
-          <ul className="mt-7 flex flex-wrap gap-x-5 gap-y-2 text-sm text-white/80">
+          <ul className="mt-7 flex flex-wrap gap-x-5 gap-y-2 text-sm text-fam-on-dark/80">
             {trustItems.map((t) => (
               <li key={t} className="inline-flex items-center gap-1.5">
-                <Check className="h-4 w-4 text-white/60" /> {t}
+                <Check className="h-4 w-4 text-fam-on-dark/60" /> {t}
               </li>
             ))}
           </ul>

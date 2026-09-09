@@ -24,7 +24,7 @@ export function ProcessCardsBlock({
   const steps = (site as { steps?: ProcessStep[] }).steps
   if (!steps || steps.length === 0) return null
   return (
-    <section className="bg-white">
+    <section className="bg-fam-card">
       <div className="container-x py-section">
         <div className="max-w-2xl">
           <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">
@@ -43,12 +43,12 @@ export function ProcessCardsBlock({
             return (
               <div
                 key={`${s.title}-${i}`}
-                className="relative flex flex-col rounded-2xl border border-fam-hairline bg-white p-7 transition-colors hover:border-fam-accent"
+                className="relative flex flex-col rounded-2xl border border-fam-hairline bg-fam-card p-7 transition-colors hover:border-fam-accent"
               >
-                <span className="absolute right-6 top-6 font-display text-5xl font-semibold text-[#EEF2F6]">
+                <span className="absolute right-6 top-6 font-display text-5xl font-semibold text-fam-surface-3">
                   {String(i + 1).padStart(2, '0')}
                 </span>
-                <span className="grid h-12 w-12 place-items-center rounded-xl bg-fam-accent font-display text-base font-semibold text-white">
+                <span className="grid h-12 w-12 place-items-center rounded-xl bg-fam-accent font-display text-base font-semibold text-fam-on-dark">
                   {Icon ? <Icon className="h-5 w-5" /> : i + 1}
                 </span>
                 <h3 className="mt-6 font-display text-lg font-semibold tracking-tight text-fam-ink">{s.title}</h3>

@@ -23,7 +23,7 @@ export function CaseStudiesCarouselBlock({
   const studies = (site as { caseStudies?: CaseStudy[] }).caseStudies
   if (!studies || studies.length === 0) return null
   return (
-    <section className="bg-white">
+    <section className="bg-fam-card">
       <div className="container-x py-section">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div className="max-w-2xl">
@@ -40,7 +40,7 @@ export function CaseStudiesCarouselBlock({
       <div className="relative">
         <div className="flex snap-x snap-mandatory gap-6 overflow-x-auto px-[max(1.5rem,calc((100vw-80rem)/2+1.5rem))] pb-6 [scrollbar-width:thin]">
           {studies.map((s, i) => (
-            <article key={`${s.title}-${i}`} className="flex w-[320px] shrink-0 snap-start flex-col overflow-hidden rounded-2xl border border-fam-hairline bg-white md:w-[400px]">
+            <article key={`${s.title}-${i}`} className="flex w-[320px] shrink-0 snap-start flex-col overflow-hidden rounded-2xl border border-fam-hairline bg-fam-card md:w-[400px]">
               {s.image ? (
                 <div className="aspect-[16/10] overflow-hidden"><img src={s.image} alt={s.title} loading="lazy" className="h-full w-full object-cover" /></div>
               ) : (
@@ -54,7 +54,7 @@ export function CaseStudiesCarouselBlock({
             </article>
           ))}
         </div>
-        <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-16 bg-gradient-to-l from-white to-transparent md:block" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-16 bg-gradient-to-l from-fam-card to-transparent md:block" />
       </div>
     </section>
   )

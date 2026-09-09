@@ -61,7 +61,7 @@ export function ReviewsLuminousBlock({
                 ease: [0.16, 1, 0.3, 1],
               }}
               whileHover={reduce ? undefined : { y: -6 }}
-              className="group relative flex h-full flex-col overflow-hidden rounded-[1.5rem] border bg-white/70 p-7 backdrop-blur-md transition-shadow"
+              className="group relative flex h-full flex-col overflow-hidden rounded-[1.5rem] border bg-fam-card/70 p-7 backdrop-blur-md transition-shadow"
               style={{ borderColor: 'var(--wow-hairline)', boxShadow: 'var(--wow-shadow-soft)' }}
             >
               {/* Oversized brand-gradient quotation mark. */}

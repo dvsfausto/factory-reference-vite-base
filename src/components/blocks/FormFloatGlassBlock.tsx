@@ -99,7 +99,7 @@ export function FormFloatGlassBlock({
             ) : (
               <form
                 onSubmit={onSubmit}
-                className="relative overflow-hidden rounded-[1.5rem] border bg-white/80 p-8 backdrop-blur-md md:p-10"
+                className="relative overflow-hidden rounded-[1.5rem] border bg-fam-card/80 p-8 backdrop-blur-md md:p-10"
                 style={{ borderColor: 'var(--wow-hairline)', boxShadow: 'var(--wow-shadow-lift)' }}
               >
                 {/* Brand accent hairline across the top of the glass card. */}

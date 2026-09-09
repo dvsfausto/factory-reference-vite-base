@@ -9,7 +9,7 @@ export function TaglineBarBlock({
 }) {
   if (!site.tagline) return null
   return (
-    <section className="bg-brand-900 text-white">
+    <section className="bg-brand-900 text-fam-on-dark">
       <div className="container-x py-5 text-center">
         <p className="font-display text-lg md:text-xl">{site.tagline}</p>
       </div>

@@ -17,7 +17,7 @@ import { FormContactBlock } from './FormContactBlock'
 // folded into a message. That function creates or updates the contact from the standard keys (name,
 // email, phone, message) and keeps the rest on the contact as metadata, and records the submission.
 //
-// TOKEN DISCIPLINE: the form-ui controls (fam-* tokens), bg-white card, rounded-* (DNA), font-display (DNA).
+// TOKEN DISCIPLINE: the form-ui controls (fam-* tokens), bg-fam-card card, rounded-* (DNA), font-display (DNA).
 type Status = 'idle' | 'submitting' | 'success' | 'error'
 
 function visible(f: FormField, values: Record<string, string>): boolean {
@@ -107,7 +107,7 @@ function CustomForm({
           <label key={f.name} className="block">
             <span className="font-display text-sm font-medium text-fam-ink">{f.label} {f.required && <span className="text-fam-accent-text">*</span>}</span>
             <select id={id} name={f.name} required={f.required} value={values[f.name] ?? ''} onChange={(e) => set(f.name, e.target.value)}
-              className="mt-2 w-full rounded-xl border border-fam-hairline bg-white px-4 py-3 text-base text-fam-ink outline-none focus:border-fam-accent focus:ring-1 focus:ring-fam-accent">
+              className="mt-2 w-full rounded-xl border border-fam-hairline bg-fam-card px-4 py-3 text-base text-fam-ink outline-none focus:border-fam-accent focus:ring-1 focus:ring-fam-accent">
               <option value="">{f.placeholder ?? tr('form.choose')}</option>
               {options.map((o) => <option key={o} value={o}>{o}</option>)}
             </select>
@@ -126,7 +126,7 @@ function CustomForm({
           <label key={f.name} className="block">
             <span className="font-display text-sm font-medium text-fam-ink">{f.label} {f.required && <span className="text-fam-accent-text">*</span>}</span>
             <input id={id} type="number" name={f.name} required={f.required} min={f.min} max={f.max} placeholder={f.placeholder} onChange={(e) => set(f.name, e.target.value)}
-              className="mt-2 w-full rounded-xl border border-fam-hairline bg-white px-4 py-3 text-base text-fam-ink outline-none placeholder:text-fam-ink-faint focus:border-fam-accent focus:ring-1 focus:ring-fam-accent" />
+              className="mt-2 w-full rounded-xl border border-fam-hairline bg-fam-card px-4 py-3 text-base text-fam-ink outline-none placeholder:text-fam-ink-faint focus:border-fam-accent focus:ring-1 focus:ring-fam-accent" />
           </label>
         )
       default:
@@ -160,9 +160,9 @@ function CustomForm({
   )
   if (inline) return formMarkup
   return (
-    <section className="bg-white">
+    <section className="bg-fam-card">
       <div className="container-x py-section">
-        <div className="mx-auto max-w-3xl overflow-hidden rounded-3xl border border-fam-hairline bg-white shadow-sm">
+        <div className="mx-auto max-w-3xl overflow-hidden rounded-3xl border border-fam-hairline bg-fam-card shadow-sm">
           <div className="px-8 pt-10 md:px-12">
             <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">
               <span className="h-px w-6 bg-fam-accent" />

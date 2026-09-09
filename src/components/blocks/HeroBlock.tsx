@@ -28,7 +28,7 @@ export function HeroBlock({
 }) {
   const heroParts = splitScriptAccent(site.hero.headline)
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-brand-50 via-white to-white">
+    <section className="relative overflow-hidden bg-gradient-to-b from-brand-50 via-fam-card to-fam-card">
       <img src={decorativeAsset} alt="" aria-hidden className="hidden md:block absolute -left-10 top-10 h-[80%] opacity-50 pointer-events-none select-none" />
       <img src={decorativeAsset} alt="" aria-hidden className="hidden md:block absolute -right-10 bottom-0 h-[60%] opacity-40 pointer-events-none select-none rotate-180" />
 

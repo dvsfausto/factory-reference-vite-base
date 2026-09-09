@@ -128,7 +128,7 @@ export function AreaDetailsBlock({
               key={s.slug}
               to="/services/$slug"
               params={{ slug: s.slug }}
-              className="group flex flex-col overflow-hidden rounded-2xl border bg-white/85 backdrop-blur-md transition-transform duration-500 hover:-translate-y-1"
+              className="group flex flex-col overflow-hidden rounded-2xl border bg-fam-card/85 backdrop-blur-md transition-transform duration-500 hover:-translate-y-1"
               style={{
                 borderColor: 'var(--fam-hairline, var(--wow-hairline))',
                 boxShadow: 'var(--wow-shadow-soft)',
@@ -177,14 +177,14 @@ export function AreaDetailsBlock({
           {landmarks.items.map((item, i) => (
             <li
               key={i}
-              className="flex items-start gap-3.5 rounded-2xl border bg-white/80 p-5 backdrop-blur-md"
+              className="flex items-start gap-3.5 rounded-2xl border bg-fam-card/80 p-5 backdrop-blur-md"
               style={{
                 borderColor: 'var(--fam-hairline, var(--wow-hairline))',
                 boxShadow: 'var(--wow-shadow-soft)',
               }}
             >
               <span
-                className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-lg text-white"
+                className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-lg text-fam-on-dark"
                 style={{ backgroundImage: 'var(--wow-grad-brand)' }}
               >
                 <MapPin className="h-4 w-4" />
@@ -201,14 +201,14 @@ export function AreaDetailsBlock({
     blocks.push(
       <div key="localContext" className="mx-auto max-w-3xl">
         <div
-          className="rounded-3xl border bg-white/85 p-8 backdrop-blur-md md:p-10"
+          className="rounded-3xl border bg-fam-card/85 p-8 backdrop-blur-md md:p-10"
           style={{
             borderColor: 'var(--fam-hairline, var(--wow-hairline))',
             boxShadow: 'var(--wow-shadow-soft)',
           }}
         >
           <span
-            className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-white"
+            className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-fam-on-dark"
             style={{ backgroundImage: 'var(--wow-grad-brand)' }}
           >{tr('tmpl.localInsight')}</span>
           <h2 className="mt-4 font-display text-2xl leading-tight text-[var(--fam-ink,var(--color-ink-900))] sm:text-3xl">

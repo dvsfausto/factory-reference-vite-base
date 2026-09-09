@@ -23,18 +23,18 @@ export interface ElegantSurface {
 }
 
 const DARK: ElegantSurface = {
-  section: 'bg-[#1A1410]',
-  sectionAlt: 'bg-[#241C16]',
-  card: 'bg-[#241C16]',
-  border: 'border-[#3A2E24]',
-  text: 'text-[#F2E8DC]',
-  muted: 'text-[#B8A893]',
+  section: 'bg-fam-statement',
+  sectionAlt: 'bg-fam-statement-2',
+  card: 'bg-fam-statement-2',
+  border: 'border-fam-statement-hairline',
+  text: 'text-fam-on-statement',
+  muted: 'text-fam-on-statement-muted',
 };
 
 const LIGHT: ElegantSurface = {
   section: 'bg-fam-surface',
   sectionAlt: 'bg-fam-surface-2',
-  card: 'bg-white',
+  card: 'bg-fam-card',
   border: 'border-fam-hairline',
   text: 'text-fam-ink',
   muted: 'text-fam-ink-muted',

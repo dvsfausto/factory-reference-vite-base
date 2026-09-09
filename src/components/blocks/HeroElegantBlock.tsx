@@ -47,14 +47,14 @@ export function HeroElegantBlock({
 
   if (dark) {
     return (
-      <section className="relative isolate flex flex-col overflow-hidden bg-[#1A1410] text-[#F2E8DC]">
+      <section className="relative isolate flex flex-col overflow-hidden bg-fam-statement text-fam-on-statement">
         {/* Full-bleed lounge photo under a warm espresso scrim, low-light, intimate. */}
         <img
           src={imageSrc(imageUrl)}
           alt={HERO_ALT}
           className="absolute inset-0 -z-20 h-full w-full object-cover"
         />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-[#1A1410] via-[#1A1410]/92 to-[#1A1410]/55" />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-fam-statement via-fam-statement/92 to-fam-statement/55" />
 
         <div className="container-x relative flex flex-1 items-center py-section">
           <motion.div
@@ -69,7 +69,7 @@ export function HeroElegantBlock({
             </span>
 
             {/* Refined serif headline, title-case, generous, unhurried. */}
-            <h1 className="mt-6 font-display text-5xl font-medium leading-[1.05] tracking-tight text-[#F2E8DC] sm:text-6xl lg:text-7xl">
+            <h1 className="mt-6 font-display text-5xl font-medium leading-[1.05] tracking-tight text-fam-on-statement sm:text-6xl lg:text-7xl">
               {headline}
             </h1>
 
@@ -79,7 +79,7 @@ export function HeroElegantBlock({
               </p>
             )}
 
-            <p className="mt-6 max-w-xl text-lg leading-relaxed text-[#B8A893]">
+            <p className="mt-6 max-w-xl text-lg leading-relaxed text-fam-on-statement-muted">
               {body}
             </p>
 
@@ -91,14 +91,14 @@ export function HeroElegantBlock({
               </PrimaryCta>
               {hasPhone(site.phone) && (<a
                 href={`tel:${site.phone}`}
-                className="inline-flex h-[54px] items-center gap-2 rounded-lg border border-fam-accent/60 px-7 font-medium text-[#F2E8DC] transition-colors hover:border-fam-accent hover:bg-fam-accent/10"
+                className="inline-flex h-[54px] items-center gap-2 rounded-lg border border-fam-accent/60 px-7 font-medium text-fam-on-statement transition-colors hover:border-fam-accent hover:bg-fam-accent/10"
               >
                 <Phone className="h-4 w-4" /> {site.phoneDisplay}
               </a>)}
             </div>
 
             {/* Refined trust row, a thin amber-ruled line, not a loud banner. */}
-            <div className="mt-12 flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-[#3A2E24] pt-6 text-xs uppercase tracking-[0.18em] text-[#B8A893]">
+            <div className="mt-12 flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-fam-statement-hairline pt-6 text-xs uppercase tracking-[0.18em] text-fam-on-statement-muted">
               {trustItems.map((t) => (
                 <span key={t} className="inline-flex items-center gap-2">
                   <span className="h-1 w-1 rounded-full bg-fam-accent" /> {t}
@@ -128,7 +128,7 @@ export function HeroElegantBlock({
         >
           <span className="text-xs font-medium uppercase tracking-[0.32em] text-fam-accent-text-strong">{kicker}</span>
           {(metaLine || site.phoneDisplay) && (
-            <span className="text-xs uppercase tracking-[0.22em] text-[#9A8E7C]">
+            <span className="text-xs uppercase tracking-[0.22em] text-fam-on-statement-faint">
               {[metaLine, site.phoneDisplay].filter(Boolean).join('  ·  ')}
             </span>
           )}

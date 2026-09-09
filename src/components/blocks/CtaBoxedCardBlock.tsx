@@ -42,7 +42,7 @@ export function CtaBoxedCardBlock({
               {site.tagline}
             </span>
           )}
-          <h2 className="mt-6 font-display text-4xl font-semibold leading-[1.1] tracking-tight text-white sm:text-5xl">
+          <h2 className="mt-6 font-display text-4xl font-semibold leading-[1.1] tracking-tight text-fam-on-dark sm:text-5xl">
             {headline}
           </h2>
           {sub && (
@@ -55,7 +55,7 @@ export function CtaBoxedCardBlock({
             </PrimaryCta>
             {hasPhone(site.phone) && (<a
               href={`tel:${site.phone}`}
-              className="inline-flex h-[54px] items-center gap-2 rounded-xl border border-white/25 px-7 font-display font-semibold text-white transition-colors hover:border-fam-accent hover:text-fam-accent-on-dark"
+              className="inline-flex h-[54px] items-center gap-2 rounded-xl border border-fam-card/25 px-7 font-display font-semibold text-fam-on-dark transition-colors hover:border-fam-accent hover:text-fam-accent-on-dark"
             >
               <Phone className="h-4 w-4 text-fam-accent-on-dark" /> {site.phoneDisplay}
             </a>)}

@@ -54,7 +54,7 @@ export function VideoTestimonialsFeaturedThumbsBlock({
                 type="button"
                 onClick={() => setActive(i)}
                 aria-label={`Play ${v.author}`}
-                className={`flex shrink-0 items-center gap-3 rounded-xl border p-3 text-left transition-all ${i === active ? 'border-fam-accent ring-1 ring-fam-accent bg-white' : 'border-fam-hairline bg-white hover:border-fam-accent'}`}
+                className={`flex shrink-0 items-center gap-3 rounded-xl border p-3 text-left transition-all ${i === active ? 'border-fam-accent ring-1 ring-fam-accent bg-fam-card' : 'border-fam-hairline bg-fam-card hover:border-fam-accent'}`}
               >
                 <span className="h-12 w-20 shrink-0 overflow-hidden rounded-lg bg-slate-900">
                   {v.poster && <img src={v.poster} alt={v.author} className="h-full w-full object-cover" />}

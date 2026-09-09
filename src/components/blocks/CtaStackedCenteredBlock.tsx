@@ -32,7 +32,7 @@ export function CtaStackedCenteredBlock({
   const headline = title ?? cta?.title ?? 'Ready when you are.'
   const sub = subtitle ?? cta?.subtitle ?? tr('cta.reachOutToday')
   return (
-    <section className="bg-white">
+    <section className="bg-fam-card">
       <div className="container-x py-section">
         <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
           {site.tagline && (

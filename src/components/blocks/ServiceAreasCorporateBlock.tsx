@@ -30,7 +30,7 @@ export function ServiceAreasCorporateBlock({
 }) {
   if (areas.length === 0) return null
   return (
-    <section className="bg-white">
+    <section className="bg-fam-card">
       <div className="container-x py-section">
         <SectionHeaderCorporate label={label} heading={heading} scriptAccent={scriptAccent} body={body} />
         <div className="grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-fam-hairline bg-fam-hairline sm:grid-cols-3 lg:grid-cols-4">
@@ -39,7 +39,7 @@ export function ServiceAreasCorporateBlock({
               key={a.slug}
               to="/areas/$slug"
               params={{ slug: a.slug }}
-              className="group inline-flex items-center gap-2 bg-white px-5 py-4 text-sm font-semibold text-fam-ink transition-colors hover:bg-[#FAFBFC] hover:text-fam-accent-text-strong"
+              className="group inline-flex items-center gap-2 bg-fam-card px-5 py-4 text-sm font-semibold text-fam-ink transition-colors hover:bg-fam-surface-5 hover:text-fam-accent-text-strong"
             >
               <MapPin className="h-4 w-4 text-fam-accent-text" /> {a.name}
             </Link>

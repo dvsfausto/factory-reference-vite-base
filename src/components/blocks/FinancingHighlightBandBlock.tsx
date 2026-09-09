@@ -24,7 +24,7 @@ export function FinancingHighlightBandBlock({
   return (
     <section className="bg-fam-surface-2">
       <div className="container-x py-section">
-        <div className="overflow-hidden rounded-3xl border border-fam-hairline bg-white p-8 md:p-12">
+        <div className="overflow-hidden rounded-3xl border border-fam-hairline bg-fam-card p-8 md:p-12">
           <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-16">
             <div>
               <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">

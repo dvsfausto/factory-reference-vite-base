@@ -23,7 +23,7 @@ export function TestimonialsSection({ heading, intro, testimonials }: Props) {
           {testimonials.map((t, i) => (
             <li
               key={i}
-              className="flex flex-col rounded-2xl bg-white p-6 shadow-sm"
+              className="flex flex-col rounded-2xl bg-fam-card p-6 shadow-sm"
             >
               {typeof t.rating === 'number' && t.rating > 0 && (
                 <div

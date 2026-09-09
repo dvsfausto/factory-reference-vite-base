@@ -75,7 +75,7 @@ export function ProcessGlowNodesBlock({
                 >
                   {/* Glowing numbered node. */}
                   <span
-                    className="relative z-10 grid h-14 w-14 shrink-0 place-items-center rounded-2xl font-display text-xl font-semibold text-white"
+                    className="relative z-10 grid h-14 w-14 shrink-0 place-items-center rounded-2xl font-display text-xl font-semibold text-fam-on-dark"
                     style={{ backgroundImage: 'var(--wow-grad-brand)', boxShadow: 'var(--wow-shadow-glow)' }}
                   >
                     {Icon ? <Icon className="h-6 w-6" /> : i + 1}
@@ -83,7 +83,7 @@ export function ProcessGlowNodesBlock({
                   {/* Step content in a glass card. */}
                   <motion.div
                     whileHover={reduce ? undefined : { y: -4 }}
-                    className="flex-1 rounded-[1.25rem] border bg-white/70 p-6 backdrop-blur-md"
+                    className="flex-1 rounded-[1.25rem] border bg-fam-card/70 p-6 backdrop-blur-md"
                     style={{ borderColor: 'var(--wow-hairline)', boxShadow: 'var(--wow-shadow-soft)' }}
                   >
                     <h3 className="font-display text-xl font-semibold tracking-tight text-ink-900">{s.title}</h3>

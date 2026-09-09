@@ -41,7 +41,7 @@ export function HeroVideoBlock({
   const poster = imageSrc(site.hero.image_url)
 
   return (
-    <section className="relative isolate flex min-h-[34rem] flex-col overflow-hidden bg-slate-950 text-white md:min-h-[40rem]">
+    <section className="relative isolate flex min-h-[34rem] flex-col overflow-hidden bg-slate-950 text-fam-on-dark md:min-h-[40rem]">
       {videoUrl ? (
         <video
           autoPlay
@@ -75,7 +75,7 @@ export function HeroVideoBlock({
             <span className="h-px w-7 bg-fam-accent" />
           </span>
 
-          <h1 className="mt-6 font-display text-5xl font-semibold leading-[1.03] tracking-tight text-white drop-shadow-sm sm:text-6xl lg:text-7xl">
+          <h1 className="mt-6 font-display text-5xl font-semibold leading-[1.03] tracking-tight text-fam-on-dark drop-shadow-sm sm:text-6xl lg:text-7xl">
             {site.hero.headline}
           </h1>
 
@@ -97,7 +97,7 @@ export function HeroVideoBlock({
             </PrimaryCta>
             {hasPhone(site.phone) && (<a
               href={`tel:${site.phone}`}
-              className="inline-flex h-[52px] items-center gap-2 rounded-xl border border-white/30 bg-white/5 px-6 font-display font-semibold text-white backdrop-blur-sm transition-colors hover:border-fam-accent hover:text-fam-accent-on-dark"
+              className="inline-flex h-[52px] items-center gap-2 rounded-xl border border-fam-card/30 bg-fam-card/5 px-6 font-display font-semibold text-fam-on-dark backdrop-blur-sm transition-colors hover:border-fam-accent hover:text-fam-accent-on-dark"
             >
               <Phone className="h-4 w-4 text-fam-accent-on-dark" /> {site.phoneDisplay}
             </a>)}

@@ -35,7 +35,7 @@ export function AreaAboutBlock({
     >
       <div className="container-x py-section">
         <div
-          className="mx-auto max-w-3xl rounded-3xl border bg-white/85 p-8 backdrop-blur-md md:p-10"
+          className="mx-auto max-w-3xl rounded-3xl border bg-fam-card/85 p-8 backdrop-blur-md md:p-10"
           style={{
             borderColor: 'var(--fam-hairline, var(--wow-hairline))',
             boxShadow: 'var(--wow-shadow-soft)',

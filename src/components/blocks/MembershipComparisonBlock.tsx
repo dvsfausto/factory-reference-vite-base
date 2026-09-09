@@ -37,7 +37,7 @@ export function MembershipComparisonBlock({
           <h2 className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight text-fam-ink sm:text-5xl">{heading}</h2>
           {body && <p className="mt-4 text-lg leading-relaxed text-fam-ink-muted">{body}</p>}
         </div>
-        <div className="mt-12 overflow-x-auto rounded-2xl border border-fam-hairline bg-white">
+        <div className="mt-12 overflow-x-auto rounded-2xl border border-fam-hairline bg-fam-card">
           <table className="w-full min-w-[640px] border-collapse text-left">
             <thead>
               <tr className="border-b border-fam-hairline">
@@ -59,7 +59,7 @@ export function MembershipComparisonBlock({
                   <td className="p-5 text-sm font-medium text-fam-ink-muted">{perk}</td>
                   {cols.map((m, i) => (
                     <td key={`${m.name}-${i}`} className={`p-5 ${m.highlighted ? 'bg-fam-accent-soft' : ''}`}>
-                      {(m.perks ?? []).includes(perk) ? <Check className="h-5 w-5 text-fam-accent-text" /> : <Minus className="h-5 w-5 text-[#CBD5E1]" />}
+                      {(m.perks ?? []).includes(perk) ? <Check className="h-5 w-5 text-fam-accent-text" /> : <Minus className="h-5 w-5 text-fam-line-2" />}
                     </td>
                   ))}
                 </tr>

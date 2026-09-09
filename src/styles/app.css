@@ -54,12 +54,33 @@
   --color-brand-800: #1E3A8A;
   --color-brand-900: #0B2A5B;
 
-  --color-ink-900: #0B1F3A;
-  --color-ink-700: #2C3E5C;
-  --color-ink-500: #5B6B82;
-  --color-ink-300: #B7C3D3;
-  --color-ink-100: #E6ECF4;
-  --color-ink-50: #F5F8FC;
+  /* ★ POLARITY (niche arc Stage 6, 2026-09-09): the neutral ramps read a --fam-* var first. On a light site
+     nothing sets them and every value is the exact one below (byte-identical). On a DARK site (the
+     scaffolder derives ONE flag from the background's luminance — family-theme.ts, never a per-niche switch)
+     the scaffolder emits the ramp inverted from the owner's foreground/background, so ink-900 text becomes
+     the light foreground and ink-50 grounds become the lifted dark ground, without renaming a class.
+     (ink-800 / ink-600 are used in 17 places and were never defined — those classes paint nothing and the
+     text inherits; defining them now would move light sites, so they stay undefined: the elevation arc's.) */
+  --color-ink-900: var(--fam-ink-900, #0B1F3A);
+  --color-ink-700: var(--fam-ink-700, #2C3E5C);
+  --color-ink-500: var(--fam-ink-500, #5B6B82);
+  --color-ink-300: var(--fam-ink-300, #B7C3D3);
+  --color-ink-100: var(--fam-ink-100, #E6ECF4);
+  --color-ink-50: var(--fam-ink-50, #F5F8FC);
+  --color-slate-50: var(--fam-slate-50, oklch(98.4% 0.003 247.858));
+  --color-slate-100: var(--fam-slate-100, oklch(96.8% 0.007 247.896));
+  --color-slate-200: var(--fam-slate-200, oklch(92.9% 0.013 255.508));
+  --color-slate-300: var(--fam-slate-300, oklch(86.9% 0.022 252.894));
+  --color-slate-400: var(--fam-slate-400, oklch(70.4% 0.04 256.788));
+  --color-slate-500: var(--fam-slate-500, oklch(55.4% 0.046 257.417));
+  --color-slate-600: var(--fam-slate-600, oklch(44.6% 0.043 257.281));
+  --color-slate-700: var(--fam-slate-700, oklch(37.2% 0.044 257.287));
+  --color-slate-800: var(--fam-slate-800, oklch(27.9% 0.041 260.031));
+  --color-slate-900: var(--fam-slate-900, oklch(20.8% 0.042 265.755));
+  --color-slate-950: var(--fam-slate-950, oklch(12.9% 0.042 264.695));
+  --color-gray-400: var(--fam-slate-400, oklch(70.7% 0.022 261.325));
+  --color-gray-600: var(--fam-slate-600, oklch(44.6% 0.03 256.802));
+  --color-gray-700: var(--fam-slate-700, oklch(37.3% 0.034 259.733));
 
   --color-success-600: #16A34A;
   --color-success-100: #DCFCE7;
@@ -100,6 +121,27 @@
   --color-fam-accent-tint: var(--fam-accent-tint, oklch(90.5% 0.093 164.15));
   --color-fam-accent-deep: var(--fam-accent-deep, var(--accent-ramp-dark, oklch(50.8% 0.118 165.612)));
   --color-fam-accent-on-dark: var(--fam-accent-on-dark, var(--accent-ramp-light, oklch(95% 0.052 163.051)));
+  /* Stage 6 — the roles the literal sweep landed on. Light defaults = the exact literals they replaced.
+     page        the body ground (white; the owner's background on a dark site)
+     on-dark     text on a dark or brand-coloured ground (text-white → text-fam-on-dark)
+     statement   the elegant/corporate dark-statement surfaces (hero, header, band): ground / lifted / card / hairline
+     on-statement text on them: ivory / muted / faint — the scaffolder sets the family's own set (elegant espresso,
+                 corporate navy) and, on a dark site, derives all of it from the palette.
+     line-2/-3, surface-3/-4/-5  the last light greys the components painted as hexes. */
+  --color-fam-page: var(--fam-page, #FFFFFF);
+  --color-fam-on-dark: var(--fam-on-dark, #FFFFFF);
+  --color-fam-statement: var(--fam-statement, #1A1410);
+  --color-fam-statement-2: var(--fam-statement-2, #241C16);
+  --color-fam-statement-3: var(--fam-statement-3, #2C221B);
+  --color-fam-statement-hairline: var(--fam-statement-hairline, #3A2E24);
+  --color-fam-on-statement: var(--fam-on-statement, #F2E8DC);
+  --color-fam-on-statement-muted: var(--fam-on-statement-muted, #B8A893);
+  --color-fam-on-statement-faint: var(--fam-on-statement-faint, #9A8E7C);
+  --color-fam-line-2: var(--fam-line-2, #CBD5E1);
+  --color-fam-line-3: var(--fam-line-3, #D5D9DF);
+  --color-fam-surface-3: var(--fam-surface-3, #EEF2F6);
+  --color-fam-surface-4: var(--fam-surface-4, #F1F5F9);
+  --color-fam-surface-5: var(--fam-surface-5, #FAFBFC);
 }
 
 :root {
@@ -140,7 +182,7 @@
   }
 
   body {
-    background-color: #FFFFFF;
+    background-color: var(--color-fam-page);
     color: var(--color-ink-700);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;

@@ -28,7 +28,7 @@ export function PricingListBlock({
   const plans = (site as { plans?: PricingPlan[] }).plans
   if (!plans || plans.length === 0) return null
   return (
-    <section className="bg-white">
+    <section className="bg-fam-card">
       <div className="container-x py-section">
         <div className="max-w-2xl">
           <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">
@@ -46,7 +46,7 @@ export function PricingListBlock({
             <div
               key={`${p.name}-${i}`}
               className={`grid grid-cols-1 items-center gap-4 border-b border-fam-hairline p-6 last:border-0 md:grid-cols-12 md:gap-6 ${
-                p.highlighted ? 'bg-fam-accent-soft' : 'bg-white'
+                p.highlighted ? 'bg-fam-accent-soft' : 'bg-fam-card'
               }`}
             >
               <div className="md:col-span-3">

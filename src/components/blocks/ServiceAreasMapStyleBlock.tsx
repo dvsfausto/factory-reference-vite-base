@@ -46,7 +46,7 @@ export function ServiceAreasMapStyleBlock({
   const homeIndex = Math.max(0, areas.findIndex((a) => a.tier === 'home-base'))
   const pins = areas.slice(0, 6)
   return (
-    <section className="bg-white">
+    <section className="bg-fam-card">
       <div className="container-x py-section">
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
           <div>
@@ -100,8 +100,8 @@ export function ServiceAreasMapStyleBlock({
                   <span
                     className={`inline-flex items-center gap-1.5 rounded-full font-display font-semibold shadow-lg backdrop-blur-sm ${
                       isHome
-                        ? 'bg-fam-accent px-3.5 py-2 text-sm text-white'
-                        : 'bg-white/90 px-3 py-1.5 text-xs text-fam-ink'
+                        ? 'bg-fam-accent px-3.5 py-2 text-sm text-fam-on-dark'
+                        : 'bg-fam-card/90 px-3 py-1.5 text-xs text-fam-ink'
                     }`}
                   >
                     <MapPin className={isHome ? 'h-4 w-4' : 'h-3.5 w-3.5 text-fam-accent-text'} />

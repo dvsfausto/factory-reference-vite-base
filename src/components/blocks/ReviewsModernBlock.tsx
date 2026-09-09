@@ -29,14 +29,14 @@ export function ReviewsModernBlock({
   const previewReviews = reviews.slice(0, 6)
   if (previewReviews.length === 0) return null
   return (
-    <section className="bg-white">
+    <section className="bg-fam-card">
       <div className="container-x py-section">
         <SectionHeaderModern label={label} heading={heading} scriptAccent={scriptAccent} />
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {previewReviews.map((r) => (
             <figure
               key={r.id}
-              className="flex flex-col rounded-2xl border border-fam-hairline bg-white p-7"
+              className="flex flex-col rounded-2xl border border-fam-hairline bg-fam-card p-7"
             >
               <div className="flex gap-0.5">
                 {Array.from({ length: r.rating ?? 5 }).map((_, i) => (

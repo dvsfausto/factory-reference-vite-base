@@ -48,7 +48,7 @@ export function ReviewsMasonryBlock({
           {cards.map((r) => (
             <figure
               key={r.id}
-              className="mb-6 flex break-inside-avoid flex-col rounded-2xl border border-fam-hairline bg-white p-7"
+              className="mb-6 flex break-inside-avoid flex-col rounded-2xl border border-fam-hairline bg-fam-card p-7"
             >
               <div className="flex gap-0.5">
                 {Array.from({ length: r.rating ?? 5 }).map((_, i) => (

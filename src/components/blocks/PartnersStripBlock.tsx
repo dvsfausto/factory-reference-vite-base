@@ -21,7 +21,7 @@ export function PartnersStripBlock({
   const partners = (site as { partners?: Partner[] }).partners
   if (!partners || partners.length === 0) return null
   return (
-    <section className="border-y border-fam-hairline bg-white">
+    <section className="border-y border-fam-hairline bg-fam-card">
       <div className="container-x py-band">
         <div className="flex flex-col items-center gap-6 md:flex-row md:gap-10">
           <span className="shrink-0 font-display text-xs font-semibold uppercase tracking-[0.2em] text-fam-ink-faint">{label}</span>

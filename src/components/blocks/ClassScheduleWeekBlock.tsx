@@ -34,7 +34,7 @@ export function ClassScheduleWeekBlock({
   for (const s of sessions) byDay.set(s.day, [...(byDay.get(s.day) ?? []), s].sort((a, b) => a.start.localeCompare(b.start)))
   const days = order.filter((d) => byDay.has(d))
   return (
-    <section className="bg-white">
+    <section className="bg-fam-card">
       <div className="container-x py-section">
         <div className="max-w-2xl">
           <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">
@@ -53,7 +53,7 @@ export function ClassScheduleWeekBlock({
               <h3 className="font-display text-lg font-semibold text-fam-ink">{dayNames[d]}</h3>
               <ul className="mt-4 space-y-3">
                 {byDay.get(d)!.map((s, i) => (
-                  <li key={`${s.serviceName}-${s.start}-${i}`} className="rounded-xl border border-fam-hairline bg-white p-4">
+                  <li key={`${s.serviceName}-${s.start}-${i}`} className="rounded-xl border border-fam-hairline bg-fam-card p-4">
                     <div className="flex items-center gap-2 text-sm font-semibold text-fam-accent-text-strong">
                       <Clock className="h-4 w-4" /> {fmt(s.start)}{s.end ? ` – ${fmt(s.end)}` : ''}
                     </div>

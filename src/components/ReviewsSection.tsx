@@ -17,7 +17,7 @@ export function ReviewsSection({
   const display = getHomepageReviews(count)
   const agg = getAggregateRating()
   return (
-    <section className="bg-white">
+    <section className="bg-fam-card">
       <div className="mx-auto max-w-6xl px-4 py-16">
         <div className="text-center">
           <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">

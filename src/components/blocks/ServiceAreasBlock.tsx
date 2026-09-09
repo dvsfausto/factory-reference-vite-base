@@ -23,7 +23,7 @@ export function ServiceAreasBlock({
 }) {
   if (areas.length === 0) return null
   return (
-    <section className="bg-white">
+    <section className="bg-fam-card">
       <div className="container-x py-section">
         <SectionHeader
           label={label}
@@ -37,7 +37,7 @@ export function ServiceAreasBlock({
               key={a.slug}
               to="/areas/$slug"
               params={{ slug: a.slug }}
-              className="badge-pill bg-white border border-ink-100 text-ink-700 hover:border-brand-600 hover:text-brand-600 normal-case tracking-normal text-sm"
+              className="badge-pill bg-fam-card border border-ink-100 text-ink-700 hover:border-brand-600 hover:text-brand-600 normal-case tracking-normal text-sm"
             >
               <MapPin className="h-3.5 w-3.5" /> {a.name}
             </Link>

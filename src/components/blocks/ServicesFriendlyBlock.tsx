@@ -49,7 +49,7 @@ export function ServicesFriendlyBlock({
               key={s.slug}
               to="/services/$slug"
               params={{ slug: s.slug }}
-              className="group flex flex-col overflow-hidden rounded-3xl border border-fam-hairline bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl"
+              className="group flex flex-col overflow-hidden rounded-3xl border border-fam-hairline bg-fam-card shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl"
             >
               <div className="aspect-[4/3] overflow-hidden">
                 <img

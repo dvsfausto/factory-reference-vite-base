@@ -40,7 +40,7 @@ export function ReviewsGlassWallBlock({
   if (previewReviews.length === 0) return null
 
   return (
-    <section className="relative overflow-hidden bg-white">
+    <section className="relative overflow-hidden bg-fam-card">
       <div className="container-x py-section">
         <SectionHeader label={label} heading={heading} scriptAccent={scriptAccent} />
 
@@ -63,7 +63,7 @@ export function ReviewsGlassWallBlock({
                   ease: [0.16, 1, 0.3, 1],
                 }}
                 whileHover={reduce ? undefined : { y: -4 }}
-                className="group relative mb-5 block break-inside-avoid overflow-hidden rounded-2xl border bg-white/80 p-6 backdrop-blur-md transition-shadow"
+                className="group relative mb-5 block break-inside-avoid overflow-hidden rounded-2xl border bg-fam-card/80 p-6 backdrop-blur-md transition-shadow"
                 style={{ borderColor: 'var(--wow-hairline)', boxShadow: 'var(--wow-shadow-soft)' }}
               >
                 <div

@@ -30,7 +30,7 @@ export function ServiceAreasBoldBlock({
 }) {
   if (areas.length === 0) return null
   return (
-    <section className="bg-white">
+    <section className="bg-fam-card">
       <div className="container-x py-section">
         <SectionHeaderBold label={label} heading={heading} scriptAccent={scriptAccent} body={body} />
         <div className="flex flex-wrap gap-2">

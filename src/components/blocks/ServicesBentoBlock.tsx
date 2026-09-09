@@ -63,7 +63,7 @@ export function ServicesBentoBlock({
   }
 
   return (
-    <section className="bg-white">
+    <section className="bg-fam-card">
       <div className="container-x py-section">
         <div className="max-w-2xl">
           <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">
@@ -99,10 +99,10 @@ export function ServicesBentoBlock({
                 />
                 <div className="absolute inset-0 -z-10 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent" />
                 <div className="flex items-end justify-between gap-3 p-6">
-                  <h3 className={`font-display font-semibold tracking-tight text-white drop-shadow-sm ${i === 0 ? 'text-2xl sm:text-3xl' : 'text-xl'}`}>
+                  <h3 className={`font-display font-semibold tracking-tight text-fam-on-dark drop-shadow-sm ${i === 0 ? 'text-2xl sm:text-3xl' : 'text-xl'}`}>
                     {s.displayName}
                   </h3>
-                  <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/10 text-white backdrop-blur-sm transition-colors group-hover:bg-fam-accent">
+                  <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-fam-card/10 text-fam-on-dark backdrop-blur-sm transition-colors group-hover:bg-fam-accent">
                     <ArrowUpRight className="h-4 w-4" />
                   </span>
                 </div>

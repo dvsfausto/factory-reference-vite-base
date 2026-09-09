@@ -20,7 +20,7 @@ export function FAQSection({ faqs, title = tr('section.faq'), intro }: Props) {
   // Tailwind never scans, so separators switch to per-item border-t (the border
   // token IS a literal in the map → scanned).
   const T = resolveCharacterTokens();
-  const secPlain = T?.section ?? "bg-white";
+  const secPlain = T?.section ?? "bg-fam-card";
   const tStrong = T?.text ?? "text-ink-900";
   const tBody = T?.text ?? "text-ink-700";
   const tMuted = T?.muted ?? "text-ink-500";

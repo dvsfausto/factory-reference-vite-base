@@ -88,33 +88,33 @@ export function FormBrandSplitBlock({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-10%' }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="grid grid-cols-1 overflow-hidden rounded-[1.75rem] border bg-white lg:grid-cols-2"
+          className="grid grid-cols-1 overflow-hidden rounded-[1.75rem] border bg-fam-card lg:grid-cols-2"
           style={{ borderColor: 'var(--wow-hairline)', boxShadow: 'var(--wow-shadow-lift)' }}
         >
           {/* Brand-gradient info panel, real contact details only. */}
           <div
-            className="relative flex flex-col p-9 text-white md:p-12"
+            className="relative flex flex-col p-9 text-fam-on-dark md:p-12"
             style={{ backgroundImage: 'var(--wow-grad-brand)' }}
           >
-            <span className="inline-flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.2em] text-white/80">
-              <span className="h-2.5 w-2.5 rounded-full bg-white/70" />
+            <span className="inline-flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.2em] text-fam-on-dark/80">
+              <span className="h-2.5 w-2.5 rounded-full bg-fam-card/70" />
               {label}
             </span>
-            <Heading className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight text-white sm:text-5xl">
+            <Heading className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight text-fam-on-dark sm:text-5xl">
               {heading}
             </Heading>
-            {body && <p className="mt-4 max-w-md leading-relaxed text-white/85">{body}</p>}
+            {body && <p className="mt-4 max-w-md leading-relaxed text-fam-on-dark/85">{body}</p>}
 
             <div className="mt-10 flex flex-col gap-5">
               {rows.map((r, i) => (
                 <div key={i} className="flex items-center gap-4">
-                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-white/15 text-white backdrop-blur-sm">
+                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-fam-card/15 text-fam-on-dark backdrop-blur-sm">
                     <r.Icon className="h-5 w-5" />
                   </span>
                   {r.href ? (
-                    <a href={r.href} className="font-display font-medium text-white hover:text-white/80">{r.label}</a>
+                    <a href={r.href} className="font-display font-medium text-fam-on-dark hover:text-fam-on-dark/80">{r.label}</a>
                   ) : (
-                    <span className="font-display font-medium text-white">{r.label}</span>
+                    <span className="font-display font-medium text-fam-on-dark">{r.label}</span>
                   )}
                 </div>
               ))}

@@ -18,7 +18,7 @@ import { PROJECTS, type GalleryItem } from '~/data/projects'
 function Slider({ item }: { item: GalleryItem }) {
   const [pos, setPos] = useState(50)
   return (
-    <figure className="overflow-hidden rounded-2xl border border-fam-hairline bg-white">
+    <figure className="overflow-hidden rounded-2xl border border-fam-hairline bg-fam-card">
       <div className="relative aspect-[4/3] select-none">
         <img src={item.afterImage} alt={`${item.title}, after`} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
         <img
@@ -28,9 +28,9 @@ function Slider({ item }: { item: GalleryItem }) {
           className="absolute inset-0 h-full w-full object-cover"
           style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}
         />
-        <span className="absolute left-3 top-3 rounded-md bg-white/90 px-2 py-1 font-display text-[10px] font-semibold uppercase tracking-[0.16em] text-fam-ink backdrop-blur-sm">{tr('gallery.before')}</span>
-        <span className="absolute right-3 top-3 rounded-md bg-fam-accent px-2 py-1 font-display text-[10px] font-semibold uppercase tracking-[0.16em] text-white">{tr('gallery.after')}</span>
-        <div className="pointer-events-none absolute inset-y-0 w-0.5 bg-white shadow" style={{ left: `${pos}%` }} />
+        <span className="absolute left-3 top-3 rounded-md bg-fam-card/90 px-2 py-1 font-display text-[10px] font-semibold uppercase tracking-[0.16em] text-fam-ink backdrop-blur-sm">{tr('gallery.before')}</span>
+        <span className="absolute right-3 top-3 rounded-md bg-fam-accent px-2 py-1 font-display text-[10px] font-semibold uppercase tracking-[0.16em] text-fam-on-dark">{tr('gallery.after')}</span>
+        <div className="pointer-events-none absolute inset-y-0 w-0.5 bg-fam-card shadow" style={{ left: `${pos}%` }} />
         <input
           type="range"
           min={0}
@@ -63,7 +63,7 @@ export function GalleryBeforeAfterBlock({
   const pairs = projects.filter((p) => p.beforeImage && p.afterImage)
   if (pairs.length === 0) return null
   return (
-    <section className="bg-white">
+    <section className="bg-fam-card">
       <div className="container-x py-section">
         <div className="max-w-2xl">
           <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">

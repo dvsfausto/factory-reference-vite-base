@@ -52,7 +52,7 @@ export function HeroBoldFullbleedBlock({
   ctaLabel?: string
 }) {
   return (
-    <section className="relative isolate flex flex-col overflow-hidden bg-ink-900 text-white">
+    <section className="relative isolate flex flex-col overflow-hidden bg-ink-900 text-fam-on-dark">
       {/* Full-bleed jobsite/build photo, "we build things", not a boutique. */}
       <img
         src={imageSrc(imageUrl)}
@@ -76,7 +76,7 @@ export function HeroBoldFullbleedBlock({
           </span>
 
           {/* Heavy UPPERCASE Oswald headline, the whole line, no script split. */}
-          <h1 className="mt-5 font-display text-5xl font-bold uppercase leading-[0.95] tracking-tight text-white sm:text-6xl lg:text-7xl">
+          <h1 className="mt-5 font-display text-5xl font-bold uppercase leading-[0.95] tracking-tight text-fam-on-dark sm:text-6xl lg:text-7xl">
             {headline}
           </h1>
 
@@ -104,7 +104,7 @@ export function HeroBoldFullbleedBlock({
             {/* Secondary CTA: outline phone, same square structural corners. */}
             {hasPhone(site.phone) && (<a
               href={`tel:${site.phone}`}
-              className="inline-flex h-[54px] items-center gap-2 rounded-md border border-white/35 px-7 font-semibold text-white transition-colors hover:border-white hover:bg-white/10"
+              className="inline-flex h-[54px] items-center gap-2 rounded-md border border-fam-card/35 px-7 font-semibold text-fam-on-dark transition-colors hover:border-fam-card hover:bg-fam-card/10"
             >
               <Phone className="h-4 w-4" /> {site.phoneDisplay}
             </a>)}
@@ -115,7 +115,7 @@ export function HeroBoldFullbleedBlock({
       {/* Full-width steel-blue trust band, a contractor's banner stripe. The
           most unmistakable carrier of the DNA accent color. */}
       <div className="relative bg-fam-accent">
-        <div className="container-x flex flex-wrap items-center gap-x-8 gap-y-2 py-3.5 text-xs font-semibold uppercase tracking-[0.14em] text-white">
+        <div className="container-x flex flex-wrap items-center gap-x-8 gap-y-2 py-3.5 text-xs font-semibold uppercase tracking-[0.14em] text-fam-on-dark">
           {trustItems.map((t) => (
             <span key={t} className="inline-flex items-center gap-2">
               <Check className="h-4 w-4" /> {t}

@@ -187,7 +187,7 @@ export function LeadForm({
     <form
       onSubmit={onSubmit}
       noValidate
-      className="rounded-2xl bg-white p-6 shadow-sm sm:p-8"
+      className="rounded-2xl bg-fam-card p-6 shadow-sm sm:p-8"
     >
       <h3 className="text-2xl font-bold text-slate-900">{heading}</h3>
       <p className="mt-2 text-sm text-slate-600">{sublabel}</p>
@@ -231,7 +231,7 @@ export function LeadForm({
             value={form.message}
             onChange={update('message')}
             maxLength={1000}
-            className="mt-1 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-base text-slate-900 outline-none transition-colors focus:border-fam-accent focus:ring-2 focus:ring-fam-accent-soft-2"
+            className="mt-1 w-full rounded-md border border-slate-300 bg-fam-card px-3 py-2 text-base text-slate-900 outline-none transition-colors focus:border-fam-accent focus:ring-2 focus:ring-fam-accent-soft-2"
           />
         </div>
       </div>
@@ -239,7 +239,7 @@ export function LeadForm({
       <button
         type="submit"
         disabled={status === 'submitting'}
-        className="mt-6 inline-flex w-full items-center justify-center rounded-md bg-fam-accent px-6 py-3 font-semibold text-white shadow-sm transition-colors hover:bg-fam-accent-deep disabled:opacity-60"
+        className="mt-6 inline-flex w-full items-center justify-center rounded-md bg-fam-accent px-6 py-3 font-semibold text-fam-on-dark shadow-sm transition-colors hover:bg-fam-accent-deep disabled:opacity-60"
       >
         {status === 'submitting' ? tr('form.sending') : submitLabel}
       </button>
@@ -311,7 +311,7 @@ function Field({
            screen reader, and colour alone fails anyone who cannot distinguish it. */
         aria-invalid={error ? true : undefined}
         aria-describedby={error ? `${id}-error` : undefined}
-        className={`mt-1 w-full rounded-md border bg-white px-3 py-2 text-base text-slate-900 outline-none transition-colors ${
+        className={`mt-1 w-full rounded-md border bg-fam-card px-3 py-2 text-base text-slate-900 outline-none transition-colors ${
           error
             ? 'border-red-500 focus:border-red-600 focus:ring-2 focus:ring-red-100'
             : 'border-slate-300 focus:border-fam-accent focus:ring-2 focus:ring-fam-accent-soft-2'

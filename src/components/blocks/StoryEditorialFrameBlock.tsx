@@ -37,7 +37,7 @@ export function StoryEditorialFrameBlock({
   if (!prose) return null
 
   return (
-    <section className="bg-white">
+    <section className="bg-fam-card">
       <div className="container-x py-section">
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
           {/* Copy column */}
@@ -91,7 +91,7 @@ export function StoryEditorialFrameBlock({
               style={{ backgroundImage: 'var(--wow-grad-brand)', filter: 'blur(56px)' }}
             />
             <div
-              className="overflow-hidden rounded-[1.75rem] border bg-white"
+              className="overflow-hidden rounded-[1.75rem] border bg-fam-card"
               style={{ borderColor: 'var(--wow-hairline)', boxShadow: 'var(--wow-shadow-lift)' }}
             >
               <img

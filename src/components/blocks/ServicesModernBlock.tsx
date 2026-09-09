@@ -62,7 +62,7 @@ export function ServicesModernBlock({
                 key={s.slug}
                 to="/services/$slug"
                 params={{ slug: s.slug }}
-                className="zi-rise group flex items-center gap-4 rounded-lg border border-fam-hairline bg-white p-3 transition-colors hover:border-fam-accent"
+                className="zi-rise group flex items-center gap-4 rounded-lg border border-fam-hairline bg-fam-card p-3 transition-colors hover:border-fam-accent"
               >
                 <div className="zi-media h-16 w-16 shrink-0 overflow-hidden rounded-md">
                   <img src={serviceImageUrl(s.slug)} alt={s.name} loading="lazy" width={128} height={128} className="h-full w-full object-cover" />

@@ -24,7 +24,7 @@ export function FinancingCardsBlock({
   const fin = (site as { financing?: Financing }).financing
   if (!fin) return null
   return (
-    <section className="bg-white">
+    <section className="bg-fam-card">
       <div className="container-x py-section">
         <div className="max-w-2xl">
           <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">
@@ -36,7 +36,7 @@ export function FinancingCardsBlock({
         </div>
         <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {fin.options.map((o, i) => (
-            <div key={`${o}-${i}`} className="flex flex-col rounded-2xl border border-fam-hairline bg-white p-7">
+            <div key={`${o}-${i}`} className="flex flex-col rounded-2xl border border-fam-hairline bg-fam-card p-7">
               <span className="grid h-11 w-11 place-items-center rounded-xl bg-fam-accent-soft text-fam-accent-text"><Wallet className="h-5 w-5" /></span>
               <p className="mt-5 flex-1 font-display text-lg font-medium leading-snug text-fam-ink">{o}</p>
             </div>

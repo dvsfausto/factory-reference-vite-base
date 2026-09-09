@@ -24,7 +24,7 @@ export function PackagesBundleCardsBlock({
   const packages = (site as { packages?: ServicePackage[] }).packages
   if (!packages || packages.length === 0) return null
   return (
-    <section className="bg-white">
+    <section className="bg-fam-card">
       <div className="container-x py-section">
         <div className="max-w-2xl">
           <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">
@@ -36,7 +36,7 @@ export function PackagesBundleCardsBlock({
         </div>
         <div className="mt-12 grid grid-cols-1 items-start gap-6 md:grid-cols-3">
           {packages.slice(0, 3).map((p, i) => (
-            <div key={`${p.name}-${i}`} className={`flex flex-col rounded-3xl border bg-white p-8 ${p.popular ? 'border-fam-accent ring-1 ring-fam-accent' : 'border-fam-hairline'}`}>
+            <div key={`${p.name}-${i}`} className={`flex flex-col rounded-3xl border bg-fam-card p-8 ${p.popular ? 'border-fam-accent ring-1 ring-fam-accent' : 'border-fam-hairline'}`}>
               <div className="flex items-center justify-between gap-3">
                 <span className="grid h-11 w-11 place-items-center rounded-xl bg-fam-accent-soft text-fam-accent-text"><Package className="h-5 w-5" /></span>
                 {p.popular && <span className="rounded-full bg-fam-accent-soft px-3 py-1 font-display text-xs font-semibold text-fam-accent-text-strong">Most popular</span>}

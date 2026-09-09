@@ -57,7 +57,7 @@ export function FaqGlassAccordionBlock({
               return (
                 <motion.div
                   key={i}
-                  className="overflow-hidden rounded-2xl border bg-white/80 backdrop-blur-md transition-shadow"
+                  className="overflow-hidden rounded-2xl border bg-fam-card/80 backdrop-blur-md transition-shadow"
                   style={{
                     borderColor: 'var(--wow-hairline)',
                     boxShadow: isOpen ? 'var(--wow-shadow-glow)' : 'none',
@@ -81,7 +81,7 @@ export function FaqGlassAccordionBlock({
                       {faq.question}
                     </span>
                     <span
-                      className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-white transition-transform duration-300 ${
+                      className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-fam-on-dark transition-transform duration-300 ${
                         isOpen ? 'rotate-45' : ''
                       }`}
                       style={{ backgroundImage: 'var(--wow-grad-brand)' }}

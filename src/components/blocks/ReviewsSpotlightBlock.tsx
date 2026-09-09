@@ -36,7 +36,7 @@ export function ReviewsSpotlightBlock({
   const [hero, ...rest] = all
   const supporting = rest.slice(0, 3)
   return (
-    <section className="bg-white">
+    <section className="bg-fam-card">
       <div className="container-x py-section">
         <div className="max-w-2xl">
           <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">
@@ -65,7 +65,7 @@ export function ReviewsSpotlightBlock({
               {hero.avatar ? (
                 <img src={hero.avatar} alt={hero.author} className="h-12 w-12 rounded-full object-cover" />
               ) : (
-                <span className="grid h-12 w-12 place-items-center rounded-full bg-fam-accent font-display font-semibold text-white">
+                <span className="grid h-12 w-12 place-items-center rounded-full bg-fam-accent font-display font-semibold text-fam-on-dark">
                   {hero.author.slice(0, 1)}
                 </span>
               )}

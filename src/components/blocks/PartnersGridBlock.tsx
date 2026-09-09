@@ -35,7 +35,7 @@ export function PartnersGridBlock({
         </div>
         <div className="mt-12 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-fam-hairline bg-fam-hairline sm:grid-cols-3 lg:grid-cols-4">
           {partners.map((p, i) => (
-            <div key={`${p.name}-${i}`} className="flex min-h-[120px] items-center justify-center bg-white p-8">
+            <div key={`${p.name}-${i}`} className="flex min-h-[120px] items-center justify-center bg-fam-card p-8">
               {p.logo ? (
                 <img src={p.logo} alt={p.name} loading="lazy" className="h-10 w-auto opacity-70 grayscale transition-all hover:opacity-100 hover:grayscale-0" />
               ) : (

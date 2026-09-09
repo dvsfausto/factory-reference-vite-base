@@ -39,10 +39,10 @@ export function ServiceAreasBrandPanelBlock({
   if (areas.length === 0) return null
 
   return (
-    <section className="bg-white">
+    <section className="bg-fam-card">
       <div className="container-x py-section">
         <div
-          className="relative overflow-hidden rounded-[1.75rem] text-white"
+          className="relative overflow-hidden rounded-[1.75rem] text-fam-on-dark"
           style={{
             backgroundImage: 'var(--wow-grad-brand)',
             boxShadow: 'var(--wow-shadow-lift)',
@@ -51,26 +51,26 @@ export function ServiceAreasBrandPanelBlock({
           {/* Ambient inner glow. */}
           <div
             aria-hidden
-            className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-white/15 blur-3xl"
+            className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-fam-card/15 blur-3xl"
           />
           <div className="relative grid gap-10 p-8 md:p-12 lg:grid-cols-12 lg:gap-14">
             {/* Copy rail. */}
             <div className="lg:col-span-4">
               {label && (
-                <span className="inline-flex items-center rounded-full bg-white/15 px-3 py-1 text-xs font-bold uppercase tracking-[0.16em]">
+                <span className="inline-flex items-center rounded-full bg-fam-card/15 px-3 py-1 text-xs font-bold uppercase tracking-[0.16em]">
                   {label}
                 </span>
               )}
-              <h2 className="mt-4 text-white">
+              <h2 className="mt-4 text-fam-on-dark">
                 {heading}
                 {scriptAccent && (
-                  <> <span className="font-script text-[1.1em] text-white/90">{scriptAccent}</span></>
+                  <> <span className="font-script text-[1.1em] text-fam-on-dark/90">{scriptAccent}</span></>
                 )}
               </h2>
-              {body && <p className="mt-3 max-w-sm text-white/80">{body}</p>}
+              {body && <p className="mt-3 max-w-sm text-fam-on-dark/80">{body}</p>}
               <Link
                 to="/areas"
-                className="mt-6 inline-flex h-11 items-center gap-2 rounded-full bg-white/95 px-6 font-semibold text-brand-800 transition-transform hover:-translate-y-0.5"
+                className="mt-6 inline-flex h-11 items-center gap-2 rounded-full bg-fam-card/95 px-6 font-semibold text-brand-800 transition-transform hover:-translate-y-0.5"
                 style={{ boxShadow: 'var(--wow-shadow-glow)' }}
               >
                 {moreLink} <ArrowRight className="h-4 w-4" />
@@ -79,7 +79,7 @@ export function ServiceAreasBrandPanelBlock({
 
             {/* Area columns with hairline dividers. */}
             <motion.ul
-              className="grid grid-cols-1 gap-x-8 border-t border-white/20 pt-2 sm:grid-cols-2 lg:col-span-8 lg:border-l lg:border-t-0 lg:pl-10 lg:pt-0"
+              className="grid grid-cols-1 gap-x-8 border-t border-fam-card/20 pt-2 sm:grid-cols-2 lg:col-span-8 lg:border-l lg:border-t-0 lg:pl-10 lg:pt-0"
               initial="hidden"
               whileInView="show"
               viewport={{ once: true, margin: '-10%' }}
@@ -93,7 +93,7 @@ export function ServiceAreasBrandPanelBlock({
               {areas.map((a) => (
                 <motion.li
                   key={a.slug}
-                  className="border-b border-white/15"
+                  className="border-b border-fam-card/15"
                   variants={{
                     hidden: reduce ? { opacity: 1 } : { opacity: 0, x: 12 },
                     show: {
@@ -106,10 +106,10 @@ export function ServiceAreasBrandPanelBlock({
                   <Link
                     to="/areas/$slug"
                     params={{ slug: a.slug }}
-                    className="group flex items-center gap-3 py-3.5 transition-colors hover:text-white"
+                    className="group flex items-center gap-3 py-3.5 transition-colors hover:text-fam-on-dark"
                   >
-                    <MapPin className="h-4 w-4 shrink-0 text-white/70 transition-transform group-hover:scale-110" />
-                    <span className="font-medium text-white/90 group-hover:text-white">
+                    <MapPin className="h-4 w-4 shrink-0 text-fam-on-dark/70 transition-transform group-hover:scale-110" />
+                    <span className="font-medium text-fam-on-dark/90 group-hover:text-fam-on-dark">
                       {a.name}
                     </span>
                     <ArrowRight className="ml-auto h-4 w-4 -translate-x-1 opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100" />

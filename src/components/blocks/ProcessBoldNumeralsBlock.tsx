@@ -36,7 +36,7 @@ export function ProcessBoldNumeralsBlock({
   const items = steps.slice(0, 4)
 
   return (
-    <section className="relative overflow-hidden bg-white">
+    <section className="relative overflow-hidden bg-fam-card">
       <div className="container-x py-section">
         <div className="max-w-2xl">
           <span className="inline-flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.2em] text-brand-700">
@@ -63,7 +63,7 @@ export function ProcessBoldNumeralsBlock({
                 viewport={{ once: true, margin: '-10%' }}
                 transition={{ duration: 0.55, delay: reduce ? 0 : i * 0.1, ease: [0.16, 1, 0.3, 1] }}
                 whileHover={reduce ? undefined : { y: -6 }}
-                className="group relative flex flex-col overflow-hidden rounded-[1.5rem] border bg-white p-7 pt-10"
+                className="group relative flex flex-col overflow-hidden rounded-[1.5rem] border bg-fam-card p-7 pt-10"
                 style={{ borderColor: 'var(--wow-hairline)', boxShadow: 'var(--wow-shadow-soft)' }}
               >
                 {/* Oversized brand-gradient watermark numeral. */}
@@ -75,7 +75,7 @@ export function ProcessBoldNumeralsBlock({
                   {i + 1}
                 </span>
                 <span
-                  className="relative grid h-12 w-12 place-items-center rounded-xl text-white"
+                  className="relative grid h-12 w-12 place-items-center rounded-xl text-fam-on-dark"
                   style={{ backgroundImage: 'var(--wow-grad-brand)', boxShadow: 'var(--wow-shadow-glow)' }}
                 >
                   {Icon ? <Icon className="h-5 w-5" /> : <span className="font-display text-lg font-semibold">{i + 1}</span>}

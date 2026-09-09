@@ -67,7 +67,7 @@ export function CtaGlassPanelBlock({
             style={{ backgroundImage: 'var(--wow-grad-brand)', filter: 'blur(52px)' }}
           />
           <div
-            className="overflow-hidden rounded-[1.75rem] border bg-white/80 px-8 py-12 text-center backdrop-blur-md md:px-14 md:py-16"
+            className="overflow-hidden rounded-[1.75rem] border bg-fam-card/80 px-8 py-12 text-center backdrop-blur-md md:px-14 md:py-16"
             style={{ borderColor: 'var(--wow-hairline)', boxShadow: 'var(--wow-shadow-lift)' }}
           >
             <span

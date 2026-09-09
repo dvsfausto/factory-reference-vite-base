@@ -19,11 +19,11 @@ export function NotFound({ children }: { children?: any }) {
       <p className="flex items-center gap-2 flex-wrap">
         <button
           onClick={() => window.history.back()}
-          className="bg-fam-accent text-white px-2 py-1 rounded-sm uppercase font-black text-sm"
+          className="bg-fam-accent text-fam-on-dark px-2 py-1 rounded-sm uppercase font-black text-sm"
         >{tr('error.goBack')}</button>
         <Link
           to="/"
-          className="bg-cyan-600 text-white px-2 py-1 rounded-sm uppercase font-black text-sm"
+          className="bg-cyan-600 text-fam-on-dark px-2 py-1 rounded-sm uppercase font-black text-sm"
         >{tr('error.startOver')}</Link>
       </p>
     </div>

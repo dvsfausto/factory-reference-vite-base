@@ -445,7 +445,7 @@ export function BookingWizardBlock({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-10%' }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="relative mt-8 overflow-hidden rounded-[1.5rem] border bg-white/85 p-6 backdrop-blur-md sm:p-8 md:p-10"
+            className="relative mt-8 overflow-hidden rounded-[1.5rem] border bg-fam-card/85 p-6 backdrop-blur-md sm:p-8 md:p-10"
             style={{
               borderColor: 'var(--wow-hairline)',
               boxShadow: 'var(--wow-shadow-lift)',
@@ -528,7 +528,7 @@ export function BookingWizardBlock({
                               setTime(null)
                               setStep('date')
                             }}
-                            className="group flex items-center justify-between gap-4 rounded-2xl border bg-white px-5 py-4 text-left transition-all hover:-translate-y-0.5"
+                            className="group flex items-center justify-between gap-4 rounded-2xl border bg-fam-card px-5 py-4 text-left transition-all hover:-translate-y-0.5"
                             style={{ borderColor: 'var(--wow-hairline)' }}
                           >
                             <span>
@@ -723,7 +723,7 @@ export function BookingWizardBlock({
                         <div className="mt-2">
                           <button
                             type="submit"
-                            className="inline-flex h-12 items-center justify-center gap-2 rounded-xl px-7 font-display text-sm font-semibold text-white transition-opacity hover:opacity-90"
+                            className="inline-flex h-12 items-center justify-center gap-2 rounded-xl px-7 font-display text-sm font-semibold text-fam-on-dark transition-opacity hover:opacity-90"
                             style={{ backgroundImage: 'var(--wow-grad-brand)' }}
                           >
                             {tr('booking.continue')}
@@ -796,7 +796,7 @@ export function BookingWizardBlock({
                                 notes: e.target.value,
                               }))
                             }
-                            className="mt-1.5 w-full rounded-xl border bg-white px-4 py-3 text-base text-ink-900 outline-none transition-colors focus:border-brand-600 focus:ring-1 focus:ring-brand-600"
+                            className="mt-1.5 w-full rounded-xl border bg-fam-card px-4 py-3 text-base text-ink-900 outline-none transition-colors focus:border-brand-600 focus:ring-1 focus:ring-brand-600"
                             style={{ borderColor: 'var(--wow-hairline)' }}
                           />
                         </label>
@@ -811,7 +811,7 @@ export function BookingWizardBlock({
                           <button
                             type="submit"
                             disabled={submitting}
-                            className="inline-flex h-12 items-center justify-center gap-2 rounded-xl px-7 font-display text-sm font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60"
+                            className="inline-flex h-12 items-center justify-center gap-2 rounded-xl px-7 font-display text-sm font-semibold text-fam-on-dark transition-opacity hover:opacity-90 disabled:opacity-60"
                             style={{ backgroundImage: 'var(--wow-grad-brand)' }}
                           >
                             {submitting ? (
@@ -854,7 +854,7 @@ export function BookingWizardBlock({
                 className="py-4 text-center"
               >
                 <span
-                  className="mx-auto grid h-14 w-14 place-items-center rounded-full text-white"
+                  className="mx-auto grid h-14 w-14 place-items-center rounded-full text-fam-on-dark"
                   style={{ backgroundImage: 'var(--wow-grad-brand)' }}
                 >
                   <Check className="h-7 w-7" />
@@ -867,7 +867,7 @@ export function BookingWizardBlock({
                     : ` ${tr('booking.seeYouThen')}`}
                 </p>
                 <div
-                  className="mx-auto mt-6 max-w-xs rounded-2xl border bg-white p-4 text-left text-sm"
+                  className="mx-auto mt-6 max-w-xs rounded-2xl border bg-fam-card p-4 text-left text-sm"
                   style={{ borderColor: 'var(--wow-hairline)' }}
                 >
                   <Row Icon={Calendar} label={`${formatDateLong(date)} · ${to12h(time)}`} />
@@ -935,7 +935,7 @@ function SummaryChip({
     <button
       type="button"
       onClick={onClick}
-      className="rounded-full border bg-white px-3 py-1 font-medium text-ink-700 transition-colors hover:text-brand-700"
+      className="rounded-full border bg-fam-card px-3 py-1 font-medium text-ink-700 transition-colors hover:text-brand-700"
       style={{ borderColor: 'var(--wow-hairline)' }}
     >
       {label}
@@ -969,7 +969,7 @@ function WField({
         value={value}
         autoComplete={autoComplete}
         onChange={(e) => onChange(e.target.value)}
-        className="mt-1.5 w-full rounded-xl border bg-white px-4 py-3 text-base text-ink-900 outline-none transition-colors focus:border-brand-600 focus:ring-1 focus:ring-brand-600"
+        className="mt-1.5 w-full rounded-xl border bg-fam-card px-4 py-3 text-base text-ink-900 outline-none transition-colors focus:border-brand-600 focus:ring-1 focus:ring-brand-600"
         style={{ borderColor: 'var(--wow-hairline)' }}
       />
     </label>
@@ -1006,7 +1006,7 @@ function FallbackCard({ message, features }: { message: string; features?: Booki
         <a
           href={quoteHref ?? '/contact'}
           data-booking-fallback={quoteHref ? 'quote' : 'contact'}
-          className="mt-6 inline-flex h-12 items-center justify-center gap-2 rounded-xl px-7 font-display text-sm font-semibold text-white transition-opacity hover:opacity-90"
+          className="mt-6 inline-flex h-12 items-center justify-center gap-2 rounded-xl px-7 font-display text-sm font-semibold text-fam-on-dark transition-opacity hover:opacity-90"
           style={{ backgroundImage: 'var(--wow-grad-brand)' }}
         >
           {quoteHref ? tr('booking.requestQuote') : tr('booking.sendMessage')}
@@ -1014,7 +1014,7 @@ function FallbackCard({ message, features }: { message: string; features?: Booki
       )}
       {HAS_PHONE && (<a
         href={`tel:${SITE.phone}`}
-        className="mt-6 inline-flex h-12 items-center justify-center gap-2 rounded-xl px-7 font-display text-sm font-semibold text-white transition-opacity hover:opacity-90"
+        className="mt-6 inline-flex h-12 items-center justify-center gap-2 rounded-xl px-7 font-display text-sm font-semibold text-fam-on-dark transition-opacity hover:opacity-90"
         style={{ backgroundImage: 'var(--wow-grad-brand)' }}
       >
         <Phone className="h-4 w-4" />

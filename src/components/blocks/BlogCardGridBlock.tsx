@@ -22,7 +22,7 @@ export function BlogCardGridBlock({
   const posts = (site as { posts?: BlogPost[] }).posts
   if (!posts || posts.length === 0) return null
   return (
-    <section className="bg-white">
+    <section className="bg-fam-card">
       <div className="container-x py-section">
         <div className="max-w-2xl">
           <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">
@@ -34,7 +34,7 @@ export function BlogCardGridBlock({
         </div>
         <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {posts.slice(0, 6).map((p, i) => (
-            <a key={`${p.title}-${i}`} href={p.href} className="group flex flex-col overflow-hidden rounded-2xl border border-fam-hairline bg-white transition-all hover:border-fam-accent hover:shadow-md">
+            <a key={`${p.title}-${i}`} href={p.href} className="group flex flex-col overflow-hidden rounded-2xl border border-fam-hairline bg-fam-card transition-all hover:border-fam-accent hover:shadow-md">
               {p.image && (
                 <div className="aspect-[16/10] overflow-hidden">
                   <img src={p.image} alt={p.title} loading="lazy" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />

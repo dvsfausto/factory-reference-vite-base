@@ -87,7 +87,7 @@ export function ServicePageTemplate({ data }: Props) {
         <>
           {/* Character breadcrumb band: the crumb sits ABOVE the character hero, so it needs
               the character surface (secPlain) or it renders on the page's default white — a
-              white-band leak on e.g. a cream elegant page. secPlain = T?.section ?? "bg-white",
+              white-band leak on e.g. a cream elegant page. secPlain = T?.section ?? "bg-fam-card",
               so known verticals (no character) are byte-identical AND never reach this branch. */}
           <div className={T?.crumb?.surface ?? secPlain}>
             <nav aria-label={tr('breadcrumb.aria')} className="container-x pt-8 md:pt-10">
@@ -101,7 +101,7 @@ export function ServicePageTemplate({ data }: Props) {
           {characterHero}
         </>
       ) : (
-      <section className="relative overflow-hidden bg-gradient-to-b from-brand-50 via-white to-white">
+      <section className="relative overflow-hidden bg-gradient-to-b from-brand-50 via-fam-card to-fam-card">
         <img src={leaves} alt="" aria-hidden className="hidden md:block absolute -left-10 top-10 h-[80%] opacity-50 pointer-events-none select-none" />
         <img src={leaves} alt="" aria-hidden className="hidden md:block absolute -right-10 bottom-0 h-[60%] opacity-40 pointer-events-none select-none rotate-180" />
         <div className="container-x py-section relative">
@@ -133,7 +133,7 @@ export function ServicePageTemplate({ data }: Props) {
               </div>
             </div>
             <div className="lg:col-span-5">
-              <div className="aspect-[4/3] rounded-2xl border-4 border-white shadow-xl overflow-hidden bg-brand-50">
+              <div className="aspect-[4/3] rounded-2xl border-4 border-fam-card shadow-xl overflow-hidden bg-brand-50">
                 <img
                   src={serviceImageUrl(data.slug)}
                   alt={data.hero.h1}
@@ -257,7 +257,7 @@ export function ServicePageTemplate({ data }: Props) {
         <section className={secPlain}>
           <div className={`container-x ${T ? T.spacingY.split(" ")[0] : "py-16"}`}>
             <div className={`${T ? `${T.card} ${T.cardRadius} border ${T.border}` : "card-soft"} p-8 md:p-10 max-w-3xl mx-auto`}>
-              <span className={T ? `badge-pill bg-white border ${T.accentBorder} ${T.accent}` : "badge-pill bg-white border border-brand-100 text-brand-600"}>{tr('tmpl.localInsight')}</span>
+              <span className={T ? `badge-pill bg-fam-card border ${T.accentBorder} ${T.accent}` : "badge-pill bg-fam-card border border-brand-100 text-brand-600"}>{tr('tmpl.localInsight')}</span>
               <h2 className={`mt-3 ${T ? T.text : ""}`.trimEnd()}>
                 {localTitleParts ? (
                   <>
@@ -290,7 +290,7 @@ export function ServicePageTemplate({ data }: Props) {
                   <Link
                     key={a.href}
                     to={a.href}
-                    className={`badge-pill bg-white border ${T?.border ?? "border-ink-100"} ${tBody} ${T ? T.accentHover : "hover:border-brand-600 hover:text-brand-600"} normal-case tracking-normal text-sm`}
+                    className={`badge-pill bg-fam-card border ${T?.border ?? "border-ink-100"} ${tBody} ${T ? T.accentHover : "hover:border-brand-600 hover:text-brand-600"} normal-case tracking-normal text-sm`}
                   >
                     <MapPin className="h-3.5 w-3.5" /> {a.label}
                   </Link>
@@ -298,7 +298,7 @@ export function ServicePageTemplate({ data }: Props) {
                   // No area page for this place (SEO-2): text chip, no dead link.
                   <span
                     key={a.label}
-                    className={`badge-pill bg-white border ${T?.border ?? "border-ink-100"} ${tBody} normal-case tracking-normal text-sm`}
+                    className={`badge-pill bg-fam-card border ${T?.border ?? "border-ink-100"} ${tBody} normal-case tracking-normal text-sm`}
                   >
                     <MapPin className="h-3.5 w-3.5" /> {a.label}
                   </span>

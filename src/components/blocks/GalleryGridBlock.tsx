@@ -39,7 +39,7 @@ export function GalleryGridBlock({
           {projects.map((p, i) => (
             <figure
               key={`${p.title}-${i}`}
-              className="group overflow-hidden rounded-2xl border border-fam-hairline bg-white"
+              className="group overflow-hidden rounded-2xl border border-fam-hairline bg-fam-card"
             >
               {/* ★ 4:3, not square: real-work photos are mostly landscape; a square crop lost the sides of every one. */}
               <div className="aspect-[4/3] overflow-hidden">

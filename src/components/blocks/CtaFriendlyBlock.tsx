@@ -43,7 +43,7 @@ export function CtaFriendlyBlock({
             </PrimaryCta>
             {hasPhone(site.phone) && (<a
               href={`tel:${site.phone}`}
-              className="inline-flex h-[54px] items-center gap-2 rounded-2xl border-2 border-fam-accent/40 bg-white px-7 font-display font-semibold text-fam-ink transition-colors hover:border-fam-accent hover:bg-fam-accent-soft"
+              className="inline-flex h-[54px] items-center gap-2 rounded-2xl border-2 border-fam-accent/40 bg-fam-card px-7 font-display font-semibold text-fam-ink transition-colors hover:border-fam-accent hover:bg-fam-accent-soft"
             >
               <Phone className="h-4 w-4 text-fam-accent-text" /> {site.phoneDisplay}
             </a>)}

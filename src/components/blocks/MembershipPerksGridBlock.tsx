@@ -53,7 +53,7 @@ export function MembershipPerksGridBlock({
 
         <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {perks.map((p) => (
-            <div key={p} className="flex items-start gap-4 rounded-2xl border border-fam-hairline bg-white p-6">
+            <div key={p} className="flex items-start gap-4 rounded-2xl border border-fam-hairline bg-fam-card p-6">
               <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-fam-accent-soft text-fam-accent-text">
                 <BadgeCheck className="h-5 w-5" />
               </span>

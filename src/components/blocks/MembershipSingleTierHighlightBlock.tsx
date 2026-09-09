@@ -26,7 +26,7 @@ export function MembershipSingleTierHighlightBlock({
   if (!memberships || memberships.length === 0) return null
   const m = memberships.find((x) => x.highlighted) ?? memberships[0]!
   return (
-    <section className="bg-white">
+    <section className="bg-fam-card">
       <div className="container-x py-section">
         <div className="mx-auto max-w-3xl text-center">
           <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">
@@ -36,9 +36,9 @@ export function MembershipSingleTierHighlightBlock({
           <h2 className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight text-fam-ink sm:text-5xl">{heading}</h2>
           {body && <p className="mt-4 text-lg leading-relaxed text-fam-ink-muted">{body}</p>}
         </div>
-        <div className="mt-12 overflow-hidden rounded-3xl bg-slate-950 text-white shadow-xl">
+        <div className="mt-12 overflow-hidden rounded-3xl bg-slate-950 text-fam-on-dark shadow-xl">
           <div className="grid gap-8 p-8 md:grid-cols-5 md:p-12">
-            <div className="md:col-span-2 md:border-r md:border-white/10 md:pr-10">
+            <div className="md:col-span-2 md:border-r md:border-fam-card/10 md:pr-10">
               <h3 className="font-display text-2xl font-semibold">{m.name}</h3>
               <div className="mt-5 flex items-baseline gap-1">
                 <span className="font-display text-6xl font-semibold tracking-tight">{m.price}</span>

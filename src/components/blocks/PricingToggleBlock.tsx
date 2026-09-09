@@ -35,7 +35,7 @@ export function PricingToggleBlock({
   const hasAnnual = plans.some((p) => !!p.priceAnnual)
 
   return (
-    <section className="bg-white">
+    <section className="bg-fam-card">
       <div className="container-x py-section">
         <div className="flex flex-col items-center text-center">
           <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">
@@ -53,7 +53,7 @@ export function PricingToggleBlock({
                 type="button"
                 onClick={() => setAnnual(false)}
                 className={`rounded-full px-5 py-2 font-display text-sm font-semibold transition-colors ${
-                  !annual ? 'bg-fam-accent text-white' : 'text-fam-ink-muted'
+                  !annual ? 'bg-fam-accent text-fam-on-dark' : 'text-fam-ink-muted'
                 }`}
               >
                 Monthly
@@ -62,7 +62,7 @@ export function PricingToggleBlock({
                 type="button"
                 onClick={() => setAnnual(true)}
                 className={`rounded-full px-5 py-2 font-display text-sm font-semibold transition-colors ${
-                  annual ? 'bg-fam-accent text-white' : 'text-fam-ink-muted'
+                  annual ? 'bg-fam-accent text-fam-on-dark' : 'text-fam-ink-muted'
                 }`}
               >
                 Annual
@@ -77,7 +77,7 @@ export function PricingToggleBlock({
               key={`${p.name}-${i}`}
               className={`flex flex-col rounded-3xl border p-8 ${
                 p.highlighted ? 'border-fam-accent ring-1 ring-fam-accent' : 'border-fam-hairline'
-              } bg-white`}
+              } bg-fam-card`}
             >
               <h3 className="font-display text-lg font-semibold text-fam-ink">{p.name}</h3>
               <div className="mt-4 flex items-baseline gap-1">

@@ -36,7 +36,7 @@ export function ReviewsCorporateBlock({
           {previewReviews.map((r) => (
             <figure
               key={r.id}
-              className="flex flex-col rounded-lg border border-fam-hairline bg-white p-7"
+              className="flex flex-col rounded-lg border border-fam-hairline bg-fam-card p-7"
             >
               <div className="flex gap-0.5">
                 {Array.from({ length: r.rating ?? 5 }).map((_, i) => (
@@ -57,7 +57,7 @@ export function ReviewsCorporateBlock({
           <div className="mt-10">
             <Link
               to="/reviews"
-              className="inline-flex h-12 items-center rounded-md border border-fam-hairline bg-white px-6 font-display text-sm font-semibold text-fam-ink transition-colors hover:border-fam-accent hover:text-fam-accent-text-strong"
+              className="inline-flex h-12 items-center rounded-md border border-fam-hairline bg-fam-card px-6 font-display text-sm font-semibold text-fam-ink transition-colors hover:border-fam-accent hover:text-fam-accent-text-strong"
             >
               {moreLink}
             </Link>

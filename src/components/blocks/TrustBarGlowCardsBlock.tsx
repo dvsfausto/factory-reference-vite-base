@@ -61,11 +61,11 @@ export function TrustBarGlowCardsBlock({
                 ease: [0.16, 1, 0.3, 1],
               }}
               whileHover={reduce ? undefined : { y: -6 }}
-              className="group rounded-2xl border bg-white/80 p-7 backdrop-blur-md transition-shadow"
+              className="group rounded-2xl border bg-fam-card/80 p-7 backdrop-blur-md transition-shadow"
               style={{ borderColor: 'var(--wow-hairline)' }}
             >
               <span
-                className="inline-flex h-14 w-14 items-center justify-center rounded-2xl text-white transition-shadow"
+                className="inline-flex h-14 w-14 items-center justify-center rounded-2xl text-fam-on-dark transition-shadow"
                 style={{ backgroundImage: 'var(--wow-grad-brand)', boxShadow: 'var(--wow-shadow-glow)' }}
               >
                 {icons[i % icons.length]}

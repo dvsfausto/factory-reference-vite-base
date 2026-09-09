@@ -12,7 +12,7 @@ interface Props {
 export function AreasSection({ heading, intro, areas, mapEmbedUrl }: Props) {
   if (areas.length === 0) return null
   return (
-    <section className="bg-white">
+    <section className="bg-fam-card">
       <div className="mx-auto max-w-6xl px-4 py-16">
         <div className="max-w-2xl">
           <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
@@ -43,7 +43,7 @@ export function AreasSection({ heading, intro, areas, mapEmbedUrl }: Props) {
                 <p className="font-semibold text-slate-900 group-hover:text-fam-accent-text-strong">
                   {a.name}
                   {a.tier === 'home-base' && (
-                    <span className="ml-2 inline-flex items-center rounded bg-fam-accent px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white">
+                    <span className="ml-2 inline-flex items-center rounded bg-fam-accent px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-fam-on-dark">
                       Base
                     </span>
                   )}

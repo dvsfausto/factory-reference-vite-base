@@ -125,7 +125,7 @@ export function ServiceDetailsBlock({
           {scenarios.cards.map((c, i) => (
             <div
               key={i}
-              className="rounded-2xl border bg-white/80 p-6 backdrop-blur-md"
+              className="rounded-2xl border bg-fam-card/80 p-6 backdrop-blur-md"
               style={{
                 borderColor: 'var(--fam-hairline, var(--wow-hairline))',
                 boxShadow: 'var(--wow-shadow-soft)',
@@ -153,7 +153,7 @@ export function ServiceDetailsBlock({
         </div>
         {showRanges && pricing.ranges && (
           <div
-            className="mx-auto mt-10 max-w-2xl overflow-hidden rounded-2xl border bg-white/85 backdrop-blur-md"
+            className="mx-auto mt-10 max-w-2xl overflow-hidden rounded-2xl border bg-fam-card/85 backdrop-blur-md"
             style={{
               borderColor: 'var(--fam-hairline, var(--wow-hairline))',
               boxShadow: 'var(--wow-shadow-soft)',
@@ -219,7 +219,7 @@ export function ServiceDetailsBlock({
               <Link
                 key={a.href}
                 to={a.href}
-                className="inline-flex items-center gap-1.5 rounded-full border bg-white/85 px-4 py-2 text-sm text-[var(--fam-ink,var(--color-ink-700))] backdrop-blur-md transition-colors hover:text-brand-700"
+                className="inline-flex items-center gap-1.5 rounded-full border bg-fam-card/85 px-4 py-2 text-sm text-[var(--fam-ink,var(--color-ink-700))] backdrop-blur-md transition-colors hover:text-brand-700"
                 style={{ borderColor: 'var(--fam-hairline, var(--wow-hairline))' }}
               >
                 <MapPin className="h-3.5 w-3.5" /> {a.label}
@@ -228,7 +228,7 @@ export function ServiceDetailsBlock({
               // No area page for this place (SEO-2): the coverage claim stays, the dead link goes.
               <span
                 key={a.label}
-                className="inline-flex items-center gap-1.5 rounded-full border bg-white/85 px-4 py-2 text-sm text-[var(--fam-ink,var(--color-ink-700))] backdrop-blur-md"
+                className="inline-flex items-center gap-1.5 rounded-full border bg-fam-card/85 px-4 py-2 text-sm text-[var(--fam-ink,var(--color-ink-700))] backdrop-blur-md"
                 style={{ borderColor: 'var(--fam-hairline, var(--wow-hairline))' }}
               >
                 <MapPin className="h-3.5 w-3.5" /> {a.label}
@@ -244,14 +244,14 @@ export function ServiceDetailsBlock({
     blocks.push(
       <div key="localContext" className="mx-auto max-w-3xl">
         <div
-          className="rounded-3xl border bg-white/85 p-8 backdrop-blur-md md:p-10"
+          className="rounded-3xl border bg-fam-card/85 p-8 backdrop-blur-md md:p-10"
           style={{
             borderColor: 'var(--fam-hairline, var(--wow-hairline))',
             boxShadow: 'var(--wow-shadow-soft)',
           }}
         >
           <span
-            className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-white"
+            className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-fam-on-dark"
             style={{ backgroundImage: 'var(--wow-grad-brand)' }}
           >{tr('tmpl.localInsight')}</span>
           <h2 className="mt-4 font-display text-2xl leading-tight text-[var(--fam-ink,var(--color-ink-900))] sm:text-3xl">

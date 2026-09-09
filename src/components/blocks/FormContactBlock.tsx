@@ -74,7 +74,7 @@ export function FormContactBlock({
             {status === 'success' ? (
               <SuccessCard />
             ) : (
-              <form onSubmit={onSubmit} className="rounded-2xl border border-fam-hairline bg-white p-8 md:p-10">
+              <form onSubmit={onSubmit} className="rounded-2xl border border-fam-hairline bg-fam-card p-8 md:p-10">
                 <div className="grid gap-5 md:grid-cols-2">
                   <Field label={tr('form.firstName')} name="first_name" required autoComplete="given-name" />
                   <Field label={tr('form.lastName')} name="last_name" required autoComplete="family-name" />

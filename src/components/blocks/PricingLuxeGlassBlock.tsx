@@ -74,7 +74,7 @@ export function PricingLuxeGlassBlock({
                   transition={{ duration: 0.6, delay: reduce ? 0 : i * 0.1, ease: [0.16, 1, 0.3, 1] }}
                   whileHover={reduce ? undefined : { y: -6 }}
                   className={`group relative flex flex-col rounded-[1.5rem] border p-8 backdrop-blur-md ${
-                    featured ? 'text-white md:-mt-4 md:pb-12' : 'bg-white/70 text-ink-900'
+                    featured ? 'text-fam-on-dark md:-mt-4 md:pb-12' : 'bg-fam-card/70 text-ink-900'
                   }`}
                   style={{
                     borderColor: 'var(--wow-hairline)',
@@ -84,24 +84,24 @@ export function PricingLuxeGlassBlock({
                   }}
                 >
                   {featured && (
-                    <span className="mb-4 inline-flex w-fit items-center gap-1.5 rounded-full bg-white/20 px-3 py-1 font-display text-xs font-semibold text-white backdrop-blur-sm">
+                    <span className="mb-4 inline-flex w-fit items-center gap-1.5 rounded-full bg-fam-card/20 px-3 py-1 font-display text-xs font-semibold text-fam-on-dark backdrop-blur-sm">
                       <Sparkles className="h-3.5 w-3.5" /> Most popular
                     </span>
                   )}
-                  <h3 className={`font-display text-lg font-semibold ${featured ? 'text-white' : 'text-ink-900'}`}>
+                  <h3 className={`font-display text-lg font-semibold ${featured ? 'text-fam-on-dark' : 'text-ink-900'}`}>
                     {p.name}
                   </h3>
                   <div className="mt-4 flex items-baseline gap-1">
-                    <span className={`font-display text-4xl font-semibold tracking-tight ${featured ? 'text-white' : 'text-ink-900'}`}>
+                    <span className={`font-display text-4xl font-semibold tracking-tight ${featured ? 'text-fam-on-dark' : 'text-ink-900'}`}>
                       {p.price}
                     </span>
-                    {p.period && <span className={featured ? 'text-white/75' : 'text-ink-500'}>{p.period}</span>}
+                    {p.period && <span className={featured ? 'text-fam-on-dark/75' : 'text-ink-500'}>{p.period}</span>}
                   </div>
                   {p.features && p.features.length > 0 && (
                     <ul className="mt-7 flex flex-1 flex-col gap-3 text-sm">
                       {p.features.map((f) => (
-                        <li key={f} className={`flex items-start gap-2.5 ${featured ? 'text-white/90' : 'text-ink-700'}`}>
-                          <Check className={`mt-0.5 h-4 w-4 shrink-0 ${featured ? 'text-white' : 'text-brand-600'}`} /> {f}
+                        <li key={f} className={`flex items-start gap-2.5 ${featured ? 'text-fam-on-dark/90' : 'text-ink-700'}`}>
+                          <Check className={`mt-0.5 h-4 w-4 shrink-0 ${featured ? 'text-fam-on-dark' : 'text-brand-600'}`} /> {f}
                         </li>
                       ))}
                     </ul>
@@ -110,7 +110,7 @@ export function PricingLuxeGlassBlock({
                     to="/contact"
                     className={`mt-8 inline-flex h-12 items-center justify-center gap-2 rounded-full px-6 font-display text-sm font-semibold transition-transform hover:-translate-y-0.5 ${
                       featured
-                        ? 'bg-white text-ink-900'
+                        ? 'bg-fam-card text-ink-900'
                         : 'bg-cta text-cta-foreground'
                     }`}
                     style={featured ? undefined : { boxShadow: 'var(--wow-shadow-glow)' }}
@@ -128,7 +128,7 @@ export function PricingLuxeGlassBlock({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-10%' }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="relative mx-auto mt-12 max-w-2xl overflow-hidden rounded-[1.75rem] border bg-white/70 p-10 text-center backdrop-blur-md md:p-14"
+            className="relative mx-auto mt-12 max-w-2xl overflow-hidden rounded-[1.75rem] border bg-fam-card/70 p-10 text-center backdrop-blur-md md:p-14"
             style={{ borderColor: 'var(--wow-hairline)', boxShadow: 'var(--wow-shadow-soft)' }}
           >
             <div
@@ -137,7 +137,7 @@ export function PricingLuxeGlassBlock({
               style={{ backgroundImage: 'var(--wow-grad-brand)' }}
             />
             <span
-              className="mx-auto grid h-14 w-14 place-items-center rounded-2xl text-white"
+              className="mx-auto grid h-14 w-14 place-items-center rounded-2xl text-fam-on-dark"
               style={{ backgroundImage: 'var(--wow-grad-brand)', boxShadow: 'var(--wow-shadow-glow)' }}
             >
               <Sparkles className="h-6 w-6" />

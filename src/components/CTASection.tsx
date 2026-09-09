@@ -27,24 +27,24 @@ export function CTASection({
   const accent = words.slice(-1).join("");
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-brand-800 via-brand-700 to-brand-900 text-white">
+    <section className="relative overflow-hidden bg-gradient-to-br from-brand-800 via-brand-700 to-brand-900 text-fam-on-dark">
       <img src={decorativeAsset} alt="" aria-hidden className="absolute -left-12 top-6 h-[140%] opacity-25 pointer-events-none select-none" />
       <img src={decorativeAsset} alt="" aria-hidden className="absolute -right-12 -bottom-12 h-[140%] opacity-20 pointer-events-none select-none rotate-180" />
       <div className="container-x py-section text-center relative">
         {showSparkleBadge && SITE.tagline && (
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-xs font-semibold uppercase tracking-widest mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-fam-card/10 border border-fam-card/20 text-xs font-semibold uppercase tracking-widest mb-6">
             <Sparkles className="h-3.5 w-3.5" /> {SITE.tagline}
           </div>
         )}
-        <h2 className="text-white max-w-2xl mx-auto">
+        <h2 className="text-fam-on-dark max-w-2xl mx-auto">
           {lead} <span className="font-script text-brand-200 font-normal">{accent}</span>
         </h2>
         {subtitle && (
-          <p className="mt-5 text-white/85 text-lg max-w-xl mx-auto">{subtitle}</p>
+          <p className="mt-5 text-fam-on-dark/85 text-lg max-w-xl mx-auto">{subtitle}</p>
         )}
         <div className="mt-9 flex flex-wrap justify-center gap-3">
           <PrimaryCta to={to} className="btn btn-lg btn-white">{label}</PrimaryCta>
-          {HAS_PHONE && (<a href={`tel:${SITE.phone}`} className="btn btn-lg btn-outline-white">
+          {HAS_PHONE && (<a href={`tel:${SITE.phone}`} className="btn btn-lg btn-outline-fam-card">
             <Phone className="h-4 w-4" /> {SITE.phoneDisplay}
           </a>)}
         </div>

@@ -29,7 +29,7 @@ export function ReviewsCreativeBlock({
   const previewReviews = reviews.slice(0, 6)
   if (previewReviews.length === 0) return null
   return (
-    <section className="bg-white">
+    <section className="bg-fam-card">
       <div className="container-x py-section">
         <SectionHeaderCreative label={label} heading={heading} scriptAccent={scriptAccent} />
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -53,7 +53,7 @@ export function ReviewsCreativeBlock({
           <div className="mt-14">
             <Link
               to="/reviews"
-              className="inline-flex h-14 items-center gap-2 rounded-2xl border-2 border-fam-ink px-7 font-display text-base font-bold text-fam-ink transition-colors hover:bg-fam-accent hover:border-fam-accent hover:text-white"
+              className="inline-flex h-14 items-center gap-2 rounded-2xl border-2 border-fam-ink px-7 font-display text-base font-bold text-fam-ink transition-colors hover:bg-fam-accent hover:border-fam-accent hover:text-fam-on-dark"
             >
               {moreLink} <ArrowUpRight className="h-5 w-5" />
             </Link>

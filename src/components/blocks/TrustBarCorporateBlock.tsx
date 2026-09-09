@@ -16,7 +16,7 @@ export function TrustBarCorporateBlock({
   if (!items.length) return null // no trust facts → no section; never an invented one (niche arc 2b)
   const icons = [Scale, ShieldCheck, Award]
   return (
-    <section className="bg-white">
+    <section className="bg-fam-card">
       <div className="container-x py-band">
         <div className="grid grid-cols-1 divide-y divide-fam-hairline overflow-hidden rounded-lg border border-fam-hairline md:grid-cols-3 md:divide-x md:divide-y-0">
           {items.map((item, i) => {

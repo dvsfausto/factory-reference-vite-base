@@ -35,7 +35,7 @@ export function CaseStudiesGridBlock({
         </div>
         <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {studies.slice(0, 6).map((s, i) => (
-            <article key={`${s.title}-${i}`} className="flex flex-col overflow-hidden rounded-2xl border border-fam-hairline bg-white">
+            <article key={`${s.title}-${i}`} className="flex flex-col overflow-hidden rounded-2xl border border-fam-hairline bg-fam-card">
               {s.image ? (
                 <div className="aspect-[16/10] overflow-hidden"><img src={s.image} alt={s.title} loading="lazy" className="h-full w-full object-cover" /></div>
               ) : (

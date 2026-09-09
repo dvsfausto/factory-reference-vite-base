@@ -59,7 +59,7 @@ export function FormMinimalBlock({
   return (
     <section className="bg-fam-surface-2">
       <div className="container-x py-section">
-        <div className="mx-auto max-w-3xl rounded-3xl border border-fam-hairline bg-white p-8 md:p-12">
+        <div className="mx-auto max-w-3xl rounded-3xl border border-fam-hairline bg-fam-card p-8 md:p-12">
           <div className="grid items-center gap-8 md:grid-cols-5">
             <div className="md:col-span-2">
               <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">

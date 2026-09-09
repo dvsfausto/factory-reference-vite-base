@@ -23,7 +23,7 @@ export function StoryNarrativeBlock({
   const attribution = story?.attribution ?? site.name
   if (!quote) return null
   return (
-    <section className="bg-white">
+    <section className="bg-fam-card">
       <div className="container-x py-section">
         <div className="mx-auto max-w-4xl text-center">
           <span className="inline-flex items-center justify-center gap-3 text-xs font-semibold uppercase tracking-[0.25em] text-fam-accent-text">

@@ -437,7 +437,7 @@ function ContactFormSection() {
           </div>
           <aside className="lg:col-span-1">
             <div
-              className="rounded-2xl border bg-white p-6"
+              className="rounded-2xl border bg-fam-card p-6"
               style={{
                 borderColor: 'var(--wow-hairline)',
                 boxShadow: 'var(--wow-shadow-lift)',
@@ -448,7 +448,7 @@ function ContactFormSection() {
                 {rows.map((r, i) => (
                   <div key={i} className="flex items-center gap-3.5">
                     <span
-                      className="grid h-10 w-10 shrink-0 place-items-center rounded-xl text-white"
+                      className="grid h-10 w-10 shrink-0 place-items-center rounded-xl text-fam-on-dark"
                       style={{ backgroundImage: 'var(--wow-grad-brand)' }}
                     >
                       <r.Icon className="h-5 w-5" />

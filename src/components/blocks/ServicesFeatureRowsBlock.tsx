@@ -45,7 +45,7 @@ export function ServicesFeatureRowsBlock({
 
   return (
     <section
-      className="relative overflow-hidden border-y bg-white"
+      className="relative overflow-hidden border-y bg-fam-card"
       style={{ borderColor: 'var(--wow-hairline)' }}
     >
       <div className="container-x py-section">

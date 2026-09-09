@@ -22,7 +22,7 @@
 //     primary CTA in the middle sections, so nothing brand-expressive is retinted.
 //   · bold sectionAlt: border-based (white + border-y border-ink-100), no invented
 //     tint — hairlines are bold's language.
-//   · dark elegant card: lifted to #2C221B (from #241C16) for card/section
+//   · dark elegant card: lifted to var(--color-fam-statement-3) (from var(--color-fam-statement-2)) for card/section
 //     separation — flat cards are the dark-mode muddy failure mode.
 //
 // font + base radius scale already carry via CSS vars (--font-display, --radius-*),
@@ -98,14 +98,14 @@ const BOLD: CharacterTokens = {
   ...CHARACTER_ACCENT,
   section: 'bg-background',
   sectionAlt: 'bg-background', // border-based rhythm (decision): white + border-y border-ink-100
-  card: 'bg-white',
+  card: 'bg-fam-card',
   border: 'border-ink-100',
   text: 'text-ink-900',
   muted: 'text-ink-500',
-  // Bold's hero is dark navy (HeroBoldFullbleedBlock → bg-ink-900 text-white) but its section is
+  // Bold's hero is dark navy (HeroBoldFullbleedBlock → bg-ink-900 text-fam-on-dark) but its section is
   // white. The crumb sits over the hero, so it coordinates with the hero's dark chrome (matching the
   // dark footer, bg-ink-900) with light text — not the white section that produced the white band.
-  crumb: { surface: 'bg-ink-900', text: 'text-white', muted: 'text-white/70' },
+  crumb: { surface: 'bg-ink-900', text: 'text-fam-on-dark', muted: 'text-fam-on-dark/70' },
   cardRadius: 'rounded-lg',
   cardElevation: 'transition-all hover:-translate-y-1 hover:border-fam-accent hover:shadow-xl',
   buttonRadius: 'rounded-lg',
@@ -118,7 +118,7 @@ const ELEGANT_LIGHT: CharacterTokens = {
   ...CHARACTER_ACCENT,
   section: 'bg-fam-surface',
   sectionAlt: 'bg-fam-surface-2',
-  card: 'bg-white',
+  card: 'bg-fam-card',
   border: 'border-fam-hairline',
   text: 'text-fam-ink',
   muted: 'text-fam-ink-muted',
@@ -132,19 +132,19 @@ const ELEGANT_LIGHT: CharacterTokens = {
 
 const ELEGANT_DARK: CharacterTokens = {
   ...ELEGANT_LIGHT,
-  section: 'bg-[#1A1410]',
-  sectionAlt: 'bg-[#241C16]',
-  card: 'bg-[#2C221B]', // lifted from #241C16 for card/section separation (decision)
-  border: 'border-[#3A2E24]',
-  text: 'text-[#F2E8DC]',
-  muted: 'text-[#B8A893]',
+  section: 'bg-fam-statement',
+  sectionAlt: 'bg-fam-statement-2',
+  card: 'bg-fam-statement-3', // lifted from var(--color-fam-statement-2) for card/section separation (decision)
+  border: 'border-fam-statement-hairline',
+  text: 'text-fam-on-statement',
+  muted: 'text-fam-on-statement-muted',
 }
 
 const FRIENDLY: CharacterTokens = {
   ...CHARACTER_ACCENT,
   section: 'bg-fam-surface-2',
   sectionAlt: 'bg-fam-surface',
-  card: 'bg-white',
+  card: 'bg-fam-card',
   border: 'border-fam-hairline',
   text: 'text-fam-ink',
   muted: 'text-fam-ink-muted',
@@ -159,8 +159,8 @@ const FRIENDLY: CharacterTokens = {
 const MODERN: CharacterTokens = {
   ...CHARACTER_ACCENT,
   section: 'bg-fam-surface-2',
-  sectionAlt: 'bg-white',
-  card: 'bg-white',
+  sectionAlt: 'bg-fam-card',
+  card: 'bg-fam-card',
   border: 'border-fam-hairline',
   text: 'text-fam-ink',
   muted: 'text-fam-ink-muted',
@@ -175,8 +175,8 @@ const MODERN: CharacterTokens = {
 const CORPORATE: CharacterTokens = {
   ...CHARACTER_ACCENT,
   section: 'bg-fam-surface-2',
-  sectionAlt: 'bg-white',
-  card: 'bg-white',
+  sectionAlt: 'bg-fam-card',
+  card: 'bg-fam-card',
   border: 'border-fam-hairline',
   text: 'text-fam-ink',
   muted: 'text-fam-ink-muted',
@@ -190,7 +190,7 @@ const CORPORATE: CharacterTokens = {
 
 const CREATIVE: CharacterTokens = {
   ...CHARACTER_ACCENT,
-  section: 'bg-white',
+  section: 'bg-fam-card',
   sectionAlt: 'bg-fam-surface-2',
   card: 'bg-fam-surface-2',
   border: 'border-transparent', // creative cards are borderless (derived)

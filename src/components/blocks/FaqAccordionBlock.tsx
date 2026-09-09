@@ -25,7 +25,7 @@ export function FaqAccordionBlock({
   const [open, setOpen] = useState<number | null>(0)
   if (!faqs || faqs.length === 0) return null
   return (
-    <section className="bg-white">
+    <section className="bg-fam-card">
       <div className="container-x py-section">
         <div className="mx-auto max-w-3xl">
           <div className="max-w-2xl">

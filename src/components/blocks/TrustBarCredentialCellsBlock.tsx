@@ -30,7 +30,7 @@ export function TrustBarCredentialCellsBlock({
           {items.map((item, i) => {
             const Icon = ICONS[i % ICONS.length]!
             return (
-              <div key={i} className="flex flex-col bg-white p-7">
+              <div key={i} className="flex flex-col bg-fam-card p-7">
                 <span className="grid h-11 w-11 place-items-center rounded-xl bg-fam-accent-soft text-fam-accent-text">
                   <Icon className="h-5 w-5" strokeWidth={1.9} />
                 </span>

@@ -27,7 +27,7 @@ export function GalleryJustifiedBlock({
 }) {
   if (projects.length === 0) return null
   return (
-    <section className="bg-white">
+    <section className="bg-fam-card">
       <div className="container-x py-section">
         <div className="max-w-2xl">
           <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">
@@ -54,7 +54,7 @@ export function GalleryJustifiedBlock({
                 className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
               <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/80 to-transparent p-4">
-                <span className="font-display text-sm font-semibold text-white drop-shadow">{p.title}</span>
+                <span className="font-display text-sm font-semibold text-fam-on-dark drop-shadow">{p.title}</span>
               </figcaption>
             </figure>
           ))}

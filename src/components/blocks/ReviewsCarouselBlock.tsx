@@ -32,7 +32,7 @@ export function ReviewsCarouselBlock({
   const cards = reviews.slice(0, 12)
   if (cards.length === 0) return null
   return (
-    <section className="bg-white">
+    <section className="bg-fam-card">
       <div className="container-x py-section">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div className="max-w-2xl">
@@ -53,7 +53,7 @@ export function ReviewsCarouselBlock({
           {cards.map((r) => (
             <figure
               key={r.id}
-              className="flex w-[300px] shrink-0 snap-start flex-col rounded-2xl border border-fam-hairline bg-white p-7 md:w-[380px]"
+              className="flex w-[300px] shrink-0 snap-start flex-col rounded-2xl border border-fam-hairline bg-fam-card p-7 md:w-[380px]"
             >
               <div className="flex gap-0.5">
                 {Array.from({ length: r.rating ?? 5 }).map((_, i) => (
@@ -68,7 +68,7 @@ export function ReviewsCarouselBlock({
             </figure>
           ))}
         </div>
-        <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-16 bg-gradient-to-l from-white to-transparent md:block" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-16 bg-gradient-to-l from-fam-card to-transparent md:block" />
       </div>
 
       {reviews.length > cards.length && (

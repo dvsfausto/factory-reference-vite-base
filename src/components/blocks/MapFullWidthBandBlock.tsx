@@ -26,7 +26,7 @@ export function MapFullWidthBandBlock({
   if (areas.length === 0) return null
   const homeIndex = Math.max(0, areas.findIndex((a) => a.tier === 'home-base'))
   return (
-    <section className="relative isolate overflow-hidden bg-slate-950 text-white">
+    <section className="relative isolate overflow-hidden bg-slate-950 text-fam-on-dark">
       <div className="absolute inset-0 opacity-[0.16]" style={{ backgroundImage: 'linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)', backgroundSize: '52px 52px' }} />
       <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/70 to-slate-950/40" />
       <div className="container-x relative py-section">
@@ -35,13 +35,13 @@ export function MapFullWidthBandBlock({
             <span className="h-px w-6 bg-fam-accent" />
             {label}
           </span>
-          <h2 className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight text-white sm:text-5xl">{heading}</h2>
+          <h2 className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight text-fam-on-dark sm:text-5xl">{heading}</h2>
           {body && <p className="mt-4 text-lg leading-relaxed text-slate-300">{body}</p>}
         </div>
         <div className="mt-10 flex flex-wrap gap-3">
           {areas.slice(0, 12).map((a, i) => (
-            <span key={a.slug} className={`inline-flex items-center gap-1.5 rounded-full px-4 py-2 font-display text-sm font-semibold backdrop-blur-sm ${i === homeIndex ? 'bg-fam-accent text-white' : 'bg-white/10 text-white'}`}>
-              <MapPin className={`h-4 w-4 ${i === homeIndex ? 'text-white' : 'text-fam-accent-on-dark'}`} /> {a.name}
+            <span key={a.slug} className={`inline-flex items-center gap-1.5 rounded-full px-4 py-2 font-display text-sm font-semibold backdrop-blur-sm ${i === homeIndex ? 'bg-fam-accent text-fam-on-dark' : 'bg-fam-card/10 text-fam-on-dark'}`}>
+              <MapPin className={`h-4 w-4 ${i === homeIndex ? 'text-fam-on-dark' : 'text-fam-accent-on-dark'}`} /> {a.name}
             </span>
           ))}
         </div>

@@ -16,7 +16,7 @@ import { hasPhone } from '~/lib/phone'
 //   · --wow-ease-out     → entrance easing.
 // BRAND identity → the band IS the brand gradient; on that dark fill the primary
 // action is a white pill (neutral, matches the default band's btn-white) and the
-// phone is an outline-white pill. The script accent uses text-brand-100.
+// phone is an outline-fam-card pill. The script accent uses text-brand-100.
 //
 // HONESTY: renders ONLY the real title/subtitle + the real phone (SITE.phone/
 // phoneDisplay) and the optional SITE.tagline badge, nothing invented. No
@@ -50,7 +50,7 @@ export function CtaAuroraGlowBlock({
 
   return (
     <section
-      className="relative overflow-hidden text-white"
+      className="relative overflow-hidden text-fam-on-dark"
       style={{ backgroundImage: 'var(--wow-grad-brand)' }}
     >
       {/* Ambient brand glow blobs, decorative, brand-derived, motion honors reduce. */}
@@ -74,7 +74,7 @@ export function CtaAuroraGlowBlock({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-10%' }}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] backdrop-blur-sm"
+            className="mb-6 inline-flex items-center gap-2 rounded-full border border-fam-card/25 bg-fam-card/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] backdrop-blur-sm"
           >
             <Sparkles className="h-3.5 w-3.5" /> {site.tagline}
           </motion.div>
@@ -85,7 +85,7 @@ export function CtaAuroraGlowBlock({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-10%' }}
           transition={{ duration: 0.6, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
-          className="mx-auto max-w-3xl text-5xl leading-[0.98] tracking-tight text-white sm:text-6xl"
+          className="mx-auto max-w-3xl text-5xl leading-[0.98] tracking-tight text-fam-on-dark sm:text-6xl"
         >
           {parts.lead || title}
           {parts.lead && (
@@ -101,7 +101,7 @@ export function CtaAuroraGlowBlock({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-10%' }}
             transition={{ duration: 0.6, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
-            className="mx-auto mt-5 max-w-xl text-lg text-white/85"
+            className="mx-auto mt-5 max-w-xl text-lg text-fam-on-dark/85"
           >
             {subtitle}
           </motion.p>
@@ -115,14 +115,14 @@ export function CtaAuroraGlowBlock({
           className="mt-10 flex flex-wrap justify-center gap-3.5"
         >
           <PrimaryCta
-            className="inline-flex h-[52px] items-center gap-2 rounded-full bg-white px-8 font-semibold text-brand-800 transition-transform hover:-translate-y-0.5"
+            className="inline-flex h-[52px] items-center gap-2 rounded-full bg-fam-card px-8 font-semibold text-brand-800 transition-transform hover:-translate-y-0.5"
             style={{ boxShadow: 'var(--wow-shadow-glow)' }}
           >
             {label} <ArrowRight className="h-4 w-4" />
           </PrimaryCta>
           {hasPhone(site.phone) && (<a
             href={`tel:${site.phone}`}
-            className="inline-flex h-[52px] items-center gap-2 rounded-full border border-white/70 px-6 font-semibold text-white transition-colors hover:bg-white/10"
+            className="inline-flex h-[52px] items-center gap-2 rounded-full border border-fam-card/70 px-6 font-semibold text-fam-on-dark transition-colors hover:bg-fam-card/10"
           >
             <Phone className="h-4 w-4" /> {site.phoneDisplay}
           </a>)}

@@ -26,7 +26,7 @@ export function TrustBarLogoStripBlock({
 }) {
   if (!items.length) return null // no trust facts → no section; never an invented one (niche arc 2b)
   return (
-    <section className="border-y border-fam-hairline bg-white">
+    <section className="border-y border-fam-hairline bg-fam-card">
       <div className="container-x py-band">
         <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-6 md:justify-between">
           {items.map((item, i) => {

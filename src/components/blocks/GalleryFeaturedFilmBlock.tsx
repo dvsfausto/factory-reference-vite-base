@@ -33,7 +33,7 @@ export function GalleryFeaturedFilmBlock({
   if (!featured) return null
 
   return (
-    <section className="bg-white">
+    <section className="bg-fam-card">
       <div className="container-x py-section">
         <div className="max-w-2xl">
           <span className="inline-flex items-center gap-3 text-xs font-bold uppercase tracking-[0.2em] text-brand-700">
@@ -60,7 +60,7 @@ export function GalleryFeaturedFilmBlock({
             style={{ backgroundImage: 'var(--wow-grad-brand)', filter: 'blur(56px)' }}
           />
           <div
-            className="relative overflow-hidden rounded-[1.75rem] border bg-white"
+            className="relative overflow-hidden rounded-[1.75rem] border bg-fam-card"
             style={{ borderColor: 'var(--wow-hairline)', boxShadow: 'var(--wow-shadow-lift)' }}
           >
             <img
@@ -69,7 +69,7 @@ export function GalleryFeaturedFilmBlock({
               className="h-[44vh] min-h-[320px] w-full object-cover md:h-[56vh]"
             />
             <div
-              className="absolute bottom-5 left-5 flex items-center gap-2.5 rounded-2xl border bg-white/85 px-4 py-2.5 backdrop-blur-md"
+              className="absolute bottom-5 left-5 flex items-center gap-2.5 rounded-2xl border bg-fam-card/85 px-4 py-2.5 backdrop-blur-md"
               style={{ borderColor: 'var(--wow-hairline)' }}
             >
               <span
@@ -113,7 +113,7 @@ export function GalleryFeaturedFilmBlock({
                   className="aspect-[4/3] w-full object-cover"
                 />
                 <figcaption
-                  className="absolute bottom-3 left-3 rounded-full border bg-white/85 px-3 py-1.5 backdrop-blur-md"
+                  className="absolute bottom-3 left-3 rounded-full border bg-fam-card/85 px-3 py-1.5 backdrop-blur-md"
                   style={{ borderColor: 'var(--wow-hairline)' }}
                 >
                   <span className="font-display text-xs font-semibold text-ink-900">{p.title}</span>

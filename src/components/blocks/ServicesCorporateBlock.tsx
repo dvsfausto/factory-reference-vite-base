@@ -49,7 +49,7 @@ export function ServicesCorporateBlock({
               key={s.slug}
               to="/services/$slug"
               params={{ slug: s.slug }}
-              className="group flex flex-col bg-white transition-colors hover:bg-[#FAFBFC]"
+              className="group flex flex-col bg-fam-card transition-colors hover:bg-fam-surface-5"
             >
               <div className="aspect-[16/9] overflow-hidden border-b border-fam-hairline">
                 <img

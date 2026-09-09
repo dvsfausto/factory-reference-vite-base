@@ -35,7 +35,7 @@ export function BlogFeaturedListBlock({
           {body && <p className="mt-4 text-lg leading-relaxed text-fam-ink-muted">{body}</p>}
         </div>
         <div className="mt-12 grid gap-8 lg:grid-cols-2 lg:gap-12">
-          <a href={lead.href} className="group flex flex-col overflow-hidden rounded-3xl border border-fam-hairline bg-white">
+          <a href={lead.href} className="group flex flex-col overflow-hidden rounded-3xl border border-fam-hairline bg-fam-card">
             {lead.image && (
               <div className="aspect-[16/9] overflow-hidden"><img src={lead.image} alt={lead.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" /></div>
             )}

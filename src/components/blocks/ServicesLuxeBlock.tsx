@@ -84,7 +84,7 @@ export function ServicesLuxeBlock({
               <Link
                 to="/services/$slug"
                 params={{ slug: s.slug }}
-                className="group relative flex h-full flex-col overflow-hidden rounded-[1.5rem] border bg-white/85 backdrop-blur-md transition-all duration-500 hover:-translate-y-1.5"
+                className="group relative flex h-full flex-col overflow-hidden rounded-[1.5rem] border bg-fam-card/85 backdrop-blur-md transition-all duration-500 hover:-translate-y-1.5"
                 style={{
                   borderColor: 'var(--wow-hairline)',
                   boxShadow: 'var(--wow-shadow-soft)',
@@ -113,7 +113,7 @@ export function ServicesLuxeBlock({
                   />
                   {/* Gradient index badge riding the corner. */}
                   <span
-                    className="absolute left-4 top-4 flex h-11 w-11 items-center justify-center rounded-2xl font-display text-lg font-bold text-white"
+                    className="absolute left-4 top-4 flex h-11 w-11 items-center justify-center rounded-2xl font-display text-lg font-bold text-fam-on-dark"
                     style={{
                       backgroundImage: 'var(--wow-grad-brand)',
                       boxShadow: 'var(--wow-shadow-glow)',
