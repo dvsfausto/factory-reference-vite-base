@@ -115,7 +115,7 @@ export function HeroBoldFullbleedBlock({
       {/* Full-width steel-blue trust band, a contractor's banner stripe. The
           most unmistakable carrier of the DNA accent color. */}
       <div className="relative bg-fam-accent">
-        <div className="container-x flex flex-wrap items-center gap-x-8 gap-y-2 py-3.5 text-xs font-semibold uppercase tracking-[0.14em] text-fam-on-dark">
+        <div className="container-x flex flex-wrap items-center gap-x-8 gap-y-2 py-3.5 text-xs font-semibold uppercase tracking-[0.14em] text-fam-on-accent">
           {trustItems.map((t) => (
             <span key={t} className="inline-flex items-center gap-2">
               <Check className="h-4 w-4" /> {t}
