@@ -348,6 +348,13 @@ export const VARIANT_MANIFEST: SectionVariants[] = [
     ],
   },
   {
+    section: 'classSchedule',
+    label: 'Class schedule',
+    variants: [
+      { id: 'week', label: 'Week', description: 'One column per day with a session; time, class, instructor and spots on each card.', default: true },
+    ],
+  },
+  {
     section: 'booking',
     label: 'Booking',
     variants: [

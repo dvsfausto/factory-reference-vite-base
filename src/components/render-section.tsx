@@ -46,6 +46,8 @@ import { MenuListBlock } from '~/components/blocks/MenuListBlock'
 import { MENU_VARIANTS } from '~/components/blocks/menu-variants'
 import { ProductGridBlock } from '~/components/blocks/ProductGridBlock'
 import { PRODUCT_GRID_VARIANTS } from '~/components/blocks/product-grid-variants'
+import { ClassScheduleWeekBlock } from '~/components/blocks/ClassScheduleWeekBlock'
+import { CLASS_SCHEDULE_VARIANTS } from '~/components/blocks/class-schedule-variants'
 import { serviceCta } from '~/lib/primaryCta'
 // WOW Stage 2 — additional section variants (brand-reactive + motion, consume --wow-*).
 // Additive map keys only; unknown variant → the section's default component.
@@ -681,6 +683,17 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
       return (
         <ProductGridComponent
           key="productGrid"
+          label={block.params?.label as string | undefined}
+          heading={block.params?.heading as string | undefined}
+          body={block.params?.body as string | undefined}
+        />
+      )
+    }
+    case 'classSchedule': {
+      const ScheduleComponent = CLASS_SCHEDULE_VARIANTS[block.variant ?? ''] ?? ClassScheduleWeekBlock
+      return (
+        <ScheduleComponent
+          key="classSchedule"
           label={block.params?.label as string | undefined}
           heading={block.params?.heading as string | undefined}
           body={block.params?.body as string | undefined}
