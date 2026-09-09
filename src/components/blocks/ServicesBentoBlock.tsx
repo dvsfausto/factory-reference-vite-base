@@ -97,7 +97,7 @@ export function ServicesBentoBlock({
                   height={600}
                   className="absolute inset-0 -z-20 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 -z-10 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent" />
+                <div className="absolute inset-0 -z-10 bg-gradient-to-t from-fam-scrim-2/90 via-fam-scrim-2/30 to-transparent" />
                 <div className="flex items-end justify-between gap-3 p-6">
                   <h3 className={`font-display font-semibold tracking-tight text-fam-on-dark drop-shadow-sm ${i === 0 ? 'text-2xl sm:text-3xl' : 'text-xl'}`}>
                     {s.displayName}

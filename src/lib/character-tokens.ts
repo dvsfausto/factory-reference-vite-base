@@ -20,7 +20,7 @@
 //     (emerald, the DNA accent every character block already uses) via the accent*
 //     tokens below; known verticals keep text-brand-* (byte-identical). There is no
 //     primary CTA in the middle sections, so nothing brand-expressive is retinted.
-//   · bold sectionAlt: border-based (white + border-y border-ink-100), no invented
+//   · bold sectionAlt: border-based (white + border-y border-fam-line-ink), no invented
 //     tint — hairlines are bold's language.
 //   · dark elegant card: lifted to var(--color-fam-statement-3) (from var(--color-fam-statement-2)) for card/section
 //     separation — flat cards are the dark-mode muddy failure mode.
@@ -97,9 +97,9 @@ const CHARACTER_ACCENT = {
 const BOLD: CharacterTokens = {
   ...CHARACTER_ACCENT,
   section: 'bg-background',
-  sectionAlt: 'bg-background', // border-based rhythm (decision): white + border-y border-ink-100
+  sectionAlt: 'bg-background', // border-based rhythm (decision): white + border-y border-fam-line-ink
   card: 'bg-fam-card',
-  border: 'border-ink-100',
+  border: 'border-fam-line-ink',
   text: 'text-ink-900',
   muted: 'text-ink-500',
   // Bold's hero is dark navy (HeroBoldFullbleedBlock → bg-fam-panel-ink text-fam-on-dark) but its section is

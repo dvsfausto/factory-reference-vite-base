@@ -53,7 +53,7 @@ export function GalleryJustifiedBlock({
                 loading="lazy"
                 className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
-              <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/80 to-transparent p-4">
+              <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-fam-scrim-2/80 to-transparent p-4">
                 <span className="font-display text-sm font-semibold text-fam-on-dark drop-shadow">{p.title}</span>
               </figcaption>
             </figure>

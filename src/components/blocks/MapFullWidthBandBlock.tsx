@@ -28,7 +28,7 @@ export function MapFullWidthBandBlock({
   return (
     <section className="relative isolate overflow-hidden bg-fam-panel text-fam-on-dark">
       <div className="absolute inset-0 opacity-[0.16]" style={{ backgroundImage: 'linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)', backgroundSize: '52px 52px' }} />
-      <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/70 to-slate-950/40" />
+      <div className="absolute inset-0 bg-gradient-to-t from-fam-scrim-2 via-fam-scrim-2/70 to-fam-scrim-2/40" />
       <div className="container-x relative py-section">
         <div className="max-w-2xl">
           <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-on-dark">

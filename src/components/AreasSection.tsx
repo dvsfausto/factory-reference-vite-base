@@ -23,7 +23,7 @@ export function AreasSection({ heading, intro, areas, mapEmbedUrl }: Props) {
           )}
         </div>
         {mapEmbedUrl && (
-          <div className="mt-10 overflow-hidden rounded-2xl border border-slate-200 shadow-sm">
+          <div className="mt-10 overflow-hidden rounded-2xl border border-fam-line-slate shadow-sm">
             <iframe
               src={mapEmbedUrl}
               title={tr('section.serviceAreaMap')}
@@ -38,7 +38,7 @@ export function AreasSection({ heading, intro, areas, mapEmbedUrl }: Props) {
               <Link
                 to="/areas/$slug"
                 params={{ slug: a.slug }}
-                className="group block rounded-lg bg-slate-50 px-4 py-4 transition-colors hover:bg-fam-accent-soft"
+                className="group block rounded-lg bg-fam-surface-slate px-4 py-4 transition-colors hover:bg-fam-accent-soft"
               >
                 <p className="font-semibold text-slate-900 group-hover:text-fam-accent-text-strong">
                   {a.name}

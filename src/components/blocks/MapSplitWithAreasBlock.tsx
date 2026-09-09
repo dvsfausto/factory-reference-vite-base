@@ -53,7 +53,7 @@ export function MapSplitWithAreasBlock({
           </div>
           <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-fam-hairline bg-fam-panel-2">
             <div className="absolute inset-0 opacity-[0.18]" style={{ backgroundImage: 'linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)', backgroundSize: '38px 38px' }} />
-            <div className="absolute inset-0 bg-gradient-to-tr from-slate-950 via-transparent to-fam-accent/10" />
+            <div className="absolute inset-0 bg-gradient-to-tr from-fam-scrim-2 via-transparent to-fam-accent/10" />
             {pins.map((a, i) => {
               const isHome = i === homeIndex
               const pos = isHome ? { top: '48%', left: '50%' } : SPOTS[i % SPOTS.length]

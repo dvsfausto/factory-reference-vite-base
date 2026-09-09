@@ -290,7 +290,7 @@ export function ServicePageTemplate({ data }: Props) {
                   <Link
                     key={a.href}
                     to={a.href}
-                    className={`badge-pill bg-fam-card border ${T?.border ?? "border-ink-100"} ${tBody} ${T ? T.accentHover : "hover:border-brand-600 hover:text-brand-600"} normal-case tracking-normal text-sm`}
+                    className={`badge-pill bg-fam-card border ${T?.border ?? "border-fam-line-ink"} ${tBody} ${T ? T.accentHover : "hover:border-brand-600 hover:text-brand-600"} normal-case tracking-normal text-sm`}
                   >
                     <MapPin className="h-3.5 w-3.5" /> {a.label}
                   </Link>
@@ -298,7 +298,7 @@ export function ServicePageTemplate({ data }: Props) {
                   // No area page for this place (SEO-2): text chip, no dead link.
                   <span
                     key={a.label}
-                    className={`badge-pill bg-fam-card border ${T?.border ?? "border-ink-100"} ${tBody} normal-case tracking-normal text-sm`}
+                    className={`badge-pill bg-fam-card border ${T?.border ?? "border-fam-line-ink"} ${tBody} normal-case tracking-normal text-sm`}
                   >
                     <MapPin className="h-3.5 w-3.5" /> {a.label}
                   </span>

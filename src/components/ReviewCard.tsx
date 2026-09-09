@@ -8,8 +8,8 @@ const PLATFORM_COLORS: Record<
 > = {
   google: "bg-blue-50 text-blue-700",
   yelp: "bg-red-50 text-red-700",
-  manual: "bg-slate-50 text-slate-700",
-  direct: "bg-slate-50 text-slate-700",
+  manual: "bg-fam-surface-slate text-slate-700",
+  direct: "bg-fam-surface-slate text-slate-700",
   hybrid: "bg-purple-50 text-purple-700",
 };
 
@@ -22,7 +22,7 @@ export function ReviewCard({ review }: { review: Review }) {
   const tBody = T?.text ?? "text-ink-700";
   const tStrong = T?.text ?? "text-ink-900";
   const tMuted = T?.muted ?? "text-ink-500";
-  const tBorder = T ? T.border : "border-ink-100";
+  const tBorder = T ? T.border : "border-fam-line-ink";
 
   return (
     <div className={`${tCard} p-7 h-full flex flex-col relative overflow-hidden`}>

@@ -47,7 +47,7 @@ export function ReviewsSection({
 
 function ReviewCard({ review }: { review: Review }) {
   return (
-    <article className="flex h-full flex-col rounded-2xl bg-slate-50 p-6">
+    <article className="flex h-full flex-col rounded-2xl bg-fam-surface-slate p-6">
       <div
         aria-label={`${review.rating} of 5 stars`}
         className="mb-3 flex gap-0.5 text-amber-500"
@@ -61,7 +61,7 @@ function ReviewCard({ review }: { review: Review }) {
       <blockquote className="flex-1 text-base leading-relaxed text-slate-800">
         &ldquo;{review.text}&rdquo;
       </blockquote>
-      <footer className="mt-4 border-t border-slate-200 pt-3 text-sm">
+      <footer className="mt-4 border-t border-fam-line-slate pt-3 text-sm">
         <p className="font-semibold text-slate-900">{review.author}</p>
         {(review.location || review.service) && (
           <p className="mt-0.5 text-slate-500">

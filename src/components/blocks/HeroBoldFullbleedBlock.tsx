@@ -60,7 +60,7 @@ export function HeroBoldFullbleedBlock({
         className="absolute inset-0 -z-20 h-full w-full object-cover"
       />
       {/* Dark structural scrim for legibility + industrial mood. */}
-      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-ink-900 via-ink-900/90 to-ink-900/45" />
+      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-fam-scrim via-fam-scrim/90 to-fam-scrim/45" />
 
       <div className="container-x relative flex flex-1 items-center py-section">
         <motion.div

@@ -40,8 +40,8 @@ export function HeroBackgroundBlock({
         alt={HERO_ALT}
         className="absolute inset-0 -z-20 h-full w-full object-cover"
       />
-      <div className="absolute inset-0 -z-10 bg-gradient-to-t from-slate-950 via-slate-950/70 to-slate-950/25" />
-      <div className="absolute inset-0 -z-10 bg-gradient-to-tr from-slate-950/85 via-slate-950/35 to-transparent" />
+      <div className="absolute inset-0 -z-10 bg-gradient-to-t from-fam-scrim-2 via-fam-scrim-2/70 to-fam-scrim-2/25" />
+      <div className="absolute inset-0 -z-10 bg-gradient-to-tr from-fam-scrim-2/85 via-fam-scrim-2/35 to-transparent" />
 
       <div className="container-x relative flex flex-1 items-end py-section">
         <motion.div

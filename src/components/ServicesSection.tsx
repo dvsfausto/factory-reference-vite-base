@@ -12,7 +12,7 @@ interface Props {
 export function ServicesSection({ heading, intro, services }: Props) {
   if (services.length === 0) return null
   return (
-    <section className="bg-slate-50">
+    <section className="bg-fam-surface-slate">
       <div className="mx-auto max-w-6xl px-4 py-16">
         <div className="max-w-2xl">
           <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
@@ -28,7 +28,7 @@ export function ServicesSection({ heading, intro, services }: Props) {
             // as a CARD, not an anchor — no /services/$slug link is created, so nothing can dangle.
             const paged = s.paged !== false
             const media = (
-              <div className="aspect-[4/3] overflow-hidden bg-slate-100">
+              <div className="aspect-[4/3] overflow-hidden bg-fam-surface-slate-2">
                 <img
                   src={serviceImageUrl(s.slug)}
                   alt={s.name}

@@ -24,7 +24,7 @@ export function FAQSection({ faqs, title = tr('section.faq'), intro }: Props) {
   const tStrong = T?.text ?? "text-ink-900";
   const tBody = T?.text ?? "text-ink-700";
   const tMuted = T?.muted ?? "text-ink-500";
-  const faqWrap = T ? `mt-10 border-y ${T.border}` : "mt-10 divide-y divide-ink-100 border-y border-ink-100";
+  const faqWrap = T ? `mt-10 border-y ${T.border}` : "mt-10 divide-y divide-fam-line-ink border-y border-fam-line-ink";
 
   return (
     <section className={secPlain}>

@@ -70,7 +70,7 @@ export function HeroAuroraBlock({
         className="absolute inset-0 -z-30 h-full w-full object-cover"
       />
       {/* Legibility scrim, dark from the left, fading right. */}
-      <div className="absolute inset-0 -z-20 bg-gradient-to-tr from-ink-900 via-ink-900/85 to-ink-900/30" />
+      <div className="absolute inset-0 -z-20 bg-gradient-to-tr from-fam-scrim via-fam-scrim/85 to-fam-scrim/30" />
       {/* Ambient brand AURORA, a slow-drifting, blurred wash of --wow-grad-brand.
           screen blend lifts the brand hue out of the photo. Motion is gated: a
           reduced-motion viewer gets the static glow with no drift. */}

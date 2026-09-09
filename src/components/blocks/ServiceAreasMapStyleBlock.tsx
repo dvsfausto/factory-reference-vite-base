@@ -87,7 +87,7 @@ export function ServiceAreasMapStyleBlock({
                 backgroundSize: '38px 38px',
               }}
             />
-            <div className="absolute inset-0 bg-gradient-to-tr from-slate-950 via-transparent to-fam-accent/10" />
+            <div className="absolute inset-0 bg-gradient-to-tr from-fam-scrim-2 via-transparent to-fam-accent/10" />
             {pins.map((a, i) => {
               const isHome = i === homeIndex
               const pos = isHome ? { top: '48%', left: '50%' } : SPOTS[i % SPOTS.length]

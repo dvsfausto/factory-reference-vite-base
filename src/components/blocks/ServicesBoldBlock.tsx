@@ -41,7 +41,7 @@ export function ServicesBoldBlock({
   const previewServices = services.slice(0, 3)
   if (previewServices.length === 0) return null
   return (
-    <section className="bg-background border-y border-ink-100">
+    <section className="bg-background border-y border-fam-line-ink">
       <div className="container-x py-section">
         <SectionHeaderBold
           label={label ?? ((site as { homeServices?: { label?: string; heading?: string; body?: string } }).homeServices?.label ?? tr('section.whatWeDo'))}
@@ -54,7 +54,7 @@ export function ServicesBoldBlock({
               key={s.slug}
               to="/services/$slug"
               params={{ slug: s.slug }}
-              className="group flex flex-col overflow-hidden rounded-lg border border-ink-100 bg-fam-card transition-all hover:-translate-y-1 hover:border-fam-accent hover:shadow-xl"
+              className="group flex flex-col overflow-hidden rounded-lg border border-fam-line-ink bg-fam-card transition-all hover:-translate-y-1 hover:border-fam-accent hover:shadow-xl"
             >
               <div className="aspect-[4/3] overflow-hidden">
                 <img

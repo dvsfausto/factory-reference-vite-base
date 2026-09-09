@@ -23,7 +23,7 @@ export function Hero({
   heroImage,
 }: Props) {
   return (
-    <section className="bg-gradient-to-b from-slate-50 to-fam-card">
+    <section className="bg-gradient-to-b from-fam-surface-slate to-fam-card">
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-16 lg:grid-cols-2 lg:py-24">
         <div className="flex flex-col justify-center">
           <h1 className="text-4xl font-bold leading-tight tracking-tight text-slate-900 sm:text-5xl">
@@ -82,7 +82,7 @@ function CtaButton({
   const className =
     variant === 'primary'
       ? 'inline-flex items-center justify-center rounded-md bg-fam-accent px-6 py-3 font-semibold text-fam-on-accent shadow-sm hover:bg-fam-accent-deep transition-colors'
-      : 'inline-flex items-center justify-center rounded-md border border-slate-300 bg-fam-card px-6 py-3 font-semibold text-slate-900 hover:bg-slate-50 transition-colors'
+      : 'inline-flex items-center justify-center rounded-md border border-fam-line-slate-2 bg-fam-card px-6 py-3 font-semibold text-slate-900 hover:bg-fam-surface-slate transition-colors'
   if (link.href.startsWith('http') || link.href.startsWith('tel:') || link.href.startsWith('mailto:')) {
     return (
       <a href={link.href} className={className}>

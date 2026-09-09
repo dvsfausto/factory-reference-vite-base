@@ -24,7 +24,11 @@
   --color-card-foreground: var(--card-foreground);
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
+  /* the brand primary as a FILL (bands, buttons, marks). Light: the primary itself. Dark polarity: the emitter sets
+     --fam-primary-fill to the brand fill ramp's 600 — the primary lifted from a ground it would vanish into, just until
+     the foreground reads on it — so a brand band is still a band. --color-primary-ink is the primary AS TEXT. */
+  --color-primary: var(--fam-primary-fill, var(--primary));
+  --color-primary-ink: var(--fam-primary-ink, var(--primary));
   --color-primary-foreground: var(--primary-foreground);
   /* THE CTA SLOT (niche arc · Stage 3, 2026-09-08): the button's fill and ink. --cta / --cta-foreground are set
      ONLY by the factory when a brand kit carries a CTA colour; absent, the button is the primary, byte-identical
@@ -134,6 +138,18 @@
      Dark polarity: the accent is lifted to read as TEXT on the ground, so the fill takes the page ground as ink
      (the Stage 3 rule for the dark presets' CTA). Derived once per build from the same polarity flag. */
   --color-fam-on-accent: var(--fam-on-accent, var(--color-fam-on-dark));
+  /* FILL roles of the ink and slate ramps (Stage 6). On a light site a ramp serves as text AND as fill (a scrim under
+     light text, a hairline, a pale surface); on a dark ground those pull apart — text must go light, a scrim must stay
+     dark — so every fill use reads a role token whose light value IS the ramp step it replaced, and the ramp
+     variables carry text semantics only when the emitter derives a dark polarity. */
+  --color-fam-line-ink: var(--fam-line-ink, var(--color-ink-100));
+  --color-fam-line-ink-2: var(--fam-line-ink-2, var(--color-ink-300));
+  --color-fam-scrim: var(--fam-scrim, var(--color-ink-900));
+  --color-fam-scrim-2: var(--fam-scrim-2, var(--color-slate-950));
+  --color-fam-surface-slate: var(--fam-surface-slate, var(--color-slate-50));
+  --color-fam-surface-slate-2: var(--fam-surface-slate-2, var(--color-slate-100));
+  --color-fam-line-slate: var(--fam-line-slate, var(--color-slate-200));
+  --color-fam-line-slate-2: var(--fam-line-slate-2, var(--color-slate-300));
   --color-fam-statement: var(--fam-statement, #1A1410);
   --color-fam-statement-2: var(--fam-statement-2, #241C16);
   --color-fam-statement-3: var(--fam-statement-3, #2C221B);
@@ -308,7 +324,7 @@
     background: var(--color-fam-card);
     border-radius: 20px;
     box-shadow: 0 1px 2px rgba(11,42,91,0.04), 0 8px 24px -12px rgba(11,42,91,0.08);
-    border: 1px solid var(--color-ink-100);
+    border: 1px solid var(--color-fam-line-ink);
   }
 
   .card-soft {
@@ -373,7 +389,7 @@
   }
 
   /* Decorative input on contact form */
-  .input-stead{display:block;width:100%;border:1px solid var(--color-ink-300);border-radius:10px;padding:11px 14px;font-size:14px;background:var(--color-fam-card);color:var(--color-ink-900);transition:all .15s;font-family:var(--font-sans)}
+  .input-stead{display:block;width:100%;border:1px solid var(--color-fam-line-ink-2);border-radius:10px;padding:11px 14px;font-size:14px;background:var(--color-fam-card);color:var(--color-ink-900);transition:all .15s;font-family:var(--font-sans)}
   .input-stead:focus{outline:none;border-color:var(--color-brand-600);box-shadow:0 0 0 3px rgba(30,99,214,.15)}
 }
 

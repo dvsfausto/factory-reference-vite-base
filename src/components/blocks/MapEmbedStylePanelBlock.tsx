@@ -46,7 +46,7 @@ export function MapEmbedStylePanelBlock({
         </div>
         <div className="relative mt-10 aspect-[16/9] overflow-hidden rounded-3xl border border-fam-hairline bg-fam-panel-2">
           <div className="absolute inset-0 opacity-[0.18]" style={{ backgroundImage: 'linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)', backgroundSize: '44px 44px' }} />
-          <div className="absolute inset-0 bg-gradient-to-tr from-slate-950 via-transparent to-fam-accent/10" />
+          <div className="absolute inset-0 bg-gradient-to-tr from-fam-scrim-2 via-transparent to-fam-accent/10" />
           <div className="absolute right-4 top-4 flex flex-col overflow-hidden rounded-lg border border-fam-card/15 bg-fam-card/10 backdrop-blur-sm">
             <span className="grid h-8 w-8 place-items-center text-fam-on-dark/80"><Plus className="h-4 w-4" /></span>
             <span className="grid h-8 w-8 place-items-center border-t border-fam-card/15 text-fam-on-dark/80"><Minus className="h-4 w-4" /></span>

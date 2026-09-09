@@ -9,7 +9,7 @@ interface Props {
 export function TestimonialsSection({ heading, intro, testimonials }: Props) {
   if (testimonials.length === 0) return null
   return (
-    <section className="bg-slate-50">
+    <section className="bg-fam-surface-slate">
       <div className="mx-auto max-w-6xl px-4 py-16">
         <div className="max-w-2xl">
           <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
@@ -40,7 +40,7 @@ export function TestimonialsSection({ heading, intro, testimonials }: Props) {
               <blockquote className="flex-1 text-base leading-relaxed text-slate-800">
                 &ldquo;{t.text}&rdquo;
               </blockquote>
-              <footer className="mt-5 border-t border-slate-200 pt-4 text-sm">
+              <footer className="mt-5 border-t border-fam-line-slate pt-4 text-sm">
                 <p className="font-semibold text-slate-900">{t.author}</p>
                 {t.location && (
                   <p className="mt-0.5 text-slate-500">{t.location}</p>

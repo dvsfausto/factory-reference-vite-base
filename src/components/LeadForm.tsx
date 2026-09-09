@@ -231,7 +231,7 @@ export function LeadForm({
             value={form.message}
             onChange={update('message')}
             maxLength={1000}
-            className="mt-1 w-full rounded-md border border-slate-300 bg-fam-card px-3 py-2 text-base text-slate-900 outline-none transition-colors focus:border-fam-accent focus:ring-2 focus:ring-fam-accent-soft-2"
+            className="mt-1 w-full rounded-md border border-fam-line-slate-2 bg-fam-card px-3 py-2 text-base text-slate-900 outline-none transition-colors focus:border-fam-accent focus:ring-2 focus:ring-fam-accent-soft-2"
           />
         </div>
       </div>
@@ -314,7 +314,7 @@ function Field({
         className={`mt-1 w-full rounded-md border bg-fam-card px-3 py-2 text-base text-slate-900 outline-none transition-colors ${
           error
             ? 'border-red-500 focus:border-red-600 focus:ring-2 focus:ring-red-100'
-            : 'border-slate-300 focus:border-fam-accent focus:ring-2 focus:ring-fam-accent-soft-2'
+            : 'border-fam-line-slate-2 focus:border-fam-accent focus:ring-2 focus:ring-fam-accent-soft-2'
         }`}
       />
       {error && (

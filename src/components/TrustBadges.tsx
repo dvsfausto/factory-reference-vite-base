@@ -5,7 +5,7 @@ interface Props {
 export function TrustBadges({ items }: Props) {
   if (items.length === 0) return null
   return (
-    <section className="border-y border-slate-200 bg-slate-50">
+    <section className="border-y border-fam-line-slate bg-fam-surface-slate">
       <div className="mx-auto max-w-6xl px-4 py-6">
         <ul className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm text-slate-700">
           {items.map((item) => (
