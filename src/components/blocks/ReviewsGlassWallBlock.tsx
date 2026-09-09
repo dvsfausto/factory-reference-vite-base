@@ -83,7 +83,7 @@ export function ReviewsGlassWallBlock({
                     strokeWidth={1.5}
                     style={{
                       color: 'transparent',
-                      backgroundImage: 'var(--wow-grad-brand)',
+                      backgroundImage: 'var(--wow-grad-brand-text)',
                       WebkitBackgroundClip: 'text',
                       backgroundClip: 'text',
                     }}

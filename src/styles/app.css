@@ -392,6 +392,9 @@
   --wow-dur-slow: 0.9s;
   /* brand-derived visual richness */
   --wow-grad-brand: linear-gradient(135deg, var(--color-brand-500), color-mix(in oklab, var(--color-brand-700) 82%, black));
+  /* the same gradient for TEXT painted through the glyphs (bg-clip-text): on a light site identical; on dark polarity the
+     emitter defines the text ramp and --fam-grad-deep so the numeral stays readable instead of vanishing into the ground */
+  --wow-grad-brand-text: linear-gradient(135deg, var(--color-brand-text-500, var(--color-brand-500)), color-mix(in oklab, var(--color-brand-text-700, var(--color-brand-700)) 82%, var(--fam-grad-deep, black)));
   --wow-grad-surface: radial-gradient(120% 90% at 80% 8%, color-mix(in oklab, var(--color-brand-100) 55%, var(--color-fam-page)), var(--color-fam-page) 60%);
   --wow-shadow-soft: 0 40px 80px -50px color-mix(in oklab, var(--color-brand-700) 45%, transparent);
   --wow-shadow-glow: 0 24px 52px -20px color-mix(in oklab, var(--color-brand-500) 55%, transparent);

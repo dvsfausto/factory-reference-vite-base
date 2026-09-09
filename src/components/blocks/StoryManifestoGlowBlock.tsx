@@ -57,7 +57,7 @@ export function StoryManifestoGlowBlock({
           <span
             aria-hidden
             className="mt-4 block bg-clip-text font-display text-[7rem] leading-[0.6] text-transparent sm:text-[9rem]"
-            style={{ backgroundImage: 'var(--wow-grad-brand)' }}
+            style={{ backgroundImage: 'var(--wow-grad-brand-text)' }}
           >
             &ldquo;
           </span>

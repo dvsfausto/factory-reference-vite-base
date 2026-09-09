@@ -45,7 +45,7 @@ export function AreaAboutBlock({
             className="text-xs font-bold uppercase tracking-[0.18em]"
             style={{
               color: 'transparent',
-              backgroundImage: 'var(--wow-grad-brand)',
+              backgroundImage: 'var(--wow-grad-brand-text)',
               WebkitBackgroundClip: 'text',
               backgroundClip: 'text',
             }}

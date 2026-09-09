@@ -70,7 +70,7 @@ export function ProcessBoldNumeralsBlock({
                 <span
                   aria-hidden
                   className="pointer-events-none absolute -right-2 -top-4 select-none bg-clip-text font-display text-[7rem] font-bold leading-none text-transparent opacity-20"
-                  style={{ backgroundImage: 'var(--wow-grad-brand)' }}
+                  style={{ backgroundImage: 'var(--wow-grad-brand-text)' }}
                 >
                   {i + 1}
                 </span>

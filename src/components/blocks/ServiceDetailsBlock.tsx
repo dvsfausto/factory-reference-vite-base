@@ -92,7 +92,7 @@ export function ServiceDetailsBlock({
                 className="w-12 shrink-0 font-display text-3xl"
                 style={{
                   color: 'transparent',
-                  backgroundImage: 'var(--wow-grad-brand)',
+                  backgroundImage: 'var(--wow-grad-brand-text)',
                   WebkitBackgroundClip: 'text',
                   backgroundClip: 'text',
                 }}
@@ -278,7 +278,7 @@ export function ServiceDetailsBlock({
           strokeWidth={1.25}
           style={{
             color: 'transparent',
-            backgroundImage: 'var(--wow-grad-brand)',
+            backgroundImage: 'var(--wow-grad-brand-text)',
             WebkitBackgroundClip: 'text',
             backgroundClip: 'text',
           }}

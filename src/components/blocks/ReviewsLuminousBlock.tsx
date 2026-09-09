@@ -71,7 +71,7 @@ export function ReviewsLuminousBlock({
                 strokeWidth={1}
                 style={{
                   color: 'transparent',
-                  backgroundImage: 'var(--wow-grad-brand)',
+                  backgroundImage: 'var(--wow-grad-brand-text)',
                   WebkitBackgroundClip: 'text',
                   backgroundClip: 'text',
                 }}

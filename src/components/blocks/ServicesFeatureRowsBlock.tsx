@@ -105,7 +105,7 @@ export function ServicesFeatureRowsBlock({
                     aria-hidden
                     className="block font-display text-6xl font-extrabold leading-none tracking-tight sm:text-7xl"
                     style={{
-                      backgroundImage: 'var(--wow-grad-brand)',
+                      backgroundImage: 'var(--wow-grad-brand-text)',
                       WebkitBackgroundClip: 'text',
                       backgroundClip: 'text',
                       color: 'transparent',
