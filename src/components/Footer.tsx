@@ -10,6 +10,10 @@ import { siteDecor } from "~/lib/decor";
 import { tr } from "~/lib/i18n";
 import { HAS_PHONE } from '~/lib/phone'
 import { HAS_EMAIL } from '~/lib/email'
+
+// Stage 7 (2026-09-09): on a dark-polarity site every chrome ground is dark, so the logo takes its light rendering
+// whatever the family theme says (a friendly header on Athletic Dark has no invert of its own). Light sites: unchanged.
+const isDarkSite = (SITE as { polarity?: string }).polarity === "dark"
 import { reviews as REVIEWS } from '~/data/reviews'
 
 const HIDDEN_NAV: string[] = [
@@ -164,7 +168,7 @@ function BottomBar({ t }: { t: FooterTheme }) {
 function LogoTagline({ t }: { t: FooterTheme }) {
   return (
     <div>
-      <Logo src={SITE.logo_url} light={t.logoLight} height={48} alt={SITE.name} />
+      <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} height={48} alt={SITE.name} />
       {SITE.tagline && <p className={`mt-4 text-sm ${t.tagline} leading-relaxed font-display italic`}>{SITE.tagline}</p>}
       <div className="mt-5"><SocialRow t={t} /></div>
     </div>
@@ -200,7 +204,7 @@ function FooterEditorial({ t }: { t: FooterTheme }) {
       <div className="container-x py-section">
         {/* Masthead: wordmark left, small-caps place/phone right, over a hairline. */}
         <div className={`flex flex-wrap items-end justify-between gap-6 border-b ${t.border} pb-8`}>
-          <Logo src={SITE.logo_url} light={t.logoLight} height={52} alt={SITE.name} />
+          <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} height={52} alt={SITE.name} />
           <span className={`${capLabel} ${t.tagline}`}>{[loc, SITE.phoneDisplay].filter(Boolean).join("  ·  ")}</span>
         </div>
 
@@ -270,7 +274,7 @@ function FooterMinimal({ t }: { t: FooterTheme }) {
           {/* Logo + tagline: the minimal footer still carries SITE.tagline (footer.tagline is an
               editor-editable field — dropping it silently no-op'd owner edits). Kept to one tight line. */}
           <div>
-            <Logo src={SITE.logo_url} light={t.logoLight} height={40} alt={SITE.name} />
+            <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} height={40} alt={SITE.name} />
             {SITE.tagline && <p className={`mt-3 max-w-xs text-sm ${t.tagline} leading-relaxed font-display italic`}>{SITE.tagline}</p>}
           </div>
           <nav className={`flex flex-wrap gap-x-7 gap-y-2 text-xs font-semibold uppercase tracking-[0.12em] ${t.listText}`}>
