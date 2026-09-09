@@ -37,7 +37,7 @@ export function VideoTestimonialsGridBlock({
         <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {vids.slice(0, 6).map((v, i) => (
             <figure key={`${v.author}-${i}`} className="flex flex-col overflow-hidden rounded-2xl border border-fam-hairline bg-fam-card">
-              <div className="aspect-video overflow-hidden bg-slate-900">
+              <div className="aspect-video overflow-hidden bg-fam-panel-2">
                 <video controls preload="none" poster={v.poster} className="h-full w-full object-cover">
                   <source src={v.videoUrl} />
                 </video>

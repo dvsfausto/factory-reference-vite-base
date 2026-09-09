@@ -62,7 +62,7 @@ export function HeroAuroraBlock({
   const rating = getAggregateRating()
 
   return (
-    <section className="relative isolate flex min-h-[calc(100vh-4rem)] flex-col overflow-hidden bg-ink-900 text-fam-on-dark">
+    <section className="relative isolate flex min-h-[calc(100vh-4rem)] flex-col overflow-hidden bg-fam-panel-ink text-fam-on-dark">
       {/* Full-bleed business photo. */}
       <img
         src={imageSrc(imageUrl)}

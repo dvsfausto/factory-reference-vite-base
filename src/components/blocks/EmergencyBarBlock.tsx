@@ -33,7 +33,7 @@ export function EmergencyBarBlock({
   const headingText = heading ?? tr('emergency.heading')
   const bodyText = body ?? site.hours ?? ''
   return (
-    <section className="bg-fam-ink text-fam-on-dark">
+    <section className="bg-fam-ink-panel text-fam-on-dark">
       <div className="container-x flex flex-wrap items-center justify-between gap-x-6 gap-y-3 py-3">
         <div className="flex min-w-0 items-center gap-3">
           <span className="relative flex h-2.5 w-2.5 shrink-0" aria-hidden="true">

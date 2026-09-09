@@ -41,7 +41,7 @@ export function HeroVideoBlock({
   const poster = imageSrc(site.hero.image_url)
 
   return (
-    <section className="relative isolate flex min-h-[34rem] flex-col overflow-hidden bg-slate-950 text-fam-on-dark md:min-h-[40rem]">
+    <section className="relative isolate flex min-h-[34rem] flex-col overflow-hidden bg-fam-panel text-fam-on-dark md:min-h-[40rem]">
       {videoUrl ? (
         <video
           autoPlay

@@ -78,7 +78,7 @@ export function ServiceAreasMapStyleBlock({
             </Link>
           </div>
 
-          <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-fam-hairline bg-slate-900">
+          <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-fam-hairline bg-fam-panel-2">
             <div
               className="absolute inset-0 opacity-[0.18]"
               style={{

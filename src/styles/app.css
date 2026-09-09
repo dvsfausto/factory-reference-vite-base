@@ -142,6 +142,14 @@
   --color-fam-surface-3: var(--fam-surface-3, #EEF2F6);
   --color-fam-surface-4: var(--fam-surface-4, #F1F5F9);
   --color-fam-surface-5: var(--fam-surface-5, #FAFBFC);
+  /* Stage 6 — PANEL grounds: a dark card on a light site (bg-slate-950 / bg-slate-900 / bg-ink-900 / bg-fam-ink with
+     light text on it). As a GROUND that role must stay dark on both polarities, while the same shade as TEXT
+     inverts with the ramp — so the ground gets its own token: light value = the exact shade it replaced, dark
+     value = the lifted ground (the scaffolder). */
+  --color-fam-panel: var(--fam-panel, oklch(12.9% 0.042 264.695));
+  --color-fam-panel-2: var(--fam-panel-2, oklch(20.8% 0.042 265.755));
+  --color-fam-panel-ink: var(--fam-panel-ink, #0B1F3A);
+  --color-fam-ink-panel: var(--fam-ink-panel, var(--fam-ink, #0F172A));
 }
 
 :root {

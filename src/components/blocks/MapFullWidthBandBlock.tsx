@@ -26,7 +26,7 @@ export function MapFullWidthBandBlock({
   if (areas.length === 0) return null
   const homeIndex = Math.max(0, areas.findIndex((a) => a.tier === 'home-base'))
   return (
-    <section className="relative isolate overflow-hidden bg-slate-950 text-fam-on-dark">
+    <section className="relative isolate overflow-hidden bg-fam-panel text-fam-on-dark">
       <div className="absolute inset-0 opacity-[0.16]" style={{ backgroundImage: 'linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)', backgroundSize: '52px 52px' }} />
       <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/70 to-slate-950/40" />
       <div className="container-x relative py-section">

@@ -102,10 +102,10 @@ const BOLD: CharacterTokens = {
   border: 'border-ink-100',
   text: 'text-ink-900',
   muted: 'text-ink-500',
-  // Bold's hero is dark navy (HeroBoldFullbleedBlock → bg-ink-900 text-fam-on-dark) but its section is
+  // Bold's hero is dark navy (HeroBoldFullbleedBlock → bg-fam-panel-ink text-fam-on-dark) but its section is
   // white. The crumb sits over the hero, so it coordinates with the hero's dark chrome (matching the
-  // dark footer, bg-ink-900) with light text — not the white section that produced the white band.
-  crumb: { surface: 'bg-ink-900', text: 'text-fam-on-dark', muted: 'text-fam-on-dark/70' },
+  // dark footer, bg-fam-panel-ink) with light text — not the white section that produced the white band.
+  crumb: { surface: 'bg-fam-panel-ink', text: 'text-fam-on-dark', muted: 'text-fam-on-dark/70' },
   cardRadius: 'rounded-lg',
   cardElevation: 'transition-all hover:-translate-y-1 hover:border-fam-accent hover:shadow-xl',
   buttonRadius: 'rounded-lg',

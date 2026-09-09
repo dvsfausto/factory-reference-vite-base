@@ -77,7 +77,7 @@ export function ServicesSpotlightTilesBlock({
             <Link
               to="/services/$slug"
               params={{ slug: lead.slug }}
-              className="group relative flex h-full min-h-[22rem] flex-col justify-end overflow-hidden rounded-[1.75rem] border bg-ink-900 p-7 sm:p-9"
+              className="group relative flex h-full min-h-[22rem] flex-col justify-end overflow-hidden rounded-[1.75rem] border bg-fam-panel-ink p-7 sm:p-9"
               style={{
                 borderColor: 'var(--wow-hairline)',
                 boxShadow: 'var(--wow-shadow-lift)',
@@ -100,7 +100,7 @@ export function ServicesSpotlightTilesBlock({
               {/* Legibility scrim, a NEUTRAL dark gradient that covers the whole copy
                   area (bottom ~55%), not just the bottom 40%. Sits ABOVE the brand wash
                   so white copy stays ≥4.5:1 regardless of the photo OR a light brand
-                  wash (light/yellow primaries). The bg-ink-900 tile base guarantees the
+                  wash (light/yellow primaries). The bg-fam-panel-ink tile base guarantees the
                   same when the image is missing or still loading. */}
               <span
                 aria-hidden

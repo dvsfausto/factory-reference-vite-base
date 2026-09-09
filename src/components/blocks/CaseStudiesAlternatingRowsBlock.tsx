@@ -40,7 +40,7 @@ export function CaseStudiesAlternatingRowsBlock({
                 {s.image ? (
                   <img src={s.image} alt={s.title} loading="lazy" className="aspect-[4/3] w-full object-cover" />
                 ) : (
-                  <div className="flex aspect-[4/3] flex-col items-center justify-center bg-slate-950 p-10 text-center">
+                  <div className="flex aspect-[4/3] flex-col items-center justify-center bg-fam-panel p-10 text-center">
                     {s.result && <span className="font-display text-5xl font-semibold tracking-tight text-fam-accent-on-dark">{s.result}</span>}
                     <span className="mt-3 text-sm uppercase tracking-[0.14em] text-slate-400">Outcome</span>
                   </div>

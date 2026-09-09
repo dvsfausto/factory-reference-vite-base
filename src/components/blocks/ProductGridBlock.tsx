@@ -51,7 +51,7 @@ export function ProductGridBlock({
                   </div>
                 )}
                 {p.stock === 'out' && (
-                  <span className="absolute left-3 top-3 rounded-full bg-fam-ink px-3 py-1 text-xs font-semibold text-fam-on-dark">{tr('products.soldOut')}</span>
+                  <span className="absolute left-3 top-3 rounded-full bg-fam-ink-panel px-3 py-1 text-xs font-semibold text-fam-on-dark">{tr('products.soldOut')}</span>
                 )}
                 {p.stock === 'low' && (
                   <span className="absolute left-3 top-3 rounded-full bg-fam-accent-soft px-3 py-1 text-xs font-semibold text-fam-accent-text-strong">{tr('products.lowStock')}</span>

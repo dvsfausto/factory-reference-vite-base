@@ -52,7 +52,7 @@ export function HeroBoldFullbleedBlock({
   ctaLabel?: string
 }) {
   return (
-    <section className="relative isolate flex flex-col overflow-hidden bg-ink-900 text-fam-on-dark">
+    <section className="relative isolate flex flex-col overflow-hidden bg-fam-panel-ink text-fam-on-dark">
       {/* Full-bleed jobsite/build photo, "we build things", not a boutique. */}
       <img
         src={imageSrc(imageUrl)}

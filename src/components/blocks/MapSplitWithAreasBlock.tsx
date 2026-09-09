@@ -51,7 +51,7 @@ export function MapSplitWithAreasBlock({
             </div>
             <Link to="/areas" className="mt-8 inline-flex h-12 items-center rounded-xl bg-cta px-7 font-display text-sm font-semibold text-cta-foreground transition-opacity hover:opacity-90">{tr('common.allAreas')}</Link>
           </div>
-          <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-fam-hairline bg-slate-900">
+          <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-fam-hairline bg-fam-panel-2">
             <div className="absolute inset-0 opacity-[0.18]" style={{ backgroundImage: 'linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)', backgroundSize: '38px 38px' }} />
             <div className="absolute inset-0 bg-gradient-to-tr from-slate-950 via-transparent to-fam-accent/10" />
             {pins.map((a, i) => {

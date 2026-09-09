@@ -48,7 +48,7 @@ export function PricingTiersBlock({
               key={`${p.name}-${i}`}
               className={`flex flex-col rounded-3xl p-8 ${
                 p.highlighted
-                  ? 'bg-slate-950 text-fam-on-dark shadow-xl ring-1 ring-fam-accent md:-mt-4 md:pb-12'
+                  ? 'bg-fam-panel text-fam-on-dark shadow-xl ring-1 ring-fam-accent md:-mt-4 md:pb-12'
                   : 'border border-fam-hairline bg-fam-card'
               }`}
             >

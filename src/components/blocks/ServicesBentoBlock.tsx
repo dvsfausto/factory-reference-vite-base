@@ -87,7 +87,7 @@ export function ServicesBentoBlock({
                 key={s.slug}
                 to="/services/$slug"
                 params={{ slug: s.slug }}
-                className={`group relative isolate flex flex-col justify-end overflow-hidden rounded-2xl bg-slate-950 ${span}`}
+                className={`group relative isolate flex flex-col justify-end overflow-hidden rounded-2xl bg-fam-panel ${span}`}
               >
                 <img
                   src={serviceImageUrl(s.slug)}

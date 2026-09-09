@@ -39,7 +39,7 @@ export function VideoTestimonialsFeaturedThumbsBlock({
         </div>
         <div className="mt-12 grid gap-8 lg:grid-cols-3">
           <figure className="lg:col-span-2">
-            <div className="aspect-video overflow-hidden rounded-2xl border border-fam-hairline bg-slate-900">
+            <div className="aspect-video overflow-hidden rounded-2xl border border-fam-hairline bg-fam-panel-2">
               <video key={f.videoUrl} controls preload="none" poster={f.poster} className="h-full w-full object-cover">
                 <source src={f.videoUrl} />
               </video>
@@ -56,7 +56,7 @@ export function VideoTestimonialsFeaturedThumbsBlock({
                 aria-label={`Play ${v.author}`}
                 className={`flex shrink-0 items-center gap-3 rounded-xl border p-3 text-left transition-all ${i === active ? 'border-fam-accent ring-1 ring-fam-accent bg-fam-card' : 'border-fam-hairline bg-fam-card hover:border-fam-accent'}`}
               >
-                <span className="h-12 w-20 shrink-0 overflow-hidden rounded-lg bg-slate-900">
+                <span className="h-12 w-20 shrink-0 overflow-hidden rounded-lg bg-fam-panel-2">
                   {v.poster && <img src={v.poster} alt={v.author} className="h-full w-full object-cover" />}
                 </span>
                 <span className="min-w-0">

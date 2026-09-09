@@ -46,7 +46,7 @@ export function FormQuoteBlock({
     <section className="bg-fam-card">
       <div className="container-x py-section">
         <div className="mx-auto max-w-3xl overflow-hidden rounded-3xl border border-fam-hairline bg-fam-card shadow-sm">
-          <div className="bg-slate-950 px-8 py-10 text-fam-on-dark md:px-12">
+          <div className="bg-fam-panel px-8 py-10 text-fam-on-dark md:px-12">
             <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-on-dark">
               <span className="h-px w-6 bg-fam-accent" />
               {eyebrowText}

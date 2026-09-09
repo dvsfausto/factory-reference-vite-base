@@ -41,7 +41,7 @@ export function VideoTestimonialsCarouselBlock({
         <div className="flex snap-x snap-mandatory gap-6 overflow-x-auto px-[max(1.5rem,calc((100vw-80rem)/2+1.5rem))] pb-6 [scrollbar-width:thin]">
           {vids.map((v, i) => (
             <figure key={`${v.author}-${i}`} className="w-[320px] shrink-0 snap-start overflow-hidden rounded-2xl border border-fam-hairline bg-fam-card md:w-[400px]">
-              <div className="aspect-video overflow-hidden bg-slate-900">
+              <div className="aspect-video overflow-hidden bg-fam-panel-2">
                 <video controls preload="none" poster={v.poster} className="h-full w-full object-cover">
                   <source src={v.videoUrl} />
                 </video>

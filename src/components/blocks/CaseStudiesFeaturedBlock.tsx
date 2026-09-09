@@ -42,7 +42,7 @@ export function CaseStudiesFeaturedBlock({
             {hero.image ? (
               <div className="aspect-[16/9] overflow-hidden"><img src={hero.image} alt={hero.title} className="h-full w-full object-cover" /></div>
             ) : (
-              <div className="flex aspect-[16/9] items-center justify-center bg-slate-950 p-10">
+              <div className="flex aspect-[16/9] items-center justify-center bg-fam-panel p-10">
                 {hero.result && <span className="font-display text-5xl font-semibold tracking-tight text-fam-accent-on-dark">{hero.result}</span>}
               </div>
             )}

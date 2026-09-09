@@ -27,7 +27,7 @@ export function PromotionsCountdownBandBlock({
   if (!promos || promos.length === 0) return null
   const p = promos[0]!
   return (
-    <section className="bg-slate-950 text-fam-on-dark">
+    <section className="bg-fam-panel text-fam-on-dark">
       <div className="container-x py-band">
         <div className="flex flex-col items-start gap-6 md:flex-row md:items-center md:justify-between">
           <div className="max-w-2xl">

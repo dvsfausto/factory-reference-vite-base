@@ -42,7 +42,7 @@ export function MembershipTierCardsBlock({
             <div
               key={`${m.name}-${i}`}
               className={`flex flex-col rounded-3xl p-8 ${
-                m.highlighted ? 'bg-slate-950 text-fam-on-dark ring-1 ring-fam-accent md:-mt-4 md:pb-12' : 'border border-fam-hairline bg-fam-card'
+                m.highlighted ? 'bg-fam-panel text-fam-on-dark ring-1 ring-fam-accent md:-mt-4 md:pb-12' : 'border border-fam-hairline bg-fam-card'
               }`}
             >
               {m.highlighted && (

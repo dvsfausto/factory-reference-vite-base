@@ -26,7 +26,7 @@ export function VideoTestimonialsSpotlightBlock({
   if (!vids || vids.length === 0) return null
   const [lead, ...rest] = vids
   return (
-    <section className="bg-slate-950 text-fam-on-dark">
+    <section className="bg-fam-panel text-fam-on-dark">
       <div className="container-x py-section">
         <div className="max-w-2xl">
           <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-on-dark">

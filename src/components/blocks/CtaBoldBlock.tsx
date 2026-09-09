@@ -31,7 +31,7 @@ export function CtaBoldBlock({
   const sub = subtitle ?? ((site as { homeCta?: { title?: string; subtitle?: string } }).homeCta?.subtitle ?? 'Tell us what you need and we’ll take it from there.')
   const ctaLabel = ((site as { headerCtaLabel?: string }).headerCtaLabel ?? tr('form.getFreeQuote'))
   return (
-    <section className="relative isolate overflow-hidden bg-ink-900 text-fam-on-dark">
+    <section className="relative isolate overflow-hidden bg-fam-panel-ink text-fam-on-dark">
       {/* Emerald accent rule across the top, the DNA accent as a structural band. */}
       <div className="h-1.5 w-full bg-fam-accent" />
       <div className="container-x py-section">
