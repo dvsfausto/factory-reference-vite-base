@@ -81,7 +81,7 @@ function CtaButton({
 }) {
   const className =
     variant === 'primary'
-      ? 'inline-flex items-center justify-center rounded-md bg-fam-accent px-6 py-3 font-semibold text-fam-on-dark shadow-sm hover:bg-fam-accent-deep transition-colors'
+      ? 'inline-flex items-center justify-center rounded-md bg-fam-accent px-6 py-3 font-semibold text-fam-on-accent shadow-sm hover:bg-fam-accent-deep transition-colors'
       : 'inline-flex items-center justify-center rounded-md border border-slate-300 bg-fam-card px-6 py-3 font-semibold text-slate-900 hover:bg-slate-50 transition-colors'
   if (link.href.startsWith('http') || link.href.startsWith('tel:') || link.href.startsWith('mailto:')) {
     return (

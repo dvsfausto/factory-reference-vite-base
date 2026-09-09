@@ -29,7 +29,7 @@ function Slider({ item }: { item: GalleryItem }) {
           style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}
         />
         <span className="absolute left-3 top-3 rounded-md bg-fam-card/90 px-2 py-1 font-display text-[10px] font-semibold uppercase tracking-[0.16em] text-fam-ink backdrop-blur-sm">{tr('gallery.before')}</span>
-        <span className="absolute right-3 top-3 rounded-md bg-fam-accent px-2 py-1 font-display text-[10px] font-semibold uppercase tracking-[0.16em] text-fam-on-dark">{tr('gallery.after')}</span>
+        <span className="absolute right-3 top-3 rounded-md bg-fam-accent px-2 py-1 font-display text-[10px] font-semibold uppercase tracking-[0.16em] text-fam-on-accent">{tr('gallery.after')}</span>
         <div className="pointer-events-none absolute inset-y-0 w-0.5 bg-fam-card shadow" style={{ left: `${pos}%` }} />
         <input
           type="range"

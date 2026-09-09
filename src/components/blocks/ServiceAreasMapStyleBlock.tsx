@@ -100,7 +100,7 @@ export function ServiceAreasMapStyleBlock({
                   <span
                     className={`inline-flex items-center gap-1.5 rounded-full font-display font-semibold shadow-lg backdrop-blur-sm ${
                       isHome
-                        ? 'bg-fam-accent px-3.5 py-2 text-sm text-fam-on-dark'
+                        ? 'bg-fam-accent px-3.5 py-2 text-sm text-fam-on-accent'
                         : 'bg-fam-card/90 px-3 py-1.5 text-xs text-fam-ink'
                     }`}
                   >

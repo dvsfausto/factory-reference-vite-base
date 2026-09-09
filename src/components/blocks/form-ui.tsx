@@ -94,7 +94,7 @@ export function SuccessCard({
 } = {}) {
   return (
     <div className="rounded-2xl border border-fam-accent bg-fam-accent-soft p-10 text-center">
-      <span className="mx-auto grid h-12 w-12 place-items-center rounded-full bg-fam-accent text-fam-on-dark">
+      <span className="mx-auto grid h-12 w-12 place-items-center rounded-full bg-fam-accent text-fam-on-accent">
         <Check className="h-6 w-6" />
       </span>
       <h3 className="mt-5 font-display text-2xl font-semibold tracking-tight text-fam-ink">{title}</h3>

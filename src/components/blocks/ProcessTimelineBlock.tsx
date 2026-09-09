@@ -44,7 +44,7 @@ export function ProcessTimelineBlock({
             return (
               <div key={`${s.title}-${i}`} className="relative">
                 <div className="flex items-center">
-                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-fam-accent font-display text-sm font-semibold text-fam-on-dark">
+                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-fam-accent font-display text-sm font-semibold text-fam-on-accent">
                     {Icon ? <Icon className="h-5 w-5" /> : i + 1}
                   </span>
                   {i < items.length - 1 && <span className="ml-3 hidden h-0.5 flex-1 bg-fam-accent-soft-2 md:block" />}

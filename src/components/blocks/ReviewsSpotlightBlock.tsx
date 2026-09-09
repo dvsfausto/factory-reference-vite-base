@@ -65,7 +65,7 @@ export function ReviewsSpotlightBlock({
               {hero.avatar ? (
                 <img src={hero.avatar} alt={hero.author} className="h-12 w-12 rounded-full object-cover" />
               ) : (
-                <span className="grid h-12 w-12 place-items-center rounded-full bg-fam-accent font-display font-semibold text-fam-on-dark">
+                <span className="grid h-12 w-12 place-items-center rounded-full bg-fam-accent font-display font-semibold text-fam-on-accent">
                   {hero.author.slice(0, 1)}
                 </span>
               )}

@@ -39,7 +39,7 @@ export function ServiceAreasCreativeBlock({
               key={a.slug}
               to="/areas/$slug"
               params={{ slug: a.slug }}
-              className="inline-flex items-center gap-2 rounded-full border-2 border-fam-accent px-5 py-2.5 font-display text-sm font-bold text-fam-accent-text-strong transition-colors hover:bg-fam-accent hover:text-fam-on-dark"
+              className="inline-flex items-center gap-2 rounded-full border-2 border-fam-accent px-5 py-2.5 font-display text-sm font-bold text-fam-accent-text-strong transition-colors hover:bg-fam-accent hover:text-fam-on-accent"
             >
               {a.name}
             </Link>

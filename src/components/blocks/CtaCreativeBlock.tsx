@@ -26,20 +26,20 @@ export function CtaCreativeBlock({
   const headline = title ?? ((site as { homeCta?: { title?: string; subtitle?: string } }).homeCta?.title ?? tr('cta.readyToStart'))
   const sub = subtitle ?? ((site as { homeCta?: { title?: string; subtitle?: string } }).homeCta?.subtitle ?? 'Tell us what you need and we’ll take it from there.')
   return (
-    <section className="bg-fam-accent text-fam-on-dark">
+    <section className="bg-fam-accent text-fam-on-accent">
       <div className="container-x py-section">
         <div className="max-w-3xl">
           {site.tagline && (
-            <span className="inline-flex items-center gap-2.5 text-sm font-bold uppercase tracking-[0.14em] text-fam-on-dark">
+            <span className="inline-flex items-center gap-2.5 text-sm font-bold uppercase tracking-[0.14em] text-fam-on-accent">
               <span className="inline-block h-4 w-4 rounded bg-fam-card" />
               {site.tagline}
             </span>
           )}
-          <h2 className="mt-5 font-display text-5xl font-extrabold leading-[0.95] tracking-tight text-fam-on-dark sm:text-6xl lg:text-7xl">
+          <h2 className="mt-5 font-display text-5xl font-extrabold leading-[0.95] tracking-tight text-fam-on-accent sm:text-6xl lg:text-7xl">
             {headline}
           </h2>
           {sub && (
-            <p className="mt-6 max-w-xl text-xl leading-relaxed text-fam-on-dark/90">{sub}</p>
+            <p className="mt-6 max-w-xl text-xl leading-relaxed text-fam-on-accent/90">{sub}</p>
           )}
           <div className="mt-10 flex flex-wrap gap-4">
             <PrimaryCta
@@ -48,7 +48,7 @@ export function CtaCreativeBlock({
             </PrimaryCta>
             {hasPhone(site.phone) && (<a
               href={`tel:${site.phone}`}
-              className="inline-flex h-[56px] items-center gap-2 rounded-2xl border-2 border-fam-card px-7 font-display font-bold text-fam-on-dark transition-colors hover:bg-fam-card hover:text-fam-accent-text-strong"
+              className="inline-flex h-[56px] items-center gap-2 rounded-2xl border-2 border-fam-card px-7 font-display font-bold text-fam-on-accent transition-colors hover:bg-fam-card hover:text-fam-accent-text-strong"
             >
               <Phone className="h-4 w-4" /> {site.phoneDisplay}
             </a>)}

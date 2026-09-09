@@ -112,7 +112,7 @@ const HEADER_THEMES: Record<string, HeaderTheme> = {
   bold: {
     shell: "bg-fam-panel-ink",
     scrolledShadow: "shadow-[0_2px_16px_rgba(0,0,0,0.45)]",
-    skip: "focus:bg-fam-accent focus:text-fam-on-dark",
+    skip: "focus:bg-fam-accent focus:text-fam-on-accent",
     navLink: "font-display text-sm font-semibold uppercase tracking-wide text-ink-100 hover:text-fam-on-dark",
     cta: "inline-flex h-[42px] items-center rounded-md bg-primary px-5 font-display text-sm font-semibold uppercase tracking-wide text-primary-foreground transition-opacity hover:opacity-90",
     ctaLabel: "Free Quote",
@@ -134,7 +134,7 @@ const HEADER_THEMES: Record<string, HeaderTheme> = {
   elegant: {
     shell: "bg-fam-statement",
     scrolledShadow: "shadow-[0_2px_24px_rgba(0,0,0,0.5)]",
-    skip: "focus:bg-fam-accent focus:text-fam-on-dark",
+    skip: "focus:bg-fam-accent focus:text-fam-on-accent",
     navLink: "font-display text-[15px] text-fam-on-statement-muted hover:text-fam-on-statement",
     cta: "inline-flex h-[42px] items-center rounded-lg bg-primary px-5 font-display text-sm font-medium tracking-wide text-primary-foreground transition-opacity hover:opacity-90",
     ctaLabel: "Free Quote",
@@ -156,7 +156,7 @@ const HEADER_THEMES: Record<string, HeaderTheme> = {
   "elegant-light": {
     shell: "bg-fam-surface",
     scrolledShadow: "shadow-[0_2px_16px_rgba(43,38,32,0.07)]",
-    skip: "focus:bg-fam-accent focus:text-fam-on-dark",
+    skip: "focus:bg-fam-accent focus:text-fam-on-accent",
     navLink: "font-display text-[15px] text-fam-ink-muted hover:text-fam-ink",
     cta: "inline-flex h-[42px] items-center rounded-lg bg-primary px-5 font-display text-sm font-medium tracking-wide text-primary-foreground transition-opacity hover:opacity-90",
     ctaLabel: "Get in touch",
@@ -178,7 +178,7 @@ const HEADER_THEMES: Record<string, HeaderTheme> = {
   modern: {
     shell: "bg-fam-card",
     scrolledShadow: "shadow-[0_1px_0_0_#E6E8EC,0_2px_16px_rgba(15,23,42,0.05)]",
-    skip: "focus:bg-fam-accent focus:text-fam-on-dark",
+    skip: "focus:bg-fam-accent focus:text-fam-on-accent",
     navLink: "font-display text-[15px] font-medium text-fam-ink-muted hover:text-fam-ink",
     cta: "inline-flex h-[42px] items-center rounded-xl bg-primary px-5 font-display text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90",
     ctaLabel: "Free Quote",
@@ -200,7 +200,7 @@ const HEADER_THEMES: Record<string, HeaderTheme> = {
   corporate: {
     shell: "bg-fam-card",
     scrolledShadow: "shadow-[0_1px_0_0_#D8DEE7,0_2px_12px_rgba(26,36,51,0.05)]",
-    skip: "focus:bg-fam-accent focus:text-fam-on-dark",
+    skip: "focus:bg-fam-accent focus:text-fam-on-accent",
     navLink: "font-display text-[15px] font-medium text-fam-ink hover:text-fam-accent-text-strong",
     cta: "inline-flex h-[42px] items-center rounded-md bg-primary px-5 font-display text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90",
     ctaLabel: "Free Quote",
@@ -222,7 +222,7 @@ const HEADER_THEMES: Record<string, HeaderTheme> = {
   creative: {
     shell: "bg-fam-card",
     scrolledShadow: "shadow-[0_2px_20px_rgba(24,24,27,0.06)]",
-    skip: "focus:bg-fam-accent focus:text-fam-on-dark",
+    skip: "focus:bg-fam-accent focus:text-fam-on-accent",
     navLink: "font-display text-[15px] font-bold text-fam-ink hover:text-fam-accent-text-strong",
     cta: "inline-flex h-[44px] items-center rounded-2xl bg-primary px-5 font-display text-sm font-bold text-primary-foreground transition-transform hover:-translate-y-0.5",
     ctaLabel: "Start a project",
@@ -247,7 +247,7 @@ const HEADER_THEMES: Record<string, HeaderTheme> = {
   clean: {
     shell: "bg-fam-surface",
     scrolledShadow: "shadow-[0_1px_0_0_#E2E8F0,0_2px_14px_rgba(30,41,59,0.05)]",
-    skip: "focus:bg-fam-accent focus:text-fam-on-dark",
+    skip: "focus:bg-fam-accent focus:text-fam-on-accent",
     navLink: "font-display text-[15px] font-medium text-fam-ink-muted hover:text-fam-ink",
     cta: "inline-flex h-[42px] items-center rounded-lg bg-primary px-5 font-display text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90",
     ctaLabel: "Free Quote",
@@ -269,7 +269,7 @@ const HEADER_THEMES: Record<string, HeaderTheme> = {
   friendly: {
     shell: "bg-fam-surface",
     scrolledShadow: "shadow-[0_2px_16px_rgba(61,53,48,0.08)]",
-    skip: "focus:bg-fam-accent focus:text-fam-on-dark",
+    skip: "focus:bg-fam-accent focus:text-fam-on-accent",
     navLink: "font-display text-[15px] font-medium text-fam-ink-muted hover:text-fam-accent-text-strong",
     cta: "inline-flex h-[42px] items-center rounded-2xl bg-primary px-5 font-display text-sm font-semibold text-primary-foreground shadow-md transition-opacity hover:opacity-90",
     ctaLabel: "Free Quote",

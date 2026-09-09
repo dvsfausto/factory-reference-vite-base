@@ -130,6 +130,10 @@
      line-2/-3, surface-3/-4/-5  the last light greys the components painted as hexes. */
   --color-fam-page: var(--fam-page, #FFFFFF);
   --color-fam-on-dark: var(--fam-on-dark, #FFFFFF);
+  /* on-accent   ink on an accent FILL (buttons, number badges). Light: = on-dark (the accent is a dark fill).
+     Dark polarity: the accent is lifted to read as TEXT on the ground, so the fill takes the page ground as ink
+     (the Stage 3 rule for the dark presets' CTA). Derived once per build from the same polarity flag. */
+  --color-fam-on-accent: var(--fam-on-accent, var(--color-fam-on-dark));
   --color-fam-statement: var(--fam-statement, #1A1410);
   --color-fam-statement-2: var(--fam-statement-2, #241C16);
   --color-fam-statement-3: var(--fam-statement-3, #2C221B);
@@ -288,20 +292,20 @@
   .btn-primary { background: var(--cta, var(--color-brand-600)); color: var(--cta-foreground, var(--btn-primary-fg, #fff)); box-shadow: 0 4px 14px -4px rgba(30,99,214,0.35); }
   .btn-primary:hover { background: var(--cta-hover, var(--btn-primary-hover, var(--color-brand-800))); box-shadow: 0 10px 24px -8px rgba(30,99,214,0.55); transform: translateY(-1px); }
 
-  .btn-secondary { background: #fff; color: var(--color-brand-800); border: 1.5px solid var(--color-brand-200); }
-  .btn-secondary:hover { background: var(--color-brand-50); border-color: var(--color-brand-600); color: var(--color-brand-600); }
+  .btn-secondary { background: var(--color-fam-card); color: var(--color-brand-text-800, var(--color-brand-800)); border: 1.5px solid var(--color-brand-200); }
+  .btn-secondary:hover { background: var(--color-brand-50); border-color: var(--color-brand-600); color: var(--color-brand-text-600, var(--color-brand-600)); }
 
-  .btn-ghost { background: transparent; color: var(--color-brand-600); }
+  .btn-ghost { background: transparent; color: var(--color-brand-text-600, var(--color-brand-600)); }
   .btn-ghost:hover { background: var(--color-brand-50); }
 
-  .btn-white { background: #fff; color: var(--color-brand-800); }
+  .btn-white { background: var(--color-fam-card); color: var(--color-brand-text-800, var(--color-brand-800)); }
   .btn-white:hover { background: var(--color-brand-50); transform: translateY(-1px); }
 
-  .btn-outline-white { background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,0.7); }
+  .btn-outline-white { background: transparent; color: var(--color-fam-on-dark); border: 1.5px solid color-mix(in srgb, var(--color-fam-on-dark) 70%, transparent); }
   .btn-outline-white:hover { background: rgba(255,255,255,0.12); }
 
   .card-stead {
-    background: #fff;
+    background: var(--color-fam-card);
     border-radius: 20px;
     box-shadow: 0 1px 2px rgba(11,42,91,0.04), 0 8px 24px -12px rgba(11,42,91,0.08);
     border: 1px solid var(--color-ink-100);
@@ -335,13 +339,13 @@
     width: 48px;
     border-radius: 999px;
     background: var(--color-brand-600);
-    color: #fff;
+    color: var(--btn-primary-fg, #fff);
     box-shadow: 0 6px 16px -6px rgba(30,99,214,0.4);
   }
   .icon-circle-lg { height: 60px; width: 60px; }
   .icon-circle-soft {
     background: var(--color-brand-50);
-    color: var(--color-brand-600);
+    color: var(--color-brand-text-600, var(--color-brand-600));
     border: 1.5px solid var(--color-brand-100);
     box-shadow: none;
   }
@@ -352,7 +356,7 @@
     align-items: center;
     justify-content: center;
     gap: 14px;
-    color: var(--color-brand-600);
+    color: var(--color-brand-text-600, var(--color-brand-600));
   }
   .divider-diamond::before,
   .divider-diamond::after {
@@ -369,7 +373,7 @@
   }
 
   /* Decorative input on contact form */
-  .input-stead{display:block;width:100%;border:1px solid var(--color-ink-300);border-radius:10px;padding:11px 14px;font-size:14px;background:#fff;color:var(--color-ink-900);transition:all .15s;font-family:var(--font-sans)}
+  .input-stead{display:block;width:100%;border:1px solid var(--color-ink-300);border-radius:10px;padding:11px 14px;font-size:14px;background:var(--color-fam-card);color:var(--color-ink-900);transition:all .15s;font-family:var(--font-sans)}
   .input-stead:focus{outline:none;border-color:var(--color-brand-600);box-shadow:0 0 0 3px rgba(30,99,214,.15)}
 }
 
@@ -388,7 +392,7 @@
   --wow-dur-slow: 0.9s;
   /* brand-derived visual richness */
   --wow-grad-brand: linear-gradient(135deg, var(--color-brand-500), color-mix(in oklab, var(--color-brand-700) 82%, black));
-  --wow-grad-surface: radial-gradient(120% 90% at 80% 8%, color-mix(in oklab, var(--color-brand-100) 55%, white), white 60%);
+  --wow-grad-surface: radial-gradient(120% 90% at 80% 8%, color-mix(in oklab, var(--color-brand-100) 55%, var(--color-fam-page)), var(--color-fam-page) 60%);
   --wow-shadow-soft: 0 40px 80px -50px color-mix(in oklab, var(--color-brand-700) 45%, transparent);
   --wow-shadow-glow: 0 24px 52px -20px color-mix(in oklab, var(--color-brand-500) 55%, transparent);
   --wow-shadow-lift: 0 60px 100px -50px color-mix(in oklab, var(--color-brand-700) 50%, transparent);

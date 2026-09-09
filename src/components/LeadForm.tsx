@@ -239,7 +239,7 @@ export function LeadForm({
       <button
         type="submit"
         disabled={status === 'submitting'}
-        className="mt-6 inline-flex w-full items-center justify-center rounded-md bg-fam-accent px-6 py-3 font-semibold text-fam-on-dark shadow-sm transition-colors hover:bg-fam-accent-deep disabled:opacity-60"
+        className="mt-6 inline-flex w-full items-center justify-center rounded-md bg-fam-accent px-6 py-3 font-semibold text-fam-on-accent shadow-sm transition-colors hover:bg-fam-accent-deep disabled:opacity-60"
       >
         {status === 'submitting' ? tr('form.sending') : submitLabel}
       </button>

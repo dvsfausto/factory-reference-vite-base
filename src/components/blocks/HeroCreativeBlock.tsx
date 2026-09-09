@@ -81,7 +81,7 @@ export function HeroCreativeBlock({
               </PrimaryCta>
               {hasPhone(site.phone) && (<a
                 href={`tel:${site.phone}`}
-                className="inline-flex h-[56px] items-center gap-2 rounded-2xl border-2 border-fam-ink px-7 font-display font-bold text-fam-ink transition-colors hover:bg-fam-accent hover:border-fam-accent hover:text-fam-on-dark"
+                className="inline-flex h-[56px] items-center gap-2 rounded-2xl border-2 border-fam-ink px-7 font-display font-bold text-fam-ink transition-colors hover:bg-fam-accent hover:border-fam-accent hover:text-fam-on-accent"
               >
                 <Phone className="h-4 w-4" /> {site.phoneDisplay}
               </a>)}
@@ -111,7 +111,7 @@ export function HeroCreativeBlock({
                 className="aspect-[4/5] w-full object-cover"
               />
             </div>
-            <div className="absolute -bottom-6 -right-4 rounded-2xl bg-fam-accent px-5 py-4 font-display text-sm font-bold text-fam-on-dark shadow-xl">{tr('hero.letsMake')}<br />something.
+            <div className="absolute -bottom-6 -right-4 rounded-2xl bg-fam-accent px-5 py-4 font-display text-sm font-bold text-fam-on-accent shadow-xl">{tr('hero.letsMake')}<br />something.
             </div>
           </motion.div>
         </div>

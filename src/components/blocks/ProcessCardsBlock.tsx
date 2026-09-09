@@ -48,7 +48,7 @@ export function ProcessCardsBlock({
                 <span className="absolute right-6 top-6 font-display text-5xl font-semibold text-fam-surface-3">
                   {String(i + 1).padStart(2, '0')}
                 </span>
-                <span className="grid h-12 w-12 place-items-center rounded-xl bg-fam-accent font-display text-base font-semibold text-fam-on-dark">
+                <span className="grid h-12 w-12 place-items-center rounded-xl bg-fam-accent font-display text-base font-semibold text-fam-on-accent">
                   {Icon ? <Icon className="h-5 w-5" /> : i + 1}
                 </span>
                 <h3 className="mt-6 font-display text-lg font-semibold tracking-tight text-fam-ink">{s.title}</h3>

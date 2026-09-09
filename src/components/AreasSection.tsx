@@ -43,7 +43,7 @@ export function AreasSection({ heading, intro, areas, mapEmbedUrl }: Props) {
                 <p className="font-semibold text-slate-900 group-hover:text-fam-accent-text-strong">
                   {a.name}
                   {a.tier === 'home-base' && (
-                    <span className="ml-2 inline-flex items-center rounded bg-fam-accent px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-fam-on-dark">
+                    <span className="ml-2 inline-flex items-center rounded bg-fam-accent px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-fam-on-accent">
                       Base
                     </span>
                   )}
