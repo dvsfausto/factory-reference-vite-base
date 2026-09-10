@@ -278,6 +278,80 @@ export function pruneVariantsPlugin() {
   }
 }
 
+
+// ──────────────────────────────────────────────────────────────────────────────────────────────
+// PAGE-DATA SPLIT (Stage C, second lever). The scaffolder emits `src/data/services.ts`,
+// `info-pages.ts` and `areas.ts` each as ONE module holding both the light refs the whole site reads
+// (SERVICES / INFO_PAGES / AREAS — names, slugs, card lines) and the heavy per-page copy only the
+// detail route's loader reads (servicesData / infoPagesData / serviceAreasData — every service page's
+// hero, sections and FAQs; 72 KB + 45 KB on a four-service barbershop). A module is a chunking unit,
+// and a route LOADER is part of the eager route tree, so the homepage shipped every inner page's
+// prose. Here the heavy declaration is served as its own module, `virtual:zmode-page-data/<name>`,
+// and the three detail routes `await import()` it inside their loader — so the client fetches a
+// service page's copy only when it navigates there; on the server the loader still runs before
+// render with the same object, so the served HTML is byte-identical (gate: test:ssr-identity).
+// The emitted data files are untouched on disk (the editor keeps patching them); the split happens
+// in memory at serve and build time. Not an optimisation switch: the routes depend on the module.
+// ──────────────────────────────────────────────────────────────────────────────────────────────
+
+export const PAGE_DATA = {
+  servicesData: 'src/data/services.ts',
+  infoPagesData: 'src/data/info-pages.ts',
+  serviceAreasData: 'src/data/areas.ts',
+}
+const VIRTUAL_PREFIX = 'virtual:zmode-page-data/'
+const RESOLVED_PREFIX = '\0' + VIRTUAL_PREFIX
+const RESOLVED_SUFFIX = '.ts' // the copy carries TS casts (`as unknown as ServicePageData`); the suffix picks the TS loader
+
+/** Split one emitted data module: { light, heavy } sources, or null when the declaration is not found. */
+export function splitPageData(code, exportName) {
+  const lines = code.split('\n')
+  const start = lines.findIndex((l) => new RegExp(`^export const ${exportName}\\b`).test(l))
+  if (start < 0) return null
+  let end = start
+  if (!/=\s*\{\s*\};?\s*$/.test(lines[start])) { // a one-line empty record closes on its own line
+    end = start + 1
+    while (end < lines.length && !/^\};?\s*$/.test(lines[end])) end++
+    if (end >= lines.length) return null
+  }
+  const header = lines.filter((l, i) => i < start && /^import type /.test(l)) // type-only, erased before resolution
+  const heavy = [...header, '', ...lines.slice(start, end + 1), ''].join('\n')
+  const light = [...lines.slice(0, start), `// ${exportName}: served as ${VIRTUAL_PREFIX}${exportName} (scripts/prune-variants.mjs split-page-data)`, ...lines.slice(end + 1)].join('\n')
+  return { light, heavy }
+}
+
+export function splitPageDataPlugin() {
+  let root = process.cwd()
+  return {
+    name: 'split-page-data',
+    enforce: 'pre',
+    configResolved(config) { root = config.root },
+    resolveId(id) {
+      if (id.startsWith(VIRTUAL_PREFIX)) return RESOLVED_PREFIX + id.slice(VIRTUAL_PREFIX.length) + RESOLVED_SUFFIX
+      return null
+    },
+    load(id) {
+      if (!id.startsWith(RESOLVED_PREFIX)) return null
+      const name = id.slice(RESOLVED_PREFIX.length, -RESOLVED_SUFFIX.length)
+      const file = PAGE_DATA[name]
+      if (!file) throw new Error(`split-page-data: unknown page data "${name}"`)
+      const r = splitPageData(readFileSync(join(root, file), 'utf8'), name)
+      if (!r) throw new Error(`split-page-data: cannot find "export const ${name}" in ${file}`)
+      this.addWatchFile?.(join(root, file))
+      return { code: r.heavy, map: null }
+    },
+    transform(code, id) {
+      const f = id.split('?')[0]
+      const rel = f.startsWith(root + '/') ? f.slice(root.length + 1) : null
+      if (!rel) return null
+      const name = Object.keys(PAGE_DATA).find((n) => PAGE_DATA[n] === rel)
+      if (!name) return null
+      const r = splitPageData(code, name)
+      return r ? { code: r.light, map: null } : null
+    },
+  }
+}
+
 // CLI: `node scripts/prune-variants.mjs` prints what a build of THIS checkout would keep.
 if (process.argv[1] && resolve(process.argv[1]) === resolve(new URL(import.meta.url).pathname)) {
   const root = process.cwd()

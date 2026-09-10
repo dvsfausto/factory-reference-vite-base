@@ -2,12 +2,14 @@ import { createFileRoute, notFound } from '@tanstack/react-router'
 import { SectionList } from '~/components/render-section'
 import { INFO_DETAIL_LAYOUT } from '~/data/info-detail-layout'
 import { JsonLd } from '~/components/JsonLd'
-import { infoPagesData } from '~/data/info-pages'
 import { articleLd, breadcrumbLd, buildMeta, faqLd } from '~/lib/seo'
 import { SITE } from '~/data/site'
 
 export const Route = createFileRoute('/info/$slug')({
-  loader: ({ params }) => {
+  loader: async ({ params }) => {
+    // Stage C: the per-page copy is its own module (scripts/prune-variants.mjs split-page-data), fetched only when
+    // this route runs — the homepage no longer ships every inner page's prose. Same object, same served HTML.
+    const { infoPagesData } = await import('virtual:zmode-page-data/infoPagesData')
     const data = infoPagesData[params.slug]
     if (!data) throw notFound()
     return { data }

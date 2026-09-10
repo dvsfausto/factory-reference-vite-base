@@ -3,7 +3,7 @@ import { defineConfig } from 'vite'
 import viteReact from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import { nitro } from 'nitro/vite'
-import { pruneVariantsPlugin } from './scripts/prune-variants.mjs'
+import { pruneVariantsPlugin, splitPageDataPlugin } from './scripts/prune-variants.mjs'
 
 export default defineConfig({
   server: {
@@ -16,6 +16,9 @@ export default defineConfig({
     // Stage C (2026-09-10): drop the variant-map entries this site's layouts never select (build only,
     // PRUNE_VARIANTS=0 to disable). See scripts/prune-variants.mjs.
     pruneVariantsPlugin(),
+    // Stage C: the per-page copy (servicesData / infoPagesData / serviceAreasData) leaves the shared chunk for the
+    // route that reads it — same values, same server output. Same off switch.
+    splitPageDataPlugin(),
     tailwindcss(),
     tanstackStart({
       srcDirectory: 'src',

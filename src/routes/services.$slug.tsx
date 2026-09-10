@@ -2,14 +2,16 @@ import { createFileRoute, notFound, redirect } from '@tanstack/react-router'
 import { SectionList } from '~/components/render-section'
 import { SERVICE_DETAIL_LAYOUT } from '~/data/service-detail-layout'
 import { JsonLd } from '~/components/JsonLd'
-import { servicesData } from '~/data/services'
 import { PAGED_SERVICES } from '~/data/services-view'
 import { serviceLd, breadcrumbLd, faqLd, buildMeta } from '~/lib/seo'
 import { ogImageForService } from '~/data/images'
 import { SITE } from '~/data/site'
 
 export const Route = createFileRoute('/services/$slug')({
-  loader: ({ params }) => {
+  loader: async ({ params }) => {
+    // Stage C: the per-page copy is its own module (scripts/prune-variants.mjs split-page-data), fetched only when
+    // this route runs — the homepage no longer ships every inner page's prose. Same object, same served HTML.
+    const { servicesData } = await import('virtual:zmode-page-data/servicesData')
     const data = servicesData[params.slug]
     if (!data) throw notFound()
     // NOT PAGED — either UNPUBLISHED (published:false) or NON-PAGED (paged:false, beyond the top-8 or
