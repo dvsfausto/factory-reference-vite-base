@@ -71,7 +71,7 @@ export function ServicesModernBlock({
                   <h3 className="truncate font-display text-base font-semibold tracking-tight text-fam-ink">{s.displayName}</h3>
                   <p className="mt-0.5 line-clamp-2 text-sm text-fam-ink-muted">{s.short}</p>
                 </div>
-                <ArrowRight className="ml-auto h-4 w-4 shrink-0 text-fam-ink-faint transition-all group-hover:translate-x-0.5 group-hover:text-fam-accent-text" />
+                <ArrowRight className="ml-auto h-4 w-4 shrink-0 text-fam-ink-faint transition-all group-hover:translate-x-(--hov-nudge-sm) group-hover:text-fam-accent-text" />
               </Link>
             ))}
           </div>

@@ -41,7 +41,7 @@ export function ProductGridBlock({
 
         <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {products.map((p) => (
-            <li key={p.id} className="flex flex-col overflow-hidden rounded-2xl border border-fam-hairline bg-fam-card transition-shadow hover:shadow-md">
+            <li key={p.id} className="flex flex-col overflow-hidden rounded-2xl border border-fam-hairline bg-fam-card transition-shadow hover:shadow-(--elev-2)">
               <div className="relative aspect-square bg-fam-surface-2">
                 {p.image ? (
                   <img src={imageSrc(p.image)} alt={p.name} loading="lazy" className="h-full w-full object-cover" />
@@ -74,7 +74,7 @@ export function ProductGridBlock({
                       href={p.buyUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex h-10 items-center gap-1.5 rounded-xl bg-cta px-4 text-sm font-semibold text-cta-foreground transition-opacity hover:opacity-90"
+                      className="inline-flex h-10 items-center gap-1.5 rounded-xl bg-cta px-4 text-sm font-semibold text-cta-foreground transition-opacity hover:opacity-(--hov-fade)"
                     >
                       {tr('products.buy')} <ArrowUpRight className="h-4 w-4" />
                     </a>

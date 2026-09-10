@@ -104,7 +104,7 @@ export function HeroEditorialBlock({
           </div>
           <div className="flex flex-wrap gap-3.5">
             <PrimaryCta
-              className="inline-flex h-[52px] items-center gap-2 rounded-full bg-cta px-8 font-semibold text-cta-foreground transition-transform hover:-translate-y-0.5"
+              className="inline-flex h-[52px] items-center gap-2 rounded-full bg-cta px-8 font-semibold text-cta-foreground transition-transform hover:translate-y-(--hov-lift-sm)"
               style={{ boxShadow: 'var(--wow-shadow-glow)' }}
             >
               {ctaLabel} <ArrowRight className="h-4 w-4" />

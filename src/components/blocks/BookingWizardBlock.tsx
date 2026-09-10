@@ -426,7 +426,7 @@ export function BookingWizardBlock({
               {STEP_ORDER.map((s, i) => (
                 <div key={s} className="flex flex-1 items-center gap-2">
                   <div
-                    className="h-1.5 flex-1 rounded-full transition-colors duration-500"
+                    className="h-1.5 flex-1 rounded-full transition-colors duration-(--motion-slow)"
                     style={{
                       backgroundImage:
                         i <= stepIndex ? 'var(--wow-grad-brand)' : undefined,
@@ -528,7 +528,7 @@ export function BookingWizardBlock({
                               setTime(null)
                               setStep('date')
                             }}
-                            className="group flex items-center justify-between gap-4 rounded-2xl border bg-fam-card px-5 py-4 text-left transition-all hover:-translate-y-0.5"
+                            className="group flex items-center justify-between gap-4 rounded-2xl border bg-fam-card px-5 py-4 text-left transition-all hover:translate-y-(--hov-lift-sm)"
                             style={{ borderColor: 'var(--wow-hairline)' }}
                           >
                             <span>
@@ -582,7 +582,7 @@ export function BookingWizardBlock({
                                 setTime(null)
                                 setStep('time')
                               }}
-                              className="flex flex-col items-center rounded-2xl border px-3 py-3.5 transition-all hover:-translate-y-0.5"
+                              className="flex flex-col items-center rounded-2xl border px-3 py-3.5 transition-all hover:translate-y-(--hov-lift-sm)"
                               style={
                                 selected
                                   ? {
@@ -641,7 +641,7 @@ export function BookingWizardBlock({
                                   setTime(s)
                                   setStep(visit ? 'address' : 'details')
                                 }}
-                                className="rounded-xl border px-3 py-2.5 text-sm font-medium transition-all hover:-translate-y-0.5"
+                                className="rounded-xl border px-3 py-2.5 text-sm font-medium transition-all hover:translate-y-(--hov-lift-sm)"
                                 style={
                                   selected
                                     ? {
@@ -723,7 +723,7 @@ export function BookingWizardBlock({
                         <div className="mt-2">
                           <button
                             type="submit"
-                            className="inline-flex h-12 items-center justify-center gap-2 rounded-xl px-7 font-display text-sm font-semibold text-fam-on-dark transition-opacity hover:opacity-90"
+                            className="inline-flex h-12 items-center justify-center gap-2 rounded-xl px-7 font-display text-sm font-semibold text-fam-on-dark transition-opacity hover:opacity-(--hov-fade)"
                             style={{ backgroundImage: 'var(--wow-grad-brand)' }}
                           >
                             {tr('booking.continue')}
@@ -811,7 +811,7 @@ export function BookingWizardBlock({
                           <button
                             type="submit"
                             disabled={submitting}
-                            className="inline-flex h-12 items-center justify-center gap-2 rounded-xl px-7 font-display text-sm font-semibold text-fam-on-dark transition-opacity hover:opacity-90 disabled:opacity-60"
+                            className="inline-flex h-12 items-center justify-center gap-2 rounded-xl px-7 font-display text-sm font-semibold text-fam-on-dark transition-opacity hover:opacity-(--hov-fade) disabled:opacity-60"
                             style={{ backgroundImage: 'var(--wow-grad-brand)' }}
                           >
                             {submitting ? (
@@ -1006,7 +1006,7 @@ function FallbackCard({ message, features }: { message: string; features?: Booki
         <a
           href={quoteHref ?? '/contact'}
           data-booking-fallback={quoteHref ? 'quote' : 'contact'}
-          className="mt-6 inline-flex h-12 items-center justify-center gap-2 rounded-xl px-7 font-display text-sm font-semibold text-fam-on-dark transition-opacity hover:opacity-90"
+          className="mt-6 inline-flex h-12 items-center justify-center gap-2 rounded-xl px-7 font-display text-sm font-semibold text-fam-on-dark transition-opacity hover:opacity-(--hov-fade)"
           style={{ backgroundImage: 'var(--wow-grad-brand)' }}
         >
           {quoteHref ? tr('booking.requestQuote') : tr('booking.sendMessage')}
@@ -1014,7 +1014,7 @@ function FallbackCard({ message, features }: { message: string; features?: Booki
       )}
       {HAS_PHONE && (<a
         href={`tel:${SITE.phone}`}
-        className="mt-6 inline-flex h-12 items-center justify-center gap-2 rounded-xl px-7 font-display text-sm font-semibold text-fam-on-dark transition-opacity hover:opacity-90"
+        className="mt-6 inline-flex h-12 items-center justify-center gap-2 rounded-xl px-7 font-display text-sm font-semibold text-fam-on-dark transition-opacity hover:opacity-(--hov-fade)"
         style={{ backgroundImage: 'var(--wow-grad-brand)' }}
       >
         <Phone className="h-4 w-4" />

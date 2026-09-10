@@ -70,7 +70,7 @@ export function ServiceAreasBrandPanelBlock({
               {body && <p className="mt-3 max-w-sm text-fam-on-dark/80">{body}</p>}
               <Link
                 to="/areas"
-                className="mt-6 inline-flex h-11 items-center gap-2 rounded-full bg-fam-card/95 px-6 font-semibold text-brand-800 transition-transform hover:-translate-y-0.5"
+                className="mt-6 inline-flex h-11 items-center gap-2 rounded-full bg-fam-card/95 px-6 font-semibold text-brand-800 transition-transform hover:translate-y-(--hov-lift-sm)"
                 style={{ boxShadow: 'var(--wow-shadow-glow)' }}
               >
                 {moreLink} <ArrowRight className="h-4 w-4" />
@@ -108,7 +108,7 @@ export function ServiceAreasBrandPanelBlock({
                     params={{ slug: a.slug }}
                     className="group flex items-center gap-3 py-3.5 transition-colors hover:text-fam-on-dark"
                   >
-                    <MapPin className="h-4 w-4 shrink-0 text-fam-on-dark/70 transition-transform group-hover:scale-110" />
+                    <MapPin className="h-4 w-4 shrink-0 text-fam-on-dark/70 transition-transform group-hover:scale-(--hov-zoom-lg)" />
                     <span className="font-medium text-fam-on-dark/90 group-hover:text-fam-on-dark">
                       {a.name}
                     </span>

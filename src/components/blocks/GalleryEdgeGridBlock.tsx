@@ -54,14 +54,14 @@ export function GalleryEdgeGridBlock({
             whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-10%' }}
             transition={{ duration: 0.6, delay: reduce ? 0 : (i % 3) * 0.08, ease: [0.16, 1, 0.3, 1] }}
-            className="group relative overflow-hidden bg-fam-card transition-shadow duration-300"
+            className="group relative overflow-hidden bg-fam-card transition-shadow duration-(--motion-base)"
             whileHover={reduce ? undefined : { boxShadow: 'var(--wow-shadow-glow)' }}
           >
             <img
               src={p.image}
               alt={p.alt ?? p.title}
               loading="lazy"
-              className="aspect-square w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.05]"
+              className="aspect-square w-full object-cover transition-transform duration-(--motion-slow) ease-(--ease-standard) group-hover:scale-(--hov-zoom)"
             />
             {/* Brand-gradient corner accent. */}
             <span
@@ -74,7 +74,7 @@ export function GalleryEdgeGridBlock({
             />
             {/* Caption band slides up on hover. */}
             <figcaption
-              className="absolute inset-x-0 bottom-0 translate-y-full p-4 text-fam-on-dark transition-transform duration-300 ease-out group-hover:translate-y-0"
+              className="absolute inset-x-0 bottom-0 translate-y-full p-4 text-fam-on-dark transition-transform duration-(--motion-base) ease-(--ease-standard) group-hover:translate-y-0"
               style={{ backgroundImage: 'var(--wow-grad-brand)' }}
             >
               <span className="block font-display text-sm font-semibold">{p.title}</span>

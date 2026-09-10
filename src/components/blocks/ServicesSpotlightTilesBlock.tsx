@@ -89,7 +89,7 @@ export function ServicesSpotlightTilesBlock({
                 loading="lazy"
                 width={1000}
                 height={800}
-                className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.05]"
+                className="absolute inset-0 h-full w-full object-cover transition-transform duration-(--motion-slower) group-hover:scale-(--hov-zoom)"
               />
               {/* Brand wash, decorative brand TINT over the photo (aesthetic only). */}
               <span
@@ -144,7 +144,7 @@ export function ServicesSpotlightTilesBlock({
                   <Link
                     to="/services/$slug"
                     params={{ slug: s.slug }}
-                    className="group flex h-full items-center gap-5 overflow-hidden rounded-[1.5rem] border bg-fam-card/85 p-4 backdrop-blur-md transition-all duration-500 hover:-translate-y-1 sm:p-5"
+                    className="group flex h-full items-center gap-5 overflow-hidden rounded-[1.5rem] border bg-fam-card/85 p-4 backdrop-blur-md transition-all duration-(--motion-slow) hover:translate-y-(--hov-lift) sm:p-5"
                     style={{
                       borderColor: 'var(--wow-hairline)',
                       boxShadow: 'var(--wow-shadow-soft)',
@@ -169,7 +169,7 @@ export function ServicesSpotlightTilesBlock({
                         loading="lazy"
                         width={224}
                         height={224}
-                        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.08]"
+                        className="h-full w-full object-cover transition-transform duration-(--motion-slower) group-hover:scale-(--hov-zoom-xl)"
                       />
                     </div>
                     <div className="min-w-0 flex-1">

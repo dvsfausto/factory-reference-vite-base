@@ -47,7 +47,7 @@ export function GalleryGridBlock({
                   src={p.image}
                   alt={p.alt ?? p.title}
                   loading="lazy"
-                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  className="h-full w-full object-cover transition-transform duration-(--motion-slow) group-hover:scale-(--hov-zoom)"
                 />
               </div>
               <figcaption className="p-4">

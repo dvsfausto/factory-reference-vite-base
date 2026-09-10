@@ -84,7 +84,7 @@ export function ServicesLuxeBlock({
               <Link
                 to="/services/$slug"
                 params={{ slug: s.slug }}
-                className="group relative flex h-full flex-col overflow-hidden rounded-[1.5rem] border bg-fam-card/85 backdrop-blur-md transition-all duration-500 hover:-translate-y-1.5"
+                className="group relative flex h-full flex-col overflow-hidden rounded-[1.5rem] border bg-fam-card/85 backdrop-blur-md transition-all duration-(--motion-slow) hover:translate-y-(--hov-lift-lg)"
                 style={{
                   borderColor: 'var(--wow-hairline)',
                   boxShadow: 'var(--wow-shadow-soft)',
@@ -109,7 +109,7 @@ export function ServicesLuxeBlock({
                     loading="lazy"
                     width={800}
                     height={600}
-                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.06]"
+                    className="h-full w-full object-cover transition-transform duration-(--motion-slower) group-hover:scale-(--hov-zoom-md)"
                   />
                   {/* Gradient index badge riding the corner. */}
                   <span
@@ -128,7 +128,7 @@ export function ServicesLuxeBlock({
                   {/* Brand-gradient rule that widens on hover. */}
                   <span
                     aria-hidden
-                    className="mt-5 block h-[3px] w-10 rounded-full transition-all duration-500 group-hover:w-16"
+                    className="mt-5 block h-[3px] w-10 rounded-full transition-all duration-(--motion-slow) group-hover:w-16"
                     style={{ backgroundImage: 'var(--wow-grad-brand)' }}
                   />
                   <div className="mt-4 flex items-center gap-1 font-semibold text-brand-600 transition-all group-hover:gap-2">

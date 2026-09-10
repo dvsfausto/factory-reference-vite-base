@@ -36,7 +36,7 @@ export function ServicesSection({ heading, intro, services }: Props) {
                   height={900}
                   loading="lazy"
                   decoding="async"
-                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                  className="h-full w-full object-cover transition-transform duration-(--motion-slow) group-hover:scale-(--hov-zoom-xs)"
                 />
               </div>
             )
@@ -47,7 +47,7 @@ export function ServicesSection({ heading, intro, services }: Props) {
                 </p>
                 <p className="mt-2 text-sm leading-relaxed text-slate-600">{s.short}</p>
                 {paged && (
-                  <p className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-fam-accent-text-strong">{tr('common.learnMore')}<span aria-hidden className="transition-transform group-hover:translate-x-0.5">
+                  <p className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-fam-accent-text-strong">{tr('common.learnMore')}<span aria-hidden className="transition-transform group-hover:translate-x-(--hov-nudge-sm)">
                       →
                     </span>
                   </p>
@@ -60,13 +60,13 @@ export function ServicesSection({ heading, intro, services }: Props) {
                   <Link
                     to="/services/$slug"
                     params={{ slug: s.slug }}
-                    className="group block h-full overflow-hidden rounded-2xl bg-fam-card shadow-sm transition-all hover:shadow-lg"
+                    className="group block h-full overflow-hidden rounded-2xl bg-fam-card shadow-(--elev-1) transition-all hover:shadow-(--elev-3)"
                   >
                     {media}
                     {body}
                   </Link>
                 ) : (
-                  <div className="group block h-full overflow-hidden rounded-2xl bg-fam-card shadow-sm">
+                  <div className="group block h-full overflow-hidden rounded-2xl bg-fam-card shadow-(--elev-1)">
                     {media}
                     {body}
                   </div>

@@ -66,7 +66,7 @@ export function MembershipTierCardsBlock({
               )}
               <Link
                 to="/contact"
-                className={`mt-8 inline-flex h-12 items-center justify-center rounded-xl px-6 font-display text-sm font-semibold transition-opacity hover:opacity-90 ${
+                className={`mt-8 inline-flex h-12 items-center justify-center rounded-xl px-6 font-display text-sm font-semibold transition-opacity hover:opacity-(--hov-fade) ${
                   m.highlighted ? 'bg-cta text-cta-foreground' : 'border border-fam-hairline text-fam-ink hover:border-fam-accent hover:text-fam-accent-text-strong'
                 }`}
               >

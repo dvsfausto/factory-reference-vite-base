@@ -45,7 +45,7 @@ export function MembershipPerksGridBlock({
               <span className="font-display text-4xl font-semibold tracking-tight text-fam-ink">{m.price}</span>
               <span className="text-fam-ink-muted">{m.period ?? '/month'}</span>
             </div>
-            <Link to="/contact" className="inline-flex h-12 items-center rounded-xl bg-cta px-6 font-display text-sm font-semibold text-cta-foreground transition-opacity hover:opacity-90">
+            <Link to="/contact" className="inline-flex h-12 items-center rounded-xl bg-cta px-6 font-display text-sm font-semibold text-cta-foreground transition-opacity hover:opacity-(--hov-fade)">
               Join now
             </Link>
           </div>

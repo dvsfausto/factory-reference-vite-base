@@ -116,7 +116,7 @@ export function AreaDetailsBlock({
                 <h3 className="font-display text-2xl font-semibold tracking-tight text-fam-ink transition-colors group-hover:text-fam-accent-text-strong md:col-span-5">{s.displayName}</h3>
                 <p className="text-base leading-relaxed text-fam-ink-muted md:col-span-5">{s.short}</p>
                 <span className="hidden items-center justify-end text-fam-accent-text md:col-span-1 md:flex">
-                  <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+                  <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-(--hov-nudge)" />
                 </span>
               </Link>
             ))}
@@ -128,7 +128,7 @@ export function AreaDetailsBlock({
               key={s.slug}
               to="/services/$slug"
               params={{ slug: s.slug }}
-              className="group flex flex-col overflow-hidden rounded-2xl border bg-fam-card/85 backdrop-blur-md transition-transform duration-500 hover:-translate-y-1"
+              className="group flex flex-col overflow-hidden rounded-2xl border bg-fam-card/85 backdrop-blur-md transition-transform duration-(--motion-slow) hover:translate-y-(--hov-lift)"
               style={{
                 borderColor: 'var(--fam-hairline, var(--wow-hairline))',
                 boxShadow: 'var(--wow-shadow-soft)',
@@ -141,7 +141,7 @@ export function AreaDetailsBlock({
                   loading="lazy"
                   width={800}
                   height={600}
-                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  className="h-full w-full object-cover transition-transform duration-(--motion-slow) group-hover:scale-(--hov-zoom)"
                 />
               </div>
               <div className="p-6">

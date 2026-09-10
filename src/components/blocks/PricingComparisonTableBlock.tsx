@@ -84,7 +84,7 @@ export function PricingComparisonTableBlock({
                   <td key={`${p.name}-${i}`} className={`p-5 ${p.highlighted ? 'bg-fam-accent-soft' : ''}`}>
                     <Link
                       to="/contact"
-                      className={`inline-flex h-11 items-center justify-center rounded-xl px-5 font-display text-sm font-semibold transition-opacity hover:opacity-90 ${
+                      className={`inline-flex h-11 items-center justify-center rounded-xl px-5 font-display text-sm font-semibold transition-opacity hover:opacity-(--hov-fade) ${
                         p.highlighted
                           ? 'bg-cta text-cta-foreground'
                           : 'border border-fam-hairline text-fam-ink hover:border-fam-accent'

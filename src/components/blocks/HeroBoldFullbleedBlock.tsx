@@ -97,7 +97,7 @@ export function HeroBoldFullbleedBlock({
                 not emerald (that is the DNA accent role) and not the literal
                 brand scale or .btn-primary (fixed hex that ignores the kit). */}
             <PrimaryCta
-              className="inline-flex h-[54px] items-center gap-2 rounded-md bg-cta px-8 font-display text-base font-semibold uppercase tracking-wide text-cta-foreground transition-opacity hover:opacity-90"
+              className="inline-flex h-[54px] items-center gap-2 rounded-md bg-cta px-8 font-display text-base font-semibold uppercase tracking-wide text-cta-foreground transition-opacity hover:opacity-(--hov-fade)"
             >
               {ctaLabel} <ArrowRight className="h-4 w-4" />
             </PrimaryCta>

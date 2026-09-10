@@ -43,7 +43,7 @@ export function PromotionsCardsBlock({
               <p className="mt-2 flex-1 leading-relaxed text-fam-ink-muted">{p.detail}</p>
               {p.code && <span className="mt-5 w-fit rounded-lg border border-dashed border-fam-accent px-3 py-1.5 font-display text-sm font-semibold tracking-wider text-fam-accent-text-strong">Code: {p.code}</span>}
               {p.expires && <span className="mt-3 text-xs text-fam-ink-faint">Ends {p.expires}</span>}
-              <Link to="/contact" className="mt-6 inline-flex h-11 items-center justify-center rounded-xl bg-cta px-5 font-display text-sm font-semibold text-cta-foreground transition-opacity hover:opacity-90">Claim offer</Link>
+              <Link to="/contact" className="mt-6 inline-flex h-11 items-center justify-center rounded-xl bg-cta px-5 font-display text-sm font-semibold text-cta-foreground transition-opacity hover:opacity-(--hov-fade)">Claim offer</Link>
             </div>
           ))}
         </div>

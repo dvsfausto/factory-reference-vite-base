@@ -103,7 +103,7 @@ export function PricingSpotlightTierBlock({
               </div>
               <Link
                 to="/contact"
-                className="mt-9 inline-flex h-[52px] w-fit items-center gap-2 rounded-full bg-fam-card px-8 font-semibold text-ink-900 transition-transform hover:-translate-y-0.5"
+                className="mt-9 inline-flex h-[52px] w-fit items-center gap-2 rounded-full bg-fam-card px-8 font-semibold text-ink-900 transition-transform hover:translate-y-(--hov-lift-sm)"
               >
                 Get started <ArrowRight className="h-4 w-4" />
               </Link>
@@ -176,7 +176,7 @@ export function PricingSpotlightTierBlock({
               </p>
               <Link
                 to="/contact"
-                className="mt-7 inline-flex h-[52px] w-fit items-center gap-2 rounded-full bg-cta px-8 font-semibold text-cta-foreground transition-transform hover:-translate-y-0.5"
+                className="mt-7 inline-flex h-[52px] w-fit items-center gap-2 rounded-full bg-cta px-8 font-semibold text-cta-foreground transition-transform hover:translate-y-(--hov-lift-sm)"
                 style={{ boxShadow: 'var(--wow-shadow-glow)' }}
               >
                 Request a quote <ArrowRight className="h-4 w-4" />

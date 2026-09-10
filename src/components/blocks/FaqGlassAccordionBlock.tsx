@@ -81,7 +81,7 @@ export function FaqGlassAccordionBlock({
                       {faq.question}
                     </span>
                     <span
-                      className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-fam-on-dark transition-transform duration-300 ${
+                      className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-fam-on-dark transition-transform duration-(--motion-base) ${
                         isOpen ? 'rotate-45' : ''
                       }`}
                       style={{ backgroundImage: 'var(--wow-grad-brand)' }}

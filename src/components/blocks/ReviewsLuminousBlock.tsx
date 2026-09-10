@@ -80,7 +80,7 @@ export function ReviewsLuminousBlock({
               {/* Hover glow ring (applied via inline shadow on group-hover). */}
               <div
                 aria-hidden
-                className="pointer-events-none absolute inset-0 rounded-[1.5rem] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                className="pointer-events-none absolute inset-0 rounded-[1.5rem] opacity-0 transition-opacity duration-(--motion-slow) group-hover:opacity-100"
                 style={{ boxShadow: 'var(--wow-shadow-glow)' }}
               />
 

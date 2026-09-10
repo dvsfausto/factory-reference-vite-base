@@ -72,7 +72,7 @@ export function HeroCorporateBlock({
 
             <div className="mt-8 flex flex-wrap gap-3">
               <PrimaryCta
-                className="inline-flex h-[52px] items-center gap-2 rounded-md bg-cta px-7 font-display text-base font-semibold text-cta-foreground transition-opacity hover:opacity-90"
+                className="inline-flex h-[52px] items-center gap-2 rounded-md bg-cta px-7 font-display text-base font-semibold text-cta-foreground transition-opacity hover:opacity-(--hov-fade)"
               >
                 {ctaLabel} <ArrowRight className="h-4 w-4" />
               </PrimaryCta>
@@ -92,7 +92,7 @@ export function HeroCorporateBlock({
             transition={{ duration: 0.6, delay: 0.1 }}
             className="lg:col-span-5"
           >
-            <div className="zi-card zi-media overflow-hidden rounded-lg border border-fam-hairline shadow-sm">
+            <div className="zi-card zi-media overflow-hidden rounded-lg border border-fam-hairline shadow-(--elev-1)">
               <img
                 src={imageSrc(imageUrl)}
                 alt={HERO_ALT}

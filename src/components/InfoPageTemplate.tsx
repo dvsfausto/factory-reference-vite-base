@@ -55,7 +55,7 @@ export function InfoPageTemplate({ data }: Props) {
                 alt=""
                 aria-hidden
                 loading="lazy"
-                className="mt-8 aspect-[16/7] w-full rounded-2xl object-cover shadow-sm"
+                className="mt-8 aspect-[16/7] w-full rounded-2xl object-cover shadow-(--elev-1)"
               />
             )}
           </div>
@@ -118,7 +118,7 @@ export function InfoPageTemplate({ data }: Props) {
                           className="group flex items-center gap-2 text-base font-semibold text-ink-900 hover:text-brand-600"
                         >
                           {r.label}
-                          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-(--hov-nudge-sm)" />
                         </Link>
                       </li>
                     ))}
@@ -136,7 +136,7 @@ export function InfoPageTemplate({ data }: Props) {
                           className="group flex items-center gap-2 text-base font-semibold text-ink-900 hover:text-brand-600"
                         >
                           {r.label}
-                          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-(--hov-nudge-sm)" />
                         </Link>
                       </li>
                     ))}

@@ -61,7 +61,7 @@ export function HeroMinimalBlock({
 
           <div className="mt-12 flex flex-wrap items-center gap-4">
             <PrimaryCta
-              className="inline-flex h-[56px] items-center gap-2 rounded-xl bg-cta px-8 font-display text-base font-semibold text-cta-foreground transition-opacity hover:opacity-90"
+              className="inline-flex h-[56px] items-center gap-2 rounded-xl bg-cta px-8 font-display text-base font-semibold text-cta-foreground transition-opacity hover:opacity-(--hov-fade)"
             >
               {site.hero.cta_primary_label} <ArrowRight className="h-4 w-4" />
             </PrimaryCta>

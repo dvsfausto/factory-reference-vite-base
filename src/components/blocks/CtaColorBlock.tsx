@@ -51,7 +51,7 @@ export function CtaColorBlock({
           )}
           <div className="mt-10 flex flex-wrap justify-center gap-4">
             <PrimaryCta
-              className="inline-flex h-[54px] items-center gap-2 rounded-xl bg-fam-card px-8 font-display text-base font-semibold text-fam-ink transition-transform hover:-translate-y-0.5"
+              className="inline-flex h-[54px] items-center gap-2 rounded-xl bg-fam-card px-8 font-display text-base font-semibold text-fam-ink transition-transform hover:translate-y-(--hov-lift-sm)"
             >{tr('section.getStarted')}<ArrowRight className="h-4 w-4" />
             </PrimaryCta>
             {hasPhone(site.phone) && (<a

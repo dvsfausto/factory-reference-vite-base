@@ -187,7 +187,7 @@ export function LeadForm({
     <form
       onSubmit={onSubmit}
       noValidate
-      className="rounded-2xl bg-fam-card p-6 shadow-sm sm:p-8"
+      className="rounded-2xl bg-fam-card p-6 shadow-(--elev-1) sm:p-8"
     >
       <h3 className="text-2xl font-bold text-slate-900">{heading}</h3>
       <p className="mt-2 text-sm text-slate-600">{sublabel}</p>
@@ -239,7 +239,7 @@ export function LeadForm({
       <button
         type="submit"
         disabled={status === 'submitting'}
-        className="mt-6 inline-flex w-full items-center justify-center rounded-md bg-fam-accent px-6 py-3 font-semibold text-fam-on-accent shadow-sm transition-colors hover:bg-fam-accent-deep disabled:opacity-60"
+        className="mt-6 inline-flex w-full items-center justify-center rounded-md bg-fam-accent px-6 py-3 font-semibold text-fam-on-accent shadow-(--elev-1) transition-colors hover:bg-fam-accent-deep disabled:opacity-60"
       >
         {status === 'submitting' ? tr('form.sending') : submitLabel}
       </button>

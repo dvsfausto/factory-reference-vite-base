@@ -51,7 +51,7 @@ export function ServicesCreativeBlock({
               key={s.slug}
               to="/services/$slug"
               params={{ slug: s.slug }}
-              className={`group flex flex-col overflow-hidden rounded-3xl bg-fam-surface-2 transition-transform hover:-translate-y-1.5 ${offsets[i] ?? ''}`}
+              className={`group flex flex-col overflow-hidden rounded-3xl bg-fam-surface-2 transition-transform hover:translate-y-(--hov-lift-lg) ${offsets[i] ?? ''}`}
             >
               <div className="aspect-[4/3] overflow-hidden">
                 <img
@@ -60,7 +60,7 @@ export function ServicesCreativeBlock({
                   loading="lazy"
                   width={800}
                   height={600}
-                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  className="h-full w-full object-cover transition-transform duration-(--motion-slow) group-hover:scale-(--hov-zoom)"
                 />
               </div>
               <div className="flex flex-1 flex-col p-7">
@@ -79,7 +79,7 @@ export function ServicesCreativeBlock({
           <div className="mt-14">
             <Link
               to="/services"
-              className="inline-flex h-14 items-center gap-2 rounded-2xl bg-cta px-8 font-display text-base font-bold text-cta-foreground transition-transform hover:-translate-y-0.5"
+              className="inline-flex h-14 items-center gap-2 rounded-2xl bg-cta px-8 font-display text-base font-bold text-cta-foreground transition-transform hover:translate-y-(--hov-lift-sm)"
             >
               {moreLink} <ArrowUpRight className="h-5 w-5" />
             </Link>

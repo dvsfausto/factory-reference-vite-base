@@ -70,7 +70,7 @@ export function HeroModernBlock({
 
             <div className="mt-9 flex flex-wrap gap-4">
               <PrimaryCta
-                className="inline-flex h-[52px] items-center gap-2 rounded-xl bg-cta px-7 font-display text-base font-semibold text-cta-foreground transition-opacity hover:opacity-90"
+                className="inline-flex h-[52px] items-center gap-2 rounded-xl bg-cta px-7 font-display text-base font-semibold text-cta-foreground transition-opacity hover:opacity-(--hov-fade)"
               >
                 {ctaLabel} <ArrowRight className="h-4 w-4" />
               </PrimaryCta>
@@ -99,7 +99,7 @@ export function HeroModernBlock({
             transition={{ duration: 0.6, delay: 0.1 }}
             className="relative"
           >
-            <div className="zi-card zi-media overflow-hidden rounded-2xl border border-fam-hairline shadow-sm">
+            <div className="zi-card zi-media overflow-hidden rounded-2xl border border-fam-hairline shadow-(--elev-1)">
               <img
                 src={imageSrc(imageUrl)}
                 alt={HERO_ALT}

@@ -37,7 +37,7 @@ export function BlogFeaturedListBlock({
         <div className="mt-12 grid gap-8 lg:grid-cols-2 lg:gap-12">
           <a href={lead.href} className="group flex flex-col overflow-hidden rounded-3xl border border-fam-hairline bg-fam-card">
             {lead.image && (
-              <div className="aspect-[16/9] overflow-hidden"><img src={lead.image} alt={lead.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" /></div>
+              <div className="aspect-[16/9] overflow-hidden"><img src={lead.image} alt={lead.title} className="h-full w-full object-cover transition-transform duration-(--motion-slow) group-hover:scale-(--hov-zoom)" /></div>
             )}
             <div className="p-8">
               {lead.date && <span className="text-xs font-semibold uppercase tracking-[0.12em] text-fam-ink-faint">{lead.date}</span>}

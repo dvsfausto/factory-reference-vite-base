@@ -70,7 +70,7 @@ export function ServicesCarouselBlock({
               key={s.slug}
               to="/services/$slug"
               params={{ slug: s.slug }}
-              className="group flex w-[280px] shrink-0 snap-start flex-col overflow-hidden rounded-2xl border border-fam-hairline bg-fam-card transition-all hover:border-fam-accent hover:shadow-md md:w-[340px]"
+              className="group flex w-[280px] shrink-0 snap-start flex-col overflow-hidden rounded-2xl border border-fam-hairline bg-fam-card transition-all hover:border-fam-accent hover:shadow-(--elev-2) md:w-[340px]"
             >
               <div className="aspect-[4/3] overflow-hidden">
                 <img
@@ -79,7 +79,7 @@ export function ServicesCarouselBlock({
                   loading="lazy"
                   width={800}
                   height={600}
-                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  className="h-full w-full object-cover transition-transform duration-(--motion-slow) group-hover:scale-(--hov-zoom)"
                 />
               </div>
               <div className="flex flex-1 flex-col p-7">
@@ -99,7 +99,7 @@ export function ServicesCarouselBlock({
         <div className="container-x mt-8">
           <Link
             to="/services"
-            className="inline-flex h-12 items-center gap-2 rounded-xl bg-cta px-7 font-display text-sm font-semibold text-cta-foreground transition-opacity hover:opacity-90"
+            className="inline-flex h-12 items-center gap-2 rounded-xl bg-cta px-7 font-display text-sm font-semibold text-cta-foreground transition-opacity hover:opacity-(--hov-fade)"
           >
             {moreLink} <ArrowRight className="h-4 w-4" />
           </Link>

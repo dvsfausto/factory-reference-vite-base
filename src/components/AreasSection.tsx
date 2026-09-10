@@ -23,7 +23,7 @@ export function AreasSection({ heading, intro, areas, mapEmbedUrl }: Props) {
           )}
         </div>
         {mapEmbedUrl && (
-          <div className="mt-10 overflow-hidden rounded-2xl border border-fam-line-slate shadow-sm">
+          <div className="mt-10 overflow-hidden rounded-2xl border border-fam-line-slate shadow-(--elev-1)">
             <iframe
               src={mapEmbedUrl}
               title={tr('section.serviceAreaMap')}

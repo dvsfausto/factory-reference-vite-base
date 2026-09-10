@@ -64,7 +64,7 @@ export function ServiceAreasColumnedListBlock({
         <div className="mt-10">
           <Link
             to="/areas"
-            className="inline-flex h-12 items-center gap-2 rounded-xl bg-cta px-7 font-display text-sm font-semibold text-cta-foreground transition-opacity hover:opacity-90"
+            className="inline-flex h-12 items-center gap-2 rounded-xl bg-cta px-7 font-display text-sm font-semibold text-cta-foreground transition-opacity hover:opacity-(--hov-fade)"
           >
             {moreLink}
           </Link>

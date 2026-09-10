@@ -51,7 +51,7 @@ export function ServicesPreviewBlock({
               key={s.slug}
               to="/services/$slug"
               params={{ slug: s.slug }}
-              className="card-stead overflow-hidden group hover:shadow-xl hover:-translate-y-1 transition-all"
+              className="card-stead overflow-hidden group hover:shadow-(--elev-4) hover:translate-y-(--hov-lift) transition-all"
             >
               <div className="aspect-[4/3] overflow-hidden">
                 <img
@@ -60,7 +60,7 @@ export function ServicesPreviewBlock({
                   loading="lazy"
                   width={800}
                   height={600}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-cover group-hover:scale-(--hov-zoom) transition-transform duration-(--motion-slow)"
                 />
               </div>
               <div className="p-6">

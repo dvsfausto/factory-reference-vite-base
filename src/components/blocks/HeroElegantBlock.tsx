@@ -85,7 +85,7 @@ export function HeroElegantBlock({
 
             <div className="mt-10 flex flex-wrap gap-4">
               <PrimaryCta
-                className="inline-flex h-[54px] items-center gap-2 rounded-lg bg-cta px-8 font-display text-base font-medium tracking-wide text-cta-foreground transition-opacity hover:opacity-90"
+                className="inline-flex h-[54px] items-center gap-2 rounded-lg bg-cta px-8 font-display text-base font-medium tracking-wide text-cta-foreground transition-opacity hover:opacity-(--hov-fade)"
               >
                 {ctaLabel} <ArrowRight className="h-4 w-4" />
               </PrimaryCta>
@@ -159,7 +159,7 @@ export function HeroElegantBlock({
           <div className="lg:col-span-5 lg:col-start-8">
             <p className="text-lg leading-relaxed text-fam-ink-muted">{body}</p>
             <div className="mt-7 flex flex-wrap items-center gap-6">
-              <PrimaryCta className="inline-flex h-[54px] items-center gap-2 rounded-lg bg-cta px-8 font-display text-base font-medium tracking-wide text-cta-foreground transition-opacity hover:opacity-90">
+              <PrimaryCta className="inline-flex h-[54px] items-center gap-2 rounded-lg bg-cta px-8 font-display text-base font-medium tracking-wide text-cta-foreground transition-opacity hover:opacity-(--hov-fade)">
                 {ctaLabel} <ArrowRight className="h-4 w-4" />
               </PrimaryCta>
               {hasPhone(site.phone) && (<a href={`tel:${site.phone}`} className="inline-flex items-center gap-2 font-display font-medium text-fam-ink underline-offset-4 transition-colors hover:text-fam-accent-text-strong hover:underline">

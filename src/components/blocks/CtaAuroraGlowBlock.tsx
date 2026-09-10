@@ -115,7 +115,7 @@ export function CtaAuroraGlowBlock({
           className="mt-10 flex flex-wrap justify-center gap-3.5"
         >
           <PrimaryCta
-            className="inline-flex h-[52px] items-center gap-2 rounded-full bg-fam-card px-8 font-semibold text-brand-800 transition-transform hover:-translate-y-0.5"
+            className="inline-flex h-[52px] items-center gap-2 rounded-full bg-fam-card px-8 font-semibold text-brand-800 transition-transform hover:translate-y-(--hov-lift-sm)"
             style={{ boxShadow: 'var(--wow-shadow-glow)' }}
           >
             {label} <ArrowRight className="h-4 w-4" />

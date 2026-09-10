@@ -54,7 +54,7 @@ export function HeroGalleryBlock({
             <p className="mt-5 max-w-xl text-lg leading-relaxed text-fam-ink-muted">{site.hero.body}</p>
 
             <div className="mt-9 flex flex-wrap gap-4">
-              <PrimaryCta className="inline-flex h-[52px] items-center gap-2 rounded-xl bg-cta px-7 font-display text-base font-semibold text-cta-foreground transition-opacity hover:opacity-90">
+              <PrimaryCta className="inline-flex h-[52px] items-center gap-2 rounded-xl bg-cta px-7 font-display text-base font-semibold text-cta-foreground transition-opacity hover:opacity-(--hov-fade)">
                 {site.hero.cta_primary_label} <ArrowRight className="h-4 w-4" />
               </PrimaryCta>
               {hasPhone(site.phone) && (
@@ -100,7 +100,7 @@ export function HeroGalleryBlock({
                 ))}
               </ul>
             ) : (
-              <div className="overflow-hidden rounded-2xl border border-fam-hairline shadow-sm">
+              <div className="overflow-hidden rounded-2xl border border-fam-hairline shadow-(--elev-1)">
                 <img src={imageSrc(photos[0]?.image ?? site.hero.image_url)} alt={photos[0]?.alt ?? photos[0]?.title ?? HERO_ALT} className="aspect-[4/3] w-full object-cover" />
               </div>
             )}

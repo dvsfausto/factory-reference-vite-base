@@ -95,7 +95,7 @@ export function ServicesBentoBlock({
                   loading="lazy"
                   width={800}
                   height={600}
-                  className="absolute inset-0 -z-20 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  className="absolute inset-0 -z-20 h-full w-full object-cover transition-transform duration-(--motion-slow) group-hover:scale-(--hov-zoom)"
                 />
                 <div className="absolute inset-0 -z-10 bg-gradient-to-t from-fam-scrim-2/90 via-fam-scrim-2/30 to-transparent" />
                 <div className="flex items-end justify-between gap-3 p-6">
@@ -115,7 +115,7 @@ export function ServicesBentoBlock({
           <div className="mt-12">
             <Link
               to="/services"
-              className="inline-flex h-12 items-center gap-2 rounded-xl bg-cta px-7 font-display text-sm font-semibold text-cta-foreground transition-opacity hover:opacity-90"
+              className="inline-flex h-12 items-center gap-2 rounded-xl bg-cta px-7 font-display text-sm font-semibold text-cta-foreground transition-opacity hover:opacity-(--hov-fade)"
             >
               {moreLink} <ArrowUpRight className="h-4 w-4" />
             </Link>

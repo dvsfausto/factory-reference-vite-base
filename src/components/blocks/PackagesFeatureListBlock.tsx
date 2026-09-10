@@ -45,7 +45,7 @@ export function PackagesFeatureListBlock({
                 </div>
                 <div className="mt-2 font-display text-3xl font-semibold tracking-tight text-fam-accent-text-strong">{p.price}</div>
                 <Link to="/contact" className="group mt-5 inline-flex items-center gap-2 font-display text-sm font-semibold text-fam-accent-text hover:text-fam-accent-text-strong">
-                  Choose this package <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  Choose this package <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-(--hov-nudge)" />
                 </Link>
               </div>
               {p.includes && p.includes.length > 0 && (

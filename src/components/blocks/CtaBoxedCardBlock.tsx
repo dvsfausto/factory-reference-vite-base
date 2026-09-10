@@ -35,7 +35,7 @@ export function CtaBoxedCardBlock({
   return (
     <section className="bg-fam-surface-2">
       <div className="container-x py-section">
-        <div className="relative isolate mx-auto max-w-4xl overflow-hidden rounded-3xl bg-fam-panel px-8 py-14 text-center shadow-xl md:px-16 md:py-20">
+        <div className="relative isolate mx-auto max-w-4xl overflow-hidden rounded-3xl bg-fam-panel px-8 py-14 text-center shadow-(--elev-4) md:px-16 md:py-20">
           {site.tagline && (
             <span className="inline-flex items-center justify-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] text-fam-accent-on-dark">
               <span className="h-px w-7 bg-fam-accent" />
@@ -50,7 +50,7 @@ export function CtaBoxedCardBlock({
           )}
           <div className="mt-10 flex flex-wrap justify-center gap-4">
             <PrimaryCta
-              className="inline-flex h-[54px] items-center gap-2 rounded-xl bg-cta px-8 font-display text-base font-semibold text-cta-foreground transition-opacity hover:opacity-90"
+              className="inline-flex h-[54px] items-center gap-2 rounded-xl bg-cta px-8 font-display text-base font-semibold text-cta-foreground transition-opacity hover:opacity-(--hov-fade)"
             >{tr('section.getStarted')}<ArrowRight className="h-4 w-4" />
             </PrimaryCta>
             {hasPhone(site.phone) && (<a

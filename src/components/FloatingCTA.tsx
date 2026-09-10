@@ -16,7 +16,7 @@ export function FloatingCTA({ to, label }: Props) {
   return (
     <PrimaryCta
       to={to}
-      className="lg:hidden fixed bottom-4 right-4 z-30 btn btn-md btn-primary shadow-xl"
+      className="lg:hidden fixed bottom-4 right-4 z-30 btn btn-md btn-primary shadow-(--elev-4)"
     >
       <Sparkles className="h-4 w-4" />
       {affordanceLabel}

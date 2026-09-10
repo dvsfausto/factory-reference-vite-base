@@ -73,7 +73,7 @@ export function ServicesListBlock({
               </h3>
               <p className="text-base leading-relaxed text-fam-ink-muted md:col-span-5">{s.short}</p>
               <span className="hidden items-center justify-end text-fam-accent-text md:col-span-1 md:flex">
-                <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+                <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-(--hov-nudge)" />
               </span>
             </Link>
           ))}
@@ -82,7 +82,7 @@ export function ServicesListBlock({
         <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3">
           <Link
             to="/services"
-            className="inline-flex h-12 items-center gap-2 rounded-xl bg-cta px-7 font-display text-sm font-semibold text-cta-foreground transition-opacity hover:opacity-90"
+            className="inline-flex h-12 items-center gap-2 rounded-xl bg-cta px-7 font-display text-sm font-semibold text-cta-foreground transition-opacity hover:opacity-(--hov-fade)"
           >
             {moreLink} <ArrowRight className="h-4 w-4" />
           </Link>

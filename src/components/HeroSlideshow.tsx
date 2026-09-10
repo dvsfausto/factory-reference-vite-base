@@ -52,7 +52,7 @@ export function HeroSlideshow({
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <div className="relative rounded-[28px] overflow-hidden shadow-2xl shadow-brand-900/20 border-4 border-fam-card aspect-[4/3] bg-brand-50">
+      <div className="relative rounded-[28px] overflow-hidden shadow-(--elev-5) shadow-brand-900/20 border-4 border-fam-card aspect-[4/3] bg-brand-50">
         {!isSlideshow || !mounted ? (
           <img
             src={images[0].src}

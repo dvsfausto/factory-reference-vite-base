@@ -43,7 +43,7 @@ export function CtaCreativeBlock({
           )}
           <div className="mt-10 flex flex-wrap gap-4">
             <PrimaryCta
-              className="inline-flex h-[56px] items-center gap-2 rounded-2xl bg-cta px-8 font-display text-base font-bold text-cta-foreground transition-transform hover:-translate-y-0.5"
+              className="inline-flex h-[56px] items-center gap-2 rounded-2xl bg-cta px-8 font-display text-base font-bold text-cta-foreground transition-transform hover:translate-y-(--hov-lift-sm)"
             >{tr('cta.startProject')}<ArrowUpRight className="h-5 w-5" />
             </PrimaryCta>
             {hasPhone(site.phone) && (<a

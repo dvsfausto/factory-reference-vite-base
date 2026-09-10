@@ -48,7 +48,7 @@ export function PricingTiersBlock({
               key={`${p.name}-${i}`}
               className={`flex flex-col rounded-3xl p-8 ${
                 p.highlighted
-                  ? 'bg-fam-panel text-fam-on-dark shadow-xl ring-1 ring-fam-accent md:-mt-4 md:pb-12'
+                  ? 'bg-fam-panel text-fam-on-dark shadow-(--elev-4) ring-1 ring-fam-accent md:-mt-4 md:pb-12'
                   : 'border border-fam-hairline bg-fam-card'
               }`}
             >
@@ -77,7 +77,7 @@ export function PricingTiersBlock({
               )}
               <Link
                 to="/contact"
-                className={`mt-8 inline-flex h-12 items-center justify-center rounded-xl px-6 font-display text-sm font-semibold transition-opacity hover:opacity-90 ${
+                className={`mt-8 inline-flex h-12 items-center justify-center rounded-xl px-6 font-display text-sm font-semibold transition-opacity hover:opacity-(--hov-fade) ${
                   p.highlighted
                     ? 'bg-cta text-cta-foreground'
                     : 'border border-fam-hairline text-fam-ink hover:border-fam-accent hover:text-fam-accent-text-strong'

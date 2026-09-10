@@ -36,7 +36,7 @@ export function MembershipSingleTierHighlightBlock({
           <h2 className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight text-fam-ink sm:text-5xl">{heading}</h2>
           {body && <p className="mt-4 text-lg leading-relaxed text-fam-ink-muted">{body}</p>}
         </div>
-        <div className="mt-12 overflow-hidden rounded-3xl bg-fam-panel text-fam-on-dark shadow-xl">
+        <div className="mt-12 overflow-hidden rounded-3xl bg-fam-panel text-fam-on-dark shadow-(--elev-4)">
           <div className="grid gap-8 p-8 md:grid-cols-5 md:p-12">
             <div className="md:col-span-2 md:border-r md:border-fam-card/10 md:pr-10">
               <h3 className="font-display text-2xl font-semibold">{m.name}</h3>
@@ -44,7 +44,7 @@ export function MembershipSingleTierHighlightBlock({
                 <span className="font-display text-6xl font-semibold tracking-tight">{m.price}</span>
                 <span className="text-slate-300">{m.period ?? '/month'}</span>
               </div>
-              <Link to="/contact" className="mt-8 inline-flex h-12 items-center justify-center rounded-xl bg-cta px-7 font-display text-sm font-semibold text-cta-foreground transition-opacity hover:opacity-90">
+              <Link to="/contact" className="mt-8 inline-flex h-12 items-center justify-center rounded-xl bg-cta px-7 font-display text-sm font-semibold text-cta-foreground transition-opacity hover:opacity-(--hov-fade)">
                 Become a member
               </Link>
             </div>

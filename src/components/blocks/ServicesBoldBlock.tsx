@@ -54,7 +54,7 @@ export function ServicesBoldBlock({
               key={s.slug}
               to="/services/$slug"
               params={{ slug: s.slug }}
-              className="group flex flex-col overflow-hidden rounded-lg border border-fam-line-ink bg-fam-card transition-all hover:-translate-y-1 hover:border-fam-accent hover:shadow-xl"
+              className="group flex flex-col overflow-hidden rounded-lg border border-fam-line-ink bg-fam-card transition-all hover:translate-y-(--hov-lift) hover:border-fam-accent hover:shadow-(--elev-4)"
             >
               <div className="aspect-[4/3] overflow-hidden">
                 <img
@@ -63,7 +63,7 @@ export function ServicesBoldBlock({
                   loading="lazy"
                   width={800}
                   height={600}
-                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  className="h-full w-full object-cover transition-transform duration-(--motion-slow) group-hover:scale-(--hov-zoom)"
                 />
               </div>
               <div className="flex flex-1 flex-col p-6">
@@ -82,7 +82,7 @@ export function ServicesBoldBlock({
           <div className="mt-10">
             <Link
               to="/services"
-              className="inline-flex h-12 items-center gap-2 rounded-md bg-cta px-7 font-display text-sm font-semibold uppercase tracking-wide text-cta-foreground transition-opacity hover:opacity-90"
+              className="inline-flex h-12 items-center gap-2 rounded-md bg-cta px-7 font-display text-sm font-semibold uppercase tracking-wide text-cta-foreground transition-opacity hover:opacity-(--hov-fade)"
             >
               {moreLink} <ArrowRight className="h-4 w-4" />
             </Link>

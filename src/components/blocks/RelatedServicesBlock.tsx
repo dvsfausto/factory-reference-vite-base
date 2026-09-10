@@ -51,7 +51,7 @@ export function RelatedServicesBlock({
             >
               <Link
                 to={r.href}
-                className="group flex h-full flex-col justify-between rounded-2xl border bg-fam-card/85 p-7 backdrop-blur-md transition-transform duration-500 hover:-translate-y-1"
+                className="group flex h-full flex-col justify-between rounded-2xl border bg-fam-card/85 p-7 backdrop-blur-md transition-transform duration-(--motion-slow) hover:translate-y-(--hov-lift)"
                 style={{
                   borderColor: 'var(--fam-hairline, var(--wow-hairline))',
                   boxShadow: 'var(--wow-shadow-soft)',

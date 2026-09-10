@@ -62,7 +62,7 @@ export function ServicesAlternatingRowsBlock({
         <div className="mt-16 space-y-20 md:mt-24 md:space-y-28">
           {rows.map((s, i) => (
             <div key={s.slug} className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
-              <div className={`overflow-hidden rounded-3xl border border-fam-hairline shadow-sm ${i % 2 === 1 ? 'lg:order-2' : ''}`}>
+              <div className={`overflow-hidden rounded-3xl border border-fam-hairline shadow-(--elev-1) ${i % 2 === 1 ? 'lg:order-2' : ''}`}>
                 <img
                   src={serviceImageUrl(s.slug)}
                   alt={s.name}
@@ -85,7 +85,7 @@ export function ServicesAlternatingRowsBlock({
                   params={{ slug: s.slug }}
                   className="group mt-6 inline-flex items-center gap-2 font-display text-base font-semibold text-fam-accent-text transition-all hover:text-fam-accent-text-strong"
                 >
-                  {exploreLabel} <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  {exploreLabel} <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-(--hov-nudge)" />
                 </Link>
               </div>
             </div>
@@ -96,7 +96,7 @@ export function ServicesAlternatingRowsBlock({
           <div className="mt-16">
             <Link
               to="/services"
-              className="inline-flex h-12 items-center gap-2 rounded-xl bg-cta px-7 font-display text-sm font-semibold text-cta-foreground transition-opacity hover:opacity-90"
+              className="inline-flex h-12 items-center gap-2 rounded-xl bg-cta px-7 font-display text-sm font-semibold text-cta-foreground transition-opacity hover:opacity-(--hov-fade)"
             >
               {moreLink} <ArrowRight className="h-4 w-4" />
             </Link>

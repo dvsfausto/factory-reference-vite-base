@@ -56,7 +56,7 @@ export function MapEmbedStylePanelBlock({
             const pos = isHome ? { top: '48%', left: '50%' } : SPOTS[i % SPOTS.length]
             return (
               <div key={a.slug} className="absolute -translate-x-1/2 -translate-y-1/2" style={{ top: pos!.top, left: pos!.left }}>
-                <span className={`inline-flex items-center gap-1.5 rounded-full font-display font-semibold shadow-lg backdrop-blur-sm ${isHome ? 'bg-fam-accent px-3.5 py-2 text-sm text-fam-on-accent' : 'bg-fam-card/90 px-3 py-1.5 text-xs text-fam-ink'}`}>
+                <span className={`inline-flex items-center gap-1.5 rounded-full font-display font-semibold shadow-(--elev-3) backdrop-blur-sm ${isHome ? 'bg-fam-accent px-3.5 py-2 text-sm text-fam-on-accent' : 'bg-fam-card/90 px-3 py-1.5 text-xs text-fam-ink'}`}>
                   <MapPin className={isHome ? 'h-4 w-4' : 'h-3.5 w-3.5 text-fam-accent-text'} /> {a.name}
                 </span>
               </div>
@@ -64,7 +64,7 @@ export function MapEmbedStylePanelBlock({
           })}
         </div>
         <div className="mt-8">
-          <Link to="/areas" className="inline-flex h-12 items-center rounded-xl bg-cta px-7 font-display text-sm font-semibold text-cta-foreground transition-opacity hover:opacity-90">{tr('section.seeAllAreas')}</Link>
+          <Link to="/areas" className="inline-flex h-12 items-center rounded-xl bg-cta px-7 font-display text-sm font-semibold text-cta-foreground transition-opacity hover:opacity-(--hov-fade)">{tr('section.seeAllAreas')}</Link>
         </div>
       </div>
     </section>

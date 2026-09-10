@@ -64,7 +64,7 @@ export function ServiceAreasCardsBlock({
                 key={a.slug}
                 to="/areas/$slug"
                 params={{ slug: a.slug }}
-                className="group flex flex-col overflow-hidden rounded-2xl border border-fam-hairline bg-fam-card transition-all hover:border-fam-accent hover:shadow-md"
+                className="group flex flex-col overflow-hidden rounded-2xl border border-fam-hairline bg-fam-card transition-all hover:border-fam-accent hover:shadow-(--elev-2)"
               >
                 <div className="relative aspect-[16/10] overflow-hidden">
                   <img
@@ -73,7 +73,7 @@ export function ServiceAreasCardsBlock({
                     loading="lazy"
                     width={800}
                     height={500}
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="h-full w-full object-cover transition-transform duration-(--motion-slow) group-hover:scale-(--hov-zoom)"
                   />
                   {tier && (
                     <span className="absolute left-3 top-3 rounded-full bg-fam-accent-soft px-3 py-1 font-display text-xs font-semibold text-fam-accent-text-strong">
@@ -90,7 +90,7 @@ export function ServiceAreasCardsBlock({
                       <p className="mt-1 text-sm text-fam-ink-muted">{zips} ZIP codes covered</p>
                     )}
                   </div>
-                  <ArrowRight className="h-5 w-5 shrink-0 text-fam-accent-text transition-transform group-hover:translate-x-1" />
+                  <ArrowRight className="h-5 w-5 shrink-0 text-fam-accent-text transition-transform group-hover:translate-x-(--hov-nudge)" />
                 </div>
               </Link>
             )
@@ -100,7 +100,7 @@ export function ServiceAreasCardsBlock({
         <div className="mt-12">
           <Link
             to="/areas"
-            className="inline-flex h-12 items-center gap-2 rounded-xl bg-cta px-7 font-display text-sm font-semibold text-cta-foreground transition-opacity hover:opacity-90"
+            className="inline-flex h-12 items-center gap-2 rounded-xl bg-cta px-7 font-display text-sm font-semibold text-cta-foreground transition-opacity hover:opacity-(--hov-fade)"
           >
             {moreLink}
           </Link>

@@ -98,7 +98,7 @@ export function FaqSplitPanelBlock({
                         {faq.question}
                       </span>
                       <ChevronDown
-                        className={`mt-1 h-5 w-5 shrink-0 text-brand-600 transition-transform duration-300 ${
+                        className={`mt-1 h-5 w-5 shrink-0 text-brand-600 transition-transform duration-(--motion-base) ${
                           isOpen ? 'rotate-180' : ''
                         }`}
                       />

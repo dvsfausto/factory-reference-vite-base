@@ -80,7 +80,7 @@ export function ServiceAreasGlowPinsBlock({
               <Link
                 to="/areas/$slug"
                 params={{ slug: a.slug }}
-                className="group flex h-full items-center gap-3 rounded-2xl border bg-fam-card/80 px-4 py-4 backdrop-blur-md transition-transform duration-300 hover:-translate-y-1"
+                className="group flex h-full items-center gap-3 rounded-2xl border bg-fam-card/80 px-4 py-4 backdrop-blur-md transition-transform duration-(--motion-base) hover:translate-y-(--hov-lift)"
                 style={{ borderColor: 'var(--wow-hairline)' }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.boxShadow = 'var(--wow-shadow-glow)'
@@ -90,7 +90,7 @@ export function ServiceAreasGlowPinsBlock({
                 }}
               >
                 <span
-                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-fam-on-dark transition-transform duration-300 group-hover:scale-110"
+                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-fam-on-dark transition-transform duration-(--motion-base) group-hover:scale-(--hov-zoom-lg)"
                   style={{ backgroundImage: 'var(--wow-grad-brand)' }}
                 >
                   <MapPin className="h-4 w-4" />

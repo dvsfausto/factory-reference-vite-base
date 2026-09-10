@@ -108,7 +108,7 @@ export function PricingLuxeGlassBlock({
                   )}
                   <Link
                     to="/contact"
-                    className={`mt-8 inline-flex h-12 items-center justify-center gap-2 rounded-full px-6 font-display text-sm font-semibold transition-transform hover:-translate-y-0.5 ${
+                    className={`mt-8 inline-flex h-12 items-center justify-center gap-2 rounded-full px-6 font-display text-sm font-semibold transition-transform hover:translate-y-(--hov-lift-sm) ${
                       featured
                         ? 'bg-fam-card text-ink-900'
                         : 'bg-cta text-cta-foreground'
@@ -148,7 +148,7 @@ export function PricingLuxeGlassBlock({
             </p>
             <Link
               to="/contact"
-              className="mt-8 inline-flex h-[52px] items-center gap-2 rounded-full bg-cta px-8 font-semibold text-cta-foreground transition-transform hover:-translate-y-0.5"
+              className="mt-8 inline-flex h-[52px] items-center gap-2 rounded-full bg-cta px-8 font-semibold text-cta-foreground transition-transform hover:translate-y-(--hov-lift-sm)"
               style={{ boxShadow: 'var(--wow-shadow-glow)' }}
             >
               Request a quote <ArrowRight className="h-4 w-4" />

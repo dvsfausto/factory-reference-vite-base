@@ -53,7 +53,7 @@ export function GalleryCinematicMasonryBlock({
               whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-10%' }}
               transition={{ duration: 0.6, delay: reduce ? 0 : (i % 3) * 0.08, ease: [0.16, 1, 0.3, 1] }}
-              className="group relative mb-5 block break-inside-avoid overflow-hidden rounded-2xl border transition-shadow duration-300"
+              className="group relative mb-5 block break-inside-avoid overflow-hidden rounded-2xl border transition-shadow duration-(--motion-base)"
               style={{ borderColor: 'var(--wow-hairline)' }}
               whileHover={reduce ? undefined : { boxShadow: 'var(--wow-shadow-glow)' }}
             >
@@ -65,12 +65,12 @@ export function GalleryCinematicMasonryBlock({
                   src={p.image}
                   alt={p.alt ?? p.title}
                   loading="lazy"
-                  className="aspect-[4/3] w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.06]"
+                  className="aspect-[4/3] w-full object-cover transition-transform duration-(--motion-slow) ease-(--ease-standard) group-hover:scale-(--hov-zoom-md)"
                 />
               </div>
               {/* Brand-gradient caption overlay, appears on hover. */}
               <figcaption
-                className="pointer-events-none absolute inset-x-0 bottom-0 flex flex-col gap-0.5 p-4 text-fam-on-dark opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                className="pointer-events-none absolute inset-x-0 bottom-0 flex flex-col gap-0.5 p-4 text-fam-on-dark opacity-0 transition-opacity duration-(--motion-base) group-hover:opacity-100"
                 style={{ backgroundImage: 'var(--wow-grad-brand)' }}
               >
                 <span className="font-display text-sm font-semibold">{p.title}</span>
