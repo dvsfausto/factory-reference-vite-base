@@ -18,7 +18,7 @@
 export function TrustBarStatNumbersBlock({
   items = [],
 }: {
-  items?: { title: string; description: string }[]
+  items?: { title: string; description: string; kind?: string | null }[]
 }) {
   if (!items.length) return null // no trust facts → no section; never an invented one (niche arc 2b)
   return (

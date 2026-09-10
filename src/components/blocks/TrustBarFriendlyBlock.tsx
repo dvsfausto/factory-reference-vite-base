@@ -1,4 +1,5 @@
 import { HeartHandshake, ShieldCheck, Sparkles } from 'lucide-react'
+import { factIcon } from '~/lib/fact-icons'
 
 // TrustBar VARIANT: 'friendly', the 3 feature points under the hero, warm +
 // bright. Soft rounded coral icon chips (NOT round icon-circles, NOT brand
@@ -11,7 +12,7 @@ import { HeartHandshake, ShieldCheck, Sparkles } from 'lucide-react'
 export function TrustBarFriendlyBlock({
   items = [],
 }: {
-  items?: { title: string; description: string }[]
+  items?: { title: string; description: string; kind?: string | null }[]
 }) {
   if (!items.length) return null // no trust facts → no section; never an invented one (niche arc 2b)
   const icons = [ShieldCheck, HeartHandshake, Sparkles]
@@ -20,12 +21,14 @@ export function TrustBarFriendlyBlock({
       <div className="container-x py-band">
         <div className={`grid grid-cols-1 gap-8 ${items.length === 2 ? "md:grid-cols-2" : "md:grid-cols-3"}`}>
           {items.map((item, i) => {
-            const Icon = icons[i] ?? ShieldCheck
+            const Icon = factIcon(item)
             return (
               <div key={i} className="flex flex-col items-start">
-                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-fam-accent-soft text-fam-accent-text">
-                  <Icon className="h-7 w-7" strokeWidth={2} />
-                </div>
+                {Icon && (
+                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-fam-accent-soft text-fam-accent-text">
+                    <Icon className="h-7 w-7" strokeWidth={2} />
+                  </div>
+                )}
                 <h3 className="mt-4 font-display text-xl font-bold tracking-tight text-fam-ink">
                   {item.title}
                 </h3>

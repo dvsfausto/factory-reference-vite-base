@@ -1,4 +1,5 @@
 import { Clock, Heart, ShieldCheck } from 'lucide-react'
+import { factIcon } from '~/lib/fact-icons'
 
 // TrustBar VARIANT: 'bold', the 3 feature-cards under the hero, made bold.
 // The default TrustBar renders round icon-circles + text-brand-800 headings
@@ -13,7 +14,7 @@ import { Clock, Heart, ShieldCheck } from 'lucide-react'
 export function TrustBarBoldBlock({
   items = [],
 }: {
-  items?: { title: string; description: string }[]
+  items?: { title: string; description: string; kind?: string | null }[]
 }) {
   if (!items.length) return null // no trust facts → no section; never an invented one (niche arc 2b)
   const icons = [ShieldCheck, Clock, Heart]
@@ -21,12 +22,14 @@ export function TrustBarBoldBlock({
     <section className="container-x py-band">
       <div className={`grid grid-cols-1 gap-8 ${items.length === 2 ? "md:grid-cols-2" : "md:grid-cols-3"}`}>
         {items.map((item, i) => {
-          const Icon = icons[i] ?? ShieldCheck
+          const Icon = factIcon(item)
           return (
             <div key={i} className="flex flex-col items-start">
-              <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-fam-accent-soft text-fam-accent-text-strong">
-                <Icon className="h-7 w-7" strokeWidth={2} />
-              </div>
+              {Icon && (
+                <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-fam-accent-soft text-fam-accent-text-strong">
+                  <Icon className="h-7 w-7" strokeWidth={2} />
+                </div>
+              )}
               <h3 className="mt-5 font-display text-xl font-semibold uppercase tracking-tight text-ink-900">
                 {item.title}
               </h3>

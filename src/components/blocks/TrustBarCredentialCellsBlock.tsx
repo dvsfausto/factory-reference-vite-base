@@ -1,4 +1,5 @@
 import { ShieldCheck, Clock, Heart, Award, BadgeCheck, Star, type LucideIcon } from 'lucide-react'
+import { factIcon } from '~/lib/fact-icons'
 
 // TrustBar LAYOUT: 'credential-cells', each trust point set in its own bordered
 // cell, joined into a single framed band (shared hairlines, like a credentials
@@ -20,7 +21,7 @@ const ICONS: LucideIcon[] = [ShieldCheck, Clock, Heart, Award, BadgeCheck, Star]
 export function TrustBarCredentialCellsBlock({
   items = [],
 }: {
-  items?: { title: string; description: string }[]
+  items?: { title: string; description: string; kind?: string | null }[]
 }) {
   if (!items.length) return null // no trust facts → no section; never an invented one (niche arc 2b)
   return (
@@ -28,12 +29,14 @@ export function TrustBarCredentialCellsBlock({
       <div className="container-x py-band">
         <div className="grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-fam-hairline bg-fam-hairline sm:grid-cols-3">
           {items.map((item, i) => {
-            const Icon = ICONS[i % ICONS.length]!
+            const Icon = factIcon(item)
             return (
               <div key={i} className="flex flex-col bg-fam-card p-7">
-                <span className="grid h-11 w-11 place-items-center rounded-xl bg-fam-accent-soft text-fam-accent-text">
-                  <Icon className="h-5 w-5" strokeWidth={1.9} />
-                </span>
+                {Icon && (
+                  <span className="grid h-11 w-11 place-items-center rounded-xl bg-fam-accent-soft text-fam-accent-text">
+                    <Icon className="h-5 w-5" strokeWidth={1.9} />
+                  </span>
+                )}
                 <h3 className="mt-5 font-display text-lg font-semibold tracking-tight text-fam-ink">
                   {item.title}
                 </h3>

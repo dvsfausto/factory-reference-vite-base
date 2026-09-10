@@ -1,4 +1,5 @@
 import { Scale, ShieldCheck, Award } from 'lucide-react'
+import { factIcon } from '~/lib/fact-icons'
 
 // TrustBar VARIANT: 'corporate', a structured "why us" value strip. Bordered
 // cells, navy line-icons, heavy grotesque headings, dense. No round icon-circles,
@@ -11,7 +12,7 @@ import { Scale, ShieldCheck, Award } from 'lucide-react'
 export function TrustBarCorporateBlock({
   items = [],
 }: {
-  items?: { title: string; description: string }[]
+  items?: { title: string; description: string; kind?: string | null }[]
 }) {
   if (!items.length) return null // no trust facts → no section; never an invented one (niche arc 2b)
   const icons = [Scale, ShieldCheck, Award]
@@ -20,10 +21,10 @@ export function TrustBarCorporateBlock({
       <div className="container-x py-band">
         <div className="grid grid-cols-1 divide-y divide-fam-hairline overflow-hidden rounded-lg border border-fam-hairline md:grid-cols-3 md:divide-x md:divide-y-0">
           {items.map((item, i) => {
-            const Icon = icons[i] ?? ShieldCheck
+            const Icon = factIcon(item)
             return (
               <div key={i} className="flex flex-col items-start p-7">
-                <Icon className="h-7 w-7 text-fam-accent-text" strokeWidth={1.75} />
+                {Icon && <Icon className="h-7 w-7 text-fam-accent-text" strokeWidth={1.75} />}
                 <h3 className="mt-4 font-display text-lg font-bold tracking-tight text-fam-ink">
                   {item.title}
                 </h3>

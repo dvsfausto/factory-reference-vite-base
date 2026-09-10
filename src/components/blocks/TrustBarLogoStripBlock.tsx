@@ -1,4 +1,5 @@
 import { ShieldCheck, Clock, Heart, Award, BadgeCheck, Star, type LucideIcon } from 'lucide-react'
+import { factIcon } from '~/lib/fact-icons'
 
 // TrustBar LAYOUT: 'logo-strip', a compact, monochrome single-row strip of trust
 // marks, the "trusted / certified by" bar pattern. Character-agnostic. Quiet and
@@ -22,7 +23,7 @@ const ICONS: LucideIcon[] = [ShieldCheck, Award, BadgeCheck, Star, Clock, Heart]
 export function TrustBarLogoStripBlock({
   items = [],
 }: {
-  items?: { title: string; description: string }[]
+  items?: { title: string; description: string; kind?: string | null }[]
 }) {
   if (!items.length) return null // no trust facts → no section; never an invented one (niche arc 2b)
   return (
@@ -31,7 +32,7 @@ export function TrustBarLogoStripBlock({
         <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-6 md:justify-between">
           {items.map((item, i) => {
             const logo = (item as { logo?: string }).logo
-            const Icon = ICONS[i % ICONS.length]!
+            const Icon = factIcon(item)
             return logo ? (
               <img
                 key={i}
@@ -45,7 +46,7 @@ export function TrustBarLogoStripBlock({
                 key={i}
                 className="inline-flex items-center gap-2.5 font-display text-sm font-semibold uppercase tracking-[0.12em] text-fam-ink-muted"
               >
-                <Icon className="h-5 w-5 text-fam-accent-text" strokeWidth={1.75} />
+                {Icon && <Icon className="h-5 w-5 text-fam-accent-text" strokeWidth={1.75} />}
                 {item.title}
               </span>
             )

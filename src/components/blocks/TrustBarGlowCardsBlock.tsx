@@ -1,4 +1,4 @@
-import { Clock, Heart, ShieldCheck } from 'lucide-react'
+import { factIcon } from '~/lib/fact-icons'
 import { motion, useReducedMotion } from 'framer-motion'
 import type { ReactNode } from 'react'
 import { SITE } from '~/data/site'
@@ -26,7 +26,7 @@ export function TrustBarGlowCardsBlock({
   items,
 }: {
   site?: typeof SITE
-  items?: { title: string; description: string }[]
+  items?: { title: string; description: string; kind?: string | null }[]
 }) {
   const reduce = useReducedMotion()
   const resolved = (
@@ -36,11 +36,6 @@ export function TrustBarGlowCardsBlock({
   ).slice(0, 3) // cap at 3 — only 3 icons exist and a 4th card wraps (generic vertical ships 4). Matches TrustBarBlock.
   if (resolved.length === 0) return null
 
-  const icons: ReactNode[] = [
-    <ShieldCheck className="h-6 w-6" strokeWidth={1.8} />,
-    <Clock className="h-6 w-6" strokeWidth={1.8} />,
-    <Heart className="h-6 w-6" strokeWidth={1.8} />,
-  ]
 
   return (
     <section
@@ -64,12 +59,13 @@ export function TrustBarGlowCardsBlock({
               className="group rounded-2xl border bg-fam-card/80 p-7 backdrop-blur-md transition-shadow"
               style={{ borderColor: 'var(--wow-hairline)' }}
             >
+              {(() => { const Icon = factIcon(item); return Icon ? (
               <span
                 className="inline-flex h-14 w-14 items-center justify-center rounded-2xl text-fam-on-dark transition-shadow"
                 style={{ backgroundImage: 'var(--wow-grad-brand)', boxShadow: 'var(--wow-shadow-glow)' }}
               >
-                {icons[i % icons.length]}
-              </span>
+                <Icon className="h-6 w-6" strokeWidth={1.8} />
+              </span>) : null })()}
               <h3 className="mt-5 text-brand-900">{item.title}</h3>
               <p className="mt-2 text-ink-600">{item.description}</p>
             </motion.div>

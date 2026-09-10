@@ -23,7 +23,7 @@ export function TrustBarHairlineRowsBlock({
   items,
 }: {
   site?: typeof SITE
-  items?: { title: string; description: string }[]
+  items?: { title: string; description: string; kind?: string | null }[]
 }) {
   const reduce = useReducedMotion()
   const resolved = (

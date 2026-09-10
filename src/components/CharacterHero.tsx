@@ -62,7 +62,7 @@ const CTA_BY_CHARACTER: Record<string, ComponentType<{ title?: string; subtitle?
   creative: CtaCreativeBlock,
 }
 
-type TrustItems = { items?: { title: string; description: string }[] }
+type TrustItems = { items?: { title: string; description: string; kind?: string | null }[] }
 const TRUSTBAR_BY_CHARACTER: Record<string, ComponentType<TrustItems>> = {
   bold: TrustBarBoldBlock,
   elegant: TrustBarElegantBlock,

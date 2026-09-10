@@ -1,4 +1,5 @@
 import { CalendarCheck, ShieldCheck, Sparkles } from 'lucide-react'
+import { factIcon } from '~/lib/fact-icons'
 
 // TrustBar VARIANT: 'modern', the 3 feature points under the hero, clean +
 // minimal. Plain indigo line-icons (no round icon-circles, no brand color),
@@ -10,7 +11,7 @@ import { CalendarCheck, ShieldCheck, Sparkles } from 'lucide-react'
 export function TrustBarModernBlock({
   items = [],
 }: {
-  items?: { title: string; description: string }[]
+  items?: { title: string; description: string; kind?: string | null }[]
 }) {
   if (!items.length) return null // no trust facts → no section; never an invented one (niche arc 2b)
   const icons = [CalendarCheck, ShieldCheck, Sparkles]
@@ -19,10 +20,10 @@ export function TrustBarModernBlock({
       <div className="container-x py-band">
         <div className={`grid grid-cols-1 gap-10 ${items.length === 2 ? "md:grid-cols-2" : "md:grid-cols-3"}`}>
           {items.map((item, i) => {
-            const Icon = icons[i] ?? ShieldCheck
+            const Icon = factIcon(item)
             return (
               <div key={i} className="flex flex-col items-start">
-                <Icon className="h-7 w-7 text-fam-accent-text" strokeWidth={1.75} />
+                {Icon && <Icon className="h-7 w-7 text-fam-accent-text" strokeWidth={1.75} />}
                 <h3 className="mt-4 font-display text-lg font-semibold tracking-tight text-fam-ink">
                   {item.title}
                 </h3>
