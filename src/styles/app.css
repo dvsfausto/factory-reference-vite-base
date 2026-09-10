@@ -5,11 +5,30 @@
 @source "..";
 @import "tw-animate-css";
 
+/* Stage C (2026-09-10): metric-matched local fallbacks for the template's own faces, so the swap to the web
+   font does not move a line (every measured layout shift on the live fleet was this swap). A per-customer
+   typography override appends its own "<Family> Fallback" faces the same way (scaffolder font-fallback.ts). */
+@font-face {
+  font-family: "Cormorant Garamond Fallback";
+  src: local('Georgia');
+  ascent-override: 104.5482%;
+  descent-override: 32.4733%;
+  size-adjust: 88.3803%;
+}
+@font-face {
+  font-family: "Inter Fallback";
+  src: local('Arial'), local('ArialMT');
+  ascent-override: 90.4365%;
+  descent-override: 22.518%;
+  line-gap-override: 0%;
+  size-adjust: 107.1194%;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Cormorant Garamond", "Playfair Display", Georgia, serif;
+  --font-sans: "Inter", "Inter Fallback", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Cormorant Garamond", "Cormorant Garamond Fallback", "Playfair Display", Georgia, serif;
 
   --radius-sm: 6px;
   --radius-md: 8px;
