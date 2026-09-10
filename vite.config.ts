@@ -3,6 +3,7 @@ import { defineConfig } from 'vite'
 import viteReact from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import { nitro } from 'nitro/vite'
+import { pruneVariantsPlugin } from './scripts/prune-variants.mjs'
 
 export default defineConfig({
   server: {
@@ -12,6 +13,9 @@ export default defineConfig({
     tsconfigPaths: true,
   },
   plugins: [
+    // Stage C (2026-09-10): drop the variant-map entries this site's layouts never select (build only,
+    // PRUNE_VARIANTS=0 to disable). See scripts/prune-variants.mjs.
+    pruneVariantsPlugin(),
     tailwindcss(),
     tanstackStart({
       srcDirectory: 'src',
