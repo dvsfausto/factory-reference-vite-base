@@ -30,17 +30,18 @@
    Every shadow, duration, ease and hover kind on the site reads ONE of these. Each falls back to the exact value
    the raw Tailwind class produced before the pass (gate: test:elevation-identity at zero), so a site whose family
    emits nothing renders byte-for-byte as before. The family physics (scaffolder family-theme, behind its flag)
-   sets the --fam-* side; a family that says nothing keeps today's physics. Never a raw shadow-/duration-/ease-
+   sets the --fam-* side; a family that says nothing keeps today's physics. The fallbacks read --tw-shadow-color exactly
+   as Tailwind's own classes do, so a `shadow-brand-900/20` tint beside a token still applies. Never a raw shadow-/duration-/ease-
    class in a component again (scripts/check-raw-physics.mjs fails the build). */
 :root {
   /* elevation at rest: 1 hairline (inputs, chips) · 2 resting card · 3 raised panel · 4 floating (hero media, the one
      lifted element) · 5 modal/hero on dark */
-  --elev-1: var(--fam-elev-1, 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1));
-  --elev-2: var(--fam-elev-2, 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1));
-  --elev-3: var(--fam-elev-3, 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1));
-  --elev-4: var(--fam-elev-4, 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1));
-  --elev-5: var(--fam-elev-5, 0 25px 50px -12px rgb(0 0 0 / 0.25));
-  --elev-0: var(--fam-elev-0, 0 1px 2px 0 rgb(0 0 0 / 0.05));
+  --elev-1: var(--fam-elev-1, 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1)));
+  --elev-2: var(--fam-elev-2, 0 4px 6px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 2px 4px -2px var(--tw-shadow-color, rgb(0 0 0 / 0.1)));
+  --elev-3: var(--fam-elev-3, 0 10px 15px -3px var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 4px 6px -4px var(--tw-shadow-color, rgb(0 0 0 / 0.1)));
+  --elev-4: var(--fam-elev-4, 0 20px 25px -5px var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 8px 10px -6px var(--tw-shadow-color, rgb(0 0 0 / 0.1)));
+  --elev-5: var(--fam-elev-5, 0 25px 50px -12px var(--tw-shadow-color, rgb(0 0 0 / 0.25)));
+  --elev-0: var(--fam-elev-0, 0 1px 2px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.05)));
   /* motion: fast (state flips) · base (hover) · slow (reveals, image zooms) · slower (long fades) */
   --motion-fast: var(--fam-motion-fast, 200ms);
   --motion-base: var(--fam-motion-base, 300ms);
