@@ -134,7 +134,7 @@ export function ServicePageTemplate({ data }: Props) {
               </div>
             </div>
             <div className="lg:col-span-5">
-              <div className="aspect-[4/3] rounded-2xl border-4 border-fam-card shadow-(--elev-4) overflow-hidden bg-brand-50">
+              <div className="aspect-[4/3] rounded-2xl border-4 border-fam-card elev-4 overflow-hidden bg-brand-50">
                 <img
                   src={serviceImageUrl(data.slug)}
                   alt={data.hero.h1}
@@ -347,7 +347,7 @@ export function ServicePageTemplate({ data }: Props) {
                 <Link
                   key={r.href}
                   to={r.href}
-                  className={T ? `${T.card} ${T.cardRadius} border ${T.border} p-7 group ${T.cardElevation}` : "card-stead p-7 group hover:shadow-(--elev-3) transition-all"}
+                  className={T ? `${T.card} ${T.cardRadius} border ${T.border} p-7 group ${T.cardElevation}` : "card-stead p-7 group hover:elev-3 transition-all"}
                 >
                   <h4 className={hCls}>{r.label}</h4>
                   <div className={`mt-3 ${T ? T.accent : "text-brand-600"} font-semibold flex items-center gap-1 group-hover:gap-2 transition-all`}>{tr('common.explore')}<ArrowRight className="h-4 w-4" />

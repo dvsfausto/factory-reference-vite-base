@@ -12,7 +12,7 @@ export function CookieBanner() {
   }, []);
   if (!show) return null;
   return (
-    <div className="fixed bottom-4 left-4 right-4 lg:left-auto lg:right-4 lg:max-w-md z-40 card-stead p-4 flex items-start gap-3 shadow-(--elev-4)">
+    <div className="fixed bottom-4 left-4 right-4 lg:left-auto lg:right-4 lg:max-w-md z-40 card-stead p-4 flex items-start gap-3 elev-4">
       <p className="text-sm text-ink-700 flex-1">
         We use cookies to improve your browsing experience and analyze site traffic. By clicking accept you agree to our use of cookies.
       </p>

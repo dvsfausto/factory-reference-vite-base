@@ -92,7 +92,7 @@ export function HeroCorporateBlock({
             transition={{ duration: 0.6, delay: 0.1 }}
             className="lg:col-span-5"
           >
-            <div className="zi-card zi-media overflow-hidden rounded-lg border border-fam-hairline shadow-(--elev-1)">
+            <div className="zi-card zi-media overflow-hidden rounded-lg border border-fam-hairline elev-1">
               <img
                 src={imageSrc(imageUrl)}
                 alt={HERO_ALT}

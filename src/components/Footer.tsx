@@ -250,7 +250,7 @@ function FooterCtaBand({ t, ctaTitle, rounded }: { t: FooterTheme; ctaTitle: str
             <div className={`font-display text-2xl font-bold sm:text-3xl ${t.heading}`}>{ctaTitle}</div>
             {(HAS_PHONE || HAS_EMAIL) && <div className={`mt-2 text-sm ${t.tagline}`}>{[HAS_PHONE ? SITE.phoneDisplay : "", HAS_EMAIL ? SITE.email : ""].filter(Boolean).join(" · ")}</div>}
           </div>
-          {HAS_PHONE && (<a href={`tel:${SITE.phone}`} className={`inline-flex h-12 items-center gap-2 ${rounded ? 'rounded-2xl' : 'rounded-lg'} bg-cta px-7 font-display text-sm font-semibold text-cta-foreground shadow-(--elev-3) transition-transform hover:translate-y-(--hov-lift-sm)`}>
+          {HAS_PHONE && (<a href={`tel:${SITE.phone}`} className={`inline-flex h-12 items-center gap-2 ${rounded ? 'rounded-2xl' : 'rounded-lg'} bg-cta px-7 font-display text-sm font-semibold text-cta-foreground elev-3 transition-transform hover:translate-y-(--hov-lift-sm)`}>
             {tr('cta.getInTouch')} <ArrowRight className="h-4 w-4" />
           </a>)}
         </div>

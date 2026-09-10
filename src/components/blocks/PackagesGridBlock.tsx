@@ -36,7 +36,7 @@ export function PackagesGridBlock({
         </div>
         <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {packages.slice(0, 6).map((p, i) => (
-            <Link key={`${p.name}-${i}`} to="/contact" className={`group flex flex-col rounded-2xl border bg-fam-card p-6 transition-all hover:shadow-(--elev-2) ${p.popular ? 'border-fam-accent' : 'border-fam-hairline hover:border-fam-accent'}`}>
+            <Link key={`${p.name}-${i}`} to="/contact" className={`group flex flex-col rounded-2xl border bg-fam-card p-6 transition-all hover:elev-2 ${p.popular ? 'border-fam-accent' : 'border-fam-hairline hover:border-fam-accent'}`}>
               <div className="flex items-center justify-between gap-3">
                 <h3 className="font-display text-base font-semibold text-fam-ink">{p.name}</h3>
                 <span className="font-display text-lg font-semibold text-fam-accent-text-strong">{p.price}</span>

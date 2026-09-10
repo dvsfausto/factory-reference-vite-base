@@ -49,7 +49,7 @@ export function ServicesFriendlyBlock({
               key={s.slug}
               to="/services/$slug"
               params={{ slug: s.slug }}
-              className="group flex flex-col overflow-hidden rounded-3xl border border-fam-hairline bg-fam-card shadow-(--elev-1) transition-all hover:translate-y-(--hov-lift) hover:shadow-(--elev-4)"
+              className="group flex flex-col overflow-hidden rounded-3xl border border-fam-hairline bg-fam-card elev-1 transition-all hover:translate-y-(--hov-lift) hover:elev-4"
             >
               <div className="aspect-[4/3] overflow-hidden">
                 <img
@@ -77,7 +77,7 @@ export function ServicesFriendlyBlock({
           <div className="mt-10">
             <Link
               to="/services"
-              className="inline-flex h-12 items-center gap-2 rounded-2xl bg-cta px-7 font-display text-sm font-semibold text-cta-foreground shadow-(--elev-2) transition-[filter] hover:brightness-(--hov-shade)"
+              className="inline-flex h-12 items-center gap-2 rounded-2xl bg-cta px-7 font-display text-sm font-semibold text-cta-foreground elev-2 transition-[filter] hover:brightness-(--hov-shade)"
             >
               {moreLink} <ArrowRight className="h-4 w-4" />
             </Link>

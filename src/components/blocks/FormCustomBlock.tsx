@@ -162,7 +162,7 @@ function CustomForm({
   return (
     <section className="bg-fam-card">
       <div className="container-x py-section">
-        <div className="mx-auto max-w-3xl overflow-hidden rounded-3xl border border-fam-hairline bg-fam-card shadow-(--elev-1)">
+        <div className="mx-auto max-w-3xl overflow-hidden rounded-3xl border border-fam-hairline bg-fam-card elev-1">
           <div className="px-8 pt-10 md:px-12">
             <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">
               <span className="h-px w-6 bg-fam-accent" />

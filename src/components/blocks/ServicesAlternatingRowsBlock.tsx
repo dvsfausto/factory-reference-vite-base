@@ -62,7 +62,7 @@ export function ServicesAlternatingRowsBlock({
         <div className="mt-16 space-y-20 md:mt-24 md:space-y-28">
           {rows.map((s, i) => (
             <div key={s.slug} className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
-              <div className={`overflow-hidden rounded-3xl border border-fam-hairline shadow-(--elev-1) ${i % 2 === 1 ? 'lg:order-2' : ''}`}>
+              <div className={`overflow-hidden rounded-3xl border border-fam-hairline elev-1 ${i % 2 === 1 ? 'lg:order-2' : ''}`}>
                 <img
                   src={serviceImageUrl(s.slug)}
                   alt={s.name}

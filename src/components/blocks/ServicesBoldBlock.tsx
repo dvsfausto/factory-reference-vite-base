@@ -54,7 +54,7 @@ export function ServicesBoldBlock({
               key={s.slug}
               to="/services/$slug"
               params={{ slug: s.slug }}
-              className="group flex flex-col overflow-hidden rounded-lg border border-fam-line-ink bg-fam-card transition-all hover:translate-y-(--hov-lift) hover:border-fam-accent hover:shadow-(--elev-4)"
+              className="group flex flex-col overflow-hidden rounded-lg border border-fam-line-ink bg-fam-card transition-all hover:translate-y-(--hov-lift) hover:border-fam-accent hover:elev-4"
             >
               <div className="aspect-[4/3] overflow-hidden">
                 <img

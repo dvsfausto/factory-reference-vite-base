@@ -100,7 +100,7 @@ export function HeroGalleryBlock({
                 ))}
               </ul>
             ) : (
-              <div className="overflow-hidden rounded-2xl border border-fam-hairline shadow-(--elev-1)">
+              <div className="overflow-hidden rounded-2xl border border-fam-hairline elev-1">
                 <img src={imageSrc(photos[0]?.image ?? site.hero.image_url)} alt={photos[0]?.alt ?? photos[0]?.title ?? HERO_ALT} className="aspect-[4/3] w-full object-cover" />
               </div>
             )}

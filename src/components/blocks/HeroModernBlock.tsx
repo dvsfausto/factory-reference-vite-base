@@ -99,7 +99,7 @@ export function HeroModernBlock({
             transition={{ duration: 0.6, delay: 0.1 }}
             className="relative"
           >
-            <div className="zi-card zi-media overflow-hidden rounded-2xl border border-fam-hairline shadow-(--elev-1)">
+            <div className="zi-card zi-media overflow-hidden rounded-2xl border border-fam-hairline elev-1">
               <img
                 src={imageSrc(imageUrl)}
                 alt={HERO_ALT}

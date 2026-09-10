@@ -53,7 +53,7 @@ export function EmergencyBarBlock({
       {/* Thumb-reach call button on phones only; the strip above is the desktop surface. */}
       <a
         href={tel}
-        className="fixed inset-x-4 bottom-4 z-40 inline-flex h-14 items-center justify-center gap-2 rounded-2xl bg-cta font-display text-base font-semibold text-cta-foreground shadow-(--elev-3) md:hidden"
+        className="fixed inset-x-4 bottom-4 z-40 inline-flex h-14 items-center justify-center gap-2 rounded-2xl bg-cta font-display text-base font-semibold text-cta-foreground elev-3 md:hidden"
       >
         <Phone className="h-5 w-5" /> {tr('emergency.callNow')} {site.phoneDisplay}
       </a>

@@ -62,7 +62,7 @@ export function CtaSplitWithImageBlock({
               </a>)}
             </div>
           </div>
-          <div className="overflow-hidden rounded-3xl border border-fam-hairline shadow-(--elev-1)">
+          <div className="overflow-hidden rounded-3xl border border-fam-hairline elev-1">
             <img
               src={imageSrc(site.hero.image_url)}
               alt={HERO_ALT}

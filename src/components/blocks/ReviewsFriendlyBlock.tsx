@@ -36,7 +36,7 @@ export function ReviewsFriendlyBlock({
           {previewReviews.map((r) => (
             <figure
               key={r.id}
-              className="flex flex-col rounded-3xl border border-fam-hairline bg-fam-card p-6 shadow-(--elev-1)"
+              className="flex flex-col rounded-3xl border border-fam-hairline bg-fam-card p-6 elev-1"
             >
               <div className="flex gap-0.5">
                 {Array.from({ length: r.rating ?? 5 }).map((_, i) => (

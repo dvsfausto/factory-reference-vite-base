@@ -134,7 +134,7 @@ export function ServiceAreaPageTemplate({ data }: Props) {
               </div>
             </div>
             <div className="lg:col-span-5">
-              <div className="aspect-[4/3] rounded-2xl border-4 border-fam-card shadow-(--elev-4) overflow-hidden bg-brand-50">
+              <div className="aspect-[4/3] rounded-2xl border-4 border-fam-card elev-4 overflow-hidden bg-brand-50">
                 <img
                   src={areaImageUrl(data.slug)}
                   alt={areaAlt(data.slug)}
@@ -186,7 +186,7 @@ export function ServiceAreaPageTemplate({ data }: Props) {
                   key={s.slug}
                   to="/services/$slug"
                   params={{ slug: s.slug }}
-                  className={T ? `${T.card} ${T.cardRadius} border ${T.border} overflow-hidden group ${T.cardElevation}` : "card-stead overflow-hidden group hover:shadow-(--elev-4) hover:translate-y-(--hov-lift) transition-all"}
+                  className={T ? `${T.card} ${T.cardRadius} border ${T.border} overflow-hidden group ${T.cardElevation}` : "card-stead overflow-hidden group hover:elev-4 hover:translate-y-(--hov-lift) transition-all"}
                 >
                   <div className="aspect-[4/3] overflow-hidden">
                     <img

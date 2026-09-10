@@ -60,13 +60,13 @@ export function ServicesSection({ heading, intro, services }: Props) {
                   <Link
                     to="/services/$slug"
                     params={{ slug: s.slug }}
-                    className="group block h-full overflow-hidden rounded-2xl bg-fam-card shadow-(--elev-1) transition-all hover:shadow-(--elev-3)"
+                    className="group block h-full overflow-hidden rounded-2xl bg-fam-card elev-1 transition-all hover:elev-3"
                   >
                     {media}
                     {body}
                   </Link>
                 ) : (
-                  <div className="group block h-full overflow-hidden rounded-2xl bg-fam-card shadow-(--elev-1)">
+                  <div className="group block h-full overflow-hidden rounded-2xl bg-fam-card elev-1">
                     {media}
                     {body}
                   </div>

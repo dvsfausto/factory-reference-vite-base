@@ -39,7 +39,7 @@ export function ServiceAreasFriendlyBlock({
               key={a.slug}
               to="/areas/$slug"
               params={{ slug: a.slug }}
-              className="inline-flex items-center gap-2 rounded-full border border-fam-hairline bg-fam-card px-4 py-2.5 text-sm font-medium text-fam-ink shadow-(--elev-1) transition-colors hover:border-fam-accent hover:text-fam-accent-text-strong"
+              className="inline-flex items-center gap-2 rounded-full border border-fam-hairline bg-fam-card px-4 py-2.5 text-sm font-medium text-fam-ink elev-1 transition-colors hover:border-fam-accent hover:text-fam-accent-text-strong"
             >
               <MapPin className="h-3.5 w-3.5 text-fam-accent-text" /> {a.name}
             </Link>

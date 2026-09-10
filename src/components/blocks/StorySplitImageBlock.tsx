@@ -39,7 +39,7 @@ export function StorySplitImageBlock({
             </h2>
             <p className="mt-6 text-lg leading-relaxed text-fam-ink-muted">{prose}</p>
           </div>
-          <div className="overflow-hidden rounded-3xl border border-fam-hairline shadow-(--elev-1)">
+          <div className="overflow-hidden rounded-3xl border border-fam-hairline elev-1">
             <img
               src={imageSrc(storyImage ?? site.hero.image_url)}
               alt={HERO_ALT}

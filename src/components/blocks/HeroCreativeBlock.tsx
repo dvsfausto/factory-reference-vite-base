@@ -104,14 +104,14 @@ export function HeroCreativeBlock({
             className="relative lg:col-span-5"
           >
             <div className="absolute -left-5 -top-5 -z-10 h-32 w-32 rounded-2xl bg-fam-accent" />
-            <div className="overflow-hidden rounded-3xl shadow-(--elev-5)">
+            <div className="overflow-hidden rounded-3xl elev-5">
               <img
                 src={imageSrc(imageUrl)}
                 alt={HERO_ALT}
                 className="aspect-[4/5] w-full object-cover"
               />
             </div>
-            <div className="absolute -bottom-6 -right-4 rounded-2xl bg-fam-accent px-5 py-4 font-display text-sm font-bold text-fam-on-accent shadow-(--elev-4)">{tr('hero.letsMake')}<br />something.
+            <div className="absolute -bottom-6 -right-4 rounded-2xl bg-fam-accent px-5 py-4 font-display text-sm font-bold text-fam-on-accent elev-4">{tr('hero.letsMake')}<br />something.
             </div>
           </motion.div>
         </div>

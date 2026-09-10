@@ -89,7 +89,7 @@ export function HeroSplitReversedBlock({
             transition={{ duration: 0.6, delay: 0.1 }}
             className="relative lg:order-1"
           >
-            <div className="overflow-hidden rounded-2xl border border-fam-hairline shadow-(--elev-1)">
+            <div className="overflow-hidden rounded-2xl border border-fam-hairline elev-1">
               <img
                 src={imageSrc(site.hero.image_url)}
                 alt={HERO_ALT}

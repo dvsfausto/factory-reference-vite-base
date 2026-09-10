@@ -94,7 +94,7 @@ export function ServicesIconTilesBlock({
                 key={s.slug}
                 to="/services/$slug"
                 params={{ slug: s.slug }}
-                className="group flex flex-col rounded-2xl border border-fam-hairline bg-fam-card p-7 transition-all hover:border-fam-accent hover:shadow-(--elev-2)"
+                className="group flex flex-col rounded-2xl border border-fam-hairline bg-fam-card p-7 transition-all hover:border-fam-accent hover:elev-2"
               >
                 <span className="grid h-12 w-12 place-items-center rounded-xl bg-fam-accent-soft text-fam-accent-text transition-colors group-hover:bg-fam-accent-soft-2">
                   <Icon className="h-6 w-6" />

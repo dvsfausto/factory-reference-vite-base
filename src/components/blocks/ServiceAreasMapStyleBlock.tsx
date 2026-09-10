@@ -98,7 +98,7 @@ export function ServiceAreasMapStyleBlock({
                   style={{ top: pos!.top, left: pos!.left }}
                 >
                   <span
-                    className={`inline-flex items-center gap-1.5 rounded-full font-display font-semibold shadow-(--elev-3) backdrop-blur-sm ${
+                    className={`inline-flex items-center gap-1.5 rounded-full font-display font-semibold elev-3 backdrop-blur-sm ${
                       isHome
                         ? 'bg-fam-accent px-3.5 py-2 text-sm text-fam-on-accent'
                         : 'bg-fam-card/90 px-3 py-1.5 text-xs text-fam-ink'

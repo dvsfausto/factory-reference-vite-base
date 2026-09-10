@@ -28,7 +28,7 @@ export function CtaFriendlyBlock({
   return (
     <section className="bg-fam-surface">
       <div className="container-x py-section">
-        <div className="rounded-3xl border border-fam-hairline bg-fam-accent-soft px-8 py-14 text-center shadow-(--elev-1) md:px-16">
+        <div className="rounded-3xl border border-fam-hairline bg-fam-accent-soft px-8 py-14 text-center elev-1 md:px-16">
           <h2 className="mx-auto max-w-2xl font-display text-3xl font-bold leading-tight tracking-tight text-fam-ink sm:text-4xl">
             {headline}
           </h2>
@@ -37,7 +37,7 @@ export function CtaFriendlyBlock({
           )}
           <div className="mt-8 flex flex-wrap justify-center gap-4">
             <PrimaryCta
-              className="inline-flex h-[54px] items-center gap-2 rounded-2xl bg-cta px-8 font-display text-base font-semibold text-cta-foreground shadow-(--elev-3) transition-[filter] hover:brightness-(--hov-shade)"
+              className="inline-flex h-[54px] items-center gap-2 rounded-2xl bg-cta px-8 font-display text-base font-semibold text-cta-foreground elev-3 transition-[filter] hover:brightness-(--hov-shade)"
             >
               {ctaLabel} <ArrowRight className="h-4 w-4" />
             </PrimaryCta>

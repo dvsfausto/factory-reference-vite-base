@@ -55,7 +55,7 @@ export function InfoPageTemplate({ data }: Props) {
                 alt=""
                 aria-hidden
                 loading="lazy"
-                className="mt-8 aspect-[16/7] w-full rounded-2xl object-cover shadow-(--elev-1)"
+                className="mt-8 aspect-[16/7] w-full rounded-2xl object-cover elev-1"
               />
             )}
           </div>

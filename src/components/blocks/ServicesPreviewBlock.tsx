@@ -51,7 +51,7 @@ export function ServicesPreviewBlock({
               key={s.slug}
               to="/services/$slug"
               params={{ slug: s.slug }}
-              className="card-stead overflow-hidden group hover:shadow-(--elev-4) hover:translate-y-(--hov-lift) transition-all"
+              className="card-stead overflow-hidden group hover:elev-4 hover:translate-y-(--hov-lift) transition-all"
             >
               <div className="aspect-[4/3] overflow-hidden">
                 <img

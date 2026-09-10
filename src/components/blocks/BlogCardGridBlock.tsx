@@ -34,7 +34,7 @@ export function BlogCardGridBlock({
         </div>
         <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {posts.slice(0, 6).map((p, i) => (
-            <a key={`${p.title}-${i}`} href={p.href} className="group flex flex-col overflow-hidden rounded-2xl border border-fam-hairline bg-fam-card transition-all hover:border-fam-accent hover:shadow-(--elev-2)">
+            <a key={`${p.title}-${i}`} href={p.href} className="group flex flex-col overflow-hidden rounded-2xl border border-fam-hairline bg-fam-card transition-all hover:border-fam-accent hover:elev-2">
               {p.image && (
                 <div className="aspect-[16/10] overflow-hidden">
                   <img src={p.image} alt={p.title} loading="lazy" className="h-full w-full object-cover transition-transform duration-(--motion-slow) group-hover:scale-(--hov-zoom)" />

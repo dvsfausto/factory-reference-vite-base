@@ -53,7 +53,7 @@ export function Hero({
         </div>
         {heroImage && (
           <div className="order-first lg:order-last">
-            <div className="aspect-[4/3] overflow-hidden rounded-2xl shadow-(--elev-4)">
+            <div className="aspect-[4/3] overflow-hidden rounded-2xl elev-4">
               <img
                 src={heroImage.src}
                 alt={heroImage.alt}
@@ -81,7 +81,7 @@ function CtaButton({
 }) {
   const className =
     variant === 'primary'
-      ? 'inline-flex items-center justify-center rounded-md bg-fam-accent px-6 py-3 font-semibold text-fam-on-accent shadow-(--elev-1) hover:bg-fam-accent-deep transition-colors'
+      ? 'inline-flex items-center justify-center rounded-md bg-fam-accent px-6 py-3 font-semibold text-fam-on-accent elev-1 hover:bg-fam-accent-deep transition-colors'
       : 'inline-flex items-center justify-center rounded-md border border-fam-line-slate-2 bg-fam-card px-6 py-3 font-semibold text-slate-900 hover:bg-fam-surface-slate transition-colors'
   if (link.href.startsWith('http') || link.href.startsWith('tel:') || link.href.startsWith('mailto:')) {
     return (

@@ -70,7 +70,7 @@ export function ServicesCarouselBlock({
               key={s.slug}
               to="/services/$slug"
               params={{ slug: s.slug }}
-              className="group flex w-[280px] shrink-0 snap-start flex-col overflow-hidden rounded-2xl border border-fam-hairline bg-fam-card transition-all hover:border-fam-accent hover:shadow-(--elev-2) md:w-[340px]"
+              className="group flex w-[280px] shrink-0 snap-start flex-col overflow-hidden rounded-2xl border border-fam-hairline bg-fam-card transition-all hover:border-fam-accent hover:elev-2 md:w-[340px]"
             >
               <div className="aspect-[4/3] overflow-hidden">
                 <img

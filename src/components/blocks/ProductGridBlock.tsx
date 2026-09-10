@@ -41,7 +41,7 @@ export function ProductGridBlock({
 
         <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {products.map((p) => (
-            <li key={p.id} className="flex flex-col overflow-hidden rounded-2xl border border-fam-hairline bg-fam-card transition-shadow hover:shadow-(--elev-2)">
+            <li key={p.id} className="flex flex-col overflow-hidden rounded-2xl border border-fam-hairline bg-fam-card transition-shadow hover:elev-2">
               <div className="relative aspect-square bg-fam-surface-2">
                 {p.image ? (
                   <img src={imageSrc(p.image)} alt={p.name} loading="lazy" className="h-full w-full object-cover" />

@@ -72,7 +72,7 @@ export function HeroFriendlyBlock({
 
             <div className="mt-8 flex flex-wrap gap-4">
               <PrimaryCta
-                className="inline-flex h-[54px] items-center gap-2 rounded-2xl bg-cta px-8 font-display text-base font-semibold text-cta-foreground shadow-(--elev-3) transition-[filter] hover:brightness-(--hov-shade)"
+                className="inline-flex h-[54px] items-center gap-2 rounded-2xl bg-cta px-8 font-display text-base font-semibold text-cta-foreground elev-3 transition-[filter] hover:brightness-(--hov-shade)"
               >
                 {ctaLabel} <ArrowRight className="h-4 w-4" />
               </PrimaryCta>
@@ -104,7 +104,7 @@ export function HeroFriendlyBlock({
             transition={{ duration: 0.7, delay: 0.1 }}
             className="relative"
           >
-            <div className="zi-card zi-media overflow-hidden rounded-3xl border border-fam-hairline shadow-(--elev-4)">
+            <div className="zi-card zi-media overflow-hidden rounded-3xl border border-fam-hairline elev-4">
               <img
                 src={imageSrc(imageUrl)}
                 alt={HERO_ALT}

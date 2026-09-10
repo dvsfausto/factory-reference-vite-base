@@ -5,12 +5,12 @@ import { readFileSync, writeFileSync, readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 const MAP = [
   // elevation at rest and on hover (the prefix — hover:, group-hover:, md: … — is kept verbatim)
-  [/(?<=^|[\s"'`{(:])((?:[a-z-]+:)*)shadow-xs(?=[\s"'`})]|$)/g, '$1shadow-(--elev-0)'],
-  [/(?<=^|[\s"'`{(:])((?:[a-z-]+:)*)shadow-sm(?=[\s"'`})]|$)/g, '$1shadow-(--elev-1)'],
-  [/(?<=^|[\s"'`{(:])((?:[a-z-]+:)*)shadow-md(?=[\s"'`})]|$)/g, '$1shadow-(--elev-2)'],
-  [/(?<=^|[\s"'`{(:])((?:[a-z-]+:)*)shadow-lg(?=[\s"'`})]|$)/g, '$1shadow-(--elev-3)'],
-  [/(?<=^|[\s"'`{(:])((?:[a-z-]+:)*)shadow-xl(?=[\s"'`})]|$)/g, '$1shadow-(--elev-4)'],
-  [/(?<=^|[\s"'`{(:])((?:[a-z-]+:)*)shadow-2xl(?=[\s"'`})]|$)/g, '$1shadow-(--elev-5)'],
+  [/(?<=^|[\s"'`{(:])((?:[a-z-]+:)*)shadow-xs(?=[\s"'`})]|$)/g, '$1elev-0'],
+  [/(?<=^|[\s"'`{(:])((?:[a-z-]+:)*)shadow-sm(?=[\s"'`})]|$)/g, '$1elev-1'],
+  [/(?<=^|[\s"'`{(:])((?:[a-z-]+:)*)shadow-md(?=[\s"'`})]|$)/g, '$1elev-2'],
+  [/(?<=^|[\s"'`{(:])((?:[a-z-]+:)*)shadow-lg(?=[\s"'`})]|$)/g, '$1elev-3'],
+  [/(?<=^|[\s"'`{(:])((?:[a-z-]+:)*)shadow-xl(?=[\s"'`})]|$)/g, '$1elev-4'],
+  [/(?<=^|[\s"'`{(:])((?:[a-z-]+:)*)shadow-2xl(?=[\s"'`})]|$)/g, '$1elev-5'],
   // durations and eases
   [/(?<=^|[\s"'`{(:])((?:[a-z-]+:)*)duration-200(?=[\s"'`})]|$)/g, '$1duration-(--motion-fast)'],
   [/(?<=^|[\s"'`{(:])((?:[a-z-]+:)*)duration-300(?=[\s"'`})]|$)/g, '$1duration-(--motion-base)'],
