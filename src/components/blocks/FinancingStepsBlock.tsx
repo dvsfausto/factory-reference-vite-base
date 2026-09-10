@@ -48,7 +48,7 @@ export function FinancingStepsBlock({
           })}
         </div>
         <div className="mt-10">
-          <Link to="/contact" className="inline-flex h-12 items-center rounded-xl bg-cta px-7 font-display text-sm font-semibold text-cta-foreground transition-opacity hover:opacity-(--hov-fade)">{tr('cta.getPreQualified')}</Link>
+          <Link to="/contact" className="inline-flex h-12 items-center rounded-xl bg-cta px-7 font-display text-sm font-semibold text-cta-foreground transition-[filter] hover:brightness-(--hov-shade)">{tr('cta.getPreQualified')}</Link>
         </div>
       </div>
     </section>

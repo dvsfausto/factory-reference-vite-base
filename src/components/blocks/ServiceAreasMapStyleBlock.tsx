@@ -72,7 +72,7 @@ export function ServiceAreasMapStyleBlock({
             </div>
             <Link
               to="/areas"
-              className="mt-8 inline-flex h-12 items-center gap-2 rounded-xl bg-cta px-7 font-display text-sm font-semibold text-cta-foreground transition-opacity hover:opacity-(--hov-fade)"
+              className="mt-8 inline-flex h-12 items-center gap-2 rounded-xl bg-cta px-7 font-display text-sm font-semibold text-cta-foreground transition-[filter] hover:brightness-(--hov-shade)"
             >
               {moreLink}
             </Link>

@@ -77,7 +77,7 @@ export function ServicesCorporateBlock({
           <div className="mt-10">
             <Link
               to="/services"
-              className="inline-flex h-12 items-center gap-2 rounded-md bg-cta px-7 font-display text-sm font-semibold text-cta-foreground transition-opacity hover:opacity-(--hov-fade)"
+              className="inline-flex h-12 items-center gap-2 rounded-md bg-cta px-7 font-display text-sm font-semibold text-cta-foreground transition-[filter] hover:brightness-(--hov-shade)"
             >
               {moreLink} <ArrowRight className="h-4 w-4" />
             </Link>

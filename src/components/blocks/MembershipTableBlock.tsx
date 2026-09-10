@@ -56,7 +56,7 @@ export function MembershipTableBlock({
                 )}
               </div>
               <div className="md:col-span-2 md:text-right">
-                <Link to="/contact" className="inline-flex h-11 items-center gap-1.5 rounded-xl bg-cta px-5 font-display text-sm font-semibold text-cta-foreground transition-opacity hover:opacity-(--hov-fade)">
+                <Link to="/contact" className="inline-flex h-11 items-center gap-1.5 rounded-xl bg-cta px-5 font-display text-sm font-semibold text-cta-foreground transition-[filter] hover:brightness-(--hov-shade)">
                   Join <ArrowRight className="h-4 w-4" />
                 </Link>
               </div>

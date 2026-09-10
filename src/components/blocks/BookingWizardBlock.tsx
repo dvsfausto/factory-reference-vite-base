@@ -723,7 +723,7 @@ export function BookingWizardBlock({
                         <div className="mt-2">
                           <button
                             type="submit"
-                            className="inline-flex h-12 items-center justify-center gap-2 rounded-xl px-7 font-display text-sm font-semibold text-fam-on-dark transition-opacity hover:opacity-(--hov-fade)"
+                            className="inline-flex h-12 items-center justify-center gap-2 rounded-xl px-7 font-display text-sm font-semibold text-fam-on-dark transition-[filter] hover:brightness-(--hov-shade)"
                             style={{ backgroundImage: 'var(--wow-grad-brand)' }}
                           >
                             {tr('booking.continue')}
@@ -811,7 +811,7 @@ export function BookingWizardBlock({
                           <button
                             type="submit"
                             disabled={submitting}
-                            className="inline-flex h-12 items-center justify-center gap-2 rounded-xl px-7 font-display text-sm font-semibold text-fam-on-dark transition-opacity hover:opacity-(--hov-fade) disabled:opacity-60"
+                            className="inline-flex h-12 items-center justify-center gap-2 rounded-xl px-7 font-display text-sm font-semibold text-fam-on-dark transition-[filter] hover:brightness-(--hov-shade) disabled:opacity-60"
                             style={{ backgroundImage: 'var(--wow-grad-brand)' }}
                           >
                             {submitting ? (
@@ -1006,7 +1006,7 @@ function FallbackCard({ message, features }: { message: string; features?: Booki
         <a
           href={quoteHref ?? '/contact'}
           data-booking-fallback={quoteHref ? 'quote' : 'contact'}
-          className="mt-6 inline-flex h-12 items-center justify-center gap-2 rounded-xl px-7 font-display text-sm font-semibold text-fam-on-dark transition-opacity hover:opacity-(--hov-fade)"
+          className="mt-6 inline-flex h-12 items-center justify-center gap-2 rounded-xl px-7 font-display text-sm font-semibold text-fam-on-dark transition-[filter] hover:brightness-(--hov-shade)"
           style={{ backgroundImage: 'var(--wow-grad-brand)' }}
         >
           {quoteHref ? tr('booking.requestQuote') : tr('booking.sendMessage')}
@@ -1014,7 +1014,7 @@ function FallbackCard({ message, features }: { message: string; features?: Booki
       )}
       {HAS_PHONE && (<a
         href={`tel:${SITE.phone}`}
-        className="mt-6 inline-flex h-12 items-center justify-center gap-2 rounded-xl px-7 font-display text-sm font-semibold text-fam-on-dark transition-opacity hover:opacity-(--hov-fade)"
+        className="mt-6 inline-flex h-12 items-center justify-center gap-2 rounded-xl px-7 font-display text-sm font-semibold text-fam-on-dark transition-[filter] hover:brightness-(--hov-shade)"
         style={{ backgroundImage: 'var(--wow-grad-brand)' }}
       >
         <Phone className="h-4 w-4" />

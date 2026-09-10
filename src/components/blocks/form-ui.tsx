@@ -77,7 +77,7 @@ export function SubmitButton({
     <button
       type="submit"
       disabled={status === 'submitting'}
-      className="inline-flex h-12 items-center justify-center rounded-xl bg-cta px-7 font-display text-sm font-semibold text-cta-foreground transition-opacity hover:opacity-(--hov-fade) disabled:opacity-60"
+      className="inline-flex h-12 items-center justify-center rounded-xl bg-cta px-7 font-display text-sm font-semibold text-cta-foreground transition-[filter] hover:brightness-(--hov-shade) disabled:opacity-60"
     >
       {status === 'submitting' ? tr('form.sending') : label}
     </button>

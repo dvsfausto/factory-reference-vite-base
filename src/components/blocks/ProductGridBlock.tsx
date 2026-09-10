@@ -74,7 +74,7 @@ export function ProductGridBlock({
                       href={p.buyUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex h-10 items-center gap-1.5 rounded-xl bg-cta px-4 text-sm font-semibold text-cta-foreground transition-opacity hover:opacity-(--hov-fade)"
+                      className="inline-flex h-10 items-center gap-1.5 rounded-xl bg-cta px-4 text-sm font-semibold text-cta-foreground transition-[filter] hover:brightness-(--hov-shade)"
                     >
                       {tr('products.buy')} <ArrowUpRight className="h-4 w-4" />
                     </a>

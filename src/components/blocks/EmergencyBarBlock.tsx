@@ -45,7 +45,7 @@ export function EmergencyBarBlock({
         </div>
         <a
           href={tel}
-          className="inline-flex h-11 items-center gap-2 rounded-xl bg-cta px-5 font-display text-sm font-semibold text-cta-foreground transition-opacity hover:opacity-(--hov-fade) sm:text-base"
+          className="inline-flex h-11 items-center gap-2 rounded-xl bg-cta px-5 font-display text-sm font-semibold text-cta-foreground transition-[filter] hover:brightness-(--hov-shade) sm:text-base"
         >
           <Phone className="h-4 w-4" /> {site.phoneDisplay}
         </a>

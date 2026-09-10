@@ -44,7 +44,7 @@ export function MembershipSingleTierHighlightBlock({
                 <span className="font-display text-6xl font-semibold tracking-tight">{m.price}</span>
                 <span className="text-slate-300">{m.period ?? '/month'}</span>
               </div>
-              <Link to="/contact" className="mt-8 inline-flex h-12 items-center justify-center rounded-xl bg-cta px-7 font-display text-sm font-semibold text-cta-foreground transition-opacity hover:opacity-(--hov-fade)">
+              <Link to="/contact" className="mt-8 inline-flex h-12 items-center justify-center rounded-xl bg-cta px-7 font-display text-sm font-semibold text-cta-foreground transition-[filter] hover:brightness-(--hov-shade)">
                 Become a member
               </Link>
             </div>

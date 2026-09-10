@@ -66,7 +66,7 @@ export function PackagesComparisonBlock({
                 <td className="p-5" />
                 {cols.map((p, i) => (
                   <td key={`${p.name}-${i}`} className={`p-5 ${p.popular ? 'bg-fam-accent-soft' : ''}`}>
-                    <Link to="/contact" className={`inline-flex h-11 items-center justify-center rounded-xl px-5 font-display text-sm font-semibold transition-opacity hover:opacity-(--hov-fade) ${p.popular ? 'bg-cta text-cta-foreground' : 'border border-fam-hairline text-fam-ink hover:border-fam-accent'}`}>Choose</Link>
+                    <Link to="/contact" className={`inline-flex h-11 items-center justify-center rounded-xl px-5 font-display text-sm font-semibold transition-[filter] hover:brightness-(--hov-shade) ${p.popular ? 'bg-cta text-cta-foreground' : 'border border-fam-hairline text-fam-ink hover:border-fam-accent'}`}>Choose</Link>
                   </td>
                 ))}
               </tr>

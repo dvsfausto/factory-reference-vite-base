@@ -10,6 +10,7 @@ const RAW = [
   [/(?<![\w-])(?:group-)?hover:-translate-y-[\d.]+(?![\w-])/, 'hover lift → translate-y-(--hov-lift*)'],
   [/(?<![\w-])(?:group-)?hover:scale-(1[01]\d|\[1\.\d+\])(?![\w-])/, 'hover zoom → scale-(--hov-zoom*)'],
   [/(?<![\w-])(?:group-)?hover:opacity-90(?![\w-])/, 'hover fade → opacity-(--hov-fade)'],
+  [/(?<![\w-])hover:opacity-\(--hov-fade\)(?![\w-])/, 'a filled button shades, it never fades → brightness-(--hov-shade)'],
 ];
 const SKIP = /\/src\/components\/ui\//;
 const bad = [];

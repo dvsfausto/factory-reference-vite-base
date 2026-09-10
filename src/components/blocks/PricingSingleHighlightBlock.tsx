@@ -52,7 +52,7 @@ export function PricingSingleHighlightBlock({
               </div>
               <Link
                 to="/contact"
-                className="mt-8 inline-flex h-12 items-center justify-center rounded-xl bg-cta px-7 font-display text-sm font-semibold text-cta-foreground transition-opacity hover:opacity-(--hov-fade)"
+                className="mt-8 inline-flex h-12 items-center justify-center rounded-xl bg-cta px-7 font-display text-sm font-semibold text-cta-foreground transition-[filter] hover:brightness-(--hov-shade)"
               >
                 Get started
               </Link>

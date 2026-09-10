@@ -43,7 +43,7 @@ export function CtaModernBlock({
           )}
           <div className="mt-9 flex flex-wrap justify-center gap-4">
             <PrimaryCta
-              className="inline-flex h-[52px] items-center gap-2 rounded-xl bg-cta px-7 font-display text-base font-semibold text-cta-foreground transition-opacity hover:opacity-(--hov-fade)"
+              className="inline-flex h-[52px] items-center gap-2 rounded-xl bg-cta px-7 font-display text-base font-semibold text-cta-foreground transition-[filter] hover:brightness-(--hov-shade)"
             >
               {ctaLabel} <ArrowRight className="h-4 w-4" />
             </PrimaryCta>

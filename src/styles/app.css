@@ -60,6 +60,9 @@
   --hov-zoom-xs: var(--fam-hov-zoom-xs, 1.02);
   --hov-zoom-xl: var(--fam-hov-zoom-xl, 1.08);
   --hov-fade: var(--fam-hov-fade, 0.9);
+  /* a FILLED button shades on hover (brightness), it never fades: white text on a brand fill at 90% opacity over a
+     light page drops below 4.5:1 (the hover contrast sweep found it on every family, 2026-09-10) */
+  --hov-shade: var(--fam-hov-shade, 0.92);
   --hov-nudge-sm: var(--fam-hov-nudge-sm, 0.125rem);
   --hov-nudge: var(--fam-hov-nudge, 0.25rem);
 }

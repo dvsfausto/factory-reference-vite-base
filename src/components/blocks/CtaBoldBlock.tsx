@@ -50,7 +50,7 @@ export function CtaBoldBlock({
           )}
           <div className="mt-9 flex flex-wrap gap-4">
             <PrimaryCta
-              className="inline-flex h-[54px] items-center gap-2 rounded-md bg-cta px-8 font-display text-base font-semibold uppercase tracking-wide text-cta-foreground transition-opacity hover:opacity-(--hov-fade)"
+              className="inline-flex h-[54px] items-center gap-2 rounded-md bg-cta px-8 font-display text-base font-semibold uppercase tracking-wide text-cta-foreground transition-[filter] hover:brightness-(--hov-shade)"
             >
               {ctaLabel} <ArrowRight className="h-4 w-4" />
             </PrimaryCta>
