@@ -89,6 +89,13 @@ interface CustomerInfo {
 
 type Step = 'service' | 'date' | 'time' | 'address' | 'details' | 'confirmed'
 
+/** What create-booking says happened to the confirmation email. Absent on old deployments = unknown, never "sent". */
+interface EmailConfirmation {
+  sent: boolean
+  reason?: 'no_email' | 'disabled' | 'provider_error'
+  error?: string
+}
+
 const REST = `${SUPABASE_URL}/rest/v1`
 const CREATE_BOOKING = `${SUPABASE_URL}/functions/v1/create-booking`
 const ANON_HEADERS = {
@@ -257,6 +264,8 @@ export function BookingWizardBlock({
   const [addressError, setAddressError] = useState<string | null>(null)
   const [submitting, setSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
+  // The server's answer about the confirmation email; undefined = unknown (old deployment).
+  const [emailConfirmation, setEmailConfirmation] = useState<EmailConfirmation | undefined>(undefined)
 
   // Load bookable services + weekly availability once, client-side (anon reads).
   useEffect(() => {
@@ -374,10 +383,12 @@ export function BookingWizardBlock({
       const data = (await res.json().catch(() => ({}))) as {
         success?: boolean
         error?: string
+        confirmation?: { email?: EmailConfirmation }
       }
       if (!res.ok || !data.success) {
         throw new Error(data.error || tr('booking.couldNotComplete'))
       }
+      setEmailConfirmation(data.confirmation?.email)
       setStep('confirmed')
     } catch (err) {
       setSubmitError(
@@ -862,7 +873,7 @@ export function BookingWizardBlock({
                 <h3 className="mt-5 font-display text-2xl font-semibold tracking-tight text-ink-900">{tr('booking.confirmed')}</h3>
                 <p className="mx-auto mt-2 max-w-md leading-relaxed text-ink-700">
                   {service.name}, {formatDateLong(date)} {tr('booking.at')} {to12h(time)}.
-                  {customer.email
+                  {emailConfirmation?.sent === true && customer.email
                     ? ` ${tr('booking.confirmationTo')} ${customer.email}.`
                     : ` ${tr('booking.seeYouThen')}`}
                 </p>
