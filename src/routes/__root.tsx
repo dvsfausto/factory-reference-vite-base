@@ -115,8 +115,19 @@ function RootDocument({ children }: { children: React.ReactNode }) {
                  it posts today, so the two sides can ship in either order and nothing depends on a
                  key existing. The server records an unkeyed view with source NULL rather than
                  guessing it is ours. */
+              /* ★★★ SAYS WHEN IT IS NOT A CUSTOMER (2026-09-16). The view is still sent; the server records it
+                 with an `excluded` reason and the owner's counts leave it out. embedded = inside an iframe
+                 (the dashboard preview, Lovable's editor); webdriver = Playwright/Puppeteer/Selenium;
+                 internal = this browser has opened the site inside the dashboard before (marked on the
+                 site's own origin the first time it is embedded, so the owner's and staff's later direct
+                 visits from that browser stay out too). Every read is wrapped: a blocked storage API
+                 must never stop the beacon. */
+              `var em=false,wd=false,it=false;try{em=window.top!==window.self}catch(_){em=true}` +
+              `try{wd=!!navigator.webdriver}catch(_){}` +
+              `try{if(em){localStorage.setItem('zmode_internal','1')}it=localStorage.getItem('zmode_internal')==='1'}catch(_){}` +
               `function ping(){try{var p=location.pathname+location.search;if(p===last)return;last=p;` +
-              `var body=JSON.stringify(k?{site_key:k,path:p,referrer:document.referrer||''}:{business_id:b,path:p,referrer:document.referrer||''});` +
+              `var f={path:p,referrer:document.referrer||'',embedded:em,webdriver:wd,internal:it};` +
+              `if(k){f.site_key=k}else{f.business_id=b}var body=JSON.stringify(f);` +
               `if(navigator.sendBeacon){navigator.sendBeacon(e,body)}` +
               `else{fetch(e,{method:'POST',body:body,keepalive:true,headers:{'Content-Type':'application/json'}})}` +
               `}catch(_){}}` +
