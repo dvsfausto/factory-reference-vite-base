@@ -196,6 +196,11 @@ const blocks = Object.keys(BLOCK_NEEDS).map((type) => {
   // (c) page-record blocks: the page's own record
   const pageRecord = need.ctx === 'service' ? 'ServicePageData' : need.ctx === 'area' ? 'ServiceAreaPageData' : need.ctx === 'info' ? 'InfoPageData' : null
   if (pageRecord && shapes[pageRecord]) for (const f of shapes[pageRecord]) push({ ...f, path: `${need.ctx}.${f.path}` }, 'page')
+  // (d) the per-block PARAMS copy channel: `params?.heading` / `.label` / `.body`… the components read (the
+  // scaffolder emits these per section — "Places we plan" is gallery.params.label — and the site's layout row
+  // carries them; they override the SITE copy at render). Data slots (need.params) and layout knobs are not copy.
+  const KNOBS = new Set(['style', 'forceEnabled', 'servicesLayout', 'decorativeAsset', ...Object.keys(INTO_KIND), ...Object.values(BLOCK_NEEDS).map((n) => n.params).filter((x): x is string => Boolean(x))])
+  for (const key of scanProps(files, 'params')) if (!KNOBS.has(key)) push({ path: `params.${key}`, kind: 'text', required: false }, 'params')
   const photo_targets = fields.filter((f) => f.kind === 'image').map((f) => f.path)
   return {
     type, label: { en, es: lab.es }, scope: need.scope,
