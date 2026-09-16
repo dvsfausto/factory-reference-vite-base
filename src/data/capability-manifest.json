@@ -4,7 +4,7 @@
   "counts": {
     "blocks": 44,
     "variants": 170,
-    "fields": 195,
+    "fields": 207,
     "fields_by_kind": {
       "boolean": 5,
       "enum": 5,
@@ -12,7 +12,7 @@
       "list": 23,
       "money": 6,
       "number": 3,
-      "text": 138,
+      "text": 150,
       "url": 3
     },
     "photo_targets": 16,
@@ -388,6 +388,12 @@
           "kind": "list",
           "required": false,
           "of": "item"
+        },
+        {
+          "path": "params.label",
+          "kind": "text",
+          "required": false,
+          "of": "params"
         }
       ],
       "photo_targets": [],
@@ -439,6 +445,18 @@
           "kind": "text",
           "required": false,
           "of": "copy"
+        },
+        {
+          "path": "params.body",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.heading",
+          "kind": "text",
+          "required": false,
+          "of": "params"
         }
       ],
       "photo_targets": [],
@@ -529,6 +547,24 @@
           "kind": "text",
           "required": true,
           "of": "item"
+        },
+        {
+          "path": "params.body",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.heading",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.label",
+          "kind": "text",
+          "required": false,
+          "of": "params"
         }
       ],
       "photo_targets": [],
@@ -611,6 +647,24 @@
           "kind": "url",
           "required": true,
           "of": "item"
+        },
+        {
+          "path": "params.body",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.heading",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.label",
+          "kind": "text",
+          "required": false,
+          "of": "params"
         }
       ],
       "photo_targets": [
@@ -685,6 +739,24 @@
           "kind": "number",
           "required": false,
           "of": "item"
+        },
+        {
+          "path": "params.body",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.heading",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.label",
+          "kind": "text",
+          "required": false,
+          "of": "params"
         }
       ],
       "photo_targets": [],
@@ -996,6 +1068,42 @@
           "kind": "text",
           "required": false,
           "of": "site"
+        },
+        {
+          "path": "params.body",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.exploreLabel",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.heading",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.label",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.moreLink",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.scriptAccent",
+          "kind": "text",
+          "required": false,
+          "of": "params"
         }
       ],
       "photo_targets": [],
@@ -1152,6 +1260,36 @@
           "kind": "text",
           "required": false,
           "of": "copy"
+        },
+        {
+          "path": "params.body",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.heading",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.label",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.moreLink",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.scriptAccent",
+          "kind": "text",
+          "required": false,
+          "of": "params"
         }
       ],
       "photo_targets": [],
@@ -1338,6 +1476,30 @@
           "kind": "text",
           "required": false,
           "of": "copy"
+        },
+        {
+          "path": "params.heading",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.label",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.moreLink",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.scriptAccent",
+          "kind": "text",
+          "required": false,
+          "of": "params"
         }
       ],
       "photo_targets": [
@@ -1400,6 +1562,12 @@
           "kind": "text",
           "required": false,
           "of": "site"
+        },
+        {
+          "path": "params.title",
+          "kind": "text",
+          "required": false,
+          "of": "params"
         }
       ],
       "photo_targets": [],
@@ -1585,6 +1753,18 @@
           "kind": "text",
           "required": false,
           "of": "copy"
+        },
+        {
+          "path": "params.subtitle",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.title",
+          "kind": "text",
+          "required": false,
+          "of": "params"
         }
       ],
       "photo_targets": [
@@ -1658,6 +1838,24 @@
           "kind": "text",
           "required": false,
           "of": "item"
+        },
+        {
+          "path": "params.body",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.heading",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.label",
+          "kind": "text",
+          "required": false,
+          "of": "params"
         }
       ],
       "photo_targets": [
@@ -1774,6 +1972,24 @@
           "kind": "money",
           "required": false,
           "of": "item"
+        },
+        {
+          "path": "params.body",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.heading",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.label",
+          "kind": "text",
+          "required": false,
+          "of": "params"
         }
       ],
       "photo_targets": [],
@@ -1894,6 +2110,24 @@
           "kind": "image",
           "required": false,
           "of": "item"
+        },
+        {
+          "path": "params.body",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.heading",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.label",
+          "kind": "text",
+          "required": false,
+          "of": "params"
         }
       ],
       "photo_targets": [
@@ -1986,6 +2220,24 @@
           "kind": "text",
           "required": false,
           "of": "item"
+        },
+        {
+          "path": "params.body",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.heading",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.label",
+          "kind": "text",
+          "required": false,
+          "of": "params"
         }
       ],
       "photo_targets": [],
@@ -2046,6 +2298,24 @@
           "kind": "text",
           "required": false,
           "of": "site"
+        },
+        {
+          "path": "params.body",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.heading",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.label",
+          "kind": "text",
+          "required": false,
+          "of": "params"
         }
       ],
       "photo_targets": [],
@@ -2221,6 +2491,24 @@
           "kind": "text",
           "required": false,
           "of": "copy"
+        },
+        {
+          "path": "params.body",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.heading",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.label",
+          "kind": "text",
+          "required": false,
+          "of": "params"
         }
       ],
       "photo_targets": [
@@ -2373,6 +2661,30 @@
           "kind": "text",
           "required": false,
           "of": "copy"
+        },
+        {
+          "path": "params.body",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.heading",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.label",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.submitLabel",
+          "kind": "text",
+          "required": false,
+          "of": "params"
         }
       ],
       "photo_targets": [],
@@ -2468,6 +2780,24 @@
           "kind": "boolean",
           "required": false,
           "of": "item"
+        },
+        {
+          "path": "params.body",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.heading",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.label",
+          "kind": "text",
+          "required": false,
+          "of": "params"
         }
       ],
       "photo_targets": [],
@@ -2552,6 +2882,24 @@
           "kind": "boolean",
           "required": false,
           "of": "item"
+        },
+        {
+          "path": "params.body",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.heading",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.label",
+          "kind": "text",
+          "required": false,
+          "of": "params"
         }
       ],
       "photo_targets": [],
@@ -2642,6 +2990,24 @@
           "kind": "text",
           "required": false,
           "of": "item"
+        },
+        {
+          "path": "params.body",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.heading",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.label",
+          "kind": "text",
+          "required": false,
+          "of": "params"
         }
       ],
       "photo_targets": [
@@ -2722,6 +3088,24 @@
           "kind": "text",
           "required": false,
           "of": "item"
+        },
+        {
+          "path": "params.body",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.heading",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.label",
+          "kind": "text",
+          "required": false,
+          "of": "params"
         }
       ],
       "photo_targets": [
@@ -2802,6 +3186,24 @@
           "kind": "text",
           "required": false,
           "of": "item"
+        },
+        {
+          "path": "params.body",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.heading",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.label",
+          "kind": "text",
+          "required": false,
+          "of": "params"
         }
       ],
       "photo_targets": [],
@@ -2868,6 +3270,24 @@
           "kind": "text",
           "required": false,
           "of": "item"
+        },
+        {
+          "path": "params.body",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.heading",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.label",
+          "kind": "text",
+          "required": false,
+          "of": "params"
         }
       ],
       "photo_targets": [],
@@ -2934,6 +3354,24 @@
           "kind": "image",
           "required": false,
           "of": "item"
+        },
+        {
+          "path": "params.body",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.heading",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.label",
+          "kind": "text",
+          "required": false,
+          "of": "params"
         }
       ],
       "photo_targets": [
@@ -3008,6 +3446,24 @@
           "kind": "list",
           "required": false,
           "of": "item"
+        },
+        {
+          "path": "params.body",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.heading",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.label",
+          "kind": "text",
+          "required": false,
+          "of": "params"
         }
       ],
       "photo_targets": [],
@@ -3078,6 +3534,24 @@
           "kind": "url",
           "required": true,
           "of": "item"
+        },
+        {
+          "path": "params.body",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.heading",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.label",
+          "kind": "text",
+          "required": false,
+          "of": "params"
         }
       ],
       "photo_targets": [
@@ -3148,6 +3622,24 @@
           "kind": "text",
           "required": false,
           "of": "copy"
+        },
+        {
+          "path": "params.body",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.heading",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.label",
+          "kind": "text",
+          "required": false,
+          "of": "params"
         }
       ],
       "photo_targets": [],
@@ -3177,7 +3669,26 @@
         "fallback": false
       },
       "variants": [],
-      "fields": [],
+      "fields": [
+        {
+          "path": "params.body",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.eyebrow",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.heading",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        }
+      ],
       "photo_targets": [],
       "reads": [],
       "files": 1
@@ -4609,6 +5120,18 @@
           "kind": "text",
           "required": true,
           "of": "item"
+        },
+        {
+          "path": "params.heading",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.intro",
+          "kind": "text",
+          "required": false,
+          "of": "params"
         }
       ],
       "photo_targets": [],
@@ -4662,6 +5185,18 @@
           "kind": "list",
           "required": false,
           "of": "item"
+        },
+        {
+          "path": "params.heading",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.intro",
+          "kind": "text",
+          "required": false,
+          "of": "params"
         }
       ],
       "photo_targets": [],
@@ -4743,6 +5278,18 @@
           "kind": "image",
           "required": false,
           "of": "item"
+        },
+        {
+          "path": "params.count",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.heading",
+          "kind": "text",
+          "required": false,
+          "of": "params"
         }
       ],
       "photo_targets": [

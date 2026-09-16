@@ -128,8 +128,10 @@ function variantsFileComponents(mapName: string): string[] {
   return []
 }
 const filesOf: Record<string, string[]> = {}
+const caseParamsOf: Record<string, string[]> = {}
 for (const m of rs.matchAll(/case '([a-zA-Z]+)':([\s\S]*?)(?=\n\s+case '|\n\s*default:)/g)) {
   const type = m[1]; const body = m[2]; const files = new Set<string>()
+  caseParamsOf[type] = [...new Set([...body.matchAll(/\bparams\??\.([a-zA-Z_]+)/g)].map((x) => x[1]))].sort()
   for (const v of body.matchAll(/\b([A-Z_]+_VARIANTS)\[/g)) {
     const map = v[1]
     if (inlineMaps[map]) for (const id of inlineMaps[map]) { if (importPath[id]) files.add(importPath[id]) }
@@ -200,7 +202,7 @@ const blocks = Object.keys(BLOCK_NEEDS).map((type) => {
   // scaffolder emits these per section — "Places we plan" is gallery.params.label — and the site's layout row
   // carries them; they override the SITE copy at render). Data slots (need.params) and layout knobs are not copy.
   const KNOBS = new Set(['style', 'forceEnabled', 'servicesLayout', 'decorativeAsset', ...Object.keys(INTO_KIND), ...Object.values(BLOCK_NEEDS).map((n) => n.params).filter((x): x is string => Boolean(x))])
-  for (const key of scanProps(files, 'params')) if (!KNOBS.has(key)) push({ path: `params.${key}`, kind: 'text', required: false }, 'params')
+  for (const key of [...new Set([...scanProps(files, 'params'), ...(caseParamsOf[type] ?? [])])].sort()) if (!KNOBS.has(key)) push({ path: `params.${key}`, kind: 'text', required: false }, 'params')
   const photo_targets = fields.filter((f) => f.kind === 'image').map((f) => f.path)
   return {
     type, label: { en, es: lab.es }, scope: need.scope,
