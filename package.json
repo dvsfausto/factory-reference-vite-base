@@ -16,7 +16,9 @@
     "lint:manifest": "node scripts/check-variant-manifest.mjs",
     "lint:booking": "node scripts/check-booking-shape.mjs",
     "test:contrast-sweep": "tsx scripts/test-contrast-sweep.ts",
-    "lint:decor": "node scripts/check-shared-decor.mjs"
+    "lint:decor": "node scripts/check-shared-decor.mjs",
+    "gen:capability": "node scripts/gen-capability-manifest.ts",
+    "lint:capability": "node scripts/gen-capability-manifest.ts --check"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

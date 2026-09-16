@@ -1,0 +1,5029 @@
+{
+  "version": 1,
+  "inputs_hash": "cb385e7d58932672",
+  "counts": {
+    "blocks": 44,
+    "variants": 170,
+    "fields": 195,
+    "fields_by_kind": {
+      "boolean": 5,
+      "enum": 5,
+      "image": 12,
+      "list": 23,
+      "money": 6,
+      "number": 3,
+      "text": 138,
+      "url": 3
+    },
+    "photo_targets": 16,
+    "chrome_fields": 19,
+    "pages": 11,
+    "blocks_without_variants": 16,
+    "blocks_without_files": [
+      "contactForm"
+    ]
+  },
+  "pages": [
+    "home",
+    "about",
+    "contact",
+    "pricing",
+    "reviews",
+    "servicesIndex",
+    "areasIndex",
+    "serviceDetail",
+    "areaDetail",
+    "infoDetail",
+    "custom"
+  ],
+  "blocks": [
+    {
+      "type": "hero",
+      "label": {
+        "en": "Hero",
+        "es": "Portada (hero)"
+      },
+      "scope": "site",
+      "pages": "any",
+      "data": {
+        "site_keys": [
+          "hero",
+          "REVIEWS",
+          "IMAGES"
+        ],
+        "ctx": null,
+        "params": "hero",
+        "into": [
+          "hero"
+        ],
+        "kind": "object",
+        "fallback": true
+      },
+      "variants": [
+        {
+          "id": "modern",
+          "label": "Modern split",
+          "default": true,
+          "wow": false
+        },
+        {
+          "id": "aurora",
+          "label": "Aurora (cinematic)",
+          "default": false,
+          "wow": true
+        },
+        {
+          "id": "spotlight",
+          "label": "Spotlight (editorial)",
+          "default": false,
+          "wow": true
+        },
+        {
+          "id": "editorial",
+          "label": "Editorial (magazine)",
+          "default": false,
+          "wow": true
+        },
+        {
+          "id": "bold-fullbleed",
+          "label": "Bold full-bleed",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "centered",
+          "label": "Centered",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "background",
+          "label": "Background image",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "split-reversed",
+          "label": "Split (reversed)",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "minimal",
+          "label": "Minimal",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "video",
+          "label": "Video",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "banner",
+          "label": "Banner",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "estimate",
+          "label": "Estimate form",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "gallery",
+          "label": "Gallery mosaic",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "elegant",
+          "label": "Elegant",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "friendly",
+          "label": "Friendly",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "corporate",
+          "label": "Corporate",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "creative",
+          "label": "Creative",
+          "default": false,
+          "wow": false
+        }
+      ],
+      "fields": [
+        {
+          "path": "hero.kicker",
+          "kind": "text",
+          "required": false,
+          "of": "site"
+        },
+        {
+          "path": "hero.headline",
+          "kind": "text",
+          "required": false,
+          "of": "site"
+        },
+        {
+          "path": "hero.subheadline",
+          "kind": "text",
+          "required": false,
+          "of": "site"
+        },
+        {
+          "path": "hero.body",
+          "kind": "text",
+          "required": false,
+          "of": "site"
+        },
+        {
+          "path": "hero.cta_primary_label",
+          "kind": "text",
+          "required": false,
+          "of": "site"
+        },
+        {
+          "path": "hero.cta_secondary_label",
+          "kind": "text",
+          "required": false,
+          "of": "site"
+        },
+        {
+          "path": "hero.image_url",
+          "kind": "image",
+          "required": false,
+          "of": "site"
+        },
+        {
+          "path": "REVIEWS[].id",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "REVIEWS[].text",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "REVIEWS[].author",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "REVIEWS[].rating",
+          "kind": "number",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "REVIEWS[].location",
+          "kind": "text",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "REVIEWS[].service",
+          "kind": "text",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "REVIEWS[].date",
+          "kind": "text",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "REVIEWS[].source",
+          "kind": "enum",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "REVIEWS[].avatar",
+          "kind": "image",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "address.street",
+          "kind": "text",
+          "required": false,
+          "of": "copy"
+        },
+        {
+          "path": "address.city",
+          "kind": "text",
+          "required": false,
+          "of": "copy"
+        },
+        {
+          "path": "address.state",
+          "kind": "text",
+          "required": false,
+          "of": "copy"
+        },
+        {
+          "path": "address.zip",
+          "kind": "text",
+          "required": false,
+          "of": "copy"
+        },
+        {
+          "path": "phone",
+          "kind": "text",
+          "required": false,
+          "of": "copy"
+        },
+        {
+          "path": "phoneDisplay",
+          "kind": "text",
+          "required": false,
+          "of": "copy"
+        }
+      ],
+      "photo_targets": [
+        "hero.image_url",
+        "REVIEWS[].avatar"
+      ],
+      "reads": [
+        "address",
+        "hero",
+        "phone",
+        "phoneDisplay",
+        "quoteForm"
+      ],
+      "files": 17
+    },
+    {
+      "type": "taglineBar",
+      "label": {
+        "en": "Tagline bar",
+        "es": "Barra de lema"
+      },
+      "scope": "chrome",
+      "pages": "any",
+      "data": {
+        "site_keys": [
+          "tagline"
+        ],
+        "ctx": null,
+        "params": null,
+        "into": null,
+        "kind": null,
+        "fallback": false
+      },
+      "variants": [],
+      "fields": [
+        {
+          "path": "tagline",
+          "kind": "text",
+          "required": false,
+          "of": "site"
+        }
+      ],
+      "photo_targets": [],
+      "reads": [
+        "tagline"
+      ],
+      "files": 1
+    },
+    {
+      "type": "localBar",
+      "label": {
+        "en": "Neighbourhood strip",
+        "es": "Franja de zonas"
+      },
+      "scope": "site",
+      "pages": "any",
+      "data": {
+        "site_keys": [
+          "AREAS"
+        ],
+        "ctx": null,
+        "params": "areas",
+        "into": [
+          "AREAS"
+        ],
+        "kind": "array",
+        "fallback": false
+      },
+      "variants": [],
+      "fields": [
+        {
+          "path": "AREAS[].slug",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "AREAS[].name",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "AREAS[].tier",
+          "kind": "enum",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "AREAS[].zipCodes",
+          "kind": "list",
+          "required": false,
+          "of": "item"
+        }
+      ],
+      "photo_targets": [],
+      "reads": [],
+      "files": 1
+    },
+    {
+      "type": "emergencyBar",
+      "label": {
+        "en": "Emergency call bar",
+        "es": "Barra de emergencia"
+      },
+      "scope": "chrome",
+      "pages": "any",
+      "data": {
+        "site_keys": [
+          "phone",
+          "hours"
+        ],
+        "ctx": null,
+        "params": null,
+        "into": null,
+        "kind": null,
+        "fallback": false
+      },
+      "variants": [
+        {
+          "id": "strip",
+          "label": "Strip",
+          "default": true,
+          "wow": false
+        }
+      ],
+      "fields": [
+        {
+          "path": "phone",
+          "kind": "text",
+          "required": false,
+          "of": "site"
+        },
+        {
+          "path": "hours",
+          "kind": "text",
+          "required": false,
+          "of": "site"
+        },
+        {
+          "path": "phoneDisplay",
+          "kind": "text",
+          "required": false,
+          "of": "copy"
+        }
+      ],
+      "photo_targets": [],
+      "reads": [
+        "hours",
+        "phone",
+        "phoneDisplay"
+      ],
+      "files": 1
+    },
+    {
+      "type": "menu",
+      "label": {
+        "en": "Menu",
+        "es": "Menú"
+      },
+      "scope": "site",
+      "pages": "any",
+      "data": {
+        "site_keys": [
+          "SERVICES"
+        ],
+        "ctx": null,
+        "params": null,
+        "into": null,
+        "kind": null,
+        "fallback": false
+      },
+      "variants": [
+        {
+          "id": "list",
+          "label": "List",
+          "default": true,
+          "wow": false
+        }
+      ],
+      "fields": [
+        {
+          "path": "SERVICES[].slug",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "SERVICES[].name",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "SERVICES[].displayName",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "SERVICES[].short",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "SERVICES[].tagline",
+          "kind": "text",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "SERVICES[].published",
+          "kind": "boolean",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "SERVICES[].paged",
+          "kind": "boolean",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "SERVICES[].action",
+          "kind": "enum",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "SERVICES[].id",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        }
+      ],
+      "photo_targets": [],
+      "reads": [],
+      "files": 1
+    },
+    {
+      "type": "productGrid",
+      "label": {
+        "en": "Products",
+        "es": "Productos"
+      },
+      "scope": "site",
+      "pages": "any",
+      "data": {
+        "site_keys": [
+          "products"
+        ],
+        "ctx": null,
+        "params": "products",
+        "into": [
+          "products"
+        ],
+        "kind": "array",
+        "fallback": false
+      },
+      "variants": [
+        {
+          "id": "cards",
+          "label": "Cards",
+          "default": true,
+          "wow": false
+        }
+      ],
+      "fields": [
+        {
+          "path": "products[].id",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "products[].name",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "products[].description",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "products[].price",
+          "kind": "money",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "products[].compareAtPrice",
+          "kind": "money",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "products[].image",
+          "kind": "image",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "products[].stock",
+          "kind": "enum",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "products[].buyUrl",
+          "kind": "url",
+          "required": true,
+          "of": "item"
+        }
+      ],
+      "photo_targets": [
+        "products[].image"
+      ],
+      "reads": [
+        "products"
+      ],
+      "files": 1
+    },
+    {
+      "type": "classSchedule",
+      "label": {
+        "en": "Class schedule",
+        "es": "Horario de clases"
+      },
+      "scope": "site",
+      "pages": "any",
+      "data": {
+        "site_keys": [
+          "classSchedule"
+        ],
+        "ctx": null,
+        "params": "sessions",
+        "into": [
+          "classSchedule"
+        ],
+        "kind": "array",
+        "fallback": false
+      },
+      "variants": [
+        {
+          "id": "week",
+          "label": "Week",
+          "default": true,
+          "wow": false
+        }
+      ],
+      "fields": [
+        {
+          "path": "classSchedule[].serviceName",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "classSchedule[].day",
+          "kind": "number",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "classSchedule[].start",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "classSchedule[].end",
+          "kind": "text",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "classSchedule[].instructor",
+          "kind": "text",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "classSchedule[].capacity",
+          "kind": "number",
+          "required": false,
+          "of": "item"
+        }
+      ],
+      "photo_targets": [],
+      "reads": [],
+      "files": 1
+    },
+    {
+      "type": "trustBar",
+      "label": {
+        "en": "Trust bar",
+        "es": "Barra de confianza (Por qué elegirnos)"
+      },
+      "scope": "site",
+      "pages": "any",
+      "data": {
+        "site_keys": [
+          "trustItems"
+        ],
+        "ctx": null,
+        "params": "items",
+        "into": [
+          "trustItems"
+        ],
+        "kind": "array",
+        "fallback": false
+      },
+      "variants": [
+        {
+          "id": "icon-row",
+          "label": "Icon row",
+          "default": true,
+          "wow": false
+        },
+        {
+          "id": "glow-cards",
+          "label": "Glow cards",
+          "default": false,
+          "wow": true
+        },
+        {
+          "id": "hairline-rows",
+          "label": "Hairline row",
+          "default": false,
+          "wow": true
+        },
+        {
+          "id": "stat-numbers",
+          "label": "Stat numbers",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "logo-strip",
+          "label": "Logo strip",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "credential-cells",
+          "label": "Credential cells",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "bold",
+          "label": "Bold",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "elegant",
+          "label": "Elegant",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "friendly",
+          "label": "Friendly",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "modern",
+          "label": "Modern",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "corporate",
+          "label": "Corporate",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "creative",
+          "label": "Creative",
+          "default": false,
+          "wow": false
+        }
+      ],
+      "fields": [
+        {
+          "path": "trustItems[].title",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "trustItems[].description",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "trustItems[].kind",
+          "kind": "text",
+          "required": false,
+          "of": "item"
+        }
+      ],
+      "photo_targets": [],
+      "reads": [
+        "trustItems"
+      ],
+      "files": 12
+    },
+    {
+      "type": "servicesPreview",
+      "label": {
+        "en": "Services",
+        "es": "Servicios"
+      },
+      "scope": "site",
+      "pages": "any",
+      "data": {
+        "site_keys": [
+          "SERVICES",
+          "homeServices"
+        ],
+        "ctx": null,
+        "params": "services",
+        "into": [
+          "SERVICES"
+        ],
+        "kind": "array",
+        "fallback": false
+      },
+      "variants": [
+        {
+          "id": "grid",
+          "label": "Grid",
+          "default": true,
+          "wow": false
+        },
+        {
+          "id": "luxe",
+          "label": "Luxe glass",
+          "default": false,
+          "wow": true
+        },
+        {
+          "id": "feature-rows",
+          "label": "Feature rows",
+          "default": false,
+          "wow": true
+        },
+        {
+          "id": "spotlight-tiles",
+          "label": "Spotlight tiles",
+          "default": false,
+          "wow": true
+        },
+        {
+          "id": "alternating-rows",
+          "label": "Alternating rows",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "bento",
+          "label": "Bento",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "list",
+          "label": "List",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "icon-tiles",
+          "label": "Icon tiles",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "carousel",
+          "label": "Carousel",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "bold",
+          "label": "Bold",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "elegant",
+          "label": "Elegant",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "friendly",
+          "label": "Friendly",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "modern",
+          "label": "Modern",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "corporate",
+          "label": "Corporate",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "creative",
+          "label": "Creative",
+          "default": false,
+          "wow": false
+        }
+      ],
+      "fields": [
+        {
+          "path": "SERVICES[].slug",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "SERVICES[].name",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "SERVICES[].displayName",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "SERVICES[].short",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "SERVICES[].tagline",
+          "kind": "text",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "SERVICES[].published",
+          "kind": "boolean",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "SERVICES[].paged",
+          "kind": "boolean",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "SERVICES[].action",
+          "kind": "enum",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "SERVICES[].id",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "homeServices.label",
+          "kind": "text",
+          "required": false,
+          "of": "site"
+        },
+        {
+          "path": "homeServices.heading",
+          "kind": "text",
+          "required": false,
+          "of": "site"
+        },
+        {
+          "path": "homeServices.body",
+          "kind": "text",
+          "required": false,
+          "of": "site"
+        }
+      ],
+      "photo_targets": [],
+      "reads": [
+        "homeServices"
+      ],
+      "files": 15
+    },
+    {
+      "type": "serviceAreas",
+      "label": {
+        "en": "Service areas",
+        "es": "Zonas de servicio"
+      },
+      "scope": "site",
+      "pages": "any",
+      "data": {
+        "site_keys": [
+          "AREAS"
+        ],
+        "ctx": null,
+        "params": "areas",
+        "into": [
+          "AREAS"
+        ],
+        "kind": "array",
+        "fallback": false
+      },
+      "variants": [
+        {
+          "id": "chips",
+          "label": "Chips",
+          "default": true,
+          "wow": false
+        },
+        {
+          "id": "glow-pins",
+          "label": "Glow pins",
+          "default": false,
+          "wow": true
+        },
+        {
+          "id": "brand-panel",
+          "label": "Brand panel",
+          "default": false,
+          "wow": true
+        },
+        {
+          "id": "map-style",
+          "label": "Map style",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "columned-list",
+          "label": "Columned list",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "cards",
+          "label": "Cards",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "stacked",
+          "label": "Stacked",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "bold",
+          "label": "Bold",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "elegant",
+          "label": "Elegant",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "friendly",
+          "label": "Friendly",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "modern",
+          "label": "Modern",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "corporate",
+          "label": "Corporate",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "creative",
+          "label": "Creative",
+          "default": false,
+          "wow": false
+        }
+      ],
+      "fields": [
+        {
+          "path": "AREAS[].slug",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "AREAS[].name",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "AREAS[].tier",
+          "kind": "enum",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "AREAS[].zipCodes",
+          "kind": "list",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "homeAreas.label",
+          "kind": "text",
+          "required": false,
+          "of": "copy"
+        },
+        {
+          "path": "homeAreas.heading",
+          "kind": "text",
+          "required": false,
+          "of": "copy"
+        },
+        {
+          "path": "homeAreas.scriptAccent",
+          "kind": "text",
+          "required": false,
+          "of": "copy"
+        },
+        {
+          "path": "homeAreas.body",
+          "kind": "text",
+          "required": false,
+          "of": "copy"
+        }
+      ],
+      "photo_targets": [],
+      "reads": [
+        "homeAreas"
+      ],
+      "files": 13
+    },
+    {
+      "type": "reviews",
+      "label": {
+        "en": "Reviews",
+        "es": "Reseñas"
+      },
+      "scope": "site",
+      "pages": "any",
+      "data": {
+        "site_keys": [
+          "REVIEWS"
+        ],
+        "ctx": null,
+        "params": "reviews",
+        "into": [
+          "REVIEWS"
+        ],
+        "kind": "array",
+        "fallback": false
+      },
+      "variants": [
+        {
+          "id": "grid",
+          "label": "Grid",
+          "default": true,
+          "wow": false
+        },
+        {
+          "id": "luminous",
+          "label": "Luminous",
+          "default": false,
+          "wow": true
+        },
+        {
+          "id": "pull-quote",
+          "label": "Pull quote",
+          "default": false,
+          "wow": true
+        },
+        {
+          "id": "glass-wall",
+          "label": "Glass wall",
+          "default": false,
+          "wow": true
+        },
+        {
+          "id": "spotlight",
+          "label": "Spotlight",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "carousel",
+          "label": "Carousel",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "masonry",
+          "label": "Masonry",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "stacked",
+          "label": "Stacked",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "bold",
+          "label": "Bold",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "elegant",
+          "label": "Elegant",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "friendly",
+          "label": "Friendly",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "modern",
+          "label": "Modern",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "corporate",
+          "label": "Corporate",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "creative",
+          "label": "Creative",
+          "default": false,
+          "wow": false
+        }
+      ],
+      "fields": [
+        {
+          "path": "REVIEWS[].id",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "REVIEWS[].text",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "REVIEWS[].author",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "REVIEWS[].rating",
+          "kind": "number",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "REVIEWS[].location",
+          "kind": "text",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "REVIEWS[].service",
+          "kind": "text",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "REVIEWS[].date",
+          "kind": "text",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "REVIEWS[].source",
+          "kind": "enum",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "REVIEWS[].avatar",
+          "kind": "image",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "homeReviews.label",
+          "kind": "text",
+          "required": false,
+          "of": "copy"
+        },
+        {
+          "path": "homeReviews.heading",
+          "kind": "text",
+          "required": false,
+          "of": "copy"
+        },
+        {
+          "path": "homeReviews.scriptAccent",
+          "kind": "text",
+          "required": false,
+          "of": "copy"
+        }
+      ],
+      "photo_targets": [
+        "REVIEWS[].avatar"
+      ],
+      "reads": [
+        "homeReviews"
+      ],
+      "files": 14
+    },
+    {
+      "type": "faq",
+      "label": {
+        "en": "FAQ",
+        "es": "Preguntas frecuentes"
+      },
+      "scope": "page",
+      "pages": "any",
+      "data": {
+        "site_keys": [
+          "homeFaqs"
+        ],
+        "ctx": "faqs",
+        "params": "faqs",
+        "into": [
+          "homeFaqs"
+        ],
+        "kind": "array",
+        "fallback": false
+      },
+      "variants": [
+        {
+          "id": "accordion",
+          "label": "Accordion",
+          "default": true,
+          "wow": false
+        },
+        {
+          "id": "glass-accordion",
+          "label": "Glass accordion",
+          "default": false,
+          "wow": true
+        },
+        {
+          "id": "split-panel",
+          "label": "Split panel",
+          "default": false,
+          "wow": true
+        }
+      ],
+      "fields": [
+        {
+          "path": "homeFaqs[].question",
+          "kind": "text",
+          "required": false,
+          "of": "site"
+        },
+        {
+          "path": "homeFaqs[].answer",
+          "kind": "text",
+          "required": false,
+          "of": "site"
+        }
+      ],
+      "photo_targets": [],
+      "reads": [],
+      "files": 3
+    },
+    {
+      "type": "cta",
+      "label": {
+        "en": "Call to action",
+        "es": "Llamado a la acción"
+      },
+      "scope": "site",
+      "pages": "any",
+      "data": {
+        "site_keys": [
+          "homeCta",
+          "hero"
+        ],
+        "ctx": null,
+        "params": "cta",
+        "into": [
+          "homeCta"
+        ],
+        "kind": "object",
+        "fallback": true
+      },
+      "variants": [
+        {
+          "id": "band",
+          "label": "Band",
+          "default": true,
+          "wow": false
+        },
+        {
+          "id": "aurora-glow",
+          "label": "Aurora glow",
+          "default": false,
+          "wow": true
+        },
+        {
+          "id": "glass-panel",
+          "label": "Glass panel",
+          "default": false,
+          "wow": true
+        },
+        {
+          "id": "color-block",
+          "label": "Color block",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "split-with-image",
+          "label": "Split with image",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "boxed-card",
+          "label": "Boxed card",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "stacked-centered",
+          "label": "Stacked centered",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "bold",
+          "label": "Bold",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "elegant",
+          "label": "Elegant",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "friendly",
+          "label": "Friendly",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "modern",
+          "label": "Modern",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "corporate",
+          "label": "Corporate",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "creative",
+          "label": "Creative",
+          "default": false,
+          "wow": false
+        }
+      ],
+      "fields": [
+        {
+          "path": "homeCta.title",
+          "kind": "text",
+          "required": false,
+          "of": "site"
+        },
+        {
+          "path": "homeCta.subtitle",
+          "kind": "text",
+          "required": false,
+          "of": "site"
+        },
+        {
+          "path": "hero.kicker",
+          "kind": "text",
+          "required": false,
+          "of": "site"
+        },
+        {
+          "path": "hero.headline",
+          "kind": "text",
+          "required": false,
+          "of": "site"
+        },
+        {
+          "path": "hero.subheadline",
+          "kind": "text",
+          "required": false,
+          "of": "site"
+        },
+        {
+          "path": "hero.body",
+          "kind": "text",
+          "required": false,
+          "of": "site"
+        },
+        {
+          "path": "hero.cta_primary_label",
+          "kind": "text",
+          "required": false,
+          "of": "site"
+        },
+        {
+          "path": "hero.cta_secondary_label",
+          "kind": "text",
+          "required": false,
+          "of": "site"
+        },
+        {
+          "path": "hero.image_url",
+          "kind": "image",
+          "required": false,
+          "of": "site"
+        },
+        {
+          "path": "headerCtaLabel",
+          "kind": "text",
+          "required": false,
+          "of": "copy"
+        },
+        {
+          "path": "phone",
+          "kind": "text",
+          "required": false,
+          "of": "copy"
+        },
+        {
+          "path": "phoneDisplay",
+          "kind": "text",
+          "required": false,
+          "of": "copy"
+        },
+        {
+          "path": "tagline",
+          "kind": "text",
+          "required": false,
+          "of": "copy"
+        }
+      ],
+      "photo_targets": [
+        "hero.image_url"
+      ],
+      "reads": [
+        "headerCtaLabel",
+        "hero",
+        "homeCta",
+        "phone",
+        "phoneDisplay",
+        "tagline"
+      ],
+      "files": 13
+    },
+    {
+      "type": "team",
+      "label": {
+        "en": "Team",
+        "es": "Nuestro equipo"
+      },
+      "scope": "site",
+      "pages": "any",
+      "data": {
+        "site_keys": [
+          "team"
+        ],
+        "ctx": null,
+        "params": "team",
+        "into": [
+          "team"
+        ],
+        "kind": "array",
+        "fallback": false
+      },
+      "variants": [
+        {
+          "id": "grid",
+          "label": "Grid",
+          "default": true,
+          "wow": false
+        },
+        {
+          "id": "spotlight",
+          "label": "Spotlight",
+          "default": false,
+          "wow": false
+        }
+      ],
+      "fields": [
+        {
+          "path": "team[].name",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "team[].role",
+          "kind": "text",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "team[].photo",
+          "kind": "image",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "team[].bio",
+          "kind": "text",
+          "required": false,
+          "of": "item"
+        }
+      ],
+      "photo_targets": [
+        "team[].photo"
+      ],
+      "reads": [
+        "team"
+      ],
+      "files": 2
+    },
+    {
+      "type": "pricing",
+      "label": {
+        "en": "Pricing",
+        "es": "Precios"
+      },
+      "scope": "site",
+      "pages": "any",
+      "data": {
+        "site_keys": [
+          "plans"
+        ],
+        "ctx": null,
+        "params": "plans",
+        "into": [
+          "plans"
+        ],
+        "kind": "array",
+        "fallback": false
+      },
+      "variants": [
+        {
+          "id": "tiers",
+          "label": "Tiers",
+          "default": true,
+          "wow": false
+        },
+        {
+          "id": "luxe-glass",
+          "label": "Luxe glass",
+          "default": false,
+          "wow": true
+        },
+        {
+          "id": "spotlight-tier",
+          "label": "Spotlight tier",
+          "default": false,
+          "wow": true
+        },
+        {
+          "id": "comparison-table",
+          "label": "Comparison table",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "toggle",
+          "label": "Monthly / annual toggle",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "cards",
+          "label": "Cards",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "single-highlight",
+          "label": "Single highlight",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "list",
+          "label": "List",
+          "default": false,
+          "wow": false
+        }
+      ],
+      "fields": [
+        {
+          "path": "plans[].name",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "plans[].price",
+          "kind": "money",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "plans[].period",
+          "kind": "text",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "plans[].features",
+          "kind": "list",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "plans[].highlighted",
+          "kind": "boolean",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "plans[].priceAnnual",
+          "kind": "money",
+          "required": false,
+          "of": "item"
+        }
+      ],
+      "photo_targets": [],
+      "reads": [
+        "plans"
+      ],
+      "files": 8
+    },
+    {
+      "type": "gallery",
+      "label": {
+        "en": "Gallery",
+        "es": "Galería"
+      },
+      "scope": "site",
+      "pages": "any",
+      "data": {
+        "site_keys": [
+          "PROJECTS"
+        ],
+        "ctx": null,
+        "params": "projects",
+        "into": [
+          "PROJECTS"
+        ],
+        "kind": "array",
+        "fallback": false
+      },
+      "variants": [
+        {
+          "id": "masonry",
+          "label": "Masonry",
+          "default": true,
+          "wow": false
+        },
+        {
+          "id": "cinematic-masonry",
+          "label": "Cinematic masonry",
+          "default": false,
+          "wow": true
+        },
+        {
+          "id": "featured-film",
+          "label": "Featured filmstrip",
+          "default": false,
+          "wow": true
+        },
+        {
+          "id": "edge-grid",
+          "label": "Edge grid",
+          "default": false,
+          "wow": true
+        },
+        {
+          "id": "grid",
+          "label": "Grid",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "before-after-slider",
+          "label": "Before / after",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "carousel",
+          "label": "Carousel",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "featured-thumbs",
+          "label": "Featured + thumbs",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "justified",
+          "label": "Justified",
+          "default": false,
+          "wow": false
+        }
+      ],
+      "fields": [
+        {
+          "path": "PROJECTS[].title",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "PROJECTS[].caption",
+          "kind": "text",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "PROJECTS[].image",
+          "kind": "image",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "PROJECTS[].alt",
+          "kind": "text",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "PROJECTS[].beforeImage",
+          "kind": "image",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "PROJECTS[].afterImage",
+          "kind": "image",
+          "required": false,
+          "of": "item"
+        }
+      ],
+      "photo_targets": [
+        "PROJECTS[].image",
+        "PROJECTS[].beforeImage",
+        "PROJECTS[].afterImage"
+      ],
+      "reads": [],
+      "files": 9
+    },
+    {
+      "type": "process",
+      "label": {
+        "en": "Process",
+        "es": "Cómo trabajamos"
+      },
+      "scope": "site",
+      "pages": "any",
+      "data": {
+        "site_keys": [
+          "steps"
+        ],
+        "ctx": null,
+        "params": "steps",
+        "into": [
+          "steps"
+        ],
+        "kind": "array",
+        "fallback": false
+      },
+      "variants": [
+        {
+          "id": "numbered-steps",
+          "label": "Numbered steps",
+          "default": true,
+          "wow": false
+        },
+        {
+          "id": "glow-nodes",
+          "label": "Glow timeline",
+          "default": false,
+          "wow": true
+        },
+        {
+          "id": "bold-numerals",
+          "label": "Bold numerals",
+          "default": false,
+          "wow": true
+        },
+        {
+          "id": "timeline",
+          "label": "Timeline",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "cards",
+          "label": "Cards",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "alternating",
+          "label": "Alternating",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "vertical-rail",
+          "label": "Vertical rail",
+          "default": false,
+          "wow": false
+        }
+      ],
+      "fields": [
+        {
+          "path": "steps[].title",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "steps[].description",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "steps[].icon",
+          "kind": "text",
+          "required": false,
+          "of": "item"
+        }
+      ],
+      "photo_targets": [],
+      "reads": [
+        "steps"
+      ],
+      "files": 7
+    },
+    {
+      "type": "faqSection",
+      "label": {
+        "en": "FAQ section",
+        "es": "Sección de preguntas"
+      },
+      "scope": "site",
+      "pages": "any",
+      "data": {
+        "site_keys": [
+          "homeFaqs"
+        ],
+        "ctx": "faqs",
+        "params": "faqs",
+        "into": [
+          "homeFaqs"
+        ],
+        "kind": "array",
+        "fallback": false
+      },
+      "variants": [
+        {
+          "id": "accordion",
+          "label": "Accordion",
+          "default": true,
+          "wow": false
+        },
+        {
+          "id": "two-column",
+          "label": "Two column",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "list",
+          "label": "List",
+          "default": false,
+          "wow": false
+        }
+      ],
+      "fields": [
+        {
+          "path": "homeFaqs[].question",
+          "kind": "text",
+          "required": false,
+          "of": "site"
+        },
+        {
+          "path": "homeFaqs[].answer",
+          "kind": "text",
+          "required": false,
+          "of": "site"
+        }
+      ],
+      "photo_targets": [],
+      "reads": [
+        "homeFaqs"
+      ],
+      "files": 3
+    },
+    {
+      "type": "story",
+      "label": {
+        "en": "About / Story",
+        "es": "Nuestra historia"
+      },
+      "scope": "site",
+      "pages": "any",
+      "data": {
+        "site_keys": [
+          "about",
+          "story",
+          "stats",
+          "milestones",
+          "IMAGES"
+        ],
+        "ctx": null,
+        "params": "story",
+        "into": [
+          "about",
+          "story",
+          "stats",
+          "milestones"
+        ],
+        "kind": "string",
+        "fallback": false
+      },
+      "variants": [
+        {
+          "id": "narrative",
+          "label": "Narrative",
+          "default": true,
+          "wow": false
+        },
+        {
+          "id": "editorial-frame",
+          "label": "Editorial frame",
+          "default": false,
+          "wow": true
+        },
+        {
+          "id": "manifesto-glow",
+          "label": "Manifesto",
+          "default": false,
+          "wow": true
+        },
+        {
+          "id": "split-image",
+          "label": "Split image",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "stat-band",
+          "label": "Stat band",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "milestone-timeline",
+          "label": "Milestone timeline",
+          "default": false,
+          "wow": false
+        }
+      ],
+      "fields": [
+        {
+          "path": "about",
+          "kind": "text",
+          "required": false,
+          "of": "site"
+        },
+        {
+          "path": "story.attribution",
+          "kind": "text",
+          "required": false,
+          "of": "site"
+        },
+        {
+          "path": "story.image",
+          "kind": "image",
+          "required": false,
+          "of": "site"
+        },
+        {
+          "path": "story.quote",
+          "kind": "text",
+          "required": false,
+          "of": "site"
+        },
+        {
+          "path": "stats[].value",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "stats[].label",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "milestones[].year",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "milestones[].title",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "milestones[].description",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "hero.kicker",
+          "kind": "text",
+          "required": false,
+          "of": "copy"
+        },
+        {
+          "path": "hero.headline",
+          "kind": "text",
+          "required": false,
+          "of": "copy"
+        },
+        {
+          "path": "hero.subheadline",
+          "kind": "text",
+          "required": false,
+          "of": "copy"
+        },
+        {
+          "path": "hero.body",
+          "kind": "text",
+          "required": false,
+          "of": "copy"
+        },
+        {
+          "path": "hero.cta_primary_label",
+          "kind": "text",
+          "required": false,
+          "of": "copy"
+        },
+        {
+          "path": "hero.cta_secondary_label",
+          "kind": "text",
+          "required": false,
+          "of": "copy"
+        },
+        {
+          "path": "hero.image_url",
+          "kind": "image",
+          "required": false,
+          "of": "copy"
+        },
+        {
+          "path": "name",
+          "kind": "text",
+          "required": false,
+          "of": "copy"
+        }
+      ],
+      "photo_targets": [
+        "story.image",
+        "hero.image_url"
+      ],
+      "reads": [
+        "about",
+        "hero",
+        "milestones",
+        "name",
+        "stats",
+        "story"
+      ],
+      "files": 6
+    },
+    {
+      "type": "forms",
+      "label": {
+        "en": "Contact form",
+        "es": "Formulario"
+      },
+      "scope": "site",
+      "pages": "any",
+      "data": {
+        "site_keys": [
+          "quoteForm"
+        ],
+        "ctx": null,
+        "params": "form",
+        "into": [
+          "quoteForm"
+        ],
+        "kind": "object",
+        "fallback": true
+      },
+      "variants": [
+        {
+          "id": "contact",
+          "label": "Contact",
+          "default": true,
+          "wow": false
+        },
+        {
+          "id": "float-glass",
+          "label": "Floating glass",
+          "default": false,
+          "wow": true
+        },
+        {
+          "id": "brand-split",
+          "label": "Brand split",
+          "default": false,
+          "wow": true
+        },
+        {
+          "id": "booking",
+          "label": "Booking",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "quote",
+          "label": "Quote",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "split-with-info",
+          "label": "Split with info",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "minimal",
+          "label": "Minimal",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "custom",
+          "label": "Custom fields",
+          "default": false,
+          "wow": false
+        }
+      ],
+      "fields": [
+        {
+          "path": "quoteForm.body",
+          "kind": "text",
+          "required": false,
+          "of": "site"
+        },
+        {
+          "path": "quoteForm.eyebrow",
+          "kind": "text",
+          "required": false,
+          "of": "site"
+        },
+        {
+          "path": "quoteForm.heading",
+          "kind": "text",
+          "required": false,
+          "of": "site"
+        },
+        {
+          "path": "address.street",
+          "kind": "text",
+          "required": false,
+          "of": "copy"
+        },
+        {
+          "path": "address.city",
+          "kind": "text",
+          "required": false,
+          "of": "copy"
+        },
+        {
+          "path": "address.state",
+          "kind": "text",
+          "required": false,
+          "of": "copy"
+        },
+        {
+          "path": "address.zip",
+          "kind": "text",
+          "required": false,
+          "of": "copy"
+        },
+        {
+          "path": "email",
+          "kind": "text",
+          "required": false,
+          "of": "copy"
+        },
+        {
+          "path": "hours",
+          "kind": "text",
+          "required": false,
+          "of": "copy"
+        },
+        {
+          "path": "phone",
+          "kind": "text",
+          "required": false,
+          "of": "copy"
+        },
+        {
+          "path": "phoneDisplay",
+          "kind": "text",
+          "required": false,
+          "of": "copy"
+        }
+      ],
+      "photo_targets": [],
+      "reads": [
+        "address",
+        "email",
+        "hours",
+        "phone",
+        "phoneDisplay",
+        "quoteForm"
+      ],
+      "files": 8
+    },
+    {
+      "type": "membership",
+      "label": {
+        "en": "Memberships",
+        "es": "Membresías"
+      },
+      "scope": "site",
+      "pages": "any",
+      "data": {
+        "site_keys": [
+          "memberships"
+        ],
+        "ctx": null,
+        "params": "memberships",
+        "into": [
+          "memberships"
+        ],
+        "kind": "array",
+        "fallback": false
+      },
+      "variants": [
+        {
+          "id": "tier-cards",
+          "label": "Tier cards",
+          "default": true,
+          "wow": false
+        },
+        {
+          "id": "comparison",
+          "label": "Comparison",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "single-tier-highlight",
+          "label": "Single tier highlight",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "perks-grid",
+          "label": "Perks grid",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "table",
+          "label": "Table",
+          "default": false,
+          "wow": false
+        }
+      ],
+      "fields": [
+        {
+          "path": "memberships[].name",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "memberships[].price",
+          "kind": "money",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "memberships[].period",
+          "kind": "text",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "memberships[].perks",
+          "kind": "list",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "memberships[].highlighted",
+          "kind": "boolean",
+          "required": false,
+          "of": "item"
+        }
+      ],
+      "photo_targets": [],
+      "reads": [
+        "memberships"
+      ],
+      "files": 5
+    },
+    {
+      "type": "packages",
+      "label": {
+        "en": "Packages",
+        "es": "Paquetes"
+      },
+      "scope": "site",
+      "pages": "any",
+      "data": {
+        "site_keys": [
+          "packages"
+        ],
+        "ctx": null,
+        "params": "packages",
+        "into": [
+          "packages"
+        ],
+        "kind": "array",
+        "fallback": false
+      },
+      "variants": [
+        {
+          "id": "bundle-cards",
+          "label": "Bundle cards",
+          "default": true,
+          "wow": false
+        },
+        {
+          "id": "tiered",
+          "label": "Tiered",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "feature-list",
+          "label": "Feature list",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "grid",
+          "label": "Grid",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "comparison",
+          "label": "Comparison",
+          "default": false,
+          "wow": false
+        }
+      ],
+      "fields": [
+        {
+          "path": "packages[].name",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "packages[].price",
+          "kind": "money",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "packages[].includes",
+          "kind": "list",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "packages[].popular",
+          "kind": "boolean",
+          "required": false,
+          "of": "item"
+        }
+      ],
+      "photo_targets": [],
+      "reads": [
+        "packages"
+      ],
+      "files": 5
+    },
+    {
+      "type": "caseStudies",
+      "label": {
+        "en": "Case studies",
+        "es": "Casos de éxito"
+      },
+      "scope": "site",
+      "pages": "any",
+      "data": {
+        "site_keys": [
+          "caseStudies"
+        ],
+        "ctx": null,
+        "params": "caseStudies",
+        "into": [
+          "caseStudies"
+        ],
+        "kind": "array",
+        "fallback": false
+      },
+      "variants": [
+        {
+          "id": "featured",
+          "label": "Featured",
+          "default": true,
+          "wow": false
+        },
+        {
+          "id": "grid",
+          "label": "Grid",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "alternating-rows",
+          "label": "Alternating rows",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "carousel",
+          "label": "Carousel",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "list",
+          "label": "List",
+          "default": false,
+          "wow": false
+        }
+      ],
+      "fields": [
+        {
+          "path": "caseStudies[].title",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "caseStudies[].summary",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "caseStudies[].image",
+          "kind": "image",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "caseStudies[].result",
+          "kind": "text",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "caseStudies[].client",
+          "kind": "text",
+          "required": false,
+          "of": "item"
+        }
+      ],
+      "photo_targets": [
+        "caseStudies[].image"
+      ],
+      "reads": [
+        "caseStudies"
+      ],
+      "files": 5
+    },
+    {
+      "type": "videoTestimonials",
+      "label": {
+        "en": "Video reviews",
+        "es": "Testimonios en video"
+      },
+      "scope": "site",
+      "pages": "any",
+      "data": {
+        "site_keys": [
+          "videoTestimonials"
+        ],
+        "ctx": null,
+        "params": "videoTestimonials",
+        "into": [
+          "videoTestimonials"
+        ],
+        "kind": "array",
+        "fallback": false
+      },
+      "variants": [
+        {
+          "id": "grid",
+          "label": "Grid",
+          "default": true,
+          "wow": false
+        },
+        {
+          "id": "featured-thumbs",
+          "label": "Featured thumbs",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "carousel",
+          "label": "Carousel",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "spotlight",
+          "label": "Spotlight",
+          "default": false,
+          "wow": false
+        }
+      ],
+      "fields": [
+        {
+          "path": "videoTestimonials[].videoUrl",
+          "kind": "url",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "videoTestimonials[].poster",
+          "kind": "image",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "videoTestimonials[].author",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "videoTestimonials[].quote",
+          "kind": "text",
+          "required": false,
+          "of": "item"
+        }
+      ],
+      "photo_targets": [
+        "videoTestimonials[].poster"
+      ],
+      "reads": [
+        "videoTestimonials"
+      ],
+      "files": 4
+    },
+    {
+      "type": "promotions",
+      "label": {
+        "en": "Promotions",
+        "es": "Promociones"
+      },
+      "scope": "site",
+      "pages": "any",
+      "data": {
+        "site_keys": [
+          "promotions"
+        ],
+        "ctx": null,
+        "params": "promotions",
+        "into": [
+          "promotions"
+        ],
+        "kind": "array",
+        "fallback": false
+      },
+      "variants": [
+        {
+          "id": "banner",
+          "label": "Banner",
+          "default": true,
+          "wow": false
+        },
+        {
+          "id": "cards",
+          "label": "Cards",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "offer-grid",
+          "label": "Offer grid",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "countdown-band",
+          "label": "Countdown band",
+          "default": false,
+          "wow": false
+        }
+      ],
+      "fields": [
+        {
+          "path": "promotions[].title",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "promotions[].detail",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "promotions[].code",
+          "kind": "text",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "promotions[].expires",
+          "kind": "text",
+          "required": false,
+          "of": "item"
+        }
+      ],
+      "photo_targets": [],
+      "reads": [
+        "promotions"
+      ],
+      "files": 4
+    },
+    {
+      "type": "financing",
+      "label": {
+        "en": "Financing",
+        "es": "Financiamiento"
+      },
+      "scope": "site",
+      "pages": "any",
+      "data": {
+        "site_keys": [
+          "financing"
+        ],
+        "ctx": null,
+        "params": "financing",
+        "into": [
+          "financing"
+        ],
+        "kind": "object",
+        "fallback": false
+      },
+      "variants": [
+        {
+          "id": "highlight-band",
+          "label": "Highlight band",
+          "default": true,
+          "wow": false
+        },
+        {
+          "id": "cards",
+          "label": "Cards",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "steps",
+          "label": "Steps",
+          "default": false,
+          "wow": false
+        }
+      ],
+      "fields": [
+        {
+          "path": "financing[].headline",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "financing[].options",
+          "kind": "list",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "financing[].partner",
+          "kind": "text",
+          "required": false,
+          "of": "item"
+        }
+      ],
+      "photo_targets": [],
+      "reads": [
+        "financing"
+      ],
+      "files": 3
+    },
+    {
+      "type": "partners",
+      "label": {
+        "en": "Partners",
+        "es": "Aliados"
+      },
+      "scope": "site",
+      "pages": "any",
+      "data": {
+        "site_keys": [
+          "partners"
+        ],
+        "ctx": null,
+        "params": "partners",
+        "into": [
+          "partners"
+        ],
+        "kind": "array",
+        "fallback": false
+      },
+      "variants": [
+        {
+          "id": "logo-wall",
+          "label": "Logo wall",
+          "default": true,
+          "wow": false
+        },
+        {
+          "id": "strip",
+          "label": "Strip",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "grid",
+          "label": "Grid",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "with-text",
+          "label": "With text",
+          "default": false,
+          "wow": false
+        }
+      ],
+      "fields": [
+        {
+          "path": "partners[].name",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "partners[].logo",
+          "kind": "image",
+          "required": false,
+          "of": "item"
+        }
+      ],
+      "photo_targets": [
+        "partners[].logo"
+      ],
+      "reads": [
+        "partners"
+      ],
+      "files": 4
+    },
+    {
+      "type": "map",
+      "label": {
+        "en": "Map",
+        "es": "Mapa"
+      },
+      "scope": "site",
+      "pages": "any",
+      "data": {
+        "site_keys": [
+          "AREAS"
+        ],
+        "ctx": null,
+        "params": "areas",
+        "into": [
+          "AREAS"
+        ],
+        "kind": "array",
+        "fallback": false
+      },
+      "variants": [
+        {
+          "id": "embed-style-panel",
+          "label": "Embed style panel",
+          "default": true,
+          "wow": false
+        },
+        {
+          "id": "split-with-areas",
+          "label": "Split with areas",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "full-width-band",
+          "label": "Full width band",
+          "default": false,
+          "wow": false
+        }
+      ],
+      "fields": [
+        {
+          "path": "AREAS[].slug",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "AREAS[].name",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "AREAS[].tier",
+          "kind": "enum",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "AREAS[].zipCodes",
+          "kind": "list",
+          "required": false,
+          "of": "item"
+        }
+      ],
+      "photo_targets": [],
+      "reads": [],
+      "files": 3
+    },
+    {
+      "type": "blog",
+      "label": {
+        "en": "Blog",
+        "es": "Blog"
+      },
+      "scope": "site",
+      "pages": "any",
+      "data": {
+        "site_keys": [
+          "posts"
+        ],
+        "ctx": null,
+        "params": "posts",
+        "into": [
+          "posts"
+        ],
+        "kind": "array",
+        "fallback": false
+      },
+      "variants": [
+        {
+          "id": "card-grid",
+          "label": "Card grid",
+          "default": true,
+          "wow": false
+        },
+        {
+          "id": "list",
+          "label": "List",
+          "default": false,
+          "wow": false
+        }
+      ],
+      "fields": [
+        {
+          "path": "posts[].title",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "posts[].excerpt",
+          "kind": "text",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "posts[].date",
+          "kind": "text",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "posts[].image",
+          "kind": "image",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "posts[].href",
+          "kind": "url",
+          "required": true,
+          "of": "item"
+        }
+      ],
+      "photo_targets": [
+        "posts[].image"
+      ],
+      "reads": [
+        "posts"
+      ],
+      "files": 3
+    },
+    {
+      "type": "booking",
+      "label": {
+        "en": "Booking",
+        "es": "Reservas"
+      },
+      "scope": "params",
+      "pages": "any",
+      "data": {
+        "site_keys": [],
+        "ctx": null,
+        "params": null,
+        "into": null,
+        "kind": null,
+        "fallback": true
+      },
+      "variants": [
+        {
+          "id": "wizard",
+          "label": "Wizard",
+          "default": true,
+          "wow": false
+        }
+      ],
+      "fields": [
+        {
+          "path": "address.street",
+          "kind": "text",
+          "required": false,
+          "of": "copy"
+        },
+        {
+          "path": "address.city",
+          "kind": "text",
+          "required": false,
+          "of": "copy"
+        },
+        {
+          "path": "address.state",
+          "kind": "text",
+          "required": false,
+          "of": "copy"
+        },
+        {
+          "path": "address.zip",
+          "kind": "text",
+          "required": false,
+          "of": "copy"
+        },
+        {
+          "path": "phone",
+          "kind": "text",
+          "required": false,
+          "of": "copy"
+        },
+        {
+          "path": "phoneDisplay",
+          "kind": "text",
+          "required": false,
+          "of": "copy"
+        }
+      ],
+      "photo_targets": [],
+      "reads": [
+        "address",
+        "phone",
+        "phoneDisplay"
+      ],
+      "files": 1
+    },
+    {
+      "type": "richText",
+      "label": {
+        "en": "Text block",
+        "es": "Bloque de texto"
+      },
+      "scope": "params",
+      "pages": [
+        "custom"
+      ],
+      "data": {
+        "site_keys": [],
+        "ctx": null,
+        "params": null,
+        "into": null,
+        "kind": null,
+        "fallback": false
+      },
+      "variants": [],
+      "fields": [],
+      "photo_targets": [],
+      "reads": [],
+      "files": 1
+    },
+    {
+      "type": "intro",
+      "label": {
+        "en": "Page intro",
+        "es": "Introducción de página"
+      },
+      "scope": "page",
+      "pages": [
+        "about",
+        "pricing",
+        "contact",
+        "reviews",
+        "servicesIndex",
+        "areasIndex",
+        "custom"
+      ],
+      "data": {
+        "site_keys": [],
+        "ctx": "intro",
+        "params": null,
+        "into": null,
+        "kind": null,
+        "fallback": false
+      },
+      "variants": [],
+      "fields": [],
+      "photo_targets": [],
+      "reads": [],
+      "files": 1
+    },
+    {
+      "type": "serviceWhatWeCover",
+      "label": {
+        "en": "Service overview",
+        "es": "Resumen del servicio"
+      },
+      "scope": "page",
+      "pages": [
+        "serviceDetail"
+      ],
+      "data": {
+        "site_keys": [],
+        "ctx": "service",
+        "params": null,
+        "into": null,
+        "kind": null,
+        "fallback": false
+      },
+      "variants": [],
+      "fields": [
+        {
+          "path": "service.slug",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.title",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.description",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.hero.h1",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.hero.subhead",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.hero.trustLine",
+          "kind": "text",
+          "required": false,
+          "of": "page"
+        },
+        {
+          "path": "service.whatWeBuy.title",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.whatWeBuy.body",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.whatWeBuy.items",
+          "kind": "list",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.howPrice.title",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.howPrice.body",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.howPrice.factors[].title",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.howPrice.factors[].text",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.scenarios.title",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.scenarios.intro",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.scenarios.cards[].title",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.scenarios.cards[].text",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.pricing.title",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.pricing.body",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.pricing.ranges[].label",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.pricing.ranges[].range",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.pricing.notes",
+          "kind": "list",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.coverage.title",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.coverage.intro",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.coverage.areas",
+          "kind": "list",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.localContext.title",
+          "kind": "text",
+          "required": false,
+          "of": "page"
+        },
+        {
+          "path": "service.localContext.body",
+          "kind": "list",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.testimonial",
+          "kind": "text",
+          "required": false,
+          "of": "page"
+        },
+        {
+          "path": "service.faqs",
+          "kind": "list",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.relatedServices",
+          "kind": "list",
+          "required": true,
+          "of": "page"
+        }
+      ],
+      "photo_targets": [],
+      "reads": [],
+      "files": 1
+    },
+    {
+      "type": "serviceDetails",
+      "label": {
+        "en": "Service details",
+        "es": "Detalles del servicio"
+      },
+      "scope": "page",
+      "pages": [
+        "serviceDetail"
+      ],
+      "data": {
+        "site_keys": [],
+        "ctx": "service",
+        "params": null,
+        "into": null,
+        "kind": null,
+        "fallback": false
+      },
+      "variants": [],
+      "fields": [
+        {
+          "path": "service.slug",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.title",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.description",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.hero.h1",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.hero.subhead",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.hero.trustLine",
+          "kind": "text",
+          "required": false,
+          "of": "page"
+        },
+        {
+          "path": "service.whatWeBuy.title",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.whatWeBuy.body",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.whatWeBuy.items",
+          "kind": "list",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.howPrice.title",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.howPrice.body",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.howPrice.factors[].title",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.howPrice.factors[].text",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.scenarios.title",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.scenarios.intro",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.scenarios.cards[].title",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.scenarios.cards[].text",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.pricing.title",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.pricing.body",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.pricing.ranges[].label",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.pricing.ranges[].range",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.pricing.notes",
+          "kind": "list",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.coverage.title",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.coverage.intro",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.coverage.areas",
+          "kind": "list",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.localContext.title",
+          "kind": "text",
+          "required": false,
+          "of": "page"
+        },
+        {
+          "path": "service.localContext.body",
+          "kind": "list",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.testimonial",
+          "kind": "text",
+          "required": false,
+          "of": "page"
+        },
+        {
+          "path": "service.faqs",
+          "kind": "list",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.relatedServices",
+          "kind": "list",
+          "required": true,
+          "of": "page"
+        }
+      ],
+      "photo_targets": [],
+      "reads": [],
+      "files": 1
+    },
+    {
+      "type": "relatedServices",
+      "label": {
+        "en": "Related services",
+        "es": "Servicios relacionados"
+      },
+      "scope": "page",
+      "pages": [
+        "serviceDetail"
+      ],
+      "data": {
+        "site_keys": [
+          "SERVICES"
+        ],
+        "ctx": "service",
+        "params": null,
+        "into": null,
+        "kind": null,
+        "fallback": false
+      },
+      "variants": [],
+      "fields": [
+        {
+          "path": "SERVICES[].slug",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "SERVICES[].name",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "SERVICES[].displayName",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "SERVICES[].short",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "SERVICES[].tagline",
+          "kind": "text",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "SERVICES[].published",
+          "kind": "boolean",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "SERVICES[].paged",
+          "kind": "boolean",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "SERVICES[].action",
+          "kind": "enum",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "SERVICES[].id",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "service.slug",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.title",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.description",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.hero.h1",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.hero.subhead",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.hero.trustLine",
+          "kind": "text",
+          "required": false,
+          "of": "page"
+        },
+        {
+          "path": "service.whatWeBuy.title",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.whatWeBuy.body",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.whatWeBuy.items",
+          "kind": "list",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.howPrice.title",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.howPrice.body",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.howPrice.factors[].title",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.howPrice.factors[].text",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.scenarios.title",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.scenarios.intro",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.scenarios.cards[].title",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.scenarios.cards[].text",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.pricing.title",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.pricing.body",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.pricing.ranges[].label",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.pricing.ranges[].range",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.pricing.notes",
+          "kind": "list",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.coverage.title",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.coverage.intro",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.coverage.areas",
+          "kind": "list",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.localContext.title",
+          "kind": "text",
+          "required": false,
+          "of": "page"
+        },
+        {
+          "path": "service.localContext.body",
+          "kind": "list",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.testimonial",
+          "kind": "text",
+          "required": false,
+          "of": "page"
+        },
+        {
+          "path": "service.faqs",
+          "kind": "list",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "service.relatedServices",
+          "kind": "list",
+          "required": true,
+          "of": "page"
+        }
+      ],
+      "photo_targets": [],
+      "reads": [],
+      "files": 1
+    },
+    {
+      "type": "areaAbout",
+      "label": {
+        "en": "About this area",
+        "es": "Sobre esta zona"
+      },
+      "scope": "page",
+      "pages": [
+        "areaDetail"
+      ],
+      "data": {
+        "site_keys": [],
+        "ctx": "area",
+        "params": null,
+        "into": null,
+        "kind": null,
+        "fallback": false
+      },
+      "variants": [],
+      "fields": [
+        {
+          "path": "area.slug",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "area.title",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "area.description",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "area.name",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "area.tier",
+          "kind": "enum",
+          "required": false,
+          "of": "page"
+        },
+        {
+          "path": "area.zipCodes",
+          "kind": "list",
+          "required": false,
+          "of": "page"
+        },
+        {
+          "path": "area.hero.h1",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "area.hero.subhead",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "area.about.title",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "area.about.body",
+          "kind": "list",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "area.servicesHere.title",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "area.servicesHere.intro",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "area.servicesHere.featured",
+          "kind": "list",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "area.landmarks.title",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "area.landmarks.intro",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "area.landmarks.items",
+          "kind": "list",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "area.localContext.title",
+          "kind": "text",
+          "required": false,
+          "of": "page"
+        },
+        {
+          "path": "area.localContext.body",
+          "kind": "list",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "area.testimonial",
+          "kind": "text",
+          "required": false,
+          "of": "page"
+        },
+        {
+          "path": "area.faqs",
+          "kind": "list",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "area.relatedAreas",
+          "kind": "list",
+          "required": true,
+          "of": "page"
+        }
+      ],
+      "photo_targets": [],
+      "reads": [],
+      "files": 1
+    },
+    {
+      "type": "areaDetails",
+      "label": {
+        "en": "Area details",
+        "es": "Detalles de la zona"
+      },
+      "scope": "page",
+      "pages": [
+        "areaDetail"
+      ],
+      "data": {
+        "site_keys": [],
+        "ctx": "area",
+        "params": null,
+        "into": null,
+        "kind": null,
+        "fallback": false
+      },
+      "variants": [],
+      "fields": [
+        {
+          "path": "area.slug",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "area.title",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "area.description",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "area.name",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "area.tier",
+          "kind": "enum",
+          "required": false,
+          "of": "page"
+        },
+        {
+          "path": "area.zipCodes",
+          "kind": "list",
+          "required": false,
+          "of": "page"
+        },
+        {
+          "path": "area.hero.h1",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "area.hero.subhead",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "area.about.title",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "area.about.body",
+          "kind": "list",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "area.servicesHere.title",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "area.servicesHere.intro",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "area.servicesHere.featured",
+          "kind": "list",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "area.landmarks.title",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "area.landmarks.intro",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "area.landmarks.items",
+          "kind": "list",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "area.localContext.title",
+          "kind": "text",
+          "required": false,
+          "of": "page"
+        },
+        {
+          "path": "area.localContext.body",
+          "kind": "list",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "area.testimonial",
+          "kind": "text",
+          "required": false,
+          "of": "page"
+        },
+        {
+          "path": "area.faqs",
+          "kind": "list",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "area.relatedAreas",
+          "kind": "list",
+          "required": true,
+          "of": "page"
+        }
+      ],
+      "photo_targets": [],
+      "reads": [],
+      "files": 1
+    },
+    {
+      "type": "relatedAreas",
+      "label": {
+        "en": "Related areas",
+        "es": "Zonas relacionadas"
+      },
+      "scope": "page",
+      "pages": [
+        "areaDetail"
+      ],
+      "data": {
+        "site_keys": [
+          "AREAS"
+        ],
+        "ctx": "area",
+        "params": null,
+        "into": null,
+        "kind": null,
+        "fallback": false
+      },
+      "variants": [],
+      "fields": [
+        {
+          "path": "AREAS[].slug",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "AREAS[].name",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "AREAS[].tier",
+          "kind": "enum",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "AREAS[].zipCodes",
+          "kind": "list",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "area.slug",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "area.title",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "area.description",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "area.name",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "area.tier",
+          "kind": "enum",
+          "required": false,
+          "of": "page"
+        },
+        {
+          "path": "area.zipCodes",
+          "kind": "list",
+          "required": false,
+          "of": "page"
+        },
+        {
+          "path": "area.hero.h1",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "area.hero.subhead",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "area.about.title",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "area.about.body",
+          "kind": "list",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "area.servicesHere.title",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "area.servicesHere.intro",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "area.servicesHere.featured",
+          "kind": "list",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "area.landmarks.title",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "area.landmarks.intro",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "area.landmarks.items",
+          "kind": "list",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "area.localContext.title",
+          "kind": "text",
+          "required": false,
+          "of": "page"
+        },
+        {
+          "path": "area.localContext.body",
+          "kind": "list",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "area.testimonial",
+          "kind": "text",
+          "required": false,
+          "of": "page"
+        },
+        {
+          "path": "area.faqs",
+          "kind": "list",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "area.relatedAreas",
+          "kind": "list",
+          "required": true,
+          "of": "page"
+        }
+      ],
+      "photo_targets": [],
+      "reads": [],
+      "files": 1
+    },
+    {
+      "type": "infoArticle",
+      "label": {
+        "en": "Info article",
+        "es": "Artículo informativo"
+      },
+      "scope": "page",
+      "pages": [
+        "infoDetail"
+      ],
+      "data": {
+        "site_keys": [],
+        "ctx": "info",
+        "params": null,
+        "into": null,
+        "kind": null,
+        "fallback": false
+      },
+      "variants": [],
+      "fields": [
+        {
+          "path": "info.slug",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "info.title",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "info.description",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "info.hero.h1",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "info.hero.subhead",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "info.intro",
+          "kind": "list",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "info.sections",
+          "kind": "list",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "info.faqs",
+          "kind": "list",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "info.relatedInfo",
+          "kind": "list",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "info.relatedServices",
+          "kind": "list",
+          "required": true,
+          "of": "page"
+        }
+      ],
+      "photo_targets": [],
+      "reads": [],
+      "files": 1
+    },
+    {
+      "type": "relatedInfo",
+      "label": {
+        "en": "Related info pages",
+        "es": "Páginas relacionadas"
+      },
+      "scope": "page",
+      "pages": [
+        "infoDetail"
+      ],
+      "data": {
+        "site_keys": [],
+        "ctx": "info",
+        "params": null,
+        "into": null,
+        "kind": null,
+        "fallback": false
+      },
+      "variants": [],
+      "fields": [
+        {
+          "path": "info.slug",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "info.title",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "info.description",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "info.hero.h1",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "info.hero.subhead",
+          "kind": "text",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "info.intro",
+          "kind": "list",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "info.sections",
+          "kind": "list",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "info.faqs",
+          "kind": "list",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "info.relatedInfo",
+          "kind": "list",
+          "required": true,
+          "of": "page"
+        },
+        {
+          "path": "info.relatedServices",
+          "kind": "list",
+          "required": true,
+          "of": "page"
+        }
+      ],
+      "photo_targets": [],
+      "reads": [],
+      "files": 1
+    },
+    {
+      "type": "servicesIndex",
+      "label": {
+        "en": "All services",
+        "es": "Todos los servicios"
+      },
+      "scope": "site",
+      "pages": [
+        "servicesIndex"
+      ],
+      "data": {
+        "site_keys": [
+          "SERVICES"
+        ],
+        "ctx": null,
+        "params": "services",
+        "into": [
+          "SERVICES"
+        ],
+        "kind": "array",
+        "fallback": false
+      },
+      "variants": [],
+      "fields": [
+        {
+          "path": "SERVICES[].slug",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "SERVICES[].name",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "SERVICES[].displayName",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "SERVICES[].short",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "SERVICES[].tagline",
+          "kind": "text",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "SERVICES[].published",
+          "kind": "boolean",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "SERVICES[].paged",
+          "kind": "boolean",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "SERVICES[].action",
+          "kind": "enum",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "SERVICES[].id",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        }
+      ],
+      "photo_targets": [],
+      "reads": [],
+      "files": 1
+    },
+    {
+      "type": "areasIndex",
+      "label": {
+        "en": "All service areas",
+        "es": "Todas las zonas"
+      },
+      "scope": "site",
+      "pages": [
+        "areasIndex"
+      ],
+      "data": {
+        "site_keys": [
+          "AREAS"
+        ],
+        "ctx": null,
+        "params": "areas",
+        "into": [
+          "AREAS"
+        ],
+        "kind": "array",
+        "fallback": false
+      },
+      "variants": [],
+      "fields": [
+        {
+          "path": "AREAS[].slug",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "AREAS[].name",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "AREAS[].tier",
+          "kind": "enum",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "AREAS[].zipCodes",
+          "kind": "list",
+          "required": false,
+          "of": "item"
+        }
+      ],
+      "photo_targets": [],
+      "reads": [],
+      "files": 1
+    },
+    {
+      "type": "reviewsIndex",
+      "label": {
+        "en": "All reviews",
+        "es": "Todas las reseñas"
+      },
+      "scope": "site",
+      "pages": [
+        "reviews"
+      ],
+      "data": {
+        "site_keys": [
+          "REVIEWS"
+        ],
+        "ctx": null,
+        "params": null,
+        "into": null,
+        "kind": null,
+        "fallback": false
+      },
+      "variants": [],
+      "fields": [
+        {
+          "path": "REVIEWS[].id",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "REVIEWS[].text",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "REVIEWS[].author",
+          "kind": "text",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "REVIEWS[].rating",
+          "kind": "number",
+          "required": true,
+          "of": "item"
+        },
+        {
+          "path": "REVIEWS[].location",
+          "kind": "text",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "REVIEWS[].service",
+          "kind": "text",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "REVIEWS[].date",
+          "kind": "text",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "REVIEWS[].source",
+          "kind": "enum",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "REVIEWS[].avatar",
+          "kind": "image",
+          "required": false,
+          "of": "item"
+        }
+      ],
+      "photo_targets": [
+        "REVIEWS[].avatar"
+      ],
+      "reads": [],
+      "files": 1
+    },
+    {
+      "type": "contactForm",
+      "label": {
+        "en": "Contact form",
+        "es": "Formulario de contacto"
+      },
+      "scope": "chrome",
+      "pages": [
+        "contact"
+      ],
+      "data": {
+        "site_keys": [
+          "phone",
+          "email",
+          "address",
+          "hours"
+        ],
+        "ctx": null,
+        "params": null,
+        "into": null,
+        "kind": null,
+        "fallback": true
+      },
+      "variants": [],
+      "fields": [
+        {
+          "path": "phone",
+          "kind": "text",
+          "required": false,
+          "of": "site"
+        },
+        {
+          "path": "email",
+          "kind": "text",
+          "required": false,
+          "of": "site"
+        },
+        {
+          "path": "address.street",
+          "kind": "text",
+          "required": false,
+          "of": "site"
+        },
+        {
+          "path": "address.city",
+          "kind": "text",
+          "required": false,
+          "of": "site"
+        },
+        {
+          "path": "address.state",
+          "kind": "text",
+          "required": false,
+          "of": "site"
+        },
+        {
+          "path": "address.zip",
+          "kind": "text",
+          "required": false,
+          "of": "site"
+        },
+        {
+          "path": "hours",
+          "kind": "text",
+          "required": false,
+          "of": "site"
+        }
+      ],
+      "photo_targets": [],
+      "reads": [],
+      "files": 0
+    }
+  ],
+  "chrome": [
+    {
+      "path": "name",
+      "kind": "text",
+      "required": false
+    },
+    {
+      "path": "logo_url",
+      "kind": "url",
+      "required": false
+    },
+    {
+      "path": "logo_light_url",
+      "kind": "url",
+      "required": false
+    },
+    {
+      "path": "domain",
+      "kind": "url",
+      "required": false
+    },
+    {
+      "path": "phone",
+      "kind": "text",
+      "required": false
+    },
+    {
+      "path": "phoneDisplay",
+      "kind": "text",
+      "required": false
+    },
+    {
+      "path": "email",
+      "kind": "text",
+      "required": false
+    },
+    {
+      "path": "address.street",
+      "kind": "text",
+      "required": false
+    },
+    {
+      "path": "address.city",
+      "kind": "text",
+      "required": false
+    },
+    {
+      "path": "address.state",
+      "kind": "text",
+      "required": false
+    },
+    {
+      "path": "address.zip",
+      "kind": "text",
+      "required": false
+    },
+    {
+      "path": "hours",
+      "kind": "text",
+      "required": false
+    },
+    {
+      "path": "tagline",
+      "kind": "text",
+      "required": false
+    },
+    {
+      "path": "description",
+      "kind": "text",
+      "required": false
+    },
+    {
+      "path": "social.instagram",
+      "kind": "url",
+      "required": false
+    },
+    {
+      "path": "social.facebook",
+      "kind": "url",
+      "required": false
+    },
+    {
+      "path": "social.yelp",
+      "kind": "url",
+      "required": false
+    },
+    {
+      "path": "social.google",
+      "kind": "url",
+      "required": false
+    },
+    {
+      "path": "headerCtaLabel",
+      "kind": "text",
+      "required": false
+    }
+  ],
+  "image_slots": [
+    {
+      "id": "hero",
+      "path": "hero.image_url",
+      "per": "site"
+    },
+    {
+      "id": "editorial",
+      "path": "EDITORIAL_IMAGE",
+      "per": "site"
+    },
+    {
+      "id": "service",
+      "path": "SERVICE_IMAGES[slug]",
+      "per": "service"
+    },
+    {
+      "id": "area",
+      "path": "AREA_IMAGES[slug]",
+      "per": "area"
+    },
+    {
+      "id": "page",
+      "path": "PAGE_IMAGES[slug]",
+      "per": "infoPage"
+    }
+  ],
+  "custom_pages": {
+    "ref": [
+      {
+        "path": "slug",
+        "kind": "text",
+        "required": true
+      },
+      {
+        "path": "title",
+        "kind": "text",
+        "required": true
+      },
+      {
+        "path": "nav",
+        "kind": "boolean",
+        "required": false
+      }
+    ],
+    "data": [
+      {
+        "path": "slug",
+        "kind": "text",
+        "required": true
+      },
+      {
+        "path": "title",
+        "kind": "text",
+        "required": true
+      },
+      {
+        "path": "description",
+        "kind": "text",
+        "required": true
+      },
+      {
+        "path": "intro.eyebrow",
+        "kind": "text",
+        "required": false
+      },
+      {
+        "path": "intro.heading",
+        "kind": "text",
+        "required": true
+      },
+      {
+        "path": "intro.body",
+        "kind": "text",
+        "required": false
+      },
+      {
+        "path": "layout",
+        "kind": "list",
+        "required": true
+      }
+    ],
+    "block": [
+      {
+        "path": "id",
+        "kind": "text",
+        "required": false
+      },
+      {
+        "path": "type",
+        "kind": "text",
+        "required": true
+      },
+      {
+        "path": "variant",
+        "kind": "text",
+        "required": false
+      },
+      {
+        "path": "params",
+        "kind": "text",
+        "required": false
+      }
+    ]
+  }
+}
