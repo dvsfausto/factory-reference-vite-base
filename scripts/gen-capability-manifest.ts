@@ -1,3 +1,5 @@
+// @ts-nocheck — a Node-run generator (node scripts/gen-capability-manifest.ts): its relative imports carry .ts extensions for Node's
+// type stripping, which tsc --noEmit (part of `build`, run on every factory build) rejects (TS5097). This file is not part of the site.
 // gen:capability — THE CAPABILITY MANIFEST, generated from the templates' own catalog (website-surface arc,
 // Stage 1, 2026-09-16). One JSON that says, for every block the renderer knows: what it is called, where it may
 // go, what data it reads, which layout variants it has, which fields (text / image / list / money…) that data has,
