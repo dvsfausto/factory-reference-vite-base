@@ -479,7 +479,7 @@ export function Header() {
         {structure === "standard" && (
           <div className="container-x flex items-center justify-between h-20">
             <Link to="/" className="focus-ring rounded-md" aria-label={`${SITE.name} ${tr('nav.homeLink')}`}>
-              <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} height={44} alt={SITE.name} />
+              <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={44} alt={SITE.name} />
             </Link>
             <nav className="hidden lg:flex items-center gap-1" aria-label={tr('nav.ariaPrimary')}>
               {navLinks()}
@@ -500,7 +500,7 @@ export function Header() {
           <div className="container-x">
             <div className="flex lg:hidden items-center justify-between h-20">
               <Link to="/" className="focus-ring rounded-md" aria-label={`${SITE.name} ${tr('nav.homeLink')}`}>
-                <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} height={40} alt={SITE.name} />
+                <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={40} alt={SITE.name} />
               </Link>
               {mobileTrigger}
             </div>
@@ -510,7 +510,7 @@ export function Header() {
                   {cityLine || SITE.hours}
                 </div>
                 <Link to="/" className="justify-self-center focus-ring rounded-md" aria-label={`${SITE.name} ${tr('nav.homeLink')}`}>
-                  <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} height={46} alt={SITE.name} />
+                  <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={46} alt={SITE.name} />
                 </Link>
                 <div className="justify-self-end flex items-center gap-4">
                   {phoneCluster}
@@ -544,7 +544,7 @@ export function Header() {
             </div>
             <div className="container-x flex items-center justify-between h-[72px]">
               <Link to="/" className="focus-ring rounded-md" aria-label={`${SITE.name} ${tr('nav.homeLink')}`}>
-                <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} height={42} alt={SITE.name} />
+                <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={42} alt={SITE.name} />
               </Link>
               <nav className="hidden lg:flex items-center gap-1" aria-label={tr('nav.ariaPrimary')}>
                 {navLinks()}
@@ -561,7 +561,7 @@ export function Header() {
       {open && (
         <div className={`fixed inset-0 z-[60] ${t.mobilePanel} lg:hidden overflow-y-auto`}>
           <div className="container-x flex items-center justify-between h-20">
-            <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} height={40} alt={SITE.name} />
+            <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={40} alt={SITE.name} />
             <button onClick={() => setOpen(false)} aria-label={tr('nav.closeMenu')} className={`p-2 focus-ring rounded-md ${t.menuIcon}`}>
               <X className="h-6 w-6" />
             </button>

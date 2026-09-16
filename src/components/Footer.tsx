@@ -168,7 +168,7 @@ function BottomBar({ t }: { t: FooterTheme }) {
 function LogoTagline({ t }: { t: FooterTheme }) {
   return (
     <div>
-      <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} height={48} alt={SITE.name} />
+      <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={48} alt={SITE.name} />
       {SITE.tagline && <p className={`mt-4 text-sm ${t.tagline} leading-relaxed font-display italic`}>{SITE.tagline}</p>}
       <div className="mt-5"><SocialRow t={t} /></div>
     </div>
@@ -204,7 +204,7 @@ function FooterEditorial({ t }: { t: FooterTheme }) {
       <div className="container-x py-section">
         {/* Masthead: wordmark left, small-caps place/phone right, over a hairline. */}
         <div className={`flex flex-wrap items-end justify-between gap-6 border-b ${t.border} pb-8`}>
-          <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} height={52} alt={SITE.name} />
+          <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={52} alt={SITE.name} />
           <span className={`${capLabel} ${t.tagline}`}>{[loc, SITE.phoneDisplay].filter(Boolean).join("  ·  ")}</span>
         </div>
 
@@ -274,7 +274,7 @@ function FooterMinimal({ t }: { t: FooterTheme }) {
           {/* Logo + tagline: the minimal footer still carries SITE.tagline (footer.tagline is an
               editor-editable field — dropping it silently no-op'd owner edits). Kept to one tight line. */}
           <div>
-            <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} height={40} alt={SITE.name} />
+            <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={40} alt={SITE.name} />
             {SITE.tagline && <p className={`mt-3 max-w-xs text-sm ${t.tagline} leading-relaxed font-display italic`}>{SITE.tagline}</p>}
           </div>
           <nav className={`flex flex-wrap gap-x-7 gap-y-2 text-xs font-semibold uppercase tracking-[0.12em] ${t.listText}`}>

@@ -6,9 +6,29 @@ type Props = {
   className?: string;
   light?: boolean;
   height?: number;
+  /**
+   * Footer arc (2026-09-16): the LIGHT/KNOCKOUT logo variant (SITE.logo_light_url).
+   * When the chrome is dark (`light`) AND a knockout exists, we render IT directly —
+   * a purpose-made light mark that reads on dark and needs no filter. This is the
+   * ground-aware rule the email frames use (wow compositor: dark ground → knockout),
+   * and it is strictly better than inverting: an invert turns an opaque colour logo
+   * into a white box. With no knockout, behaviour is byte-identical to before (the
+   * colour logo with the transparent-only invert + opaque guard).
+   */
+  lightSrc?: string;
 };
 
-export function Logo({ src, alt = "Logo", className = "", light = false, height = 40 }: Props) {
+export function Logo({ src, alt = "Logo", className = "", light = false, height = 40, lightSrc }: Props) {
+  // On dark chrome, prefer the knockout: render it as-is (no filter). Fall through
+  // to the colour logo + invert guard only when there is no knockout.
+  const knockout = light && lightSrc ? lightSrc : "";
+  if (knockout) {
+    return (
+      <div className={`flex items-center ${className}`}>
+        <img src={knockout} alt={alt} height={height} style={{ height, width: "auto" }} />
+      </div>
+    );
+  }
   // RENDER GUARD (footer white-box). `brightness(0) invert(1)` whitens a dark logo so it reads on the
   // dark footer — but it turns a logo with a BAKED OPAQUE background (an uploaded screenshot, a JPEG,
   // a white-bg PNG) into a solid WHITE BOX. Default to the historical behaviour (invert when `light`)
