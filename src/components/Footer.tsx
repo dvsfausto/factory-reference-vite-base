@@ -159,6 +159,11 @@ function BottomBar({ t }: { t: FooterTheme }) {
           {LEGAL_PAGES.map((p) => (
             <Link key={p.slug} to="/p/$slug" params={{ slug: p.slug }} className={t.bottomHover}>{p.title}</Link>
           ))}
+          {/* ★ 2026-09-16: the site now records engagement and a daily visitor code, so it says so. The
+              built-in /privacy statement links here unless the owner made their own privacy page. */}
+          {!LEGAL_PAGES.some((p) => /privacy|privacidad/i.test(p.slug)) && (
+            <Link to="/privacy" className={t.bottomHover}>{tr('footer.privacy')}</Link>
+          )}
           <a href="/sitemap.xml" className={t.bottomHover}>{tr('footer.sitemap')}</a>
         </div>
       </div>

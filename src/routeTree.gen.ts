@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ReviewsRouteImport } from './routes/reviews'
 import { Route as QuoteRouteImport } from './routes/quote'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as BookRouteImport } from './routes/book'
@@ -31,6 +32,11 @@ const ReviewsRoute = ReviewsRouteImport.update({
 const QuoteRoute = QuoteRouteImport.update({
   id: '/quote',
   path: '/quote',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PricingRoute = PricingRouteImport.update({
@@ -95,6 +101,7 @@ export interface FileRoutesByFullPath {
   '/book': typeof BookRoute
   '/contact': typeof ContactRoute
   '/pricing': typeof PricingRoute
+  '/privacy': typeof PrivacyRoute
   '/quote': typeof QuoteRoute
   '/reviews': typeof ReviewsRoute
   '/areas/$slug': typeof AreasSlugRoute
@@ -110,6 +117,7 @@ export interface FileRoutesByTo {
   '/book': typeof BookRoute
   '/contact': typeof ContactRoute
   '/pricing': typeof PricingRoute
+  '/privacy': typeof PrivacyRoute
   '/quote': typeof QuoteRoute
   '/reviews': typeof ReviewsRoute
   '/areas/$slug': typeof AreasSlugRoute
@@ -126,6 +134,7 @@ export interface FileRoutesById {
   '/book': typeof BookRoute
   '/contact': typeof ContactRoute
   '/pricing': typeof PricingRoute
+  '/privacy': typeof PrivacyRoute
   '/quote': typeof QuoteRoute
   '/reviews': typeof ReviewsRoute
   '/areas/$slug': typeof AreasSlugRoute
@@ -143,6 +152,7 @@ export interface FileRouteTypes {
     | '/book'
     | '/contact'
     | '/pricing'
+    | '/privacy'
     | '/quote'
     | '/reviews'
     | '/areas/$slug'
@@ -158,6 +168,7 @@ export interface FileRouteTypes {
     | '/book'
     | '/contact'
     | '/pricing'
+    | '/privacy'
     | '/quote'
     | '/reviews'
     | '/areas/$slug'
@@ -173,6 +184,7 @@ export interface FileRouteTypes {
     | '/book'
     | '/contact'
     | '/pricing'
+    | '/privacy'
     | '/quote'
     | '/reviews'
     | '/areas/$slug'
@@ -189,6 +201,7 @@ export interface RootRouteChildren {
   BookRoute: typeof BookRoute
   ContactRoute: typeof ContactRoute
   PricingRoute: typeof PricingRoute
+  PrivacyRoute: typeof PrivacyRoute
   QuoteRoute: typeof QuoteRoute
   ReviewsRoute: typeof ReviewsRoute
   AreasSlugRoute: typeof AreasSlugRoute
@@ -213,6 +226,13 @@ declare module '@tanstack/react-router' {
       path: '/quote'
       fullPath: '/quote'
       preLoaderRoute: typeof QuoteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/pricing': {
@@ -301,6 +321,7 @@ const rootRouteChildren: RootRouteChildren = {
   BookRoute: BookRoute,
   ContactRoute: ContactRoute,
   PricingRoute: PricingRoute,
+  PrivacyRoute: PrivacyRoute,
   QuoteRoute: QuoteRoute,
   ReviewsRoute: ReviewsRoute,
   AreasSlugRoute: AreasSlugRoute,

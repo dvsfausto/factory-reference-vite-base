@@ -125,11 +125,23 @@ function RootDocument({ children }: { children: React.ReactNode }) {
               `var em=false,wd=false,it=false;try{em=window.top!==window.self}catch(_){em=true}` +
               `try{wd=!!navigator.webdriver}catch(_){}` +
               `try{if(em){localStorage.setItem('zmode_internal','1')}it=localStorage.getItem('zmode_internal')==='1'}catch(_){}` +
-              `function ping(){try{var p=location.pathname+location.search;if(p===last)return;last=p;` +
-              `var f={path:p,referrer:document.referrer||'',embedded:em,webdriver:wd,internal:it};` +
-              `if(k){f.site_key=k}else{f.business_id=b}var body=JSON.stringify(f);` +
+              /* ★★★ ENGAGEMENT (2026-09-16): one more ping per page view, once, when the page has been
+                 VISIBLE for ten seconds in total or the visitor has scrolled. Same view_id as the view, so
+                 the server marks that row engaged. Humans engage, crawlers do not. */
+              `var vid='',eng=false,tm=null,vis=0,vs=0;` +
+              `function send(f){if(k){f.site_key=k}else{f.business_id=b}var body=JSON.stringify(f);` +
               `if(navigator.sendBeacon){navigator.sendBeacon(e,body)}` +
-              `else{fetch(e,{method:'POST',body:body,keepalive:true,headers:{'Content-Type':'application/json'}})}` +
+              `else{fetch(e,{method:'POST',body:body,keepalive:true,headers:{'Content-Type':'application/json'}})}}` +
+              `function engaged(){if(eng||!vid)return;eng=true;if(tm){clearTimeout(tm);tm=null}try{send({view_id:vid,engaged:true})}catch(_){}}` +
+              `function tick(){if(eng||tm||document.visibilityState!=='visible')return;vs=Date.now();` +
+              `tm=setTimeout(function(){tm=null;vis+=Date.now()-vs;if(vis>=10000){engaged()}else{tick()}},Math.max(200,10000-vis))}` +
+              `function arm(){eng=false;vis=0;if(tm){clearTimeout(tm);tm=null}tick()}` +
+              `document.addEventListener('visibilitychange',function(){if(eng)return;if(document.visibilityState==='visible'){tick()}` +
+              `else if(tm){clearTimeout(tm);tm=null;vis+=Date.now()-vs}});` +
+              `addEventListener('scroll',function(){if(window.scrollY>40)engaged()},{passive:true});` +
+              `function ping(){try{var p=location.pathname+location.search;if(p===last)return;last=p;` +
+              `vid=Math.random().toString(36).slice(2,10)+Date.now().toString(36);` +
+              `send({path:p,referrer:document.referrer||'',embedded:em,webdriver:wd,internal:it,view_id:vid});arm()` +
               `}catch(_){}}` +
               `ping();var w=function(t){var o=history[t];if(!o)return;` +
               `history[t]=function(){var r=o.apply(this,arguments);ping();return r}};` +
