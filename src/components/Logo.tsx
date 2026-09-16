@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-
 type Props = {
   src?: string;
   alt?: string;
@@ -7,65 +5,29 @@ type Props = {
   light?: boolean;
   height?: number;
   /**
-   * Footer arc (2026-09-16): the LIGHT/KNOCKOUT logo variant (SITE.logo_light_url).
-   * When the chrome is dark (`light`) AND a knockout exists, we render IT directly —
-   * a purpose-made light mark that reads on dark and needs no filter. This is the
-   * ground-aware rule the email frames use (wow compositor: dark ground → knockout),
-   * and it is strictly better than inverting: an invert turns an opaque colour logo
-   * into a white box. With no knockout, behaviour is byte-identical to before (the
-   * colour logo with the transparent-only invert + opaque guard).
+   * The LIGHT/KNOCKOUT logo variant (SITE.logo_light_url). A GENUINELY distinct knockout
+   * (lightSrc !== src) reads on a dark ground and is rendered as-is. But ~75 of the fleet's
+   * kits are uploaded logos whose light slot is a COPY of the primary — lightSrc === src —
+   * so there is no real knockout and the footer must not pretend there is one.
    */
   lightSrc?: string;
 };
 
+/**
+ * Footer arc (2026-09-16). The footer knows it is on a dark ground (`light`) and measures the
+ * situation against THAT, not a generic "dark":
+ *   1. A distinct knockout exists (lightSrc && lightSrc !== src) → render it; it reads on dark.
+ *   2. No distinct knockout on a dark ground → the only mark we have is the colour/primary logo
+ *      (an uploaded navy mark on a dark-navy footer measures 1.28:1 — invisible). NEITHER variant
+ *      reads on this ground, so put the mark on a light PLATE, exactly as the email frames do.
+ *      The plate is white, so any dark or colour mark clears well past 3:1.
+ *   3. Light ground → the colour logo reads as-is.
+ * Synchronous (no canvas probe), so the decision is baked into the prerendered HTML and needs no JS.
+ * KNOWN EDGE: a rare uploaded logo that is ITSELF light, copied to all slots, would be plated
+ * (light-on-white); uncommon, and a real per-kit knockout backfill is the systemic fix.
+ */
 export function Logo({ src, alt = "Logo", className = "", light = false, height = 40, lightSrc }: Props) {
-  // On dark chrome, prefer the knockout: render it as-is (no filter). Fall through
-  // to the colour logo + invert guard only when there is no knockout.
-  const knockout = light && lightSrc ? lightSrc : "";
-  if (knockout) {
-    return (
-      <div className={`flex items-center ${className}`}>
-        <img src={knockout} alt={alt} height={height} style={{ height, width: "auto" }} />
-      </div>
-    );
-  }
-  // RENDER GUARD (footer white-box). `brightness(0) invert(1)` whitens a dark logo so it reads on the
-  // dark footer — but it turns a logo with a BAKED OPAQUE background (an uploaded screenshot, a JPEG,
-  // a white-bg PNG) into a solid WHITE BOX. Default to the historical behaviour (invert when `light`)
-  // so TRANSPARENT logos render BYTE-IDENTICALLY and never flash; only DISABLE the invert once we detect
-  // the asset is opaque, so a logo that slipped through renders visibly ("ugly rather than blank").
-  // We probe a CLEAN copy — reading the on-page <img> would sample the already-FILTERED pixels.
-  const [opaqueBg, setOpaqueBg] = useState(false);
-  useEffect(() => {
-    if (!src || !light) return; // the invert only applies when `light`; nothing to guard otherwise
-    let cancelled = false;
-    const probe = new Image();
-    probe.crossOrigin = "anonymous"; // required to read cross-origin pixels; denied → caught below
-    probe.onload = () => {
-      try {
-        const w = probe.naturalWidth, h = probe.naturalHeight;
-        if (!w || !h) return;
-        const cv = document.createElement("canvas");
-        cv.width = w;
-        cv.height = h;
-        const ctx = cv.getContext("2d", { willReadFrequently: true });
-        if (!ctx) return;
-        ctx.drawImage(probe, 0, 0);
-        const corners: Array<[number, number]> = [[0, 0], [w - 1, 0], [0, h - 1], [w - 1, h - 1]];
-        const opaque = corners.every(([x, y]) => ctx.getImageData(x, y, 1, 1).data[3] > 250);
-        if (!cancelled && opaque) setOpaqueBg(true);
-      } catch {
-        /* cross-origin taint or no canvas → keep the default (invert): no worse than before */
-      }
-    };
-    probe.src = src;
-    return () => {
-      cancelled = true;
-    };
-  }, [src, light]);
-
-  // No logo asset (e.g. a build with no brand kit) → render the business name as a
-  // text wordmark, never a broken/empty <img>. Keeps logo-less builds branded.
+  // No logo asset → the business name as a text wordmark, never a broken/empty <img>.
   if (!src) {
     return (
       <span
@@ -78,20 +40,43 @@ export function Logo({ src, alt = "Logo", className = "", light = false, height 
       </span>
     );
   }
+
+  const hasKnockout = !!lightSrc && lightSrc !== src;
+
+  // 1. A real knockout on a dark ground: render it directly (no filter).
+  if (light && hasKnockout) {
+    return (
+      <div className={`flex items-center ${className}`}>
+        <img src={lightSrc} alt={alt} height={height} style={{ height, width: "auto" }} />
+      </div>
+    );
+  }
+
+  // 2. Dark ground, no real knockout: neither variant reads → PLATE the mark so it is legible.
+  if (light) {
+    const pad = Math.max(6, Math.round(height * 0.18));
+    return (
+      <div className={`inline-flex items-center ${className}`}>
+        <span
+          style={{
+            background: "#ffffff",
+            borderRadius: Math.round(height * 0.2),
+            padding: `${pad}px ${Math.round(pad * 1.4)}px`,
+            display: "inline-flex",
+            alignItems: "center",
+            lineHeight: 0,
+          }}
+        >
+          <img src={src} alt={alt} height={height} style={{ height, width: "auto" }} />
+        </span>
+      </div>
+    );
+  }
+
+  // 3. Light ground: the colour logo reads as-is.
   return (
     <div className={`flex items-center ${className}`}>
-      <img
-        src={src}
-        alt={alt}
-        height={height}
-        style={{
-          height,
-          width: "auto",
-          // Invert only for a TRANSPARENT logo (opaqueBg=false → byte-identical to before). An opaque
-          // logo keeps its own colours instead of becoming a white box.
-          filter: light && !opaqueBg ? "brightness(0) invert(1)" : undefined,
-        }}
-      />
+      <img src={src} alt={alt} height={height} style={{ height, width: "auto" }} />
     </div>
   );
 }
