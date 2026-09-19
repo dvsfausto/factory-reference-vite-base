@@ -611,6 +611,110 @@ export function tr(key: keyof typeof EN): string {
   return DICT[SITE_LANGUAGE]?.[key] ?? EN[key] ?? (key as string)
 }
 
+// ─────────────────────────────────────────────────────────────────────────────
+// ★★★ CUSTOM-FORM FIELD TEXT (2026-09-19). The contact form's field LABELS and select OPTIONS come
+// from SITE.customForm data (scaffolder copies the template's default fields verbatim — English), while
+// the eyebrow and submit button go through `tr`. That split is why a Spanish site showed a Spanish
+// heading and button over English fields ("Your name", "Phone", "Email"). This maps every TEMPLATE
+// DEFAULT English field string to the site language at RENDER time — so it fixes every current AND
+// future language in one place, with no data migration. An owner who typed their OWN label/option
+// (not a template default) won't match any key and is left exactly as written. English is identity, so
+// an English build is byte-identical. Keyed on the exact trimmed English string.
+const FORM_TEXT: Record<Lang, Record<string, string>> = {
+  en: {},
+  es: {
+    // labels
+    'What are you coming in for?': '¿Qué servicio buscas?',
+    'Anything you have in mind? (a look, a photo you will bring)': '¿Tienes algo en mente? (un look, una foto que traerás)',
+    'Preferred day and time': 'Día y hora preferidos',
+    'Your name': 'Tu nombre',
+    'Phone': 'Teléfono',
+    'Email': 'Correo electrónico',
+    'Service': 'Servicio',
+    'Is this your first visit?': '¿Es tu primera visita?',
+    'Reason for your visit': 'Motivo de tu visita',
+    'Pain level, 1 to 10': 'Nivel de dolor, del 1 al 10',
+    'New or returning patient?': '¿Paciente nuevo o de vuelta?',
+    'Insurance provider': 'Compañía de seguro',
+    'What do you need help with?': '¿En qué necesitas ayuda?',
+    'How soon?': '¿Qué tan pronto?',
+    'Best way to reach you': 'Mejor forma de contactarte',
+    'Project type': 'Tipo de proyecto',
+    'Budget range': 'Rango de presupuesto',
+    'When would you like to start?': '¿Cuándo te gustaría empezar?',
+    'Project address': 'Dirección del proyecto',
+    'Tell us about the project': 'Cuéntanos sobre el proyecto',
+    'What is wrong?': '¿Qué está pasando?',
+    'Is the water shut off?': '¿Está cerrada el agua?',
+    'When did it start?': '¿Cuándo empezó?',
+    'Address': 'Dirección',
+    'Anything else we should know': '¿Algo más que debamos saber?',
+    'What do you need done?': '¿Qué necesitas que hagamos?',
+    'Property type': 'Tipo de propiedad',
+    'Size': 'Tamaño',
+    'Preferred date': 'Fecha preferida',
+    'Details': 'Detalles',
+    'What would you like?': '¿Qué te gustaría ordenar?',
+    'Pickup or delivery?': '¿Recoger o entrega?',
+    'Delivery address': 'Dirección de entrega',
+    'When?': '¿Cuándo?',
+    'Pickup address': 'Dirección de recogida',
+    'Date': 'Fecha',
+    'What is being moved or shipped?': '¿Qué se va a mover o enviar?',
+    'Stairs or elevator at either end?': '¿Escaleras o ascensor en algún extremo?',
+    'What are you looking for?': '¿Qué estás buscando?',
+    'What can we help with?': '¿En qué te podemos ayudar?',
+    // select options
+    '$10k to $25k': '$10k a $25k',
+    '$25k to $50k': '$25k a $50k',
+    'A few days ago': 'Hace unos días',
+    'Addition': 'Ampliación',
+    'Apartment or condo': 'Apartamento o condominio',
+    'As soon as possible': 'Lo antes posible',
+    'Bathroom': 'Baño',
+    'Both': 'Ambos',
+    'Delivery': 'Entrega',
+    'Elevator': 'Ascensor',
+    'Exterior': 'Exterior',
+    'Ground floor both ends': 'Planta baja en ambos extremos',
+    'House': 'Casa',
+    'Just now': 'Justo ahora',
+    'Just planning': 'Solo estoy planeando',
+    'Kitchen': 'Cocina',
+    'Large': 'Grande',
+    'Leak or burst pipe': 'Fuga o tubería rota',
+    'Locked out': 'Me quedé afuera',
+    'Medium': 'Mediano',
+    'New patient': 'Paciente nuevo',
+    'No heat or cooling': 'Sin calefacción ni aire',
+    'No water': 'Sin agua',
+    'Not urgent': 'No urgente',
+    'Office': 'Oficina',
+    'Other': 'Otro',
+    'Over $50k': 'Más de $50k',
+    'Pickup': 'Recoger',
+    'Power out': 'Sin electricidad',
+    'Returning patient': 'Paciente de vuelta',
+    'Small': 'Pequeño',
+    'Stairs': 'Escaleras',
+    'Text': 'Mensaje de texto',
+    'This month': 'Este mes',
+    'This week': 'Esta semana',
+    'Today': 'Hoy',
+    'Under $10k': 'Menos de $10k',
+    'Whole home': 'Casa completa',
+    'Within 3 months': 'En 3 meses',
+    'Within a year': 'En un año',
+  },
+}
+
+/** Translate a custom-form field label / select option to the site language. Unknown string (an owner's
+ *  own wording) or English site → returned unchanged. */
+export function trFormText(s: string | null | undefined): string {
+  if (!s) return s ?? ''
+  return FORM_TEXT[SITE_LANGUAGE]?.[s.trim()] ?? s
+}
+
 // Localized month + weekday short names for the BookingWizard calendar. Index-aligned to JS getMonth()/
 // getDay(). English values are today's exact literals.
 export const MONTHS_SHORT: Record<Lang, readonly string[]> = {

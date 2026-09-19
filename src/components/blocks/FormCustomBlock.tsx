@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react'
-import { tr } from '~/lib/i18n'
+import { tr, trFormText } from '~/lib/i18n'
 import { BUSINESS_ID, SITE, SUPABASE_URL } from '~/data/site'
 import { hasPhone } from '~/lib/phone'
 import { useCustomForm, type FormField } from '~/lib/useCustomForm'
@@ -99,17 +99,17 @@ function CustomForm({
     const id = `cf-${f.name}`
     switch (f.type) {
       case 'textarea':
-        return <Textarea key={f.name} label={f.label} name={f.name} required={f.required} rows={4} placeholder={f.placeholder} />
+        return <Textarea key={f.name} label={trFormText(f.label)} name={f.name} required={f.required} rows={4} placeholder={trFormText(f.placeholder)} />
       case 'select':
       case 'yesno': {
         const options = f.type === 'yesno' ? [tr('form.yes'), tr('form.no')] : (f.options ?? [])
         return (
           <label key={f.name} className="block">
-            <span className="font-display text-sm font-medium text-fam-ink">{f.label} {f.required && <span className="text-fam-accent-text">*</span>}</span>
+            <span className="font-display text-sm font-medium text-fam-ink">{trFormText(f.label)} {f.required && <span className="text-fam-accent-text">*</span>}</span>
             <select id={id} name={f.name} required={f.required} value={values[f.name] ?? ''} onChange={(e) => set(f.name, e.target.value)}
               className="mt-2 w-full rounded-xl border border-fam-hairline bg-fam-card px-4 py-3 text-base text-fam-ink outline-none focus:border-fam-accent focus:ring-1 focus:ring-fam-accent">
-              <option value="">{f.placeholder ?? tr('form.choose')}</option>
-              {options.map((o) => <option key={o} value={o}>{o}</option>)}
+              <option value="">{trFormText(f.placeholder) || tr('form.choose')}</option>
+              {options.map((o) => <option key={o} value={o}>{f.type === 'yesno' ? o : trFormText(o)}</option>)}
             </select>
           </label>
         )
@@ -118,19 +118,19 @@ function CustomForm({
         return (
           <label key={f.name} className="flex items-center gap-3">
             <input id={id} type="checkbox" name={f.name} required={f.required} className="h-4 w-4 rounded border-fam-hairline accent-fam-accent" onChange={(e) => set(f.name, e.target.checked ? 'on' : '')} />
-            <span className="text-sm text-fam-ink">{f.label}</span>
+            <span className="text-sm text-fam-ink">{trFormText(f.label)}</span>
           </label>
         )
       case 'number':
         return (
           <label key={f.name} className="block">
-            <span className="font-display text-sm font-medium text-fam-ink">{f.label} {f.required && <span className="text-fam-accent-text">*</span>}</span>
-            <input id={id} type="number" name={f.name} required={f.required} min={f.min} max={f.max} placeholder={f.placeholder} onChange={(e) => set(f.name, e.target.value)}
+            <span className="font-display text-sm font-medium text-fam-ink">{trFormText(f.label)} {f.required && <span className="text-fam-accent-text">*</span>}</span>
+            <input id={id} type="number" name={f.name} required={f.required} min={f.min} max={f.max} placeholder={trFormText(f.placeholder)} onChange={(e) => set(f.name, e.target.value)}
               className="mt-2 w-full rounded-xl border border-fam-hairline bg-fam-card px-4 py-3 text-base text-fam-ink outline-none placeholder:text-fam-ink-faint focus:border-fam-accent focus:ring-1 focus:ring-fam-accent" />
           </label>
         )
       default:
-        return <Field key={f.name} label={f.label} name={f.name} type={f.type === 'date' ? 'date' : f.type} required={f.required} placeholder={f.placeholder} autoComplete={f.type === 'email' ? 'email' : f.type === 'tel' ? 'tel' : undefined} />
+        return <Field key={f.name} label={trFormText(f.label)} name={f.name} type={f.type === 'date' ? 'date' : f.type} required={f.required} placeholder={trFormText(f.placeholder)} autoComplete={f.type === 'email' ? 'email' : f.type === 'tel' ? 'tel' : undefined} />
     }
   }
 
