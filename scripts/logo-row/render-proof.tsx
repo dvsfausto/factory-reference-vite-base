@@ -27,10 +27,15 @@ for (const name of names) {
   const mod = await import(`../../src/components/blocks/${name}.tsx`)
   const html = await inRouter(() => createElement(mod[name] as never, { site: { ...SITE, partners } } as never))
   const cls = [...html.matchAll(/<img[^>]*src="https:\/\/x\/[^"]*"[^>]*class="([^"]+)"/g)].map((m) => m[1]!)
+  /* ★ the owner's colour choice (partner_logo_colour): default = the grey row exactly as before; "full" = no grey, same box */
+  const fullHtml = await inRouter(() => createElement(mod[name] as never, { site: { ...SITE, partners, partnersLogoColor: 'full' } } as never))
+  const fullCls = [...fullHtml.matchAll(/<img[^>]*src="https:\/\/x\/[^"]*"[^>]*class="([^"]+)"/g)].map((m) => m[1]!)
+  const greyByDefault = cls.every((c) => /\bgrayscale\b/.test(c))
+  const fullColour = fullCls.length === partners.length && fullCls.every((c) => !/grayscale|opacity-/.test(c)) && fullCls.every((c, i) => c.match(/\bh-\d+ w-\d+\b/)?.[0] === cls[i]?.match(/\bh-\d+ w-\d+\b/)?.[0])
   const sizes = cls.map((c) => `${c.match(/\bh-\d+\b/)?.[0] ?? '?'} ${c.match(/\bw-(\d+|auto)\b/)?.[0] ?? '?'} ${/\bobject-contain\b/.test(c) ? 'contain' : 'NO-contain'}`)
-  const ok = cls.length === partners.length && new Set(sizes).size === 1 && !/w-auto|\?|NO-contain/.test(sizes[0] ?? '?')
+  const ok = cls.length === partners.length && new Set(sizes).size === 1 && !/w-auto|\?|NO-contain/.test(sizes[0] ?? '?') && greyByDefault && fullColour
   if (!ok) bad++
-  console.log(`${ok ? 'ok  ' : 'FAIL'} ${name.padEnd(24)} ${cls.length} logos · ${[...new Set(sizes)].join(' | ')}`)
+  console.log(`${ok ? 'ok  ' : 'FAIL'} ${name.padEnd(24)} ${cls.length} logos · ${[...new Set(sizes)].join(' | ')} · default ${greyByDefault ? 'grey' : 'NOT grey'} · full ${fullColour ? 'colour, same box' : 'WRONG'}`)
 }
 console.log(bad ? `\n${bad} FAILED` : `\nall ${names.length} pass`)
 process.exit(bad ? 1 : 0)

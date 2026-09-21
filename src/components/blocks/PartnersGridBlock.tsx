@@ -25,6 +25,8 @@ export function PartnersGridBlock({
 }) {
   const partners = (site as { partners?: Partner[] }).partners
   if (!partners || partners.length === 0) return null
+  /* ★ the owner's choice, set by asking (partner_logo_colour): "full" = full colour; absent = the grey row, as before */
+  const full = (site as { partnersLogoColor?: string }).partnersLogoColor === 'full'
   return (
     <section className="bg-fam-surface-2">
       <div className="container-x py-section">
@@ -40,7 +42,7 @@ export function PartnersGridBlock({
           {partners.map((p, i) => (
             <div key={`${p.name}-${i}`} className="flex min-h-[120px] items-center justify-center bg-fam-card p-8">
               {p.logo ? (
-                <img src={p.logo} alt={p.name} loading="lazy" className="h-10 w-32 object-contain object-center opacity-70 grayscale transition-all hover:opacity-100 hover:grayscale-0" />
+                <img src={p.logo} alt={p.name} loading="lazy" className={`h-10 w-32 object-contain object-center ${full ? "" : "opacity-70 grayscale transition-all hover:opacity-100 hover:grayscale-0"}`.trim()} />
               ) : (
                 <span className="font-display text-lg font-semibold tracking-tight text-fam-ink-muted">{p.name}</span>
               )}

@@ -23,6 +23,8 @@ export function PartnersStripBlock({
 }) {
   const partners = (site as { partners?: Partner[] }).partners
   if (!partners || partners.length === 0) return null
+  /* ★ the owner's choice, set by asking (partner_logo_colour): "full" = full colour; absent = the grey row, as before */
+  const full = (site as { partnersLogoColor?: string }).partnersLogoColor === 'full'
   return (
     <section className="border-y border-fam-hairline bg-fam-card">
       <div className="container-x py-band">
@@ -31,7 +33,7 @@ export function PartnersStripBlock({
           <div className="flex flex-1 flex-wrap items-center justify-center gap-x-10 gap-y-5 md:justify-between">
             {partners.map((p, i) =>
               p.logo ? (
-                <img key={`${p.name}-${i}`} src={p.logo} alt={p.name} loading="lazy" className="h-8 w-28 object-contain object-center opacity-60 grayscale transition-all hover:opacity-100 hover:grayscale-0" />
+                <img key={`${p.name}-${i}`} src={p.logo} alt={p.name} loading="lazy" className={`h-8 w-28 object-contain object-center ${full ? "" : "opacity-60 grayscale transition-all hover:opacity-100 hover:grayscale-0"}`.trim()} />
               ) : (
                 <span key={`${p.name}-${i}`} className="font-display text-base font-semibold uppercase tracking-[0.1em] text-fam-ink-muted">{p.name}</span>
               ),

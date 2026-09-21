@@ -26,6 +26,8 @@ export function PartnersWithTextBlock({
 }) {
   const partners = (site as { partners?: Partner[] }).partners
   if (!partners || partners.length === 0) return null
+  /* ★ the owner's choice, set by asking (partner_logo_colour): "full" = full colour; absent = the grey row, as before */
+  const full = (site as { partnersLogoColor?: string }).partnersLogoColor === 'full'
   return (
     <section className="bg-fam-card">
       <div className="container-x py-section">
@@ -42,7 +44,7 @@ export function PartnersWithTextBlock({
             {partners.map((p, i) => (
               <div key={`${p.name}-${i}`} className="flex h-20 items-center justify-center rounded-2xl border border-fam-hairline bg-fam-card p-5">
                 {p.logo ? (
-                  <img src={p.logo} alt={p.name} loading="lazy" className="h-9 w-28 object-contain object-center opacity-70 grayscale transition-all hover:opacity-100 hover:grayscale-0" />
+                  <img src={p.logo} alt={p.name} loading="lazy" className={`h-9 w-28 object-contain object-center ${full ? "" : "opacity-70 grayscale transition-all hover:opacity-100 hover:grayscale-0"}`.trim()} />
                 ) : (
                   <span className="text-center font-display text-base font-semibold tracking-tight text-fam-ink-muted">{p.name}</span>
                 )}
