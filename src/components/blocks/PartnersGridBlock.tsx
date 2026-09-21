@@ -9,6 +9,9 @@ import { SITE } from '~/data/site'
 // TOKEN DISCIPLINE: accent -> fam-accent-* (DNA) 50/100/600/700. Radius -> rounded-*
 // (DNA). Font -> font-display (DNA). Cool surface component-owned (#F8FAFC / white
 // cells / hairline #E6E8EC). No CTA by design. Never bg-brand-* / .btn.
+/* ★ ONE BOX PER LOGO (the owner, 2026-09-21): every logo in the row draws at one height AND one width, the file
+   CONTAINED inside it (object-contain) — a wide wordmark and a square mark take the same space, whatever the file's
+   pixel size. It was `w-auto`: the width followed each file, so a row of real partner logos never lined up. */
 export function PartnersGridBlock({
   site = SITE,
   label = tr('section.partners'),
@@ -37,7 +40,7 @@ export function PartnersGridBlock({
           {partners.map((p, i) => (
             <div key={`${p.name}-${i}`} className="flex min-h-[120px] items-center justify-center bg-fam-card p-8">
               {p.logo ? (
-                <img src={p.logo} alt={p.name} loading="lazy" className="h-10 w-auto opacity-70 grayscale transition-all hover:opacity-100 hover:grayscale-0" />
+                <img src={p.logo} alt={p.name} loading="lazy" className="h-10 w-32 object-contain object-center opacity-70 grayscale transition-all hover:opacity-100 hover:grayscale-0" />
               ) : (
                 <span className="font-display text-lg font-semibold tracking-tight text-fam-ink-muted">{p.name}</span>
               )}

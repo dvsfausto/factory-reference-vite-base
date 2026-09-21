@@ -18,6 +18,7 @@
     "test:contrast-sweep": "tsx scripts/test-contrast-sweep.ts",
     "lint:decor": "node scripts/check-shared-decor.mjs",
     "lint:optional-copy": "node scripts/check-optional-copy.mjs",
+    "test:logo-row": "NODE_OPTIONS='--import ./scripts/optional-copy/asset-register.mjs' npx -y tsx --tsconfig tsconfig.json scripts/logo-row/render-proof.tsx",
     "test:optional-copy": "NODE_OPTIONS='--import ./scripts/optional-copy/asset-register.mjs' npx -y tsx --tsconfig tsconfig.json scripts/optional-copy/render-proof.tsx",
     "gen:capability": "node scripts/gen-capability-manifest.ts",
     "lint:capability": "node scripts/gen-capability-manifest.ts --check"

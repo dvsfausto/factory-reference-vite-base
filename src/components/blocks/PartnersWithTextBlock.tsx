@@ -10,6 +10,9 @@ import { SITE } from '~/data/site'
 // TOKEN DISCIPLINE: accent -> fam-accent-* (DNA) 50/100/600/700. Radius -> rounded-*
 // (DNA). Font -> font-display (DNA). Light surface component-owned (white / slate /
 // #E6E8EC). No CTA by design. Never bg-brand-* / .btn.
+/* ★ ONE BOX PER LOGO (the owner, 2026-09-21): every logo in the row draws at one height AND one width, the file
+   CONTAINED inside it (object-contain) — a wide wordmark and a square mark take the same space, whatever the file's
+   pixel size. It was `w-auto`: the width followed each file, so a row of real partner logos never lined up. */
 export function PartnersWithTextBlock({
   site = SITE,
   label = tr('section.partners'),
@@ -39,7 +42,7 @@ export function PartnersWithTextBlock({
             {partners.map((p, i) => (
               <div key={`${p.name}-${i}`} className="flex h-20 items-center justify-center rounded-2xl border border-fam-hairline bg-fam-card p-5">
                 {p.logo ? (
-                  <img src={p.logo} alt={p.name} loading="lazy" className="h-9 w-auto opacity-70 grayscale transition-all hover:opacity-100 hover:grayscale-0" />
+                  <img src={p.logo} alt={p.name} loading="lazy" className="h-9 w-28 object-contain object-center opacity-70 grayscale transition-all hover:opacity-100 hover:grayscale-0" />
                 ) : (
                   <span className="text-center font-display text-base font-semibold tracking-tight text-fam-ink-muted">{p.name}</span>
                 )}

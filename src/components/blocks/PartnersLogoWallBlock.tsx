@@ -9,6 +9,9 @@ import { SITE } from '~/data/site'
 // TOKEN DISCIPLINE: accent -> fam-accent-* (DNA) 50/100/600/700. Radius -> rounded-*
 // (DNA). Font -> font-display (DNA). Light surface component-owned (white / slate).
 // No CTA by design. Never bg-brand-* / .btn.
+/* ★ ONE BOX PER LOGO (the owner, 2026-09-21): every logo in the row draws at one height AND one width, the file
+   CONTAINED inside it (object-contain) — a wide wordmark and a square mark take the same space, whatever the file's
+   pixel size. It was `w-auto`: the width followed each file, so a row of real partner logos never lined up. */
 export function PartnersLogoWallBlock({
   site = SITE,
   label = tr('section.partners'),
@@ -36,7 +39,7 @@ export function PartnersLogoWallBlock({
         <div className="mt-12 flex flex-wrap items-center justify-center gap-x-12 gap-y-10">
           {partners.map((p, i) =>
             p.logo ? (
-              <img key={`${p.name}-${i}`} src={p.logo} alt={p.name} loading="lazy" className="h-10 w-auto opacity-70 grayscale transition-all hover:opacity-100 hover:grayscale-0" />
+              <img key={`${p.name}-${i}`} src={p.logo} alt={p.name} loading="lazy" className="h-10 w-32 object-contain object-center opacity-70 grayscale transition-all hover:opacity-100 hover:grayscale-0" />
             ) : (
               <span key={`${p.name}-${i}`} className="font-display text-xl font-semibold tracking-tight text-fam-ink-muted transition-colors hover:text-fam-ink">{p.name}</span>
             ),
