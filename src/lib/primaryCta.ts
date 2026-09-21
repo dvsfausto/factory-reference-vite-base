@@ -61,3 +61,14 @@ export function primaryCta(): { href: string; label: string } {
   // A partial override (only href OR only label) still wins for the field it sets.
   return { href: override?.href ?? base.href, label: override?.label ?? base.label }
 }
+
+/**
+ * The owner's OWN link for the main button: SITE.cta.href when it points at another site (an absolute
+ * https URL the owner set by asking, editor field cta.href), else undefined. The default closing band
+ * (CTASection) targets /contact rather than primaryCta(), so it reads this to follow an owner link too;
+ * with no owner link it keeps /contact, byte-identical.
+ */
+export function ownerCtaLink(): string | undefined {
+  const href = (SITE as { cta?: { href?: string } }).cta?.href
+  return href && /^https?:\/\//i.test(href) ? href : undefined
+}

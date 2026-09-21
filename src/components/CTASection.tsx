@@ -2,6 +2,7 @@ import { Phone, Sparkles } from "lucide-react";
 import { tr } from '~/lib/i18n'
 import { SITE } from "~/data/site";
 import { PrimaryCta } from "~/components/blocks/PrimaryCta";
+import { ownerCtaLink } from "~/lib/primaryCta";
 import { siteDecor } from "~/lib/decor";
 
 import { HAS_PHONE } from '~/lib/phone'
@@ -17,7 +18,8 @@ interface Props {
 export function CTASection({
   title = tr('cta.readyToStart'),
   subtitle,
-  to = "/contact",
+  // The owner's own main-button link (SITE.cta.href to another site) wins over the contact page.
+  to = ownerCtaLink() ?? "/contact",
   label = (SITE as { ctaLabel?: string }).ctaLabel ?? tr('cta.getFreeQuote'),
   decorativeAsset = siteDecor(),
   showSparkleBadge = true,
