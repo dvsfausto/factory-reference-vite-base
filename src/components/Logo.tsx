@@ -1,3 +1,5 @@
+import { SITE } from "~/data/site";
+
 type Props = {
   src?: string;
   alt?: string;
@@ -23,8 +25,14 @@ type Props = {
  *      The plate is white, so any dark or colour mark clears well past 3:1.
  *   3. Light ground → the colour logo reads as-is.
  * Synchronous (no canvas probe), so the decision is baked into the prerendered HTML and needs no JS.
- * KNOWN EDGE: a rare uploaded logo that is ITSELF light, copied to all slots, would be plated
- * (light-on-white); uncommon, and a real per-kit knockout backfill is the systemic fix.
+ *
+ * ★ THE LIGHT MARK (dark-site arc, 2026-09-21). An uploaded logo that is ITSELF light (a white mark on
+ * transparency) broke both branches: invisible on a light header, and on a WHITE plate in the footer.
+ * The scaffolder measures the file at build (factory lib/logo-tone.ts) and emits SITE.logoTone = "light"
+ * only for such a mark, so for the site's own logo:
+ *   · dark ground, no distinct knockout → the mark itself reads there: render it as-is, no plate;
+ *   · light ground → put it on a DARK plate (the mirror of the white one).
+ * Absent (every dark or colour logo) → the three branches above, unchanged.
  */
 export function Logo({ src, alt = "Logo", className = "", light = false, height = 40, lightSrc }: Props) {
   // No logo asset → the business name as a text wordmark, never a broken/empty <img>.
@@ -42,6 +50,7 @@ export function Logo({ src, alt = "Logo", className = "", light = false, height 
   }
 
   const hasKnockout = !!lightSrc && lightSrc !== src;
+  const lightMark = (SITE as { logoTone?: string }).logoTone === "light" && src === SITE.logo_url;
 
   // 1. A real knockout on a dark ground: render it directly (no filter).
   if (light && hasKnockout) {
@@ -52,14 +61,24 @@ export function Logo({ src, alt = "Logo", className = "", light = false, height 
     );
   }
 
+  // 1b. Dark ground, the mark is itself light: it reads as-is.
+  if (light && lightMark) {
+    return (
+      <div className={`flex items-center ${className}`}>
+        <img src={src} alt={alt} height={height} style={{ height, width: "auto" }} />
+      </div>
+    );
+  }
+
   // 2. Dark ground, no real knockout: neither variant reads → PLATE the mark so it is legible.
-  if (light) {
+  // 3b. Light ground, a light mark: the same plate, dark — a white mark on #111111 is ~18:1.
+  if (light || lightMark) {
     const pad = Math.max(6, Math.round(height * 0.18));
     return (
       <div className={`inline-flex items-center ${className}`}>
         <span
           style={{
-            background: "#ffffff",
+            background: light ? "#ffffff" : "#111111",
             borderRadius: Math.round(height * 0.2),
             padding: `${pad}px ${Math.round(pad * 1.4)}px`,
             display: "inline-flex",
