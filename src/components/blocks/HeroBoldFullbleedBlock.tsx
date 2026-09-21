@@ -7,6 +7,7 @@ import { HERO_ALT } from '~/data/images'
 import { imageSrc } from '~/lib/asset-url'
 
 import { hasPhone } from '~/lib/phone'
+import { hasText } from '~/lib/has-text'
 // Hero VARIANT: 'bold-fullbleed', a grounded, industrial composition for
 // trades (construction/remodel). Deliberately the OPPOSITE of the default
 // HeroBlock's split-grid + botanical leaf sprites + script-italic accent word.
@@ -70,25 +71,29 @@ export function HeroBoldFullbleedBlock({
           className="max-w-2xl"
         >
           {/* Eyebrow: a solid steel-blue block + the kicker, blocky, not dainty. */}
-          <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] text-ink-100">
-            <span className="inline-block h-3 w-3 bg-fam-accent" />
-            {kicker}
-          </span>
+          {hasText(kicker) && (
+            <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] text-ink-100">
+              <span className="inline-block h-3 w-3 bg-fam-accent" />
+              {kicker}
+            </span>
+          )}
 
           {/* Heavy UPPERCASE Oswald headline, the whole line, no script split. */}
           <h1 className="mt-5 font-display text-5xl font-bold uppercase leading-[0.95] tracking-tight text-fam-on-dark sm:text-6xl lg:text-7xl">
             {headline}
           </h1>
 
-          {subheadline && (
+          {hasText(subheadline) && (
             <p className="mt-5 font-display text-xl uppercase tracking-wide text-fam-accent-on-dark">
               {subheadline}
             </p>
           )}
 
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink-100/85">
-            {body}
-          </p>
+          {hasText(body) && (
+            <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink-100/85">
+              {body}
+            </p>
+          )}
 
           <div className="mt-9 flex flex-wrap gap-4">
             {/* Primary CTA: BRAND-owned color (bg-primary, var(--primary)) so a

@@ -8,6 +8,7 @@ import { getAggregateRating } from '~/data/reviews'
 import { imageSrc } from '~/lib/asset-url'
 
 import { hasPhone } from '~/lib/phone'
+import { hasText } from '~/lib/has-text'
 // Hero VARIANT: 'aurora', a cinematic, full-bleed WOW composition. The business
 // photo fills the frame; a slow brand-colored aurora drifts over it (screen
 // blend); the content sits in a frosted-glass panel lit by a brand glow. Built
@@ -103,13 +104,15 @@ export function HeroAuroraBlock({
             boxShadow: 'var(--wow-shadow-glow)',
           }}
         >
-          <span className="inline-flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.2em] text-fam-on-dark/80">
-            <span
-              className="h-2.5 w-2.5 rounded-full"
-              style={{ backgroundImage: 'var(--wow-grad-brand)' }}
-            />
-            {kicker}
-          </span>
+          {hasText(kicker) && (
+            <span className="inline-flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.2em] text-fam-on-dark/80">
+              <span
+                className="h-2.5 w-2.5 rounded-full"
+                style={{ backgroundImage: 'var(--wow-grad-brand)' }}
+              />
+              {kicker}
+            </span>
+          )}
 
           <h1 className="mt-5 text-5xl leading-[0.98] tracking-tight text-fam-on-dark sm:text-6xl">
             {heroParts.lead || headline}
@@ -121,11 +124,13 @@ export function HeroAuroraBlock({
             )}
           </h1>
 
-          {subheadline && (
+          {hasText(subheadline) && (
             <p className="mt-4 font-display text-xl text-fam-on-dark/85">{subheadline}</p>
           )}
 
-          <p className="mt-5 max-w-xl text-lg leading-relaxed text-fam-on-dark/75">{body}</p>
+          {hasText(body) && (
+            <p className="mt-5 max-w-xl text-lg leading-relaxed text-fam-on-dark/75">{body}</p>
+          )}
 
           <div className="mt-8 flex flex-wrap items-center gap-3.5">
             <PrimaryCta

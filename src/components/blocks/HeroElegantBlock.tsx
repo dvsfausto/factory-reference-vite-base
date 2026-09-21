@@ -7,6 +7,7 @@ import { HERO_ALT } from '~/data/images'
 import { imageSrc } from '~/lib/asset-url'
 
 import { hasPhone } from '~/lib/phone'
+import { hasText } from '~/lib/has-text'
 // Hero VARIANT: 'elegant'. Two compositions by surface mode (the scrim-over-photo
 // dark hero can't simply go light, light needs its own layout):
 //   · DARK (opt-in, design_dna.surface='dark'), a full-bleed photo under a warm
@@ -63,25 +64,29 @@ export function HeroElegantBlock({
             transition={{ duration: 0.7 }}
             className="max-w-2xl"
           >
-            <span className="inline-flex items-center gap-3 text-xs font-medium uppercase tracking-[0.3em] text-fam-accent-text">
-              <span className="h-px w-8 bg-fam-accent" />
-              {kicker}
-            </span>
+            {hasText(kicker) && (
+              <span className="inline-flex items-center gap-3 text-xs font-medium uppercase tracking-[0.3em] text-fam-accent-text">
+                <span className="h-px w-8 bg-fam-accent" />
+                {kicker}
+              </span>
+            )}
 
             {/* Refined serif headline, title-case, generous, unhurried. */}
             <h1 className="mt-6 font-display text-5xl font-medium leading-[1.05] tracking-tight text-fam-on-statement sm:text-6xl lg:text-7xl">
               {headline}
             </h1>
 
-            {subheadline && (
+            {hasText(subheadline) && (
               <p className="mt-5 font-display text-2xl italic leading-snug text-fam-accent-on-dark">
                 {subheadline}
               </p>
             )}
 
-            <p className="mt-6 max-w-xl text-lg leading-relaxed text-fam-on-statement-muted">
-              {body}
-            </p>
+            {hasText(body) && (
+              <p className="mt-6 max-w-xl text-lg leading-relaxed text-fam-on-statement-muted">
+                {body}
+              </p>
+            )}
 
             <div className="mt-10 flex flex-wrap gap-4">
               <PrimaryCta
@@ -126,7 +131,9 @@ export function HeroElegantBlock({
           transition={{ duration: 0.6 }}
           className="flex flex-wrap items-end justify-between gap-4 border-b border-fam-hairline pb-6"
         >
-          <span className="text-xs font-medium uppercase tracking-[0.32em] text-fam-accent-text-strong">{kicker}</span>
+          {hasText(kicker) && (
+            <span className="text-xs font-medium uppercase tracking-[0.32em] text-fam-accent-text-strong">{kicker}</span>
+          )}
           {(metaLine || site.phoneDisplay) && (
             <span className="text-xs uppercase tracking-[0.22em] text-fam-on-statement-faint">
               {[metaLine, site.phoneDisplay].filter(Boolean).join('  ·  ')}
@@ -146,7 +153,7 @@ export function HeroElegantBlock({
 
         {/* Asymmetric lede + CTA, the standfirst offset from the actions. */}
         <div className="mt-10 grid grid-cols-1 gap-8 lg:grid-cols-12">
-          {subheadline && (
+          {hasText(subheadline) && (
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -157,7 +164,9 @@ export function HeroElegantBlock({
             </motion.p>
           )}
           <div className="lg:col-span-5 lg:col-start-8">
-            <p className="text-lg leading-relaxed text-fam-ink-muted">{body}</p>
+            {hasText(body) && (
+              <p className="text-lg leading-relaxed text-fam-ink-muted">{body}</p>
+            )}
             <div className="mt-7 flex flex-wrap items-center gap-6">
               <PrimaryCta className="inline-flex h-[54px] items-center gap-2 rounded-lg bg-cta px-8 font-display text-base font-medium tracking-wide text-cta-foreground transition-[filter] hover:brightness-(--hov-shade)">
                 {ctaLabel} <ArrowRight className="h-4 w-4" />

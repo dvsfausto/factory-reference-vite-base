@@ -6,6 +6,7 @@ import { ownerCtaLink } from "~/lib/primaryCta";
 import { siteDecor } from "~/lib/decor";
 
 import { HAS_PHONE } from '~/lib/phone'
+import { hasText } from '~/lib/has-text'
 interface Props {
   title?: string;
   subtitle?: string;
@@ -33,7 +34,7 @@ export function CTASection({
       {decorativeAsset && <img src={decorativeAsset} alt="" aria-hidden className="absolute -left-12 top-6 h-[140%] opacity-25 pointer-events-none select-none" />}
       {decorativeAsset && <img src={decorativeAsset} alt="" aria-hidden className="absolute -right-12 -bottom-12 h-[140%] opacity-20 pointer-events-none select-none rotate-180" />}
       <div className="container-x py-section text-center relative">
-        {showSparkleBadge && SITE.tagline && (
+        {showSparkleBadge && hasText(SITE.tagline) && (
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-fam-card/10 border border-fam-card/20 text-xs font-semibold uppercase tracking-widest mb-6">
             <Sparkles className="h-3.5 w-3.5" /> {SITE.tagline}
           </div>

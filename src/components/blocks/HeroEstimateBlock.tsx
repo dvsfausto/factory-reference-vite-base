@@ -4,6 +4,7 @@ import { Check, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 import { hasPhone } from '~/lib/phone'
 import { QuoteRequestForm, readQuoteFormCopy } from './QuoteRequestForm'
+import { hasText } from '~/lib/has-text'
 
 // Hero LAYOUT: 'estimate' (niche arc Stage 4, 2026-09-08) — the estimate form IN the hero. The
 // Instant Estimate and Logistics Quote templates lead with the form: headline, body and trust row on
@@ -45,24 +46,28 @@ export function HeroEstimateBlock({
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">
-              <span className="h-px w-6 bg-fam-accent" />
-              {site.hero.kicker}
-            </span>
+            {hasText(site.hero.kicker) && (
+              <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">
+                <span className="h-px w-6 bg-fam-accent" />
+                {site.hero.kicker}
+              </span>
+            )}
 
             <h1 className="mt-6 font-display text-5xl font-semibold leading-[1.05] tracking-tight text-fam-ink sm:text-6xl">
               {site.hero.headline}
             </h1>
 
-            {site.hero.subheadline && (
+            {hasText(site.hero.subheadline) && (
               <p className="mt-5 text-xl leading-relaxed text-fam-ink-muted">
                 {site.hero.subheadline}
               </p>
             )}
 
-            <p className="mt-5 max-w-xl text-lg leading-relaxed text-fam-ink-muted">
-              {site.hero.body}
-            </p>
+            {hasText(site.hero.body) && (
+              <p className="mt-5 max-w-xl text-lg leading-relaxed text-fam-ink-muted">
+                {site.hero.body}
+              </p>
+            )}
 
             {hasPhone(site.phone) && (
               <div className="mt-9 flex flex-wrap gap-4">

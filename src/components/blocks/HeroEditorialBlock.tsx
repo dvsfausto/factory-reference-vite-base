@@ -7,6 +7,7 @@ import { HERO_ALT } from '~/data/images'
 import { imageSrc } from '~/lib/asset-url'
 
 import { hasPhone } from '~/lib/phone'
+import { hasText } from '~/lib/has-text'
 // Hero VARIANT: 'editorial', a magazine-style, typography-forward WOW hero. A
 // huge headline reveals word-by-word above a thin brand hairline rule; a wide
 // image band carries a brand-gradient corner accent; a brand-gradient strip lists
@@ -48,18 +49,20 @@ export function HeroEditorialBlock({
   return (
     <section className="relative overflow-hidden bg-fam-card">
       <div className="container-x py-section">
-        <motion.span
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.2em] text-brand-700"
-        >
-          <span
-            className="h-2.5 w-2.5 rounded-full"
-            style={{ backgroundImage: 'var(--wow-grad-brand)' }}
-          />
-          {kicker}
-        </motion.span>
+        {hasText(kicker) && (
+          <motion.span
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="inline-flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.2em] text-brand-700"
+          >
+            <span
+              className="h-2.5 w-2.5 rounded-full"
+              style={{ backgroundImage: 'var(--wow-grad-brand)' }}
+            />
+            {kicker}
+          </motion.span>
+        )}
 
         {/* Oversized kinetic headline, reveals word by word (static under reduced motion). */}
         <motion.h1
@@ -97,10 +100,12 @@ export function HeroEditorialBlock({
 
         <div className="mt-8 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-xl">
-            {subheadline && (
+            {hasText(subheadline) && (
               <p className="font-display text-xl text-ink-800">{subheadline}</p>
             )}
-            <p className="mt-3 text-lg leading-relaxed text-ink-700">{body}</p>
+            {hasText(body) && (
+              <p className="mt-3 text-lg leading-relaxed text-ink-700">{body}</p>
+            )}
           </div>
           <div className="flex flex-wrap gap-3.5">
             <PrimaryCta

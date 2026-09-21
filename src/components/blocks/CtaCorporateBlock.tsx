@@ -4,6 +4,7 @@ import { ArrowRight, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 
 import { hasPhone } from '~/lib/phone'
+import { hasText } from '~/lib/has-text'
 // CTA VARIANT: 'corporate', a formal, authoritative close on a deep navy band.
 // Identity copy from SITE.homeCta. Heavy grotesque headline, structured, a brand
 // CTA. No script, no leaf sprites, no soft gradient. Prop signature identical to
@@ -29,7 +30,7 @@ export function CtaCorporateBlock({
     <section className="bg-fam-statement text-fam-on-dark">
       <div className="container-x py-section">
         <div className="max-w-3xl">
-          {site.tagline && (
+          {hasText(site.tagline) && (
             <span className="inline-flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.16em] text-fam-accent-on-dark">
               <span className="h-0.5 w-7 bg-fam-accent-soft-2" />
               {site.tagline}

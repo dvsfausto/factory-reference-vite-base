@@ -4,6 +4,7 @@ import { ArrowUpRight, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 
 import { hasPhone } from '~/lib/phone'
+import { hasText } from '~/lib/has-text'
 // CTA VARIANT: 'creative', the signature color-forward statement: a full vivid
 // magenta color block (the DNA accent used as the whole surface field), an
 // oversized expressive headline, and a bold brand CTA. The boldest, most
@@ -29,7 +30,7 @@ export function CtaCreativeBlock({
     <section className="bg-fam-accent text-fam-on-accent">
       <div className="container-x py-section">
         <div className="max-w-3xl">
-          {site.tagline && (
+          {hasText(site.tagline) && (
             <span className="inline-flex items-center gap-2.5 text-sm font-bold uppercase tracking-[0.14em] text-fam-on-accent">
               <span className="inline-block h-4 w-4 rounded bg-fam-card" />
               {site.tagline}

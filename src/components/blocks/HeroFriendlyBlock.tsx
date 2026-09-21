@@ -7,6 +7,7 @@ import { HERO_ALT } from '~/data/images'
 import { imageSrc } from '~/lib/asset-url'
 
 import { hasPhone } from '~/lib/phone'
+import { hasText } from '~/lib/has-text'
 // Hero VARIANT: 'friendly', warm, bright, approachable (playful-but-credible).
 // The LIGHT counterpart to the dark bold/elegant heroes: a warm-white split
 // layout with a big rounded image card + soft shadow, a rounded friendly
@@ -51,24 +52,28 @@ export function HeroFriendlyBlock({
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <span className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.14em] text-fam-accent-text-strong">
-              <span className="h-2.5 w-2.5 rounded-full bg-fam-accent" />
-              {kicker}
-            </span>
+            {hasText(kicker) && (
+              <span className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.14em] text-fam-accent-text-strong">
+                <span className="h-2.5 w-2.5 rounded-full bg-fam-accent" />
+                {kicker}
+              </span>
+            )}
 
             <h1 className="mt-5 font-display text-5xl font-bold leading-[1.05] tracking-tight text-fam-ink sm:text-6xl">
               {headline}
             </h1>
 
-            {subheadline && (
+            {hasText(subheadline) && (
               <p className="mt-4 font-display text-2xl font-medium text-fam-accent-text-strong">
                 {subheadline}
               </p>
             )}
 
-            <p className="mt-5 max-w-xl text-lg leading-relaxed text-fam-ink-muted">
-              {body}
-            </p>
+            {hasText(body) && (
+              <p className="mt-5 max-w-xl text-lg leading-relaxed text-fam-ink-muted">
+                {body}
+              </p>
+            )}
 
             <div className="mt-8 flex flex-wrap gap-4">
               <PrimaryCta

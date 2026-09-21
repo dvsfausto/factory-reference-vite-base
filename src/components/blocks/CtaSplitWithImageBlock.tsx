@@ -6,6 +6,7 @@ import { HERO_ALT } from '~/data/images'
 import { imageSrc } from '~/lib/asset-url'
 
 import { hasPhone } from '~/lib/phone'
+import { hasText } from '~/lib/has-text'
 // CTA LAYOUT: 'split-with-image', the close set beside a supporting photo: text
 // and actions in one column, a framed image in the other. Character-agnostic. The
 // image gives the final ask a human, concrete anchor instead of a bare band.
@@ -37,7 +38,7 @@ export function CtaSplitWithImageBlock({
       <div className="container-x py-section">
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
           <div>
-            {site.tagline && (
+            {hasText(site.tagline) && (
               <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">
                 <span className="h-px w-6 bg-fam-accent" />
                 {site.tagline}

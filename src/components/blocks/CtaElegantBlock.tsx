@@ -5,6 +5,7 @@ import { elegantSurface } from '~/lib/elegant-surface'
 import { SITE } from '~/data/site'
 
 import { hasPhone } from '~/lib/phone'
+import { hasText } from '~/lib/has-text'
 // CTA VARIANT: 'elegant', refined close. Identity copy from SITE.homeCta. Surface
 // from elegantSurface(): LIGHT by default (warm ivory band), DARK on opt-in
 // (espresso band, the original, byte-identical). A thin emerald rule, a refined
@@ -32,7 +33,7 @@ export function CtaElegantBlock({
       <div className="h-px w-full bg-fam-accent/50" />
       <div className="container-x py-section">
         <div className="max-w-3xl">
-          {site.tagline && (
+          {hasText(site.tagline) && (
             <span className="inline-flex items-center gap-3 text-xs font-medium uppercase tracking-[0.3em] text-fam-accent-text">
               <span className="h-px w-8 bg-fam-accent" />
               {site.tagline}

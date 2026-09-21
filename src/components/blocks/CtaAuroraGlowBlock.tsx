@@ -5,6 +5,7 @@ import { ArrowRight, Phone, Sparkles } from 'lucide-react'
 import { SITE } from '~/data/site'
 
 import { hasPhone } from '~/lib/phone'
+import { hasText } from '~/lib/has-text'
 // CTA VARIANT: 'aurora-glow', a full-bleed brand-gradient band with a soft
 // ambient glow, an oversized display headline (last word set in the script
 // accent), and a glowing white primary pill. The cinematic, high-impact
@@ -68,7 +69,7 @@ export function CtaAuroraGlowBlock({
       />
 
       <div className="container-x relative py-section text-center">
-        {site.tagline && (
+        {hasText(site.tagline) && (
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}

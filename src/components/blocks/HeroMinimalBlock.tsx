@@ -5,6 +5,7 @@ import { ArrowRight, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 
 import { hasPhone } from '~/lib/phone'
+import { hasText } from '~/lib/has-text'
 // Hero LAYOUT: 'minimal', type-only, NO image. An oversized headline, a large
 // subhead, and the CTAs set in a deep field of whitespace, left-aligned on a
 // constrained measure. Stripe/Linear-caliber restraint: the layout is distinct
@@ -40,24 +41,28 @@ export function HeroMinimalBlock({
           transition={{ duration: 0.6 }}
           className="max-w-4xl"
         >
-          <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.25em] text-fam-accent-text">
-            <span className="h-px w-10 bg-fam-accent" />
-            {site.hero.kicker}
-          </span>
+          {hasText(site.hero.kicker) && (
+            <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.25em] text-fam-accent-text">
+              <span className="h-px w-10 bg-fam-accent" />
+              {site.hero.kicker}
+            </span>
+          )}
 
           <h1 className="mt-8 font-display text-6xl font-semibold leading-[0.95] tracking-tight text-fam-ink sm:text-7xl lg:text-8xl">
             {site.hero.headline}
           </h1>
 
-          {site.hero.subheadline && (
+          {hasText(site.hero.subheadline) && (
             <p className="mt-8 max-w-2xl text-2xl leading-snug text-fam-ink-muted sm:text-3xl">
               {site.hero.subheadline}
             </p>
           )}
 
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-fam-ink-muted">
-            {site.hero.body}
-          </p>
+          {hasText(site.hero.body) && (
+            <p className="mt-6 max-w-xl text-lg leading-relaxed text-fam-ink-muted">
+              {site.hero.body}
+            </p>
+          )}
 
           <div className="mt-12 flex flex-wrap items-center gap-4">
             <PrimaryCta

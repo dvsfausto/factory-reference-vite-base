@@ -7,6 +7,7 @@ import { PROJECTS } from '~/data/projects'
 import { HERO_ALT } from '~/data/images'
 import { imageSrc } from '~/lib/asset-url'
 import { hasPhone } from '~/lib/phone'
+import { hasText } from '~/lib/has-text'
 
 // Hero LAYOUT: 'gallery' (niche arc Stage 4) — the gallery-led hero the Beauty Portfolio and Project
 // Showcase templates lead with: the work itself, as a mosaic of the owner's photos beside the headline.
@@ -38,20 +39,24 @@ export function HeroGalleryBlock({
       <div className="container-x py-section">
         <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-2 lg:gap-20">
           <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-            <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">
-              <span className="h-px w-6 bg-fam-accent" />
-              {site.hero.kicker}
-            </span>
+            {hasText(site.hero.kicker) && (
+              <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">
+                <span className="h-px w-6 bg-fam-accent" />
+                {site.hero.kicker}
+              </span>
+            )}
 
             <h1 className="mt-6 font-display text-5xl font-semibold leading-[1.05] tracking-tight text-fam-ink sm:text-6xl">
               {site.hero.headline}
             </h1>
 
-            {site.hero.subheadline && (
+            {hasText(site.hero.subheadline) && (
               <p className="mt-5 text-xl leading-relaxed text-fam-ink-muted">{site.hero.subheadline}</p>
             )}
 
-            <p className="mt-5 max-w-xl text-lg leading-relaxed text-fam-ink-muted">{site.hero.body}</p>
+            {hasText(site.hero.body) && (
+              <p className="mt-5 max-w-xl text-lg leading-relaxed text-fam-ink-muted">{site.hero.body}</p>
+            )}
 
             <div className="mt-9 flex flex-wrap gap-4">
               <PrimaryCta className="inline-flex h-[52px] items-center gap-2 rounded-xl bg-cta px-7 font-display text-base font-semibold text-cta-foreground transition-[filter] hover:brightness-(--hov-shade)">

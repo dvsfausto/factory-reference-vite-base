@@ -1,4 +1,5 @@
 import { SITE } from '~/data/site'
+import { hasText } from '~/lib/has-text'
 
 // Markup extracted VERBATIM from routes/index.tsx (the TAGLINE BAR section).
 // Self-omits when SITE.tagline is empty, exactly today's `{SITE.tagline && …}`.
@@ -11,7 +12,9 @@ export function TaglineBarBlock({
   return (
     <section className="bg-brand-900 text-fam-on-dark">
       <div className="container-x py-5 text-center">
-        <p className="font-display text-lg md:text-xl">{site.tagline}</p>
+        {hasText(site.tagline) && (
+          <p className="font-display text-lg md:text-xl">{site.tagline}</p>
+        )}
       </div>
     </section>
   )

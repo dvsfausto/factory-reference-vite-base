@@ -4,6 +4,7 @@ import { ArrowRight, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 
 import { hasPhone } from '~/lib/phone'
+import { hasText } from '~/lib/has-text'
 // CTA LAYOUT: 'color-block', a bold, intentional field of the brand color filling
 // the full section, with the close set in inverted type on top. Character-agnostic.
 // The saturated brand band is the design: high-contrast, confident, impossible to
@@ -37,7 +38,7 @@ export function CtaColorBlock({
     <section className="bg-primary text-primary-foreground">
       <div className="container-x py-section">
         <div className="mx-auto max-w-3xl text-center">
-          {site.tagline && (
+          {hasText(site.tagline) && (
             <span className="inline-flex items-center justify-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] text-primary-foreground/80">
               <span className="h-px w-7 bg-primary-foreground/50" />
               {site.tagline}

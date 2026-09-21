@@ -15,6 +15,7 @@ import { HAS_EMAIL } from '~/lib/email'
 // whatever the family theme says (a friendly header on Athletic Dark has no invert of its own). Light sites: unchanged.
 const isDarkSite = (SITE as { polarity?: string }).polarity === "dark"
 import { reviews as REVIEWS } from '~/data/reviews'
+import { hasText } from '~/lib/has-text'
 
 const HIDDEN_NAV: string[] = [
   ...((SITE as { hiddenNav?: string[] }).hiddenNav ?? []),
@@ -174,7 +175,7 @@ function LogoTagline({ t }: { t: FooterTheme }) {
   return (
     <div>
       <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={48} alt={SITE.name} />
-      {SITE.tagline && <p className={`mt-4 text-sm ${t.tagline} leading-relaxed font-display italic`}>{SITE.tagline}</p>}
+      {hasText(SITE.tagline) && <p className={`mt-4 text-sm ${t.tagline} leading-relaxed font-display italic`}>{SITE.tagline}</p>}
       <div className="mt-5"><SocialRow t={t} /></div>
     </div>
   );
@@ -216,7 +217,7 @@ function FooterEditorial({ t }: { t: FooterTheme }) {
         {/* Asymmetric grid: tagline + social wide left; two small link columns right. */}
         <div className="mt-12 grid grid-cols-1 gap-10 lg:grid-cols-12">
           <div className="lg:col-span-6">
-            {SITE.tagline && <p className={`max-w-md font-display text-xl italic leading-relaxed ${t.tagline}`}>{SITE.tagline}</p>}
+            {hasText(SITE.tagline) && <p className={`max-w-md font-display text-xl italic leading-relaxed ${t.tagline}`}>{SITE.tagline}</p>}
             <div className="mt-6"><SocialRow t={t} /></div>
           </div>
 
@@ -280,7 +281,7 @@ function FooterMinimal({ t }: { t: FooterTheme }) {
               editor-editable field — dropping it silently no-op'd owner edits). Kept to one tight line. */}
           <div>
             <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={40} alt={SITE.name} />
-            {SITE.tagline && <p className={`mt-3 max-w-xs text-sm ${t.tagline} leading-relaxed font-display italic`}>{SITE.tagline}</p>}
+            {hasText(SITE.tagline) && <p className={`mt-3 max-w-xs text-sm ${t.tagline} leading-relaxed font-display italic`}>{SITE.tagline}</p>}
           </div>
           <nav className={`flex flex-wrap gap-x-7 gap-y-2 text-xs font-semibold uppercase tracking-[0.12em] ${t.listText}`}>
             {SERVICES.slice(0, 3).map((s) => (<Link key={s.slug} to="/services/$slug" params={{ slug: s.slug }} className={`${t.listHover} transition-colors`}>{s.displayName}</Link>))}

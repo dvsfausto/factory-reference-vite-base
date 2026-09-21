@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
-    "build": "node scripts/check-no-literal-colours.mjs && node scripts/check-display-name-seam.mjs && node scripts/check-image-transform.mjs && node scripts/check-booking-shape.mjs && node scripts/check-shared-decor.mjs && node scripts/check-contact-guards.mjs && node scripts/check-raw-physics.mjs && node scripts/check-fact-icons.mjs && vite build && tsc --noEmit",
+    "build": "node scripts/check-no-literal-colours.mjs && node scripts/check-display-name-seam.mjs && node scripts/check-image-transform.mjs && node scripts/check-booking-shape.mjs && node scripts/check-shared-decor.mjs && node scripts/check-contact-guards.mjs && node scripts/check-raw-physics.mjs && node scripts/check-fact-icons.mjs && node scripts/check-optional-copy.mjs && vite build && tsc --noEmit",
     "preview": "vite preview",
     "start": "node .output/server/index.mjs",
     "lint:honesty": "node scripts/check-no-credential-claims.mjs",
@@ -17,6 +17,8 @@
     "lint:booking": "node scripts/check-booking-shape.mjs",
     "test:contrast-sweep": "tsx scripts/test-contrast-sweep.ts",
     "lint:decor": "node scripts/check-shared-decor.mjs",
+    "lint:optional-copy": "node scripts/check-optional-copy.mjs",
+    "test:optional-copy": "NODE_OPTIONS='--import ./scripts/optional-copy/asset-register.mjs' npx -y tsx --tsconfig tsconfig.json scripts/optional-copy/render-proof.tsx",
     "gen:capability": "node scripts/gen-capability-manifest.ts",
     "lint:capability": "node scripts/gen-capability-manifest.ts --check"
   },

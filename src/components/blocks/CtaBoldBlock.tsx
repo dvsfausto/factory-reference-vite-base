@@ -4,6 +4,7 @@ import { ArrowRight, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 
 import { hasPhone } from '~/lib/phone'
+import { hasText } from '~/lib/has-text'
 // CTA VARIANT: 'bold', matches the hero's weight. The default CtaBlock/
 // CTASection uses a brand-gradient band + a font-script accent word + leaf
 // sprites + .btn-white/.btn-outline-fam-card pills, all soft/wellness signals.
@@ -36,7 +37,7 @@ export function CtaBoldBlock({
       <div className="h-1.5 w-full bg-fam-accent" />
       <div className="container-x py-section">
         <div className="max-w-3xl">
-          {site.tagline && (
+          {hasText(site.tagline) && (
             <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] text-ink-100">
               <span className="inline-block h-3 w-3 bg-fam-accent" />
               {site.tagline}

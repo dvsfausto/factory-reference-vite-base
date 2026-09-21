@@ -6,6 +6,7 @@ import { imageSrc } from '~/lib/asset-url'
 import { primaryCta } from '~/lib/primaryCta'
 
 import { hasPhone } from '~/lib/phone'
+import { hasText } from '~/lib/has-text'
 // INNER-PAGE HERO VARIANT: 'banner' — a COMPACT, FAMILY-AWARE banner for service / area / info DETAIL pages
 // (Phase 2 opener). It replaces the WOW `aurora` inner hero, which was two problems at once: (1) 100vh, so a
 // service page opened with a full-screen poster and pushed the actual content below the fold — a homepage hero
@@ -52,7 +53,7 @@ export function HeroServiceBannerBlock({
             <h1 className="mt-4 font-display text-3xl font-semibold leading-[1.1] tracking-tight text-[var(--fam-ink,var(--color-ink-900))] sm:text-4xl md:text-5xl">
               {headline}
             </h1>
-            {body && (
+            {hasText(body) && (
               <p className="mt-4 max-w-xl text-lg leading-relaxed text-[var(--fam-ink-muted,var(--color-ink-500))]">
                 {body}
               </p>

@@ -7,6 +7,7 @@ import { HERO_ALT } from '~/data/images'
 import { imageSrc } from '~/lib/asset-url'
 
 import { hasPhone } from '~/lib/phone'
+import { hasText } from '~/lib/has-text'
 // Hero LAYOUT: 'video', a background video behind centered text, with a scrim for
 // legibility. The video source is DATA, not hardcoded: it is read from an OPTIONAL
 // SITE.hero.video_url consumed via the same inline-cast precedent the codebase
@@ -69,25 +70,29 @@ export function HeroVideoBlock({
           transition={{ duration: 0.6 }}
           className="mx-auto flex max-w-3xl flex-col items-center text-center"
         >
-          <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] text-fam-accent-on-dark">
-            <span className="h-px w-7 bg-fam-accent" />
-            {site.hero.kicker}
-            <span className="h-px w-7 bg-fam-accent" />
-          </span>
+          {hasText(site.hero.kicker) && (
+            <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] text-fam-accent-on-dark">
+              <span className="h-px w-7 bg-fam-accent" />
+              {site.hero.kicker}
+              <span className="h-px w-7 bg-fam-accent" />
+            </span>
+          )}
 
           <h1 className="mt-6 font-display text-5xl font-semibold leading-[1.03] tracking-tight text-fam-on-dark drop-shadow-sm sm:text-6xl lg:text-7xl">
             {site.hero.headline}
           </h1>
 
-          {site.hero.subheadline && (
+          {hasText(site.hero.subheadline) && (
             <p className="mt-5 text-xl leading-relaxed text-slate-200">
               {site.hero.subheadline}
             </p>
           )}
 
-          <p className="mt-4 max-w-xl text-lg leading-relaxed text-slate-300">
-            {site.hero.body}
-          </p>
+          {hasText(site.hero.body) && (
+            <p className="mt-4 max-w-xl text-lg leading-relaxed text-slate-300">
+              {site.hero.body}
+            </p>
+          )}
 
           <div className="mt-9 flex flex-wrap justify-center gap-4">
             <PrimaryCta

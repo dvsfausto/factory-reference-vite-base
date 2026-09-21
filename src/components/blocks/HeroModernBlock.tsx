@@ -7,6 +7,7 @@ import { HERO_ALT } from '~/data/images'
 import { imageSrc } from '~/lib/asset-url'
 
 import { hasPhone } from '~/lib/phone'
+import { hasText } from '~/lib/has-text'
 // Hero VARIANT: 'modern', clean, contemporary, tech-forward. A light-cool split
 // with generous whitespace, a large geometric-sans headline, a sharp framed
 // image, restrained indigo accents, and subtle motion. No leaf sprites, no script
@@ -49,24 +50,28 @@ export function HeroModernBlock({
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">
-              <span className="h-px w-6 bg-fam-accent" />
-              {kicker}
-            </span>
+            {hasText(kicker) && (
+              <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">
+                <span className="h-px w-6 bg-fam-accent" />
+                {kicker}
+              </span>
+            )}
 
             <h1 className="mt-6 font-display text-5xl font-semibold leading-[1.05] tracking-tight text-fam-ink sm:text-6xl">
               {headline}
             </h1>
 
-            {subheadline && (
+            {hasText(subheadline) && (
               <p className="mt-5 text-xl leading-relaxed text-fam-ink-muted">
                 {subheadline}
               </p>
             )}
 
-            <p className="mt-5 max-w-xl text-lg leading-relaxed text-fam-ink-muted">
-              {body}
-            </p>
+            {hasText(body) && (
+              <p className="mt-5 max-w-xl text-lg leading-relaxed text-fam-ink-muted">
+                {body}
+              </p>
+            )}
 
             <div className="mt-9 flex flex-wrap gap-4">
               <PrimaryCta

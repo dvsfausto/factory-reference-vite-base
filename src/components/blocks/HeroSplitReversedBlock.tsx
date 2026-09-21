@@ -7,6 +7,7 @@ import { HERO_ALT } from '~/data/images'
 import { imageSrc } from '~/lib/asset-url'
 
 import { hasPhone } from '~/lib/phone'
+import { hasText } from '~/lib/has-text'
 // Hero LAYOUT: 'split-reversed', the modern split, mirrored: the framed image
 // sits on the LEFT and the headline/CTA column on the RIGHT (the default split
 // is image-right). Same light-cool modern character + tokens as HeroModernBlock;
@@ -41,24 +42,28 @@ export function HeroSplitReversedBlock({
             transition={{ duration: 0.5 }}
             className="lg:order-2"
           >
-            <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">
-              <span className="h-px w-6 bg-fam-accent" />
-              {site.hero.kicker}
-            </span>
+            {hasText(site.hero.kicker) && (
+              <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">
+                <span className="h-px w-6 bg-fam-accent" />
+                {site.hero.kicker}
+              </span>
+            )}
 
             <h1 className="mt-6 font-display text-5xl font-semibold leading-[1.05] tracking-tight text-fam-ink sm:text-6xl">
               {site.hero.headline}
             </h1>
 
-            {site.hero.subheadline && (
+            {hasText(site.hero.subheadline) && (
               <p className="mt-5 text-xl leading-relaxed text-fam-ink-muted">
                 {site.hero.subheadline}
               </p>
             )}
 
-            <p className="mt-5 max-w-xl text-lg leading-relaxed text-fam-ink-muted">
-              {site.hero.body}
-            </p>
+            {hasText(site.hero.body) && (
+              <p className="mt-5 max-w-xl text-lg leading-relaxed text-fam-ink-muted">
+                {site.hero.body}
+              </p>
+            )}
 
             <div className="mt-9 flex flex-wrap gap-4">
               <PrimaryCta

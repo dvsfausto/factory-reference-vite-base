@@ -4,6 +4,7 @@ import { ArrowRight, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 
 import { hasPhone } from '~/lib/phone'
+import { hasText } from '~/lib/has-text'
 // CTA LAYOUT: 'boxed-card', the close lives inside a single elevated dark card
 // floating on a light section, rather than spanning a full-width band. Character-
 // agnostic. The contained, shadowed card reads as a deliberate object on the page
@@ -36,7 +37,7 @@ export function CtaBoxedCardBlock({
     <section className="bg-fam-surface-2">
       <div className="container-x py-section">
         <div className="relative isolate mx-auto max-w-4xl overflow-hidden rounded-3xl bg-fam-panel px-8 py-14 text-center elev-4 md:px-16 md:py-20">
-          {site.tagline && (
+          {hasText(site.tagline) && (
             <span className="inline-flex items-center justify-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] text-fam-accent-on-dark">
               <span className="h-px w-7 bg-fam-accent" />
               {site.tagline}

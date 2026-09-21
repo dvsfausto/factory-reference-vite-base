@@ -4,6 +4,7 @@ import { ArrowRight, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 
 import { hasPhone } from '~/lib/phone'
+import { hasText } from '~/lib/has-text'
 // CTA VARIANT: 'modern', clean, restrained close. Identity copy from SITE.homeCta.
 // A simple centered block with generous whitespace on white, a large geometric-
 // sans headline, a brand CTA. No script, no leaf sprites, no brand gradient.
@@ -29,7 +30,7 @@ export function CtaModernBlock({
     <section className="bg-fam-card">
       <div className="container-x py-section">
         <div className="mx-auto max-w-2xl text-center">
-          {site.tagline && (
+          {hasText(site.tagline) && (
             <span className="inline-flex items-center justify-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">
               <span className="h-px w-6 bg-fam-accent" />
               {site.tagline}

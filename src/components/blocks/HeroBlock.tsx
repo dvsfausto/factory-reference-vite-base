@@ -9,6 +9,7 @@ import { imageSrc } from '~/lib/asset-url'
 import { siteDecor } from '~/lib/decor'
 
 import { hasPhone } from '~/lib/phone'
+import { hasText } from '~/lib/has-text'
 // Markup extracted VERBATIM from routes/index.tsx (the HERO section). Do not
 // restyle, block fidelity is pass/fail.
 function splitScriptAccent(heading: string): { lead: string; accent: string } {
@@ -40,9 +41,11 @@ export function HeroBlock({
             transition={{ duration: 0.6 }}
             className="lg:col-span-6"
           >
-            <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-brand-700">
-              <span className="h-px w-8 bg-brand-600" /> {site.hero.kicker}
-            </span>
+            {hasText(site.hero.kicker) && (
+              <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-brand-700">
+                <span className="h-px w-8 bg-brand-600" /> {site.hero.kicker}
+              </span>
+            )}
             <h1 className="mt-4">
               {heroParts.lead || site.hero.headline}
               {heroParts.lead && ' '}
@@ -55,14 +58,16 @@ export function HeroBlock({
                 </>
               )}
             </h1>
-            {site.hero.subheadline && (
+            {hasText(site.hero.subheadline) && (
               <p className="mt-3 font-display text-xl text-ink-700">
                 {site.hero.subheadline}
               </p>
             )}
-            <p className="mt-6 text-lg text-ink-700 max-w-xl leading-relaxed">
-              {site.hero.body}
-            </p>
+            {hasText(site.hero.body) && (
+              <p className="mt-6 text-lg text-ink-700 max-w-xl leading-relaxed">
+                {site.hero.body}
+              </p>
+            )}
             <div className="mt-8 flex flex-wrap gap-3">
               <PrimaryCta className="btn btn-lg btn-primary">
                 {site.hero.cta_primary_label} <ArrowRight className="h-4 w-4" />

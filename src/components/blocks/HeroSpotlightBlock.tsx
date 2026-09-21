@@ -8,6 +8,7 @@ import { getAggregateRating } from '~/data/reviews'
 import { imageSrc } from '~/lib/asset-url'
 
 import { hasPhone } from '~/lib/phone'
+import { hasText } from '~/lib/has-text'
 // Hero VARIANT: 'spotlight', a premium, editorial left/right split on a LIGHT
 // surface. The business photo sits in a lifted, framed card over a radial brand
 // glow; glass trust chips float at its edges. The polished, boutique counterpart
@@ -71,13 +72,15 @@ export function HeroSpotlightBlock({
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-6"
           >
-            <span className="inline-flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.18em] text-brand-700">
-              <span
-                className="h-2.5 w-2.5 rounded-full"
-                style={{ backgroundImage: 'var(--wow-grad-brand)' }}
-              />
-              {kicker}
-            </span>
+            {hasText(kicker) && (
+              <span className="inline-flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.18em] text-brand-700">
+                <span
+                  className="h-2.5 w-2.5 rounded-full"
+                  style={{ backgroundImage: 'var(--wow-grad-brand)' }}
+                />
+                {kicker}
+              </span>
+            )}
 
             <h1 className="mt-4 text-5xl leading-[0.98] tracking-tight sm:text-6xl">
               {heroParts.lead || headline}
@@ -89,11 +92,13 @@ export function HeroSpotlightBlock({
               )}
             </h1>
 
-            {subheadline && (
+            {hasText(subheadline) && (
               <p className="mt-4 font-display text-xl text-ink-700">{subheadline}</p>
             )}
 
-            <p className="mt-5 max-w-xl text-lg leading-relaxed text-ink-700">{body}</p>
+            {hasText(body) && (
+              <p className="mt-5 max-w-xl text-lg leading-relaxed text-ink-700">{body}</p>
+            )}
 
             <div className="mt-8 flex flex-wrap gap-3.5">
               <PrimaryCta

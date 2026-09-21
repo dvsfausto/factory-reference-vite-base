@@ -7,6 +7,7 @@ import { HERO_ALT } from '~/data/images'
 import { imageSrc } from '~/lib/asset-url'
 
 import { hasPhone } from '~/lib/phone'
+import { hasText } from '~/lib/has-text'
 // Hero VARIANT: 'creative', expressive, color-forward, asymmetric-within-section.
 // An off-balance split (uneven columns), an oversized display headline, and an
 // image overlapped by a vivid magenta blob + a big rounded color field behind it.
@@ -54,24 +55,28 @@ export function HeroCreativeBlock({
             transition={{ duration: 0.55 }}
             className="lg:col-span-7"
           >
-            <span className="inline-flex items-center gap-2.5 text-sm font-bold uppercase tracking-[0.14em] text-fam-ink">
-              <span className="inline-block h-4 w-4 rounded bg-fam-accent" />
-              {kicker}
-            </span>
+            {hasText(kicker) && (
+              <span className="inline-flex items-center gap-2.5 text-sm font-bold uppercase tracking-[0.14em] text-fam-ink">
+                <span className="inline-block h-4 w-4 rounded bg-fam-accent" />
+                {kicker}
+              </span>
+            )}
 
             <h1 className="mt-5 font-display text-6xl font-extrabold leading-[0.95] tracking-tight text-fam-ink sm:text-7xl lg:text-8xl">
               {headline}
             </h1>
 
-            {subheadline && (
+            {hasText(subheadline) && (
               <p className="mt-6 max-w-lg text-2xl font-medium leading-snug text-fam-accent-text-strong">
                 {subheadline}
               </p>
             )}
 
-            <p className="mt-5 max-w-xl text-lg leading-relaxed text-fam-ink-muted">
-              {body}
-            </p>
+            {hasText(body) && (
+              <p className="mt-5 max-w-xl text-lg leading-relaxed text-fam-ink-muted">
+                {body}
+              </p>
+            )}
 
             <div className="mt-9 flex flex-wrap gap-4">
               <PrimaryCta

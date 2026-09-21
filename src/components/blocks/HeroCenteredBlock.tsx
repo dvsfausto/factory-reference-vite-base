@@ -7,6 +7,7 @@ import { HERO_ALT } from '~/data/images'
 import { imageSrc } from '~/lib/asset-url'
 
 import { hasPhone } from '~/lib/phone'
+import { hasText } from '~/lib/has-text'
 // Hero LAYOUT: 'centered', the same modern, light-cool character as
 // HeroModernBlock, re-laid as a single centered column instead of a left/right
 // split. Headline, subheadline, body, CTAs and trust row stack and center on a
@@ -39,25 +40,29 @@ export function HeroCenteredBlock({
           transition={{ duration: 0.5 }}
           className="mx-auto flex max-w-3xl flex-col items-center text-center"
         >
-          <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">
-            <span className="h-px w-6 bg-fam-accent" />
-            {site.hero.kicker}
-            <span className="h-px w-6 bg-fam-accent" />
-          </span>
+          {hasText(site.hero.kicker) && (
+            <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">
+              <span className="h-px w-6 bg-fam-accent" />
+              {site.hero.kicker}
+              <span className="h-px w-6 bg-fam-accent" />
+            </span>
+          )}
 
           <h1 className="mt-6 font-display text-5xl font-semibold leading-[1.05] tracking-tight text-fam-ink sm:text-6xl">
             {site.hero.headline}
           </h1>
 
-          {site.hero.subheadline && (
+          {hasText(site.hero.subheadline) && (
             <p className="mt-5 text-xl leading-relaxed text-fam-ink-muted">
               {site.hero.subheadline}
             </p>
           )}
 
-          <p className="mt-5 max-w-2xl text-lg leading-relaxed text-fam-ink-muted">
-            {site.hero.body}
-          </p>
+          {hasText(site.hero.body) && (
+            <p className="mt-5 max-w-2xl text-lg leading-relaxed text-fam-ink-muted">
+              {site.hero.body}
+            </p>
+          )}
 
           <div className="mt-9 flex flex-wrap justify-center gap-4">
             <PrimaryCta

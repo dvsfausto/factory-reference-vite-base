@@ -7,6 +7,7 @@ import { HERO_ALT } from '~/data/images'
 import { imageSrc } from '~/lib/asset-url'
 
 import { hasPhone } from '~/lib/phone'
+import { hasText } from '~/lib/has-text'
 // Hero VARIANT: 'corporate', formal, structured, authoritative. A dense split
 // with a heavy grotesque headline, a framed image, and a foregrounded
 // CREDENTIALS strip (bordered cells, not pills), trust signals up front, the
@@ -51,24 +52,28 @@ export function HeroCorporateBlock({
             transition={{ duration: 0.5 }}
             className="lg:col-span-7"
           >
-            <span className="inline-flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.16em] text-fam-accent-text">
-              <span className="h-0.5 w-7 bg-fam-accent" />
-              {kicker}
-            </span>
+            {hasText(kicker) && (
+              <span className="inline-flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.16em] text-fam-accent-text">
+                <span className="h-0.5 w-7 bg-fam-accent" />
+                {kicker}
+              </span>
+            )}
 
             <h1 className="mt-4 font-display text-4xl font-bold leading-[1.08] tracking-tight text-fam-ink sm:text-5xl lg:text-6xl">
               {headline}
             </h1>
 
-            {subheadline && (
+            {hasText(subheadline) && (
               <p className="mt-4 text-xl leading-relaxed text-fam-ink-muted">
                 {subheadline}
               </p>
             )}
 
-            <p className="mt-4 max-w-xl text-lg leading-relaxed text-fam-ink-muted">
-              {body}
-            </p>
+            {hasText(body) && (
+              <p className="mt-4 max-w-xl text-lg leading-relaxed text-fam-ink-muted">
+                {body}
+              </p>
+            )}
 
             <div className="mt-8 flex flex-wrap gap-3">
               <PrimaryCta

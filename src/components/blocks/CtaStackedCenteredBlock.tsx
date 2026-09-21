@@ -4,6 +4,7 @@ import { ArrowRight, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 
 import { hasPhone } from '~/lib/phone'
+import { hasText } from '~/lib/has-text'
 // CTA LAYOUT: 'stacked-centered', a single, oversized centered close in a deep
 // field of whitespace: eyebrow, display-scale headline, sub, and a centered action
 // stack. Character-agnostic. Distinct through restraint and type drama, the final
@@ -35,7 +36,7 @@ export function CtaStackedCenteredBlock({
     <section className="bg-fam-card">
       <div className="container-x py-section">
         <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
-          {site.tagline && (
+          {hasText(site.tagline) && (
             <span className="inline-flex items-center justify-center gap-3 text-xs font-semibold uppercase tracking-[0.25em] text-fam-accent-text">
               <span className="h-px w-10 bg-fam-accent" />
               {site.tagline}
