@@ -15,6 +15,10 @@ import { primaryCta } from '~/lib/primaryCta'
 //     navigate home then scroll, the wizard lives only on the homepage.
 //   · booking-OFF → routes to the lead form via SPA <Link> (the `to` fallback, default
 //     /contact) exactly as before, byte-identical for every non-booking business.
+//   · an OWNER LINK (SITE.cta.href = an absolute https URL, set by asking the assistant, e.g.
+//     https://app.zmode.com/onboarding?ref=x) → a plain same-tab <a href>, never the router:
+//     the router would treat it as an app path. The href is passed through verbatim, so the
+//     query string reaches the other site intact. The booking section and nav are untouched.
 //
 // Secondary CTAs (tel: links) are untouched. Callers pass their own className/style so
 // each variant keeps its exact look; only the destination is centralized here.
@@ -40,7 +44,10 @@ export function PrimaryCta({
   // A hash target (/#book) scrolls the on-page wizard and must be a plain <a> (works from inner pages
   // too, they navigate home then scroll). A route target (/quote, /shop, /contact) is an SPA <Link>.
   const isHash = target.startsWith('#') || target.startsWith('/#')
-  if (isHash) {
+  // An owner link to another site (editor field cta.href: https only, http refused upstream) is a
+  // plain <a> too. http:// is matched here only so a hand-edited site.ts can never hand one to the router.
+  const isExternal = /^https?:\/\//i.test(target)
+  if (isHash || isExternal) {
     return (
       <a href={target} className={className} style={style} onClick={onClick} aria-label={ariaLabel}>
         {children}
