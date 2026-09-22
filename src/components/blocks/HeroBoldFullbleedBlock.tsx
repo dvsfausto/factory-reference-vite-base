@@ -1,6 +1,5 @@
 import { PrimaryCta } from './PrimaryCta'
 import { tr } from '~/lib/i18n'
-import { motion } from 'framer-motion'
 import { ArrowRight, Check, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 import { HERO_ALT } from '~/data/images'
@@ -64,10 +63,8 @@ export function HeroBoldFullbleedBlock({
       <div className="absolute inset-0 -z-10 bg-gradient-to-r from-fam-scrim via-fam-scrim/90 to-fam-scrim/45" />
 
       <div className="container-x relative flex flex-1 items-center py-section">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+        <div
+          data-enter="up"
           className="max-w-2xl"
         >
           {/* Eyebrow: a solid steel-blue block + the kicker, blocky, not dainty. */}
@@ -114,7 +111,7 @@ export function HeroBoldFullbleedBlock({
               <Phone className="h-4 w-4" /> {site.phoneDisplay}
             </a>)}
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Full-width steel-blue trust band, a contractor's banner stripe. The

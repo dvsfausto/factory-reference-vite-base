@@ -54,9 +54,6 @@ export function CtaGlassPanelBlock({
     >
       <div className="container-x relative py-section">
         <motion.div
-          initial={{ opacity: 0, y: 24, scale: 0.98 }}
-          whileInView={{ opacity: 1, y: 0, scale: 1 }}
-          viewport={{ once: true, margin: '-10%' }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="relative mx-auto max-w-3xl"
         >

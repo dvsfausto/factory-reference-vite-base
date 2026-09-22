@@ -1,6 +1,5 @@
 import { PrimaryCta } from './PrimaryCta'
 import { tr } from '~/lib/i18n'
-import { motion } from 'framer-motion'
 import { ArrowRight, Check, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 import { HERO_ALT } from '~/data/images'
@@ -36,10 +35,8 @@ export function HeroSplitReversedBlock({
     <section className="bg-fam-card">
       <div className="container-x py-section">
         <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-2 lg:gap-20">
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+          <div
+            data-enter="up"
             className="lg:order-2"
           >
             {hasText(site.hero.kicker) && (
@@ -86,12 +83,10 @@ export function HeroSplitReversedBlock({
                 </span>
               ))}
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
+          <div
+            data-enter="up-late"
             className="relative lg:order-1"
           >
             <div className="overflow-hidden rounded-2xl border border-fam-hairline elev-1">
@@ -101,7 +96,7 @@ export function HeroSplitReversedBlock({
                 className="aspect-[4/3] w-full object-cover"
               />
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

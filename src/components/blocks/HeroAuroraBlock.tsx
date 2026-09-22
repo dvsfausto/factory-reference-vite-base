@@ -93,10 +93,8 @@ export function HeroAuroraBlock({
       />
 
       <div className="container-x relative flex flex-1 items-center py-section">
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        <div
+          data-enter="up"
           className="max-w-2xl rounded-3xl border px-7 py-8 backdrop-blur-md sm:px-10 sm:py-11"
           style={{
             backgroundColor: 'rgba(255,255,255,0.06)',
@@ -162,7 +160,7 @@ export function HeroAuroraBlock({
               </li>
             ))}
           </ul>
-        </motion.div>
+        </div>
       </div>
     </section>
   )

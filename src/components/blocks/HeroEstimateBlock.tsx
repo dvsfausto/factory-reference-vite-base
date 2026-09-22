@@ -1,5 +1,4 @@
 import { tr } from '~/lib/i18n'
-import { motion } from 'framer-motion'
 import { Check, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 import { hasPhone } from '~/lib/phone'
@@ -41,10 +40,8 @@ export function HeroEstimateBlock({
     <section className="bg-fam-surface">
       <div className="container-x py-section">
         <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+          <div
+            data-enter="up"
           >
             {hasText(site.hero.kicker) && (
               <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">
@@ -87,12 +84,10 @@ export function HeroEstimateBlock({
                 </span>
               ))}
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
+          <div
+            data-enter="up-late"
             className="relative"
           >
             <div aria-hidden="true" className="absolute -inset-4 -z-10 rounded-[2rem] bg-fam-accent-soft blur-2xl" />
@@ -109,7 +104,7 @@ export function HeroEstimateBlock({
                 <QuoteRequestForm site={site} compact selectId="hero-quote-service" />
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

@@ -80,7 +80,7 @@ export function ServiceAreasBrandPanelBlock({
             {/* Area columns with hairline dividers. */}
             <motion.ul
               className="grid grid-cols-1 gap-x-8 border-t border-fam-card/20 pt-2 sm:grid-cols-2 lg:col-span-8 lg:border-l lg:border-t-0 lg:pl-10 lg:pt-0"
-              initial="hidden"
+              initial={false}
               whileInView="show"
               viewport={{ once: true, margin: '-10%' }}
               variants={{

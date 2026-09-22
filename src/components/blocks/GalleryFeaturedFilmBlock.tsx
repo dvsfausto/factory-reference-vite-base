@@ -93,7 +93,7 @@ export function GalleryFeaturedFilmBlock({
         {rest.length > 0 && (
           <motion.div
             className="mt-6 flex gap-5 overflow-x-auto pb-3"
-            initial={reduce ? undefined : 'hidden'}
+            initial={false}
             whileInView={reduce ? undefined : 'show'}
             viewport={{ once: true, margin: '-10%' }}
             variants={{ show: { transition: { staggerChildren: 0.06 } } }}

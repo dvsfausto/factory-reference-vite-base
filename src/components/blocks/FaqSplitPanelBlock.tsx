@@ -61,7 +61,7 @@ export function FaqSplitPanelBlock({
           {/* Q&A list. */}
           <motion.div
             className="lg:col-span-8"
-            initial="hidden"
+            initial={false}
             whileInView="show"
             viewport={{ once: true, margin: '-10%' }}
             variants={{

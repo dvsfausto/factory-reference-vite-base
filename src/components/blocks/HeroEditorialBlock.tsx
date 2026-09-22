@@ -50,10 +50,8 @@ export function HeroEditorialBlock({
     <section className="relative overflow-hidden bg-fam-card">
       <div className="container-x py-section">
         {hasText(kicker) && (
-          <motion.span
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
+          <span
+            data-enter="up"
             className="inline-flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.2em] text-brand-700"
           >
             <span
@@ -61,13 +59,13 @@ export function HeroEditorialBlock({
               style={{ backgroundImage: 'var(--wow-grad-brand)' }}
             />
             {kicker}
-          </motion.span>
+          </span>
         )}
 
         {/* Oversized kinetic headline, reveals word by word (static under reduced motion). */}
         <motion.h1
           className="mt-6 max-w-5xl text-5xl leading-[0.95] tracking-tight sm:text-7xl lg:text-8xl"
-          initial="hidden"
+          initial={false}
           animate="show"
           variants={{
             hidden: {},
@@ -125,10 +123,8 @@ export function HeroEditorialBlock({
         </div>
 
         {/* Wide image band with a brand-gradient corner accent. */}
-        <motion.div
-          initial={{ opacity: 0, y: 28 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+        <div
+          data-enter="up-late"
           className="relative mt-12"
         >
           <div
@@ -146,7 +142,7 @@ export function HeroEditorialBlock({
               className="h-[42vh] min-h-[320px] w-full object-cover md:h-[52vh]"
             />
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Brand-gradient trust strip, the real trust items. */}

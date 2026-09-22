@@ -1,6 +1,5 @@
 import { PrimaryCta } from './PrimaryCta'
 import { tr } from '~/lib/i18n'
-import { motion } from 'framer-motion'
 import { ArrowRight, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 import { HERO_ALT } from '~/data/images'
@@ -64,10 +63,8 @@ export function HeroVideoBlock({
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-fam-scrim-2/85 via-fam-scrim-2/50 to-fam-scrim-2/85" />
 
       <div className="container-x relative flex flex-1 items-center justify-center py-section">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+        <div
+          data-enter="up"
           className="mx-auto flex max-w-3xl flex-col items-center text-center"
         >
           {hasText(site.hero.kicker) && (
@@ -115,7 +112,7 @@ export function HeroVideoBlock({
               </span>
             ))}
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   )

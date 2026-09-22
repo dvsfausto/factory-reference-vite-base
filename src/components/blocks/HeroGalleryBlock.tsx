@@ -1,6 +1,5 @@
 import { PrimaryCta } from './PrimaryCta'
 import { tr } from '~/lib/i18n'
-import { motion } from 'framer-motion'
 import { ArrowRight, Check, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 import { PROJECTS } from '~/data/projects'
@@ -38,7 +37,7 @@ export function HeroGalleryBlock({
     <section className="bg-fam-card">
       <div className="container-x py-section">
         <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-2 lg:gap-20">
-          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+          <div data-enter="up">
             {hasText(site.hero.kicker) && (
               <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">
                 <span className="h-px w-6 bg-fam-accent" />
@@ -79,9 +78,9 @@ export function HeroGalleryBlock({
                 </span>
               ))}
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }} className="relative">
+          <div data-enter="up-late" className="relative">
             {photos.length >= 2 ? (
               <ul className="grid grid-cols-6 grid-rows-2 gap-3" aria-label={tr('hero.galleryLabel')}>
                 {photos.map((p, i) => (
@@ -109,7 +108,7 @@ export function HeroGalleryBlock({
                 <img src={imageSrc(photos[0]?.image ?? site.hero.image_url)} alt={photos[0]?.alt ?? photos[0]?.title ?? HERO_ALT} className="aspect-[4/3] w-full object-cover" />
               </div>
             )}
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

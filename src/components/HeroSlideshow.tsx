@@ -62,7 +62,7 @@ export function HeroSlideshow({
             className="absolute inset-0 w-full h-full object-cover"
           />
         ) : (
-          <AnimatePresence mode="wait">
+          <AnimatePresence mode="wait" initial={false}>
             <motion.img
               key={index}
               src={images[index].src}

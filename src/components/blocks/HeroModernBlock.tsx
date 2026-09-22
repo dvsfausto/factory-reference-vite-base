@@ -45,10 +45,8 @@ export function HeroModernBlock({
     <section className="bg-fam-card">
       <div className="container-x py-section">
         <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-2 lg:gap-20">
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+          <div
+            data-enter="up"
           >
             {hasText(kicker) && (
               <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">
@@ -95,13 +93,11 @@ export function HeroModernBlock({
                 </span>
               ))}
             </div>
-          </motion.div>
+          </div>
 
           {/* Sharp framed image, thin border, restrained radius, minimal shadow. */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
+          <div
+            data-enter="up-late"
             className="relative"
           >
             <div className="zi-card zi-media overflow-hidden rounded-2xl border border-fam-hairline elev-1">
@@ -111,7 +107,7 @@ export function HeroModernBlock({
                 className="aspect-[4/3] w-full object-cover"
               />
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

@@ -6,6 +6,11 @@ import { nitro } from 'nitro/vite'
 import { pruneVariantsPlugin, splitPageDataPlugin } from './scripts/prune-variants.mjs'
 
 export default defineConfig({
+  // Phones from 2020 still run this bundle: the client build is lowered to what iOS 14 parses (2026-09-22).
+  // A newer syntax slipping through would be one SyntaxError that stops the whole page on that phone.
+  build: {
+    target: ['es2020', 'safari14', 'ios14'],
+  },
   server: {
     port: 3000,
   },

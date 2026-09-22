@@ -1,6 +1,5 @@
 import { PrimaryCta } from './PrimaryCta'
 import { tr } from '~/lib/i18n'
-import { motion } from 'framer-motion'
 import { ArrowRight, Check, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 import { HERO_ALT } from '~/data/images'
@@ -47,10 +46,8 @@ export function HeroFriendlyBlock({
     <section className="bg-fam-surface">
       <div className="container-x py-section">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+          <div
+            data-enter="up"
           >
             {hasText(kicker) && (
               <span className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.14em] text-fam-accent-text-strong">
@@ -100,13 +97,11 @@ export function HeroFriendlyBlock({
                 </span>
               ))}
             </div>
-          </motion.div>
+          </div>
 
           {/* Big rounded image card with a soft shadow, warm + welcoming. */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.97 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.7, delay: 0.1 }}
+          <div
+            data-enter="up-late"
             className="relative"
           >
             <div className="zi-card zi-media overflow-hidden rounded-3xl border border-fam-hairline elev-4">
@@ -116,7 +111,7 @@ export function HeroFriendlyBlock({
                 className="aspect-[4/3] w-full object-cover"
               />
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

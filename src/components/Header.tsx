@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Menu, X, Phone, ChevronDown } from "lucide-react";
 import { Logo } from "./Logo";
 import { SITE, BOOKING } from "~/data/site";
@@ -296,7 +296,10 @@ const HEADER_THEMES: Record<string, HeaderTheme> = {
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
-  const [open, setOpen] = useState(false);
+  // The mobile menu is a native <details>: it opens before hydration and with no JS at all (2026-09-22: a customer's
+  // phone showed a dead menu button while the bundle had not run). React only closes it after a link is followed.
+  const menuRef = useRef<HTMLDetailsElement>(null);
+  const closeMenu = () => { if (menuRef.current) menuRef.current.open = false; };
   const [openMenu, setOpenMenu] = useState<"services" | "areas" | null>(null);
   const character = (SITE as { character?: string }).character ?? "";
   const surface = (SITE as { surface?: string }).surface ?? "";
@@ -348,12 +351,10 @@ export function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => {
-    if (!open) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => { document.body.style.overflow = prev; };
-  }, [open]);
+  // Body scroll locks while the menu is open (after hydration; before it the native <details> simply opens).
+  const onMenuToggle = (e: React.SyntheticEvent<HTMLDetailsElement>) => {
+    document.body.style.overflow = e.currentTarget.open ? "hidden" : "";
+  };
 
   // ── Shared primitives, composed differently per STRUCTURE ─────────────────────
   // The desktop nav links (dropdowns + page links). `dropAlign` positions the
@@ -445,13 +446,54 @@ export function Header() {
   );
   const ctaButton = <PrimaryCta className={t.cta}>{headerCtaLabel}</PrimaryCta>;
   const mobileTrigger = (
-    <button
-      className="lg:hidden p-2 focus-ring rounded-md"
-      onClick={() => setOpen(true)}
-      aria-label={tr('nav.openMenu')}
-    >
-      <Menu className={`h-6 w-6 ${t.menuIcon}`} />
-    </button>
+    <details ref={menuRef} className="mobile-nav lg:hidden" onToggle={onMenuToggle}>
+      <summary className="inline-flex p-2 focus-ring rounded-md cursor-pointer" aria-label={tr('nav.openMenu')}>
+        <Menu className={`when-closed h-6 w-6 ${t.menuIcon}`} aria-hidden="true" />
+        <X className={`when-open h-6 w-6 ${t.menuIcon}`} aria-hidden="true" />
+      </summary>
+      {/* Absolute under the bar, not fixed: the header's backdrop-blur is a containing block for fixed children. */}
+      <div className={`absolute inset-x-0 top-full z-[60] ${t.mobilePanel} lg:hidden overflow-y-auto`} style={{ height: 'calc(100dvh - 5rem)' }}>
+          <div className="container-x pb-12 space-y-6">
+            {SERVICES.length > 0 && (
+              <div>
+                <div className={`text-xs font-semibold ${t.mobileLabel} uppercase tracking-wider mb-2`}>{tr('nav.services')}</div>
+                {SERVICES.map((s) => (
+                  <Link key={s.slug} to="/services/$slug" params={{ slug: s.slug }} onClick={closeMenu} className={`block py-2 text-base font-medium ${t.mobileText}`}>
+                    {s.displayName}
+                  </Link>
+                ))}
+              </div>
+            )}
+            {AREAS.length > 0 && (
+              <div>
+                <div className={`text-xs font-semibold ${t.mobileLabel} uppercase tracking-wider mb-2`}>{tr('nav.areas')}</div>
+                {AREAS.map((a) => (
+                  <Link key={a.slug} to="/areas/$slug" params={{ slug: a.slug }} onClick={closeMenu} className={`block py-2 text-base font-medium ${t.mobileText}`}>
+                    {a.name}
+                  </Link>
+                ))}
+              </div>
+            )}
+            <div className="space-y-2">
+              {!HIDDEN_NAV.includes('pricing') && <Link to="/pricing" onClick={closeMenu} className={`block py-2 text-base font-medium ${t.mobileText}`}>{tr('nav.pricing')}</Link>}
+              {!HIDDEN_NAV.includes('reviews') && <Link to="/reviews" onClick={closeMenu} className={`block py-2 text-base font-medium ${t.mobileText}`}>{tr('nav.reviews')}</Link>}
+              {!HIDDEN_NAV.includes('about') && <Link to="/about" onClick={closeMenu} className={`block py-2 text-base font-medium ${t.mobileText}`}>{tr('nav.about')}</Link>}
+              {!HIDDEN_NAV.includes('contact') && <Link to="/contact" onClick={closeMenu} className={`block py-2 text-base font-medium ${t.mobileText}`}>{tr('nav.contact')}</Link>}
+              {CUSTOM_PAGES.filter((p) => p.nav !== false).map((p) => (
+                <Link key={p.slug} to="/p/$slug" params={{ slug: p.slug }} onClick={closeMenu} className={`block py-2 text-base font-medium ${t.mobileText}`}>{p.title}</Link>
+              ))}
+            </div>
+            <div className={`pt-4 border-t ${t.mobileBorder} space-y-3`}>
+              {HAS_PHONE && (<a href={`tel:${SITE.phone}`} className={`flex items-center gap-2 text-base font-semibold ${t.mobilePhone}`}>
+                <Phone className="h-5 w-5" /> {SITE.phoneDisplay}
+              </a>)}
+              <PrimaryCta onClick={closeMenu} className={t.mobileCta}>
+                {headerCtaLabel}
+              </PrimaryCta>
+            </div>
+          </div>
+      </div>
+    </details>
   );
   const skipLink = (
     <a href="#main" className={`sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 ${t.skip} focus:px-3 focus:py-1.5 focus:rounded-md`}>
@@ -558,55 +600,6 @@ export function Header() {
         )}
       </header>
 
-      {open && (
-        <div className={`fixed inset-0 z-[60] ${t.mobilePanel} lg:hidden overflow-y-auto`}>
-          <div className="container-x flex items-center justify-between h-20">
-            <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={40} alt={SITE.name} />
-            <button onClick={() => setOpen(false)} aria-label={tr('nav.closeMenu')} className={`p-2 focus-ring rounded-md ${t.menuIcon}`}>
-              <X className="h-6 w-6" />
-            </button>
-          </div>
-          <div className="container-x pb-12 space-y-6">
-            {SERVICES.length > 0 && (
-              <div>
-                <div className={`text-xs font-semibold ${t.mobileLabel} uppercase tracking-wider mb-2`}>{tr('nav.services')}</div>
-                {SERVICES.map((s) => (
-                  <Link key={s.slug} to="/services/$slug" params={{ slug: s.slug }} onClick={() => setOpen(false)} className={`block py-2 text-base font-medium ${t.mobileText}`}>
-                    {s.displayName}
-                  </Link>
-                ))}
-              </div>
-            )}
-            {AREAS.length > 0 && (
-              <div>
-                <div className={`text-xs font-semibold ${t.mobileLabel} uppercase tracking-wider mb-2`}>{tr('nav.areas')}</div>
-                {AREAS.map((a) => (
-                  <Link key={a.slug} to="/areas/$slug" params={{ slug: a.slug }} onClick={() => setOpen(false)} className={`block py-2 text-base font-medium ${t.mobileText}`}>
-                    {a.name}
-                  </Link>
-                ))}
-              </div>
-            )}
-            <div className="space-y-2">
-              {!HIDDEN_NAV.includes('pricing') && <Link to="/pricing" onClick={() => setOpen(false)} className={`block py-2 text-base font-medium ${t.mobileText}`}>{tr('nav.pricing')}</Link>}
-              {!HIDDEN_NAV.includes('reviews') && <Link to="/reviews" onClick={() => setOpen(false)} className={`block py-2 text-base font-medium ${t.mobileText}`}>{tr('nav.reviews')}</Link>}
-              {!HIDDEN_NAV.includes('about') && <Link to="/about" onClick={() => setOpen(false)} className={`block py-2 text-base font-medium ${t.mobileText}`}>{tr('nav.about')}</Link>}
-              {!HIDDEN_NAV.includes('contact') && <Link to="/contact" onClick={() => setOpen(false)} className={`block py-2 text-base font-medium ${t.mobileText}`}>{tr('nav.contact')}</Link>}
-              {CUSTOM_PAGES.filter((p) => p.nav !== false).map((p) => (
-                <Link key={p.slug} to="/p/$slug" params={{ slug: p.slug }} onClick={() => setOpen(false)} className={`block py-2 text-base font-medium ${t.mobileText}`}>{p.title}</Link>
-              ))}
-            </div>
-            <div className={`pt-4 border-t ${t.mobileBorder} space-y-3`}>
-              {HAS_PHONE && (<a href={`tel:${SITE.phone}`} className={`flex items-center gap-2 text-base font-semibold ${t.mobilePhone}`}>
-                <Phone className="h-5 w-5" /> {SITE.phoneDisplay}
-              </a>)}
-              <PrimaryCta onClick={() => setOpen(false)} className={t.mobileCta}>
-                {headerCtaLabel}
-              </PrimaryCta>
-            </div>
-          </div>
-        </div>
-      )}
     </>
   );
 }

@@ -1,6 +1,5 @@
 import { PrimaryCta } from './PrimaryCta'
 import { tr } from '~/lib/i18n'
-import { motion } from 'framer-motion'
 import { ArrowRight, Check, Phone } from 'lucide-react'
 import { HeroSlideshow } from '~/components/HeroSlideshow'
 import { SITE } from '~/data/site'
@@ -35,10 +34,8 @@ export function HeroBlock({
 
       <div className="container-x py-section relative">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+          <div
+            data-enter="up"
             className="lg:col-span-6"
           >
             {hasText(site.hero.kicker) && (
@@ -90,18 +87,16 @@ export function HeroBlock({
                 </li>
               ))}
             </ul>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.96 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.7, delay: 0.1 }}
+          <div
+            data-enter="up-late"
             className="lg:col-span-6 relative"
           >
             <HeroSlideshow
               images={[{ src: imageSrc(site.hero.image_url), alt: HERO_ALT }]}
             />
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

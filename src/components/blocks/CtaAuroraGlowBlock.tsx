@@ -71,9 +71,6 @@ export function CtaAuroraGlowBlock({
       <div className="container-x relative py-section text-center">
         {hasText(site.tagline) && (
           <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-10%' }}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="mb-6 inline-flex items-center gap-2 rounded-full border border-fam-card/25 bg-fam-card/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] backdrop-blur-sm"
           >
@@ -82,9 +79,6 @@ export function CtaAuroraGlowBlock({
         )}
 
         <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-10%' }}
           transition={{ duration: 0.6, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
           className="mx-auto max-w-3xl text-5xl leading-[0.98] tracking-tight text-fam-on-dark sm:text-6xl"
         >
@@ -98,9 +92,6 @@ export function CtaAuroraGlowBlock({
 
         {subtitle && (
           <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-10%' }}
             transition={{ duration: 0.6, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
             className="mx-auto mt-5 max-w-xl text-lg text-fam-on-dark/85"
           >
@@ -109,9 +100,6 @@ export function CtaAuroraGlowBlock({
         )}
 
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-10%' }}
           transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           className="mt-10 flex flex-wrap justify-center gap-3.5"
         >

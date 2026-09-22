@@ -1,6 +1,5 @@
 import { PrimaryCta } from './PrimaryCta'
 import { tr } from '~/lib/i18n'
-import { motion } from 'framer-motion'
 import { ArrowRight, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 
@@ -35,10 +34,8 @@ export function HeroMinimalBlock({
   return (
     <section className="bg-fam-card">
       <div className="container-x py-section">
-        <motion.div
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+        <div
+          data-enter="up"
           className="max-w-4xl"
         >
           {hasText(site.hero.kicker) && (
@@ -85,7 +82,7 @@ export function HeroMinimalBlock({
               </span>
             ))}
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   )

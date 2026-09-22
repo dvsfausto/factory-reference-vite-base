@@ -1,6 +1,5 @@
 import { PrimaryCta } from './PrimaryCta'
 import { tr } from '~/lib/i18n'
-import { motion } from 'framer-motion'
 import { ArrowRight, Check, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 import { HERO_ALT } from '~/data/images'
@@ -34,10 +33,8 @@ export function HeroCenteredBlock({
   return (
     <section className="bg-fam-card">
       <div className="container-x py-section">
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+        <div
+          data-enter="up"
           className="mx-auto flex max-w-3xl flex-col items-center text-center"
         >
           {hasText(site.hero.kicker) && (
@@ -85,12 +82,10 @@ export function HeroCenteredBlock({
               </span>
             ))}
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
+        <div
+          data-enter="up-late"
           className="mx-auto mt-14 max-w-5xl"
         >
           <div className="overflow-hidden rounded-2xl border border-fam-hairline elev-1">
@@ -100,7 +95,7 @@ export function HeroCenteredBlock({
               className="aspect-[16/7] w-full object-cover"
             />
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   )

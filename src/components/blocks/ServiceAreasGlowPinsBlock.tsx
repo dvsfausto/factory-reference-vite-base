@@ -55,7 +55,7 @@ export function ServiceAreasGlowPinsBlock({
 
         <motion.div
           className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4"
-          initial="hidden"
+          initial={false}
           whileInView="show"
           viewport={{ once: true, margin: '-10%' }}
           variants={{

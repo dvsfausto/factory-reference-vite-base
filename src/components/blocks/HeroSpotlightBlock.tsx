@@ -1,6 +1,6 @@
 import { PrimaryCta } from './PrimaryCta'
 import { tr } from '~/lib/i18n'
-import { motion, useReducedMotion } from 'framer-motion'
+import { useReducedMotion } from 'framer-motion'
 import { ArrowRight, Check, Phone, Star } from 'lucide-react'
 import { SITE } from '~/data/site'
 import { HERO_ALT } from '~/data/images'
@@ -66,10 +66,8 @@ export function HeroSpotlightBlock({
       <div className="container-x relative py-section">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-16">
           {/* Copy column */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          <div
+            data-enter="up"
             className="lg:col-span-6"
           >
             {hasText(kicker) && (
@@ -123,13 +121,11 @@ export function HeroSpotlightBlock({
                 </li>
               ))}
             </ul>
-          </motion.div>
+          </div>
 
           {/* Framed spotlight image + floating chips */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          <div
+            data-enter="up-late"
             className="relative lg:col-span-6"
           >
             {/* Radial brand glow behind the frame. */}
@@ -151,25 +147,21 @@ export function HeroSpotlightBlock({
 
             {/* Floating rating chip, only when there are real reviews. */}
             {rating && (
-              <motion.div
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: reduce ? 0 : 0.5 }}
+              <div
+                data-enter="up-late"
                 className="absolute -left-4 top-8 flex items-center gap-2 rounded-2xl border bg-fam-card/90 px-4 py-3 backdrop-blur-md"
                 style={{ borderColor: 'var(--wow-hairline)', boxShadow: 'var(--wow-shadow-glow)' }}
               >
                 <Star className="h-5 w-5 fill-current text-amber-400" />
                 <span className="text-lg font-bold text-ink-900">{rating.value.toFixed(1)}</span>
                 <span className="text-sm text-ink-500">({rating.count})</span>
-              </motion.div>
+              </div>
             )}
 
             {/* Floating trust chip, the real first trust item. */}
             {topChip && (
-              <motion.div
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: reduce ? 0 : 0.62 }}
+              <div
+                data-enter="up-late"
                 className="absolute -right-3 bottom-10 flex items-center gap-2 rounded-2xl border bg-fam-card/90 px-4 py-3 backdrop-blur-md"
                 style={{ borderColor: 'var(--wow-hairline)', boxShadow: 'var(--wow-shadow-glow)' }}
               >
@@ -180,9 +172,9 @@ export function HeroSpotlightBlock({
                   <Check className="h-4 w-4" />
                 </span>
                 <span className="text-sm font-semibold text-ink-800">{topChip}</span>
-              </motion.div>
+              </div>
             )}
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

@@ -42,7 +42,7 @@ export function FaqGlassAccordionBlock({
 
           <motion.div
             className="mt-10 space-y-3"
-            initial="hidden"
+            initial={false}
             whileInView="show"
             viewport={{ once: true, margin: '-10%' }}
             variants={{

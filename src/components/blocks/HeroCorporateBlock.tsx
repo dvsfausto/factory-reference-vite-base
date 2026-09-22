@@ -1,6 +1,5 @@
 import { PrimaryCta } from './PrimaryCta'
 import { tr } from '~/lib/i18n'
-import { motion } from 'framer-motion'
 import { ArrowRight, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 import { HERO_ALT } from '~/data/images'
@@ -46,10 +45,8 @@ export function HeroCorporateBlock({
     <section className="bg-fam-card">
       <div className="container-x py-section">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-14">
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+          <div
+            data-enter="up"
             className="lg:col-span-7"
           >
             {hasText(kicker) && (
@@ -88,13 +85,11 @@ export function HeroCorporateBlock({
                 <Phone className="h-4 w-4 text-fam-accent-text" /> {site.phoneDisplay}
               </a>)}
             </div>
-          </motion.div>
+          </div>
 
           {/* Framed image, defined border, tight radius, structured. */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
+          <div
+            data-enter="up-late"
             className="lg:col-span-5"
           >
             <div className="zi-card zi-media overflow-hidden rounded-lg border border-fam-hairline elev-1">
@@ -104,7 +99,7 @@ export function HeroCorporateBlock({
                 className="aspect-[4/3] w-full object-cover"
               />
             </div>
-          </motion.div>
+          </div>
         </div>
 
         {/* Credentials strip, foregrounded trust signals in bordered cells. */}

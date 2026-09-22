@@ -1,6 +1,5 @@
 import { PrimaryCta } from './PrimaryCta'
 import { tr } from '~/lib/i18n'
-import { motion } from 'framer-motion'
 import { ArrowRight, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 import { HERO_ALT } from '~/data/images'
@@ -58,10 +57,8 @@ export function HeroElegantBlock({
         <div className="absolute inset-0 -z-10 bg-gradient-to-r from-fam-statement via-fam-statement/92 to-fam-statement/55" />
 
         <div className="container-x relative flex flex-1 items-center py-section">
-          <motion.div
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
+          <div
+            data-enter="up"
             className="max-w-2xl"
           >
             {hasText(kicker) && (
@@ -110,7 +107,7 @@ export function HeroElegantBlock({
                 </span>
               ))}
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
     )
@@ -125,10 +122,8 @@ export function HeroElegantBlock({
     <section className="bg-fam-surface text-fam-ink">
       <div className="container-x py-section">
         {/* Masthead: eyebrow left, place/phone right, over a hairline. */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+        <div
+          data-enter="up"
           className="flex flex-wrap items-end justify-between gap-4 border-b border-fam-hairline pb-6"
         >
           {hasText(kicker) && (
@@ -139,29 +134,25 @@ export function HeroElegantBlock({
               {[metaLine, site.phoneDisplay].filter(Boolean).join('  ·  ')}
             </span>
           )}
-        </motion.div>
+        </div>
 
         {/* Oversized headline, full width, generous leading. */}
-        <motion.h1
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.05 }}
+        <h1
+          data-enter="up-late"
           className="mt-10 max-w-5xl font-display text-[2.75rem] font-medium leading-[1.03] tracking-tight sm:text-6xl md:text-7xl"
         >
           {headline}
-        </motion.h1>
+        </h1>
 
         {/* Asymmetric lede + CTA, the standfirst offset from the actions. */}
         <div className="mt-10 grid grid-cols-1 gap-8 lg:grid-cols-12">
           {hasText(subheadline) && (
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.7, delay: 0.15 }}
+            <p
+              data-enter="up-late"
               className="font-display text-2xl italic leading-snug text-fam-accent-text-strong lg:col-span-6"
             >
               {subheadline}
-            </motion.p>
+            </p>
           )}
           <div className="lg:col-span-5 lg:col-start-8">
             {hasText(body) && (
@@ -179,14 +170,12 @@ export function HeroElegantBlock({
         </div>
 
         {/* Wide cinematic image band, beneath the type, not beside it. */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+        <div
+          data-enter="up-late"
           className="zi-media mt-14 overflow-hidden rounded-2xl border border-fam-hairline"
         >
           <img src={imageSrc(imageUrl)} alt={HERO_ALT} className="aspect-[16/7] w-full object-cover" />
-        </motion.div>
+        </div>
 
         {/* Trust row, small caps, hairline-separated. */}
         <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-2 text-xs uppercase tracking-[0.18em] text-fam-ink-muted">

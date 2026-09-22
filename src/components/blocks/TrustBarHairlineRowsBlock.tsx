@@ -40,9 +40,6 @@ export function TrustBarHairlineRowsBlock({
           {resolved.map((item, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-10%' }}
               transition={{
                 duration: 0.5,
                 delay: reduce ? 0 : i * 0.1,
