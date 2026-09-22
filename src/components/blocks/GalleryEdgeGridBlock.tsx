@@ -50,7 +50,7 @@ export function GalleryEdgeGridBlock({
         {projects.map((p, i) => (
           <motion.figure
             key={`${p.title}-${i}`}
-            initial={reduce ? undefined : { opacity: 0, y: 24 }}
+            initial={false}
             whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-10%' }}
             transition={{ duration: 0.6, delay: reduce ? 0 : (i % 3) * 0.08, ease: [0.16, 1, 0.3, 1] }}

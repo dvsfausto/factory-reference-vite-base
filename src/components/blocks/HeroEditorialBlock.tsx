@@ -89,7 +89,7 @@ export function HeroEditorialBlock({
 
         {/* Brand hairline rule. */}
         <motion.div
-          initial={{ scaleX: 0 }}
+          initial={false}
           animate={{ scaleX: 1 }}
           transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           className="mt-8 h-px origin-left"

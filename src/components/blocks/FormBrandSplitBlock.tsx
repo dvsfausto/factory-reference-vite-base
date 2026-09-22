@@ -84,7 +84,7 @@ export function FormBrandSplitBlock({
     >
       <div className="container-x py-section">
         <motion.div
-          initial={reduce ? false : { opacity: 0, y: 28 }}
+          initial={false}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-10%' }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}

@@ -42,7 +42,7 @@ export function StoryEditorialFrameBlock({
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
           {/* Copy column */}
           <motion.div
-            initial={reduce ? undefined : { opacity: 0, y: 24 }}
+            initial={false}
             whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-10%' }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
@@ -66,7 +66,7 @@ export function StoryEditorialFrameBlock({
 
             {/* Brand hairline rule. */}
             <motion.div
-              initial={reduce ? undefined : { scaleX: 0 }}
+              initial={false}
               whileInView={reduce ? undefined : { scaleX: 1 }}
               viewport={{ once: true, margin: '-10%' }}
               transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
@@ -79,7 +79,7 @@ export function StoryEditorialFrameBlock({
 
           {/* Framed photo over a radial brand glow. */}
           <motion.div
-            initial={reduce ? undefined : { opacity: 0, scale: 0.95 }}
+            initial={false}
             whileInView={reduce ? undefined : { opacity: 1, scale: 1 }}
             viewport={{ once: true, margin: '-10%' }}
             transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}

@@ -75,7 +75,7 @@ export function PricingSpotlightTierBlock({
           <div className="mt-14 grid grid-cols-1 items-stretch gap-6 lg:grid-cols-12">
             {/* Spotlight plan, brand-gradient hero card. */}
             <motion.div
-              initial={reduce ? false : { opacity: 0, y: 24 }}
+              initial={false}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-10%' }}
               transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
@@ -114,7 +114,7 @@ export function PricingSpotlightTierBlock({
               {rest.map((p, i) => (
                 <motion.div
                   key={`${p.name}-${i}`}
-                  initial={reduce ? false : { opacity: 0, y: 20 }}
+                  initial={false}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: '-10%' }}
                   transition={{ duration: 0.55, delay: reduce ? 0 : 0.1 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
@@ -152,7 +152,7 @@ export function PricingSpotlightTierBlock({
         ) : (
           // Prose-only case, a split panel with a brand-gradient accent rail.
           <motion.div
-            initial={reduce ? false : { opacity: 0, y: 24 }}
+            initial={false}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-10%' }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}

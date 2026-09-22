@@ -441,7 +441,7 @@ export function BookingWizardBlock({
 
           {/* Card */}
           <motion.div
-            initial={reduce ? false : { opacity: 0, y: 24 }}
+            initial={false}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-10%' }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
@@ -482,7 +482,7 @@ export function BookingWizardBlock({
               <AnimatePresence mode="wait" initial={false}>
                 <motion.div
                   key={step}
-                  initial={reduce ? false : { opacity: 0, x: 12 }}
+                  initial={false}
                   animate={{ opacity: 1, x: 0 }}
                   exit={reduce ? undefined : { opacity: 0, x: -12 }}
                   transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
@@ -848,7 +848,7 @@ export function BookingWizardBlock({
             {/* STEP: confirmed (outside AnimatePresence so it persists) */}
             {step === 'confirmed' && service && date && time && (
               <motion.div
-                initial={reduce ? false : { opacity: 0, scale: 0.98 }}
+                initial={false}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                 className="py-4 text-center"

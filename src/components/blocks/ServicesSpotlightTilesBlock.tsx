@@ -69,7 +69,7 @@ export function ServicesSpotlightTilesBlock({
         >
           {/* Lead spotlight tile, big brand-gradient showcase. */}
           <motion.div
-            initial={reduce ? false : { opacity: 0, y: 28 }}
+            initial={false}
             whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-10%' }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
@@ -131,7 +131,7 @@ export function ServicesSpotlightTilesBlock({
               {rest.map((s, i) => (
                 <motion.div
                   key={s.slug}
-                  initial={reduce ? false : { opacity: 0, y: 22 }}
+                  initial={false}
                   whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: '-10%' }}
                   transition={{

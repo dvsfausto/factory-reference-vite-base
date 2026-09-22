@@ -52,7 +52,7 @@ export function ReviewsLuminousBlock({
           {previewReviews.map((r, i) => (
             <motion.figure
               key={r.id}
-              initial={reduce ? { opacity: 1 } : { opacity: 0, y: 24 }}
+              initial={false}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-10%' }}
               transition={{

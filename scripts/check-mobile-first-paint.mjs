@@ -21,7 +21,8 @@ const files = []
 const walk = (d) => { for (const n of readdirSync(d)) { const p = join(d, n); statSync(p).isDirectory() ? walk(p) : /\.tsx$/.test(n) && files.push(p) } }
 walk('src')
 
-const HIDDEN = [/initial=\{\{\s*opacity:\s*0\b/, /initial="hidden"/, /initial=\{[^}]*'hidden'[^}]*\}/]
+// any framer `initial` that is not exactly `initial={false}` starts the element in a state the server renders inline
+const HIDDEN = [/\binitial=(?!\{false\})/]
 for (const f of files) {
   const lines = readFileSync(f, 'utf8').split('\n')
   lines.forEach((line, i) => {

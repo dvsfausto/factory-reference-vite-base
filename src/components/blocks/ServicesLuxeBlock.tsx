@@ -72,7 +72,7 @@ export function ServicesLuxeBlock({
           {previewServices.map((s, i) => (
             <motion.div
               key={s.slug}
-              initial={reduce ? false : { opacity: 0, y: 26 }}
+              initial={false}
               whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-10%' }}
               transition={{

@@ -61,7 +61,7 @@ export function InfoArticleBlock({
               {sections.map((s, i) => (
                 <motion.section
                   key={i}
-                  initial={reduce ? false : { opacity: 0, y: 20 }}
+                  initial={false}
                   whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: '-10%' }}
                   transition={{

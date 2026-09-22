@@ -68,7 +68,7 @@ export function PricingLuxeGlassBlock({
               return (
                 <motion.div
                   key={`${p.name}-${i}`}
-                  initial={reduce ? false : { opacity: 0, y: 24 }}
+                  initial={false}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: '-10%' }}
                   transition={{ duration: 0.6, delay: reduce ? 0 : i * 0.1, ease: [0.16, 1, 0.3, 1] }}
@@ -124,7 +124,7 @@ export function PricingLuxeGlassBlock({
         ) : (
           // Prose-only case, a brand-framed "how pricing works" panel, no numbers.
           <motion.div
-            initial={reduce ? false : { opacity: 0, y: 24 }}
+            initial={false}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-10%' }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}

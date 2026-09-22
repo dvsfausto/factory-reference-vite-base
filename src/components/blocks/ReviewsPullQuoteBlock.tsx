@@ -55,7 +55,7 @@ export function ReviewsPullQuoteBlock({
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-14">
           {/* Featured pull-quote. */}
           <motion.figure
-            initial={reduce ? { opacity: 1 } : { opacity: 0, y: 24 }}
+            initial={false}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-10%' }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
@@ -109,7 +109,7 @@ export function ReviewsPullQuoteBlock({
           {/* Aggregate rating, ONLY when real (getAggregateRating() non-null). */}
           {rating && (
             <motion.div
-              initial={reduce ? { opacity: 1 } : { opacity: 0, scale: 0.94 }}
+              initial={false}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, margin: '-10%' }}
               transition={{ duration: 0.6, delay: reduce ? 0 : 0.15, ease: [0.16, 1, 0.3, 1] }}
@@ -141,7 +141,7 @@ export function ReviewsPullQuoteBlock({
             {rest.map((r, i) => (
               <motion.figure
                 key={r.id}
-                initial={reduce ? { opacity: 1 } : { opacity: 0, y: 16 }}
+                initial={false}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-10%' }}
                 transition={{

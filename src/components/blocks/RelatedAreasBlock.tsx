@@ -44,7 +44,7 @@ export function RelatedAreasBlock({
           {related.map((a, i) => (
             <motion.div
               key={a.href}
-              initial={reduce ? false : { opacity: 0, y: 20 }}
+              initial={false}
               whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-10%' }}
               transition={{

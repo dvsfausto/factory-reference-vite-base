@@ -61,7 +61,7 @@ export function ServicesFeatureRowsBlock({
             return (
               <motion.div
                 key={s.slug}
-                initial={reduce ? false : { opacity: 0, y: 34 }}
+                initial={false}
                 whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-10%' }}
                 transition={{
@@ -73,7 +73,7 @@ export function ServicesFeatureRowsBlock({
               >
                 {/* Photo, order flips on alternating rows (desktop only). */}
                 <motion.div
-                  initial={reduce ? false : { opacity: 0, x: flip ? 40 : -40 }}
+                  initial={false}
                   whileInView={reduce ? undefined : { opacity: 1, x: 0 }}
                   viewport={{ once: true, margin: '-10%' }}
                   transition={{

@@ -67,7 +67,7 @@ export function ProcessGlowNodesBlock({
               return (
                 <motion.li
                   key={`${s.title}-${i}`}
-                  initial={reduce ? false : { opacity: 0, x: -16 }}
+                  initial={false}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true, margin: '-10%' }}
                   transition={{ duration: 0.55, delay: reduce ? 0 : i * 0.1, ease: [0.16, 1, 0.3, 1] }}
