@@ -4,6 +4,7 @@ import { JsonLd } from '~/components/JsonLd'
 import { customPagesData } from '~/data/custom-pages'
 import { breadcrumbLd, buildMeta } from '~/lib/seo'
 import { SITE } from '~/data/site'
+import { PacksForSale } from '~/components/blocks/PacksForSale'
 
 // CLEAN /book route for the booking widget — the URL a barber actually texts a customer
 // ("mysite.com/book"), and the canonical for ranking. It renders the SAME 'book' customPage
@@ -41,6 +42,12 @@ function BookPage() {
         ])}
       />
       <SectionList blocks={data.layout} ctx={{ intro: data.intro, faqs: SITE.homeFaqs }} titleFromFirstBlock />
+      {/* ★ the packs for sale (the classes arc, 2026-09-23): on the booking page of every site; nothing when the business sells none */}
+      <section className="bg-fam-card">
+        <div className="container-x pb-section">
+          <PacksForSale />
+        </div>
+      </section>
     </>
   )
 }
