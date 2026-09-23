@@ -284,6 +284,7 @@ export function BookingWizardBlock({
   /* ★ NO PACK → THE PACKS TO BUY (the classes arc, part 3, 2026-09-23): the booking function answers pack_required with the
      packs for sale; each gets a Buy button that opens a checkout on the business's own Stripe. Paid → back here with ?paid=1. */
   const [packOffer, setPackOffer] = useState<Array<{ id: string; name: string; credits: number; price: number }>>([])
+  const [waiverLink, setWaiverLink] = useState<string | null>(null)
   const [buying, setBuying] = useState<string | null>(null)
   const paid = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('paid') === '1'
   const buyPack = async (packId: string) => {
@@ -426,11 +427,15 @@ export function BookingWizardBlock({
       const data = (await res.json().catch(() => ({}))) as {
         success?: boolean
         error?: string
+        waiver?: { link?: string; signed?: boolean } | null
       }
       if (!res.ok || !data.success) {
         if ((data as { code?: string }).code === 'pack_required' && Array.isArray((data as { packs?: unknown[] }).packs)) setPackOffer((data as { packs: Array<{ id: string; name: string; credits: number; price: number }> }).packs)
         throw new Error(data.error || tr('booking.couldNotComplete'))
       }
+      /* ★ THE WAIVER BY LINK (the classes arc, part 4): a class booking whose person has not signed the studio's current waiver
+         gets the signing link on the confirmation screen. Signed before → nothing shown. */
+      setWaiverLink(data.waiver && data.waiver.signed !== true && typeof data.waiver.link === 'string' ? data.waiver.link : null)
       setStep('confirmed')
     } catch (err) {
       setSubmitError(
@@ -965,6 +970,24 @@ export function BookingWizardBlock({
                     ? ` ${tr('booking.confirmationTo')} ${customer.email}.`
                     : ` ${tr('booking.seeYouThen')}`}
                 </p>
+                {waiverLink && (
+                  <div
+                    data-booking-waiver
+                    className="mx-auto mt-5 max-w-md rounded-2xl border bg-fam-card p-4 text-left text-sm"
+                    style={{ borderColor: 'var(--wow-hairline)' }}
+                  >
+                    <p className="text-ink-700">{tr('booking.waiverAsk')}</p>
+                    <a
+                      href={waiverLink}
+                      target="_blank"
+                      rel="noopener"
+                      className="mt-3 inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-semibold text-fam-on-dark"
+                      style={{ backgroundImage: 'var(--wow-grad-brand)' }}
+                    >
+                      {tr('booking.waiverSign')}
+                    </a>
+                  </div>
+                )}
                 <div
                   className="mx-auto mt-6 max-w-xs rounded-2xl border bg-fam-card p-4 text-left text-sm"
                   style={{ borderColor: 'var(--wow-hairline)' }}
