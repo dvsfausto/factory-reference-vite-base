@@ -98,6 +98,17 @@ function RootDocument({ children }: { children: React.ReactNode }) {
               "setTimeout(function(){try{if(!h.hasAttribute('data-hydrated'))h.classList.remove('js-reveal')}catch(e){}},2000)}catch(e){}",
           }}
         />
+        {/* ★★★ A PICTURE NEVER STAYS BLANK (2026-09-23, demo3's hero): owner photos are served through the storage resizer
+            (/storage/v1/render/image/public/…); when the resizer refuses one (an original above its resolution limit answers 400),
+            the same <img> falls back to the plain file at /storage/v1/object/public/…, once, in plain DOM, before or without React. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "document.addEventListener('error',function(e){try{var t=e.target;if(!t||t.tagName!=='IMG'||t.getAttribute('data-plain'))return;" +
+              "var s=t.currentSrc||t.src||'';var i=s.indexOf('/storage/v1/render/image/public/');if(i<0)return;" +
+              "t.setAttribute('data-plain','1');t.removeAttribute('srcset');t.src=s.slice(0,i)+'/storage/v1/object/public/'+s.slice(i+32).split('?')[0]}catch(x){}},true)",
+          }}
+        />
         {/* Own-beacon site analytics: dependency-free, fire-and-forget. Fires ONE sendBeacon on first
             load + every SPA route change (patches history.pushState/replaceState + popstate — TanStack
             Router navigates through the History API, so this catches all client navigations). business_id
