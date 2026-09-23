@@ -285,6 +285,7 @@ export function BookingWizardBlock({
      packs for sale; each gets a Buy button that opens a checkout on the business's own Stripe. Paid → back here with ?paid=1. */
   const [packOffer, setPackOffer] = useState<Array<{ id: string; name: string; credits: number; price: number }>>([])
   const [waiverLink, setWaiverLink] = useState<string | null>(null)
+  const [payInfo, setPayInfo] = useState<{ link: string; amount: number; kind: string } | null>(null)
   /* ★ THE WAITLIST (the classes arc, 2026-09-23): a FULL class takes names; the same details step, then waitlist-join instead of a booking */
   const [waitlist, setWaitlist] = useState<{ position: number; waiting: number } | null>(null)
   const [waitlistMode, setWaitlistMode] = useState(false)
@@ -461,6 +462,7 @@ export function BookingWizardBlock({
       })
       const data = (await res.json().catch(() => ({}))) as {
         success?: boolean
+        invoice?: { link?: string; amount?: number; kind?: string; paid?: boolean }
         error?: string
         waiver?: { link?: string; signed?: boolean } | null
       }
@@ -471,6 +473,7 @@ export function BookingWizardBlock({
       /* ★ THE WAIVER BY LINK (the classes arc, part 4): a class booking whose person has not signed the studio's current waiver
          gets the signing link on the confirmation screen. Signed before → nothing shown. */
       setWaiverLink(data.waiver && data.waiver.signed !== true && typeof data.waiver.link === 'string' ? data.waiver.link : null)
+      setPayInfo(data.invoice && typeof data.invoice.link === 'string' && Number(data.invoice.amount) > 0 && data.invoice.paid !== true ? { link: data.invoice.link, amount: Number(data.invoice.amount), kind: String(data.invoice.kind ?? '') } : null)
       setStep('confirmed')
     } catch (err) {
       setSubmitError(
@@ -1020,6 +1023,22 @@ export function BookingWizardBlock({
                     ? ` ${tr('booking.confirmationTo')} ${customer.email}.`
                     : ` ${tr('booking.seeYouThen')}`}
                 </p>
+                )}
+                {payInfo && (
+                  <div
+                    data-booking-pay
+                    className="mx-auto mt-5 max-w-md rounded-2xl border bg-fam-card p-4 text-left text-sm"
+                    style={{ borderColor: 'var(--wow-hairline)' }}
+                  >
+                    <p className="text-ink-700">{(payInfo.kind === 'deposit' ? tr('booking.depositHolds') : tr('booking.classCosts')).replace('{amount}', `$${payInfo.amount.toFixed(2).replace(/\.00$/, '')}`)}</p>
+                    <a
+                      href={payInfo.link}
+                      className="mt-3 inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-semibold text-fam-on-dark"
+                      style={{ backgroundImage: 'var(--wow-grad-brand)' }}
+                    >
+                      {tr('booking.payNow').replace('{amount}', `$${payInfo.amount.toFixed(2).replace(/\.00$/, '')}`)}
+                    </a>
+                  </div>
                 )}
                 {waiverLink && (
                   <div
