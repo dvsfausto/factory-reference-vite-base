@@ -18,6 +18,7 @@ export interface Product {
   stock: '' | 'low' | 'out'
   /** The owner's payment link when enabled; '' → the contact form. */
   buyUrl: string
+  rawPrice?: number
 }
 
 export function readBakedProducts(site: typeof SITE = SITE): Product[] {
@@ -58,7 +59,7 @@ export function useProducts(): Product[] {
     let cancelled = false
     const url =
       `${SUPABASE_URL}/rest/v1/products?business_id=eq.${BUSINESS_ID}&is_active=eq.true` +
-      `&select=id,name,description,price,compare_at_price,photo_url,images,stock_status,payment_link_enabled,payment_link_url,sort_order&order=sort_order.asc`
+      `&select=id,name,description,price,compare_at_price,photo_url,images,stock_status,sort_order&order=sort_order.asc`
     fetch(url, { headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` } })
       .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
       .then((rows: Array<Record<string, unknown>>) => {
@@ -74,7 +75,9 @@ export function useProducts(): Product[] {
               compareAtPrice: money(r.compare_at_price as number | string | null),
               image: firstImage(r as { photo_url?: string | null; images?: unknown }),
               stock: r.stock_status === 'out_of_stock' ? 'out' : r.stock_status === 'low_stock' ? 'low' : '',
-              buyUrl: r.payment_link_enabled && typeof r.payment_link_url === 'string' && /^https?:\/\//.test(r.payment_link_url) ? r.payment_link_url : '',
+              /* ★ no owner-pasted links (the owner, 2026-09-23): Buy goes through the business's own card door, never an outside link */
+              buyUrl: '',
+              rawPrice: Number(r.price ?? 0) || 0,
             })),
         )
       })
