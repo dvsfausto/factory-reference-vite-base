@@ -67,8 +67,8 @@ export function ClassScheduleWeekBlock({
                         ) : s.capacity ? (
                           <span className="inline-flex items-center gap-1"><Users className="h-3.5 w-3.5" /> {s.capacity} {tr('schedule.spots')}</span>
                         ) : null}
-                        {s.occurrenceId && s.serviceId && (s.seatsLeft == null || s.seatsLeft > 0) && (
-                          <a href={`/book?occurrence=${s.occurrenceId}`} className="font-semibold text-fam-accent-text hover:underline">{tr('schedule.book')}</a>
+                        {s.occurrenceId && s.serviceId && (
+                          <a href={`/book?occurrence=${s.occurrenceId}`} className="font-semibold text-fam-accent-text hover:underline">{s.seatsLeft == null || s.seatsLeft > 0 ? tr('schedule.book') : tr('schedule.waitlist')}</a>
                         )}
                       </div>
                     )}

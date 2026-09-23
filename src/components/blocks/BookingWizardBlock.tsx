@@ -285,6 +285,9 @@ export function BookingWizardBlock({
      packs for sale; each gets a Buy button that opens a checkout on the business's own Stripe. Paid → back here with ?paid=1. */
   const [packOffer, setPackOffer] = useState<Array<{ id: string; name: string; credits: number; price: number }>>([])
   const [waiverLink, setWaiverLink] = useState<string | null>(null)
+  /* ★ THE WAITLIST (the classes arc, 2026-09-23): a FULL class takes names; the same details step, then waitlist-join instead of a booking */
+  const [waitlist, setWaitlist] = useState<{ position: number; waiting: number } | null>(null)
+  const [waitlistMode, setWaitlistMode] = useState(false)
   const [buying, setBuying] = useState<string | null>(null)
   const paid = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('paid') === '1'
   const buyPack = async (packId: string) => {
@@ -393,6 +396,20 @@ export function BookingWizardBlock({
     }
     setSubmitting(true)
     setSubmitError(null)
+    if (waitlistMode && occurrence) {
+      try {
+        const res = await fetch(`${SUPABASE_URL}/functions/v1/waitlist-join`, { method: 'POST', headers: { 'Content-Type': 'application/json', ...ANON_HEADERS }, body: JSON.stringify({ businessId: BUSINESS_ID, occurrenceId: occurrence.id, customer: { firstName: customer.firstName.trim(), lastName: customer.lastName.trim(), email: customer.email.trim(), phone: customer.phone.trim() } }) })
+        const data = (await res.json().catch(() => ({}))) as { joined?: boolean; position?: number; waiting?: number; message?: string }
+        if (!data.joined) throw new Error(data.message || tr('booking.couldNotComplete'))
+        setWaitlist({ position: Number(data.position ?? 0), waiting: Number(data.waiting ?? 0) })
+        setStep('confirmed')
+      } catch (err) {
+        setSubmitError(err instanceof Error ? err.message : tr('booking.retry'))
+      } finally {
+        setSubmitting(false)
+      }
+      return
+    }
     try {
       const res = await fetch(CREATE_BOOKING, {
         method: 'POST',
@@ -682,9 +699,10 @@ export function BookingWizardBlock({
                               <button
                                 key={c.id}
                                 type="button"
-                                disabled={full}
+                                data-class-full={full ? '1' : undefined}
                                 onClick={() => {
                                   setOccurrence(c)
+                                  setWaitlistMode(full)
                                   const l = classLocal(c.start_at); setDate(l.date); setTime(l.time)
                                   setStep('details')
                                 }}
@@ -692,7 +710,7 @@ export function BookingWizardBlock({
                                 style={selected ? { backgroundImage: 'var(--wow-grad-brand)', borderColor: 'transparent', color: 'white' } : { borderColor: 'var(--wow-hairline)' }}
                               >
                                 <span><span className="font-semibold">{classDayLabel(c.start_at)}</span> · {to12h(classLocal(c.start_at).time)}{c.instructor ? ` · ${c.instructor}` : ''}</span>
-                                <span className="text-xs">{typeof c.seats_left === 'number' ? (full ? tr('booking.classFull') : `${c.seats_left} ${tr('schedule.left')}`) : ''}</span>
+                                <span className="text-xs">{typeof c.seats_left === 'number' ? (full ? `${tr('booking.classFull')} · ${tr('booking.joinWaitlist')}` : `${c.seats_left} ${tr('schedule.left')}`) : ''}</span>
                               </button>
                             )
                           })}
@@ -923,7 +941,7 @@ export function BookingWizardBlock({
                                 <Loader2 className="h-4 w-4 animate-spin" />{tr('booking.submitting')}</>
                             ) : (
                               <>
-                                {tr('booking.confirmBooking')}
+                                {waitlistMode ? tr('booking.joinWaitlist') : tr('booking.confirmBooking')}
                                 {date && time && (
                                   <span className="opacity-90">
                                     · {formatDateLong(date)}, {to12h(time)}
@@ -963,13 +981,19 @@ export function BookingWizardBlock({
                 >
                   <Check className="h-7 w-7" />
                 </span>
-                <h3 className="mt-5 font-display text-2xl font-semibold tracking-tight text-ink-900">{tr('booking.confirmed')}</h3>
+                <h3 className="mt-5 font-display text-2xl font-semibold tracking-tight text-ink-900">{waitlist ? tr('booking.waitlisted') : tr('booking.confirmed')}</h3>
+                {waitlist ? (
+                  <p data-booking-waitlist className="mx-auto mt-2 max-w-md leading-relaxed text-ink-700">
+                    {service.name}, {formatDateLong(date)} {tr('booking.at')} {to12h(time)}. {tr('booking.waitlistPosition')} {waitlist.position} {tr('booking.waitlistOf')} {waitlist.waiting}. {customer.phone ? tr('booking.waitlistText') : tr('booking.waitlistEmail')}
+                  </p>
+                ) : (
                 <p className="mx-auto mt-2 max-w-md leading-relaxed text-ink-700">
                   {service.name}, {formatDateLong(date)} {tr('booking.at')} {to12h(time)}.
                   {customer.email
                     ? ` ${tr('booking.confirmationTo')} ${customer.email}.`
                     : ` ${tr('booking.seeYouThen')}`}
                 </p>
+                )}
                 {waiverLink && (
                   <div
                     data-booking-waiver
