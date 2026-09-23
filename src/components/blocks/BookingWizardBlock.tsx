@@ -22,13 +22,13 @@ import {
   type BookingFeatures,
   type ServiceAddress,
 } from '~/lib/booking-shape'
+import { liveClassesUrl, type LiveClass } from '~/lib/useClassSchedule'
 import {
   BOOKING,
   BUSINESS_ID,
   SITE,
   SUPABASE_ANON_KEY,
-  SUPABASE_URL,
-} from '~/data/site'
+  SUPABASE_URL, SITE_LANGUAGE } from '~/data/site'
 
 // ─────────────────────────────────────────────────────────────────────────────
 // NATIVE SELF-SERVICE BOOKING WIZARD (Arc 4a · Stage 2).
@@ -87,7 +87,7 @@ interface CustomerInfo {
   notes: string
 }
 
-type Step = 'service' | 'date' | 'time' | 'address' | 'details' | 'confirmed'
+type Step = 'service' | 'class' | 'date' | 'time' | 'address' | 'details' | 'confirmed'
 
 const REST = `${SUPABASE_URL}/rest/v1`
 const CREATE_BOOKING = `${SUPABASE_URL}/functions/v1/create-booking`
@@ -208,6 +208,26 @@ function generateSlots(
   return slots
 }
 
+const classLocal = (iso: string) => {
+  const tz = BOOKING.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone
+  const parts = new Intl.DateTimeFormat('en-CA', { timeZone: tz, hourCycle: 'h23', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }).formatToParts(new Date(iso))
+  const g = (t: string) => parts.find((x) => x.type === t)?.value ?? ''
+  return { date: new Date(`${g('year')}-${g('month')}-${g('day')}T12:00:00`), time: `${g('hour')}:${g('minute')}` }
+}
+const classDayLabel = (iso: string) => new Intl.DateTimeFormat(SITE_LANGUAGE === 'es' ? 'es' : 'en-US', { timeZone: BOOKING.timezone || undefined, weekday: 'short', month: 'short', day: 'numeric' }).format(new Date(iso))
+async function fetchClasses(serviceId: string): Promise<LiveClass[]> {
+  const res = await fetch(`${liveClassesUrl(BUSINESS_ID, 21)}&service_id=eq.${serviceId}`, { headers: ANON_HEADERS })
+  if (!res.ok) return []
+  const rows = (await res.json()) as LiveClass[]
+  return Array.isArray(rows) ? rows.filter((r) => new Date(r.start_at).getTime() > Date.now()) : []
+}
+async function fetchClass(id: string): Promise<LiveClass | null> {
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/class_schedule_public?id=eq.${id}&select=id,service_id,title,instructor,start_at,end_at,seats_total,seats_left`, { headers: ANON_HEADERS })
+  if (!res.ok) return null
+  const rows = (await res.json()) as LiveClass[]
+  return Array.isArray(rows) && rows[0] ? rows[0] : null
+}
+
 export function BookingWizardBlock({
   site = SITE,
   label = tr('booking.bookOnline'),
@@ -241,6 +261,10 @@ export function BookingWizardBlock({
 
   const [step, setStep] = useState<Step>('service')
   const [service, setService] = useState<BookableService | null>(null)
+  /* ★ A CLASS IS A DATED SESSION WITH SEATS (the classes arc, 2026-09-23): when the chosen service has upcoming classes,
+     the wizard lists them instead of cutting hours into slots; the booking carries the occurrence and takes a seat. */
+  const [classes, setClasses] = useState<LiveClass[]>([])
+  const [occurrence, setOccurrence] = useState<LiveClass | null>(null)
   const [date, setDate] = useState<Date | null>(null)
   const [time, setTime] = useState<string | null>(null)
   const [customer, setCustomer] = useState<CustomerInfo>({
@@ -296,6 +320,19 @@ export function BookingWizardBlock({
         // /book?service=<id> (a service page's own "Book now"): land on that service's calendar.
         const pre =
           typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('service') : null
+        const preClass = typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('occurrence') : null
+        if (preClass) {
+          const occ = await fetchClass(preClass)
+          const cls = occ?.service_id ? svc.find((s) => s.id === occ.service_id) : undefined
+          if (occ && cls && !cancelled) {
+            setService({ ...cls, price: cls.price == null ? null : Number(cls.price), duration_minutes: cls.duration_minutes == null ? null : Number(cls.duration_minutes) })
+            setOccurrence(occ)
+            const l = classLocal(occ.start_at); setDate(l.date); setTime(l.time)
+            setStep('details')
+            setLoading(false)
+            return
+          }
+        }
         const hit = pre ? svc.find((s) => s.id === pre) : undefined
         if (hit) {
           setService({
@@ -348,6 +385,7 @@ export function BookingWizardBlock({
         body: JSON.stringify({
           businessId: BUSINESS_ID,
           serviceId: service.id,
+          ...(occurrence ? { occurrenceId: occurrence.id } : {}),
           selectedDate: date.toISOString(),
           selectedTime: time,
           customerInfo: {
@@ -390,7 +428,7 @@ export function BookingWizardBlock({
     }
   }
 
-  const STEP_ORDER: Step[] = stepOrder(visit)
+  const STEP_ORDER: Step[] = stepOrder(visit, !!occurrence || step === 'class')
   const stepIndex = STEP_ORDER.indexOf(step)
 
   return (
@@ -494,16 +532,16 @@ export function BookingWizardBlock({
                         label={service?.name}
                         onClick={() => setStep('service')}
                       />
-                      {date && step !== 'date' && (
+                      {date && step !== 'date' && step !== 'class' && (
                         <SummaryChip
                           label={formatDateLong(date)}
-                          onClick={() => setStep('date')}
+                          onClick={() => setStep(occurrence ? 'class' : 'date')}
                         />
                       )}
                       {time && (step === 'details' || step === 'address') && (
                         <SummaryChip
                           label={to12h(time)}
-                          onClick={() => setStep('time')}
+                          onClick={() => setStep(occurrence ? 'class' : 'time')}
                         />
                       )}
                       {visit && step === 'details' && addressComplete(address) && (
@@ -526,7 +564,8 @@ export function BookingWizardBlock({
                             onClick={() => {
                               setService(s)
                               setTime(null)
-                              setStep('date')
+                              setOccurrence(null)
+                              void fetchClasses(s.id).then((rows) => { setClasses(rows); setStep(rows.length ? 'class' : 'date') })
                             }}
                             className="group flex items-center justify-between gap-4 rounded-2xl border bg-fam-card px-5 py-4 text-left transition-all hover:translate-y-(--hov-lift-sm)"
                             style={{ borderColor: 'var(--wow-hairline)' }}
@@ -610,6 +649,38 @@ export function BookingWizardBlock({
                   )}
 
                   {/* STEP: time */}
+                  {step === 'class' && (
+                    <StepShell title={tr('booking.chooseClass')} onBack={() => setStep('service')}>
+                      {classes.length === 0 ? (
+                        <p className="rounded-2xl border border-dashed px-5 py-8 text-center text-sm text-ink-600" style={{ borderColor: 'var(--wow-hairline)' }}>{tr('booking.noClasses')}</p>
+                      ) : (
+                        <div className="grid gap-2.5 sm:grid-cols-2">
+                          {classes.map((c) => {
+                            const full = typeof c.seats_left === 'number' && c.seats_left <= 0
+                            const selected = occurrence?.id === c.id
+                            return (
+                              <button
+                                key={c.id}
+                                type="button"
+                                disabled={full}
+                                onClick={() => {
+                                  setOccurrence(c)
+                                  const l = classLocal(c.start_at); setDate(l.date); setTime(l.time)
+                                  setStep('details')
+                                }}
+                                className="flex items-center justify-between gap-3 rounded-xl border px-4 py-3 text-left text-sm transition-all hover:translate-y-(--hov-lift-sm) disabled:opacity-50"
+                                style={selected ? { backgroundImage: 'var(--wow-grad-brand)', borderColor: 'transparent', color: 'white' } : { borderColor: 'var(--wow-hairline)' }}
+                              >
+                                <span><span className="font-semibold">{classDayLabel(c.start_at)}</span> · {to12h(classLocal(c.start_at).time)}{c.instructor ? ` · ${c.instructor}` : ''}</span>
+                                <span className="text-xs">{typeof c.seats_left === 'number' ? (full ? tr('booking.classFull') : `${c.seats_left} ${tr('schedule.left')}`) : ''}</span>
+                              </button>
+                            )
+                          })}
+                        </div>
+                      )}
+                    </StepShell>
+                  )}
+
                   {step === 'time' && (
                     <StepShell
                       title={visit ? tr('booking.arrivalTime') : tr('booking.chooseTime')}

@@ -58,11 +58,16 @@ export function ClassScheduleWeekBlock({
                       <Clock className="h-4 w-4" /> {fmt(s.start)}{s.end ? ` – ${fmt(s.end)}` : ''}
                     </div>
                     <div className="mt-1 font-display text-base font-semibold text-fam-ink">{s.serviceName}</div>
-                    {(s.instructor || s.capacity) && (
+                    {(s.instructor || s.capacity || s.occurrenceId) && (
                       <div className="mt-1 flex flex-wrap gap-x-4 gap-y-1 text-sm text-fam-ink-muted">
                         {s.instructor && <span>{tr('schedule.with')} {s.instructor}</span>}
-                        {s.capacity && (
+                        {s.occurrenceId && typeof s.seatsLeft === 'number' ? (
+                          <span className="inline-flex items-center gap-1"><Users className="h-3.5 w-3.5" /> {s.seatsLeft > 0 ? `${s.seatsLeft} ${tr('schedule.left')}` : tr('schedule.full')}</span>
+                        ) : s.capacity ? (
                           <span className="inline-flex items-center gap-1"><Users className="h-3.5 w-3.5" /> {s.capacity} {tr('schedule.spots')}</span>
+                        ) : null}
+                        {s.occurrenceId && s.serviceId && (s.seatsLeft == null || s.seatsLeft > 0) && (
+                          <a href={`/book?occurrence=${s.occurrenceId}`} className="font-semibold text-fam-accent-text hover:underline">{tr('schedule.book')}</a>
                         )}
                       </div>
                     )}

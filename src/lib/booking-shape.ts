@@ -120,6 +120,8 @@ export function serviceCtaTarget(
 }
 
 /** The wizard's step order: a visit asks WHERE before the details. */
-export function stepOrder(visit: boolean): Array<'service' | 'date' | 'time' | 'address' | 'details'> {
+export function stepOrder(visit: boolean, klass = false): Array<'service' | 'class' | 'date' | 'time' | 'address' | 'details'> {
+  /* a class (the classes arc): the time IS the dated class, so there is no date and no time step */
+  if (klass) return ['service', 'class', 'details']
   return visit ? ['service', 'date', 'time', 'address', 'details'] : ['service', 'date', 'time', 'details']
 }

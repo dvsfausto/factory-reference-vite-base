@@ -55,6 +55,8 @@ t('address formats on one line without empty parts', () => {
 t('a visit asks where before the details', () => {
   assert.deepEqual(stepOrder(true), ['service', 'date', 'time', 'address', 'details'])
   assert.deepEqual(stepOrder(false), ['service', 'date', 'time', 'details'])
+  assert.deepEqual(stepOrder(false, true), ['service', 'class', 'details'])
+  assert.deepEqual(stepOrder(true, true), ['service', 'class', 'details'])
 })
 t('per-service CTA: each service follows its own action, only to pages that exist', () => {
   const pages = { book: true, quote: true, bookingWidget: false }

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { BUSINESS_ID, SITE, SUPABASE_ANON_KEY, SUPABASE_URL } from '~/data/site'
+import { BOOKING, BUSINESS_ID, SITE, SUPABASE_ANON_KEY, SUPABASE_URL } from '~/data/site'
 
 // THE CLASS SCHEDULE READ (niche arc Stage 5b) — the booking-widget model over site_content_items rows of
 // kind 'class_session' (the owner's weekly timetable, entered in the dashboard's Website → Content tab or
@@ -16,6 +16,42 @@ export interface ClassSession {
   end?: string
   instructor?: string
   capacity?: number
+  /** a dated class (the classes arc): its id to book, its seats left (null = no limit), its date and instant */
+  occurrenceId?: string
+  serviceId?: string | null
+  seatsLeft?: number | null
+  date?: string
+  startAt?: string
+}
+
+/** one dated class as the public schedule view serves it (class_schedule_public: no names, no bookings) */
+export interface LiveClass {
+  id: string
+  service_id: string | null
+  title: string
+  instructor: string | null
+  start_at: string
+  end_at: string
+  seats_total: number | null
+  seats_left: number | null
+}
+const tzParts = (iso: string, tz: string) => {
+  const parts = new Intl.DateTimeFormat('en-CA', { timeZone: tz, hourCycle: 'h23', weekday: 'short', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }).formatToParts(new Date(iso))
+  const g = (t: string) => parts.find((x) => x.type === t)?.value ?? ''
+  return { day: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(g('weekday')), date: `${g('year')}-${g('month')}-${g('day')}`, time: `${g('hour')}:${g('minute')}` }
+}
+/** the dated classes as timetable sessions, in the business's zone; pure so the check can read it */
+export function sessionsFromClasses(rows: LiveClass[], tz: string): ClassSession[] {
+  return rows
+    .filter((r) => r && typeof r.id === 'string' && typeof r.start_at === 'string' && typeof r.title === 'string' && r.title.trim())
+    .map<ClassSession>((r) => {
+      const a = tzParts(r.start_at, tz); const b = tzParts(r.end_at, tz)
+      return { serviceName: r.title.trim(), day: a.day, start: a.time, end: b.time, ...(r.instructor ? { instructor: r.instructor } : {}), ...(typeof r.seats_total === 'number' ? { capacity: r.seats_total } : {}), occurrenceId: r.id, serviceId: r.service_id ?? null, seatsLeft: r.seats_left ?? null, date: a.date, startAt: r.start_at }
+    })
+}
+export function liveClassesUrl(businessId: string, days = 7, now = new Date()): string {
+  const until = new Date(now.getTime() + days * 86_400_000).toISOString()
+  return `${SUPABASE_URL}/rest/v1/class_schedule_public?business_id=eq.${businessId}&start_at=lt.${encodeURIComponent(until)}&select=id,service_id,title,instructor,start_at,end_at,seats_total,seats_left&order=start_at.asc`
 }
 
 export function readBakedSchedule(site: typeof SITE = SITE): ClassSession[] {
@@ -51,6 +87,17 @@ export function useClassSchedule(): ClassSession[] {
   useEffect(() => {
     if (readBakedSchedule().length === 0) return
     let cancelled = false
+    /* ★ THE REAL SCHEDULE FIRST (the classes arc, 2026-09-23): the next seven days of dated classes with seats left, read
+       from the public schedule view. When any exist they replace the weekly rule on the page; the rule rows stay the
+       fallback (a business that has classes but no generated dates yet degrades to what it showed before). */
+    fetch(liveClassesUrl(BUSINESS_ID), { headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` } })
+      .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
+      .then((rows: LiveClass[]) => {
+        if (cancelled || !Array.isArray(rows) || rows.length === 0) return
+        const live = sessionsFromClasses(rows, BOOKING.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone)
+        if (live.length > 0) setSessions(live)
+      })
+      .catch(() => { /* keep the rule rows */ })
     const url =
       `${SUPABASE_URL}/rest/v1/site_content_items?business_id=eq.${BUSINESS_ID}&kind=eq.class_session&is_active=eq.true` +
       `&select=payload,sort_order&order=sort_order.asc`
