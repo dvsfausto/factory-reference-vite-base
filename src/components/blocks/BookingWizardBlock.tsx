@@ -290,6 +290,24 @@ export function BookingWizardBlock({
   const [waitlistMode, setWaitlistMode] = useState(false)
   const [buying, setBuying] = useState<string | null>(null)
   const paid = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('paid') === '1'
+  /* ★ THE PAID RETURN (the owner, 2026-09-23): a person back from Stripe sees first that it worked and what they now hold, read from
+     the sale itself (pack-checkout GET ?session=): first name, the pack, the classes. Nothing is claimed before it is read. */
+  const [paidInfo, setPaidInfo] = useState<{ first_name: string | null; pack: string | null; credits: number | null; balance: number | null; landed: boolean } | null>(null)
+  useEffect(() => {
+    if (!paid || typeof window === 'undefined') return
+    const sid = new URLSearchParams(window.location.search).get('session_id') || ''
+    if (!/^cs_(live|test)_[A-Za-z0-9]+$/.test(sid) || !SUPABASE_URL || !BUSINESS_ID) return
+    let tries = 0
+    const read = async () => {
+      try {
+        const r = await fetch(`${SUPABASE_URL}/functions/v1/pack-checkout?session=${encodeURIComponent(sid)}&business=${BUSINESS_ID}`, { headers: ANON_HEADERS })
+        const j = (await r.json()) as { paid?: boolean; landed?: boolean; first_name?: string | null; pack?: string | null; credits?: number | null; balance?: number | null }
+        if (j.paid) setPaidInfo({ first_name: j.first_name ?? null, pack: j.pack ?? null, credits: j.credits ?? null, balance: j.balance ?? null, landed: !!j.landed })
+        if (j.paid && !j.landed && tries++ < 6) setTimeout(read, 2500)
+      } catch { /* the page stays as it is */ }
+    }
+    void read()
+  }, [paid])
   const buyPack = async (packId: string) => {
     setBuying(packId)
     try {
@@ -476,6 +494,15 @@ export function BookingWizardBlock({
     >
       <div className="container-x py-section">
         <div className="mx-auto max-w-3xl">
+          {paidInfo && (
+            <div data-booking-paid role="status" className="mb-8 rounded-2xl border border-fam-hairline bg-fam-surface px-5 py-4 text-fam-ink">
+              <div className="font-display text-lg font-semibold">{tr('booking.paidTitle')}</div>
+              <p className="mt-1 text-sm text-fam-ink-muted">
+                {(paidInfo.first_name ? `${paidInfo.first_name}, ` : '') + tr('booking.paidBody').replace('{n}', String(paidInfo.balance ?? paidInfo.credits ?? '')).replace('{pack}', paidInfo.pack ?? '')}
+                {!paidInfo.landed ? ` ${tr('booking.paidLanding')}` : ''}
+              </p>
+            </div>
+          )}
           {/* Header */}
           <div className="text-center">
             <span className="inline-flex items-center justify-center gap-2.5 text-xs font-bold uppercase tracking-[0.2em] text-brand-700">
