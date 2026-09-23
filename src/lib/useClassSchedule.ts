@@ -36,9 +36,11 @@ export interface LiveClass {
   seats_left: number | null
 }
 const tzParts = (iso: string, tz: string) => {
-  const parts = new Intl.DateTimeFormat('en-CA', { timeZone: tz, hourCycle: 'h23', weekday: 'short', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }).formatToParts(new Date(iso))
+  /* the weekday from the local DATE, never from a locale's spelling ("Wed." in en-CA on some browsers) */
+  const parts = new Intl.DateTimeFormat('en-CA', { timeZone: tz, hourCycle: 'h23', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }).formatToParts(new Date(iso))
   const g = (t: string) => parts.find((x) => x.type === t)?.value ?? ''
-  return { day: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(g('weekday')), date: `${g('year')}-${g('month')}-${g('day')}`, time: `${g('hour')}:${g('minute')}` }
+  const y = Number(g('year')); const m = Number(g('month')); const d = Number(g('day'))
+  return { day: new Date(Date.UTC(y, m - 1, d)).getUTCDay(), date: `${g('year')}-${g('month')}-${g('day')}`, time: `${g('hour')}:${g('minute')}` }
 }
 /** the dated classes as timetable sessions, in the business's zone; pure so the check can read it */
 export function sessionsFromClasses(rows: LiveClass[], tz: string): ClassSession[] {
@@ -87,30 +89,31 @@ export function useClassSchedule(): ClassSession[] {
   useEffect(() => {
     if (readBakedSchedule().length === 0) return
     let cancelled = false
+    const headers = { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` }
     /* ★ THE REAL SCHEDULE FIRST (the classes arc, 2026-09-23): the next seven days of dated classes with seats left, read
-       from the public schedule view. When any exist they replace the weekly rule on the page; the rule rows stay the
-       fallback (a business that has classes but no generated dates yet degrades to what it showed before). */
-    fetch(liveClassesUrl(BUSINESS_ID), { headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` } })
+       from the public schedule view. When any exist they are the page. Only when there are none does the weekly rule
+       (site_content_items) load, so the two reads never race each other (the rule read used to land last and win). */
+    const rulesFallback = () => {
+      const url =
+        `${SUPABASE_URL}/rest/v1/site_content_items?business_id=eq.${BUSINESS_ID}&kind=eq.class_session&is_active=eq.true` +
+        `&select=payload,sort_order&order=sort_order.asc`
+      return fetch(url, { headers })
+        .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
+        .then((rows: Array<{ payload?: Record<string, unknown> | null; sort_order?: number | null }>) => {
+          if (cancelled || !Array.isArray(rows) || rows.length === 0) return
+          const live = sessionsFromRows(rows)
+          if (live.length > 0) setSessions(live)
+        })
+    }
+    fetch(liveClassesUrl(BUSINESS_ID), { headers })
       .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
       .then((rows: LiveClass[]) => {
-        if (cancelled || !Array.isArray(rows) || rows.length === 0) return
-        const live = sessionsFromClasses(rows, BOOKING.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone)
+        if (cancelled) return
+        const live = Array.isArray(rows) && rows.length ? sessionsFromClasses(rows, BOOKING.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone) : []
         if (live.length > 0) setSessions(live)
+        else return rulesFallback()
       })
-      .catch(() => { /* keep the rule rows */ })
-    const url =
-      `${SUPABASE_URL}/rest/v1/site_content_items?business_id=eq.${BUSINESS_ID}&kind=eq.class_session&is_active=eq.true` +
-      `&select=payload,sort_order&order=sort_order.asc`
-    fetch(url, { headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` } })
-      .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
-      .then((rows: Array<{ payload?: Record<string, unknown> | null; sort_order?: number | null }>) => {
-        if (cancelled || !Array.isArray(rows) || rows.length === 0) return
-        const live = sessionsFromRows(rows)
-        if (live.length > 0) setSessions(live)
-      })
-      .catch(() => {
-        /* keep baked — degrade-safe */
-      })
+      .catch(() => rulesFallback().catch(() => { /* keep baked, degrade-safe */ }))
     return () => {
       cancelled = true
     }
