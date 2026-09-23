@@ -1,6 +1,7 @@
 import { Clock, Users } from 'lucide-react'
 import { tr } from '~/lib/i18n'
 import { useClassSchedule, type ClassSession } from '~/lib/useClassSchedule'
+import { PacksForSale } from './PacksForSale'
 
 // Class schedule LAYOUT: 'week' (niche arc Stage 5b) — the owner's weekly timetable of group sessions: one
 // column per day that has a session, each session a card with time, class, instructor and capacity. A
@@ -77,6 +78,8 @@ export function ClassScheduleWeekBlock({
             </div>
           ))}
         </div>
+        {/* ★ the packs for sale, with a Buy that works (the classes arc, 2026-09-23); nothing when the business sells none */}
+        <PacksForSale />
       </div>
     </section>
   )
