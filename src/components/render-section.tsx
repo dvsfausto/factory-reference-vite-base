@@ -130,6 +130,7 @@ import { FORMS_VARIANTS } from '~/components/blocks/forms-variants'
 import { MembershipTierCardsBlock } from '~/components/blocks/MembershipTierCardsBlock'
 import { MEMBERSHIP_VARIANTS } from '~/components/blocks/membership-variants'
 import { PackagesBundleCardsBlock } from '~/components/blocks/PackagesBundleCardsBlock'
+import { PacksForSale } from '~/components/blocks/PacksForSale'
 import { PACKAGES_VARIANTS } from '~/components/blocks/packages-variants'
 import { CaseStudiesFeaturedBlock } from '~/components/blocks/CaseStudiesFeaturedBlock'
 import { CASE_STUDIES_VARIANTS } from '~/components/blocks/case-studies-variants'
@@ -890,8 +891,9 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
       )
     }
     case 'packages': {
+      /* ★ the Packages section IS the live packs section (2026-09-23): packs_public with Buy; the baked bundle cards only when there are no packs on file */
       const PackagesComponent = PACKAGES_VARIANTS[block.variant ?? ''] ?? PackagesBundleCardsBlock
-      return (
+      const baked = (
         <PackagesComponent
           key="packages"
           {...data}
@@ -899,6 +901,13 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
           heading={block.params?.heading as string | undefined}
           body={block.params?.body as string | undefined}
         />
+      )
+      return (
+        <section key="packages" className="bg-fam-card" data-packages-section>
+          <div className="container-x py-section">
+            <PacksForSale label={(block.params?.label as string | undefined) ?? 'Packages'} heading={block.params?.heading as string | undefined} body={block.params?.body as string | undefined} fallback={baked} />
+          </div>
+        </section>
       )
     }
     case 'caseStudies': {

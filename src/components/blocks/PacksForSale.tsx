@@ -13,8 +13,12 @@ interface Pack { id: string; name: string; description: string | null; credits: 
 const headers = { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` }
 const money = (n: number) => `$${Number(n).toFixed(2).replace(/\.00$/, '')}`
 
-export function PacksForSale() {
-  const [packs, setPacks] = useState<Pack[]>([])
+/* ★★★ ONE PACKS SECTION EVERYWHERE (the owner, 2026-09-23, Fitcycling: "show my packs anywhere on my site means the real packs section,
+   read live, with Buy; never a page of typed words that goes stale"). The book page, the home page's Packages section and any custom page's
+   Packages section all draw THIS: the live packs_public read with Buy through the business's own card door. `fallback` is what draws when
+   the business has no packs on file (the baked packages block, or nothing). */
+export function PacksForSale({ label, heading, body, fallback = null }: { label?: string; heading?: string; body?: string; fallback?: React.ReactNode } = {}) {
+  const [packs, setPacks] = useState<Pack[] | null>(null)
   const [open, setOpen] = useState<Pack | null>(null)
   const [form, setForm] = useState({ firstName: '', lastName: '', email: '', phone: '' })
   const [busy, setBusy] = useState(false)
@@ -26,7 +30,8 @@ export function PacksForSale() {
       .then((rows: Pack[]) => setPacks(Array.isArray(rows) ? rows : []))
       .catch(() => setPacks([]))
   }, [])
-  if (packs.length === 0) return null
+  if (packs === null) return null
+  if (packs.length === 0) return <>{fallback}</>
 
   const buy = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -45,8 +50,9 @@ export function PacksForSale() {
 
   return (
     <div className="mt-14" data-packs-for-sale>
-      <h3 className="font-display text-2xl font-semibold tracking-tight text-fam-ink">{tr('packs.heading')}</h3>
-      <p className="mt-2 max-w-xl text-fam-ink-muted">{tr('packs.body')}</p>
+      {label && <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text"><span className="h-px w-6 bg-fam-accent" />{label}</span>}
+      <h3 className={`font-display text-2xl font-semibold tracking-tight text-fam-ink${label ? ' mt-5' : ''}`}>{heading ?? tr('packs.heading')}</h3>
+      <p className="mt-2 max-w-xl text-fam-ink-muted">{body ?? tr('packs.body')}</p>
       <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {packs.map((p) => (
           <div key={p.id} data-pack={p.id} className="flex flex-col rounded-2xl border border-fam-hairline bg-fam-surface p-5">
