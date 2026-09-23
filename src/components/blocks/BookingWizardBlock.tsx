@@ -281,6 +281,20 @@ export function BookingWizardBlock({
   const [addressError, setAddressError] = useState<string | null>(null)
   const [submitting, setSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
+  /* ★ NO PACK → THE PACKS TO BUY (the classes arc, part 3, 2026-09-23): the booking function answers pack_required with the
+     packs for sale; each gets a Buy button that opens a checkout on the business's own Stripe. Paid → back here with ?paid=1. */
+  const [packOffer, setPackOffer] = useState<Array<{ id: string; name: string; credits: number; price: number }>>([])
+  const [buying, setBuying] = useState<string | null>(null)
+  const paid = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('paid') === '1'
+  const buyPack = async (packId: string) => {
+    setBuying(packId)
+    try {
+      const res = await fetch(`${SUPABASE_URL}/functions/v1/pack-checkout`, { method: 'POST', headers: { 'Content-Type': 'application/json', ...ANON_HEADERS }, body: JSON.stringify({ businessId: BUSINESS_ID, packId, customer: { firstName: customer.firstName.trim(), lastName: customer.lastName.trim(), email: customer.email.trim(), phone: customer.phone.trim() }, returnUrl: `${window.location.origin}${window.location.pathname}${occurrence ? `?occurrence=${occurrence.id}&paid=1` : '?paid=1'}` }) })
+      const data = (await res.json()) as { available?: boolean; url?: string; message?: string }
+      if (data.available && data.url) { window.location.href = data.url; return }
+      setSubmitError(data.message || tr('booking.couldNotComplete'))
+    } catch { setSubmitError(tr('booking.couldNotComplete')) } finally { setBuying(null) }
+  }
 
   // Load bookable services + weekly availability once, client-side (anon reads).
   useEffect(() => {
@@ -414,6 +428,7 @@ export function BookingWizardBlock({
         error?: string
       }
       if (!res.ok || !data.success) {
+        if ((data as { code?: string }).code === 'pack_required' && Array.isArray((data as { packs?: unknown[] }).packs)) setPackOffer((data as { packs: Array<{ id: string; name: string; credits: number; price: number }> }).packs)
         throw new Error(data.error || tr('booking.couldNotComplete'))
       }
       setStep('confirmed')
@@ -876,6 +891,19 @@ export function BookingWizardBlock({
                           <p role="alert" className="text-sm text-red-600">
                             {submitError}
                           </p>
+                        )}
+                        {packOffer.length > 0 && (
+                          <div className="grid gap-2 sm:grid-cols-2">
+                            {packOffer.map((pk) => (
+                              <button key={pk.id} type="button" disabled={buying !== null} onClick={() => void buyPack(pk.id)} className="flex items-center justify-between rounded-xl border px-4 py-3 text-left text-sm" style={{ borderColor: 'var(--wow-hairline)' }}>
+                                <span><span className="font-semibold">{pk.name}</span> · {pk.credits} {tr('schedule.spots') === 'spots' ? 'classes' : 'clases'}</span>
+                                <span className="font-semibold">{buying === pk.id ? '…' : `$${Number(pk.price).toFixed(2).replace(/\.00$/, '')} · ${tr('schedule.book')}`}</span>
+                              </button>
+                            ))}
+                          </div>
+                        )}
+                        {paid && !submitError && (
+                          <p className="text-sm text-ink-700">{tr('booking.packReady')}</p>
                         )}
 
                         <div className="mt-2 flex flex-wrap items-center gap-4">
