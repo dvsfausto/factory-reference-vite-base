@@ -6,9 +6,10 @@ import type { HeldEntry, HeldOptions } from '~/components/blocks/HeldBookingFlow
 
 /**
  * ★★★ THE FLOW ORDER (the owner, 2026-09-24): for a CLASS, the person is known before the seat is touched.
- *   1 their number (new here: name and email too) → 2 the code (the account is made by the code, no password) →
- *   3 the waiver, first time only, and it comes back here after signing → 4 the class is booked: a credit is spent, or the seat
- *   is HELD while they buy a pack or a single class → 5 the seat is locked → the spot pick.
+ *   the class first (they came for it) → 1 their number (new here: name too) → 2 the code (the account is made by the code, no
+ *   password; it is what makes the pack theirs and stops a double booking) → 3 the class is booked: a credit is spent, or the seat is
+ *   HELD while they buy a pack or a single class → 4 the seat is locked → 5 the waiver, first time only, now that the seat is theirs
+ *   (HeldBookingFlow; it comes back after signing) → 6 the spot pick. A waiver before a chosen class or a payment loses people.
  * A returning person: number → code → straight to the class (the waiver already signed). A session lasts 30 minutes, so a second
  * class in the same visit needs no second code. Every fact comes from the portal functions; the caller never names the person.
  */
@@ -41,7 +42,7 @@ export function ClassBookingFlow({ occurrence, serviceId, onHeld }: { occurrence
   useEffect(() => {
     let sess: string | null = null
     try { sess = window.sessionStorage.getItem(SESSION_KEY); const me = window.localStorage.getItem(REMEMBER_KEY); if (me) { const m = JSON.parse(me) as { phone?: string; firstName?: string; lastName?: string; email?: string }; setPhone(m.phone ?? ''); setFirst(m.firstName ?? ''); setLast(m.lastName ?? ''); setEmail(m.email ?? '') } } catch { /* none */ }
-    if (sess) { setToken(sess); void checkWaiver(sess) }
+    if (sess) { setToken(sess); void book(sess) }   // the same visit: no second code, straight to the class
   }, [])
   useEffect(() => {
     const digits = phone.replace(/\D/g, '')
@@ -65,7 +66,7 @@ export function ClassBookingFlow({ occurrence, serviceId, onHeld }: { occurrence
     if (!ok || typeof data.token !== 'string') { setBusy(false); setError(tr('portal.wrongCode')); return }
     try { window.sessionStorage.setItem(SESSION_KEY, data.token) } catch { /* not kept */ }
     setToken(data.token); setBusy(false)
-    await checkWaiver(data.token)
+    await book(data.token)
   }
   const checkWaiver = async (sess: string) => {
     setBusy(true); setError(null); setPhase('waiver')
@@ -85,7 +86,7 @@ export function ClassBookingFlow({ occurrence, serviceId, onHeld }: { occurrence
     const { ok, data } = await fn('create-booking', { businessId: BUSINESS_ID, serviceId, occurrenceId: occurrence.id, hold: true, source: 'portal' }, sess)
     setBusy(false)
     const d = data as { success?: boolean; held?: boolean; already?: boolean; message?: string; error?: string; booking?: { id?: string }; hold?: { token?: string; expires_at?: string }; options?: HeldOptions }
-    if (!ok || !d.success || !d.booking?.id || !d.hold?.token) { setError(d.error || tr('booking.couldNotComplete')); setPhase('waiver'); return }
+    if (!ok || !d.success || !d.booking?.id || !d.hold?.token) { setError(d.error || tr('booking.couldNotComplete')); setPhase('who'); return }
     onHeld({ bookingId: d.booking.id, token: d.hold.token, initial: d.held ? 'pay' : 'after', expiresAt: d.hold.expires_at ?? null, options: d.options ?? null, note: d.already ? (d.message ?? null) : null })
   }
 
