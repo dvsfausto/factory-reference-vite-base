@@ -16,6 +16,7 @@ import {
 import {
   EMPTY_ADDRESS,
   addressComplete,
+  postalRequiredFor,
   bookingLive,
   formatAddress,
   isVisit,
@@ -454,7 +455,7 @@ export function BookingWizardBlock({
 
   const submit = async () => {
     if (!service || !date || !time) return
-    if (visit && !addressComplete(address)) {
+    if (visit && !addressComplete(address, postalRequired)) {
       setAddressError(tr('booking.errAddress'))
       setStep('address')
       return
@@ -676,7 +677,7 @@ export function BookingWizardBlock({
                           onClick={() => setStep(occurrence ? 'class' : 'time')}
                         />
                       )}
-                      {visit && step === 'details' && addressComplete(address) && (
+                      {visit && step === 'details' && addressComplete(address, postalRequired) && (
                         <SummaryChip
                           label={formatAddress(address)}
                           onClick={() => setStep('address')}
@@ -899,8 +900,8 @@ export function BookingWizardBlock({
                       <form
                         onSubmit={(e) => {
                           e.preventDefault()
-                          if (!addressComplete(address)) {
-                            setAddressError(tr('booking.errAddress'))
+                          if (!addressComplete(address, postalRequired)) {
+                            setAddressError(tr(postalRequired ? 'booking.errAddress' : 'booking.errAddressNoPostal'))
                             return
                           }
                           setAddressError(null)
@@ -937,8 +938,8 @@ export function BookingWizardBlock({
                             onChange={(v) => setAddress((a) => ({ ...a, state: v }))}
                           />
                           <WField
-                            label={tr('form.zip')}
-                            required
+                            label={tr(postalRequired ? 'form.zip' : 'form.postal')}
+                            required={postalRequired}
                             value={address.zip}
                             autoComplete="postal-code"
                             onChange={(v) => setAddress((a) => ({ ...a, zip: v }))}
