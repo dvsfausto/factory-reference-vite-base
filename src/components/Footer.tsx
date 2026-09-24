@@ -115,7 +115,7 @@ function CompanyCol({ t }: { t: FooterTheme }) {
           * ★ CUSTOM pages stay in Company: an owner-created page IS theirs, and they chose to
           * put it in the nav.
           */}
-        {CUSTOM_PAGES.filter((p) => p.nav !== false).map((p) => (<li key={p.slug}><Link to="/p/$slug" params={{ slug: p.slug }} className={t.listHover}>{p.title}</Link></li>))}
+        {CUSTOM_PAGES.filter((p) => p.nav !== false).map((p) => (<li key={p.slug}><Link to="/$slug" params={{ slug: p.slug }} className={t.listHover}>{p.title}</Link></li>))}
       </ul>
       {INFO_PAGES.length > 0 && (
         <>
@@ -158,7 +158,7 @@ function BottomBar({ t }: { t: FooterTheme }) {
             * whose slug says so). No page, no link — nothing is lost, and nothing is claimed.
             */}
           {LEGAL_PAGES.map((p) => (
-            <Link key={p.slug} to="/p/$slug" params={{ slug: p.slug }} className={t.bottomHover}>{p.title}</Link>
+            <Link key={p.slug} to="/$slug" params={{ slug: p.slug }} className={t.bottomHover}>{p.title}</Link>
           ))}
           {/* ★ 2026-09-16: the site now records engagement and a daily visitor code, so it says so. The
               built-in /privacy statement links here unless the owner made their own privacy page. */}

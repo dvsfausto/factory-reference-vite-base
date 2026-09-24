@@ -9,7 +9,7 @@ import { SITE } from '~/data/site'
 // ("mysite.com/quote"), and the canonical for ranking. It renders the SAME 'quote' customPage
 // (design_dna → customPagesData['quote']) the /p/quote catch-all serves, so content stays editable +
 // rebuild-durable; only the URL is dedicated. 404s when the business has no quote page (no quotable
-// services). TanStack matches this static route before the /p/$slug catch-all, so /p/quote still works.
+// services). TanStack matches this static route before the /$slug catch-all; /p/quote 301s here.
 export const Route = createFileRoute('/quote')({
   loader: () => {
     const data = customPagesData['quote']

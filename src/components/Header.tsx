@@ -433,7 +433,7 @@ export function Header() {
       {!HIDDEN_NAV.includes('contact') && <Link to="/contact" className={`px-3 py-2 ${t.navLink} focus-ring rounded-md`}>{tr('nav.contact')}</Link>}
       {/* Custom pages (Phase 2). Empty CUSTOM_PAGES → nothing renders (byte-identical). */}
       {CUSTOM_PAGES.filter((p) => p.nav !== false).map((p) => (
-        <Link key={p.slug} to="/p/$slug" params={{ slug: p.slug }} className={`px-3 py-2 ${t.navLink} focus-ring rounded-md`}>{p.title}</Link>
+        <Link key={p.slug} to="/$slug" params={{ slug: p.slug }} className={`px-3 py-2 ${t.navLink} focus-ring rounded-md`}>{p.title}</Link>
       ))}
     </>
   );
@@ -480,7 +480,7 @@ export function Header() {
               {!HIDDEN_NAV.includes('about') && <Link to="/about" onClick={closeMenu} className={`block py-2 text-base font-medium ${t.mobileText}`}>{tr('nav.about')}</Link>}
               {!HIDDEN_NAV.includes('contact') && <Link to="/contact" onClick={closeMenu} className={`block py-2 text-base font-medium ${t.mobileText}`}>{tr('nav.contact')}</Link>}
               {CUSTOM_PAGES.filter((p) => p.nav !== false).map((p) => (
-                <Link key={p.slug} to="/p/$slug" params={{ slug: p.slug }} onClick={closeMenu} className={`block py-2 text-base font-medium ${t.mobileText}`}>{p.title}</Link>
+                <Link key={p.slug} to="/$slug" params={{ slug: p.slug }} onClick={closeMenu} className={`block py-2 text-base font-medium ${t.mobileText}`}>{p.title}</Link>
               ))}
             </div>
             <div className={`pt-4 border-t ${t.mobileBorder} space-y-3`}>

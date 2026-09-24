@@ -12,7 +12,7 @@ import { PacksForSale } from '~/components/blocks/PacksForSale'
 // rebuild-durable; only the URL is dedicated. The page's booking block carries params.forceEnabled
 // so the wizard renders here for any affordance-eligible business, independent of the homepage-section
 // heuristic. 404s when the business has no book page (no bookable services / vetoed type). TanStack
-// matches this static route before the /p/$slug catch-all, so /p/book still works.
+// matches this static route before the /$slug catch-all; /p/book 301s here.
 export const Route = createFileRoute('/book')({
   loader: () => {
     const data = customPagesData['book']
