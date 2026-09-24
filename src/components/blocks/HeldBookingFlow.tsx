@@ -16,7 +16,16 @@ type Status = { status: string; held: boolean; hold_expires_at: string | null; o
 type Phase = 'pay' | 'confirming' | 'waiver' | 'spot' | 'done' | 'expired' | 'released'
 /** ★ THE ROOM (2026-09-24): rows of uneven length with the things that are not spots, as the owner laid it out (rooms_public) */
 type RoomItem = { kind: string; no?: number; text?: string }
-type Room = { name: string; front: string | null; rows: Array<{ label?: string; items: RoomItem[] }> }
+type Room = { name: string; front: string | null; rows: Array<{ label?: string; items: RoomItem[] }>; spot_kind?: string | null }
+/** the icon for a kind of spot: the room says what its spots are (bike, mat, chair, station), the drawing shows it */
+export function SpotIcon({ kind, className }: { kind?: string | null; className?: string }) {
+  const c = className ?? 'h-4 w-4'
+  if (kind === 'bike') return <svg viewBox="0 0 24 24" className={c} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M15 6h-3l-2 5"/><path d="M5.5 17.5 10 11l3 6.5h5.5"/><path d="M12 11h5l1.5 6.5"/><path d="M14 4h2.5"/></svg>
+  if (kind === 'mat') return <svg viewBox="0 0 24 24" className={c} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden><rect x="3" y="8" width="18" height="8" rx="2"/><path d="M7 8v8M17 8v8"/></svg>
+  if (kind === 'chair') return <svg viewBox="0 0 24 24" className={c} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M6 4h10v9H6z"/><path d="M4 13h16v4H4z"/><path d="M6 17v3M18 17v3"/></svg>
+  if (kind === 'station') return <svg viewBox="0 0 24 24" className={c} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden><rect x="4" y="5" width="16" height="10" rx="1.5"/><path d="M8 19h8M12 15v4"/></svg>
+  return null
+}
 
 const HEADERS = { 'Content-Type': 'application/json', apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` }
 const money = (n: number) => `$${Number(n).toFixed(2).replace(/\.00$/, '')}`
@@ -87,7 +96,7 @@ export function HeldBookingFlow({ entry, onReleased }: { entry: HeldEntry; onRel
     void (async () => {
       const { data } = await call('seats'); setSeats(((data.seats as Array<{ seat_no: number; taken: boolean; mine: boolean }>) ?? []))
       try {
-        const r = await fetch(`${SUPABASE_URL}/rest/v1/rooms_public?business_id=eq.${BUSINESS_ID}&select=name,front,rows`, { headers: HEADERS })
+        const r = await fetch(`${SUPABASE_URL}/rest/v1/rooms_public?business_id=eq.${BUSINESS_ID}&select=name,front,rows,spot_kind`, { headers: HEADERS })
         const rows = (await r.json()) as Room[]
         if (rows[0] && Array.isArray(rows[0].rows) && rows[0].rows.length) setRoom(rows[0])
       } catch { /* a plain grid then */ }
@@ -195,7 +204,7 @@ export function HeldBookingFlow({ entry, onReleased }: { entry: HeldEntry; onRel
         <h3 className="font-display text-xl font-semibold text-ink-900">{tr('booking.pickSpot')}</h3>
         <p className="mt-1 text-sm text-ink-700">{mine ? tr('booking.yourSpot').replace('{n}', String(mine)) : tr('booking.spotHint')}</p>
         {room ? (
-          <div data-held-room className="mt-4 overflow-x-auto">
+          <div data-held-room className="mx-auto mt-4 w-fit max-w-full overflow-x-auto">
             {room.front && <div className="mb-2 rounded-md border border-dashed py-1 text-center text-[11px] uppercase tracking-[0.15em] text-ink-600" style={{ borderColor: 'var(--wow-hairline)' }}>{room.front}</div>}
             <div className="grid gap-2">
               {room.rows.map((row, ri) => (
@@ -207,9 +216,9 @@ export function HeldBookingFlow({ entry, onReleased }: { entry: HeldEntry; onRel
                       const state = !st ? 'closed' : st.mine ? 'mine' : st.taken ? 'taken' : 'free'
                       return (
                         <button key={ii} type="button" data-held-seat={it.no} data-seat-state={state} disabled={state !== 'free' && state !== 'mine' || busy !== null} onClick={() => state === 'free' && void pickSeat(it.no as number)}
-                          className={`h-11 w-11 rounded-lg border text-sm font-semibold ${state === 'mine' ? 'text-fam-on-dark' : state === 'free' ? 'text-ink-900' : 'opacity-40'} ${state === 'taken' ? 'line-through' : ''}`}
+                          className={`flex h-12 w-12 flex-col items-center justify-center rounded-lg border text-xs font-semibold leading-none ${state === 'mine' ? 'text-fam-on-dark' : state === 'free' ? 'text-ink-900' : 'opacity-40'} ${state === 'taken' ? 'line-through' : ''}`}
                           style={state === 'mine' ? { backgroundImage: 'var(--wow-grad-brand)', borderColor: 'transparent' } : { borderColor: 'var(--wow-hairline)' }}
-                          title={state === 'closed' ? tr('booking.spotClosed') : undefined}>{it.no}</button>
+                          title={state === 'closed' ? tr('booking.spotClosed') : undefined}><SpotIcon kind={room.spot_kind} className="mb-0.5 h-5 w-5" />{it.no}</button>
                       )
                     }
                     if (it.kind === 'gap') return <span key={ii} className="h-11 w-11" aria-hidden />
