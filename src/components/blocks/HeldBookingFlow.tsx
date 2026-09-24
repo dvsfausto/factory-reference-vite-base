@@ -14,6 +14,9 @@ export type HeldOptions = { packs: Array<{ id: string; name: string; credits: nu
 export type HeldEntry = { bookingId: string; token: string; initial: 'pay' | 'confirming' | 'after'; expiresAt?: string | null; options?: HeldOptions | null }
 type Status = { status: string; held: boolean; hold_expires_at: string | null; options?: HeldOptions | null; seat_no: number | null; seats_total: number | null; occurrence: { id: string; title: string; start_at: string } | null; invoice: { amount: number; paid: boolean; share_token: string | null } | null; pack: { name: string; balance: number } | null; waiver: { signed: boolean; link: string | null } | null }
 type Phase = 'pay' | 'confirming' | 'waiver' | 'spot' | 'done' | 'expired' | 'released'
+/** ★ THE ROOM (2026-09-24): rows of uneven length with the things that are not spots, as the owner laid it out (rooms_public) */
+type RoomItem = { kind: string; no?: number; text?: string }
+type Room = { name: string; front: string | null; rows: Array<{ label?: string; items: RoomItem[] }> }
 
 const HEADERS = { 'Content-Type': 'application/json', apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` }
 const money = (n: number) => `$${Number(n).toFixed(2).replace(/\.00$/, '')}`
@@ -24,6 +27,7 @@ export function HeldBookingFlow({ entry, onReleased }: { entry: HeldEntry; onRel
   const cameBackWithoutPaying = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('paid') !== '1'
   const [status, setStatus] = useState<Status | null>(null)
   const [seats, setSeats] = useState<Array<{ seat_no: number; taken: boolean; mine: boolean }>>([])
+  const [room, setRoom] = useState<Room | null>(null)
   const [busy, setBusy] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [now, setNow] = useState(() => Date.now())
@@ -73,7 +77,14 @@ export function HeldBookingFlow({ entry, onReleased }: { entry: HeldEntry; onRel
   /* the spots of the class */
   useEffect(() => {
     if (phase !== 'spot') return
-    void (async () => { const { data } = await call('seats'); setSeats(((data.seats as Array<{ seat_no: number; taken: boolean; mine: boolean }>) ?? [])) })()
+    void (async () => {
+      const { data } = await call('seats'); setSeats(((data.seats as Array<{ seat_no: number; taken: boolean; mine: boolean }>) ?? []))
+      try {
+        const r = await fetch(`${SUPABASE_URL}/rest/v1/rooms_public?business_id=eq.${BUSINESS_ID}&select=name,front,rows`, { headers: HEADERS })
+        const rows = (await r.json()) as Room[]
+        if (rows[0] && Array.isArray(rows[0].rows) && rows[0].rows.length) setRoom(rows[0])
+      } catch { /* a plain grid then */ }
+    })()
   }, [phase])
 
   const buyPack = async (packId: string) => {
@@ -175,6 +186,33 @@ export function HeldBookingFlow({ entry, onReleased }: { entry: HeldEntry; onRel
       <Card tag="spot">
         <h3 className="font-display text-xl font-semibold text-ink-900">{tr('booking.pickSpot')}</h3>
         <p className="mt-1 text-sm text-ink-700">{mine ? tr('booking.yourSpot').replace('{n}', String(mine)) : tr('booking.spotHint')}</p>
+        {room ? (
+          <div data-held-room className="mt-4 overflow-x-auto">
+            {room.front && <div className="mb-2 rounded-md border border-dashed py-1 text-center text-[11px] uppercase tracking-[0.15em] text-ink-600" style={{ borderColor: 'var(--wow-hairline)' }}>{room.front}</div>}
+            <div className="grid gap-2">
+              {room.rows.map((row, ri) => (
+                <div key={ri} data-room-row={ri} className="flex flex-wrap items-center justify-center gap-2">
+                  {row.label && <span className="mr-1 text-[11px] uppercase tracking-wide text-ink-600">{row.label}</span>}
+                  {row.items.map((it, ii) => {
+                    if (it.kind === 'seat' && typeof it.no === 'number') {
+                      const st = seats.find((x) => x.seat_no === it.no)
+                      const state = !st ? 'closed' : st.mine ? 'mine' : st.taken ? 'taken' : 'free'
+                      return (
+                        <button key={ii} type="button" data-held-seat={it.no} data-seat-state={state} disabled={state !== 'free' && state !== 'mine' || busy !== null} onClick={() => state === 'free' && void pickSeat(it.no as number)}
+                          className={`h-11 w-11 rounded-lg border text-sm font-semibold ${state === 'mine' ? 'text-fam-on-dark' : state === 'free' ? 'text-ink-900' : 'opacity-40'} ${state === 'taken' ? 'line-through' : ''}`}
+                          style={state === 'mine' ? { backgroundImage: 'var(--wow-grad-brand)', borderColor: 'transparent' } : { borderColor: 'var(--wow-hairline)' }}
+                          title={state === 'closed' ? tr('booking.spotClosed') : undefined}>{it.no}</button>
+                      )
+                    }
+                    if (it.kind === 'gap') return <span key={ii} className="h-11 w-11" aria-hidden />
+                    const word = it.text || (it.kind === 'instructor' ? tr('booking.roomInstructor') : it.kind === 'mirror' ? tr('booking.roomMirror') : it.kind === 'door' ? tr('booking.roomDoor') : it.kind)
+                    return <span key={ii} data-room-item={it.kind} className={`inline-flex h-11 items-center rounded-lg border border-dashed px-2 text-[11px] uppercase tracking-wide text-ink-600 ${it.kind === 'instructor' ? 'font-semibold' : ''}`} style={{ borderColor: 'var(--wow-hairline)' }}>{word}</span>
+                  })}
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : (
         <div className="mt-4 grid grid-cols-5 gap-2 sm:grid-cols-6">
           {seats.map((s) => (
             <button key={s.seat_no} type="button" data-held-seat={s.seat_no} data-seat-state={s.mine ? 'mine' : s.taken ? 'taken' : 'free'} disabled={s.taken || busy !== null} onClick={() => void pickSeat(s.seat_no)}
@@ -182,6 +220,7 @@ export function HeldBookingFlow({ entry, onReleased }: { entry: HeldEntry; onRel
               style={s.mine ? { backgroundImage: 'var(--wow-grad-brand)', borderColor: 'transparent' } : { borderColor: 'var(--wow-hairline)' }}>{s.seat_no}</button>
           ))}
         </div>
+        )}
         {error && <p role="alert" className="mt-3 text-sm text-red-600">{error}</p>}
         <div className="mt-4"><Primary tag="keep" disabled={!mine} onClick={() => setPhase('done')}>{tr('booking.keepSpot')}</Primary></div>
       </Card>
