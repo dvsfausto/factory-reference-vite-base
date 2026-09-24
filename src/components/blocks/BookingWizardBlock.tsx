@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { tr, MONTHS_SHORT, DAYS_SHORT, LANG } from '~/lib/i18n'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { HAS_PHONE, hasPhone } from '~/lib/phone'
+import { HeldBookingFlow, type HeldEntry, type HeldOptions } from '~/components/blocks/HeldBookingFlow'
 import {
   Calendar,
   Check,
@@ -87,7 +88,8 @@ interface CustomerInfo {
   notes: string
 }
 
-type Step = 'service' | 'class' | 'date' | 'time' | 'address' | 'details' | 'confirmed'
+type Step = 'service' | 'class' | 'date' | 'time' | 'address' | 'details' | 'confirmed' | 'held'
+const REMEMBER_KEY = 'zmode_booking_me'
 
 const REST = `${SUPABASE_URL}/rest/v1`
 const CREATE_BOOKING = `${SUPABASE_URL}/functions/v1/create-booking`
@@ -290,6 +292,39 @@ export function BookingWizardBlock({
   const [waitlist, setWaitlist] = useState<{ position: number; waiting: number } | null>(null)
   const [waitlistMode, setWaitlistMode] = useState(false)
   const [buying, setBuying] = useState<string | null>(null)
+  /* ★★★ THE SEAT IS ONLY THEIRS ONCE IT IS PAID OR SPENT (the owner, 2026-09-24): after a class booking lands, HeldBookingFlow
+     takes over (pay while the seat is held, then the waiver first time only, then the spot). Back from Stripe with
+     ?paid=1&booking=&t= it reads the rows until they say confirmed. */
+  const [held, setHeld] = useState<HeldEntry | null>(null)
+  /* ★ A KNOWN NUMBER IS NEVER ASKED TWICE: the phone goes first; when this business knows it, name and email are not asked.
+     A browser that booked before also remembers the person's details (their own choice of browser, their own device). */
+  const [known, setKnown] = useState<boolean | null>(null)
+  const [notMe, setNotMe] = useState(false)
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    try {
+      const raw = window.localStorage.getItem(REMEMBER_KEY)
+      if (raw) { const me = JSON.parse(raw) as Partial<CustomerInfo>; setCustomer((c) => ({ ...c, firstName: me.firstName ?? '', lastName: me.lastName ?? '', email: me.email ?? '', phone: me.phone ?? '' })) }
+    } catch { /* nothing remembered */ }
+    const q = new URLSearchParams(window.location.search)
+    const bk = q.get('booking'); const t = q.get('t'); const heldId = q.get('held')
+    if (bk && t && q.get('paid') === '1') { setHeld({ bookingId: bk, token: t, initial: 'confirming' }); setStep('held') }
+    else if (heldId && t) { setHeld({ bookingId: heldId, token: t, initial: 'confirming' }); setStep('held') }
+  }, [])
+  useEffect(() => {
+    const digits = customer.phone.replace(/\D/g, '')
+    if (digits.length < 10 || !BUSINESS_ID) { setKnown(null); return }
+    let stale = false
+    const id = setTimeout(async () => {
+      try {
+        const r = await fetch(`${SUPABASE_URL}/functions/v1/booking-lookup`, { method: 'POST', headers: { 'Content-Type': 'application/json', ...ANON_HEADERS }, body: JSON.stringify({ businessId: BUSINESS_ID, phone: customer.phone.trim() }) })
+        const j = (await r.json().catch(() => ({}))) as { known?: boolean }
+        if (!stale) setKnown(j.known === true)
+      } catch { if (!stale) setKnown(null) }
+    }, 400)
+    return () => { stale = true; clearTimeout(id) }
+  }, [customer.phone])
+  const recognised = known === true && !notMe
   const paid = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('paid') === '1'
   /* ★ THE PAID RETURN (the owner, 2026-09-23): a person back from Stripe sees first that it worked and what they now hold, read from
      the sale itself (pack-checkout GET ?session=): first name, the pack, the classes. Nothing is claimed before it is read. */
@@ -436,7 +471,7 @@ export function BookingWizardBlock({
         body: JSON.stringify({
           businessId: BUSINESS_ID,
           serviceId: service.id,
-          ...(occurrence ? { occurrenceId: occurrence.id } : {}),
+          ...(occurrence ? { occurrenceId: occurrence.id, hold: true } : {}),
           selectedDate: date.toISOString(),
           selectedTime: time,
           customerInfo: {
@@ -462,6 +497,10 @@ export function BookingWizardBlock({
       })
       const data = (await res.json().catch(() => ({}))) as {
         success?: boolean
+        held?: boolean
+        hold?: { token?: string; expires_at?: string }
+        options?: HeldOptions
+        booking?: { id?: string; seat_no?: number | null }
         invoice?: { link?: string; amount?: number; kind?: string; paid?: boolean }
         error?: string
         waiver?: { link?: string; signed?: boolean } | null
@@ -469,6 +508,13 @@ export function BookingWizardBlock({
       if (!res.ok || !data.success) {
         if ((data as { code?: string }).code === 'pack_required' && Array.isArray((data as { packs?: unknown[] }).packs)) setPackOffer((data as { packs: Array<{ id: string; name: string; credits: number; price: number }> }).packs)
         throw new Error(data.error || tr('booking.couldNotComplete'))
+      }
+      try { window.localStorage.setItem(REMEMBER_KEY, JSON.stringify({ firstName: customer.firstName.trim(), lastName: customer.lastName.trim(), email: customer.email.trim(), phone: customer.phone.trim() })) } catch { /* not remembered */ }
+      if (occurrence && data.booking?.id && data.hold?.token) {
+        /* a class: held → pay; confirmed at once (a credit spent, or a free class) → the waiver or the spot */
+        setHeld({ bookingId: data.booking.id, token: data.hold.token, initial: data.held ? 'pay' : 'after', expiresAt: data.hold.expires_at ?? null, options: data.options ?? null })
+        setStep('held')
+        return
       }
       /* ★ THE WAIVER BY LINK (the classes arc, part 4): a class booking whose person has not signed the studio's current waiver
          gets the signing link on the confirmation screen. Signed before → nothing shown. */
@@ -526,7 +572,7 @@ export function BookingWizardBlock({
           </div>
 
           {/* Progress rail (hidden on the confirmation + fallback states) */}
-          {step !== 'confirmed' && !emptyConfig && !notLive && !loadError && (
+          {step !== 'confirmed' && step !== 'held' && !emptyConfig && !notLive && !loadError && (
             <div className="mx-auto mt-10 flex max-w-md items-center gap-2">
               {STEP_ORDER.map((s, i) => (
                 <div key={s} className="flex flex-1 items-center gap-2">
@@ -583,7 +629,7 @@ export function BookingWizardBlock({
               <FallbackCard message={tr(HAS_PHONE ? 'booking.fallback' : 'booking.fallbackNoPhone')} features={features} />
             )}
 
-            {!loading && !loadError && !notLive && !emptyConfig && (
+            {!loading && !loadError && !notLive && !emptyConfig && step !== 'held' && (
               <AnimatePresence mode="wait" initial={false}>
                 <motion.div
                   key={step}
@@ -885,10 +931,27 @@ export function BookingWizardBlock({
                         }}
                         className="grid gap-4"
                       >
+                        {occurrence && <p className="text-sm text-ink-700">{tr('booking.phoneFirst')}</p>}
                         <div className="grid gap-4 sm:grid-cols-2">
                           <WField
-                            label={tr('form.firstName')}
+                            label={tr('form.phone')}
+                            type="tel"
                             required
+                            value={customer.phone}
+                            autoComplete="tel"
+                            onChange={(v) => { setNotMe(false); setCustomer((c) => ({ ...c, phone: v })) }}
+                          />
+                          {recognised && (
+                            <div data-booking-known className="flex flex-col justify-end text-sm text-ink-700">
+                              <span>{tr('booking.welcomeBack')}</span>
+                              <button type="button" onClick={() => setNotMe(true)} className="mt-1 self-start text-brand-700 underline-offset-2 hover:underline">{tr('booking.notYou')}</button>
+                            </div>
+                          )}
+                        </div>
+                        <div className={`grid gap-4 sm:grid-cols-2${recognised ? ' hidden' : ''}`}>
+                          <WField
+                            label={tr('form.firstName')}
+                            required={!recognised}
                             value={customer.firstName}
                             autoComplete="given-name"
                             onChange={(v) =>
@@ -897,21 +960,11 @@ export function BookingWizardBlock({
                           />
                           <WField
                             label={tr('form.lastName')}
-                            required
+                            required={!recognised}
                             value={customer.lastName}
                             autoComplete="family-name"
                             onChange={(v) =>
                               setCustomer((c) => ({ ...c, lastName: v }))
-                            }
-                          />
-                          <WField
-                            label={tr('form.phone')}
-                            type="tel"
-                            required
-                            value={customer.phone}
-                            autoComplete="tel"
-                            onChange={(v) =>
-                              setCustomer((c) => ({ ...c, phone: v }))
                             }
                           />
                           <WField
@@ -997,6 +1050,10 @@ export function BookingWizardBlock({
               </AnimatePresence>
             )}
 
+            {/* STEP: held (a class booking after it lands: pay while held, the waiver, the spot, done) */}
+            {step === 'held' && held && (
+              <HeldBookingFlow key={held.bookingId} entry={held} onReleased={() => { setHeld(null); setStep(occurrence ? 'class' : 'service'); if (typeof window !== 'undefined') window.history.replaceState(null, '', window.location.pathname) }} />
+            )}
             {/* STEP: confirmed (outside AnimatePresence so it persists) */}
             {step === 'confirmed' && service && date && time && (
               <motion.div
