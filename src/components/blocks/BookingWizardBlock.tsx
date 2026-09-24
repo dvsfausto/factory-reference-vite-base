@@ -3,6 +3,7 @@ import { tr, MONTHS_SHORT, DAYS_SHORT, LANG } from '~/lib/i18n'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { HAS_PHONE, hasPhone } from '~/lib/phone'
 import { HeldBookingFlow, type HeldEntry, type HeldOptions } from '~/components/blocks/HeldBookingFlow'
+import { ClassBookingFlow } from '~/components/blocks/ClassBookingFlow'
 import {
   Calendar,
   Check,
@@ -88,7 +89,7 @@ interface CustomerInfo {
   notes: string
 }
 
-type Step = 'service' | 'class' | 'date' | 'time' | 'address' | 'details' | 'confirmed' | 'held'
+type Step = 'service' | 'class' | 'date' | 'time' | 'address' | 'details' | 'confirmed' | 'held' | 'classflow'
 const REMEMBER_KEY = 'zmode_booking_me'
 
 const REST = `${SUPABASE_URL}/rest/v1`
@@ -400,7 +401,9 @@ export function BookingWizardBlock({
             setService({ ...cls, price: cls.price == null ? null : Number(cls.price), duration_minutes: cls.duration_minutes == null ? null : Number(cls.duration_minutes) })
             setOccurrence(occ)
             const l = classLocal(occ.start_at); setDate(l.date); setTime(l.time)
-            setStep('details')
+            const full = typeof occ.seats_left === 'number' && occ.seats_left <= 0
+            setWaitlistMode(full)
+            setStep(full ? 'details' : 'classflow')
             setLoading(false)
             return
           }
@@ -575,7 +578,7 @@ export function BookingWizardBlock({
           </div>
 
           {/* Progress rail (hidden on the confirmation + fallback states) */}
-          {step !== 'confirmed' && step !== 'held' && !emptyConfig && !notLive && !loadError && (
+          {step !== 'confirmed' && step !== 'held' && step !== 'classflow' && !emptyConfig && !notLive && !loadError && (
             <div className="mx-auto mt-10 flex max-w-md items-center gap-2">
               {STEP_ORDER.map((s, i) => (
                 <div key={s} className="flex flex-1 items-center gap-2">
@@ -632,7 +635,12 @@ export function BookingWizardBlock({
               <FallbackCard message={tr(HAS_PHONE ? 'booking.fallback' : 'booking.fallbackNoPhone')} features={features} />
             )}
 
-            {!loading && !loadError && !notLive && !emptyConfig && step !== 'held' && (
+            {step === 'classflow' && occurrence && service && (
+              <StepShell title={occurrence.title} onBack={() => setStep(classes.length ? 'class' : 'service')}>
+                <ClassBookingFlow key={occurrence.id} occurrence={occurrence} serviceId={service.id} onHeld={(entry) => { setHeld(entry); setStep('held') }} />
+              </StepShell>
+            )}
+            {!loading && !loadError && !notLive && !emptyConfig && step !== 'held' && step !== 'classflow' && (
               <AnimatePresence mode="wait" initial={false}>
                 <motion.div
                   key={step}
@@ -783,7 +791,8 @@ export function BookingWizardBlock({
                                   setOccurrence(c)
                                   setWaitlistMode(full)
                                   const l = classLocal(c.start_at); setDate(l.date); setTime(l.time)
-                                  setStep('details')
+                                  /* ★ the flow order (2026-09-24): a class goes number → code → waiver → booked; a FULL class keeps the details form for the waitlist */
+                                  setStep(full ? 'details' : 'classflow')
                                 }}
                                 className="flex items-center justify-between gap-3 rounded-xl border px-4 py-3 text-left text-sm transition-all hover:translate-y-(--hov-lift-sm) disabled:opacity-50"
                                 style={selected ? { backgroundImage: 'var(--wow-grad-brand)', borderColor: 'transparent', color: 'white' } : { borderColor: 'var(--wow-hairline)' }}
