@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { money, SITE_CURRENCY } from '~/lib/money'
 import { tr, MONTHS_SHORT, DAYS_SHORT, LANG } from '~/lib/i18n'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { HAS_PHONE, hasPhone } from '~/lib/phone'
@@ -107,11 +108,7 @@ function formatPrice(price: number | null): string {
   // Hide unset/zero prices (barber "Haircut" often has price 0 = not-priced) rather
   // than showing a misleading "$0"; a real charge (e.g. $20 Facial) still renders.
   if (price == null || Number.isNaN(price) || price <= 0) return ''
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    minimumFractionDigits: price % 1 === 0 ? 0 : 2,
-  }).format(price)
+  return money(price, SITE_CURRENCY, { trimWhole: true })
 }
 
 function formatDuration(min: number | null): string {

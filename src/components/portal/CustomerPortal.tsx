@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Loader2 } from 'lucide-react'
 import { SUPABASE_URL, SUPABASE_ANON_KEY, BUSINESS_ID, SITE } from '~/data/site'
+import { moneyShort } from '~/lib/money'
 import { tr } from '~/lib/i18n'
 import { liveClassesUrl, type LiveClass } from '~/lib/useClassSchedule'
 import { HeldBookingFlow, type HeldEntry, type HeldOptions } from '~/components/blocks/HeldBookingFlow'
@@ -18,7 +19,7 @@ const SESSION_KEY = 'zmode_portal_session'
 type Phase = 'checking' | 'off' | 'phone' | 'code' | 'home' | 'classes' | 'booking' | 'held'
 type Payload = { customer: { firstName: string | null; lastName: string | null }; bookings: Array<{ id: string; startTime: string; status: string; upcoming: boolean; serviceName?: string | null; classTitle?: string | null; seatNo?: number | null; cancellable?: boolean }>; packs: Array<{ id: string; packName?: string | null; balance: number; totalGranted?: number; status: string; expiresAt?: string | null }> }
 
-const money = (n: number) => `$${Number(n).toFixed(2).replace(/\.00$/, '')}`
+const money = (n: number) => moneyShort(n)
 const when = (iso: string) => new Date(iso).toLocaleString(undefined, { weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })
 
 /* declared once at module scope: a component declared inside another remounts its inputs on every keystroke (2026-09-24) */

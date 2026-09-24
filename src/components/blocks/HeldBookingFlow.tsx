@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Check, Loader2 } from 'lucide-react'
 import { SUPABASE_URL, SUPABASE_ANON_KEY, BUSINESS_ID } from '~/data/site'
+import { moneyShort } from '~/lib/money'
 import { tr } from '~/lib/i18n'
 
 /**
@@ -28,7 +29,7 @@ export function SpotIcon({ kind, className }: { kind?: string | null; className?
 }
 
 const HEADERS = { 'Content-Type': 'application/json', apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` }
-const money = (n: number) => `$${Number(n).toFixed(2).replace(/\.00$/, '')}`
+const money = (n: number) => moneyShort(n)
 /** ★ THE WAIVER COMES BACK TO THE FLOW (the owner, 2026-09-24): the signing page is told where to return (this page, this booking's key),
  *  so after signing the person lands back here and carries on to the spot. Same tab, never a second one left nowhere. */
 const withReturn = (link: string, entry: HeldEntry) => {

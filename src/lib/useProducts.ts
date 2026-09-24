@@ -1,3 +1,4 @@
+import { moneyShort } from '~/lib/money'
 import { useEffect, useState } from 'react'
 import { BUSINESS_ID, SITE, SUPABASE_ANON_KEY, SUPABASE_URL } from '~/data/site'
 
@@ -32,7 +33,7 @@ function money(v: number | string | null | undefined): string {
   if (v === null || v === undefined || v === '') return ''
   const n = typeof v === 'number' ? v : Number(v)
   if (!Number.isFinite(n) || n <= 0) return ''
-  return Number.isInteger(n) ? `$${n}` : `$${n.toFixed(2)}`
+  return moneyShort(n)
 }
 function firstImage(r: { photo_url?: string | null; images?: unknown }): string {
   if (typeof r.photo_url === 'string' && r.photo_url.trim()) return r.photo_url.trim()

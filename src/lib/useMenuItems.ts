@@ -1,3 +1,4 @@
+import { moneyShort } from '~/lib/money'
 import { useEffect, useState } from 'react'
 import { BUSINESS_ID, SUPABASE_ANON_KEY, SUPABASE_URL } from '~/data/site'
 import { SERVICES } from '~/data/services-view'
@@ -38,7 +39,7 @@ export function formatMenuPrice(price: number | string | null | undefined): stri
   if (price === null || price === undefined || price === '') return ''
   const n = typeof price === 'number' ? price : Number(price)
   if (!Number.isFinite(n) || n <= 0) return ''
-  return Number.isInteger(n) ? `$${n}` : `$${n.toFixed(2)}`
+  return moneyShort(n)
 }
 
 export function groupMenu(rows: Array<MenuItem & { category?: string | null; order?: number | null }>): MenuGroup[] {

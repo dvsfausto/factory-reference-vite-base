@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Loader2 } from 'lucide-react'
+import { moneyShort, SITE_CURRENCY } from '~/lib/money'
 import { tr } from '~/lib/i18n'
 import { BUSINESS_ID, SUPABASE_ANON_KEY, SUPABASE_URL } from '~/data/site'
 
@@ -11,7 +12,7 @@ import { BUSINESS_ID, SUPABASE_ANON_KEY, SUPABASE_URL } from '~/data/site'
 // business sells no packs. Sits under the class schedule, so it shows on every site that has one.
 interface Pack { id: string; name: string; description: string | null; credits: number; price: number; currency: string; validity_days: number | null }
 const headers = { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` }
-const money = (n: number) => `$${Number(n).toFixed(2).replace(/\.00$/, '')}`
+const money = (n: number, currency?: string | null) => moneyShort(n, currency ?? SITE_CURRENCY)
 
 /* ★★★ ONE PACKS SECTION EVERYWHERE (the owner, 2026-09-23, Fitcycling: "show my packs anywhere on my site means the real packs section,
    read live, with Buy; never a page of typed words that goes stale"). The book page, the home page's Packages section and any custom page's
@@ -60,7 +61,7 @@ export function PacksForSale({ label, heading, body, fallback = null }: { label?
             <div className="mt-1 text-sm text-fam-ink-muted">{p.credits} {tr('packs.classes')}{p.validity_days ? ` · ${tr('packs.valid')} ${p.validity_days} ${tr('packs.days')}` : ''}</div>
             {p.description && <p className="mt-2 text-sm text-fam-ink-muted">{p.description}</p>}
             <div className="mt-4 flex items-center justify-between">
-              <span className="font-display text-2xl font-semibold text-fam-ink">{money(p.price)}</span>
+              <span className="font-display text-2xl font-semibold text-fam-ink">{money(p.price, p.currency)}</span>
               <button type="button" onClick={() => { setOpen(p); setNote(null) }} className="rounded-full px-5 py-2 text-sm font-semibold text-fam-on-dark" style={{ backgroundImage: 'var(--wow-grad-brand)' }}>
                 {tr('packs.buy')}
               </button>
