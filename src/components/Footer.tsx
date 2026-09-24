@@ -5,6 +5,7 @@ import { SITE } from "~/data/site";
 import { PAGED_SERVICES as SERVICES } from "~/data/services-view";
 import { AREAS } from "~/data/areas";
 import { INFO_PAGES } from "~/data/info-pages";
+import { PortalLink } from '~/components/portal/PortalLink';
 import { CUSTOM_PAGES } from "~/data/custom-pages";
 import { siteDecor } from "~/lib/decor";
 import { tr } from "~/lib/i18n";
@@ -165,6 +166,7 @@ function BottomBar({ t }: { t: FooterTheme }) {
           {!LEGAL_PAGES.some((p) => /privacy|privacidad/i.test(p.slug)) && (
             <Link to="/privacy" className={t.bottomHover}>{tr('footer.privacy')}</Link>
           )}
+          <PortalLink className={t.bottomHover} />
           <a href="/sitemap.xml" className={t.bottomHover}>{tr('footer.sitemap')}</a>
         </div>
       </div>
