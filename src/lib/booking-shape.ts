@@ -77,10 +77,16 @@ export function priceLine(
   return { kind: 'none' }
 }
 
-/** Street + city + zip are the minimum a crew needs to arrive; unit and state are optional. */
-export function addressComplete(a: ServiceAddress | null | undefined): boolean {
+/** Street + city + zip are the minimum a crew needs to arrive; unit and state are optional.
+ *  ★ LATAM arc part 1 (2026-09-24): the postal code is required only where the country expects one (the US, the default). */
+export function addressComplete(a: ServiceAddress | null | undefined, postalRequired = true): boolean {
   if (!a) return false
-  return a.line1.trim().length > 2 && a.city.trim().length > 1 && a.zip.trim().length >= 4
+  return a.line1.trim().length > 2 && a.city.trim().length > 1 && (!postalRequired || a.zip.trim().length >= 4)
+}
+/** Whether a site's country expects a postal code on an address: the US does; '' (every site before the arc) is the US. */
+export function postalRequiredFor(country: string | undefined | null): boolean {
+  const c = (country ?? '').toUpperCase()
+  return c === '' || c === 'US'
 }
 
 export function formatAddress(a: ServiceAddress | null | undefined): string {
