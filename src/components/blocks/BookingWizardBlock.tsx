@@ -267,6 +267,10 @@ export function BookingWizardBlock({
   /* ★ A CLASS IS A DATED SESSION WITH SEATS (the classes arc, 2026-09-23): when the chosen service has upcoming classes,
      the wizard lists them instead of cutting hours into slots; the booking carries the occurrence and takes a seat. */
   const [classes, setClasses] = useState<LiveClass[]>([])
+  /* ★ A COLD VISITOR SEES THE CLASSES (the owner, 2026-09-24): every dated class of the next three weeks is read at once and listed
+     FIRST, before the services, with no link from anyone. A business with classes and no services is a class business, not an empty
+     one, and its booking hours are the classes' own times. */
+  const [upcoming, setUpcoming] = useState<LiveClass[]>([])
   const [occurrence, setOccurrence] = useState<LiveClass | null>(null)
   const [date, setDate] = useState<Date | null>(null)
   const [time, setTime] = useState<string | null>(null)
@@ -361,7 +365,7 @@ export function BookingWizardBlock({
     let cancelled = false
     ;(async () => {
       try {
-        const [svcRes, availRes, cfgRes] = await Promise.all([
+        const [svcRes, availRes, cfgRes, clsRes] = await Promise.all([
           fetch(
             `${REST}/services?business_id=eq.${BUSINESS_ID}&is_active=eq.true&bookable=eq.true&order=display_order,name&select=id,name,description,duration_minutes,price,booking_model`,
             { headers: ANON_HEADERS },
@@ -374,8 +378,10 @@ export function BookingWizardBlock({
             `${REST}/website_config?business_id=eq.${BUSINESS_ID}&select=features_enabled`,
             { headers: ANON_HEADERS },
           ),
+          fetch(liveClassesUrl(BUSINESS_ID, 21), { headers: ANON_HEADERS }).catch(() => null),
         ])
         if (!svcRes.ok || !availRes.ok || !cfgRes.ok) throw new Error('load_failed')
+        try { const rows = clsRes && clsRes.ok ? ((await clsRes.json()) as LiveClass[]) : []; if (!cancelled) setUpcoming(rows) } catch { /* no classes listed */ }
         const svc = (await svcRes.json()) as BookableService[]
         const avail = (await availRes.json()) as Availability[]
         const cfg = (await cfgRes.json()) as Array<{ features_enabled: BookingFeatures | null }>
@@ -397,8 +403,8 @@ export function BookingWizardBlock({
         if (preClass) {
           const occ = await fetchClass(preClass)
           const cls = occ?.service_id ? svc.find((s) => s.id === occ.service_id) : undefined
-          if (occ && cls && !cancelled) {
-            setService({ ...cls, price: cls.price == null ? null : Number(cls.price), duration_minutes: cls.duration_minutes == null ? null : Number(cls.duration_minutes) })
+          if (occ && !cancelled) {
+            if (cls) setService({ ...cls, price: cls.price == null ? null : Number(cls.price), duration_minutes: cls.duration_minutes == null ? null : Number(cls.duration_minutes) })
             setOccurrence(occ)
             const l = classLocal(occ.start_at); setDate(l.date); setTime(l.time)
             const full = typeof occ.seats_left === 'number' && occ.seats_left <= 0
@@ -437,11 +443,13 @@ export function BookingWizardBlock({
   if (!enabled) return null
 
   // The owner's switch + hours confirmation. Not live → "opens soon" + the phone.
-  const gate = bookingLive(features)
+  const gate0 = bookingLive(features)
+  const hasClasses = upcoming.length > 0
+  const gate = gate0.live || (features?.booking === true && gate0.reason === 'hours_unconfirmed' && hasClasses) ? { live: true, reason: 'live' as const } : gate0
   const notLive = !loading && !loadError && !gate.live
-  // Honest fallback: live but nothing to book yet → offer the phone, never a dead end.
+  // Honest fallback: live but nothing to book yet → offer the phone, never a dead end. Classes are something to book.
   const emptyConfig =
-    !loading && !loadError && gate.live && (services.length === 0 || days.length === 0)
+    !loading && !loadError && gate.live && !hasClasses && (services.length === 0 || days.length === 0)
   const visit = isVisit(service)
 
   const submit = async () => {
@@ -635,9 +643,9 @@ export function BookingWizardBlock({
               <FallbackCard message={tr(HAS_PHONE ? 'booking.fallback' : 'booking.fallbackNoPhone')} features={features} />
             )}
 
-            {step === 'classflow' && occurrence && service && (
+            {step === 'classflow' && occurrence && (
               <StepShell title={occurrence.title} onBack={() => setStep(classes.length ? 'class' : 'service')}>
-                <ClassBookingFlow key={occurrence.id} occurrence={occurrence} serviceId={service.id} onHeld={(entry) => { setHeld(entry); setStep('held') }} />
+                <ClassBookingFlow key={occurrence.id} occurrence={occurrence} serviceId={service?.id ?? occurrence.service_id ?? null} onHeld={(entry) => { setHeld(entry); setStep('held') }} />
               </StepShell>
             )}
             {!loading && !loadError && !notLive && !emptyConfig && step !== 'held' && step !== 'classflow' && (
@@ -679,7 +687,31 @@ export function BookingWizardBlock({
 
                   {/* STEP: service */}
                   {step === 'service' && (
-                    <StepShell title={tr('booking.chooseService')}>
+                    <StepShell title={hasClasses && services.length === 0 ? tr('booking.chooseClass') : tr('booking.chooseService')}>
+                      {hasClasses && (
+                        <div data-booking-classes className="mb-5">
+                          {services.length > 0 && <p className="mb-2 text-xs font-bold uppercase tracking-[0.15em] text-ink-600">{tr('booking.classesFirst')}</p>}
+                          <div className="grid gap-2.5 sm:grid-cols-2">
+                            {upcoming.map((c) => {
+                              const full = typeof c.seats_left === 'number' && c.seats_left <= 0
+                              return (
+                                <button key={c.id} type="button" data-cold-class={c.id} data-class-full={full ? '1' : undefined}
+                                  onClick={() => {
+                                    const svc = c.service_id ? services.find((x) => x.id === c.service_id) ?? null : null
+                                    setService(svc); setOccurrence(c); setWaitlistMode(full)
+                                    const l = classLocal(c.start_at); setDate(l.date); setTime(l.time)
+                                    setStep(full ? 'details' : 'classflow')
+                                  }}
+                                  className="flex items-center justify-between gap-3 rounded-xl border px-4 py-3 text-left text-sm transition-all hover:translate-y-(--hov-lift-sm)" style={{ borderColor: 'var(--wow-hairline)' }}>
+                                  <span><span className="font-semibold">{c.title}</span> · {classDayLabel(c.start_at)} {to12h(classLocal(c.start_at).time)}{c.instructor ? ` · ${c.instructor}` : ''}</span>
+                                  <span className="text-xs">{typeof c.seats_left === 'number' ? (full ? `${tr('booking.classFull')} · ${tr('booking.joinWaitlist')}` : `${c.seats_left} ${tr('schedule.left')}`) : ''}</span>
+                                </button>
+                              )
+                            })}
+                          </div>
+                          {services.length > 0 && <p className="mt-5 mb-2 text-xs font-bold uppercase tracking-[0.15em] text-ink-600">{tr('booking.servicesToo')}</p>}
+                        </div>
+                      )}
                       <div className="grid gap-3">
                         {services.map((s) => (
                           <button

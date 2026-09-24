@@ -18,7 +18,7 @@ const HEADERS = { 'Content-Type': 'application/json', apikey: SUPABASE_ANON_KEY,
 const SESSION_KEY = 'zmode_portal_session'
 const REMEMBER_KEY = 'zmode_booking_me'
 
-export function ClassBookingFlow({ occurrence, serviceId, onHeld }: { occurrence: { id: string; title: string }; serviceId: string; onHeld: (entry: HeldEntry) => void }) {
+export function ClassBookingFlow({ occurrence, serviceId, onHeld }: { occurrence: { id: string; title: string }; serviceId: string | null; onHeld: (entry: HeldEntry) => void }) {
   const [phase, setPhase] = useState<Phase>('who')
   const [phone, setPhone] = useState('')
   const [first, setFirst] = useState('')
@@ -83,7 +83,7 @@ export function ClassBookingFlow({ occurrence, serviceId, onHeld }: { occurrence
   }
   const book = async (sess: string) => {
     setBusy(true); setError(null); setPhase('booking')
-    const { ok, data } = await fn('create-booking', { businessId: BUSINESS_ID, serviceId, occurrenceId: occurrence.id, hold: true, source: 'portal' }, sess)
+    const { ok, data } = await fn('create-booking', { businessId: BUSINESS_ID, ...(serviceId ? { serviceId } : {}), occurrenceId: occurrence.id, hold: true, source: 'portal' }, sess)
     setBusy(false)
     const d = data as { success?: boolean; held?: boolean; already?: boolean; message?: string; error?: string; booking?: { id?: string }; hold?: { token?: string; expires_at?: string }; options?: HeldOptions }
     if (!ok || !d.success || !d.booking?.id || !d.hold?.token) { setError(d.error || tr('booking.couldNotComplete')); setPhase('who'); return }
