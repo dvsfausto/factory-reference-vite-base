@@ -50,16 +50,16 @@ export function ServicesCarouselBlock({
           <div className="max-w-2xl">
             <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">
               <span className="h-px w-6 bg-fam-accent" />
-              {label ?? hs?.label ?? 'Our services'}
+              {label ?? hs?.label ?? tr('section.ourServices')}
             </span>
             <h2 className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight text-fam-ink sm:text-5xl">
-              {heading ?? hs?.heading ?? 'What we do'}
+              {heading ?? hs?.heading ?? tr('section.whatWeDo')}
             </h2>
             {(body ?? hs?.body) && (
               <p className="mt-4 text-lg leading-relaxed text-fam-ink-muted">{body ?? hs?.body}</p>
             )}
           </div>
-          <span className="font-display text-sm font-medium text-fam-ink-muted">Scroll for more →</span>
+          <span className="font-display text-sm font-medium text-fam-ink-muted">{tr('blk.scrollForMore')}</span>
         </div>
       </div>
 

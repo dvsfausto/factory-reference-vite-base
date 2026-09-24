@@ -2,6 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { ArrowRight, Check } from 'lucide-react'
 import type { ServicePackage } from './packages-variants'
 import { SITE } from '~/data/site'
+import { tr } from '~/lib/i18n'
 
 // Packages LAYOUT: 'feature-list', each package a full-width detailed row: name +
 // price on the left, the complete includes list laid out on the right. Character-
@@ -13,8 +14,8 @@ import { SITE } from '~/data/site'
 // surface component-owned (white / slate / hairline #E6E8EC). Never bg-brand-*.
 export function PackagesFeatureListBlock({
   site = SITE,
-  label = 'Packages',
-  heading = "What's included",
+  label = tr('blk.packages'),
+  heading = tr('blk.whatsIncluded'),
   body,
 }: {
   site?: typeof SITE
@@ -41,11 +42,11 @@ export function PackagesFeatureListBlock({
               <div className="md:col-span-4">
                 <div className="flex items-center gap-2">
                   <h3 className="font-display text-2xl font-semibold tracking-tight text-fam-ink">{p.name}</h3>
-                  {p.popular && <span className="rounded-full bg-fam-accent-soft px-2.5 py-0.5 font-display text-xs font-semibold text-fam-accent-text-strong">Popular</span>}
+                  {p.popular && <span className="rounded-full bg-fam-accent-soft px-2.5 py-0.5 font-display text-xs font-semibold text-fam-accent-text-strong">{tr('blk.popular')}</span>}
                 </div>
                 <div className="mt-2 font-display text-3xl font-semibold tracking-tight text-fam-accent-text-strong">{p.price}</div>
                 <Link to="/contact" className="group mt-5 inline-flex items-center gap-2 font-display text-sm font-semibold text-fam-accent-text hover:text-fam-accent-text-strong">
-                  Choose this package <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-(--hov-nudge)" />
+                  {tr('blk.chooseThisPackage')} <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-(--hov-nudge)" />
                 </Link>
               </div>
               {p.includes && p.includes.length > 0 && (

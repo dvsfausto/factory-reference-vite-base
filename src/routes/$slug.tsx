@@ -4,6 +4,7 @@ import { JsonLd } from '~/components/JsonLd'
 import { customPagesData } from '~/data/custom-pages'
 import { breadcrumbLd, buildMeta } from '~/lib/seo'
 import { SITE } from '~/data/site'
+import { tr } from '~/lib/i18n'
 
 // ★ CLEAN ADDRESSES FOR CUSTOMER-CREATED PAGES (2026-09-24). A page an owner adds lives at /<slug>
 // ("mysite.com/packs"), not under a system prefix. ONE root catch-all serves every custom page from
@@ -36,7 +37,7 @@ function CustomPage() {
     <>
       <JsonLd
         data={breadcrumbLd([
-          { name: 'Home', url: '/' },
+          { name: tr('breadcrumb.home'), url: '/' },
           { name: data.title, url: `/${data.slug}` },
         ])}
       />

@@ -2,6 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { BadgeCheck } from 'lucide-react'
 import type { Membership } from './membership-variants'
 import { SITE } from '~/data/site'
+import { tr } from '~/lib/i18n'
 
 // Membership LAYOUT: 'perks-grid', benefit-forward: the membership's perks laid
 // out as a grid of badge tiles, with the price/CTA in the header. Character-
@@ -13,7 +14,7 @@ import { SITE } from '~/data/site'
 // (DNA). Font -> font-display (DNA). Light surface component-owned. No bg-brand-*.
 export function MembershipPerksGridBlock({
   site = SITE,
-  label = 'Membership',
+  label = tr('blk.membership'),
   heading,
   body,
 }: {
@@ -46,7 +47,7 @@ export function MembershipPerksGridBlock({
               <span className="text-fam-ink-muted">{m.period ?? '/month'}</span>
             </div>
             <Link to="/contact" className="inline-flex h-12 items-center rounded-xl bg-cta px-6 font-display text-sm font-semibold text-cta-foreground transition-[filter] hover:brightness-(--hov-shade)">
-              Join now
+              {tr('blk.joinNow')}
             </Link>
           </div>
         </div>

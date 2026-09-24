@@ -1,6 +1,7 @@
 import { TrendingUp } from 'lucide-react'
 import type { CaseStudy } from './case-studies-variants'
 import { SITE } from '~/data/site'
+import { tr } from '~/lib/i18n'
 
 // Case Studies LAYOUT: 'grid', a card grid of outcomes (image when present,
 // title, summary, result chip, client). Character-agnostic. OMIT-WHEN-ABSENT:
@@ -11,8 +12,8 @@ import { SITE } from '~/data/site'
 // cards / #E6E8EC). Never bg-brand-* / .btn.
 export function CaseStudiesGridBlock({
   site = SITE,
-  label = 'Case studies',
-  heading = 'Selected work',
+  label = tr('blk.caseStudies'),
+  heading = tr('blk.selectedWork'),
   body,
 }: {
   site?: typeof SITE

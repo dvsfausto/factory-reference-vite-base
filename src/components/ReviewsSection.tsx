@@ -25,8 +25,8 @@ export function ReviewsSection({
           </h2>
           {agg && (
             <p className="mt-4 text-sm text-slate-600">
-              {agg.value.toFixed(1)} of 5 across {agg.count}{' '}
-              {agg.count === 1 ? 'review' : 'reviews'}
+              {agg.value.toFixed(1)} {tr('blk.of5Across')} {agg.count}{' '}
+              {agg.count === 1 ? tr('blk.review') : tr('blk.reviews')}
             </p>
           )}
           {intro && (

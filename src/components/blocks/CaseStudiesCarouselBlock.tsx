@@ -1,6 +1,7 @@
 import { TrendingUp } from 'lucide-react'
 import type { CaseStudy } from './case-studies-variants'
 import { SITE } from '~/data/site'
+import { tr } from '~/lib/i18n'
 
 // Case Studies LAYOUT: 'carousel', a horizontal scroll-snap row of outcome cards.
 // Character-agnostic, CSS-only (SSR-safe). OMIT-WHEN-ABSENT: SITE.caseStudies via
@@ -11,8 +12,8 @@ import { SITE } from '~/data/site'
 // bg-brand-* / .btn.
 export function CaseStudiesCarouselBlock({
   site = SITE,
-  label = 'Case studies',
-  heading = 'Recent outcomes',
+  label = tr('blk.caseStudies'),
+  heading = tr('blk.recentOutcomes'),
   body,
 }: {
   site?: typeof SITE
@@ -34,7 +35,7 @@ export function CaseStudiesCarouselBlock({
             <h2 className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight text-fam-ink sm:text-5xl">{heading}</h2>
             {body && <p className="mt-4 text-lg leading-relaxed text-fam-ink-muted">{body}</p>}
           </div>
-          <span className="font-display text-sm font-medium text-fam-ink-muted">Scroll for more →</span>
+          <span className="font-display text-sm font-medium text-fam-ink-muted">{tr('blk.scrollForMore')}</span>
         </div>
       </div>
       <div className="relative">

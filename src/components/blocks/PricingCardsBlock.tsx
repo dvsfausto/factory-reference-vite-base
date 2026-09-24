@@ -2,6 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { Check } from 'lucide-react'
 import type { PricingPlan } from './pricing-variants'
 import { SITE } from '~/data/site'
+import { tr } from '~/lib/i18n'
 
 // Pricing LAYOUT: 'cards', standalone elevated plan cards in an airy grid, each
 // with a thin accent rail and a soft shadow. Character-agnostic. Distinct from
@@ -17,8 +18,8 @@ import { SITE } from '~/data/site'
 // (section #F8FAFC, white cards, #E6E8EC). Never bg-brand-* / .btn.
 export function PricingCardsBlock({
   site = SITE,
-  label = 'Pricing',
-  heading = 'Pick the plan that fits',
+  label = tr('blk.pricing'),
+  heading = tr('blk.pickThePlanThatFits'),
   body,
 }: {
   site?: typeof SITE
@@ -57,7 +58,7 @@ export function PricingCardsBlock({
                   <h3 className="font-display text-lg font-semibold text-fam-ink">{p.name}</h3>
                   {p.highlighted && (
                     <span className="rounded-full bg-fam-accent-soft px-3 py-1 font-display text-xs font-semibold text-fam-accent-text-strong">
-                      Popular
+                      {tr('blk.popular')}
                     </span>
                   )}
                 </div>
@@ -78,7 +79,7 @@ export function PricingCardsBlock({
                   to="/contact"
                   className="mt-8 inline-flex h-12 items-center justify-center rounded-xl bg-cta px-6 font-display text-sm font-semibold text-cta-foreground transition-[filter] hover:brightness-(--hov-shade)"
                 >
-                  Get started
+                  {tr('section.getStarted')}
                 </Link>
               </div>
             </div>

@@ -1,6 +1,6 @@
 import type { ComponentProps, ComponentType, CSSProperties, ReactNode } from 'react'
 import { Fragment } from 'react'
-import { tr } from '~/lib/i18n'
+import { tr, trTrustPhrase } from '~/lib/i18n'
 import { Phone, Mail, MapPin, Clock } from 'lucide-react'
 import { Reveal } from '~/components/Reveal'
 import { SITE } from '~/data/site'
@@ -569,7 +569,7 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
         const svc = ctx.service
         const ServiceHero = SERVICE_HERO_VARIANTS[block.variant ?? ''] ?? HeroAuroraBlock
         const trustItems = svc.hero.trustLine
-          ? svc.hero.trustLine.split('·').map((s) => s.trim()).filter(Boolean)
+          ? svc.hero.trustLine.split('·').map((s) => trTrustPhrase(s)).filter(Boolean)
           : undefined
         // PER-SERVICE CTA (mixed catalogues): the banner takes this service's own target — book →
         // /book?service=, quote → /quote?service=, buy → order — from serviceCta(slug). Other hero variants
@@ -905,7 +905,7 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
       return (
         <section key="packages" className="bg-fam-card" data-packages-section>
           <div className="container-x py-section">
-            <PacksForSale label={(block.params?.label as string | undefined) ?? 'Packages'} heading={block.params?.heading as string | undefined} body={block.params?.body as string | undefined} fallback={baked} />
+            <PacksForSale label={(block.params?.label as string | undefined) ?? tr('blk.packages')} heading={block.params?.heading as string | undefined} body={block.params?.body as string | undefined} fallback={baked} />
           </div>
         </section>
       )
@@ -1014,7 +1014,7 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
       return (
         <ServicesSection
           key="servicesIndex"
-          heading={(block.params?.heading as string | undefined) ?? 'Services'}
+          heading={(block.params?.heading as string | undefined) ?? tr('nav.services')}
           intro={block.params?.intro as string | undefined}
           services={data.services ?? SERVICES}
         />
@@ -1023,7 +1023,7 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
       return (
         <AreasSection
           key="areasIndex"
-          heading={(block.params?.heading as string | undefined) ?? 'Service areas'}
+          heading={(block.params?.heading as string | undefined) ?? tr('section.serviceAreas')}
           intro={block.params?.intro as string | undefined}
           areas={data.areas ?? AREAS}
         />
@@ -1032,7 +1032,7 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
       return (
         <ReviewsSection
           key="reviewsIndex"
-          heading={(block.params?.heading as string | undefined) ?? 'All reviews'}
+          heading={(block.params?.heading as string | undefined) ?? tr('blk.allReviews')}
           count={(block.params?.count as number | undefined) ?? 50}
         />
       )

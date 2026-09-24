@@ -2,6 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { Clock, ArrowRight } from 'lucide-react'
 import type { Promotion } from './promotions-variants'
 import { SITE } from '~/data/site'
+import { tr } from '~/lib/i18n'
 
 // Promotions LAYOUT: 'countdown-band', an urgency band for a time-limited offer,
 // leading with the real end date. Character-agnostic. OMIT-WHEN-ABSENT:
@@ -16,7 +17,7 @@ import { SITE } from '~/data/site'
 // (DNA). Dark band (slate-950) component-owned. Never bg-brand-* / .btn.
 export function PromotionsCountdownBandBlock({
   site = SITE,
-  label = 'Limited time',
+  label = tr('blk.limitedTime'),
 }: {
   site?: typeof SITE
   label?: string
@@ -40,12 +41,12 @@ export function PromotionsCountdownBandBlock({
           <div className="flex shrink-0 flex-col items-start gap-3 md:items-end">
             {p.expires && (
               <span className="rounded-xl bg-fam-card/10 px-5 py-3 text-center font-display backdrop-blur-sm">
-                <span className="block text-xs uppercase tracking-[0.16em] text-fam-accent-on-dark">Hurry, ends</span>
+                <span className="block text-xs uppercase tracking-[0.16em] text-fam-accent-on-dark">{tr('blk.hurryEnds')}</span>
                 <span className="mt-0.5 block text-lg font-semibold">{p.expires}</span>
               </span>
             )}
             <Link to="/contact" className="inline-flex h-12 items-center gap-2 rounded-xl bg-cta px-7 font-display text-sm font-semibold text-cta-foreground transition-[filter] hover:brightness-(--hov-shade)">
-              Claim now <ArrowRight className="h-4 w-4" />
+              {tr('blk.claimNow')} <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
         </div>

@@ -2,6 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { Check } from 'lucide-react'
 import type { ServicePackage } from './packages-variants'
 import { SITE } from '~/data/site'
+import { tr } from '~/lib/i18n'
 
 // Packages LAYOUT: 'grid', a compact, denser grid of package cards (good when
 // there are several bundles). Character-agnostic. OMIT-WHEN-ABSENT: SITE.packages
@@ -12,8 +13,8 @@ import { SITE } from '~/data/site'
 // surface component-owned (#F8FAFC / white cards / #E6E8EC). Never bg-brand-*.
 export function PackagesGridBlock({
   site = SITE,
-  label = 'Packages',
-  heading = 'Browse packages',
+  label = tr('blk.packages'),
+  heading = tr('blk.browsePackages'),
   body,
 }: {
   site?: typeof SITE
@@ -48,7 +49,7 @@ export function PackagesGridBlock({
                   ))}
                 </ul>
               )}
-              {p.popular && <span className="mt-4 w-fit rounded-full bg-fam-accent-soft px-2.5 py-0.5 font-display text-xs font-semibold text-fam-accent-text-strong">Popular</span>}
+              {p.popular && <span className="mt-4 w-fit rounded-full bg-fam-accent-soft px-2.5 py-0.5 font-display text-xs font-semibold text-fam-accent-text-strong">{tr('blk.popular')}</span>}
             </Link>
           ))}
         </div>

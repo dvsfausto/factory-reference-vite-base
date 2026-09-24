@@ -1,5 +1,6 @@
 import type { BlockType } from './layout'
 import { familyOr } from '~/lib/family-variant'
+import { tr } from '~/lib/i18n'
 
 // Per-page composition for /areas (Arc 3 · Stage B), mirroring about-layout.ts.
 // The areas-index route maps over this array via the shared renderer. Adds an 'intro'
@@ -29,8 +30,8 @@ export const AREAS_INDEX_LAYOUT: AreasIndexBlock[] = [
     type: 'cta',
     variant: familyOr('aurora-glow'),
     params: {
-      title: "Don't see your area?",
-      subtitle: 'Call us, we often travel for the right project.',
+      title: tr('blk.dontSeeYourArea'),
+      subtitle: tr('blk.callUsWeTravel'),
     },
   },
 ]

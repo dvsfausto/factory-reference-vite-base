@@ -2,6 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { Check, Package } from 'lucide-react'
 import type { ServicePackage } from './packages-variants'
 import { SITE } from '~/data/site'
+import { tr } from '~/lib/i18n'
 
 // Packages LAYOUT: 'bundle-cards', a few large bundle cards, each leading with
 // what it INCLUDES and a popular badge. Character-agnostic. OMIT-WHEN-ABSENT:
@@ -12,8 +13,8 @@ import { SITE } from '~/data/site'
 // rounded-* (DNA). Font -> font-display (DNA). Light surface component-owned.
 export function PackagesBundleCardsBlock({
   site = SITE,
-  label = 'Packages',
-  heading = 'Service packages',
+  label = tr('blk.packages'),
+  heading = tr('blk.servicePackages'),
   body,
 }: {
   site?: typeof SITE
@@ -39,7 +40,7 @@ export function PackagesBundleCardsBlock({
             <div key={`${p.name}-${i}`} className={`flex flex-col rounded-3xl border bg-fam-card p-8 ${p.popular ? 'border-fam-accent ring-1 ring-fam-accent' : 'border-fam-hairline'}`}>
               <div className="flex items-center justify-between gap-3">
                 <span className="grid h-11 w-11 place-items-center rounded-xl bg-fam-accent-soft text-fam-accent-text"><Package className="h-5 w-5" /></span>
-                {p.popular && <span className="rounded-full bg-fam-accent-soft px-3 py-1 font-display text-xs font-semibold text-fam-accent-text-strong">Most popular</span>}
+                {p.popular && <span className="rounded-full bg-fam-accent-soft px-3 py-1 font-display text-xs font-semibold text-fam-accent-text-strong">{tr('blk.mostPopular')}</span>}
               </div>
               <h3 className="mt-6 font-display text-xl font-semibold tracking-tight text-fam-ink">{p.name}</h3>
               <div className="mt-2 font-display text-3xl font-semibold tracking-tight text-fam-ink">{p.price}</div>
@@ -50,7 +51,7 @@ export function PackagesBundleCardsBlock({
                   ))}
                 </ul>
               )}
-              <Link to="/contact" className={`mt-8 inline-flex h-12 items-center justify-center rounded-xl px-6 font-display text-sm font-semibold transition-[filter] hover:brightness-(--hov-shade) ${p.popular ? 'bg-cta text-cta-foreground' : 'border border-fam-hairline text-fam-ink hover:border-fam-accent hover:text-fam-accent-text-strong'}`}>Choose package</Link>
+              <Link to="/contact" className={`mt-8 inline-flex h-12 items-center justify-center rounded-xl px-6 font-display text-sm font-semibold transition-[filter] hover:brightness-(--hov-shade) ${p.popular ? 'bg-cta text-cta-foreground' : 'border border-fam-hairline text-fam-ink hover:border-fam-accent hover:text-fam-accent-text-strong'}`}>{tr('blk.choosePackage')}</Link>
             </div>
           ))}
         </div>

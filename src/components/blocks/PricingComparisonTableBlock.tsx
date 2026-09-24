@@ -2,6 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { Check, Minus } from 'lucide-react'
 import type { PricingPlan } from './pricing-variants'
 import { SITE } from '~/data/site'
+import { tr } from '~/lib/i18n'
 
 // Pricing LAYOUT: 'comparison-table', a feature matrix: every feature across all
 // plans becomes a row, each plan a column, with a check or dash per cell. The
@@ -18,8 +19,8 @@ import { SITE } from '~/data/site'
 // component-owned (white / slate / #E6E8EC). Never bg-brand-* / .btn.
 export function PricingComparisonTableBlock({
   site = SITE,
-  label = 'Pricing',
-  heading = 'Compare plans',
+  label = tr('blk.pricing'),
+  heading = tr('blk.comparePlans'),
   body,
 }: {
   site?: typeof SITE
@@ -90,7 +91,7 @@ export function PricingComparisonTableBlock({
                           : 'border border-fam-hairline text-fam-ink hover:border-fam-accent'
                       }`}
                     >
-                      Choose
+                      {tr('blk.choose')}
                     </Link>
                   </td>
                 ))}

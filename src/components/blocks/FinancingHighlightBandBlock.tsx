@@ -2,6 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { Check, CreditCard } from 'lucide-react'
 import type { Financing } from './financing-variants'
 import { SITE } from '~/data/site'
+import { tr } from '~/lib/i18n'
 
 // Financing LAYOUT: 'highlight-band', a prominent band announcing financing, with
 // the options as a checklist and the provider named. Character-agnostic. OMIT-WHEN-
@@ -12,7 +13,7 @@ import { SITE } from '~/data/site'
 // Font -> font-display (DNA). Light surface component-owned. Never bg-brand-*.
 export function FinancingHighlightBandBlock({
   site = SITE,
-  label = 'Financing',
+  label = tr('blk.financing'),
 }: {
   site?: typeof SITE
   label?: string
@@ -32,8 +33,8 @@ export function FinancingHighlightBandBlock({
                 {label}
               </span>
               <h2 className="mt-4 font-display text-3xl font-semibold leading-tight tracking-tight text-fam-ink sm:text-4xl">{fin.headline}</h2>
-              {fin.partner && <p className="mt-3 text-fam-ink-muted">In partnership with <span className="font-display font-semibold text-fam-ink">{fin.partner}</span></p>}
-              <Link to="/contact" className="mt-7 inline-flex h-12 items-center rounded-xl bg-cta px-7 font-display text-sm font-semibold text-cta-foreground transition-[filter] hover:brightness-(--hov-shade)">Check your options</Link>
+              {fin.partner && <p className="mt-3 text-fam-ink-muted">{tr('blk.inPartnershipWith')} <span className="font-display font-semibold text-fam-ink">{fin.partner}</span></p>}
+              <Link to="/contact" className="mt-7 inline-flex h-12 items-center rounded-xl bg-cta px-7 font-display text-sm font-semibold text-cta-foreground transition-[filter] hover:brightness-(--hov-shade)">{tr('blk.checkYourOptions')}</Link>
             </div>
             {fin.options.length > 0 && (
               <ul className="grid gap-4 sm:grid-cols-2">

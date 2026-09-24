@@ -111,7 +111,7 @@ export function HeroCreativeBlock({
                 className="aspect-[4/5] w-full object-cover"
               />
             </div>
-            <div className="absolute -bottom-6 -right-4 rounded-2xl bg-fam-accent px-5 py-4 font-display text-sm font-bold text-fam-on-accent elev-4">{tr('hero.letsMake')}<br />something.
+            <div className="absolute -bottom-6 -right-4 rounded-2xl bg-fam-accent px-5 py-4 font-display text-sm font-bold text-fam-on-accent elev-4">{tr('hero.letsMake')}<br />{tr('blk.something')}
             </div>
           </div>
         </div>

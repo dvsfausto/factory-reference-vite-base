@@ -2,6 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { ArrowRight, Check } from 'lucide-react'
 import type { Membership } from './membership-variants'
 import { SITE } from '~/data/site'
+import { tr } from '~/lib/i18n'
 
 // Membership LAYOUT: 'table', compact hairline rows, one membership per line with
 // price + inline perks + a join action. Character-agnostic. The dense, scannable
@@ -12,8 +13,8 @@ import { SITE } from '~/data/site'
 // rounded-* (DNA). Font -> font-display (DNA). Light surface component-owned.
 export function MembershipTableBlock({
   site = SITE,
-  label = 'Membership',
-  heading = 'Membership options',
+  label = tr('blk.membership'),
+  heading = tr('blk.membershipOptions'),
   body,
 }: {
   site?: typeof SITE
@@ -57,7 +58,7 @@ export function MembershipTableBlock({
               </div>
               <div className="md:col-span-2 md:text-right">
                 <Link to="/contact" className="inline-flex h-11 items-center gap-1.5 rounded-xl bg-cta px-5 font-display text-sm font-semibold text-cta-foreground transition-[filter] hover:brightness-(--hov-shade)">
-                  Join <ArrowRight className="h-4 w-4" />
+                  {tr('blk.join')} <ArrowRight className="h-4 w-4" />
                 </Link>
               </div>
             </div>

@@ -58,7 +58,7 @@ export function StoryEditorialFrameBlock({
             <h2 className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight text-ink-900 sm:text-5xl">
               {heading ?? (
                 <>
-                  About{' '}
+                  {tr('blk.about')}{' '}
                   <span className="font-script font-normal text-brand-600">{site.name}</span>
                 </>
               )}

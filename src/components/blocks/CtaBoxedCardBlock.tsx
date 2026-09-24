@@ -31,7 +31,7 @@ export function CtaBoxedCardBlock({
   subtitle?: string
 }) {
   const cta = (site as { homeCta?: { title?: string; subtitle?: string } }).homeCta
-  const headline = title ?? cta?.title ?? 'Ready when you are.'
+  const headline = title ?? cta?.title ?? tr('cta.readyWhenYouAre')
   const sub = subtitle ?? cta?.subtitle ?? tr('cta.reachOutToday')
   return (
     <section className="bg-fam-surface-2">

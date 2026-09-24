@@ -2,6 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { Check, Star } from 'lucide-react'
 import type { Membership } from './membership-variants'
 import { SITE } from '~/data/site'
+import { tr } from '~/lib/i18n'
 
 // Membership LAYOUT: 'tier-cards', recurring membership tiers as cards, perks
 // listed, a "Become a member" CTA. Character-agnostic. OMIT-WHEN-ABSENT: read from
@@ -12,8 +13,8 @@ import { SITE } from '~/data/site'
 // (DNA). Font -> font-display (DNA). Light surface component-owned. No bg-brand-*.
 export function MembershipTierCardsBlock({
   site = SITE,
-  label = 'Membership',
-  heading = 'Become a member',
+  label = tr('blk.membership'),
+  heading = tr('blk.becomeAMember'),
   body,
 }: {
   site?: typeof SITE
@@ -47,7 +48,7 @@ export function MembershipTierCardsBlock({
             >
               {m.highlighted && (
                 <span className="mb-4 inline-flex w-fit items-center gap-1.5 rounded-full bg-fam-accent-soft px-3 py-1 font-display text-xs font-semibold text-fam-accent-text-strong">
-                  <Star className="h-3.5 w-3.5" /> Best value
+                  <Star className="h-3.5 w-3.5" /> {tr('blk.bestValue')}
                 </span>
               )}
               <h3 className={`font-display text-lg font-semibold ${m.highlighted ? 'text-fam-on-dark' : 'text-fam-ink'}`}>{m.name}</h3>
@@ -70,7 +71,7 @@ export function MembershipTierCardsBlock({
                   m.highlighted ? 'bg-cta text-cta-foreground' : 'border border-fam-hairline text-fam-ink hover:border-fam-accent hover:text-fam-accent-text-strong'
                 }`}
               >
-                Become a member
+                {tr('blk.becomeAMember')}
               </Link>
             </div>
           ))}

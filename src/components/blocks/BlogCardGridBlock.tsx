@@ -1,5 +1,6 @@
 import type { BlogPost } from './blog-variants'
 import { SITE } from '~/data/site'
+import { tr } from '~/lib/i18n'
 
 // Blog LAYOUT: 'card-grid', a grid of post cards (image when present, title,
 // excerpt, date). Character-agnostic, section/index only. OMIT-WHEN-ABSENT:
@@ -10,8 +11,8 @@ import { SITE } from '~/data/site'
 // owned (white / slate / #E6E8EC). Never bg-brand-* / .btn.
 export function BlogCardGridBlock({
   site = SITE,
-  label = 'Blog',
-  heading = 'From the blog',
+  label = tr('blk.blog'),
+  heading = tr('blk.fromTheBlog'),
   body,
 }: {
   site?: typeof SITE
@@ -44,7 +45,7 @@ export function BlogCardGridBlock({
                 {p.date && <span className="text-xs font-semibold uppercase tracking-[0.12em] text-fam-ink-faint">{p.date}</span>}
                 <h3 className="mt-2 font-display text-lg font-semibold tracking-tight text-fam-ink group-hover:text-fam-accent-text-strong">{p.title}</h3>
                 {p.excerpt && <p className="mt-2 flex-1 text-sm leading-relaxed text-fam-ink-muted">{p.excerpt}</p>}
-                <span className="mt-4 font-display text-sm font-semibold text-fam-accent-text">Read more →</span>
+                <span className="mt-4 font-display text-sm font-semibold text-fam-accent-text">{tr('blk.readMoreArrow')}</span>
               </div>
             </a>
           ))}

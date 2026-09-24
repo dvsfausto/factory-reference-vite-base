@@ -44,7 +44,7 @@ export function ReviewsCarouselBlock({
               {heading}
             </h2>
           </div>
-          <span className="font-display text-sm font-medium text-fam-ink-muted">Scroll for more →</span>
+          <span className="font-display text-sm font-medium text-fam-ink-muted">{tr('blk.scrollForMore')}</span>
         </div>
       </div>
 

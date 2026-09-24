@@ -13,7 +13,7 @@ import { SITE } from '~/data/site'
 // (DNA). Font -> font-display (DNA). Cool surface component-owned. Never bg-brand-*.
 export function FinancingStepsBlock({
   site = SITE,
-  label = 'Financing',
+  label = tr('blk.financing'),
   heading,
   body,
 }: {
@@ -33,7 +33,7 @@ export function FinancingStepsBlock({
             {label}
           </span>
           <h2 className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight text-fam-ink sm:text-5xl">{heading ?? fin.headline}</h2>
-          {fin.partner && <p className="mt-4 text-lg leading-relaxed text-fam-ink-muted">Powered by {fin.partner}.</p>}
+          {fin.partner && <p className="mt-4 text-lg leading-relaxed text-fam-ink-muted">{tr('blk.poweredBy')} {fin.partner}.</p>}
         </div>
         <div className="mt-12 max-w-2xl">
           {fin.options.map((o, i) => {

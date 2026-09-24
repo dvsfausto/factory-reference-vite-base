@@ -31,8 +31,8 @@ function ContactPage() {
           eyebrow: tr('nav.contact'),
           heading: tr('cta.getInTouch'),
           body: (SITE as { ctaLabel?: string }).ctaLabel
-            ? 'We reply within a business day to every message.'
-            : 'We reply within a business day to every quote request.',
+            ? tr('contact.replyMessage')
+            : tr('contact.replyQuote'),
         },
       }}
     />

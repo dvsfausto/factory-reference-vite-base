@@ -128,7 +128,7 @@ export function ReviewsPullQuoteBlock({
                   ))}
                 </div>
                 <span className="mt-2 text-sm text-ink-500">
-                  from {rating.count} review{rating.count === 1 ? '' : 's'}
+                  {tr('blk.from')} {rating.count} {rating.count === 1 ? tr('blk.review') : tr('blk.reviews')}
                 </span>
               </div>
             </motion.div>

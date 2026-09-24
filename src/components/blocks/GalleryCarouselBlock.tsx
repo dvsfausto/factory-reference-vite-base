@@ -34,7 +34,7 @@ export function GalleryCarouselBlock({
             </h2>
             {body && <p className="mt-4 text-lg leading-relaxed text-fam-ink-muted">{body}</p>}
           </div>
-          <span className="font-display text-sm font-medium text-fam-ink-muted">Scroll for more →</span>
+          <span className="font-display text-sm font-medium text-fam-ink-muted">{tr('blk.scrollForMore')}</span>
         </div>
       </div>
 

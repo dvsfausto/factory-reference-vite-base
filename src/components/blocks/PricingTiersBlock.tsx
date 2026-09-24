@@ -2,6 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { Check } from 'lucide-react'
 import type { PricingPlan } from './pricing-variants'
 import { SITE } from '~/data/site'
+import { tr } from '~/lib/i18n'
 
 // Pricing LAYOUT: 'tiers', the classic connected column of plans, the highlighted
 // plan scaled up with a "Most popular" badge. Character-agnostic. The default.
@@ -17,8 +18,8 @@ import { SITE } from '~/data/site'
 // (DNA). Light surface component-owned (white / slate / #E6E8EC). Never bg-brand-*.
 export function PricingTiersBlock({
   site = SITE,
-  label = 'Pricing',
-  heading = 'Simple, transparent pricing',
+  label = tr('blk.pricing'),
+  heading = tr('blk.simpleTransparentPricing'),
   body,
 }: {
   site?: typeof SITE
@@ -54,7 +55,7 @@ export function PricingTiersBlock({
             >
               {p.highlighted && (
                 <span className="mb-4 inline-flex w-fit rounded-full bg-fam-accent-soft px-3 py-1 font-display text-xs font-semibold text-fam-accent-text-strong">
-                  Most popular
+                  {tr('blk.mostPopular')}
                 </span>
               )}
               <h3 className={`font-display text-lg font-semibold ${p.highlighted ? 'text-fam-on-dark' : 'text-fam-ink'}`}>
@@ -83,7 +84,7 @@ export function PricingTiersBlock({
                     : 'border border-fam-hairline text-fam-ink hover:border-fam-accent hover:text-fam-accent-text-strong'
                 }`}
               >
-                Get started
+                {tr('section.getStarted')}
               </Link>
             </div>
           ))}

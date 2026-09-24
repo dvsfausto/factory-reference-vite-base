@@ -1,6 +1,7 @@
 import { Scissors } from 'lucide-react'
 import type { Promotion } from './promotions-variants'
 import { SITE } from '~/data/site'
+import { tr } from '~/lib/i18n'
 
 // Promotions LAYOUT: 'offer-grid', a denser grid of coupon-style tiles (dashed
 // "tear" edge, the code prominent). Character-agnostic. OMIT-WHEN-ABSENT:
@@ -11,8 +12,8 @@ import { SITE } from '~/data/site'
 // (DNA). Light surface component-owned. Never bg-brand-* / .btn.
 export function PromotionsOfferGridBlock({
   site = SITE,
-  label = 'Specials',
-  heading = 'Offers & coupons',
+  label = tr('blk.specials'),
+  heading = tr('blk.offersAndCoupons'),
   body,
 }: {
   site?: typeof SITE
@@ -45,7 +46,7 @@ export function PromotionsOfferGridBlock({
                   {p.code ? (
                     <span className="inline-flex items-center gap-1.5 font-display text-sm font-semibold tracking-wider text-fam-accent-text-strong"><Scissors className="h-4 w-4" /> {p.code}</span>
                   ) : <span />}
-                  {p.expires && <span className="text-xs text-fam-ink-faint">Ends {p.expires}</span>}
+                  {p.expires && <span className="text-xs text-fam-ink-faint">{tr('blk.ends')} {p.expires}</span>}
                 </div>
               </div>
             </div>

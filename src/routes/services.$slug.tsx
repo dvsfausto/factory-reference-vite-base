@@ -6,6 +6,7 @@ import { PAGED_SERVICES } from '~/data/services-view'
 import { serviceLd, breadcrumbLd, faqLd, buildMeta } from '~/lib/seo'
 import { ogImageForService } from '~/data/images'
 import { SITE } from '~/data/site'
+import { tr } from '~/lib/i18n'
 
 export const Route = createFileRoute('/services/$slug')({
   loader: async ({ params }) => {
@@ -47,8 +48,8 @@ function ServicePage() {
       />
       <JsonLd
         data={breadcrumbLd([
-          { name: 'Home', url: '/' },
-          { name: 'Services', url: '/services' },
+          { name: tr('breadcrumb.home'), url: '/' },
+          { name: tr('nav.services'), url: '/services' },
           { name: data.hero.h1, url: `/services/${data.slug}` },
         ])}
       />

@@ -255,7 +255,7 @@ export function ServiceDetailsBlock({
             style={{ backgroundImage: 'var(--wow-grad-brand)' }}
           >{tr('tmpl.localInsight')}</span>
           <h2 className="mt-4 font-display text-2xl leading-tight text-[var(--fam-ink,var(--color-ink-900))] sm:text-3xl">
-            {localContext.title ?? 'Built for your neighborhood'}
+            {localContext.title ?? tr('blk.builtForYourNeighborhood')}
           </h2>
           <div className="mt-5 space-y-4">
             {localContext.body.map((p, i) => (

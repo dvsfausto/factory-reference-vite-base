@@ -111,7 +111,7 @@ export function QuoteRequestForm({
             defaultValue={preselected || (options.length === 1 ? options[0].slug : '')}
             className="mt-1.5 w-full rounded-xl border border-fam-line-3 bg-fam-card px-4 py-3 text-ink-900 outline-none focus:border-fam-accent focus:ring-2 focus:ring-fam-accent-soft-2"
           >
-            {options.length !== 1 && <option value="">Select a service…</option>}
+            {options.length !== 1 && <option value="">{tr('form.selectService')}</option>}
             {options.map((s) => (
               <option key={s.slug} value={s.slug}>{s.name}</option>
             ))}
@@ -136,7 +136,7 @@ export function QuoteRequestForm({
       <div className={compact ? 'mt-6 flex flex-wrap items-center gap-4' : 'mt-8 flex flex-wrap items-center gap-4'}>
         <SubmitButton status={status} label={submitText} />
         {!compact && hasPhone(site.phone) && (<span className="text-sm text-fam-ink-muted">
-          Or call{' '}
+          {tr('blk.orCall')}{' '}
           <a href={`tel:${site.phone}`} className="font-medium text-fam-accent-text-strong underline-offset-2 hover:underline">
             {site.phoneDisplay}
           </a>

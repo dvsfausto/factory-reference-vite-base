@@ -5,6 +5,7 @@ import { JsonLd } from '~/components/JsonLd'
 import { articleLd, breadcrumbLd, buildMeta, faqLd } from '~/lib/seo'
 import { SITE } from '~/data/site'
 import { INFO_REDIRECTS } from '~/data/info-redirects'
+import { tr } from '~/lib/i18n'
 
 export const Route = createFileRoute('/info/$slug')({
   loader: async ({ params }) => {
@@ -44,7 +45,7 @@ function InfoPage() {
       />
       <JsonLd
         data={breadcrumbLd([
-          { name: 'Home', url: '/' },
+          { name: tr('breadcrumb.home'), url: '/' },
           { name: data.hero.h1, url: `/info/${data.slug}` },
         ])}
       />

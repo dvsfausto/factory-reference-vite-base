@@ -45,7 +45,7 @@ export function CtaGlassPanelBlock({
   const title = titleProp ?? homeCta?.title ?? tr('cta.readyWhenYouAre')
   const subtitle = subtitleProp ?? homeCta?.subtitle ?? tr('cta.quote24')
   const parts = splitScriptAccent(title)
-  const label = (site as { ctaLabel?: string }).ctaLabel ?? 'Get Free Quote'
+  const label = (site as { ctaLabel?: string }).ctaLabel ?? tr('blk.getFreeQuoteTitle')
 
   return (
     <section

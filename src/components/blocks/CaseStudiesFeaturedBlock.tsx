@@ -2,6 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { ArrowUpRight, TrendingUp } from 'lucide-react'
 import type { CaseStudy } from './case-studies-variants'
 import { SITE } from '~/data/site'
+import { tr } from '~/lib/i18n'
 
 // Case Studies LAYOUT: 'featured', one hero case study with image + outcome,
 // plus a column of supporting ones. Character-agnostic. OMIT-WHEN-ABSENT:
@@ -13,8 +14,8 @@ import { SITE } from '~/data/site'
 // surface component-owned (white / slate / #E6E8EC). Never bg-brand-* / .btn.
 export function CaseStudiesFeaturedBlock({
   site = SITE,
-  label = 'Case studies',
-  heading = 'Results that speak',
+  label = tr('blk.caseStudies'),
+  heading = tr('blk.resultsThatSpeak'),
   body,
 }: {
   site?: typeof SITE

@@ -82,7 +82,7 @@ export function FormMinimalBlock({
                   <div className="mt-1 flex flex-wrap items-center gap-4">
                     <SubmitButton status={status} />
                     {hasPhone(site.phone) && (<a href={`tel:${site.phone}`} className="text-sm font-medium text-fam-accent-text-strong underline-offset-2 hover:underline">
-                      Or call {site.phoneDisplay}
+                      {tr('blk.orCall')} {site.phoneDisplay}
                     </a>)}
                   </div>
                 </form>

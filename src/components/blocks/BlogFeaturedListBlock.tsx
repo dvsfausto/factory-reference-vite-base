@@ -1,5 +1,6 @@
 import type { BlogPost } from './blog-variants'
 import { SITE } from '~/data/site'
+import { tr } from '~/lib/i18n'
 
 // Blog LAYOUT: 'featured+list', one large featured post beside a compact list of
 // the rest. Character-agnostic, section/index only. OMIT-WHEN-ABSENT: SITE.posts
@@ -10,8 +11,8 @@ import { SITE } from '~/data/site'
 // / #E6E8EC). Never bg-brand-* / .btn.
 export function BlogFeaturedListBlock({
   site = SITE,
-  label = 'Blog',
-  heading = 'From the blog',
+  label = tr('blk.blog'),
+  heading = tr('blk.fromTheBlog'),
   body,
 }: {
   site?: typeof SITE

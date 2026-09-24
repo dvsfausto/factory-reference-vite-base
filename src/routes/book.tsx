@@ -5,6 +5,7 @@ import { customPagesData } from '~/data/custom-pages'
 import { breadcrumbLd, buildMeta } from '~/lib/seo'
 import { SITE } from '~/data/site'
 import { PacksForSale } from '~/components/blocks/PacksForSale'
+import { tr } from '~/lib/i18n'
 
 // CLEAN /book route for the booking widget — the URL a barber actually texts a customer
 // ("mysite.com/book"), and the canonical for ranking. It renders the SAME 'book' customPage
@@ -37,7 +38,7 @@ function BookPage() {
     <>
       <JsonLd
         data={breadcrumbLd([
-          { name: 'Home', url: '/' },
+          { name: tr('breadcrumb.home'), url: '/' },
           { name: data.title, url: '/book' },
         ])}
       />

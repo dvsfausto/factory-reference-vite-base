@@ -1,6 +1,7 @@
 import { TrendingUp } from 'lucide-react'
 import type { CaseStudy } from './case-studies-variants'
 import { SITE } from '~/data/site'
+import { tr } from '~/lib/i18n'
 
 // Case Studies LAYOUT: 'alternating-rows', full-width zigzag rows, image (or an
 // outcome panel) trading sides with the narrative. Character-agnostic. OMIT-WHEN-
@@ -11,8 +12,8 @@ import { SITE } from '~/data/site'
 // bg-brand-* / .btn.
 export function CaseStudiesAlternatingRowsBlock({
   site = SITE,
-  label = 'Case studies',
-  heading = 'How we help',
+  label = tr('blk.caseStudies'),
+  heading = tr('blk.howWeHelp'),
   body,
 }: {
   site?: typeof SITE
@@ -42,7 +43,7 @@ export function CaseStudiesAlternatingRowsBlock({
                 ) : (
                   <div className="flex aspect-[4/3] flex-col items-center justify-center bg-fam-panel p-10 text-center">
                     {s.result && <span className="font-display text-5xl font-semibold tracking-tight text-fam-accent-on-dark">{s.result}</span>}
-                    <span className="mt-3 text-sm uppercase tracking-[0.14em] text-slate-400">Outcome</span>
+                    <span className="mt-3 text-sm uppercase tracking-[0.14em] text-slate-400">{tr('blk.outcome')}</span>
                   </div>
                 )}
               </div>

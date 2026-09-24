@@ -1,6 +1,7 @@
 import { ArrowUpRight } from 'lucide-react'
 import type { BlogPost } from './blog-variants'
 import { SITE } from '~/data/site'
+import { tr } from '~/lib/i18n'
 
 // Blog LAYOUT: 'list', a clean hairline-separated list of posts (date + title +
 // excerpt + arrow). Character-agnostic, no imagery needed, section/index only.
@@ -11,8 +12,8 @@ import { SITE } from '~/data/site'
 // hairline #E6E8EC). Never bg-brand-* / .btn.
 export function BlogListBlock({
   site = SITE,
-  label = 'Blog',
-  heading = 'Latest articles',
+  label = tr('blk.blog'),
+  heading = tr('blk.latestArticles'),
   body,
 }: {
   site?: typeof SITE

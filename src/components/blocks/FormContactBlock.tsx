@@ -88,7 +88,7 @@ export function FormContactBlock({
                 <div className="mt-8 flex flex-wrap items-center gap-4">
                   <SubmitButton status={status} />
                   {hasPhone(site.phone) && (<span className="text-sm text-fam-ink-muted">
-                    Or call{' '}
+                    {tr('blk.orCall')}{' '}
                     <a href={`tel:${site.phone}`} className="font-medium text-fam-accent-text-strong underline-offset-2 hover:underline">
                       {site.phoneDisplay}
                     </a>

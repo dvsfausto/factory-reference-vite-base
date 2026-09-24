@@ -32,7 +32,7 @@ export function DefaultCatchBoundary({ error }: ErrorComponentProps) {
             to="/"
             className={`px-2 py-1 bg-gray-600 dark:bg-gray-700 rounded-sm text-fam-on-dark uppercase font-extrabold`}
           >
-            Home
+            {tr('breadcrumb.home')}
           </Link>
         ) : (
           <Link

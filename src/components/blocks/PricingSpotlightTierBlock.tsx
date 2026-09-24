@@ -27,7 +27,7 @@ import { SITE } from '~/data/site'
 export function PricingSpotlightTierBlock({
   site = SITE,
   label = tr('nav.pricing'),
-  heading = 'Simple, transparent pricing',
+  heading = tr('blk.simpleTransparentPricing'),
   body,
 }: {
   site?: typeof SITE
@@ -84,7 +84,7 @@ export function PricingSpotlightTierBlock({
             >
               <div>
                 <span className="inline-flex w-fit rounded-full bg-fam-card/20 px-3 py-1 font-display text-xs font-semibold text-fam-on-dark backdrop-blur-sm">
-                  Most popular
+                  {tr('blk.mostPopular')}
                 </span>
                 <h3 className="mt-5 font-display text-2xl font-semibold">{spotlight.name}</h3>
                 <div className="mt-4 flex items-baseline gap-1.5">
@@ -105,7 +105,7 @@ export function PricingSpotlightTierBlock({
                 to="/contact"
                 className="mt-9 inline-flex h-[52px] w-fit items-center gap-2 rounded-full bg-fam-card px-8 font-semibold text-ink-900 transition-transform hover:translate-y-(--hov-lift-sm)"
               >
-                Get started <ArrowRight className="h-4 w-4" />
+                {tr('section.getStarted')} <ArrowRight className="h-4 w-4" />
               </Link>
             </motion.div>
 
@@ -143,7 +143,7 @@ export function PricingSpotlightTierBlock({
                     className="mt-6 inline-flex h-11 w-fit items-center gap-1.5 rounded-full border px-5 font-display text-sm font-semibold text-brand-800 transition-colors hover:bg-brand-50"
                     style={{ borderColor: 'var(--wow-hairline)' }}
                   >
-                    Get started <ArrowRight className="h-3.5 w-3.5" />
+                    {tr('section.getStarted')} <ArrowRight className="h-3.5 w-3.5" />
                   </Link>
                 </motion.div>
               ))}
@@ -163,23 +163,21 @@ export function PricingSpotlightTierBlock({
               className="flex flex-col justify-center p-9 text-fam-on-dark md:col-span-2 md:p-11"
               style={{ backgroundImage: 'var(--wow-grad-brand)' }}
             >
-              <h3 className="font-display text-2xl font-semibold leading-tight">Pricing that fits your project</h3>
+              <h3 className="font-display text-2xl font-semibold leading-tight">{tr('blk.pricingFitsProject')}</h3>
               <p className="mt-4 leading-relaxed text-fam-on-dark/85">
-                No two jobs are the same, so we quote each one on its own terms, with
-                no surprises.
+                {tr('blk.noTwoJobs')}
               </p>
             </div>
             <div className="flex flex-col justify-center p-9 md:col-span-3 md:p-11">
               <p className="max-w-lg text-lg leading-relaxed text-ink-800">
-                Tell us what you're looking for and we'll get back to you quickly with a
-                clear, tailored quote.
+                {tr('blk.tellUsWhatYouNeed')}
               </p>
               <Link
                 to="/contact"
                 className="mt-7 inline-flex h-[52px] w-fit items-center gap-2 rounded-full bg-cta px-8 font-semibold text-cta-foreground transition-transform hover:translate-y-(--hov-lift-sm)"
                 style={{ boxShadow: 'var(--wow-shadow-glow)' }}
               >
-                Request a quote <ArrowRight className="h-4 w-4" />
+                {tr('cta.requestQuote')} <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
           </motion.div>

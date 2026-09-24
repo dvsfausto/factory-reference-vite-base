@@ -158,7 +158,7 @@ export function ServiceAreaPageTemplate({ data }: Props) {
         <div className={`container-x ${T ? T.spacingY.split(" ")[0] : "py-16"}`}>
           <div className={`${T ? `${T.card} ${T.cardRadius} border ${T.border}` : "card-soft"} p-8 max-w-3xl mx-auto`}>
             <span className={`text-xs font-bold ${T ? T.accent : "text-brand-600"} uppercase tracking-wider`}>
-              {data.name} at a glance
+              {data.name} {tr('blk.atAGlance')}
             </span>
             <h2 className={`mt-3 text-2xl ${T ? T.text : ""}`.trimEnd()}>{data.about.title}</h2>
             <div className="mt-4 space-y-3">
@@ -246,7 +246,7 @@ export function ServiceAreaPageTemplate({ data }: Props) {
                     <span className={`font-script ${T ? T.accent : "text-brand-600"}`}>{localTitleParts.accent}</span>
                   </>
                 ) : (
-                  <>Why {data.name} chooses <span className={`font-script ${T ? T.accent : "text-brand-600"}`}>us</span></>
+                  <>{tr('blk.why')} {data.name} {tr('blk.chooses')} <span className={`font-script ${T ? T.accent : "text-brand-600"}`}>{tr('blk.choosesUs')}</span></>
                 )}
               </h2>
               <div className="mt-5 space-y-4">

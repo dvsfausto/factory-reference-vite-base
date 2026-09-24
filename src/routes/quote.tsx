@@ -4,6 +4,7 @@ import { JsonLd } from '~/components/JsonLd'
 import { customPagesData } from '~/data/custom-pages'
 import { breadcrumbLd, buildMeta } from '~/lib/seo'
 import { SITE } from '~/data/site'
+import { tr } from '~/lib/i18n'
 
 // CLEAN /quote route for the quote-request widget — the URL an owner actually hands out
 // ("mysite.com/quote"), and the canonical for ranking. It renders the SAME 'quote' customPage
@@ -34,7 +35,7 @@ function QuotePage() {
     <>
       <JsonLd
         data={breadcrumbLd([
-          { name: 'Home', url: '/' },
+          { name: tr('breadcrumb.home'), url: '/' },
           { name: data.title, url: '/quote' },
         ])}
       />

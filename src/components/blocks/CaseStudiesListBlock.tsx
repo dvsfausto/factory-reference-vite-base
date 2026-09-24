@@ -1,6 +1,7 @@
 import { ArrowUpRight } from 'lucide-react'
 import type { CaseStudy } from './case-studies-variants'
 import { SITE } from '~/data/site'
+import { tr } from '~/lib/i18n'
 
 // Case Studies LAYOUT: 'list', editorial hairline rows, outcome-forward: a big
 // result figure beside the title + summary. Character-agnostic, no imagery needed.
@@ -12,8 +13,8 @@ import { SITE } from '~/data/site'
 // owned (white / slate / hairline #E6E8EC). Never bg-brand-* / .btn.
 export function CaseStudiesListBlock({
   site = SITE,
-  label = 'Case studies',
-  heading = 'Outcomes, in brief',
+  label = tr('blk.caseStudies'),
+  heading = tr('blk.outcomesInBrief'),
   body,
 }: {
   site?: typeof SITE

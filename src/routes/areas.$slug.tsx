@@ -4,6 +4,7 @@ import { AREA_DETAIL_LAYOUT } from '~/data/area-detail-layout'
 import { JsonLd } from '~/components/JsonLd'
 import { breadcrumbLd, buildMeta, faqLd } from '~/lib/seo'
 import { ogImageForArea } from '~/data/images'
+import { tr } from '~/lib/i18n'
 
 export const Route = createFileRoute('/areas/$slug')({
   loader: async ({ params }) => {
@@ -34,8 +35,8 @@ function AreaPage() {
     <>
       <JsonLd
         data={breadcrumbLd([
-          { name: 'Home', url: '/' },
-          { name: 'Areas', url: '/areas' },
+          { name: tr('breadcrumb.home'), url: '/' },
+          { name: tr('nav.areas'), url: '/areas' },
           { name: data.name, url: `/areas/${data.slug}` },
         ])}
       />

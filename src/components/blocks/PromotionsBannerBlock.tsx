@@ -2,6 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { ArrowRight, Tag } from 'lucide-react'
 import type { Promotion } from './promotions-variants'
 import { SITE } from '~/data/site'
+import { tr } from '~/lib/i18n'
 
 // Promotions LAYOUT: 'banner', one featured offer as a bold full-width band.
 // Character-agnostic. OMIT-WHEN-ABSENT: SITE.promotions via cast; none -> null,
@@ -12,7 +13,7 @@ import { SITE } from '~/data/site'
 // (DNA). Font -> font-display (DNA). Never bg-brand-* / .btn.
 export function PromotionsBannerBlock({
   site = SITE,
-  label = 'Special offer',
+  label = tr('blk.specialOffer'),
 }: {
   site?: typeof SITE
   label?: string
@@ -32,16 +33,16 @@ export function PromotionsBannerBlock({
             </span>
             <h2 className="mt-3 font-display text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">{p.title}</h2>
             <p className="mt-2 text-lg leading-relaxed text-primary-foreground/85">{p.detail}</p>
-            {p.expires && <p className="mt-2 text-sm text-primary-foreground/70">Ends {p.expires}</p>}
+            {p.expires && <p className="mt-2 text-sm text-primary-foreground/70">{tr('blk.ends')} {p.expires}</p>}
           </div>
           <div className="flex shrink-0 flex-col items-start gap-3 md:items-end">
             {p.code && (
               <span className="rounded-lg border border-dashed border-primary-foreground/50 px-4 py-2 font-display text-sm font-semibold tracking-wider">
-                Code: {p.code}
+                {tr('blk.code')} {p.code}
               </span>
             )}
             <Link to="/contact" className="inline-flex h-12 items-center gap-2 rounded-xl bg-fam-card px-7 font-display text-sm font-semibold text-fam-ink transition-transform hover:translate-y-(--hov-lift-sm)">
-              Claim offer <ArrowRight className="h-4 w-4" />
+              {tr('blk.claimOffer')} <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
         </div>

@@ -1,4 +1,5 @@
 import type { ServiceAreaPageData } from '~/lib/types/page-types'
+import { tr } from '~/lib/i18n'
 
 // AREA-DETAIL VARIANT (Arc 3 · Stage D): renders THIS area's `about` section, the
 // "at a glance" lead copy, as a WOW composition: an eyebrow + headline over a soft
@@ -50,7 +51,7 @@ export function AreaAboutBlock({
               backgroundClip: 'text',
             }}
           >
-            {name} at a glance
+            {name} {tr('blk.atAGlance')}
           </span>
           <h2 className="mt-3 font-display text-3xl leading-tight text-[var(--fam-ink,var(--color-ink-900))] sm:text-4xl">
             {about.title}

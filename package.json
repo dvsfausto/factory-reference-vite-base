@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
-    "build": "node scripts/check-no-literal-colours.mjs && node scripts/check-display-name-seam.mjs && node scripts/check-image-transform.mjs && node scripts/check-booking-shape.mjs && node scripts/check-shared-decor.mjs && node scripts/check-contact-guards.mjs && node scripts/check-raw-physics.mjs && node scripts/check-fact-icons.mjs && node scripts/check-optional-copy.mjs && node scripts/check-mobile-first-paint.mjs && vite build && node scripts/check-built-assets-syntax.mjs && tsc --noEmit",
+    "build": "node scripts/check-no-literal-colours.mjs && node scripts/check-display-name-seam.mjs && node scripts/check-image-transform.mjs && node scripts/check-booking-shape.mjs && node scripts/check-shared-decor.mjs && node scripts/check-contact-guards.mjs && node scripts/check-site-spanish.mjs && node scripts/check-raw-physics.mjs && node scripts/check-fact-icons.mjs && node scripts/check-optional-copy.mjs && node scripts/check-mobile-first-paint.mjs && vite build && node scripts/check-built-assets-syntax.mjs && tsc --noEmit",
     "preview": "vite preview",
     "start": "node .output/server/index.mjs",
     "lint:honesty": "node scripts/check-no-credential-claims.mjs",

@@ -2,6 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { ArrowRight, Check } from 'lucide-react'
 import type { PricingPlan } from './pricing-variants'
 import { SITE } from '~/data/site'
+import { tr } from '~/lib/i18n'
 
 // Pricing LAYOUT: 'list', compact hairline-separated rows, each plan a single
 // line of name + price + inline features + action. Character-agnostic. The
@@ -16,8 +17,8 @@ import { SITE } from '~/data/site'
 // owned (white / slate / hairline #E6E8EC). Never bg-brand-* / .btn.
 export function PricingListBlock({
   site = SITE,
-  label = 'Pricing',
-  heading = 'Plans & pricing',
+  label = tr('blk.pricing'),
+  heading = tr('blk.plansAndPricing'),
   body,
 }: {
   site?: typeof SITE
@@ -72,7 +73,7 @@ export function PricingListBlock({
                   to="/contact"
                   className="inline-flex h-11 items-center gap-1.5 rounded-xl bg-cta px-5 font-display text-sm font-semibold text-cta-foreground transition-[filter] hover:brightness-(--hov-shade)"
                 >
-                  Choose <ArrowRight className="h-4 w-4" />
+                  {tr('blk.choose')} <ArrowRight className="h-4 w-4" />
                 </Link>
               </div>
             </div>

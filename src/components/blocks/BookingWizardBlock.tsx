@@ -1080,7 +1080,7 @@ export function BookingWizardBlock({
                             )}
                           </button>
                           {hasPhone(site.phone) && (<span className="text-sm text-ink-600">
-                            or call{' '}
+                            {tr('blk.orCallLower')}{' '}
                             <a
                               href={`tel:${site.phone}`}
                               className="font-medium text-brand-700 underline-offset-2 hover:underline"
@@ -1313,7 +1313,7 @@ function FallbackCard({ message, features }: { message: string; features?: Booki
         style={{ backgroundImage: 'var(--wow-grad-brand)' }}
       >
         <Phone className="h-4 w-4" />
-        Call {SITE.phoneDisplay}
+        {tr('blk.callPhone')} {SITE.phoneDisplay}
       </a>)}
     </div>
   )

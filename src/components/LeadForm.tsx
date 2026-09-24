@@ -165,11 +165,11 @@ export function LeadForm({
   if (status === 'ok') {
     return (
       <div className="rounded-2xl border border-fam-accent-tint bg-fam-accent-soft p-8 text-center">
-        <h3 className="text-2xl font-bold text-slate-900">Thanks, we got it.</h3>
+        <h3 className="text-2xl font-bold text-slate-900">{tr('blk.thanksWeGotIt')}</h3>
         <p className="mt-3 text-base leading-relaxed text-slate-700">
-          We&apos;ll be in touch within a business day.
+          {tr('blk.inTouchBusinessDay')}
           {HAS_PHONE && (<>
-            {' '}If it&apos;s urgent, call us at{' '}
+            {' '}{tr('blk.ifUrgentCall')}{' '}
             <a
               href={`tel:${SITE.phone}`}
               className="font-semibold text-fam-accent-text-strong hover:underline"

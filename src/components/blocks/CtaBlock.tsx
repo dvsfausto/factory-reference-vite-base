@@ -1,6 +1,7 @@
 import { CTASection } from '~/components/CTASection'
 import { renderCharacterCta } from '~/components/CharacterHero'
 import { SITE } from '~/data/site'
+import { tr } from '~/lib/i18n'
 
 // Markup extracted VERBATIM from routes/index.tsx (the CTA section).
 // Always renders (CTASection emits its own <section>).
@@ -17,8 +18,8 @@ export function CtaBlock({
   subtitle?: string
 }) {
   const homeCta = (site as { homeCta?: { title?: string; subtitle?: string } }).homeCta
-  const title = titleProp ?? homeCta?.title ?? 'Ready when you are.'
-  const subtitle = subtitleProp ?? homeCta?.subtitle ?? 'Quote in 24 hours. No pressure.'
+  const title = titleProp ?? homeCta?.title ?? tr('cta.readyWhenYouAre')
+  const subtitle = subtitleProp ?? homeCta?.subtitle ?? tr('cta.quote24')
   // Character sites get the character CTA (elegant/bold/…); known verticals → null → the default
   // CTASection, byte-identical. Fixes the default-blue CTA leaking onto /about + /pricing (which
   // render CtaBlock directly, outside the homepage's variant-map).

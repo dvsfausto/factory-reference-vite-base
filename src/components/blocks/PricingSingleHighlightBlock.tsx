@@ -2,6 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { Check } from 'lucide-react'
 import type { PricingPlan } from './pricing-variants'
 import { SITE } from '~/data/site'
+import { tr } from '~/lib/i18n'
 
 // Pricing LAYOUT: 'single-highlight', one plan presented as a single wide, bold
 // panel with the price and features laid out generously. Character-agnostic. The
@@ -16,8 +17,8 @@ import { SITE } from '~/data/site'
 // component-owned. Never bg-brand-* / .btn.
 export function PricingSingleHighlightBlock({
   site = SITE,
-  label = 'Pricing',
-  heading = 'One simple plan',
+  label = tr('blk.pricing'),
+  heading = tr('blk.oneSimplePlan'),
   body,
 }: {
   site?: typeof SITE
@@ -54,7 +55,7 @@ export function PricingSingleHighlightBlock({
                 to="/contact"
                 className="mt-8 inline-flex h-12 items-center justify-center rounded-xl bg-cta px-7 font-display text-sm font-semibold text-cta-foreground transition-[filter] hover:brightness-(--hov-shade)"
               >
-                Get started
+                {tr('section.getStarted')}
               </Link>
             </div>
             {plan.features && plan.features.length > 0 && (

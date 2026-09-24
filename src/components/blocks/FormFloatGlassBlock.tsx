@@ -121,7 +121,7 @@ export function FormFloatGlassBlock({
                 <div className="mt-8 flex flex-wrap items-center gap-4">
                   <SubmitButton status={status} />
                   {hasPhone(site.phone) && (<span className="text-sm text-ink-600">
-                    Or call{' '}
+                    {tr('blk.orCall')}{' '}
                     <a href={`tel:${site.phone}`} className="font-medium text-brand-700 underline-offset-2 hover:underline">
                       {site.phoneDisplay}
                     </a>

@@ -2,6 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { Check } from 'lucide-react'
 import type { ServicePackage } from './packages-variants'
 import { SITE } from '~/data/site'
+import { tr } from '~/lib/i18n'
 
 // Packages LAYOUT: 'tiered', escalating good/better/best columns, the popular one
 // elevated. Character-agnostic. OMIT-WHEN-ABSENT: SITE.packages via cast; none ->
@@ -12,8 +13,8 @@ import { SITE } from '~/data/site'
 // elevated column (slate-950) component-owned. Never bg-brand-* / .btn.
 export function PackagesTieredBlock({
   site = SITE,
-  label = 'Packages',
-  heading = 'Pick your package',
+  label = tr('blk.packages'),
+  heading = tr('blk.pickYourPackage'),
   body,
 }: {
   site?: typeof SITE
@@ -37,7 +38,7 @@ export function PackagesTieredBlock({
         <div className="mt-12 grid grid-cols-1 items-start gap-6 md:grid-cols-3">
           {packages.slice(0, 3).map((p, i) => (
             <div key={`${p.name}-${i}`} className={`flex flex-col rounded-3xl p-8 ${p.popular ? 'bg-fam-panel text-fam-on-dark ring-1 ring-fam-accent md:-mt-4 md:pb-12' : 'border border-fam-hairline bg-fam-card'}`}>
-              {p.popular && <span className="mb-4 inline-flex w-fit rounded-full bg-fam-accent-soft px-3 py-1 font-display text-xs font-semibold text-fam-accent-text-strong">Most popular</span>}
+              {p.popular && <span className="mb-4 inline-flex w-fit rounded-full bg-fam-accent-soft px-3 py-1 font-display text-xs font-semibold text-fam-accent-text-strong">{tr('blk.mostPopular')}</span>}
               <h3 className={`font-display text-lg font-semibold ${p.popular ? 'text-fam-on-dark' : 'text-fam-ink'}`}>{p.name}</h3>
               <div className={`mt-3 font-display text-4xl font-semibold tracking-tight ${p.popular ? 'text-fam-on-dark' : 'text-fam-ink'}`}>{p.price}</div>
               {p.includes && p.includes.length > 0 && (
@@ -47,7 +48,7 @@ export function PackagesTieredBlock({
                   ))}
                 </ul>
               )}
-              <Link to="/contact" className={`mt-8 inline-flex h-12 items-center justify-center rounded-xl px-6 font-display text-sm font-semibold transition-[filter] hover:brightness-(--hov-shade) ${p.popular ? 'bg-cta text-cta-foreground' : 'border border-fam-hairline text-fam-ink hover:border-fam-accent hover:text-fam-accent-text-strong'}`}>Choose</Link>
+              <Link to="/contact" className={`mt-8 inline-flex h-12 items-center justify-center rounded-xl px-6 font-display text-sm font-semibold transition-[filter] hover:brightness-(--hov-shade) ${p.popular ? 'bg-cta text-cta-foreground' : 'border border-fam-hairline text-fam-ink hover:border-fam-accent hover:text-fam-accent-text-strong'}`}>{tr('blk.choose')}</Link>
             </div>
           ))}
         </div>

@@ -2,6 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { Check } from 'lucide-react'
 import type { Membership } from './membership-variants'
 import { SITE } from '~/data/site'
+import { tr } from '~/lib/i18n'
 
 // Membership LAYOUT: 'single-tier-highlight', one membership as a wide bold panel
 // (the common single-membership case). Character-agnostic. OMIT-WHEN-ABSENT:
@@ -13,8 +14,8 @@ import { SITE } from '~/data/site'
 // font-display (DNA). Dark panel (slate-950) component-owned. No bg-brand-*.
 export function MembershipSingleTierHighlightBlock({
   site = SITE,
-  label = 'Membership',
-  heading = 'Join the membership',
+  label = tr('blk.membership'),
+  heading = tr('blk.joinTheMembership'),
   body,
 }: {
   site?: typeof SITE
@@ -45,7 +46,7 @@ export function MembershipSingleTierHighlightBlock({
                 <span className="text-slate-300">{m.period ?? '/month'}</span>
               </div>
               <Link to="/contact" className="mt-8 inline-flex h-12 items-center justify-center rounded-xl bg-cta px-7 font-display text-sm font-semibold text-cta-foreground transition-[filter] hover:brightness-(--hov-shade)">
-                Become a member
+                {tr('blk.becomeAMember')}
               </Link>
             </div>
             {m.perks && m.perks.length > 0 && (

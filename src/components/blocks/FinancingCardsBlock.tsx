@@ -2,6 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { Wallet } from 'lucide-react'
 import type { Financing } from './financing-variants'
 import { SITE } from '~/data/site'
+import { tr } from '~/lib/i18n'
 
 // Financing LAYOUT: 'cards', each financing option as its own card. Character-
 // agnostic. OMIT-WHEN-ABSENT: SITE.financing via cast; absent -> null, never
@@ -12,7 +13,7 @@ import { SITE } from '~/data/site'
 // font-display (DNA). Light surface component-owned. Never bg-brand-* / .btn.
 export function FinancingCardsBlock({
   site = SITE,
-  label = 'Financing',
+  label = tr('blk.financing'),
   heading,
   body,
 }: {
@@ -32,7 +33,7 @@ export function FinancingCardsBlock({
             {label}
           </span>
           <h2 className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight text-fam-ink sm:text-5xl">{heading ?? fin.headline}</h2>
-          {fin.partner && <p className="mt-4 text-lg leading-relaxed text-fam-ink-muted">Flexible plans with {fin.partner}.</p>}
+          {fin.partner && <p className="mt-4 text-lg leading-relaxed text-fam-ink-muted">{tr('blk.flexiblePlansWith')} {fin.partner}.</p>}
         </div>
         <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {fin.options.map((o, i) => (
@@ -43,7 +44,7 @@ export function FinancingCardsBlock({
           ))}
         </div>
         <div className="mt-10">
-          <Link to="/contact" className="inline-flex h-12 items-center rounded-xl bg-cta px-7 font-display text-sm font-semibold text-cta-foreground transition-[filter] hover:brightness-(--hov-shade)">Apply for financing</Link>
+          <Link to="/contact" className="inline-flex h-12 items-center rounded-xl bg-cta px-7 font-display text-sm font-semibold text-cta-foreground transition-[filter] hover:brightness-(--hov-shade)">{tr('blk.applyForFinancing')}</Link>
         </div>
       </div>
     </section>

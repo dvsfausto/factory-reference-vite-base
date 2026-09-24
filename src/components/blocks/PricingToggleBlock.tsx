@@ -3,6 +3,7 @@ import { Link } from '@tanstack/react-router'
 import { Check } from 'lucide-react'
 import type { PricingPlan } from './pricing-variants'
 import { SITE } from '~/data/site'
+import { tr } from '~/lib/i18n'
 
 // Pricing LAYOUT: 'toggle', tier cards with an interactive monthly / annual
 // switch. Character-agnostic. The toggle is the iconic SaaS pricing control; it
@@ -20,8 +21,8 @@ import { SITE } from '~/data/site'
 // bg-brand-* / .btn.
 export function PricingToggleBlock({
   site = SITE,
-  label = 'Pricing',
-  heading = 'Simple, transparent pricing',
+  label = tr('blk.pricing'),
+  heading = tr('blk.simpleTransparentPricing'),
   body,
 }: {
   site?: typeof SITE
@@ -56,7 +57,7 @@ export function PricingToggleBlock({
                   !annual ? 'bg-fam-accent text-fam-on-accent' : 'text-fam-ink-muted'
                 }`}
               >
-                Monthly
+                {tr('blk.monthly')}
               </button>
               <button
                 type="button"
@@ -65,7 +66,7 @@ export function PricingToggleBlock({
                   annual ? 'bg-fam-accent text-fam-on-accent' : 'text-fam-ink-muted'
                 }`}
               >
-                Annual
+                {tr('blk.annual')}
               </button>
             </div>
           )}
@@ -103,7 +104,7 @@ export function PricingToggleBlock({
                     : 'border border-fam-hairline text-fam-ink hover:border-fam-accent hover:text-fam-accent-text-strong'
                 }`}
               >
-                Get started
+                {tr('section.getStarted')}
               </Link>
             </div>
           ))}

@@ -26,7 +26,7 @@ import { SITE } from '~/data/site'
 export function PricingLuxeGlassBlock({
   site = SITE,
   label = tr('nav.pricing'),
-  heading = 'Simple, transparent pricing',
+  heading = tr('blk.simpleTransparentPricing'),
   body,
 }: {
   site?: typeof SITE
@@ -85,7 +85,7 @@ export function PricingLuxeGlassBlock({
                 >
                   {featured && (
                     <span className="mb-4 inline-flex w-fit items-center gap-1.5 rounded-full bg-fam-card/20 px-3 py-1 font-display text-xs font-semibold text-fam-on-dark backdrop-blur-sm">
-                      <Sparkles className="h-3.5 w-3.5" /> Most popular
+                      <Sparkles className="h-3.5 w-3.5" /> {tr('blk.mostPopular')}
                     </span>
                   )}
                   <h3 className={`font-display text-lg font-semibold ${featured ? 'text-fam-on-dark' : 'text-ink-900'}`}>
@@ -115,7 +115,7 @@ export function PricingLuxeGlassBlock({
                     }`}
                     style={featured ? undefined : { boxShadow: 'var(--wow-shadow-glow)' }}
                   >
-                    Get started <ArrowRight className="h-4 w-4" />
+                    {tr('section.getStarted')} <ArrowRight className="h-4 w-4" />
                   </Link>
                 </motion.div>
               )
@@ -143,15 +143,14 @@ export function PricingLuxeGlassBlock({
               <Sparkles className="h-6 w-6" />
             </span>
             <p className="mx-auto mt-6 max-w-lg font-display text-xl leading-relaxed text-ink-800">
-              Every project is a little different, reach out and we'll put together
-              a fair, tailored quote for exactly what you need.
+              {tr('blk.luxeQuoteBody')}
             </p>
             <Link
               to="/contact"
               className="mt-8 inline-flex h-[52px] items-center gap-2 rounded-full bg-cta px-8 font-semibold text-cta-foreground transition-transform hover:translate-y-(--hov-lift-sm)"
               style={{ boxShadow: 'var(--wow-shadow-glow)' }}
             >
-              Request a quote <ArrowRight className="h-4 w-4" />
+              {tr('cta.requestQuote')} <ArrowRight className="h-4 w-4" />
             </Link>
           </motion.div>
         )}

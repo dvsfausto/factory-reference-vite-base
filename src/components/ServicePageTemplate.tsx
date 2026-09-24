@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { tr } from '~/lib/i18n'
+import { tr, trTrustLine, trTrustPhrase } from '~/lib/i18n'
 import { ArrowRight, Check, MapPin, Phone, Star } from "lucide-react";
 import { Breadcrumbs } from "./Breadcrumbs";
 import { FAQSection } from "./FAQSection";
@@ -42,7 +42,7 @@ export function ServicePageTemplate({ data }: Props) {
     // (integrated, below the headline) instead of an orphaned bare band under the hero.
     // Split on the middot the scaffolder joins with; absent → hero falls back to SITE.trustItems.
     trustItems: data.hero.trustLine
-      ? data.hero.trustLine.split("·").map((s) => s.trim()).filter(Boolean)
+      ? data.hero.trustLine.split("·").map((s) => trTrustPhrase(s)).filter(Boolean)
       : undefined,
   });
   const characterCta = renderCharacterCta({
@@ -122,7 +122,7 @@ export function ServicePageTemplate({ data }: Props) {
                 {data.hero.subhead}
               </p>
               {data.hero.trustLine && (
-                <p className="mt-3 text-sm text-ink-500">{data.hero.trustLine}</p>
+                <p className="mt-3 text-sm text-ink-500">{trTrustLine(data.hero.trustLine)}</p>
               )}
               <div className="mt-7 flex flex-wrap gap-3">
                 <Link to="/contact" className="btn btn-lg btn-primary">

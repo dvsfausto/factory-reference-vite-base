@@ -2,6 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { Check, Minus } from 'lucide-react'
 import type { ServicePackage } from './packages-variants'
 import { SITE } from '~/data/site'
+import { tr } from '~/lib/i18n'
 
 // Packages LAYOUT: 'comparison', an includes matrix across packages (each
 // included item a row, each package a column). Character-agnostic. OMIT-WHEN-
@@ -13,8 +14,8 @@ import { SITE } from '~/data/site'
 // rounded-* (DNA). Font -> font-display (DNA). Light surface component-owned.
 export function PackagesComparisonBlock({
   site = SITE,
-  label = 'Packages',
-  heading = 'Compare packages',
+  label = tr('blk.packages'),
+  heading = tr('blk.comparePackages'),
   body,
 }: {
   site?: typeof SITE
@@ -66,7 +67,7 @@ export function PackagesComparisonBlock({
                 <td className="p-5" />
                 {cols.map((p, i) => (
                   <td key={`${p.name}-${i}`} className={`p-5 ${p.popular ? 'bg-fam-accent-soft' : ''}`}>
-                    <Link to="/contact" className={`inline-flex h-11 items-center justify-center rounded-xl px-5 font-display text-sm font-semibold transition-[filter] hover:brightness-(--hov-shade) ${p.popular ? 'bg-cta text-cta-foreground' : 'border border-fam-hairline text-fam-ink hover:border-fam-accent'}`}>Choose</Link>
+                    <Link to="/contact" className={`inline-flex h-11 items-center justify-center rounded-xl px-5 font-display text-sm font-semibold transition-[filter] hover:brightness-(--hov-shade) ${p.popular ? 'bg-cta text-cta-foreground' : 'border border-fam-hairline text-fam-ink hover:border-fam-accent'}`}>{tr('blk.choose')}</Link>
                   </td>
                 ))}
               </tr>

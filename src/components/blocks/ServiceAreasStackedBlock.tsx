@@ -71,7 +71,7 @@ export function ServiceAreasStackedBlock({
                 <div className="flex items-center gap-6">
                   <span className="hidden text-right text-sm text-fam-ink-muted sm:block">
                     {tier && <span className="block font-display font-semibold text-fam-ink">{tier}</span>}
-                    {zips > 0 && <span>{zips} ZIP codes</span>}
+                    {zips > 0 && <span>{zips} {tr('blk.zipCodes')}</span>}
                   </span>
                   <ArrowRight className="h-5 w-5 shrink-0 text-fam-accent-text transition-transform group-hover:translate-x-(--hov-nudge)" />
                 </div>

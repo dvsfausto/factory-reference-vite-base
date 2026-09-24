@@ -2,6 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { Check, Minus } from 'lucide-react'
 import type { Membership } from './membership-variants'
 import { SITE } from '~/data/site'
+import { tr } from '~/lib/i18n'
 
 // Membership LAYOUT: 'comparison', a perk matrix across membership tiers (perks
 // as rows, tiers as columns). Character-agnostic. OMIT-WHEN-ABSENT: SITE.memberships
@@ -12,8 +13,8 @@ import { SITE } from '~/data/site'
 // rounded-* (DNA). Font -> font-display (DNA). Light surface component-owned.
 export function MembershipComparisonBlock({
   site = SITE,
-  label = 'Membership',
-  heading = 'Compare memberships',
+  label = tr('blk.membership'),
+  heading = tr('blk.compareMemberships'),
   body,
 }: {
   site?: typeof SITE
@@ -68,7 +69,7 @@ export function MembershipComparisonBlock({
                 <td className="p-5" />
                 {cols.map((m, i) => (
                   <td key={`${m.name}-${i}`} className={`p-5 ${m.highlighted ? 'bg-fam-accent-soft' : ''}`}>
-                    <Link to="/contact" className={`inline-flex h-11 items-center justify-center rounded-xl px-5 font-display text-sm font-semibold transition-[filter] hover:brightness-(--hov-shade) ${m.highlighted ? 'bg-cta text-cta-foreground' : 'border border-fam-hairline text-fam-ink hover:border-fam-accent'}`}>Join</Link>
+                    <Link to="/contact" className={`inline-flex h-11 items-center justify-center rounded-xl px-5 font-display text-sm font-semibold transition-[filter] hover:brightness-(--hov-shade) ${m.highlighted ? 'bg-cta text-cta-foreground' : 'border border-fam-hairline text-fam-ink hover:border-fam-accent'}`}>{tr('blk.join')}</Link>
                   </td>
                 ))}
               </tr>
