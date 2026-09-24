@@ -15,8 +15,6 @@ export const SITE = {
     city: '',
     state: '',
     zip: '',
-    /** ★ LATAM arc part 1 (2026-09-24): ISO-2 country, baked by the scaffolder only for a business outside the US; '' = the US. */
-    country: '' as string,
   },
   hours: 'Mon–Fri 8am–6pm',
   tagline: 'Reliable. Professional. Consistent.',

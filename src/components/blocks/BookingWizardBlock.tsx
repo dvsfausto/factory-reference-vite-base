@@ -16,7 +16,6 @@ import {
 import {
   EMPTY_ADDRESS,
   addressComplete,
-  postalRequiredFor,
   bookingLive,
   formatAddress,
   isVisit,
@@ -452,14 +451,10 @@ export function BookingWizardBlock({
   const emptyConfig =
     !loading && !loadError && gate.live && !hasClasses && (services.length === 0 || days.length === 0)
   const visit = isVisit(service)
-  // ★ LATAM arc part 1: the postal code is required only where the site's country expects one ('' = the US, every site before the arc)
-  // read through a widened type: a US site's generated site.ts carries no country key at all (kept byte for byte), so the
-  // property must not be a compile-time requirement on SITE.address
-  const postalRequired = postalRequiredFor((SITE.address as { country?: string }).country)
 
   const submit = async () => {
     if (!service || !date || !time) return
-    if (visit && !addressComplete(address, postalRequired)) {
+    if (visit && !addressComplete(address)) {
       setAddressError(tr('booking.errAddress'))
       setStep('address')
       return
@@ -681,7 +676,7 @@ export function BookingWizardBlock({
                           onClick={() => setStep(occurrence ? 'class' : 'time')}
                         />
                       )}
-                      {visit && step === 'details' && addressComplete(address, postalRequired) && (
+                      {visit && step === 'details' && addressComplete(address) && (
                         <SummaryChip
                           label={formatAddress(address)}
                           onClick={() => setStep('address')}
@@ -904,8 +899,8 @@ export function BookingWizardBlock({
                       <form
                         onSubmit={(e) => {
                           e.preventDefault()
-                          if (!addressComplete(address, postalRequired)) {
-                            setAddressError(tr(postalRequired ? 'booking.errAddress' : 'booking.errAddressNoPostal'))
+                          if (!addressComplete(address)) {
+                            setAddressError(tr('booking.errAddress'))
                             return
                           }
                           setAddressError(null)
@@ -942,8 +937,8 @@ export function BookingWizardBlock({
                             onChange={(v) => setAddress((a) => ({ ...a, state: v }))}
                           />
                           <WField
-                            label={tr(postalRequired ? 'form.zip' : 'form.postal')}
-                            required={postalRequired}
+                            label={tr('form.zip')}
+                            required
                             value={address.zip}
                             autoComplete="postal-code"
                             onChange={(v) => setAddress((a) => ({ ...a, zip: v }))}
