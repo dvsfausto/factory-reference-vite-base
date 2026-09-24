@@ -18,6 +18,21 @@ const HEADERS = { 'Content-Type': 'application/json', apikey: SUPABASE_ANON_KEY,
 const SESSION_KEY = 'zmode_portal_session'
 const REMEMBER_KEY = 'zmode_booking_me'
 
+/* ★ THE FIELD KEEPS FOCUS (the owner, 2026-09-24, on Fitcycling's live site: "the phone box only lets me type one digit"): these are
+   declared ONCE at module scope. Declared inside the flow they became a new component type on every render, so React unmounted and
+   remounted the input after each keystroke and the caret was lost. Never declare a component inside a component. */
+function Field({ label, value, onChange, type, auto, required }: { label: string; value: string; onChange: (v: string) => void; type?: string; auto?: string; required?: boolean }) {
+  return (
+    <label className="block"><span className="font-display text-sm font-medium text-ink-900">{label} {required && <span className="text-brand-700">*</span>}</span>
+      <input type={type ?? 'text'} required={required} inputMode={type === 'tel' ? 'tel' : undefined} autoComplete={auto} value={value} onChange={(e) => onChange(e.target.value)} className="mt-1.5 w-full rounded-xl border bg-fam-card px-4 py-3 text-base text-ink-900 outline-none focus:border-brand-600" style={{ borderColor: 'var(--wow-hairline)' }} /></label>
+  )
+}
+function Primary({ children, disabled, busy, tag, onClick, type = 'button' }: { children: React.ReactNode; disabled?: boolean; busy?: boolean; tag?: string; onClick?: () => void; type?: 'button' | 'submit' }) {
+  return (
+    <button type={type} data-class-action={tag} disabled={disabled || busy} onClick={onClick} className="inline-flex h-12 items-center justify-center gap-2 rounded-xl px-7 font-display text-sm font-semibold text-fam-on-dark disabled:opacity-60" style={{ backgroundImage: 'var(--wow-grad-brand)' }}>{busy ? <Loader2 className="h-4 w-4 animate-spin" /> : null}{children}</button>
+  )
+}
+
 export function ClassBookingFlow({ occurrence, serviceId, onHeld }: { occurrence: { id: string; title: string }; serviceId: string | null; onHeld: (entry: HeldEntry) => void }) {
   const [phase, setPhase] = useState<Phase>('who')
   const [phone, setPhone] = useState('')
@@ -90,13 +105,7 @@ export function ClassBookingFlow({ occurrence, serviceId, onHeld }: { occurrence
     onHeld({ bookingId: d.booking.id, token: d.hold.token, initial: d.held ? 'pay' : 'after', expiresAt: d.hold.expires_at ?? null, options: d.options ?? null, note: d.already ? (d.message ?? null) : null })
   }
 
-  const Field = ({ label, value, onChange, type, auto, required }: { label: string; value: string; onChange: (v: string) => void; type?: string; auto?: string; required?: boolean }) => (
-    <label className="block"><span className="font-display text-sm font-medium text-ink-900">{label} {required && <span className="text-brand-700">*</span>}</span>
-      <input type={type ?? 'text'} required={required} inputMode={type === 'tel' ? 'tel' : undefined} autoComplete={auto} value={value} onChange={(e) => onChange(e.target.value)} className="mt-1.5 w-full rounded-xl border bg-fam-card px-4 py-3 text-base text-ink-900 outline-none focus:border-brand-600" style={{ borderColor: 'var(--wow-hairline)' }} /></label>
-  )
-  const Primary = ({ children, disabled, tag, onClick, type = 'button' }: { children: React.ReactNode; disabled?: boolean; tag?: string; onClick?: () => void; type?: 'button' | 'submit' }) => (
-    <button type={type} data-class-action={tag} disabled={disabled || busy} onClick={onClick} className="inline-flex h-12 items-center justify-center gap-2 rounded-xl px-7 font-display text-sm font-semibold text-fam-on-dark disabled:opacity-60" style={{ backgroundImage: 'var(--wow-grad-brand)' }}>{busy ? <Loader2 className="h-4 w-4 animate-spin" /> : null}{children}</button>
-  )
+
 
   if (phase === 'who') return (
     <form data-class-step="who" className="grid gap-4" onSubmit={(e) => { e.preventDefault(); void sendCode() }}>
@@ -116,7 +125,7 @@ export function ClassBookingFlow({ occurrence, serviceId, onHeld }: { occurrence
         </div>
       )}
       {error && <p role="alert" className="text-sm text-red-600">{error}</p>}
-      <div><Primary type="submit" tag="send-code" disabled={phone.replace(/\D/g, '').length < 10 || (known === false && !first.trim())}>{tr('portal.sendCode')}</Primary></div>
+      <div><Primary busy={busy} type="submit" tag="send-code" disabled={phone.replace(/\D/g, '').length < 10 || (known === false && !first.trim())}>{tr('portal.sendCode')}</Primary></div>
       <p className="text-xs text-ink-600">{tr('portal.noAccount')}</p>
     </form>
   )
@@ -125,7 +134,7 @@ export function ClassBookingFlow({ occurrence, serviceId, onHeld }: { occurrence
       <p className="text-sm text-ink-700">{via === 'email' ? tr('portal.codeByEmail') : tr('portal.codeByText')}</p>
       <Field label={tr('portal.code')} auto="one-time-code" required value={code} onChange={setCode} />
       {error && <p role="alert" className="text-sm text-red-600">{error}</p>}
-      <div className="flex flex-wrap items-center gap-4"><Primary type="submit" tag="verify" disabled={code.replace(/\D/g, '').length < 6}>{tr('booking.continue')}</Primary><button type="button" onClick={() => setPhase('who')} className="text-sm text-ink-600 underline-offset-2 hover:underline">{tr('booking.back')}</button></div>
+      <div className="flex flex-wrap items-center gap-4"><Primary busy={busy} type="submit" tag="verify" disabled={code.replace(/\D/g, '').length < 6}>{tr('booking.continue')}</Primary><button type="button" onClick={() => setPhase('who')} className="text-sm text-ink-600 underline-offset-2 hover:underline">{tr('booking.back')}</button></div>
     </form>
   )
   if (phase === 'waiver') return (

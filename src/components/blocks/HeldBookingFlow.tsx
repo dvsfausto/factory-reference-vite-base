@@ -37,6 +37,14 @@ const withReturn = (link: string, entry: HeldEntry) => {
   return `${link}${link.includes('?') ? '&' : '?'}return=${encodeURIComponent(back)}`
 }
 
+/* declared once at module scope, never inside the flow (2026-09-24) */
+function Card({ children, tag }: { children: React.ReactNode; tag: string }) {
+  return <div data-held-step={tag} className="mx-auto mt-8 max-w-md rounded-2xl border bg-fam-card p-5 text-left" style={{ borderColor: 'var(--wow-hairline)' }}>{children}</div>
+}
+function Primary({ children, onClick, disabled, tag }: { children: React.ReactNode; onClick?: () => void; disabled?: boolean; tag?: string }) {
+  return <button type="button" data-held-action={tag} disabled={disabled} onClick={onClick} className="inline-flex h-11 items-center justify-center gap-2 rounded-xl px-6 font-display text-sm font-semibold text-fam-on-dark disabled:opacity-60" style={{ backgroundImage: 'var(--wow-grad-brand)' }}>{children}</button>
+}
+
 export function HeldBookingFlow({ entry, onReleased }: { entry: HeldEntry; onReleased: () => void }) {
   const [phase, setPhase] = useState<Phase>(entry.initial === 'pay' ? 'pay' : 'confirming')
   const [live, setLive] = useState<{ expiresAt: string | null; options: HeldOptions | null }>({ expiresAt: entry.expiresAt ?? null, options: entry.options ?? null })
@@ -137,12 +145,7 @@ export function HeldBookingFlow({ entry, onReleased }: { entry: HeldEntry; onRel
   const when = status?.occurrence ? new Date(status.occurrence.start_at) : null
   const whenWords = when ? when.toLocaleString(undefined, { weekday: 'long', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) : ''
 
-  const Card = ({ children, tag }: { children: React.ReactNode; tag: string }) => (
-    <div data-held-step={tag} className="mx-auto mt-8 max-w-md rounded-2xl border bg-fam-card p-5 text-left" style={{ borderColor: 'var(--wow-hairline)' }}>{children}</div>
-  )
-  const Primary = ({ children, onClick, disabled, tag }: { children: React.ReactNode; onClick?: () => void; disabled?: boolean; tag?: string }) => (
-    <button type="button" data-held-action={tag} disabled={disabled} onClick={onClick} className="inline-flex h-11 items-center justify-center gap-2 rounded-xl px-6 font-display text-sm font-semibold text-fam-on-dark disabled:opacity-60" style={{ backgroundImage: 'var(--wow-grad-brand)' }}>{children}</button>
-  )
+
 
   if (phase === 'pay') {
     const o = live.options

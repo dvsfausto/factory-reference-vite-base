@@ -21,6 +21,20 @@ type Payload = { customer: { firstName: string | null; lastName: string | null }
 const money = (n: number) => `$${Number(n).toFixed(2).replace(/\.00$/, '')}`
 const when = (iso: string) => new Date(iso).toLocaleString(undefined, { weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })
 
+/* declared once at module scope: a component declared inside another remounts its inputs on every keystroke (2026-09-24) */
+function Box({ children, tag }: { children: React.ReactNode; tag: string }) {
+  return <div data-portal={tag} className="rounded-2xl border bg-fam-card p-5" style={{ borderColor: 'var(--wow-hairline)' }}>{children}</div>
+}
+function Primary({ children, onClick, disabled, busy, tag, type = 'button' }: { children: React.ReactNode; onClick?: () => void; disabled?: boolean; busy?: boolean; tag?: string; type?: 'button' | 'submit' }) {
+  return <button type={type} data-portal-action={tag} disabled={disabled || busy} onClick={onClick} className="inline-flex h-11 items-center justify-center gap-2 rounded-xl px-6 font-display text-sm font-semibold text-fam-on-dark disabled:opacity-60" style={{ backgroundImage: 'var(--wow-grad-brand)' }}>{busy ? <Loader2 className="h-4 w-4 animate-spin" /> : null}{children}</button>
+}
+function Field({ label, value, onChange, type, auto }: { label: string; value: string; onChange: (v: string) => void; type?: string; auto?: string }) {
+  return (
+    <label className="block"><span className="font-display text-sm font-medium text-ink-900">{label}</span>
+      <input type={type ?? 'text'} inputMode={type === 'tel' ? 'tel' : 'numeric'} autoComplete={auto} value={value} onChange={(e) => onChange(e.target.value)} className="mt-1.5 w-full rounded-xl border bg-fam-card px-4 py-3 text-base text-ink-900 outline-none focus:border-brand-600" style={{ borderColor: 'var(--wow-hairline)' }} /></label>
+  )
+}
+
 export function CustomerPortal() {
   const [phase, setPhase] = useState<Phase>('checking')
   const [phone, setPhone] = useState('')
@@ -107,16 +121,7 @@ export function CustomerPortal() {
     setBusy(true); await fn('portal-cancel', { businessId: BUSINESS_ID, bookingId: cancelAsk.id }, token); setCancelAsk(null); await load(token); setBusy(false)
   }
 
-  const Box = ({ children, tag }: { children: React.ReactNode; tag: string }) => (
-    <div data-portal={tag} className="rounded-2xl border bg-fam-card p-5" style={{ borderColor: 'var(--wow-hairline)' }}>{children}</div>
-  )
-  const Primary = ({ children, onClick, disabled, tag, type = 'button' }: { children: React.ReactNode; onClick?: () => void; disabled?: boolean; tag?: string; type?: 'button' | 'submit' }) => (
-    <button type={type} data-portal-action={tag} disabled={disabled || busy} onClick={onClick} className="inline-flex h-11 items-center justify-center gap-2 rounded-xl px-6 font-display text-sm font-semibold text-fam-on-dark disabled:opacity-60" style={{ backgroundImage: 'var(--wow-grad-brand)' }}>{busy ? <Loader2 className="h-4 w-4 animate-spin" /> : null}{children}</button>
-  )
-  const Field = ({ label, value, onChange, type, auto }: { label: string; value: string; onChange: (v: string) => void; type?: string; auto?: string }) => (
-    <label className="block"><span className="font-display text-sm font-medium text-ink-900">{label}</span>
-      <input type={type ?? 'text'} inputMode={type === 'tel' ? 'tel' : 'numeric'} autoComplete={auto} value={value} onChange={(e) => onChange(e.target.value)} className="mt-1.5 w-full rounded-xl border bg-fam-card px-4 py-3 text-base text-ink-900 outline-none focus:border-brand-600" style={{ borderColor: 'var(--wow-hairline)' }} /></label>
-  )
+
 
   if (phase === 'checking') return <p className="flex items-center gap-2 text-sm text-ink-700"><Loader2 className="h-4 w-4 animate-spin" />…</p>
   if (phase === 'off') return <Box tag="off"><p className="text-ink-700">{tr('portal.off')}{hasPhone(SITE.phone) ? ` ${tr('portal.callUs')} ${SITE.phoneDisplay}.` : ''}</p></Box>
@@ -125,7 +130,7 @@ export function CustomerPortal() {
       <p className="text-sm text-ink-700">{tr('portal.phoneIntro')}</p>
       <form className="mt-4 grid gap-4" onSubmit={(e) => { e.preventDefault(); void start() }}>
         <Field label={tr('form.phone')} type="tel" auto="tel" value={phone} onChange={setPhone} />
-        <div><Primary type="submit" tag="send-code" disabled={phone.replace(/\D/g, '').length < 10}>{tr('portal.sendCode')}</Primary></div>
+        <div><Primary busy={busy} type="submit" tag="send-code" disabled={phone.replace(/\D/g, '').length < 10}>{tr('portal.sendCode')}</Primary></div>
       </form>
       <p className="mt-4 text-xs text-ink-600">{tr('portal.noAccount')}</p>
     </Box>
@@ -136,7 +141,7 @@ export function CustomerPortal() {
       <form className="mt-4 grid gap-4" onSubmit={(e) => { e.preventDefault(); void verify() }}>
         <Field label={tr('portal.code')} auto="one-time-code" value={code} onChange={setCode} />
         {error && <p role="alert" className="text-sm text-red-600">{error}</p>}
-        <div className="flex flex-wrap items-center gap-4"><Primary type="submit" tag="verify" disabled={code.replace(/\D/g, '').length < 6}>{tr('portal.signIn')}</Primary><button type="button" onClick={() => setPhase('phone')} className="text-sm text-ink-600 underline-offset-2 hover:underline">{tr('booking.back')}</button></div>
+        <div className="flex flex-wrap items-center gap-4"><Primary busy={busy} type="submit" tag="verify" disabled={code.replace(/\D/g, '').length < 6}>{tr('portal.signIn')}</Primary><button type="button" onClick={() => setPhase('phone')} className="text-sm text-ink-600 underline-offset-2 hover:underline">{tr('booking.back')}</button></div>
       </form>
     </Box>
   )
@@ -172,7 +177,7 @@ export function CustomerPortal() {
           {packs.length === 0 && <span>{tr('portal.noPacks')}</span>}
           {packs.map((p) => <span key={p.id}>{p.packName ?? tr('portal.pack')}: <strong>{p.balance}</strong> {p.balance === 1 ? tr('portal.classOne') : tr('portal.classMany')}{p.expiresAt ? ` · ${tr('portal.until')} ${new Date(p.expiresAt).toLocaleDateString()}` : ''}</span>)}
         </div>
-        <div className="mt-4"><Primary tag="book" onClick={() => void openClasses()}>{tr('portal.bookClass')}</Primary></div>
+        <div className="mt-4"><Primary busy={busy} tag="book" onClick={() => void openClasses()}>{tr('portal.bookClass')}</Primary></div>
       </Box>
       <Box tag="bookings">
         <h4 className="font-display text-base font-semibold text-ink-900">{tr('portal.upcoming')}</h4>
