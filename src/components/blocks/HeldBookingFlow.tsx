@@ -245,7 +245,6 @@ export function HeldBookingFlow({ entry, onReleased }: { entry: HeldEntry; onRel
   }
   return (
     <div data-held-step="done" className="py-4 text-center">
-      {entry.note && <p data-held-note className="mb-2 text-sm text-ink-700">{entry.note}</p>}
       <span className="mx-auto grid h-14 w-14 place-items-center rounded-full text-fam-on-dark" style={{ backgroundImage: 'var(--wow-grad-brand)' }}><Check className="h-7 w-7" /></span>
       <h3 className="mt-5 font-display text-2xl font-semibold tracking-tight text-ink-900">{tr('booking.seatYours')}</h3>
       <p className="mx-auto mt-2 max-w-md leading-relaxed text-ink-700">
