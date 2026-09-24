@@ -1,0 +1,5 @@
+#!/bin/sh
+# ★ THE TEMPLATE'S OWN BUILD RUNS BEFORE EVERY PUSH (the owner, 2026-09-24): two pushes in one hour broke every site build.
+echo "pre-push: running the template's own build (npm run build) …"
+npm run build >/tmp/template-prepush-build.log 2>&1 || { echo "pre-push: BUILD FAILED, push refused. See /tmp/template-prepush-build.log"; tail -20 /tmp/template-prepush-build.log; exit 1; }
+echo "pre-push: build green"

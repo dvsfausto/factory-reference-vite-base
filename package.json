@@ -21,7 +21,9 @@
     "test:logo-row": "NODE_OPTIONS='--import ./scripts/optional-copy/asset-register.mjs' npx -y tsx --tsconfig tsconfig.json scripts/logo-row/render-proof.tsx",
     "test:optional-copy": "NODE_OPTIONS='--import ./scripts/optional-copy/asset-register.mjs' npx -y tsx --tsconfig tsconfig.json scripts/optional-copy/render-proof.tsx",
     "gen:capability": "node scripts/gen-capability-manifest.ts",
-    "lint:capability": "node scripts/gen-capability-manifest.ts --check"
+    "lint:capability": "node scripts/gen-capability-manifest.ts --check",
+    "gate:push": "npm run build",
+    "hooks:install": "git config core.hooksPath .githooks"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
