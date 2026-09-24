@@ -452,6 +452,8 @@ export function BookingWizardBlock({
   const emptyConfig =
     !loading && !loadError && gate.live && !hasClasses && (services.length === 0 || days.length === 0)
   const visit = isVisit(service)
+  // ★ LATAM arc part 1: the postal code is required only where the site's country expects one ('' = the US, every site before the arc)
+  const postalRequired = postalRequiredFor(SITE.address.country)
 
   const submit = async () => {
     if (!service || !date || !time) return
