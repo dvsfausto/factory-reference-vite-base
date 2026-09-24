@@ -498,6 +498,8 @@ export function BookingWizardBlock({
       const data = (await res.json().catch(() => ({}))) as {
         success?: boolean
         held?: boolean
+        already?: boolean
+        message?: string
         hold?: { token?: string; expires_at?: string }
         options?: HeldOptions
         booking?: { id?: string; seat_no?: number | null }
@@ -511,8 +513,9 @@ export function BookingWizardBlock({
       }
       try { window.localStorage.setItem(REMEMBER_KEY, JSON.stringify({ firstName: customer.firstName.trim(), lastName: customer.lastName.trim(), email: customer.email.trim(), phone: customer.phone.trim() })) } catch { /* not remembered */ }
       if (occurrence && data.booking?.id && data.hold?.token) {
-        /* a class: held → pay; confirmed at once (a credit spent, or a free class) → the waiver or the spot */
-        setHeld({ bookingId: data.booking.id, token: data.hold.token, initial: data.held ? 'pay' : 'after', expiresAt: data.hold.expires_at ?? null, options: data.options ?? null })
+        /* a class: held → pay; confirmed at once (a credit spent, or a free class) → the waiver or the spot. ONE PERSON, ONE CLASS:
+           a booking they already hold comes back as itself (already:true), never a second one. */
+        setHeld({ bookingId: data.booking.id, token: data.hold.token, initial: data.held ? 'pay' : 'after', expiresAt: data.hold.expires_at ?? null, options: data.options ?? null, note: data.already ? (data.message ?? null) : null })
         setStep('held')
         return
       }

@@ -8,6 +8,7 @@ import { primaryCta } from "~/lib/primaryCta";
 import { PAGED_SERVICES as SERVICES } from "~/data/services-view";
 import { AREAS } from "~/data/areas";
 import { CUSTOM_PAGES } from "~/data/custom-pages";
+import { PortalLink } from "~/components/portal/PortalLink";
 import { reviews as REVIEWS } from '~/data/reviews'
 import { tr } from "~/lib/i18n";
 
@@ -435,6 +436,7 @@ export function Header() {
       {CUSTOM_PAGES.filter((p) => p.nav !== false).map((p) => (
         <Link key={p.slug} to="/$slug" params={{ slug: p.slug }} className={`px-3 py-2 ${t.navLink} focus-ring rounded-md`}>{p.title}</Link>
       ))}
+      <PortalLink place="menu" className={`px-3 py-2 ${t.navLink} focus-ring rounded-md`} />
     </>
   );
 
@@ -482,6 +484,7 @@ export function Header() {
               {CUSTOM_PAGES.filter((p) => p.nav !== false).map((p) => (
                 <Link key={p.slug} to="/$slug" params={{ slug: p.slug }} onClick={closeMenu} className={`block py-2 text-base font-medium ${t.mobileText}`}>{p.title}</Link>
               ))}
+              <PortalLink place="menu" onClick={closeMenu} className={`block py-2 text-base font-medium ${t.mobileText}`} />
             </div>
             <div className={`pt-4 border-t ${t.mobileBorder} space-y-3`}>
               {HAS_PHONE && (<a href={`tel:${SITE.phone}`} className={`flex items-center gap-2 text-base font-semibold ${t.mobilePhone}`}>

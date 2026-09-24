@@ -11,7 +11,7 @@ import { tr } from '~/lib/i18n'
  * A booking confirmed at once (a credit spent) enters at the waiver or the spot. Every fact shown is read from booking-hold.
  */
 export type HeldOptions = { packs: Array<{ id: string; name: string; credits: number; price: number }>; single: { amount: number; share_token: string | null; link: string } | null }
-export type HeldEntry = { bookingId: string; token: string; initial: 'pay' | 'confirming' | 'after'; expiresAt?: string | null; options?: HeldOptions | null }
+export type HeldEntry = { bookingId: string; token: string; initial: 'pay' | 'confirming' | 'after'; expiresAt?: string | null; options?: HeldOptions | null; note?: string | null }
 type Status = { status: string; held: boolean; hold_expires_at: string | null; options?: HeldOptions | null; seat_no: number | null; seats_total: number | null; occurrence: { id: string; title: string; start_at: string } | null; invoice: { amount: number; paid: boolean; share_token: string | null } | null; pack: { name: string; balance: number } | null; waiver: { signed: boolean; link: string | null } | null }
 type Phase = 'pay' | 'confirming' | 'waiver' | 'spot' | 'done' | 'expired' | 'released'
 /** ★ THE ROOM (2026-09-24): rows of uneven length with the things that are not spots, as the owner laid it out (rooms_public) */
@@ -20,11 +20,18 @@ type Room = { name: string; front: string | null; rows: Array<{ label?: string; 
 
 const HEADERS = { 'Content-Type': 'application/json', apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` }
 const money = (n: number) => `$${Number(n).toFixed(2).replace(/\.00$/, '')}`
+/** ★ THE WAIVER COMES BACK TO THE FLOW (the owner, 2026-09-24): the signing page is told where to return (this page, this booking's key),
+ *  so after signing the person lands back here and carries on to the spot. Same tab, never a second one left nowhere. */
+const withReturn = (link: string, entry: HeldEntry) => {
+  if (typeof window === 'undefined' || !/^https?:/.test(link)) return link
+  const back = `${window.location.origin}${window.location.pathname}?held=${entry.bookingId}&t=${entry.token}&signed=1`
+  return `${link}${link.includes('?') ? '&' : '?'}return=${encodeURIComponent(back)}`
+}
 
 export function HeldBookingFlow({ entry, onReleased }: { entry: HeldEntry; onReleased: () => void }) {
   const [phase, setPhase] = useState<Phase>(entry.initial === 'pay' ? 'pay' : 'confirming')
   const [live, setLive] = useState<{ expiresAt: string | null; options: HeldOptions | null }>({ expiresAt: entry.expiresAt ?? null, options: entry.options ?? null })
-  const cameBackWithoutPaying = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('paid') !== '1'
+  const cameBackWithoutPaying = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('paid') !== '1' && new URLSearchParams(window.location.search).get('signed') !== '1'
   const [status, setStatus] = useState<Status | null>(null)
   const [seats, setSeats] = useState<Array<{ seat_no: number; taken: boolean; mine: boolean }>>([])
   const [room, setRoom] = useState<Room | null>(null)
@@ -132,6 +139,7 @@ export function HeldBookingFlow({ entry, onReleased }: { entry: HeldEntry; onRel
     const o = live.options
     return (
       <Card tag="pay">
+        {entry.note && <p data-held-note className="mb-2 text-sm text-ink-700">{entry.note}</p>}
         <h3 className="font-display text-xl font-semibold text-ink-900">{tr('booking.holdTitle').replace('{m}', secondsLeft == null ? '' : `${Math.floor(secondsLeft / 60)}:${String(secondsLeft % 60).padStart(2, '0')}`)}</h3>
         <p className="mt-1 text-sm text-ink-700">{tr('booking.holdBody')}</p>
         <div className="mt-4 grid gap-2">
@@ -175,7 +183,7 @@ export function HeldBookingFlow({ entry, onReleased }: { entry: HeldEntry; onRel
         <h3 className="font-display text-xl font-semibold text-ink-900">{tr('booking.seatYours')}</h3>
         <p className="mt-1 text-sm text-ink-700">{tr('booking.waiverAsk')}</p>
         <div className="mt-4 flex flex-wrap gap-3">
-          <a href={status?.waiver?.link ?? '#'} target="_blank" rel="noopener" data-held-action="sign" className="inline-flex h-11 items-center justify-center rounded-xl px-6 font-display text-sm font-semibold text-fam-on-dark" style={{ backgroundImage: 'var(--wow-grad-brand)' }}>{tr('booking.waiverSign')}</a>
+          <a href={withReturn(status?.waiver?.link ?? '#', entry)} data-held-action="sign" className="inline-flex h-11 items-center justify-center rounded-xl px-6 font-display text-sm font-semibold text-fam-on-dark" style={{ backgroundImage: 'var(--wow-grad-brand)' }}>{tr('booking.waiverSign')}</a>
           <button type="button" data-held-action="signed" onClick={() => setPhase(status && status.seats_total ? 'spot' : 'done')} className="inline-flex h-11 items-center rounded-xl border px-5 text-sm font-semibold text-ink-900" style={{ borderColor: 'var(--wow-hairline)' }}>{tr('booking.waiverDone')}</button>
         </div>
       </Card>
@@ -228,6 +236,7 @@ export function HeldBookingFlow({ entry, onReleased }: { entry: HeldEntry; onRel
   }
   return (
     <div data-held-step="done" className="py-4 text-center">
+      {entry.note && <p data-held-note className="mb-2 text-sm text-ink-700">{entry.note}</p>}
       <span className="mx-auto grid h-14 w-14 place-items-center rounded-full text-fam-on-dark" style={{ backgroundImage: 'var(--wow-grad-brand)' }}><Check className="h-7 w-7" /></span>
       <h3 className="mt-5 font-display text-2xl font-semibold tracking-tight text-ink-900">{tr('booking.seatYours')}</h3>
       <p className="mx-auto mt-2 max-w-md leading-relaxed text-ink-700">
