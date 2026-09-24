@@ -35,8 +35,13 @@ export function CustomerPortal() {
   const [cancelAsk, setCancelAsk] = useState<{ id: string; words: string } | null>(null)
 
   const fn = async (name: string, body: Record<string, unknown>, sess?: string | null) => {
-    const r = await fetch(`${SUPABASE_URL}/functions/v1/${name}`, { method: 'POST', headers: { ...HEADERS, ...(sess ? { 'x-portal-session': sess } : {}) }, body: JSON.stringify(body) })
-    return { ok: r.ok, status: r.status, data: (await r.json().catch(() => ({}))) as Record<string, unknown> }
+    /* the session rides in the body (every portal function reads it there too), so no function needs a custom header allowed */
+    try {
+      const r = await fetch(`${SUPABASE_URL}/functions/v1/${name}`, { method: 'POST', headers: HEADERS, body: JSON.stringify(sess ? { ...body, token: sess } : body) })
+      return { ok: r.ok, status: r.status, data: (await r.json().catch(() => ({}))) as Record<string, unknown> }
+    } catch {
+      return { ok: false, status: 0, data: { error: tr('booking.couldNotComplete') } }
+    }
   }
   const load = async (sess: string) => {
     const { ok, status, data } = await fn('portal-read', { businessId: BUSINESS_ID }, sess)
