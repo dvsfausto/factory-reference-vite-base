@@ -12,14 +12,16 @@ import { tr } from '~/lib/i18n'
  */
 export type HeldOptions = { packs: Array<{ id: string; name: string; credits: number; price: number }>; single: { amount: number; share_token: string | null; link: string } | null }
 export type HeldEntry = { bookingId: string; token: string; initial: 'pay' | 'confirming' | 'after'; expiresAt?: string | null; options?: HeldOptions | null }
-type Status = { status: string; held: boolean; hold_expires_at: string | null; seat_no: number | null; seats_total: number | null; occurrence: { id: string; title: string; start_at: string } | null; invoice: { amount: number; paid: boolean; share_token: string | null } | null; pack: { name: string; balance: number } | null; waiver: { signed: boolean; link: string | null } | null }
+type Status = { status: string; held: boolean; hold_expires_at: string | null; options?: HeldOptions | null; seat_no: number | null; seats_total: number | null; occurrence: { id: string; title: string; start_at: string } | null; invoice: { amount: number; paid: boolean; share_token: string | null } | null; pack: { name: string; balance: number } | null; waiver: { signed: boolean; link: string | null } | null }
 type Phase = 'pay' | 'confirming' | 'waiver' | 'spot' | 'done' | 'expired' | 'released'
 
 const HEADERS = { 'Content-Type': 'application/json', apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` }
 const money = (n: number) => `$${Number(n).toFixed(2).replace(/\.00$/, '')}`
 
 export function HeldBookingFlow({ entry, onReleased }: { entry: HeldEntry; onReleased: () => void }) {
-  const [phase, setPhase] = useState<Phase>(entry.initial === 'pay' ? 'pay' : entry.initial === 'confirming' ? 'confirming' : 'confirming')
+  const [phase, setPhase] = useState<Phase>(entry.initial === 'pay' ? 'pay' : 'confirming')
+  const [live, setLive] = useState<{ expiresAt: string | null; options: HeldOptions | null }>({ expiresAt: entry.expiresAt ?? null, options: entry.options ?? null })
+  const cameBackWithoutPaying = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('paid') !== '1'
   const [status, setStatus] = useState<Status | null>(null)
   const [seats, setSeats] = useState<Array<{ seat_no: number; taken: boolean; mine: boolean }>>([])
   const [busy, setBusy] = useState<string | null>(null)
@@ -47,7 +49,7 @@ export function HeldBookingFlow({ entry, onReleased }: { entry: HeldEntry; onRel
 
   /* the clock on a held seat */
   useEffect(() => { if (phase !== 'pay') return; const id = setInterval(() => setNow(Date.now()), 1000); return () => clearInterval(id) }, [phase])
-  const secondsLeft = entry.expiresAt ? Math.max(0, Math.floor((new Date(entry.expiresAt).getTime() - now) / 1000)) : null
+  const secondsLeft = live.expiresAt ? Math.max(0, Math.floor((new Date(live.expiresAt).getTime() - now) / 1000)) : null
   useEffect(() => { if (phase === 'pay' && secondsLeft === 0) setPhase('expired') }, [phase, secondsLeft])
 
   /* confirming: read until the rows say confirmed (the webhook lands seconds after Stripe returns) */
@@ -60,7 +62,9 @@ export function HeldBookingFlow({ entry, onReleased }: { entry: HeldEntry; onRel
       if (!s) { if (tries.current++ < 3) setTimeout(tick, 2500); else setPhase('expired'); return }
       if (s.status === 'confirmed' || s.status === 'completed') { setPhase(afterConfirmed(s)); return }
       if (s.status === 'expired' || s.status === 'cancelled') { setPhase('expired'); return }
-      if (tries.current++ < 40) setTimeout(tick, 2500)
+      /* back from Stripe's own Back link, nothing paid: the seat is still held, the doors are offered again */
+      if (s.held && cameBackWithoutPaying) { setLive({ expiresAt: s.hold_expires_at, options: s.options ?? null }); setPhase('pay'); return }
+      if (tries.current++ < 40) setTimeout(tick, 2500); else setPhase('expired')
     }
     void tick()
     return () => { stop = true }
@@ -83,7 +87,7 @@ export function HeldBookingFlow({ entry, onReleased }: { entry: HeldEntry; onRel
     } catch { setError(tr('booking.couldNotComplete')) } finally { setBusy(null) }
   }
   const paySingle = async () => {
-    const tokenDoc = entry.options?.single?.share_token
+    const tokenDoc = live.options?.single?.share_token
     if (!tokenDoc) return
     setBusy('single'); setError(null)
     try {
@@ -114,7 +118,7 @@ export function HeldBookingFlow({ entry, onReleased }: { entry: HeldEntry; onRel
   )
 
   if (phase === 'pay') {
-    const o = entry.options
+    const o = live.options
     return (
       <Card tag="pay">
         <h3 className="font-display text-xl font-semibold text-ink-900">{tr('booking.holdTitle').replace('{m}', secondsLeft == null ? '' : `${Math.floor(secondsLeft / 60)}:${String(secondsLeft % 60).padStart(2, '0')}`)}</h3>
@@ -188,7 +192,7 @@ export function HeldBookingFlow({ entry, onReleased }: { entry: HeldEntry; onRel
       <span className="mx-auto grid h-14 w-14 place-items-center rounded-full text-fam-on-dark" style={{ backgroundImage: 'var(--wow-grad-brand)' }}><Check className="h-7 w-7" /></span>
       <h3 className="mt-5 font-display text-2xl font-semibold tracking-tight text-ink-900">{tr('booking.seatYours')}</h3>
       <p className="mx-auto mt-2 max-w-md leading-relaxed text-ink-700">
-        {status?.occurrence ? `${status.occurrence.title}, ${whenWords}.` : ''} {mine ? tr('booking.yourSpot').replace('{n}', String(mine)) + '.' : ''} {status?.pack ? tr('booking.classesLeft').replace('{n}', String(status.pack.balance)).replace('{pack}', status.pack.name) : ''}
+        {status?.occurrence ? `${status.occurrence.title}, ${whenWords}.` : ''} {mine ? tr('booking.yourSpot').replace('{n}', String(mine)) + '.' : ''} {status?.pack ? tr(status.pack.balance === 1 ? 'booking.classLeftOne' : 'booking.classesLeft').replace('{n}', String(status.pack.balance)).replace('{pack}', status.pack.name) : ''}
       </p>
     </div>
   )
