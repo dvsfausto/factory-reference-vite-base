@@ -236,6 +236,7 @@ export const VARIANT_MANIFEST: SectionVariants[] = [
       { id: 'embed-style-panel', label: 'Embed style panel', description: 'A map-styled panel with the areas listed beside it.', default: true },
       { id: 'split-with-areas', label: 'Split with areas', description: 'Map on one side, the area list on the other.' },
       { id: 'full-width-band', label: 'Full width band', description: 'A full-width map band.' },
+      { id: 'real-embed', label: 'Real map', description: 'The business on Google\'s own map, from its listing or address; shows only when the business has coordinates.' },
     ],
   },
   {

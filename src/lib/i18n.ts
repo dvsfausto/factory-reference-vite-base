@@ -508,6 +508,12 @@ const EN = {
   'blk.getFreeQuoteTitle': 'Get Free Quote',
   'blk.localCoverage': 'Local coverage, close to home.',
   'blk.allReviews': 'All reviews',
+  // ★ the real map and the reviews' source (the local SEO arc, 2026-09-25)
+  'map.findUs': 'Find us',
+  'map.openInGoogleMaps': 'Open in Google Maps',
+  'map.lang': 'en',
+  'review.onGoogle': 'on Google',
+  'review.readOnGoogle': 'Read it on Google',
 } as const
 
 // Miami Spanish, natural, not literal. Same keys as EN.
@@ -988,6 +994,11 @@ const ES: Record<keyof typeof EN, string> = {
   'blk.getFreeQuoteTitle': 'Cotización gratis',
   'blk.localCoverage': 'Cobertura local, cerca de casa.',
   'blk.allReviews': 'Todas las reseñas',
+  'map.findUs': 'Encuéntranos',
+  'map.openInGoogleMaps': 'Abrir en Google Maps',
+  'map.lang': 'es',
+  'review.onGoogle': 'en Google',
+  'review.readOnGoogle': 'Léela en Google',
 }
 
 const DICT: Record<Lang, Record<string, string>> = { en: EN, es: ES }

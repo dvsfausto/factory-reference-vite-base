@@ -1,6 +1,7 @@
 import { MapEmbedStylePanelBlock } from './MapEmbedStylePanelBlock'
 import { MapSplitWithAreasBlock } from './MapSplitWithAreasBlock'
 import { MapFullWidthBandBlock } from './MapFullWidthBandBlock'
+import { MapRealEmbedBlock } from './MapRealEmbedBlock'
 
 // Per-type variant map for the Map section (additive, like HERO_VARIANTS),
 // embed-style-panel default. Reads the existing AREAS data (src/data/areas.ts).
@@ -14,4 +15,6 @@ export const MAP_VARIANTS: Record<string, typeof MapEmbedStylePanelBlock> = {
   'embed-style-panel': MapEmbedStylePanelBlock,
   'split-with-areas': MapSplitWithAreasBlock,
   'full-width-band': MapFullWidthBandBlock,
+  // ★ the one real map (2026-09-25): the business's own coordinates on Google's map; renders nothing without them
+  'real-embed': MapRealEmbedBlock as unknown as typeof MapEmbedStylePanelBlock,
 }

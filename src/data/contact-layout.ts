@@ -25,4 +25,6 @@ export interface ContactBlock {
 export const CONTACT_LAYOUT: ContactBlock[] = [
   { type: 'intro' },
   { type: 'contactForm' },
+  // ★ the real map (2026-09-25): the business on Google's map, only when it has coordinates (the block renders nothing otherwise)
+  { type: 'map', variant: 'real-embed' },
 ]

@@ -258,4 +258,6 @@ export interface Review {
   date?: string
   source?: 'google' | 'yelp' | 'manual' | 'direct' | 'hybrid'
   avatar?: string
+  /** ★ the review at its source (a Google review's own page), so a reader can see it there (2026-09-25) */
+  url?: string
 }

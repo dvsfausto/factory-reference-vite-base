@@ -68,6 +68,11 @@ function ReviewCard({ review }: { review: Review }) {
             {[review.location, review.service].filter(Boolean).join(' · ')}
           </p>
         )}
+        {review.source === 'google' && review.url && (
+          <a href={review.url} target="_blank" rel="noopener noreferrer" className="mt-1 inline-block text-xs text-slate-500 underline-offset-2 hover:underline" data-review-source="google">
+            {tr('review.readOnGoogle')}
+          </a>
+        )}
       </footer>
     </article>
   )
