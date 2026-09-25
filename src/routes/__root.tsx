@@ -27,6 +27,8 @@ export const Route = createRootRoute({
       { property: 'og:site_name', content: SITE.name },
       // ★ the local SEO arc: the language AND the country (es_PE, es_CO, pt_BR, en_US), so a Peruvian site is not read as a US one
       { property: 'og:locale', content: businessLocale() },
+      // ★ Search Console as the platform: the verification tag for a domain whose DNS is not ours (the DNS ones need no tag)
+      ...((SITE as { googleSiteVerification?: string }).googleSiteVerification ? [{ name: 'google-site-verification', content: (SITE as { googleSiteVerification?: string }).googleSiteVerification! }] : []),
       { property: 'og:title', content: SITE.name },
       { property: 'og:description', content: SITE.description || SITE.name },
       { name: 'twitter:card', content: 'summary_large_image' },
