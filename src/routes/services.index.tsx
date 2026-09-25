@@ -15,7 +15,7 @@ export const Route = createFileRoute('/services/')({
   // in Header/Footer/ServicesSection/blocks still typechecks. Deleting the route
   // (the /areas-prune mistake) drops it from the union → tsc fails → Vercel ERROR.
   beforeLoad: () => {
-    if (SERVICES.length === 0) throw redirect({ to: '/' })
+    if (SERVICES.length === 0) throw redirect({ to: '/', statusCode: 308 }) // permanent: a site with none of these has no such page
   },
   head: () =>
     ({ ...buildMeta({

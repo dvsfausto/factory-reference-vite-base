@@ -13,6 +13,7 @@ import { Footer } from '~/components/Footer'
 import { JsonLd } from '~/components/JsonLd'
 import { localBusinessLd } from '~/lib/seo'
 import { SITE, SITE_LANGUAGE, BUSINESS_ID, SITE_KEY, SUPABASE_URL } from '~/data/site'
+import { businessLocale } from '~/lib/seo'
 import appCss from '~/styles/app.css?url'
 
 export const Route = createRootRoute({
@@ -24,6 +25,8 @@ export const Route = createRootRoute({
       { name: 'description', content: SITE.description || SITE.name },
       { property: 'og:type', content: 'website' },
       { property: 'og:site_name', content: SITE.name },
+      // ★ the local SEO arc: the language AND the country (es_PE, es_CO, pt_BR, en_US), so a Peruvian site is not read as a US one
+      { property: 'og:locale', content: businessLocale() },
       { property: 'og:title', content: SITE.name },
       { property: 'og:description', content: SITE.description || SITE.name },
       { name: 'twitter:card', content: 'summary_large_image' },

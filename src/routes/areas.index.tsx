@@ -14,7 +14,7 @@ export const Route = createFileRoute('/areas/')({
   // a real 404); this guard covers the window before that ships and any path
   // that keeps the route.
   beforeLoad: () => {
-    if (AREAS.length === 0) throw redirect({ to: '/' })
+    if (AREAS.length === 0) throw redirect({ to: '/', statusCode: 308 }) // permanent: a site with none of these has no such page
   },
   head: () =>
     ({ ...buildMeta({
