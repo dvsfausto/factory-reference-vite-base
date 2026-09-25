@@ -62,8 +62,7 @@ export function HeroSlideshow({
             alt={images[0].alt}
             width={1600}
             height={1200}
-            className="absolute inset-0 w-full h-full object-cover"
-          />
+            className="absolute inset-0 w-full h-full object-cover" data-hero-photo="" style={focus ? { objectPosition: focus } : undefined} />
         ) : (
           <AnimatePresence mode="wait" initial={false}>
             <motion.img
@@ -76,8 +75,7 @@ export function HeroSlideshow({
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0 }}
               transition={{ opacity: { duration: 1.1 }, scale: { duration: 6, ease: "easeOut" } }}
-              className="absolute inset-0 w-full h-full object-cover"
-            />
+              className="absolute inset-0 w-full h-full object-cover" data-hero-photo="" style={focus ? { objectPosition: focus } : undefined} />
           </AnimatePresence>
         )}
 

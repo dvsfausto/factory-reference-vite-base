@@ -99,8 +99,7 @@ export function HeroGalleryBlock({
                       src={imageSrc(p.image)}
                       alt={p.alt ?? p.title}
                       loading={i === 0 ? 'eager' : 'lazy'}
-                      className="h-full w-full object-cover"
-                    />
+                      className="h-full w-full object-cover" data-hero-photo="" style={heroFocusStyle(site)} />
                   </li>
                 ))}
               </ul>
