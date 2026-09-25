@@ -4,6 +4,7 @@ import { ArrowRight, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 import { HERO_ALT } from '~/data/images'
 import { imageSrc } from '~/lib/asset-url'
+import { heroFocusStyle } from '~/lib/hero-focus'
 
 import { hasPhone } from '~/lib/phone'
 import { hasText } from '~/lib/has-text'
@@ -70,8 +71,7 @@ export function CtaSplitWithImageBlock({
               loading="lazy"
               width={900}
               height={675}
-              className="aspect-[4/3] w-full object-cover"
-            />
+              className="aspect-[4/3] w-full object-cover" data-hero-photo="" style={heroFocusStyle(site)} />
           </div>
         </div>
       </div>

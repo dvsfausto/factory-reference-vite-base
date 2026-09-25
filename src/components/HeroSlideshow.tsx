@@ -14,6 +14,8 @@ interface ReviewBadge {
 
 interface Props {
   images: SlideImage[];
+  /** the hero's focal point ("x% y%") when the owner set one; see lib/hero-focus.ts */
+  focus?: string | null;
   variant?: "single" | "slideshow";
   reviewBadge?: ReviewBadge;
   intervalMs?: number;
@@ -23,6 +25,7 @@ const DEFAULT_INTERVAL = 5000;
 
 export function HeroSlideshow({
   images,
+  focus,
   variant = "slideshow",
   reviewBadge,
   intervalMs = DEFAULT_INTERVAL,

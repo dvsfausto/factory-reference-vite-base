@@ -4,8 +4,10 @@ import {
   Outlet,
   Scripts,
   createRootRoute,
+  useRouterState,
 } from '@tanstack/react-router'
 import * as React from 'react'
+import { applyHeroFocusRule } from '~/lib/hero-focus-runtime'
 import { DefaultCatchBoundary } from '~/components/DefaultCatchBoundary'
 import { NotFound } from '~/components/NotFound'
 import { Header } from '~/components/Header'
@@ -188,6 +190,12 @@ function RootComponent() {
       /* never worth failing a render over */
     }
   }, [])
+  /* ★ THE HERO PHOTO KEEPS WHAT MATTERS (lib/hero-focus.ts): a portrait photo with no owner-set focal point is anchored
+     towards its top once it has loaded; runs again after every client-side navigation, since inner pages draw their own hero. */
+  const pathname = useRouterState({ select: (s) => s.location.pathname })
+  React.useEffect(() => {
+    try { applyHeroFocusRule() } catch { /* a crop rule is never worth failing a render over */ }
+  }, [pathname])
 
   return (
     <>

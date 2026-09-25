@@ -3,6 +3,7 @@ import { ArrowRight, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 import { HERO_ALT } from '~/data/images'
 import { imageSrc } from '~/lib/asset-url'
+import { heroFocusStyle } from '~/lib/hero-focus'
 import { primaryCta } from '~/lib/primaryCta'
 
 import { hasPhone } from '~/lib/phone'
@@ -81,7 +82,7 @@ export function HeroServiceBannerBlock({
           </div>
           <div className="lg:col-span-5">
             <div className="overflow-hidden rounded-2xl border border-[var(--fam-hairline,var(--color-ink-100,#e5e7eb))]">
-              <img src={imageSrc(imageUrl)} alt={HERO_ALT} loading="eager" className="aspect-[4/3] w-full object-cover" />
+              <img src={imageSrc(imageUrl)} alt={HERO_ALT} loading="eager" className="aspect-[4/3] w-full object-cover" data-hero-photo="" style={heroFocusStyle(site)} />
             </div>
           </div>
         </div>

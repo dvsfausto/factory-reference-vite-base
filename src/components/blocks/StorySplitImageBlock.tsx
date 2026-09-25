@@ -2,6 +2,7 @@ import { SITE } from '~/data/site'
 import { tr } from '~/lib/i18n'
 import { HERO_ALT } from '~/data/images'
 import { imageSrc } from '~/lib/asset-url'
+import { heroFocusStyle } from '~/lib/hero-focus'
 
 // Story LAYOUT: 'split-image', the story prose beside a framed photo.
 // Character-agnostic. Uses SITE.about for the narrative and the existing
@@ -46,8 +47,7 @@ export function StorySplitImageBlock({
               loading="lazy"
               width={900}
               height={700}
-              className="aspect-[4/3] w-full object-cover"
-            />
+              className="aspect-[4/3] w-full object-cover" data-hero-photo="" style={heroFocusStyle(site)} />
           </div>
         </div>
       </div>

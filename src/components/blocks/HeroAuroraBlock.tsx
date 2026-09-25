@@ -6,6 +6,7 @@ import { SITE } from '~/data/site'
 import { HERO_ALT } from '~/data/images'
 import { getAggregateRating } from '~/data/reviews'
 import { imageSrc } from '~/lib/asset-url'
+import { heroFocusStyle } from '~/lib/hero-focus'
 
 import { hasPhone } from '~/lib/phone'
 import { hasText } from '~/lib/has-text'
@@ -68,8 +69,7 @@ export function HeroAuroraBlock({
       <img
         src={imageSrc(imageUrl)}
         alt={HERO_ALT}
-        className="absolute inset-0 -z-30 h-full w-full object-cover"
-      />
+        className="absolute inset-0 -z-30 h-full w-full object-cover" data-hero-photo="" style={heroFocusStyle(site)} />
       {/* Legibility scrim, dark from the left, fading right. */}
       <div className="absolute inset-0 -z-20 bg-gradient-to-tr from-fam-scrim via-fam-scrim/85 to-fam-scrim/30" />
       {/* Ambient brand AURORA, a slow-drifting, blurred wash of --wow-grad-brand.

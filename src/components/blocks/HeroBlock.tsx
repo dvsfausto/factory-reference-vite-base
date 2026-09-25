@@ -5,6 +5,7 @@ import { HeroSlideshow } from '~/components/HeroSlideshow'
 import { SITE } from '~/data/site'
 import { HERO_ALT } from '~/data/images'
 import { imageSrc } from '~/lib/asset-url'
+import { heroFocus } from '~/lib/hero-focus'
 import { siteDecor } from '~/lib/decor'
 
 import { hasPhone } from '~/lib/phone'
@@ -95,6 +96,7 @@ export function HeroBlock({
           >
             <HeroSlideshow
               images={[{ src: imageSrc(site.hero.image_url), alt: HERO_ALT }]}
+              focus={heroFocus(site)}
             />
           </div>
         </div>

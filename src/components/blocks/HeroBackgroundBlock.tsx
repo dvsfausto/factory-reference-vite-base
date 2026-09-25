@@ -4,6 +4,7 @@ import { ArrowRight, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 import { HERO_ALT } from '~/data/images'
 import { imageSrc } from '~/lib/asset-url'
+import { heroFocusStyle } from '~/lib/hero-focus'
 
 import { hasPhone } from '~/lib/phone'
 import { hasText } from '~/lib/has-text'
@@ -38,8 +39,7 @@ export function HeroBackgroundBlock({
       <img
         src={imageSrc(site.hero.image_url)}
         alt={HERO_ALT}
-        className="absolute inset-0 -z-20 h-full w-full object-cover"
-      />
+        className="absolute inset-0 -z-20 h-full w-full object-cover" data-hero-photo="" style={heroFocusStyle(site)} />
       <div className="absolute inset-0 -z-10 bg-gradient-to-t from-fam-scrim-2 via-fam-scrim-2/70 to-fam-scrim-2/25" />
       <div className="absolute inset-0 -z-10 bg-gradient-to-tr from-fam-scrim-2/85 via-fam-scrim-2/35 to-transparent" />
 

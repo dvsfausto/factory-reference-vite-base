@@ -5,6 +5,7 @@ import { ArrowRight, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 import { HERO_ALT } from '~/data/images'
 import { imageSrc } from '~/lib/asset-url'
+import { heroFocusStyle } from '~/lib/hero-focus'
 
 import { hasPhone } from '~/lib/phone'
 import { hasText } from '~/lib/has-text'
@@ -139,8 +140,7 @@ export function HeroEditorialBlock({
             <img
               src={imageSrc(imageUrl)}
               alt={HERO_ALT}
-              className="h-[42vh] min-h-[320px] w-full object-cover md:h-[52vh]"
-            />
+              className="h-[42vh] min-h-[320px] w-full object-cover md:h-[52vh]" data-hero-photo="" style={heroFocusStyle(site)} />
           </div>
         </div>
       </div>

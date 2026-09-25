@@ -4,6 +4,7 @@ import { ArrowRight, Check, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 import { HERO_ALT } from '~/data/images'
 import { imageSrc } from '~/lib/asset-url'
+import { heroFocusStyle } from '~/lib/hero-focus'
 
 import { hasPhone } from '~/lib/phone'
 import { hasText } from '~/lib/has-text'
@@ -57,8 +58,7 @@ export function HeroBoldFullbleedBlock({
       <img
         src={imageSrc(imageUrl)}
         alt={HERO_ALT}
-        className="absolute inset-0 -z-20 h-full w-full object-cover"
-      />
+        className="absolute inset-0 -z-20 h-full w-full object-cover" data-hero-photo="" style={heroFocusStyle(site)} />
       {/* Dark structural scrim for legibility + industrial mood. */}
       <div className="absolute inset-0 -z-10 bg-gradient-to-r from-fam-scrim via-fam-scrim/90 to-fam-scrim/45" />
 

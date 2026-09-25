@@ -4,6 +4,7 @@ import { ArrowRight, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 import { HERO_ALT } from '~/data/images'
 import { imageSrc } from '~/lib/asset-url'
+import { heroFocusStyle } from '~/lib/hero-focus'
 
 import { hasPhone } from '~/lib/phone'
 import { hasText } from '~/lib/has-text'
@@ -52,8 +53,7 @@ export function HeroElegantBlock({
         <img
           src={imageSrc(imageUrl)}
           alt={HERO_ALT}
-          className="absolute inset-0 -z-20 h-full w-full object-cover"
-        />
+          className="absolute inset-0 -z-20 h-full w-full object-cover" data-hero-photo="" style={heroFocusStyle(site)} />
         <div className="absolute inset-0 -z-10 bg-gradient-to-r from-fam-statement via-fam-statement/92 to-fam-statement/55" />
 
         <div className="container-x relative flex flex-1 items-center py-section">
@@ -174,7 +174,7 @@ export function HeroElegantBlock({
           data-enter="up-late"
           className="zi-media mt-14 overflow-hidden rounded-2xl border border-fam-hairline"
         >
-          <img src={imageSrc(imageUrl)} alt={HERO_ALT} className="aspect-[16/7] w-full object-cover" />
+          <img src={imageSrc(imageUrl)} alt={HERO_ALT} className="aspect-[16/7] w-full object-cover" data-hero-photo="" style={heroFocusStyle(site)} />
         </div>
 
         {/* Trust row, small caps, hairline-separated. */}

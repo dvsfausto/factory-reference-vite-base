@@ -6,6 +6,7 @@ import { SITE } from '~/data/site'
 import { HERO_ALT } from '~/data/images'
 import { getAggregateRating } from '~/data/reviews'
 import { imageSrc } from '~/lib/asset-url'
+import { heroFocusStyle } from '~/lib/hero-focus'
 
 import { hasPhone } from '~/lib/phone'
 import { hasText } from '~/lib/has-text'
@@ -141,8 +142,7 @@ export function HeroSpotlightBlock({
               <img
                 src={imageSrc(imageUrl)}
                 alt={HERO_ALT}
-                className="aspect-[4/5] w-full object-cover sm:aspect-[5/4] lg:aspect-[4/5]"
-              />
+                className="aspect-[4/5] w-full object-cover sm:aspect-[5/4] lg:aspect-[4/5]" data-hero-photo="" style={heroFocusStyle(site)} />
             </div>
 
             {/* Floating rating chip, only when there are real reviews. */}
