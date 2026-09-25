@@ -615,7 +615,11 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
         )
       }
       const HeroComponent = HERO_VARIANTS[block.variant ?? ''] ?? HeroBlock
+      /* ★ THE LAYOUT CAN BE READ FROM OUTSIDE (the owner, 2026-09-25: "nothing is reported done until it is read back from where
+         the owner would see it"): the homepage hero carries its block and variant on a wrapper, so the assistant's live check can
+         confirm a layout swap on the served page the way it confirms a photo. */
       return (
+        <div data-block="hero" data-variant={block.variant ?? 'modern'}>
         <HeroComponent
           key="hero"
           {...data}
@@ -625,6 +629,7 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
           }
           decorativeAsset={block.params?.decorativeAsset as string | undefined}
         />
+        </div>
       )
     }
     // ── SERVICE-DETAIL per-item cases (Arc 3 · Stage C) ───────────────────────
