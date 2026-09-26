@@ -69,11 +69,13 @@ export function ClassScheduleWeekBlock({
                         {s.instructor && <span>{tr('schedule.with')} {s.instructor}</span>}
                         {s.occurrenceId && typeof s.seatsLeft === 'number' ? (
                           <span className="inline-flex items-center gap-1"><Users className="h-3.5 w-3.5" /> {s.seatsLeft > 0 ? `${s.seatsLeft} ${tr('schedule.left')}` : tr('schedule.full')}</span>
+                        ) : s.occurrenceId && s.isFull ? (
+                          <span className="inline-flex items-center gap-1"><Users className="h-3.5 w-3.5" /> {tr('schedule.full')}</span>
                         ) : s.capacity ? (
                           <span className="inline-flex items-center gap-1"><Users className="h-3.5 w-3.5" /> {s.capacity} {tr('schedule.spots')}</span>
                         ) : null}
                         {s.occurrenceId && s.serviceId && (
-                          <a href={`/book?occurrence=${s.occurrenceId}`} className="font-semibold text-fam-accent-text hover:underline">{s.seatsLeft == null || s.seatsLeft > 0 ? tr('schedule.book') : tr('schedule.waitlist')}</a>
+                          <a href={`/book?occurrence=${s.occurrenceId}`} className="font-semibold text-fam-accent-text hover:underline">{!s.isFull && (s.seatsLeft == null || s.seatsLeft > 0) ? tr('schedule.book') : tr('schedule.waitlist')}</a>
                         )}
                       </div>
                     )}

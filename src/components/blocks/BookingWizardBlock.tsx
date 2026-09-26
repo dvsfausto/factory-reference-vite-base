@@ -246,7 +246,7 @@ async function fetchClasses(serviceId: string): Promise<LiveClass[]> {
   return Array.isArray(rows) ? rows.filter((r) => new Date(r.start_at).getTime() > Date.now()) : []
 }
 async function fetchClass(id: string): Promise<LiveClass | null> {
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/class_schedule_public?id=eq.${id}&select=id,service_id,title,instructor,start_at,end_at,seats_total,seats_left`, { headers: ANON_HEADERS })
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/class_schedule_public?id=eq.${id}&select=id,service_id,title,instructor,start_at,end_at,seats_total,seats_left,is_full`, { headers: ANON_HEADERS })
   if (!res.ok) return null
   const rows = (await res.json()) as LiveClass[]
   return Array.isArray(rows) && rows[0] ? rows[0] : null
@@ -432,7 +432,7 @@ export function BookingWizardBlock({
             if (cls) setService({ ...cls, price: cls.price == null ? null : Number(cls.price), duration_minutes: cls.duration_minutes == null ? null : Number(cls.duration_minutes) })
             setOccurrence(occ)
             const l = classLocal(occ.start_at); setDate(l.date); setTime(l.time)
-            const full = typeof occ.seats_left === 'number' && occ.seats_left <= 0
+            const full = occ.is_full === true || (typeof occ.seats_left === 'number' && occ.seats_left <= 0)
             setWaitlistMode(full)
             setStep(full ? 'details' : 'classflow')
             setLoading(false)
@@ -723,7 +723,7 @@ export function BookingWizardBlock({
                           <ClassDayStrip rows={upcoming} chosen={classDay ?? (upcoming[0] ? classDayKey(upcoming[0].start_at) : null)} onPick={setClassDay} />
                           <div className="grid gap-2.5 sm:grid-cols-2">
                             {upcoming.filter((c) => classDayKey(c.start_at) === (classDay ?? (upcoming[0] ? classDayKey(upcoming[0].start_at) : null))).map((c) => {
-                              const full = typeof c.seats_left === 'number' && c.seats_left <= 0
+                              const full = c.is_full === true || (typeof c.seats_left === 'number' && c.seats_left <= 0)
                               return (
                                 <button key={c.id} type="button" data-cold-class={c.id} data-class-full={full ? '1' : undefined}
                                   onClick={() => {
@@ -734,7 +734,7 @@ export function BookingWizardBlock({
                                   }}
                                   className="flex items-center justify-between gap-3 rounded-xl border px-4 py-3 text-left text-sm transition-all hover:translate-y-(--hov-lift-sm)" style={{ borderColor: 'var(--wow-hairline)' }}>
                                   <span><span className="font-semibold">{c.title}</span> · {classDayLabel(c.start_at)} {to12h(classLocal(c.start_at).time)}{c.instructor ? ` · ${c.instructor}` : ''}</span>
-                                  <span className="text-xs">{typeof c.seats_left === 'number' ? (full ? `${tr('booking.classFull')} · ${tr('booking.joinWaitlist')}` : `${c.seats_left} ${tr('schedule.left')}`) : ''}</span>
+                                  <span className="text-xs">{full ? `${tr('booking.classFull')} · ${tr('booking.joinWaitlist')}` : typeof c.seats_left === 'number' ? `${c.seats_left} ${tr('schedule.left')}` : ''}</span>
                                 </button>
                               )
                             })}
@@ -843,7 +843,7 @@ export function BookingWizardBlock({
                         <><ClassDayStrip rows={classes} chosen={classDay ?? (classes[0] ? classDayKey(classes[0].start_at) : null)} onPick={setClassDay} />
                         <div className="grid gap-2.5 sm:grid-cols-2">
                           {classes.filter((c) => classDayKey(c.start_at) === (classDay ?? (classes[0] ? classDayKey(classes[0].start_at) : null))).map((c) => {
-                            const full = typeof c.seats_left === 'number' && c.seats_left <= 0
+                            const full = c.is_full === true || (typeof c.seats_left === 'number' && c.seats_left <= 0)
                             const selected = occurrence?.id === c.id
                             return (
                               <button
@@ -861,7 +861,7 @@ export function BookingWizardBlock({
                                 style={selected ? { backgroundImage: 'var(--wow-grad-brand)', borderColor: 'transparent', color: 'white' } : { borderColor: 'var(--wow-hairline)' }}
                               >
                                 <span><span className="font-semibold">{classDayLabel(c.start_at)}</span> · {to12h(classLocal(c.start_at).time)}{c.instructor ? ` · ${c.instructor}` : ''}</span>
-                                <span className="text-xs">{typeof c.seats_left === 'number' ? (full ? `${tr('booking.classFull')} · ${tr('booking.joinWaitlist')}` : `${c.seats_left} ${tr('schedule.left')}`) : ''}</span>
+                                <span className="text-xs">{full ? `${tr('booking.classFull')} · ${tr('booking.joinWaitlist')}` : typeof c.seats_left === 'number' ? `${c.seats_left} ${tr('schedule.left')}` : ''}</span>
                               </button>
                             )
                           })}

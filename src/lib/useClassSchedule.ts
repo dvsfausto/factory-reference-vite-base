@@ -20,6 +20,7 @@ export interface ClassSession {
   occurrenceId?: string
   serviceId?: string | null
   seatsLeft?: number | null
+  isFull?: boolean
   date?: string
   startAt?: string
 }
@@ -34,6 +35,8 @@ export interface LiveClass {
   end_at: string
   seats_total: number | null
   seats_left: number | null
+  /** ★ the owner may hide the count (2026-09-26): seats_left reads null then; is_full still says whether the class is full */
+  is_full?: boolean | null
 }
 const tzParts = (iso: string, tz: string) => {
   /* the weekday from the local DATE, never from a locale's spelling ("Wed." in en-CA on some browsers) */
@@ -48,7 +51,7 @@ export function sessionsFromClasses(rows: LiveClass[], tz: string): ClassSession
     .filter((r) => r && typeof r.id === 'string' && typeof r.start_at === 'string' && typeof r.title === 'string' && r.title.trim())
     .map<ClassSession>((r) => {
       const a = tzParts(r.start_at, tz); const b = tzParts(r.end_at, tz)
-      return { serviceName: r.title.trim(), day: a.day, start: a.time, end: b.time, ...(r.instructor ? { instructor: r.instructor } : {}), ...(typeof r.seats_total === 'number' ? { capacity: r.seats_total } : {}), occurrenceId: r.id, serviceId: r.service_id ?? null, seatsLeft: r.seats_left ?? null, date: a.date, startAt: r.start_at }
+      return { serviceName: r.title.trim(), day: a.day, start: a.time, end: b.time, ...(r.instructor ? { instructor: r.instructor } : {}), ...(typeof r.seats_total === 'number' ? { capacity: r.seats_total } : {}), occurrenceId: r.id, isFull: r.is_full === true, serviceId: r.service_id ?? null, seatsLeft: r.seats_left ?? null, date: a.date, startAt: r.start_at }
     })
 }
 /** ★ HOW FAR AHEAD A CUSTOMER SEES (part 3, 2026-09-26): the owner's class horizon (class_settings_public.horizon_days), read once;
@@ -67,7 +70,7 @@ export function classHorizonDays(): Promise<number | null> { return classHorizon
 export async function classWindowDays(fallback: number): Promise<number> { return (await classHorizonDays()) ?? fallback }
 export function liveClassesUrl(businessId: string, days = 7, now = new Date()): string {
   const until = new Date(now.getTime() + days * 86_400_000).toISOString()
-  return `${SUPABASE_URL}/rest/v1/class_schedule_public?business_id=eq.${businessId}&start_at=lt.${encodeURIComponent(until)}&select=id,service_id,title,instructor,start_at,end_at,seats_total,seats_left&order=start_at.asc`
+  return `${SUPABASE_URL}/rest/v1/class_schedule_public?business_id=eq.${businessId}&start_at=lt.${encodeURIComponent(until)}&select=id,service_id,title,instructor,start_at,end_at,seats_total,seats_left,is_full&order=start_at.asc`
 }
 
 export function readBakedSchedule(site: typeof SITE = SITE): ClassSession[] {
