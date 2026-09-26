@@ -26,7 +26,7 @@ import {
   type BookingFeatures,
   type ServiceAddress,
 } from '~/lib/booking-shape'
-import { liveClassesUrl, type LiveClass } from '~/lib/useClassSchedule'
+import { liveClassesUrl, classWindowDays, type LiveClass } from '~/lib/useClassSchedule'
 import {
   BOOKING,
   BUSINESS_ID,
@@ -217,7 +217,7 @@ const classLocal = (iso: string) => {
 }
 const classDayLabel = (iso: string) => new Intl.DateTimeFormat(SITE_LANGUAGE === 'es' ? 'es' : 'en-US', { timeZone: BOOKING.timezone || undefined, weekday: 'short', month: 'short', day: 'numeric' }).format(new Date(iso))
 async function fetchClasses(serviceId: string): Promise<LiveClass[]> {
-  const res = await fetch(`${liveClassesUrl(BUSINESS_ID, 21)}&service_id=eq.${serviceId}`, { headers: ANON_HEADERS })
+  const res = await fetch(`${liveClassesUrl(BUSINESS_ID, await classWindowDays(21))}&service_id=eq.${serviceId}`, { headers: ANON_HEADERS })
   if (!res.ok) return []
   const rows = (await res.json()) as LiveClass[]
   return Array.isArray(rows) ? rows.filter((r) => new Date(r.start_at).getTime() > Date.now()) : []
@@ -376,7 +376,7 @@ export function BookingWizardBlock({
             `${REST}/website_config?business_id=eq.${BUSINESS_ID}&select=features_enabled`,
             { headers: ANON_HEADERS },
           ),
-          fetch(liveClassesUrl(BUSINESS_ID, 21), { headers: ANON_HEADERS }).catch(() => null),
+          classWindowDays(21).then((days) => fetch(liveClassesUrl(BUSINESS_ID, days), { headers: ANON_HEADERS })).catch(() => null),
         ])
         if (!svcRes.ok || !availRes.ok || !cfgRes.ok) throw new Error('load_failed')
         try { const rows = clsRes && clsRes.ok ? ((await clsRes.json()) as LiveClass[]) : []; if (!cancelled) setUpcoming(rows) } catch { /* no classes listed */ }

@@ -3,7 +3,7 @@ import { Loader2 } from 'lucide-react'
 import { SUPABASE_URL, SUPABASE_ANON_KEY, BUSINESS_ID, SITE } from '~/data/site'
 import { moneyShort } from '~/lib/money'
 import { tr } from '~/lib/i18n'
-import { liveClassesUrl, type LiveClass } from '~/lib/useClassSchedule'
+import { liveClassesUrl, classWindowDays, type LiveClass } from '~/lib/useClassSchedule'
 import { HeldBookingFlow, type HeldEntry, type HeldOptions } from '~/components/blocks/HeldBookingFlow'
 import { hasPhone } from '~/lib/phone'
 
@@ -98,7 +98,7 @@ export function CustomerPortal() {
   const signOut = () => { try { window.sessionStorage.removeItem(SESSION_KEY) } catch { /* nothing */ } setToken(null); setMe(null); setPhase('phone') }
   const openClasses = async () => {
     setBusy(true)
-    try { const r = await fetch(liveClassesUrl(BUSINESS_ID, 21), { headers: HEADERS }); setClasses((await r.json()) as LiveClass[]) } catch { setClasses([]) }
+    try { const r = await fetch(liveClassesUrl(BUSINESS_ID, await classWindowDays(21)), { headers: HEADERS }); setClasses((await r.json()) as LiveClass[]) } catch { setClasses([]) }
     setBusy(false); setPhase('classes')
   }
   const book = async (c: LiveClass) => {

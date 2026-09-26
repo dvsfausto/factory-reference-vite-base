@@ -51,6 +51,17 @@ export function sessionsFromClasses(rows: LiveClass[], tz: string): ClassSession
       return { serviceName: r.title.trim(), day: a.day, start: a.time, end: b.time, ...(r.instructor ? { instructor: r.instructor } : {}), ...(typeof r.seats_total === 'number' ? { capacity: r.seats_total } : {}), occurrenceId: r.id, serviceId: r.service_id ?? null, seatsLeft: r.seats_left ?? null, date: a.date, startAt: r.start_at }
     })
 }
+/** ★ HOW FAR AHEAD A CUSTOMER SEES (part 3, 2026-09-26): the owner's class horizon (class_settings_public.horizon_days), read once;
+ *  null = not set, and every surface keeps its own window (7 days here, 21 in the wizard and the portal), exactly as before. */
+let horizonPromise: Promise<number | null> | null = null
+export function classHorizonDays(): Promise<number | null> {
+  if (!horizonPromise) horizonPromise = fetch(`${SUPABASE_URL}/rest/v1/class_settings_public?business_id=eq.${BUSINESS_ID}&select=horizon_days`, { headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` } })
+    .then((r) => (r.ok ? r.json() : []))
+    .then((rows: Array<{ horizon_days: number | null }>) => { const v = rows?.[0]?.horizon_days; return typeof v === 'number' && v > 0 ? v : null })
+    .catch(() => null)
+  return horizonPromise
+}
+export async function classWindowDays(fallback: number): Promise<number> { return (await classHorizonDays()) ?? fallback }
 export function liveClassesUrl(businessId: string, days = 7, now = new Date()): string {
   const until = new Date(now.getTime() + days * 86_400_000).toISOString()
   return `${SUPABASE_URL}/rest/v1/class_schedule_public?business_id=eq.${businessId}&start_at=lt.${encodeURIComponent(until)}&select=id,service_id,title,instructor,start_at,end_at,seats_total,seats_left&order=start_at.asc`
@@ -105,7 +116,7 @@ export function useClassSchedule(): ClassSession[] {
           if (live.length > 0) setSessions(live)
         })
     }
-    fetch(liveClassesUrl(BUSINESS_ID), { headers })
+    classWindowDays(7).then((days) => fetch(liveClassesUrl(BUSINESS_ID, days), { headers }))
       .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
       .then((rows: LiveClass[]) => {
         if (cancelled) return
