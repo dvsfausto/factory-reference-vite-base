@@ -215,6 +215,29 @@ const classLocal = (iso: string) => {
   const g = (t: string) => parts.find((x) => x.type === t)?.value ?? ''
   return { date: new Date(`${g('year')}-${g('month')}-${g('day')}T12:00:00`), time: `${g('hour')}:${g('minute')}` }
 }
+/* ★★★ DATES FIRST, THEN THAT DAY'S CLASSES (the owner, 2026-09-26, a paying studio's feedback: "the class list is a wall of classes"). The
+   days that have a class as a strip of chips (weekday + number, the first chosen), then only that day's classes. Pure: the rows are the same. */
+const classDayKey = (iso: string) => { const d = classLocal(iso).date; return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}` }
+function ClassDayStrip({ rows, chosen, onPick }: { rows: LiveClass[]; chosen: string | null; onPick: (k: string) => void }) {
+  const days: Array<{ key: string; d: Date; n: number }> = []
+  for (const c of rows) { const k = classDayKey(c.start_at); const hit = days.find((x) => x.key === k); if (hit) hit.n++; else days.push({ key: k, d: classLocal(c.start_at).date, n: 1 }) }
+  if (days.length <= 1) return null
+  return (
+    <div data-class-days className="mb-4 flex gap-2 overflow-x-auto pb-1">
+      {days.map(({ key, d, n }) => {
+        const selected = key === chosen
+        return (
+          <button key={key} type="button" data-class-day={key} aria-pressed={selected} onClick={() => onPick(key)} className="flex shrink-0 flex-col items-center rounded-2xl border px-3 py-2.5 transition-all hover:translate-y-(--hov-lift-sm)"
+            style={selected ? { backgroundImage: 'var(--wow-grad-brand)', borderColor: 'transparent', color: 'white' } : { borderColor: 'var(--wow-hairline)' }}>
+            <span className="text-[11px] font-semibold uppercase tracking-wide opacity-80">{DAY_LABELS[d.getDay()]}</span>
+            <span className="font-display text-lg font-semibold leading-tight">{d.getDate()}</span>
+            <span className="text-[11px] opacity-80">{MONTHS[d.getMonth()]} · {n}</span>
+          </button>
+        )
+      })}
+    </div>
+  )
+}
 const classDayLabel = (iso: string) => new Intl.DateTimeFormat(SITE_LANGUAGE === 'es' ? 'es' : 'en-US', { timeZone: BOOKING.timezone || undefined, weekday: 'short', month: 'short', day: 'numeric' }).format(new Date(iso))
 async function fetchClasses(serviceId: string): Promise<LiveClass[]> {
   const res = await fetch(`${liveClassesUrl(BUSINESS_ID, await classWindowDays(21))}&service_id=eq.${serviceId}`, { headers: ANON_HEADERS })
@@ -272,6 +295,7 @@ export function BookingWizardBlock({
      FIRST, before the services, with no link from anyone. A business with classes and no services is a class business, not an empty
      one, and its booking hours are the classes' own times. */
   const [upcoming, setUpcoming] = useState<LiveClass[]>([])
+  const [classDay, setClassDay] = useState<string | null>(null) // the chosen day on the strip; null = the first day that has a class
   const [occurrence, setOccurrence] = useState<LiveClass | null>(null)
   const [date, setDate] = useState<Date | null>(null)
   const [time, setTime] = useState<string | null>(null)
@@ -696,8 +720,9 @@ export function BookingWizardBlock({
                       {hasClasses && (
                         <div data-booking-classes className="mb-5">
                           {services.length > 0 && <p className="mb-2 text-xs font-bold uppercase tracking-[0.15em] text-ink-600">{tr('booking.classesFirst')}</p>}
+                          <ClassDayStrip rows={upcoming} chosen={classDay ?? (upcoming[0] ? classDayKey(upcoming[0].start_at) : null)} onPick={setClassDay} />
                           <div className="grid gap-2.5 sm:grid-cols-2">
-                            {upcoming.map((c) => {
+                            {upcoming.filter((c) => classDayKey(c.start_at) === (classDay ?? (upcoming[0] ? classDayKey(upcoming[0].start_at) : null))).map((c) => {
                               const full = typeof c.seats_left === 'number' && c.seats_left <= 0
                               return (
                                 <button key={c.id} type="button" data-cold-class={c.id} data-class-full={full ? '1' : undefined}
@@ -815,8 +840,9 @@ export function BookingWizardBlock({
                       {classes.length === 0 ? (
                         <p className="rounded-2xl border border-dashed px-5 py-8 text-center text-sm text-ink-600" style={{ borderColor: 'var(--wow-hairline)' }} data-booking-no-classes="">{tr('booking.noClasses')}{beyondLine ? ` ${beyondLine}` : ''}</p>
                       ) : (
+                        <><ClassDayStrip rows={classes} chosen={classDay ?? (classes[0] ? classDayKey(classes[0].start_at) : null)} onPick={setClassDay} />
                         <div className="grid gap-2.5 sm:grid-cols-2">
-                          {classes.map((c) => {
+                          {classes.filter((c) => classDayKey(c.start_at) === (classDay ?? (classes[0] ? classDayKey(classes[0].start_at) : null))).map((c) => {
                             const full = typeof c.seats_left === 'number' && c.seats_left <= 0
                             const selected = occurrence?.id === c.id
                             return (
@@ -839,7 +865,7 @@ export function BookingWizardBlock({
                               </button>
                             )
                           })}
-                        </div>
+                        </div></>
                       )}
                     </StepShell>
                   )}
