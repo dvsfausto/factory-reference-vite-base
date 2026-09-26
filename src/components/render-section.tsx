@@ -29,6 +29,7 @@ import { HeroCorporateBlock } from '~/components/blocks/HeroCorporateBlock'
 import { HeroCreativeBlock } from '~/components/blocks/HeroCreativeBlock'
 import { HeroCenteredBlock } from '~/components/blocks/HeroCenteredBlock'
 import { HeroBackgroundBlock } from '~/components/blocks/HeroBackgroundBlock'
+import { HeroGlassBlock } from './blocks/HeroGlassBlock'
 import { HeroSplitReversedBlock } from '~/components/blocks/HeroSplitReversedBlock'
 import { HeroMinimalBlock } from '~/components/blocks/HeroMinimalBlock'
 import { HeroVideoBlock } from '~/components/blocks/HeroVideoBlock'
@@ -204,6 +205,7 @@ import { HAS_EMAIL } from '~/lib/email'
 // component. Today only 'hero' has a variant ('bold-fullbleed', for trades).
 const HERO_VARIANTS: Record<string, typeof HeroBlock> = {
   'bold-fullbleed': HeroBoldFullbleedBlock,
+  glass: HeroGlassBlock,
   elegant: HeroElegantBlock,
   friendly: HeroFriendlyBlock,
   modern: HeroModernBlock,
