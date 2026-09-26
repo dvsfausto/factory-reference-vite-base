@@ -11,7 +11,7 @@ import { BUSINESS_ID, SUPABASE_ANON_KEY, SUPABASE_URL } from '~/data/site'
 // the classes land the moment Stripe confirms, and the person comes back to /book?paid=1 to pick a class. When the business has
 // not connected card payments, Buy says so plainly and points to the front desk; nothing is invented. Renders nothing when the
 // business sells no packs. Sits under the class schedule, so it shows on every site that has one.
-interface Pack { id: string; name: string; description: string | null; credits: number; price: number; currency: string; validity_days: number | null }
+interface Pack { id: string; name: string; description: string | null; credits: number; price: number; currency: string; validity_days: number | null; /** ★ packs per kind (2026-09-26): the class kinds this pack covers, by name; empty = every class */ covers?: string[] | null }
 const headers = { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` }
 const money = (n: number, currency?: string | null) => moneyShort(n, currency ?? SITE_CURRENCY)
 
@@ -27,7 +27,7 @@ export function PacksForSale({ label, heading, body, fallback = null }: { label?
   const [note, setNote] = useState<string | null>(null)
   useEffect(() => {
     if (!BUSINESS_ID || !SUPABASE_URL) return
-    fetch(`${SUPABASE_URL}/rest/v1/packs_public?business_id=eq.${BUSINESS_ID}&select=id,name,description,credits,price,currency,validity_days&order=display_order.asc,price.asc`, { headers })
+    fetch(`${SUPABASE_URL}/rest/v1/packs_public?business_id=eq.${BUSINESS_ID}&select=id,name,description,credits,price,currency,validity_days,covers&order=display_order.asc,price.asc`, { headers })
       .then((r) => (r.ok ? r.json() : []))
       .then((rows: Pack[]) => setPacks(Array.isArray(rows) ? rows : []))
       .catch(() => setPacks([]))
@@ -61,6 +61,7 @@ export function PacksForSale({ label, heading, body, fallback = null }: { label?
             <div className="font-display text-lg font-semibold text-fam-ink">{p.name}</div>
             <div className="mt-1 text-sm text-fam-ink-muted">{p.credits} {tr('packs.classes')}{p.validity_days ? ` · ${tr('packs.valid')} ${p.validity_days} ${tr('packs.days')}` : ''}</div>
             {p.description && <p className="mt-2 text-sm text-fam-ink-muted">{p.description}</p>}
+            {Array.isArray(p.covers) && p.covers.length > 0 && <p className="mt-1 text-sm text-fam-ink-muted" data-pack-covers>{tr('packs.covers')} {p.covers.join(', ')}</p>}
             <div className="mt-4 flex items-center justify-between">
               <span className="font-display text-2xl font-semibold text-fam-ink">{money(p.price, p.currency)}</span>
               <button type="button" onClick={() => { setOpen(p); setNote(null) }} className="rounded-full px-5 py-2 text-sm font-semibold text-fam-on-dark" style={{ backgroundImage: 'var(--wow-grad-brand)' }}>
