@@ -1,6 +1,7 @@
+import { useEffect, useState } from 'react'
 import { Clock, Users } from 'lucide-react'
 import { tr } from '~/lib/i18n'
-import { useClassSchedule, type ClassSession } from '~/lib/useClassSchedule'
+import { classHorizon, useClassSchedule, type ClassHorizon, type ClassSession } from '~/lib/useClassSchedule'
 import { PacksForSale } from './PacksForSale'
 
 // Class schedule LAYOUT: 'week' (niche arc Stage 5b) — the owner's weekly timetable of group sessions: one
@@ -27,7 +28,11 @@ export function ClassScheduleWeekBlock({
   body?: string
 }) {
   const sessions = useClassSchedule()
-  if (sessions.length === 0) return null
+  const [beyond, setBeyond] = useState<ClassHorizon>({ days: null, nextBeyond: null })
+  useEffect(() => { void classHorizon().then(setBeyond) }, [])
+  /* ★ a later class exists beyond the owner's window (part 3's small one): say so instead of showing nothing */
+  const beyondLine = beyond.days && beyond.nextBeyond ? tr('schedule.moreLater').replace('{date}', new Date(beyond.nextBeyond).toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' })).replace('{days}', String(beyond.days)) : null
+  if (sessions.length === 0) return beyondLine ? <section className="px-4 py-8 text-center text-sm text-ink-600" data-schedule-beyond="">{beyondLine}</section> : null
   const dayNames = [tr('day.sun'), tr('day.mon'), tr('day.tue'), tr('day.wed'), tr('day.thu'), tr('day.fri'), tr('day.sat')]
   // Monday-first week; only days with a session render.
   const order = [1, 2, 3, 4, 5, 6, 0]
@@ -79,6 +84,7 @@ export function ClassScheduleWeekBlock({
           ))}
         </div>
         {/* ★ the packs for sale, with a Buy that works (the classes arc, 2026-09-23); nothing when the business sells none */}
+        {beyondLine && <p className="mt-6 text-center text-sm text-ink-600" data-schedule-beyond="">{beyondLine}</p>}
         <PacksForSale />
       </div>
     </section>

@@ -53,14 +53,17 @@ export function sessionsFromClasses(rows: LiveClass[], tz: string): ClassSession
 }
 /** ★ HOW FAR AHEAD A CUSTOMER SEES (part 3, 2026-09-26): the owner's class horizon (class_settings_public.horizon_days), read once;
  *  null = not set, and every surface keeps its own window (7 days here, 21 in the wizard and the portal), exactly as before. */
-let horizonPromise: Promise<number | null> | null = null
-export function classHorizonDays(): Promise<number | null> {
-  if (!horizonPromise) horizonPromise = fetch(`${SUPABASE_URL}/rest/v1/class_settings_public?business_id=eq.${BUSINESS_ID}&select=horizon_days`, { headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` } })
+export type ClassHorizon = { days: number | null; nextBeyond: string | null }
+let horizonPromise: Promise<ClassHorizon> | null = null
+/** the owner's horizon and the first class a customer cannot see yet (so the page can say a later class exists) */
+export function classHorizon(): Promise<ClassHorizon> {
+  if (!horizonPromise) horizonPromise = fetch(`${SUPABASE_URL}/rest/v1/class_settings_public?business_id=eq.${BUSINESS_ID}&select=horizon_days,next_beyond_horizon`, { headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` } })
     .then((r) => (r.ok ? r.json() : []))
-    .then((rows: Array<{ horizon_days: number | null }>) => { const v = rows?.[0]?.horizon_days; return typeof v === 'number' && v > 0 ? v : null })
-    .catch(() => null)
+    .then((rows: Array<{ horizon_days: number | null; next_beyond_horizon: string | null }>) => { const v = rows?.[0]?.horizon_days; return { days: typeof v === 'number' && v > 0 ? v : null, nextBeyond: rows?.[0]?.next_beyond_horizon ?? null } })
+    .catch(() => ({ days: null, nextBeyond: null }))
   return horizonPromise
 }
+export function classHorizonDays(): Promise<number | null> { return classHorizon().then((h) => h.days) }
 export async function classWindowDays(fallback: number): Promise<number> { return (await classHorizonDays()) ?? fallback }
 export function liveClassesUrl(businessId: string, days = 7, now = new Date()): string {
   const until = new Date(now.getTime() + days * 86_400_000).toISOString()

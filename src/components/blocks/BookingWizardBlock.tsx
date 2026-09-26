@@ -26,7 +26,7 @@ import {
   type BookingFeatures,
   type ServiceAddress,
 } from '~/lib/booking-shape'
-import { liveClassesUrl, classWindowDays, type LiveClass } from '~/lib/useClassSchedule'
+import { liveClassesUrl, classWindowDays, classHorizon, type ClassHorizon, type LiveClass } from '~/lib/useClassSchedule'
 import {
   BOOKING,
   BUSINESS_ID,
@@ -264,6 +264,9 @@ export function BookingWizardBlock({
   const [service, setService] = useState<BookableService | null>(null)
   /* ★ A CLASS IS A DATED SESSION WITH SEATS (the classes arc, 2026-09-23): when the chosen service has upcoming classes,
      the wizard lists them instead of cutting hours into slots; the booking carries the occurrence and takes a seat. */
+  const [beyond, setBeyond] = useState<ClassHorizon>({ days: null, nextBeyond: null })
+  useEffect(() => { void classHorizon().then(setBeyond) }, [])
+  const beyondLine = beyond.days && beyond.nextBeyond ? tr('schedule.moreLater').replace('{date}', new Date(beyond.nextBeyond).toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' })).replace('{days}', String(beyond.days)) : null
   const [classes, setClasses] = useState<LiveClass[]>([])
   /* ★ A COLD VISITOR SEES THE CLASSES (the owner, 2026-09-24): every dated class of the next three weeks is read at once and listed
      FIRST, before the services, with no link from anyone. A business with classes and no services is a class business, not an empty
@@ -810,7 +813,7 @@ export function BookingWizardBlock({
                   {step === 'class' && (
                     <StepShell title={tr('booking.chooseClass')} onBack={() => setStep('service')}>
                       {classes.length === 0 ? (
-                        <p className="rounded-2xl border border-dashed px-5 py-8 text-center text-sm text-ink-600" style={{ borderColor: 'var(--wow-hairline)' }}>{tr('booking.noClasses')}</p>
+                        <p className="rounded-2xl border border-dashed px-5 py-8 text-center text-sm text-ink-600" style={{ borderColor: 'var(--wow-hairline)' }} data-booking-no-classes="">{tr('booking.noClasses')}{beyondLine ? ` ${beyondLine}` : ''}</p>
                       ) : (
                         <div className="grid gap-2.5 sm:grid-cols-2">
                           {classes.map((c) => {
