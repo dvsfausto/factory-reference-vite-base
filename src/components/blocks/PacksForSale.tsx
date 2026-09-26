@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Loader2 } from 'lucide-react'
+import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { moneyShort, SITE_CURRENCY } from '~/lib/money'
 import { tr } from '~/lib/i18n'
 import { BUSINESS_ID, SUPABASE_ANON_KEY, SUPABASE_URL } from '~/data/site'
@@ -69,25 +70,37 @@ export function PacksForSale({ label, heading, body, fallback = null }: { label?
           </div>
         ))}
       </div>
-      {open && (
-        <form onSubmit={(e) => void buy(e)} data-pack-buy-form className="mt-6 max-w-lg rounded-2xl border border-fam-hairline bg-fam-card p-5">
-          <div className="font-display text-lg font-semibold text-fam-ink">{tr('packs.buying')} {open.name} · {money(open.price)}</div>
-          <p className="mt-1 text-sm text-fam-ink-muted">{tr('packs.details')}</p>
-          <div className="mt-4 grid gap-3 sm:grid-cols-2">
-            <label className="text-sm"><span className="text-fam-ink-muted">{tr('form.firstName')}</span><input required value={form.firstName} onChange={(e) => setForm({ ...form, firstName: e.target.value })} className="mt-1 w-full rounded-xl border border-fam-hairline bg-fam-surface px-3 py-2 text-fam-ink" /></label>
-            <label className="text-sm"><span className="text-fam-ink-muted">{tr('form.lastName')}</span><input required value={form.lastName} onChange={(e) => setForm({ ...form, lastName: e.target.value })} className="mt-1 w-full rounded-xl border border-fam-hairline bg-fam-surface px-3 py-2 text-fam-ink" /></label>
-            <label className="text-sm"><span className="text-fam-ink-muted">{tr('form.email')}</span><input required type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className="mt-1 w-full rounded-xl border border-fam-hairline bg-fam-surface px-3 py-2 text-fam-ink" /></label>
-            <label className="text-sm"><span className="text-fam-ink-muted">{tr('form.phone')}</span><input type="tel" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} className="mt-1 w-full rounded-xl border border-fam-hairline bg-fam-surface px-3 py-2 text-fam-ink" /></label>
-          </div>
-          {note && <p role="alert" className="mt-3 text-sm text-red-600">{note}</p>}
-          <div className="mt-4 flex items-center gap-3">
-            <button type="submit" disabled={busy} className="inline-flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-semibold text-fam-on-dark disabled:opacity-60" style={{ backgroundImage: 'var(--wow-grad-brand)' }}>
-              {busy && <Loader2 className="h-4 w-4 animate-spin" />}{tr('packs.pay')}
-            </button>
-            <button type="button" onClick={() => setOpen(null)} className="text-sm font-semibold text-fam-ink-muted">{tr('booking.back')}</button>
-          </div>
-        </form>
-      )}
+      {/* ★★★ BUY OPENS PROPERLY (the owner, 2026-09-26, a paying studio's feedback: "tapping Buy renders a form at the bottom of the section; it
+         should open properly, a panel or its own page, and be clear it is collecting their details before Stripe"). A panel over the page, in
+         the site's own tokens, headed with the pack and its price and one line that says what happens next. Same fields, same function
+         (pack-checkout), same return. Escape, the scrim and Back close it; nothing is charged here. */}
+      <DialogPrimitive.Root open={!!open} onOpenChange={(v) => { if (!v && !busy) { setOpen(null); setNote(null) } }}>
+        <DialogPrimitive.Portal>
+          <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-fam-ink/60 backdrop-blur-[2px]" />
+          <DialogPrimitive.Content data-pack-panel={open?.id ?? ''} aria-describedby="pack-panel-line" className="fixed left-1/2 top-1/2 z-50 w-[calc(100%-32px)] max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-fam-hairline bg-fam-card p-6 shadow-(--elev-4) outline-none">
+            {open && (
+              <form onSubmit={(e) => void buy(e)} data-pack-buy-form>
+                <DialogPrimitive.Title className="font-display text-xl font-semibold text-fam-ink">{open.name} · {money(open.price, open.currency)}</DialogPrimitive.Title>
+                <DialogPrimitive.Description id="pack-panel-line" className="mt-1 text-sm text-fam-ink-muted">{tr('packs.panelLine')}</DialogPrimitive.Description>
+                <p className="mt-3 text-sm text-fam-ink-muted">{open.credits} {tr('packs.classes')}{open.validity_days ? ` · ${tr('packs.valid')} ${open.validity_days} ${tr('packs.days')}` : ''}</p>
+                <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                  <label className="text-sm"><span className="text-fam-ink-muted">{tr('form.firstName')}</span><input required autoFocus value={form.firstName} onChange={(e) => setForm({ ...form, firstName: e.target.value })} className="mt-1 w-full rounded-xl border border-fam-hairline bg-fam-surface px-3 py-2 text-fam-ink" /></label>
+                  <label className="text-sm"><span className="text-fam-ink-muted">{tr('form.lastName')}</span><input required value={form.lastName} onChange={(e) => setForm({ ...form, lastName: e.target.value })} className="mt-1 w-full rounded-xl border border-fam-hairline bg-fam-surface px-3 py-2 text-fam-ink" /></label>
+                  <label className="text-sm"><span className="text-fam-ink-muted">{tr('form.email')}</span><input required type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className="mt-1 w-full rounded-xl border border-fam-hairline bg-fam-surface px-3 py-2 text-fam-ink" /></label>
+                  <label className="text-sm"><span className="text-fam-ink-muted">{tr('form.phone')}</span><input type="tel" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} className="mt-1 w-full rounded-xl border border-fam-hairline bg-fam-surface px-3 py-2 text-fam-ink" /></label>
+                </div>
+                {note && <p role="alert" className="mt-3 text-sm text-red-600">{note}</p>}
+                <div className="mt-5 flex flex-wrap items-center gap-3">
+                  <button type="submit" data-pack-continue disabled={busy} className="inline-flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-semibold text-fam-on-dark disabled:opacity-60" style={{ backgroundImage: 'var(--wow-grad-brand)' }}>
+                    {busy && <Loader2 className="h-4 w-4 animate-spin" />}{tr('packs.continue')}
+                  </button>
+                  <DialogPrimitive.Close asChild><button type="button" data-pack-back className="text-sm font-semibold text-fam-ink-muted">{tr('booking.back')}</button></DialogPrimitive.Close>
+                </div>
+              </form>
+            )}
+          </DialogPrimitive.Content>
+        </DialogPrimitive.Portal>
+      </DialogPrimitive.Root>
     </div>
   )
 }
