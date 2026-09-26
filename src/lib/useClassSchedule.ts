@@ -56,14 +56,14 @@ export function sessionsFromClasses(rows: LiveClass[], tz: string): ClassSession
 }
 /** ★ HOW FAR AHEAD A CUSTOMER SEES (part 3, 2026-09-26): the owner's class horizon (class_settings_public.horizon_days), read once;
  *  null = not set, and every surface keeps its own window (7 days here, 21 in the wizard and the portal), exactly as before. */
-export type ClassHorizon = { days: number | null; nextBeyond: string | null }
+export type ClassHorizon = { days: number | null; nextBeyond: string | null; /** the owner's waitlist switch (2026-09-26): off, a full class says Full and takes no names */ waitlist: boolean }
 let horizonPromise: Promise<ClassHorizon> | null = null
 /** the owner's horizon and the first class a customer cannot see yet (so the page can say a later class exists) */
 export function classHorizon(): Promise<ClassHorizon> {
-  if (!horizonPromise) horizonPromise = fetch(`${SUPABASE_URL}/rest/v1/class_settings_public?business_id=eq.${BUSINESS_ID}&select=horizon_days,next_beyond_horizon`, { headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` } })
+  if (!horizonPromise) horizonPromise = fetch(`${SUPABASE_URL}/rest/v1/class_settings_public?business_id=eq.${BUSINESS_ID}&select=horizon_days,next_beyond_horizon,waitlist_enabled`, { headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` } })
     .then((r) => (r.ok ? r.json() : []))
-    .then((rows: Array<{ horizon_days: number | null; next_beyond_horizon: string | null }>) => { const v = rows?.[0]?.horizon_days; return { days: typeof v === 'number' && v > 0 ? v : null, nextBeyond: rows?.[0]?.next_beyond_horizon ?? null } })
-    .catch(() => ({ days: null, nextBeyond: null }))
+    .then((rows: Array<{ horizon_days: number | null; next_beyond_horizon: string | null; waitlist_enabled?: boolean | null }>) => { const v = rows?.[0]?.horizon_days; return { waitlist: rows?.[0]?.waitlist_enabled !== false, days: typeof v === 'number' && v > 0 ? v : null, nextBeyond: rows?.[0]?.next_beyond_horizon ?? null } })
+    .catch(() => ({ days: null, nextBeyond: null, waitlist: true }))
   return horizonPromise
 }
 export function classHorizonDays(): Promise<number | null> { return classHorizon().then((h) => h.days) }

@@ -287,15 +287,16 @@ export function BookingWizardBlock({
   const [service, setService] = useState<BookableService | null>(null)
   /* ★ A CLASS IS A DATED SESSION WITH SEATS (the classes arc, 2026-09-23): when the chosen service has upcoming classes,
      the wizard lists them instead of cutting hours into slots; the booking carries the occurrence and takes a seat. */
-  const [beyond, setBeyond] = useState<ClassHorizon>({ days: null, nextBeyond: null })
-  useEffect(() => { void classHorizon().then(setBeyond) }, [])
+  const [beyond, setBeyond] = useState<ClassHorizon>({ days: null, nextBeyond: null, waitlist: true })
+  useEffect(() => { void classHorizon().then((h) => { setWaitlistOn(h.waitlist !== false); return h }).then(setBeyond) }, [])
   const beyondLine = beyond.days && beyond.nextBeyond ? tr('schedule.moreLater').replace('{date}', new Date(beyond.nextBeyond).toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' })).replace('{days}', String(beyond.days)) : null
   const [classes, setClasses] = useState<LiveClass[]>([])
   /* ★ A COLD VISITOR SEES THE CLASSES (the owner, 2026-09-24): every dated class of the next three weeks is read at once and listed
      FIRST, before the services, with no link from anyone. A business with classes and no services is a class business, not an empty
      one, and its booking hours are the classes' own times. */
   const [upcoming, setUpcoming] = useState<LiveClass[]>([])
-  const [classDay, setClassDay] = useState<string | null>(null) // the chosen day on the strip; null = the first day that has a class
+  const [classDay, setClassDay] = useState<string | null>(null)
+  const [waitlistOn, setWaitlistOn] = useState(true) // ★ the owner's switch (2026-09-26): off, a full class is Full and takes no names // the chosen day on the strip; null = the first day that has a class
   const [occurrence, setOccurrence] = useState<LiveClass | null>(null)
   const [date, setDate] = useState<Date | null>(null)
   const [time, setTime] = useState<string | null>(null)
@@ -433,6 +434,8 @@ export function BookingWizardBlock({
             setOccurrence(occ)
             const l = classLocal(occ.start_at); setDate(l.date); setTime(l.time)
             const full = occ.is_full === true || (typeof occ.seats_left === 'number' && occ.seats_left <= 0)
+            const listOn = (await classHorizon()).waitlist !== false
+            if (full && !listOn) { setStep('service'); setLoading(false); return }
             setWaitlistMode(full)
             setStep(full ? 'details' : 'classflow')
             setLoading(false)
@@ -725,7 +728,7 @@ export function BookingWizardBlock({
                             {upcoming.filter((c) => classDayKey(c.start_at) === (classDay ?? (upcoming[0] ? classDayKey(upcoming[0].start_at) : null))).map((c) => {
                               const full = c.is_full === true || (typeof c.seats_left === 'number' && c.seats_left <= 0)
                               return (
-                                <button key={c.id} type="button" data-cold-class={c.id} data-class-full={full ? '1' : undefined}
+                                <button key={c.id} type="button" data-cold-class={c.id} data-class-full={full ? '1' : undefined} disabled={full && !waitlistOn} data-class-no-list={full && !waitlistOn ? '1' : undefined}
                                   onClick={() => {
                                     const svc = c.service_id ? services.find((x) => x.id === c.service_id) ?? null : null
                                     setService(svc); setOccurrence(c); setWaitlistMode(full)
@@ -734,7 +737,7 @@ export function BookingWizardBlock({
                                   }}
                                   className="flex items-center justify-between gap-3 rounded-xl border px-4 py-3 text-left text-sm transition-all hover:translate-y-(--hov-lift-sm)" style={{ borderColor: 'var(--wow-hairline)' }}>
                                   <span><span className="font-semibold">{c.title}</span> · {classDayLabel(c.start_at)} {to12h(classLocal(c.start_at).time)}{c.instructor ? ` · ${c.instructor}` : ''}</span>
-                                  <span className="text-xs">{full ? `${tr('booking.classFull')} · ${tr('booking.joinWaitlist')}` : typeof c.seats_left === 'number' ? `${c.seats_left} ${tr('schedule.left')}` : ''}</span>
+                                  <span className="text-xs">{full ? (waitlistOn ? `${tr('booking.classFull')} · ${tr('booking.joinWaitlist')}` : tr('booking.classFull')) : typeof c.seats_left === 'number' ? `${c.seats_left} ${tr('schedule.left')}` : ''}</span>
                                 </button>
                               )
                             })}
@@ -849,7 +852,7 @@ export function BookingWizardBlock({
                               <button
                                 key={c.id}
                                 type="button"
-                                data-class-full={full ? '1' : undefined}
+                                data-class-full={full ? '1' : undefined} disabled={full && !waitlistOn} data-class-no-list={full && !waitlistOn ? '1' : undefined}
                                 onClick={() => {
                                   setOccurrence(c)
                                   setWaitlistMode(full)
@@ -861,7 +864,7 @@ export function BookingWizardBlock({
                                 style={selected ? { backgroundImage: 'var(--wow-grad-brand)', borderColor: 'transparent', color: 'white' } : { borderColor: 'var(--wow-hairline)' }}
                               >
                                 <span><span className="font-semibold">{classDayLabel(c.start_at)}</span> · {to12h(classLocal(c.start_at).time)}{c.instructor ? ` · ${c.instructor}` : ''}</span>
-                                <span className="text-xs">{full ? `${tr('booking.classFull')} · ${tr('booking.joinWaitlist')}` : typeof c.seats_left === 'number' ? `${c.seats_left} ${tr('schedule.left')}` : ''}</span>
+                                <span className="text-xs">{full ? (waitlistOn ? `${tr('booking.classFull')} · ${tr('booking.joinWaitlist')}` : tr('booking.classFull')) : typeof c.seats_left === 'number' ? `${c.seats_left} ${tr('schedule.left')}` : ''}</span>
                               </button>
                             )
                           })}

@@ -28,7 +28,7 @@ export function ClassScheduleWeekBlock({
   body?: string
 }) {
   const sessions = useClassSchedule()
-  const [beyond, setBeyond] = useState<ClassHorizon>({ days: null, nextBeyond: null })
+  const [beyond, setBeyond] = useState<ClassHorizon>({ days: null, nextBeyond: null, waitlist: true })
   useEffect(() => { void classHorizon().then(setBeyond) }, [])
   /* ★ a later class exists beyond the owner's window (part 3's small one): say so instead of showing nothing */
   const beyondLine = beyond.days && beyond.nextBeyond ? tr('schedule.moreLater').replace('{date}', new Date(beyond.nextBeyond).toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' })).replace('{days}', String(beyond.days)) : null
@@ -75,7 +75,9 @@ export function ClassScheduleWeekBlock({
                           <span className="inline-flex items-center gap-1"><Users className="h-3.5 w-3.5" /> {s.capacity} {tr('schedule.spots')}</span>
                         ) : null}
                         {s.occurrenceId && s.serviceId && (
-                          <a href={`/book?occurrence=${s.occurrenceId}`} className="font-semibold text-fam-accent-text hover:underline">{!s.isFull && (s.seatsLeft == null || s.seatsLeft > 0) ? tr('schedule.book') : tr('schedule.waitlist')}</a>
+                          (s.isFull || (typeof s.seatsLeft === 'number' && s.seatsLeft <= 0)) && beyond.waitlist === false
+                            ? <span data-schedule-full-no-list className="font-semibold text-fam-ink-muted">{tr('schedule.full')}</span>
+                            : <a href={`/book?occurrence=${s.occurrenceId}`} className="font-semibold text-fam-accent-text hover:underline">{!s.isFull && (s.seatsLeft == null || s.seatsLeft > 0) ? tr('schedule.book') : tr('schedule.waitlist')}</a>
                         )}
                       </div>
                     )}

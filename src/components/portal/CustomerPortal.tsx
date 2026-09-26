@@ -17,7 +17,7 @@ import { hasPhone } from '~/lib/phone'
 const HEADERS = { 'Content-Type': 'application/json', apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` }
 const SESSION_KEY = 'zmode_portal_session'
 type Phase = 'checking' | 'off' | 'phone' | 'code' | 'home' | 'classes' | 'booking' | 'held'
-type Payload = { customer: { firstName: string | null; lastName: string | null }; bookings: Array<{ id: string; startTime: string; status: string; upcoming: boolean; serviceName?: string | null; classTitle?: string | null; seatNo?: number | null; cancellable?: boolean }>; packs: Array<{ id: string; packName?: string | null; balance: number; totalGranted?: number; status: string; expiresAt?: string | null }> }
+type Payload = { waiting?: Array<{ occurrenceId: string; classTitle: string | null; startTime: string; position: number }>; customer: { firstName: string | null; lastName: string | null }; bookings: Array<{ id: string; startTime: string; status: string; upcoming: boolean; serviceName?: string | null; classTitle?: string | null; seatNo?: number | null; cancellable?: boolean }>; packs: Array<{ id: string; packName?: string | null; balance: number; totalGranted?: number; status: string; expiresAt?: string | null }> }
 
 const money = (n: number) => moneyShort(n)
 const when = (iso: string) => new Date(iso).toLocaleString(undefined, { weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })
@@ -117,6 +117,11 @@ export function CustomerPortal() {
     const restored = data.creditRestored === true
     setCancelAsk({ id, words: restored ? tr('portal.cancelBack') : tr('portal.cancelKeep') })
   }
+  /* ★ LEAVING A WAITING LIST (2026-09-26): the customer's own entry, through portal-cancel; the list re-reads */
+  const leaveList = async (occurrenceId: string) => {
+    if (!token) return
+    setBusy(true); await fn('portal-cancel', { businessId: BUSINESS_ID, waitlistOccurrenceId: occurrenceId }, token); await load(token); setBusy(false)
+  }
   const cancelNow = async () => {
     if (!token || !cancelAsk) return
     setBusy(true); await fn('portal-cancel', { businessId: BUSINESS_ID, bookingId: cancelAsk.id }, token); setCancelAsk(null); await load(token); setBusy(false)
@@ -196,6 +201,19 @@ export function CustomerPortal() {
           ))}
         </div>
       </Box>
+      {(me?.waiting ?? []).length > 0 && (
+        <Box tag="waiting">
+          <h4 className="font-display text-base font-semibold text-ink-900">{tr('portal.waiting')}</h4>
+          <div className="mt-2 grid gap-2 text-sm text-ink-700">
+            {(me?.waiting ?? []).map((w) => (
+              <div key={w.occurrenceId} data-portal-waiting={w.occurrenceId} className="flex flex-wrap items-center justify-between gap-2 rounded-xl border px-3 py-2" style={{ borderColor: 'var(--wow-hairline)' }}>
+                <span><strong>{w.classTitle ?? ''}</strong> · {when(w.startTime)} · {tr('booking.waitlistPosition')} {w.position}</span>
+                <button type="button" data-portal-action="leave-list" disabled={busy} onClick={() => void leaveList(w.occurrenceId)} className="text-xs text-ink-600 underline-offset-2 hover:underline">{tr('portal.leaveList')}</button>
+              </div>
+            ))}
+          </div>
+        </Box>
+      )}
     </div>
   )
 }
