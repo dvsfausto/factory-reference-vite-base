@@ -13,7 +13,7 @@ import { tr } from '~/lib/i18n'
  */
 export type HeldOptions = { packs: Array<{ id: string; name: string; credits: number; price: number }>; single: { amount: number; share_token: string | null; link: string } | null }
 export type HeldEntry = { bookingId: string; token: string; initial: 'pay' | 'confirming' | 'after'; expiresAt?: string | null; options?: HeldOptions | null; note?: string | null }
-type Status = { status: string; held: boolean; hold_expires_at: string | null; options?: HeldOptions | null; seat_no: number | null; seats_total: number | null; occurrence: { id: string; title: string; start_at: string } | null; invoice: { amount: number; paid: boolean; share_token: string | null } | null; pack: { name: string; balance: number } | null; waiver: { signed: boolean; link: string | null } | null }
+type Status = { status: string; held: boolean; hold_expires_at: string | null; options?: HeldOptions | null; seat_no: number | null; seats_total: number | null; occurrence: { id: string; title: string; start_at: string; room_key?: string | null } | null; invoice: { amount: number; paid: boolean; share_token: string | null } | null; pack: { name: string; balance: number } | null; waiver: { signed: boolean; link: string | null } | null }
 type Phase = 'pay' | 'confirming' | 'waiver' | 'spot' | 'done' | 'expired' | 'released'
 /** ★ THE ROOM (2026-09-24): rows of uneven length with the things that are not spots, as the owner laid it out (rooms_public) */
 type RoomItem = { kind: string; no?: number; text?: string }
@@ -105,8 +105,11 @@ export function HeldBookingFlow({ entry, onReleased }: { entry: HeldEntry; onRel
     void (async () => {
       const { data } = await call('seats'); setSeats(((data.seats as Array<{ seat_no: number; taken: boolean; mine: boolean }>) ?? []))
       try {
-        const r = await fetch(`${SUPABASE_URL}/rest/v1/rooms_public?business_id=eq.${BUSINESS_ID}&select=name,front,rows,spot_kind`, { headers: HEADERS })
-        const rows = (await r.json()) as Room[]
+        /* ★ THE CLASS'S ROOM (part 2, 2026-09-26): the room this class names, else the business's default; a business with one room sees no change */
+        const key = status?.occurrence?.room_key ?? null
+        const r = await fetch(`${SUPABASE_URL}/rest/v1/rooms_public?business_id=eq.${BUSINESS_ID}&select=name,front,rows,spot_kind,room_key,is_default${key ? `&room_key=eq.${key}` : '&is_default=eq.true'}`, { headers: HEADERS })
+        let rows = (await r.json()) as Room[]
+        if (!rows[0]) { const d = await fetch(`${SUPABASE_URL}/rest/v1/rooms_public?business_id=eq.${BUSINESS_ID}&select=name,front,rows,spot_kind,room_key,is_default&is_default=eq.true`, { headers: HEADERS }); rows = (await d.json()) as Room[] }
         if (rows[0] && Array.isArray(rows[0].rows) && rows[0].rows.length) setRoom(rows[0])
       } catch { /* a plain grid then */ }
     })()
