@@ -17,6 +17,7 @@ import { tr } from "~/lib/i18n";
 // whatever the family theme says (a friendly header on Athletic Dark has no invert of its own). Light sites: unchanged.
 const isDarkSite = (SITE as { polarity?: string }).polarity === "dark"
 import { HAS_PHONE } from '~/lib/phone'
+import { SELLS } from '~/lib/sells'
 // PRAISE-61 — nav links a customer chose to hide from the menu (design_dna.chrome.nav.hidden →
 // SITE.hiddenNav). ABSENT/empty → nothing filtered → byte-identical to today. Filtering only; the
 // pages still exist and are reachable by URL. Keys: pricing/reviews/about/contact, and since 2026-09-29 the two
@@ -25,6 +26,8 @@ const HIDDEN_NAV: string[] = [
   ...((SITE as { hiddenNav?: string[] }).hiddenNav ?? []),
   // 2026-09-04: /reviews 404s with no reviews (routes/reviews.tsx), so the link goes with it.
   ...(REVIEWS.length === 0 ? ['reviews'] : []),
+  // what the business sells (2026-09-29): a business that does not sell services has no Services entry
+  ...(SELLS.services ? [] : ['services']),
 ];
 
 // Character-aware root header. The shell sees SITE (not the homepage layout), so

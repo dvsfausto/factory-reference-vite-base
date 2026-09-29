@@ -11,6 +11,7 @@ import { siteDecor } from "~/lib/decor";
 import { tr } from "~/lib/i18n";
 import { HAS_PHONE } from '~/lib/phone'
 import { HAS_EMAIL } from '~/lib/email'
+import { SELLS } from '~/lib/sells'
 
 // Stage 7 (2026-09-09): on a dark-polarity site every chrome ground is dark, so the logo takes its light rendering
 // whatever the family theme says (a friendly header on Athletic Dark has no invert of its own). Light sites: unchanged.
@@ -77,7 +78,8 @@ function SocialRow({ t }: { t: FooterTheme }) {
   );
 }
 function ServicesCol({ t }: { t: FooterTheme }) {
-  if (SERVICES.length === 0) return null;
+  // what the business sells (2026-09-29): no Services column for a business that does not sell services
+  if (SERVICES.length === 0 || !SELLS.services) return null;
   return (
     <div>
       <h4 className={`text-sm font-semibold mb-4 ${t.heading}`}>{tr('footer.services')}</h4>

@@ -27,6 +27,7 @@ import {
   type ServiceAddress,
 } from '~/lib/booking-shape'
 import { liveClassesUrl, classWindowDays, classHorizon, type ClassHorizon, type LiveClass } from '~/lib/useClassSchedule'
+import { SELLS } from '~/lib/sells'
 import {
   BOOKING,
   BUSINESS_ID,
@@ -423,8 +424,10 @@ export function BookingWizardBlock({
         const cfg = (await cfgRes.json()) as Array<{ features_enabled: BookingFeatures | null }>
         if (cancelled) return
         setFeatures(cfg[0]?.features_enabled ?? null)
+        /* ★ What the business sells (2026-09-29): the Services group is drawn only for a business that sells services (an absent
+           SITE.sells reads as services on, so the live rows decide as before); a studio that sells only classes opens on its classes. */
         setServices(
-          svc.map((s) => ({
+          (SELLS.services ? svc : []).map((s) => ({
             ...s,
             price: s.price == null ? null : Number(s.price),
             duration_minutes:
