@@ -558,6 +558,7 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
           eyebrow={block.params?.eyebrow as string | undefined}
           heading={block.params?.heading as string | undefined}
           body={block.params?.body as string | undefined}
+          image={block.params?.image as { url: string; alt?: string; credit?: string; focus?: string } | undefined}
           headingLevel={opts?.headingLevel}
         />
       )
