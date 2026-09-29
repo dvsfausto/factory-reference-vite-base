@@ -17,7 +17,7 @@ import { hasPhone } from '~/lib/phone'
 const HEADERS = { 'Content-Type': 'application/json', apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` }
 const SESSION_KEY = 'zmode_portal_session'
 type Phase = 'checking' | 'off' | 'phone' | 'code' | 'home' | 'classes' | 'booking' | 'held'
-type Payload = { waiting?: Array<{ occurrenceId: string; classTitle: string | null; startTime: string; position: number }>; customer: { firstName: string | null; lastName: string | null }; bookings: Array<{ id: string; startTime: string; status: string; upcoming: boolean; serviceName?: string | null; classTitle?: string | null; seatNo?: number | null; cancellable?: boolean }>; packs: Array<{ id: string; packName?: string | null; balance: number; totalGranted?: number; status: string; expiresAt?: string | null }> }
+type Payload = { waiting?: Array<{ occurrenceId: string; classTitle: string | null; startTime: string; position: number }>; /* a seat held while paying is not a booking (the owner, 2026-09-29) */ held?: Array<{ id: string; classTitle: string | null; startTime: string; expiresAt: string }>; customer: { firstName: string | null; lastName: string | null }; bookings: Array<{ id: string; startTime: string; status: string; upcoming: boolean; serviceName?: string | null; classTitle?: string | null; seatNo?: number | null; cancellable?: boolean }>; packs: Array<{ id: string; packName?: string | null; balance: number; totalGranted?: number; status: string; expiresAt?: string | null }> }
 
 const money = (n: number) => moneyShort(n)
 const when = (iso: string) => new Date(iso).toLocaleString(undefined, { weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })
@@ -189,6 +189,11 @@ export function CustomerPortal() {
       <Box tag="bookings">
         <h4 className="font-display text-base font-semibold text-ink-900">{tr('portal.upcoming')}</h4>
         <div className="mt-2 grid gap-2 text-sm text-ink-700">
+          {(me?.held ?? []).map((h) => (
+            <div key={h.id} data-portal-held={h.id} className="rounded-xl border border-dashed px-3 py-2" style={{ borderColor: 'var(--wow-hairline)' }}>
+              {tr('portal.seatHeld').replace('{class}', h.classTitle ?? '').replace('{when}', when(h.startTime)).replace('{until}', when(h.expiresAt))}
+            </div>
+          ))}
           {upcoming.length === 0 && <span>{tr('portal.nothingUpcoming')}</span>}
           {upcoming.map((b) => (
             <div key={b.id} data-portal-booking={b.id} className="flex flex-wrap items-center justify-between gap-2 rounded-xl border px-3 py-2" style={{ borderColor: 'var(--wow-hairline)' }}>
