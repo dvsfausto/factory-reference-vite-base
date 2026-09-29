@@ -65,18 +65,18 @@ export function legibleGlassLevel(asked: GlassLevel, photoMean: [number, number,
   return 'standard'
 }
 /** the mean tone of the photo behind the panel: the panel's own box, mapped onto the image as object-cover draws it */
-function photoToneBehind(img: HTMLImageElement, panel: HTMLElement): [number, number, number] | null {
+function photoToneBehind(img: HTMLImageElement, panel: HTMLElement, source: HTMLImageElement = img): [number, number, number] | null {
   try {
     const ir = img.getBoundingClientRect(); const pr = panel.getBoundingClientRect()
-    if (!img.naturalWidth || !ir.width || !pr.width) return null
-    const scale = Math.max(ir.width / img.naturalWidth, ir.height / img.naturalHeight)
-    const dw = img.naturalWidth * scale; const dh = img.naturalHeight * scale
+    if (!source.naturalWidth || !ir.width || !pr.width) return null
+    const scale = Math.max(ir.width / source.naturalWidth, ir.height / source.naturalHeight)
+    const dw = source.naturalWidth * scale; const dh = source.naturalHeight * scale
     const ox = (ir.width - dw) / 2; const oy = (ir.height - dh) / 2
     const sx = Math.max(0, (pr.left - ir.left - ox) / scale); const sy = Math.max(0, (pr.top - ir.top - oy) / scale)
-    const sw = Math.min(img.naturalWidth - sx, pr.width / scale); const sh = Math.min(img.naturalHeight - sy, pr.height / scale)
+    const sw = Math.min(source.naturalWidth - sx, pr.width / scale); const sh = Math.min(source.naturalHeight - sy, pr.height / scale)
     const c = document.createElement('canvas'); c.width = 24; c.height = 16
     const ctx = c.getContext('2d'); if (!ctx) return null
-    ctx.drawImage(img, sx, sy, sw, sh, 0, 0, 24, 16)
+    ctx.drawImage(source, sx, sy, sw, sh, 0, 0, 24, 16)
     const d = ctx.getImageData(0, 0, 24, 16).data
     let r = 0, g = 0, b = 0; const n = d.length / 4
     for (let i = 0; i < d.length; i += 4) { r += d[i]!; g += d[i + 1]!; b += d[i + 2]! }
@@ -89,8 +89,18 @@ function useLegibleGlass(asked: GlassLevel) {
     const panel = panelRef.current; if (!panel) return
     const section = panel.closest('section'); const img = section?.querySelector<HTMLImageElement>('img[data-hero-photo]')
     if (!img) return
+    /* the displayed photo is never touched: a separate probe image, loaded with CORS, is what the canvas reads; a host that
+       sends no CORS header fails the probe and the asked level stands */
     const apply = () => {
-      const tone = photoToneBehind(img, panel); if (!tone) return
+      const probe = new Image()
+      probe.crossOrigin = 'anonymous'
+      probe.onload = () => {
+        const tone = photoToneBehind(img, panel, probe); if (!tone) return
+        finish(tone)
+      }
+      probe.src = img.currentSrc || img.src
+    }
+    const finish = (tone: [number, number, number]) => {
       const h1 = panel.querySelector('h1'); const inkCss = h1 ? getComputedStyle(h1).color : ''
       const m = inkCss.match(/(\d+)[,\s]+(\d+)[,\s]+(\d+)/)
       const ink: [number, number, number] = m ? [Number(m[1]), Number(m[2]), Number(m[3])] : [28, 26, 24]
