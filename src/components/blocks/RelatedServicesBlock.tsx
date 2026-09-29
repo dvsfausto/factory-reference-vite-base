@@ -36,7 +36,9 @@ export function RelatedServicesBlock({
     >
       <div className="container-x py-section">
         <h2 className="text-center font-display text-3xl leading-tight text-[var(--fam-ink,var(--color-ink-900))] sm:text-4xl">{tr('tmpl.youMayAlsoNeed')}</h2>
-        <div className="mx-auto mt-10 grid max-w-3xl grid-cols-1 gap-6 md:grid-cols-2">
+        {/* ★ THE COLUMNS FOLLOW THE COUNT (the owner, 2026-09-29): three related services sat two and one, four sat two and two, on every
+            service page. Three fill three columns and four fill four on a wide screen; one column on a phone. */}
+        <div className={`mx-auto mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 ${related.length >= 4 ? 'max-w-6xl lg:grid-cols-4' : related.length === 3 ? 'max-w-5xl lg:grid-cols-3' : 'max-w-3xl'}`}>
           {related.map((r, i) => (
             <motion.div
               key={r.href}

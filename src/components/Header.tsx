@@ -19,7 +19,8 @@ const isDarkSite = (SITE as { polarity?: string }).polarity === "dark"
 import { HAS_PHONE } from '~/lib/phone'
 // PRAISE-61 — nav links a customer chose to hide from the menu (design_dna.chrome.nav.hidden →
 // SITE.hiddenNav). ABSENT/empty → nothing filtered → byte-identical to today. Filtering only; the
-// pages still exist and are reachable by URL. Keys: pricing/reviews/about/contact.
+// pages still exist and are reachable by URL. Keys: pricing/reviews/about/contact, and since 2026-09-29 the two
+// dropdowns too: areas/services (a photographer wanted her areas out of the menu; the area pages stay live).
 const HIDDEN_NAV: string[] = [
   ...((SITE as { hiddenNav?: string[] }).hiddenNav ?? []),
   // 2026-09-04: /reviews 404s with no reviews (routes/reviews.tsx), so the link goes with it.
@@ -366,7 +367,7 @@ export function Header() {
       {/* Services nav omitted when the site has no service pages (e.g. a
           generic-vertical business whose owner supplied none) — no empty
           dropdown, no dead /services link. Mirrors the AREAS guard below. */}
-      {SERVICES.length > 0 && (
+      {SERVICES.length > 0 && !HIDDEN_NAV.includes('services') && (
         <div
           className="relative"
           onMouseEnter={() => setOpenMenu("services")}
@@ -397,7 +398,7 @@ export function Header() {
 
       {/* Areas nav omitted when the site has no service-area pages (e.g. a
           single-area business) — no empty dropdown, no dead /areas link. */}
-      {AREAS.length > 0 && (
+      {AREAS.length > 0 && !HIDDEN_NAV.includes('areas') && (
         <div
           className="relative"
           onMouseEnter={() => setOpenMenu("areas")}
@@ -456,7 +457,7 @@ export function Header() {
       {/* Absolute under the bar, not fixed: the header's backdrop-blur is a containing block for fixed children. */}
       <div className={`absolute inset-x-0 top-full z-[60] ${t.mobilePanel} lg:hidden overflow-y-auto`} style={{ height: 'calc(100dvh - 5rem)' }}>
           <div className="container-x pb-12 space-y-6">
-            {SERVICES.length > 0 && (
+            {SERVICES.length > 0 && !HIDDEN_NAV.includes('services') && (
               <div>
                 <div className={`text-xs font-semibold ${t.mobileLabel} uppercase tracking-wider mb-2`}>{tr('nav.services')}</div>
                 {SERVICES.map((s) => (
@@ -466,7 +467,7 @@ export function Header() {
                 ))}
               </div>
             )}
-            {AREAS.length > 0 && (
+            {AREAS.length > 0 && !HIDDEN_NAV.includes('areas') && (
               <div>
                 <div className={`text-xs font-semibold ${t.mobileLabel} uppercase tracking-wider mb-2`}>{tr('nav.areas')}</div>
                 {AREAS.map((a) => (

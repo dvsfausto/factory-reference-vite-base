@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import { tr } from '~/lib/i18n'
+import { paragraphs } from '~/lib/paragraphs'
 import { Link } from '@tanstack/react-router'
 import { MapPin, Quote, Star } from 'lucide-react'
 import type { ServicePageData } from '~/lib/types/page-types'
@@ -81,7 +82,7 @@ export function ServiceDetailsBlock({
             {howPrice.title}
           </h2>
           {howPrice.body && (
-            <p className="mt-4 text-lg leading-relaxed text-[var(--fam-ink,var(--color-ink-700))]">{howPrice.body}</p>
+            <div className="mt-4 space-y-4">{paragraphs(howPrice.body).map((p, i) => (<p key={i} className="text-lg leading-relaxed text-[var(--fam-ink,var(--color-ink-700))]">{p}</p>))}</div>
           )}
         </div>
         <ul className="mt-10 space-y-6">
@@ -118,7 +119,7 @@ export function ServiceDetailsBlock({
             {scenarios.title}
           </h2>
           {scenarios.intro && (
-            <p className="mt-4 text-lg leading-relaxed text-[var(--fam-ink,var(--color-ink-700))]">{scenarios.intro}</p>
+            <div className="mt-4 space-y-4">{paragraphs(scenarios.intro).map((p, i) => (<p key={i} className="text-lg leading-relaxed text-[var(--fam-ink,var(--color-ink-700))]">{p}</p>))}</div>
           )}
         </div>
         <div className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
@@ -148,7 +149,7 @@ export function ServiceDetailsBlock({
             {pricing.title}
           </h2>
           {pricing.body && (
-            <p className="mt-4 text-lg leading-relaxed text-[var(--fam-ink,var(--color-ink-700))]">{pricing.body}</p>
+            <div className="mt-4 space-y-4">{paragraphs(pricing.body).map((p, i) => (<p key={i} className="text-lg leading-relaxed text-[var(--fam-ink,var(--color-ink-700))]">{p}</p>))}</div>
           )}
         </div>
         {showRanges && pricing.ranges && (
@@ -210,7 +211,7 @@ export function ServiceDetailsBlock({
             {coverage.title}
           </h2>
           {coverage.intro && (
-            <p className="mt-4 text-lg leading-relaxed text-[var(--fam-ink,var(--color-ink-700))]">{coverage.intro}</p>
+            <div className="mt-4 space-y-4">{paragraphs(coverage.intro).map((p, i) => (<p key={i} className="text-lg leading-relaxed text-[var(--fam-ink,var(--color-ink-700))]">{p}</p>))}</div>
           )}
         </div>
         <div className="mt-8 flex flex-wrap justify-center gap-2">

@@ -1,3 +1,4 @@
+import { paragraphs } from '~/lib/paragraphs'
 import { motion, useReducedMotion } from 'framer-motion'
 import { Check } from 'lucide-react'
 import type { ServicePageData } from '~/lib/types/page-types'
@@ -44,7 +45,7 @@ export function ServiceWhatWeCoverBlock({
             {whatWeBuy.title}
           </h2>
           {hasBody && (
-            <p className="mt-4 text-lg leading-relaxed text-[var(--fam-ink,var(--color-ink-700))]">{whatWeBuy.body}</p>
+            <div className="mt-4 space-y-4">{paragraphs(whatWeBuy.body).map((p, i) => (<p key={i} className="text-lg leading-relaxed text-[var(--fam-ink,var(--color-ink-700))]">{p}</p>))}</div>
           )}
         </div>
 
