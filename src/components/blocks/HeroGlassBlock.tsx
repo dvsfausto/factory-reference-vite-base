@@ -25,6 +25,22 @@ import { hasText } from '~/lib/has-text'
 // TOKEN DISCIPLINE as HeroBackgroundBlock: bg-cta / text-cta-foreground, fam-accent(-text), fam-card, fam-ink(-muted),
 // fam-hairline, rounded-* (DNA), font-display (DNA), elev-5. Never bg-brand-* / .btn-primary / .btn.
 // Props identical to HeroBlock; decorativeAsset accepted for parity but unused. Returns an Element (no null).
+/* ★ HOW SEE-THROUGH THE GLASS IS, SET BY THE OWNER (2026-09-29: a photographer could not see the couple behind the panel).
+   Three levels, each a literal class pair so Tailwind emits them; the floor is the lightest tint that still reads over a
+   photo that averages to black behind the blur: at 25% the panel lands at luminance ≈0.25 under near-black ink, 4.9:1,
+   above WCAG AA for body text; at 15% it would be 3.3:1 and fail. On a phone the panel covers most of the screen and the
+   blur has less photo to average, so each level keeps a heavier tint there. Set by asking ("make it lighter", "more
+   transparent"); absent → standard, byte-identical to before. Read on the served page through data-glass-level. */
+export const GLASS_LEVELS = {
+  standard: 'bg-fam-card/80 sm:bg-fam-card/55',
+  lighter: 'bg-fam-card/65 sm:bg-fam-card/40',
+  lightest: 'bg-fam-card/50 sm:bg-fam-card/25',
+} as const
+export type GlassLevel = keyof typeof GLASS_LEVELS
+export function glassLevelOf(site: { hero?: { glass_level?: unknown } }): GlassLevel {
+  const v = site?.hero?.glass_level
+  return typeof v === 'string' && v in GLASS_LEVELS ? (v as GlassLevel) : 'standard'
+}
 export function HeroGlassBlock({
   site = SITE,
   trustItems = [tr('trust.freeEstimates'), tr('trust.onSchedule'), tr('trust.localTeam'), tr('trust.satisfactionGuaranteed')],
@@ -44,7 +60,8 @@ export function HeroGlassBlock({
         <div
           data-enter="up"
           data-hero-panel="glass"
-          className="max-w-2xl rounded-3xl border border-fam-card/70 bg-fam-card/80 p-7 elev-5 backdrop-blur-2xl backdrop-saturate-150 sm:bg-fam-card/55 sm:p-9"
+          data-glass-level={glassLevelOf(site)}
+          className={`max-w-2xl rounded-3xl border border-fam-card/70 ${GLASS_LEVELS[glassLevelOf(site)]} p-7 elev-5 backdrop-blur-2xl backdrop-saturate-150 sm:p-9`}
         >
           {hasText(site.hero.kicker) && (
             <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] text-fam-accent-text">
