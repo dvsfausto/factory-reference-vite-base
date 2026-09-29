@@ -8,7 +8,9 @@ import { tr } from '~/lib/i18n'
  * ★★★ THE SEAT IS ONLY THEIRS ONCE IT IS PAID OR SPENT (the owner, 2026-09-24).
  * After a class booking lands this takes over from the wizard: a HELD seat shows the clock and the two doors (a pack, or a
  * single class when the owner allows it), both on the business's own Stripe; back from Stripe it reads the booking until the
- * rows say confirmed; then the waiver (first time only), then the spot pick (classes with numbered spots), then done.
+ * rows say confirmed; then the waiver (first time only), then the spot pick (only a class IN A ROOM), then done.
+ * ★ NO ROOM MEANS A SPOT COUNT (the owner, 2026-09-29): a room belongs to the class kind, a dated class may override it, and a
+ * class with no room has a count and nothing to pick. The hold keeps a numbered spot server-side; the customer never sees it.
  * A booking confirmed at once (a credit spent) enters at the waiver or the spot. Every fact shown is read from booking-hold.
  */
 export type HeldOptions = { packs: Array<{ id: string; name: string; credits: number; price: number }>; single: { amount: number; share_token: string | null; link: string } | null }
@@ -62,11 +64,12 @@ export function HeldBookingFlow({ entry, onReleased }: { entry: HeldEntry; onRel
     const r = await fetch(`${SUPABASE_URL}/functions/v1/booking-hold`, { method: 'POST', headers: HEADERS, body: JSON.stringify({ businessId: BUSINESS_ID, bookingId: entry.bookingId, token: entry.token, action, ...extra }) })
     return { ok: r.ok, data: (await r.json().catch(() => ({}))) as Record<string, unknown> }
   }
-  /* where a confirmed booking goes next: the waiver first time only, then the spot when the class has numbered spots */
+  /* the picker exists only for a class in a room (the owner's model, 2026-09-29): room_key null = a spot count, never a pick */
+  const spotOrDone = (s: Status | null) => (s && s.occurrence?.room_key && s.seats_total && s.seats_total > 0 ? 'spot' : 'done') as Phase
+  /* where a confirmed booking goes next: the waiver first time only, then the spot when the class is in a room */
   const afterConfirmed = (s: Status) => {
     if (s.waiver && !s.waiver.signed && s.waiver.link) return 'waiver' as Phase
-    if (s.seats_total && s.seats_total > 0) return 'spot' as Phase
-    return 'done' as Phase
+    return spotOrDone(s)
   }
   const readStatus = async (): Promise<Status | null> => {
     const { ok, data } = await call('status')
@@ -104,12 +107,12 @@ export function HeldBookingFlow({ entry, onReleased }: { entry: HeldEntry; onRel
     if (phase !== 'spot') return
     void (async () => {
       const { data } = await call('seats'); setSeats(((data.seats as Array<{ seat_no: number; taken: boolean; mine: boolean }>) ?? []))
+      /* ★ THE CLASS'S OWN ROOM ONLY (the owner's model, 2026-09-29): the resolved room_key, never the business's default room */
+      const key = status?.occurrence?.room_key ?? null
+      if (!key) return
       try {
-        /* ★ THE CLASS'S ROOM (part 2, 2026-09-26): the room this class names, else the business's default; a business with one room sees no change */
-        const key = status?.occurrence?.room_key ?? null
-        const r = await fetch(`${SUPABASE_URL}/rest/v1/rooms_public?business_id=eq.${BUSINESS_ID}&select=name,front,rows,spot_kind,room_key,is_default${key ? `&room_key=eq.${key}` : '&is_default=eq.true'}`, { headers: HEADERS })
-        let rows = (await r.json()) as Room[]
-        if (!rows[0]) { const d = await fetch(`${SUPABASE_URL}/rest/v1/rooms_public?business_id=eq.${BUSINESS_ID}&select=name,front,rows,spot_kind,room_key,is_default&is_default=eq.true`, { headers: HEADERS }); rows = (await d.json()) as Room[] }
+        const r = await fetch(`${SUPABASE_URL}/rest/v1/rooms_public?business_id=eq.${BUSINESS_ID}&select=name,front,rows,spot_kind,room_key&room_key=eq.${encodeURIComponent(key)}`, { headers: HEADERS })
+        const rows = (await r.json()) as Room[]
         if (rows[0] && Array.isArray(rows[0].rows) && rows[0].rows.length) setRoom(rows[0])
       } catch { /* a plain grid then */ }
     })()
@@ -146,6 +149,8 @@ export function HeldBookingFlow({ entry, onReleased }: { entry: HeldEntry; onRel
     setBusy(null)
   }
   const mine = useMemo(() => seats.find((s) => s.mine)?.seat_no ?? status?.seat_no ?? null, [seats, status])
+  /* no room: the count is said, the number is not (the owner's model, 2026-09-29) */
+  const inRoom = !!status?.occurrence?.room_key
   const when = status?.occurrence ? new Date(status.occurrence.start_at) : null
   const whenWords = when ? when.toLocaleString(undefined, { weekday: 'long', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) : ''
 
@@ -200,7 +205,7 @@ export function HeldBookingFlow({ entry, onReleased }: { entry: HeldEntry; onRel
         <p className="mt-1 text-sm text-ink-700">{tr('booking.waiverAsk')}</p>
         <div className="mt-4 flex flex-wrap gap-3">
           <a href={withReturn(status?.waiver?.link ?? '#', entry)} data-held-action="sign" className="inline-flex h-11 items-center justify-center rounded-xl px-6 font-display text-sm font-semibold text-fam-on-dark" style={{ backgroundImage: 'var(--wow-grad-brand)' }}>{tr('booking.waiverSign')}</a>
-          <button type="button" data-held-action="signed" onClick={() => setPhase(status && status.seats_total ? 'spot' : 'done')} className="inline-flex h-11 items-center rounded-xl border px-5 text-sm font-semibold text-ink-900" style={{ borderColor: 'var(--wow-hairline)' }}>{tr('booking.waiverDone')}</button>
+          <button type="button" data-held-action="signed" onClick={() => setPhase(spotOrDone(status))} className="inline-flex h-11 items-center rounded-xl border px-5 text-sm font-semibold text-ink-900" style={{ borderColor: 'var(--wow-hairline)' }}>{tr('booking.waiverDone')}</button>
         </div>
       </Card>
     )
@@ -255,7 +260,7 @@ export function HeldBookingFlow({ entry, onReleased }: { entry: HeldEntry; onRel
       <span className="mx-auto grid h-14 w-14 place-items-center rounded-full text-fam-on-dark" style={{ backgroundImage: 'var(--wow-grad-brand)' }}><Check className="h-7 w-7" /></span>
       <h3 className="mt-5 font-display text-2xl font-semibold tracking-tight text-ink-900">{tr('booking.seatYours')}</h3>
       <p className="mx-auto mt-2 max-w-md leading-relaxed text-ink-700">
-        {status?.occurrence ? `${status.occurrence.title}, ${whenWords}.` : ''} {mine ? tr('booking.yourSpot').replace('{n}', String(mine)) + '.' : ''} {status?.pack ? tr(status.pack.balance === 1 ? 'booking.classLeftOne' : 'booking.classesLeft').replace('{n}', String(status.pack.balance)).replace('{pack}', status.pack.name) : ''}
+        {status?.occurrence ? `${status.occurrence.title}, ${whenWords}.` : ''} {inRoom && mine ? tr('booking.yourSpot').replace('{n}', String(mine)) + '.' : !inRoom && status?.seats_total ? tr('booking.spotSaved').replace('{n}', String(status.seats_total)) : ''} {status?.pack ? tr(status.pack.balance === 1 ? 'booking.classLeftOne' : 'booking.classesLeft').replace('{n}', String(status.pack.balance)).replace('{pack}', status.pack.name) : ''}
       </p>
     </div>
   )

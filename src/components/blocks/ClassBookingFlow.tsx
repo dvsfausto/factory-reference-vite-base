@@ -9,7 +9,8 @@ import type { HeldEntry, HeldOptions } from '~/components/blocks/HeldBookingFlow
  *   the class first (they came for it) → 1 their number (new here: name too) → 2 the code (the account is made by the code, no
  *   password; it is what makes the pack theirs and stops a double booking) → 3 the class is booked: a credit is spent, or the seat is
  *   HELD while they buy a pack or a single class → 4 the seat is locked → 5 the waiver, first time only, now that the seat is theirs
- *   (HeldBookingFlow; it comes back after signing) → 6 the spot pick. A waiver before a chosen class or a payment loses people.
+ *   (HeldBookingFlow; it comes back after signing) → 6 the spot pick, only for a class in a room (no room = a spot count, the
+ *   owner's model 2026-09-29). A waiver before a chosen class or a payment loses people.
  * A returning person: number → code → straight to the class (the waiver already signed). A session lasts 30 minutes, so a second
  * class in the same visit needs no second code. Every fact comes from the portal functions; the caller never names the person.
  */

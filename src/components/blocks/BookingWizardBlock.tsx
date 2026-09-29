@@ -248,7 +248,7 @@ async function fetchClasses(kindId: string): Promise<LiveClass[]> {
   return Array.isArray(rows) ? rows.filter((r) => new Date(r.start_at).getTime() > Date.now()) : []
 }
 async function fetchClass(id: string): Promise<LiveClass | null> {
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/class_schedule_public?id=eq.${id}&select=id,title,instructor,start_at,end_at,seats_total,seats_left,is_full,kind_id,kind_name,price_single,instructor_name`, { headers: ANON_HEADERS })
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/class_schedule_public?id=eq.${id}&select=id,title,instructor,start_at,end_at,seats_total,seats_left,is_full,kind_id,kind_name,price_single,instructor_name,room_name,room_key`, { headers: ANON_HEADERS })
   if (!res.ok) return null
   const rows = (await res.json()) as LiveClass[]
   return Array.isArray(rows) && rows[0] ? rows[0] : null
@@ -333,7 +333,8 @@ export function BookingWizardBlock({
   const [waitlistMode, setWaitlistMode] = useState(false)
   const [buying, setBuying] = useState<string | null>(null)
   /* ★★★ THE SEAT IS ONLY THEIRS ONCE IT IS PAID OR SPENT (the owner, 2026-09-24): after a class booking lands, HeldBookingFlow
-     takes over (pay while the seat is held, then the waiver first time only, then the spot). Back from Stripe with
+     takes over (pay while the seat is held, then the waiver first time only, then the spot only when the class is in a room:
+     no room = a spot count, the owner's model 2026-09-29). Back from Stripe with
      ?paid=1&booking=&t= it reads the rows until they say confirmed. */
   const [held, setHeld] = useState<HeldEntry | null>(null)
   /* ★ A KNOWN NUMBER IS NEVER ASKED TWICE: the phone goes first; when this business knows it, name and email are not asked.
@@ -747,7 +748,7 @@ export function BookingWizardBlock({
                                     setStep(full ? 'details' : 'classflow')
                                   }}
                                   className="flex items-center justify-between gap-3 rounded-xl border px-4 py-3 text-left text-sm transition-all hover:translate-y-(--hov-lift-sm)" style={{ borderColor: 'var(--wow-hairline)' }}>
-                                  <span><span className="font-semibold">{c.title}</span> · {classDayLabel(c.start_at)} {to12h(classLocal(c.start_at).time)}{c.instructor ? ` · ${c.instructor}` : ''}</span>
+                                  <span><span className="font-semibold">{c.title}</span> · {classDayLabel(c.start_at)} {to12h(classLocal(c.start_at).time)}{c.instructor ? ` · ${c.instructor}` : ''}{c.room_name?.trim() ? ` · ${tr('schedule.inRoom').replace('{room}', c.room_name.trim())}` : ''}</span>
                                   <span className="text-xs">{full ? (waitlistOn ? `${tr('booking.classFull')} · ${tr('booking.joinWaitlist')}` : tr('booking.classFull')) : typeof c.seats_left === 'number' ? `${c.seats_left} ${tr('schedule.left')}` : ''}</span>
                                 </button>
                               )
@@ -874,7 +875,7 @@ export function BookingWizardBlock({
                                 className="flex items-center justify-between gap-3 rounded-xl border px-4 py-3 text-left text-sm transition-all hover:translate-y-(--hov-lift-sm) disabled:opacity-50"
                                 style={selected ? { backgroundImage: 'var(--wow-grad-brand)', borderColor: 'transparent', color: 'white' } : { borderColor: 'var(--wow-hairline)' }}
                               >
-                                <span><span className="font-semibold">{classDayLabel(c.start_at)}</span> · {to12h(classLocal(c.start_at).time)}{c.instructor ? ` · ${c.instructor}` : ''}</span>
+                                <span><span className="font-semibold">{classDayLabel(c.start_at)}</span> · {to12h(classLocal(c.start_at).time)}{c.instructor ? ` · ${c.instructor}` : ''}{c.room_name?.trim() ? ` · ${tr('schedule.inRoom').replace('{room}', c.room_name.trim())}` : ''}</span>
                                 <span className="text-xs">{full ? (waitlistOn ? `${tr('booking.classFull')} · ${tr('booking.joinWaitlist')}` : tr('booking.classFull')) : typeof c.seats_left === 'number' ? `${c.seats_left} ${tr('schedule.left')}` : ''}</span>
                               </button>
                             )
@@ -1139,7 +1140,7 @@ export function BookingWizardBlock({
               </AnimatePresence>
             )}
 
-            {/* STEP: held (a class booking after it lands: pay while held, the waiver, the spot, done) */}
+            {/* STEP: held (a class booking after it lands: pay while held, the waiver, the spot when the class is in a room, done) */}
             {step === 'held' && held && (
               <HeldBookingFlow key={held.bookingId} entry={held} onReleased={() => { setHeld(null); setStep(occurrence ? 'class' : 'service'); if (typeof window !== 'undefined') window.history.replaceState(null, '', window.location.pathname) }} />
             )}

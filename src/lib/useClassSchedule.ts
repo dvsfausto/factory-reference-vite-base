@@ -42,6 +42,8 @@ export interface LiveClass {
   price_single: number | null
   instructor_name: string | null
   room_name?: string | null
+  /** the resolved room (the owner's model, 2026-09-29): the kind's room unless the dated class overrides it; null = no room, a spot count */
+  room_key?: string | null
   start_at: string
   end_at: string
   seats_total: number | null
@@ -82,7 +84,7 @@ export function classHorizonDays(): Promise<number | null> { return classHorizon
 export async function classWindowDays(fallback: number): Promise<number> { return (await classHorizonDays()) ?? fallback }
 export function liveClassesUrl(businessId: string, days = 7, now = new Date()): string {
   const until = new Date(now.getTime() + days * 86_400_000).toISOString()
-  return `${SUPABASE_URL}/rest/v1/class_schedule_public?business_id=eq.${businessId}&start_at=lt.${encodeURIComponent(until)}&select=id,title,instructor,start_at,end_at,seats_total,seats_left,is_full,kind_id,kind_name,price_single,instructor_name,room_name&order=start_at.asc`
+  return `${SUPABASE_URL}/rest/v1/class_schedule_public?business_id=eq.${businessId}&start_at=lt.${encodeURIComponent(until)}&select=id,title,instructor,start_at,end_at,seats_total,seats_left,is_full,kind_id,kind_name,price_single,instructor_name,room_name,room_key&order=start_at.asc`
 }
 
 export function readBakedSchedule(site: typeof SITE = SITE): ClassSession[] {
