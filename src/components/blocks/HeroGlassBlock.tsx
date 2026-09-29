@@ -41,8 +41,9 @@ export const GLASS_LEVELS = {
   lightest: 'bg-fam-card/50 sm:bg-fam-card/25',
 } as const
 export type GlassLevel = keyof typeof GLASS_LEVELS
-export function glassLevelOf(site: { hero?: { glass_level?: unknown } }): GlassLevel {
-  const v = site?.hero?.glass_level
+export function glassLevelOf(site: { hero?: object }): GlassLevel {
+  /* the site's hero type is the scaffolded literal (no glass_level on most sites), so the read is deliberately loose */
+  const v = (site?.hero as { glass_level?: unknown } | undefined)?.glass_level
   return typeof v === 'string' && v in GLASS_LEVELS ? (v as GlassLevel) : 'standard'
 }
 /** the white tint each level mixes over the blurred photo: [phone, wide] */
