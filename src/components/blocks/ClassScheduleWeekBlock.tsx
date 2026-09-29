@@ -102,6 +102,16 @@ export function ClassScheduleWeekBlock({
             </div>
           ))}
         </div>
+        {span.later.length > 0 && (
+          <p className="mt-6 text-sm text-fam-ink-muted" data-schedule-later="">
+            {span.later.map((l, i) => (
+              <span key={l.serviceName}>
+                {i > 0 ? ' · ' : ''}
+                {tr('schedule.laterClass').replace('{name}', l.serviceName).replace('{date}', new Date(`${l.date}T12:00:00`).toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' })).replace('{time}', fmt(l.start))}
+              </span>
+            ))}
+          </p>
+        )}
         {/* ★ the packs for sale, with a Buy that works (the classes arc, 2026-09-23); nothing when the business sells none */}
         {beyondLine && <p className="mt-6 text-center text-sm text-ink-600" data-schedule-beyond="">{beyondLine}</p>}
         <PacksForSale />

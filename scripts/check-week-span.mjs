@@ -10,7 +10,7 @@ const src = readFileSync('src/lib/useClassSchedule.ts', 'utf8')
 const start = src.indexOf('export function weekSpan')
 const fn = src.slice(start, src.indexOf('\n}\n', start) + 3)
 const js = fn
-  .replace(': { sessions: ClassSession[]; from: string | null }', '')
+  .replace(': { sessions: ClassSession[]; from: string | null; later: LaterClass[] }', '').replace(/const later = new Map<string, LaterClass>\(\)/, 'const later = new Map()')
   .replace('(sessions: ClassSession[], days = WEEK_BLOCK_DAYS)', '(sessions, days = WEEK_BLOCK_DAYS)')
   .replace(/s\.date!/g, 's.date').replace('[0]!', '[0]').replace('y!, m! - 1, d! + days', 'y, m - 1, d + days')
 const file = join(mkdtempSync(join(tmpdir(), 'weekspan-')), 'w.mjs')
@@ -30,6 +30,11 @@ const rules = [{ serviceName: 'Ride', day: 1, start: '09:30' }, { serviceName: '
 if (weekSpan(rules).sessions.length !== 2 || weekSpan(rules).from !== null) fails.push('undated sessions pass through')
 if (weekSpan([]).sessions.length !== 0) fails.push('empty stays empty')
 if (weekSpan([mk('2026-10-05'), mk('2026-10-13')]).sessions.length !== 1) fails.push('a class eight days after the first is not this week')
+// a class whose first date is after the shown week is named once, with its first date and time; a class already shown is not
+const bq = (date, start = '18:30') => ({ serviceName: 'Booty Queens', day: 3, start, date })
+const withLater = weekSpan([...dates.slice(0, 7).map((d) => mk(d)), bq('2026-10-14'), bq('2026-10-21'), mk('2026-10-12')])
+if (withLater.later.length !== 1 || withLater.later[0].serviceName !== 'Booty Queens' || withLater.later[0].date !== '2026-10-14' || withLater.later[0].start !== '18:30') fails.push('a later class is named once with its first date: ' + JSON.stringify(withLater.later))
+if (r.later.length !== 0) fails.push('a class already in the shown week is not listed as later')
 console.log(JSON.stringify({ from: r.from, days: [...got], kept: r.sessions.length }))
 if (fails.length) { console.error('check-week-span:\n  ' + fails.join('\n  ')); process.exit(1) }
 console.log('check-week-span: ok')

@@ -108,13 +108,23 @@ export const WEEK_BLOCK_DAYS = 7
  *  6,733px on a phone). The span starts at the FIRST upcoming dated class, not at today: a studio whose classes begin
  *  next Monday shows that whole week, not one lonely Monday (the first cut read "the next seven days" and Fitcycling's
  *  section fell from a full week to one day). Sessions without dates (the weekly rule) pass through untouched. Pure. */
-export function weekSpan(sessions: ClassSession[], days = WEEK_BLOCK_DAYS): { sessions: ClassSession[]; from: string | null } {
+export type LaterClass = { serviceName: string; date: string; start: string }
+export function weekSpan(sessions: ClassSession[], days = WEEK_BLOCK_DAYS): { sessions: ClassSession[]; from: string | null; later: LaterClass[] } {
   const dated = sessions.filter((s) => typeof s.date === 'string' && s.date)
-  if (dated.length === 0 || dated.length !== sessions.length) return { sessions, from: null }
+  if (dated.length === 0 || dated.length !== sessions.length) return { sessions, from: null, later: [] }
   const from = dated.map((s) => s.date!).sort()[0]!
   const [y, m, d] = from.split('-').map(Number)
   const until = new Date(Date.UTC(y!, m! - 1, d! + days)).toISOString().slice(0, 10)
-  return { sessions: dated.filter((s) => s.date! < until), from }
+  const shown = dated.filter((s) => s.date! < until)
+  /* ★ A CLASS THAT STARTS AFTER THE WEEK SHOWN (2026-09-29, the owner's new Wednesday class began the week after and the
+     section said nothing): every class name absent from the shown week is named with its first date and time, so an
+     owner who adds a class sees it on the page today and a customer knows it is coming. */
+  const named = new Set(shown.map((s) => s.serviceName))
+  const later = new Map<string, LaterClass>()
+  for (const s of [...dated].sort((a, b) => `${a.date}${a.start}`.localeCompare(`${b.date}${b.start}`))) {
+    if (s.date! >= until && !named.has(s.serviceName) && !later.has(s.serviceName)) later.set(s.serviceName, { serviceName: s.serviceName, date: s.date!, start: s.start })
+  }
+  return { sessions: shown, from, later: [...later.values()] }
 }
 export function useClassSchedule(): ClassSession[] {
   const [sessions, setSessions] = useState<ClassSession[]>(readBakedSchedule)
