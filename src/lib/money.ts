@@ -18,7 +18,8 @@ export function moneyShort(v: number | string | null | undefined, currency: stri
   const n = typeof v === 'number' ? v : Number(v)
   if (!Number.isFinite(n)) return ''
   const c = currency.toUpperCase()
-  if (c === 'USD') return Number.isInteger(n) ? `$${n}` : `$${n.toFixed(2)}`
+  /* thousands grouped (2026-09-29): "$1,200", never "$1200"; "$45" and "$45.50" stay byte for byte */
+  if (c === 'USD') return Number.isInteger(n) ? `$${n.toLocaleString('en-US')}` : `$${n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
   try {
     return new Intl.NumberFormat(LOCALES[c] ?? (LANG === 'es' ? 'es' : 'en-US'), { style: 'currency', currency: c, minimumFractionDigits: Number.isInteger(n) ? 0 : decimals(c), maximumFractionDigits: decimals(c) }).format(n)
   } catch { return `${SYMBOLS[c] ?? c + ' '}${n}` }
