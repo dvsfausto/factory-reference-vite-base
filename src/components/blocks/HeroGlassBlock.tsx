@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import { PrimaryCta } from './PrimaryCta'
 import { tr } from '~/lib/i18n'
 import { ArrowRight, Phone } from 'lucide-react'
@@ -26,11 +27,14 @@ import { hasText } from '~/lib/has-text'
 // fam-hairline, rounded-* (DNA), font-display (DNA), elev-5. Never bg-brand-* / .btn-primary / .btn.
 // Props identical to HeroBlock; decorativeAsset accepted for parity but unused. Returns an Element (no null).
 /* ★ HOW SEE-THROUGH THE GLASS IS, SET BY THE OWNER (2026-09-29: a photographer could not see the couple behind the panel).
-   Three levels, each a literal class pair so Tailwind emits them; the floor is the lightest tint that still reads over a
-   photo that averages to black behind the blur: at 25% the panel lands at luminance ≈0.25 under near-black ink, 4.9:1,
-   above WCAG AA for body text; at 15% it would be 3.3:1 and fail. On a phone the panel covers most of the screen and the
-   blur has less photo to average, so each level keeps a heavier tint there. Set by asking ("make it lighter", "more
-   transparent"); absent → standard, byte-identical to before. Read on the served page through data-glass-level. */
+   Three levels, each a literal class pair so Tailwind emits them. THE FLOOR FOLLOWS THE PHOTO, not a fixed number: measured on
+   her own bright beach photo the lightest tint (25%) still reads at 6.2:1, while over a photo that averages to black behind
+   the blur only the standard tint reads (4.9:1; lighter falls to 3.0:1, lightest to 1.7:1). So the owner's chosen level is the
+   wish (SSR renders it, data-glass-level), and once the photo has loaded the panel measures the tone behind itself and keeps
+   the lightest of the owner's level or heavier that still gives body text 4.5:1 (data-glass-applied). It only ever gets
+   heavier than asked, never lighter, so nothing flashes and a page without JavaScript shows the asked level. On a phone the
+   panel covers most of the screen and the blur has less photo to average, so each level keeps a heavier tint there. Set by
+   asking ("make it lighter", "more transparent"); absent → standard, byte-identical to before. */
 export const GLASS_LEVELS = {
   standard: 'bg-fam-card/80 sm:bg-fam-card/55',
   lighter: 'bg-fam-card/65 sm:bg-fam-card/40',
@@ -41,6 +45,62 @@ export function glassLevelOf(site: { hero?: { glass_level?: unknown } }): GlassL
   const v = site?.hero?.glass_level
   return typeof v === 'string' && v in GLASS_LEVELS ? (v as GlassLevel) : 'standard'
 }
+/** the white tint each level mixes over the blurred photo: [phone, wide] */
+export const GLASS_ALPHA: Record<GlassLevel, [number, number]> = { standard: [0.8, 0.55], lighter: [0.65, 0.4], lightest: [0.5, 0.25] }
+const ORDER: GlassLevel[] = ['standard', 'lighter', 'lightest']
+const srgb = (c: number) => { const v = c / 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4) }
+const luminance = (rgb: [number, number, number]) => 0.2126 * srgb(rgb[0]) + 0.7152 * srgb(rgb[1]) + 0.0722 * srgb(rgb[2])
+/** the lightest level, from the asked one downward, whose panel keeps body text at 4.5:1 over this photo tone; pure */
+export function legibleGlassLevel(asked: GlassLevel, photoMean: [number, number, number], ink: [number, number, number], wide: boolean): GlassLevel {
+  const inkL = luminance(ink)
+  for (let i = ORDER.indexOf(asked); i >= 0; i--) {
+    const level = ORDER[i]!
+    const a = GLASS_ALPHA[level][wide ? 1 : 0]
+    const panel: [number, number, number] = [a * 255 + (1 - a) * photoMean[0], a * 255 + (1 - a) * photoMean[1], a * 255 + (1 - a) * photoMean[2]]
+    const L = luminance(panel)
+    const contrast = (Math.max(L, inkL) + 0.05) / (Math.min(L, inkL) + 0.05)
+    if (contrast >= 4.5) return level
+  }
+  return 'standard'
+}
+/** the mean tone of the photo behind the panel: the panel's own box, mapped onto the image as object-cover draws it */
+function photoToneBehind(img: HTMLImageElement, panel: HTMLElement): [number, number, number] | null {
+  try {
+    const ir = img.getBoundingClientRect(); const pr = panel.getBoundingClientRect()
+    if (!img.naturalWidth || !ir.width || !pr.width) return null
+    const scale = Math.max(ir.width / img.naturalWidth, ir.height / img.naturalHeight)
+    const dw = img.naturalWidth * scale; const dh = img.naturalHeight * scale
+    const ox = (ir.width - dw) / 2; const oy = (ir.height - dh) / 2
+    const sx = Math.max(0, (pr.left - ir.left - ox) / scale); const sy = Math.max(0, (pr.top - ir.top - oy) / scale)
+    const sw = Math.min(img.naturalWidth - sx, pr.width / scale); const sh = Math.min(img.naturalHeight - sy, pr.height / scale)
+    const c = document.createElement('canvas'); c.width = 24; c.height = 16
+    const ctx = c.getContext('2d'); if (!ctx) return null
+    ctx.drawImage(img, sx, sy, sw, sh, 0, 0, 24, 16)
+    const d = ctx.getImageData(0, 0, 24, 16).data
+    let r = 0, g = 0, b = 0; const n = d.length / 4
+    for (let i = 0; i < d.length; i += 4) { r += d[i]!; g += d[i + 1]!; b += d[i + 2]! }
+    return [r / n, g / n, b / n]
+  } catch { return null /* a photo the canvas may not read (cross-origin without CORS): the asked level stands */ }
+}
+function useLegibleGlass(asked: GlassLevel) {
+  const panelRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const panel = panelRef.current; if (!panel) return
+    const section = panel.closest('section'); const img = section?.querySelector<HTMLImageElement>('img[data-hero-photo]')
+    if (!img) return
+    const apply = () => {
+      const tone = photoToneBehind(img, panel); if (!tone) return
+      const h1 = panel.querySelector('h1'); const inkCss = h1 ? getComputedStyle(h1).color : ''
+      const m = inkCss.match(/(\d+)[,\s]+(\d+)[,\s]+(\d+)/)
+      const ink: [number, number, number] = m ? [Number(m[1]), Number(m[2]), Number(m[3])] : [28, 26, 24]
+      const level = legibleGlassLevel(asked, tone, ink, window.innerWidth >= 640)
+      panel.setAttribute('data-glass-applied', level)
+      if (level !== asked) { panel.classList.remove(...GLASS_LEVELS[asked].split(' ')); panel.classList.add(...GLASS_LEVELS[level].split(' ')) }
+    }
+    if (img.complete && img.naturalWidth) apply(); else img.addEventListener('load', apply, { once: true })
+  }, [asked])
+  return panelRef
+}
 export function HeroGlassBlock({
   site = SITE,
   trustItems = [tr('trust.freeEstimates'), tr('trust.onSchedule'), tr('trust.localTeam'), tr('trust.satisfactionGuaranteed')],
@@ -49,6 +109,7 @@ export function HeroGlassBlock({
   trustItems?: string[]
   decorativeAsset?: string
 }) {
+  const panelRef = useLegibleGlass(glassLevelOf(site))
   return (
     <section className="relative isolate flex min-h-[34rem] flex-col overflow-hidden bg-fam-panel md:min-h-[40rem]">
       <img
@@ -59,6 +120,7 @@ export function HeroGlassBlock({
       <div className="container-x relative flex flex-1 items-end py-section">
         <div
           data-enter="up"
+          ref={panelRef}
           data-hero-panel="glass"
           data-glass-level={glassLevelOf(site)}
           className={`max-w-2xl rounded-3xl border border-fam-card/70 ${GLASS_LEVELS[glassLevelOf(site)]} p-7 elev-5 backdrop-blur-2xl backdrop-saturate-150 sm:p-9`}
