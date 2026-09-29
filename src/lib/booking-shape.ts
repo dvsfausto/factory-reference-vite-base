@@ -16,7 +16,7 @@
 //      visit service, and is never "$0".
 // ─────────────────────────────────────────────────────────────────────────────
 
-export type BookingModel = 'slot' | 'day' | 'visit' | null | undefined
+export type BookingModel = 'slot' | 'day' | 'visit' | 'class' | null | undefined
 
 export interface ServiceShape {
   booking_model?: BookingModel
