@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Clock, Users } from 'lucide-react'
 import { tr } from '~/lib/i18n'
-import { classHorizon, useClassSchedule, type ClassHorizon, type ClassSession } from '~/lib/useClassSchedule'
+import { classHorizon, useClassSchedule, weekSpan, type ClassHorizon, type ClassSession } from '~/lib/useClassSchedule'
 import { PacksForSale } from './PacksForSale'
 
 // Class schedule LAYOUT: 'week' (niche arc Stage 5b) — the owner's weekly timetable of group sessions: one
@@ -27,7 +27,9 @@ export function ClassScheduleWeekBlock({
   heading?: string
   body?: string
 }) {
-  const sessions = useClassSchedule()
+  const all = useClassSchedule()
+  const span = weekSpan(all)
+  const sessions = span.sessions
   const [beyond, setBeyond] = useState<ClassHorizon>({ days: null, nextBeyond: null, waitlist: true })
   useEffect(() => { void classHorizon().then(setBeyond) }, [])
   /* ★ a later class exists beyond the owner's window (part 3's small one): say so instead of showing nothing */
@@ -48,6 +50,9 @@ export function ClassScheduleWeekBlock({
   }
   const days = [...groups.values()].sort((a, b) => (dated ? a.date!.localeCompare(b.date!) : order.indexOf(a.day) - order.indexOf(b.day)))
   const dateLine = (d: string) => new Date(`${d}T12:00:00`).toLocaleDateString(undefined, { month: 'long', day: 'numeric' })
+  /* the week shown starts later than tomorrow → say which week, unless the owner wrote the heading */
+  const today = new Date(); const tomorrow = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1).toISOString().slice(0, 10)
+  const weekHeading = heading ?? (span.from && span.from > tomorrow ? tr('schedule.weekOf').replace('{date}', dateLine(span.from)) : tr('schedule.heading'))
   return (
     <section className="bg-fam-card">
       <div className="container-x py-section">
@@ -57,7 +62,7 @@ export function ClassScheduleWeekBlock({
             {label ?? tr('schedule.eyebrow')}
           </span>
           <h2 className="mt-5 font-display text-4xl font-semibold leading-tight tracking-tight text-fam-ink sm:text-5xl">
-            {heading ?? tr('schedule.heading')}
+            {weekHeading}
           </h2>
           {body && <p className="mt-4 text-lg leading-relaxed text-fam-ink-muted">{body}</p>}
         </div>

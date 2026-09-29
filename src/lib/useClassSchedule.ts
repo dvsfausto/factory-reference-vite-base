@@ -101,8 +101,21 @@ export function sessionsFromRows(rows: Array<{ payload?: Record<string, unknown>
     }))
 }
 
-/** how far the week timetable block looks ahead: seven days, one card per dated class */
+/** the span the week timetable block shows: seven days, one card per day */
 export const WEEK_BLOCK_DAYS = 7
+/** ★ ONE WEEK OF DATED CLASSES (2026-09-29, twice). The block is headed "This week" and groups by weekday, so it shows ONE
+ *  seven-day span, never every date in the owner's horizon (30 days listed the same Monday 9:30 five times, 51 cards,
+ *  6,733px on a phone). The span starts at the FIRST upcoming dated class, not at today: a studio whose classes begin
+ *  next Monday shows that whole week, not one lonely Monday (the first cut read "the next seven days" and Fitcycling's
+ *  section fell from a full week to one day). Sessions without dates (the weekly rule) pass through untouched. Pure. */
+export function weekSpan(sessions: ClassSession[], days = WEEK_BLOCK_DAYS): { sessions: ClassSession[]; from: string | null } {
+  const dated = sessions.filter((s) => typeof s.date === 'string' && s.date)
+  if (dated.length === 0 || dated.length !== sessions.length) return { sessions, from: null }
+  const from = dated.map((s) => s.date!).sort()[0]!
+  const [y, m, d] = from.split('-').map(Number)
+  const until = new Date(Date.UTC(y!, m! - 1, d! + days)).toISOString().slice(0, 10)
+  return { sessions: dated.filter((s) => s.date! < until), from }
+}
 export function useClassSchedule(): ClassSession[] {
   const [sessions, setSessions] = useState<ClassSession[]>(readBakedSchedule)
   useEffect(() => {
@@ -124,10 +137,7 @@ export function useClassSchedule(): ClassSession[] {
           if (live.length > 0) setSessions(live)
         })
     }
-    /* ★ THIS WEEK MEANS SEVEN DAYS (2026-09-29): the block is headed "This week" and groups by weekday, so it reads the
-       next seven days at most, whatever the owner's booking horizon (30 days here listed the same Monday 9:30 five
-       times, 51 cards, 6,733px on a phone). The booking flow and the portal keep the full horizon. */
-    classWindowDays(7).then((days) => fetch(liveClassesUrl(BUSINESS_ID, Math.min(days, WEEK_BLOCK_DAYS)), { headers }))
+    classWindowDays(7).then((days) => fetch(liveClassesUrl(BUSINESS_ID, days), { headers }))
       .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
       .then((rows: LiveClass[]) => {
         if (cancelled) return
