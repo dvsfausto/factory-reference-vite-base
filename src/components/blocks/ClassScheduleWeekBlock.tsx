@@ -34,11 +34,20 @@ export function ClassScheduleWeekBlock({
   const beyondLine = beyond.days && beyond.nextBeyond ? tr('schedule.moreLater').replace('{date}', new Date(beyond.nextBeyond).toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' })).replace('{days}', String(beyond.days)) : null
   if (sessions.length === 0) return beyondLine ? <section className="px-4 py-8 text-center text-sm text-ink-600" data-schedule-beyond="">{beyondLine}</section> : null
   const dayNames = [tr('day.sun'), tr('day.mon'), tr('day.tue'), tr('day.wed'), tr('day.thu'), tr('day.fri'), tr('day.sat')]
-  // Monday-first week; only days with a session render.
+  /* ★ ONE CARD PER DAY (2026-09-29). Dated classes (the live read, the next seven days) group by DATE, in date order from
+     today, so a Monday six days out sits last and the same weekday never appears twice; the weekly rule (no dates) keeps
+     the Monday-first week. Only days with a session render. */
+  const dated = sessions.every((s) => typeof s.date === 'string' && s.date)
   const order = [1, 2, 3, 4, 5, 6, 0]
-  const byDay = new Map<number, ClassSession[]>()
-  for (const s of sessions) byDay.set(s.day, [...(byDay.get(s.day) ?? []), s].sort((a, b) => a.start.localeCompare(b.start)))
-  const days = order.filter((d) => byDay.has(d))
+  const groups = new Map<string, { day: number; date?: string; list: ClassSession[] }>()
+  for (const s of sessions) {
+    const key = dated ? s.date! : String(s.day)
+    const g = groups.get(key) ?? { day: s.day, ...(dated ? { date: s.date } : {}), list: [] }
+    g.list = [...g.list, s].sort((a, b) => a.start.localeCompare(b.start))
+    groups.set(key, g)
+  }
+  const days = [...groups.values()].sort((a, b) => (dated ? a.date!.localeCompare(b.date!) : order.indexOf(a.day) - order.indexOf(b.day)))
+  const dateLine = (d: string) => new Date(`${d}T12:00:00`).toLocaleDateString(undefined, { month: 'long', day: 'numeric' })
   return (
     <section className="bg-fam-card">
       <div className="container-x py-section">
@@ -54,11 +63,12 @@ export function ClassScheduleWeekBlock({
         </div>
 
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {days.map((d) => (
-            <div key={d} className="rounded-2xl border border-fam-hairline bg-fam-surface p-5">
-              <h3 className="font-display text-lg font-semibold text-fam-ink">{dayNames[d]}</h3>
+          {days.map((g) => (
+            <div key={g.date ?? g.day} className="rounded-2xl border border-fam-hairline bg-fam-surface p-5">
+              <h3 className="font-display text-lg font-semibold text-fam-ink">{dayNames[g.day]}</h3>
+              {g.date && <p className="mt-0.5 text-sm text-fam-ink-muted">{dateLine(g.date)}</p>}
               <ul className="mt-4 space-y-3">
-                {byDay.get(d)!.map((s, i) => (
+                {g.list.map((s, i) => (
                   <li key={`${s.serviceName}-${s.start}-${i}`} className="rounded-xl border border-fam-hairline bg-fam-card p-4">
                     <div className="flex items-center gap-2 text-sm font-semibold text-fam-accent-text-strong">
                       <Clock className="h-4 w-4" /> {fmt(s.start)}{s.end ? ` – ${fmt(s.end)}` : ''}

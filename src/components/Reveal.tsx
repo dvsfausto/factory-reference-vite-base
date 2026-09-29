@@ -28,25 +28,29 @@ export function Reveal({
       setInView(true)
       return
     }
-    // ★★★ TALL-ELEMENT GUARD (2026-09-03). intersectionRatio = visible / element, so an element
-    // taller than (0.92 × viewport) / 0.12 — ≈5,090px on an iPhone (innerHeight 664) — can NEVER
-    // reach 0.12 and stays at opacity 0 forever. That blanked the lower half of every service page
-    // on 19 businesses. The designed fix is one Reveal per rendered section (SELF_REVEALING_BLOCKS
-    // in render-section.tsx); this guard keeps the primitive safe for any block that is still
-    // wrapped whole: the 0.12 entrance stays for every normal section, and only an element that
-    // cannot reach it is revealed once about half a viewport of it is on screen. Never threshold 0.
+    // ★★★ TALL-ELEMENT GUARD (2026-09-03, re-done 2026-09-29). intersectionRatio = visible / element, so an
+    // element taller than (0.92 × viewport) / 0.12 — ≈5,090px on an iPhone — can NEVER reach 0.12 and stays
+    // at opacity 0 forever. The 09-03 guard measured the element ONCE, when the observer was made; a block
+    // that GROWS after mount (the class timetable's live read landed 51 dated classes = 6,733px on a phone)
+    // outgrew its own guard and blanked the page from "About" to the FAQs (Fitcycling, 2026-09-29). So the
+    // decision is now made on EVERY callback against the element's size AT THAT MOMENT: a normal section
+    // still enters at 0.12 of itself; any section that cannot reach 0.12 enters once about half a viewport
+    // of it is on screen (intersectionRect, in pixels). The observer fires at each 0.01 step up to 0.12 so
+    // the pixel rule is checked often enough on a tall element. Never threshold 0.
     const rootH = window.innerHeight * 0.92
-    const cap = (rootH * 0.5) / Math.max(el.offsetHeight, 1)
-    const threshold = Math.min(0.12, cap)
+    const steps = Array.from({ length: 12 }, (_, i) => (i + 1) / 100)
     const io = new IntersectionObserver(
       (entries) =>
         entries.forEach((e) => {
-          if (e.isIntersecting) {
+          if (!e.isIntersecting) return
+          const shown = e.intersectionRect.height
+          const cap = Math.min(0.12, (rootH * 0.5) / Math.max(e.boundingClientRect.height, 1))
+          if (e.intersectionRatio >= cap || shown >= rootH * 0.5) {
             setInView(true)
             io.disconnect()
           }
         }),
-      { threshold, rootMargin: '0px 0px -8% 0px' },
+      { threshold: steps, rootMargin: '0px 0px -8% 0px' },
     )
     io.observe(el)
     return () => io.disconnect()

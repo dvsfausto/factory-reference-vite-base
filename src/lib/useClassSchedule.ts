@@ -101,6 +101,8 @@ export function sessionsFromRows(rows: Array<{ payload?: Record<string, unknown>
     }))
 }
 
+/** how far the week timetable block looks ahead: seven days, one card per dated class */
+export const WEEK_BLOCK_DAYS = 7
 export function useClassSchedule(): ClassSession[] {
   const [sessions, setSessions] = useState<ClassSession[]>(readBakedSchedule)
   useEffect(() => {
@@ -122,7 +124,10 @@ export function useClassSchedule(): ClassSession[] {
           if (live.length > 0) setSessions(live)
         })
     }
-    classWindowDays(7).then((days) => fetch(liveClassesUrl(BUSINESS_ID, days), { headers }))
+    /* ★ THIS WEEK MEANS SEVEN DAYS (2026-09-29): the block is headed "This week" and groups by weekday, so it reads the
+       next seven days at most, whatever the owner's booking horizon (30 days here listed the same Monday 9:30 five
+       times, 51 cards, 6,733px on a phone). The booking flow and the portal keep the full horizon. */
+    classWindowDays(7).then((days) => fetch(liveClassesUrl(BUSINESS_ID, Math.min(days, WEEK_BLOCK_DAYS)), { headers }))
       .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
       .then((rows: LiveClass[]) => {
         if (cancelled) return
