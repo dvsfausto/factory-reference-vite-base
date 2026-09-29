@@ -29,7 +29,8 @@ export const PAGED_SERVICES: ServiceRef[] = SERVICES.filter((s) => s.paged !== f
  * QUOTABLE view — visible services the customer REQUESTS A QUOTE for. That's the two quotable
  * affordances: `collect` (quotable, no price, the owner builds the estimate; Melvin's case) and
  * `quote` (quotable with a fixed estimate). The quote-request widget offers exactly these. The pattern
- * generalises: a booking widget reads `action === 'book'`, a cart reads `'buy'`. Absent `action`
+ * generalises: a booking widget reads `action === 'book'`. Products are their own thing (2026-09-29): the
+ * product grid reads the products table, never this list. Absent `action`
  * (older builds that never forwarded the affordance) → empty, and the widget falls back to offering
  * all of SERVICES so it is never a dead form.
  */

@@ -69,7 +69,8 @@ export function ProductGridBlock({
     } catch { setNote(tr('products.notOnline')) } finally { setBusy(false) }
   }
   return (
-    <section className="bg-fam-card">
+    /* the anchor a product-led site's main call to action lands on (/#products), as /#book for booking (2026-09-29) */
+    <section id="products" className="bg-fam-card">
       <div className="container-x py-section">
         <div className="max-w-2xl">
           <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-fam-accent-text">

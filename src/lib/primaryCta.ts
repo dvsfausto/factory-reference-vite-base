@@ -3,11 +3,14 @@ import { BOOKING, SITE } from '~/data/site'
 import { SERVICES } from '~/data/services'
 import { tr } from '~/lib/i18n'
 import { serviceCtaTarget } from '~/lib/booking-shape'
+import { readBakedProducts } from '~/lib/useProducts'
+import { HOMEPAGE_LAYOUT } from '~/data/layout'
 
 /**
  * A SERVICE PAGE's own CTA (mixed catalogues): the service's `action` decides — book → /book?service=,
- * quote → /quote?service=, buy → /contact "Order" — and only pages that exist are targeted. No action, or
- * no page for it → the site-wide primaryCta(). See booking-shape.serviceCtaTarget.
+ * quote → /quote?service= — and only pages that exist are targeted. No action, or no page for it → the
+ * site-wide primaryCta(). See booking-shape.serviceCtaTarget. Products are their own thing (2026-09-29):
+ * a service is never bought, so there is no order branch here.
  */
 export function serviceCta(slug: string): { href: string; label: string } {
   const ref = SERVICES.find((s) => s.slug === slug)
@@ -19,7 +22,7 @@ export function serviceCta(slug: string): { href: string; label: string } {
     bookingWidget: BOOKING.enabled,
   })
   if (!t) return site
-  const label = t.label === 'bookNow' ? tr('cta.bookNow') : t.label === 'getQuote' ? tr('cta.getQuote') : tr('cta.order')
+  const label = t.label === 'bookNow' ? tr('cta.bookNow') : tr('cta.getQuote')
   return { href: t.href, label }
 }
 
@@ -31,15 +34,17 @@ export function serviceCta(slug: string): { href: string; label: string } {
 //
 // Signal priority — every target must PROVABLY RESOLVE (never a dead CTA):
 //   1. SITE.cta override (design_dna, durable) — the owner's edit / the scaffolder's page-aware affordance.
-//   2. A widget PAGE that EXISTS (customPagesData['book'|'quote'|'shop']) → that page. Its presence is
+//   2. A widget PAGE that EXISTS (customPagesData['book'|'quote']) → that page. Its presence is
 //      the affordance AND the guarantee the link resolves.
 //   3. The native booking wizard (BOOKING.enabled) → the homepage /#book anchor (the section is rendered).
-//   4. Otherwise → "Get in touch" / /contact (a route that always exists).
+//   4. Products are their own thing (2026-09-29): baked products AND the product grid on the homepage →
+//      the /#products anchor (the section is rendered); a shop page was never generated.
+//   5. Otherwise → "Get in touch" / /contact (a route that always exists).
 //
 // ⚠️ We do NOT route off raw `services.action` here. `action='book'` is a DEFAULT FLOOD (bookable
 // defaults true → nearly every service reads 'book'), so a lead/multi-staff business — vetoed from the
 // /book page, no quotable services — would otherwise get a "Book now" CTA pointing at a /book page that
-// was never generated → 404. Likewise `action='buy'` → /shop, a page we don't generate yet. Deliberate
+// was never generated → 404. Deliberate
 // affordance routing (quote/book) already flows through SITE.cta, which the scaffolder emits ONLY when
 // the corresponding page exists. So here we trust PAGES, not actions. See affordance-gate-not-deliberate.
 // ─────────────────────────────────────────────────────────────────────────────
@@ -55,8 +60,8 @@ export function primaryCta(): { href: string; label: string } {
         ? { href: '/#book', label: tr('cta.bookNow') }
         : hasPage('quote')
           ? { href: '/quote', label: tr('cta.getQuote') }
-          : hasPage('shop')
-            ? { href: '/shop', label: tr('cta.shop') }
+          : readBakedProducts().length > 0 && HOMEPAGE_LAYOUT.some((b) => b.type === 'productGrid')
+            ? { href: '/#products', label: tr('cta.shop') }
             : { href: '/contact', label: tr('cta.getInTouch') }
   // A partial override (only href OR only label) still wins for the field it sets.
   return { href: override?.href ?? base.href, label: override?.label ?? base.label }

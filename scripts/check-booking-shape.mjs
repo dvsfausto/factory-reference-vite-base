@@ -62,7 +62,8 @@ t('per-service CTA: each service follows its own action, only to pages that exis
   const pages = { book: true, quote: true, bookingWidget: false }
   assert.deepEqual(serviceCtaTarget({ id: 'a1', slug: 'deep-cleaning', action: 'book' }, pages), { href: '/book?service=a1', label: 'bookNow' })
   assert.deepEqual(serviceCtaTarget({ id: 'b2', slug: 'full-remodel', action: 'quote' }, pages), { href: '/quote?service=full-remodel', label: 'getQuote' })
-  assert.deepEqual(serviceCtaTarget({ id: 'c3', slug: 'gift-card', action: 'buy' }, pages), { href: '/contact', label: 'order' })
+  // products are their own thing (2026-09-29): a service never carries 'buy', and an unknown action falls to the site-wide CTA
+  assert.equal(serviceCtaTarget({ id: 'c3', slug: 'gift-card', action: 'buy' }, pages), null)
   assert.equal(serviceCtaTarget({ id: 'd4', slug: 'x', action: 'inquire' }, pages), null)
   assert.equal(serviceCtaTarget({ id: 'e5', slug: 'x' }, pages), null)
 })

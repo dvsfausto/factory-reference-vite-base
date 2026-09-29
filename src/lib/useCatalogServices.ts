@@ -7,8 +7,9 @@ import type { ServiceRef } from '~/lib/types/page-types'
 // ─────────────────────────────────────────────────────────────────────────────
 // THE SHARED CATALOG-READ HOOK — the ONE place a catalog widget gets its service list, adopting
 // BookingWizardBlock's live-read pattern (PostgREST + the baked anon key; RLS "Public can view active
-// services" gates it). Parameterised by AFFORDANCE, so booking (['book']), cart (['buy']) and packages
-// inherit it — that's the point of building it here, not in the quote block.
+// services" gates it). Parameterised by AFFORDANCE, so booking (['book']) and the quote form inherit it — that's
+// the point of building it here, not in the quote block. Products are their own thing (2026-09-29): they live in
+// the products table (useProducts), never in this read, so no 'buy' value can arrive here.
 //
 // STANDARD (ready-to-go storefront):
 //   · SSR / first paint = the BAKED list (services are in the HTML → SEO, instant, no spinner).

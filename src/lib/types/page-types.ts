@@ -70,12 +70,13 @@ export interface ServiceRef {
    */
   paged?: boolean
   /**
-   * Catalog affordance — the generated `services.action` (buy/collect/quote/book/inquire) forwarded
+   * Catalog affordance — the generated `services.action` (collect/quote/book/inquire) forwarded
    * by the scaffolder from the owner's catalog. Drives which catalog-reading widgets offer this
    * service: the quote form lists only `action === 'quote'`, booking only `'book'`, etc. Absent ===
    * unknown (older builds) → catalog widgets fall back to offering all visible services.
+   * Products are their own thing (2026-09-29): a service is never bought, so there is no 'buy' here.
    */
-  action?: 'buy' | 'collect' | 'quote' | 'book' | 'inquire'
+  action?: 'collect' | 'quote' | 'book' | 'inquire'
   /**
    * ★★★ THE CATALOG SERVICE UUID — REQUIRED, and that is the point.
    *

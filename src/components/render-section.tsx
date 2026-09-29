@@ -575,7 +575,7 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
           ? svc.hero.trustLine.split('·').map((s) => trTrustPhrase(s)).filter(Boolean)
           : undefined
         // PER-SERVICE CTA (mixed catalogues): the banner takes this service's own target — book →
-        // /book?service=, quote → /quote?service=, buy → order — from serviceCta(slug). Other hero variants
+        // /book?service=, quote → /quote?service= — from serviceCta(slug). Other hero variants
         // keep the site-wide CTA (they have no cta prop); the banner is the default detail hero.
         const perService = ServiceHero === HeroServiceBannerBlock ? { cta: serviceCta(svc.slug) } : {}
         return (
