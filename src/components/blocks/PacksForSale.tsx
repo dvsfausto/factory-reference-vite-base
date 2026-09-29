@@ -11,7 +11,7 @@ import { BUSINESS_ID, SUPABASE_ANON_KEY, SUPABASE_URL } from '~/data/site'
 // the classes land the moment Stripe confirms, and the person comes back to /book?paid=1 to pick a class. When the business has
 // not connected card payments, Buy says so plainly and points to the front desk; nothing is invented. Renders nothing when the
 // business sells no packs. Sits under the class schedule, so it shows on every site that has one.
-interface Pack { id: string; name: string; description: string | null; credits: number; price: number; currency: string; validity_days: number | null; /** ★ packs per kind (2026-09-26): the class kinds this pack covers, by name; empty = every class */ covers?: string[] | null }
+interface Pack { id: string; name: string; description: string | null; credits: number; /** null = ask for the price (phase 3, 2026-09-29) */ price: number | null; currency: string; validity_days: number | null; /** ★ packs per kind (2026-09-26): the class kinds this pack covers, by name; empty = every class */ covers?: string[] | null }
 const headers = { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` }
 const money = (n: number, currency?: string | null) => moneyShort(n, currency ?? SITE_CURRENCY)
 
@@ -63,10 +63,17 @@ export function PacksForSale({ label, heading, body, fallback = null }: { label?
             {p.description && <p className="mt-2 text-sm text-fam-ink-muted">{p.description}</p>}
             {Array.isArray(p.covers) && p.covers.length > 0 && <p className="mt-1 text-sm text-fam-ink-muted" data-pack-covers>{tr('packs.covers')} {p.covers.join(', ')}</p>}
             <div className="mt-4 flex items-center justify-between">
-              <span className="font-display text-2xl font-semibold text-fam-ink">{money(p.price, p.currency)}</span>
-              <button type="button" onClick={() => { setOpen(p); setNote(null) }} className="rounded-full px-5 py-2 text-sm font-semibold text-fam-on-dark" style={{ backgroundImage: 'var(--wow-grad-brand)' }}>
-                {tr('packs.buy')}
-              </button>
+              {p.price == null ? (
+                /* a pack with no set price asks for it and is not bought online (the model decision, 2026-09-29) */
+                <span className="font-display text-base font-semibold text-fam-ink" data-pack-ask>{tr('packs.askPrice')}</span>
+              ) : (
+                <>
+                  <span className="font-display text-2xl font-semibold text-fam-ink">{money(p.price, p.currency)}</span>
+                  <button type="button" onClick={() => { setOpen(p); setNote(null) }} className="rounded-full px-5 py-2 text-sm font-semibold text-fam-on-dark" style={{ backgroundImage: 'var(--wow-grad-brand)' }}>
+                    {tr('packs.buy')}
+                  </button>
+                </>
+              )}
             </div>
           </div>
         ))}
@@ -81,7 +88,7 @@ export function PacksForSale({ label, heading, body, fallback = null }: { label?
           <DialogPrimitive.Content data-pack-panel={open?.id ?? ''} aria-describedby="pack-panel-line" className="fixed left-1/2 top-1/2 z-50 w-[calc(100%-32px)] max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-fam-hairline bg-fam-card p-6 shadow-(--elev-4) outline-none">
             {open && (
               <form onSubmit={(e) => void buy(e)} data-pack-buy-form>
-                <DialogPrimitive.Title className="font-display text-xl font-semibold text-fam-ink">{open.name} · {money(open.price, open.currency)}</DialogPrimitive.Title>
+                <DialogPrimitive.Title className="font-display text-xl font-semibold text-fam-ink">{open.name}{open.price == null ? '' : ` · ${money(open.price, open.currency)}`}</DialogPrimitive.Title>
                 <DialogPrimitive.Description id="pack-panel-line" className="mt-1 text-sm text-fam-ink-muted">{tr('packs.panelLine')}</DialogPrimitive.Description>
                 <p className="mt-3 text-sm text-fam-ink-muted">{open.credits} {tr('packs.classes')}{open.validity_days ? ` · ${tr('packs.valid')} ${open.validity_days} ${tr('packs.days')}` : ''}</p>
                 <div className="mt-4 grid gap-3 sm:grid-cols-2">
