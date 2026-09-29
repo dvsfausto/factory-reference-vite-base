@@ -408,7 +408,9 @@ export function BookingWizardBlock({
         ])
         if (!svcRes.ok || !availRes.ok || !cfgRes.ok) throw new Error('load_failed')
         try { const rows = clsRes && clsRes.ok ? ((await clsRes.json()) as LiveClass[]) : []; if (!cancelled) setUpcoming(rows) } catch { /* no classes listed */ }
-        const svc = (await svcRes.json()) as BookableService[]
+        /* ★ A CLASS KIND IS NOT AN APPOINTMENT (the studio walk, 2026-09-29): a kind (booking_model 'class') is booked through its dated
+           classes above, never as a one-hour slot on the calendar; it left the appointment list the day it was priced */
+        const svc = ((await svcRes.json()) as Array<BookableService & { booking_model?: string | null }>).filter((x) => x.booking_model !== 'class')
         const avail = (await availRes.json()) as Availability[]
         const cfg = (await cfgRes.json()) as Array<{ features_enabled: BookingFeatures | null }>
         if (cancelled) return
