@@ -73,7 +73,7 @@ interface BookableService {
   description: string | null
   duration_minutes: number | null
   price: number | null
-  booking_model: 'slot' | 'day' | 'visit' | 'class' | null
+  booking_model: 'slot' | 'day' | 'visit' | null
 }
 
 interface Availability {
@@ -239,17 +239,25 @@ function ClassDayStrip({ rows, chosen, onPick }: { rows: LiveClass[]; chosen: st
   )
 }
 const classDayLabel = (iso: string) => new Intl.DateTimeFormat(SITE_LANGUAGE === 'es' ? 'es' : 'en-US', { timeZone: BOOKING.timezone || undefined, weekday: 'short', month: 'short', day: 'numeric' }).format(new Date(iso))
-async function fetchClasses(serviceId: string): Promise<LiveClass[]> {
-  const res = await fetch(`${liveClassesUrl(BUSINESS_ID, await classWindowDays(21))}&service_id=eq.${serviceId}`, { headers: ANON_HEADERS })
+/* a class belongs to its KIND (the owner, 2026-09-29): the dated classes of one kind, never of a service */
+async function fetchClasses(kindId: string): Promise<LiveClass[]> {
+  const res = await fetch(`${liveClassesUrl(BUSINESS_ID, await classWindowDays(21))}&kind_id=eq.${kindId}`, { headers: ANON_HEADERS })
   if (!res.ok) return []
   const rows = (await res.json()) as LiveClass[]
   return Array.isArray(rows) ? rows.filter((r) => new Date(r.start_at).getTime() > Date.now()) : []
 }
 async function fetchClass(id: string): Promise<LiveClass | null> {
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/class_schedule_public?id=eq.${id}&select=id,service_id,title,instructor,start_at,end_at,seats_total,seats_left,is_full`, { headers: ANON_HEADERS })
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/class_schedule_public?id=eq.${id}&select=id,title,instructor,start_at,end_at,seats_total,seats_left,is_full,kind_id,kind_name,price_single,instructor_name`, { headers: ANON_HEADERS })
   if (!res.ok) return null
   const rows = (await res.json()) as LiveClass[]
   return Array.isArray(rows) && rows[0] ? rows[0] : null
+}
+/* ★ THE KIND STANDS IN FOR THE SERVICE (the owner, 2026-09-29): a class kind is never a service, so the chosen "service" of a
+   class booking is built from the occurrence itself (kind id, kind name, single price, the duration from its times), never
+   looked up in the services list. Pure. */
+function kindAsService(occ: LiveClass): BookableService {
+  const mins = Math.round((Date.parse(occ.end_at) - Date.parse(occ.start_at)) / 60000)
+  return { id: occ.kind_id ?? occ.id, name: (occ.kind_name ?? occ.title).trim(), description: null, duration_minutes: Number.isFinite(mins) && mins > 0 ? mins : null, price: occ.price_single == null ? null : Number(occ.price_single), booking_model: null }
 }
 
 export function BookingWizardBlock({
@@ -408,9 +416,9 @@ export function BookingWizardBlock({
         ])
         if (!svcRes.ok || !availRes.ok || !cfgRes.ok) throw new Error('load_failed')
         try { const rows = clsRes && clsRes.ok ? ((await clsRes.json()) as LiveClass[]) : []; if (!cancelled) setUpcoming(rows) } catch { /* no classes listed */ }
-        /* ★ A CLASS KIND IS NOT AN APPOINTMENT (the studio walk, 2026-09-29): a kind (booking_model 'class') is booked through its dated
-           classes above, never as a one-hour slot on the calendar; it left the appointment list the day it was priced */
-        const svc = ((await svcRes.json()) as BookableService[]).filter((x) => x.booking_model !== 'class')
+        /* ★ A CLASS KIND IS NOT AN APPOINTMENT (the studio walk, 2026-09-29): kinds live in class_kinds now, never in services; this
+           belt only catches a row from before the move and costs nothing after it */
+        const svc = ((await svcRes.json()) as Array<Omit<BookableService, 'booking_model'> & { booking_model?: string | null }>).filter((x) => x.booking_model !== 'class') as BookableService[]
         const avail = (await availRes.json()) as Availability[]
         const cfg = (await cfgRes.json()) as Array<{ features_enabled: BookingFeatures | null }>
         if (cancelled) return
@@ -430,9 +438,8 @@ export function BookingWizardBlock({
         const preClass = typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('occurrence') : null
         if (preClass) {
           const occ = await fetchClass(preClass)
-          const cls = occ?.service_id ? svc.find((s) => s.id === occ.service_id) : undefined
           if (occ && !cancelled) {
-            if (cls) setService({ ...cls, price: cls.price == null ? null : Number(cls.price), duration_minutes: cls.duration_minutes == null ? null : Number(cls.duration_minutes) })
+            setService(kindAsService(occ))
             setOccurrence(occ)
             const l = classLocal(occ.start_at); setDate(l.date); setTime(l.time)
             const full = occ.is_full === true || (typeof occ.seats_left === 'number' && occ.seats_left <= 0)
@@ -515,8 +522,8 @@ export function BookingWizardBlock({
         headers: { 'Content-Type': 'application/json', ...ANON_HEADERS },
         body: JSON.stringify({
           businessId: BUSINESS_ID,
-          serviceId: service.id,
-          ...(occurrence ? { occurrenceId: occurrence.id, hold: true } : {}),
+          /* a class books by its kind, an appointment by its service (the owner, 2026-09-29) */
+          ...(occurrence ? { kindId: occurrence.kind_id, occurrenceId: occurrence.id, hold: true } : { serviceId: service.id }),
           selectedDate: date.toISOString(),
           selectedTime: time,
           customerInfo: {
@@ -679,7 +686,7 @@ export function BookingWizardBlock({
 
             {step === 'classflow' && occurrence && (
               <StepShell title={occurrence.title} onBack={() => setStep(classes.length ? 'class' : 'service')}>
-                <ClassBookingFlow key={occurrence.id} occurrence={occurrence} serviceId={service?.id ?? occurrence.service_id ?? null} onHeld={(entry) => { setHeld(entry); setStep('held') }} />
+                <ClassBookingFlow key={occurrence.id} occurrence={occurrence} kindId={occurrence.kind_id ?? null} onHeld={(entry) => { setHeld(entry); setStep('held') }} />
               </StepShell>
             )}
             {!loading && !loadError && !notLive && !emptyConfig && step !== 'held' && step !== 'classflow' && (
@@ -732,8 +739,7 @@ export function BookingWizardBlock({
                               return (
                                 <button key={c.id} type="button" data-cold-class={c.id} data-class-full={full ? '1' : undefined} disabled={full && !waitlistOn} data-class-no-list={full && !waitlistOn ? '1' : undefined}
                                   onClick={() => {
-                                    const svc = c.service_id ? services.find((x) => x.id === c.service_id) ?? null : null
-                                    setService(svc); setOccurrence(c); setWaitlistMode(full)
+                                    setService(kindAsService(c)); setOccurrence(c); setWaitlistMode(full)
                                     const l = classLocal(c.start_at); setDate(l.date); setTime(l.time)
                                     setStep(full ? 'details' : 'classflow')
                                   }}

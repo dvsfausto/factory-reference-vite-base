@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react'
 import { BOOKING, BUSINESS_ID, SITE, SUPABASE_ANON_KEY, SUPABASE_URL } from '~/data/site'
 
-// THE CLASS SCHEDULE READ (niche arc Stage 5b) — the booking-widget model over site_content_items rows of
-// kind 'class_session' (the owner's weekly timetable, entered in the dashboard's Website → Content tab or
-// through the assistant). SSR / first paint = SITE.classSchedule, baked by the scaffolder from the same rows
-// at build; the client then reconciles LIVE so a session the owner adds or moves shows with no rebuild. A
-// failed or empty read keeps the baked list. The live read runs only when the build baked something (the
-// table exists and the owner has sessions) — never a request that can only fail.
+// THE CLASS SCHEDULE READ (niche arc Stage 5b) — the booking-widget model over the owner's dated classes
+// (class_schedule_public) and, when none are dated yet, the weekly rule (class_rules_public). SSR / first
+// paint = SITE.classSchedule, baked by the scaffolder from the same rows at build; the client then reconciles
+// LIVE so a session the owner adds or moves shows with no rebuild. A failed or empty read keeps the baked
+// list. The live read runs only when the build baked something (the owner has classes) — never a request
+// that can only fail.
+// ★ CLASSES ARE THEIR OWN THING (the owner, 2026-09-29): a class kind is never a service and the weekly rule is its
+//   own row, never website content. The names below stay for the baked shape; `serviceName` IS the kind's name.
 export interface ClassSession {
+  /** the class kind's name (kept as serviceName for the baked shape and the manifest; it is never a service) */
   serviceName: string
   /** 0 = Sunday … 6 = Saturday */
   day: number
@@ -16,9 +19,11 @@ export interface ClassSession {
   end?: string
   instructor?: string
   capacity?: number
-  /** a dated class (the classes arc): its id to book, its seats left (null = no limit), its date and instant */
+  /** the room's name when the owner named one */
+  room?: string
+  /** a dated class (the classes arc): its id to book, its kind, its seats left (null = no limit), its date and instant */
   occurrenceId?: string
-  serviceId?: string | null
+  kindId?: string | null
   seatsLeft?: number | null
   isFull?: boolean
   date?: string
@@ -28,9 +33,15 @@ export interface ClassSession {
 /** one dated class as the public schedule view serves it (class_schedule_public: no names, no bookings) */
 export interface LiveClass {
   id: string
-  service_id: string | null
   title: string
+  /** legacy free text; instructor_name (the kind's row) wins when set */
   instructor: string | null
+  /** the class kind (2026-09-29): the id a booking carries, its name and single price */
+  kind_id: string | null
+  kind_name: string | null
+  price_single: number | null
+  instructor_name: string | null
+  room_name?: string | null
   start_at: string
   end_at: string
   seats_total: number | null
@@ -51,7 +62,8 @@ export function sessionsFromClasses(rows: LiveClass[], tz: string): ClassSession
     .filter((r) => r && typeof r.id === 'string' && typeof r.start_at === 'string' && typeof r.title === 'string' && r.title.trim())
     .map<ClassSession>((r) => {
       const a = tzParts(r.start_at, tz); const b = tzParts(r.end_at, tz)
-      return { serviceName: r.title.trim(), day: a.day, start: a.time, end: b.time, ...(r.instructor ? { instructor: r.instructor } : {}), ...(typeof r.seats_total === 'number' ? { capacity: r.seats_total } : {}), occurrenceId: r.id, isFull: r.is_full === true, serviceId: r.service_id ?? null, seatsLeft: r.seats_left ?? null, date: a.date, startAt: r.start_at }
+      const who = (r.instructor_name ?? r.instructor)?.trim()
+      return { serviceName: (r.kind_name ?? r.title).trim(), day: a.day, start: a.time, end: b.time, ...(who ? { instructor: who } : {}), ...(typeof r.seats_total === 'number' ? { capacity: r.seats_total } : {}), ...(r.room_name?.trim() ? { room: r.room_name.trim() } : {}), occurrenceId: r.id, isFull: r.is_full === true, kindId: r.kind_id ?? null, seatsLeft: r.seats_left ?? null, date: a.date, startAt: r.start_at }
     })
 }
 /** ★ HOW FAR AHEAD A CUSTOMER SEES (part 3, 2026-09-26): the owner's class horizon (class_settings_public.horizon_days), read once;
@@ -70,7 +82,7 @@ export function classHorizonDays(): Promise<number | null> { return classHorizon
 export async function classWindowDays(fallback: number): Promise<number> { return (await classHorizonDays()) ?? fallback }
 export function liveClassesUrl(businessId: string, days = 7, now = new Date()): string {
   const until = new Date(now.getTime() + days * 86_400_000).toISOString()
-  return `${SUPABASE_URL}/rest/v1/class_schedule_public?business_id=eq.${businessId}&start_at=lt.${encodeURIComponent(until)}&select=id,service_id,title,instructor,start_at,end_at,seats_total,seats_left,is_full&order=start_at.asc`
+  return `${SUPABASE_URL}/rest/v1/class_schedule_public?business_id=eq.${businessId}&start_at=lt.${encodeURIComponent(until)}&select=id,title,instructor,start_at,end_at,seats_total,seats_left,is_full,kind_id,kind_name,price_single,instructor_name,room_name&order=start_at.asc`
 }
 
 export function readBakedSchedule(site: typeof SITE = SITE): ClassSession[] {
@@ -78,26 +90,40 @@ export function readBakedSchedule(site: typeof SITE = SITE): ClassSession[] {
   return Array.isArray(list) ? list : []
 }
 
-// Mirrors factory-build/factory/scaffolder/src/lib/site-content.ts (the class_session branch): the same rules.
 const time = (v: unknown): string | undefined => {
   const s = typeof v === 'string' ? v.trim() : ''
   const m = s.match(/^(\d{1,2}):(\d{2})/)
   return m ? `${m[1]!.padStart(2, '0')}:${m[2]}` : undefined
 }
 
-export function sessionsFromRows(rows: Array<{ payload?: Record<string, unknown> | null; sort_order?: number | null }>): ClassSession[] {
+/** one weekly rule as the public view serves it (class_rules_public: the owner's timetable, its own row since 2026-09-29) */
+export interface LiveRule {
+  id: string
+  kind_id: string | null
+  kind_name: string | null
+  weekday: number
+  start_time: string
+  end_time: string | null
+  spots: number | null
+  starts_on: string | null
+  ends_on: string | null
+  instructor_name: string | null
+  room_name: string | null
+}
+/** the weekly rules as timetable sessions; a rule that has not started by the week shown, or ended before it, is dropped. Pure. */
+export function sessionsFromRules(rows: LiveRule[], weekFrom: string, weekUntil: string): ClassSession[] {
   return rows
-    .slice()
-    .sort((a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0))
-    .map((r) => r.payload ?? {})
-    .filter((p) => typeof p.serviceName === 'string' && (p.serviceName as string).trim() && time(p.start) && Number.isInteger(Number(p.day)) && Number(p.day) >= 0 && Number(p.day) <= 6)
-    .map<ClassSession>((p) => ({
-      serviceName: (p.serviceName as string).trim(),
-      day: Number(p.day),
-      start: time(p.start)!,
-      ...(time(p.end) ? { end: time(p.end) } : {}),
-      ...(typeof p.instructor === 'string' && p.instructor.trim() ? { instructor: p.instructor.trim() } : {}),
-      ...(typeof p.capacity === 'number' && p.capacity > 0 ? { capacity: p.capacity } : {}),
+    .filter((r) => r && typeof r.kind_name === 'string' && r.kind_name.trim() && time(r.start_time) && Number.isInteger(Number(r.weekday)) && Number(r.weekday) >= 0 && Number(r.weekday) <= 6)
+    .filter((r) => !(typeof r.starts_on === 'string' && r.starts_on > weekUntil) && !(typeof r.ends_on === 'string' && r.ends_on < weekFrom))
+    .map<ClassSession>((r) => ({
+      serviceName: r.kind_name!.trim(),
+      day: Number(r.weekday),
+      start: time(r.start_time)!,
+      ...(time(r.end_time) ? { end: time(r.end_time) } : {}),
+      ...(typeof r.instructor_name === 'string' && r.instructor_name.trim() ? { instructor: r.instructor_name.trim() } : {}),
+      ...(typeof r.spots === 'number' && r.spots > 0 ? { capacity: r.spots } : {}),
+      ...(typeof r.room_name === 'string' && r.room_name.trim() ? { room: r.room_name.trim() } : {}),
+      kindId: r.kind_id ?? null,
     }))
 }
 
@@ -134,16 +160,19 @@ export function useClassSchedule(): ClassSession[] {
     const headers = { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` }
     /* ★ THE REAL SCHEDULE FIRST (the classes arc, 2026-09-23): the next seven days of dated classes with seats left, read
        from the public schedule view. When any exist they are the page. Only when there are none does the weekly rule
-       (site_content_items) load, so the two reads never race each other (the rule read used to land last and win). */
+       (class_rules_public, its own row since 2026-09-29) load, so the two reads never race each other. A rule that
+       starts after this week or ended before it is not shown. */
     const rulesFallback = () => {
       const url =
-        `${SUPABASE_URL}/rest/v1/site_content_items?business_id=eq.${BUSINESS_ID}&kind=eq.class_session&is_active=eq.true` +
-        `&select=payload,sort_order&order=sort_order.asc`
+        `${SUPABASE_URL}/rest/v1/class_rules_public?business_id=eq.${BUSINESS_ID}` +
+        `&select=id,kind_id,kind_name,weekday,start_time,end_time,spots,starts_on,ends_on,instructor_name,room_name&order=weekday.asc,start_time.asc`
+      const from = new Date().toISOString().slice(0, 10)
+      const until = new Date(Date.now() + WEEK_BLOCK_DAYS * 86_400_000).toISOString().slice(0, 10)
       return fetch(url, { headers })
         .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
-        .then((rows: Array<{ payload?: Record<string, unknown> | null; sort_order?: number | null }>) => {
+        .then((rows: LiveRule[]) => {
           if (cancelled || !Array.isArray(rows) || rows.length === 0) return
-          const live = sessionsFromRows(rows)
+          const live = sessionsFromRules(rows, from, until)
           if (live.length > 0) setSessions(live)
         })
     }

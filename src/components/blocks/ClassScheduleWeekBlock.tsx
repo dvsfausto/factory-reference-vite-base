@@ -5,11 +5,12 @@ import { classHorizon, useClassSchedule, weekSpan, type ClassHorizon, type Class
 import { PacksForSale } from './PacksForSale'
 
 // Class schedule LAYOUT: 'week' (niche arc Stage 5b) — the owner's weekly timetable of group sessions: one
-// column per day that has a session, each session a card with time, class, instructor and capacity. A
-// LIVE-READ block on the booking-widget model (useClassSchedule): the sessions are site_content_items rows the
-// owner edits in the dashboard or through the assistant; they survive a rebuild by construction. Returns
-// null with no sessions. Text = block params (label/heading/body). Nothing is invented: a session without an
-// end time shows only its start; no instructor → no line; no capacity → no line.
+// column per day that has a session, each session a card with time, class, instructor, room and capacity. A
+// LIVE-READ block on the booking-widget model (useClassSchedule): the dated classes (class_schedule_public) or,
+// with none dated, the owner's weekly rule (class_rules, its own row, never website content: the owner's
+// decision, 2026-09-29); they survive a rebuild by construction. Returns null with no sessions. Text = block
+// params (label/heading/body). Nothing is invented: a session without an end time shows only its start; no
+// instructor → no line; no room → no line; no capacity → no line.
 //
 // TOKEN DISCIPLINE: fam-* surfaces/ink/hairline/accent (DNA), rounded-* (DNA), font-display (DNA).
 function fmt(t: string): string {
@@ -82,6 +83,7 @@ export function ClassScheduleWeekBlock({
                     {(s.instructor || s.capacity || s.occurrenceId) && (
                       <div className="mt-1 flex flex-wrap gap-x-4 gap-y-1 text-sm text-fam-ink-muted">
                         {s.instructor && <span>{tr('schedule.with')} {s.instructor}</span>}
+                        {s.room && <span className="text-xs">{tr('schedule.inRoom').replace('{room}', s.room)}</span>}
                         {s.occurrenceId && typeof s.seatsLeft === 'number' ? (
                           <span className="inline-flex items-center gap-1"><Users className="h-3.5 w-3.5" /> {s.seatsLeft > 0 ? `${s.seatsLeft} ${tr('schedule.left')}` : tr('schedule.full')}</span>
                         ) : s.occurrenceId && s.isFull ? (
@@ -89,7 +91,8 @@ export function ClassScheduleWeekBlock({
                         ) : s.capacity ? (
                           <span className="inline-flex items-center gap-1"><Users className="h-3.5 w-3.5" /> {s.capacity} {tr('schedule.spots')}</span>
                         ) : null}
-                        {s.occurrenceId && s.serviceId && (
+                        {/* a class is booked by its kind (2026-09-29): no kind, no link */}
+                        {s.occurrenceId && s.kindId && (
                           (s.isFull || (typeof s.seatsLeft === 'number' && s.seatsLeft <= 0)) && beyond.waitlist === false
                             ? <span data-schedule-full-no-list className="font-semibold text-fam-ink-muted">{tr('schedule.full')}</span>
                             : <a href={`/book?occurrence=${s.occurrenceId}`} className="font-semibold text-fam-accent-text hover:underline">{!s.isFull && (s.seatsLeft == null || s.seatsLeft > 0) ? tr('schedule.book') : tr('schedule.waitlist')}</a>

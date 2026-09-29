@@ -16,7 +16,8 @@
 //      visit service, and is never "$0".
 // ─────────────────────────────────────────────────────────────────────────────
 
-export type BookingModel = 'slot' | 'day' | 'visit' | 'class' | null | undefined
+/* a class kind is never a service (the owner, 2026-09-29): no 'class' model; classes book through class_kinds + occurrences */
+export type BookingModel = 'slot' | 'day' | 'visit' | null | undefined
 
 export interface ServiceShape {
   booking_model?: BookingModel

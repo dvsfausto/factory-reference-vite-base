@@ -104,7 +104,8 @@ export function CustomerPortal() {
   const book = async (c: LiveClass) => {
     if (!token) return
     setBusy(true); setError(null)
-    const { ok, data } = await fn('create-booking', { businessId: BUSINESS_ID, serviceId: c.service_id, occurrenceId: c.id, hold: true, source: 'portal' }, token)
+    /* a class is booked by its kind (the owner, 2026-09-29), never a service id */
+    const { ok, data } = await fn('create-booking', { businessId: BUSINESS_ID, kindId: c.kind_id, occurrenceId: c.id, hold: true, source: 'portal' }, token)
     setBusy(false)
     const d = data as { success?: boolean; held?: boolean; error?: string; booking?: { id?: string }; hold?: { token?: string; expires_at?: string }; options?: HeldOptions }
     if (!ok || !d.success || !d.booking?.id || !d.hold?.token) { setError(d.error || tr('booking.couldNotComplete')); return }

@@ -33,7 +33,8 @@ function Primary({ children, disabled, busy, tag, onClick, type = 'button' }: { 
   )
 }
 
-export function ClassBookingFlow({ occurrence, serviceId, onHeld }: { occurrence: { id: string; title: string }; serviceId: string | null; onHeld: (entry: HeldEntry) => void }) {
+/* a class is booked by its KIND (the owner, 2026-09-29): kindId, never a service id */
+export function ClassBookingFlow({ occurrence, kindId, onHeld }: { occurrence: { id: string; title: string }; kindId: string | null; onHeld: (entry: HeldEntry) => void }) {
   const [phase, setPhase] = useState<Phase>('who')
   const [phone, setPhone] = useState('')
   const [first, setFirst] = useState('')
@@ -98,7 +99,7 @@ export function ClassBookingFlow({ occurrence, serviceId, onHeld }: { occurrence
   }
   const book = async (sess: string) => {
     setBusy(true); setError(null); setPhase('booking')
-    const { ok, data } = await fn('create-booking', { businessId: BUSINESS_ID, ...(serviceId ? { serviceId } : {}), occurrenceId: occurrence.id, hold: true, source: 'portal' }, sess)
+    const { ok, data } = await fn('create-booking', { businessId: BUSINESS_ID, ...(kindId ? { kindId } : {}), occurrenceId: occurrence.id, hold: true, source: 'portal' }, sess)
     setBusy(false)
     const d = data as { success?: boolean; held?: boolean; already?: boolean; message?: string; error?: string; booking?: { id?: string }; hold?: { token?: string; expires_at?: string }; options?: HeldOptions }
     if (!ok || !d.success || !d.booking?.id || !d.hold?.token) { setError(d.error || tr('booking.couldNotComplete')); setPhase('who'); return }

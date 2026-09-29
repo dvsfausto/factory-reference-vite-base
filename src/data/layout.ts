@@ -27,7 +27,7 @@ export type BlockType =
   | 'menu'
   // Product grid (niche arc Stage 4): LIVE-READ over the products table (SSR from SITE.products); null with none.
   | 'productGrid'
-  // Class schedule (niche arc Stage 5b): LIVE-READ over the owner's class sessions (SSR from SITE.classSchedule); null with none.
+  // Class schedule (niche arc Stage 5b): LIVE-READ over the owner's dated classes and weekly rule, their own rows never website content (2026-09-29); SSR from SITE.classSchedule; null with none.
   | 'classSchedule'
   | 'trustBar'
   | 'servicesPreview'
