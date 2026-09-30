@@ -47,12 +47,13 @@ export function serviceImageUrl(slug: string): string {
 
 // The owner's own photo for a service, or null: a picture-less layout (icon tiles, the list) shows it when it exists.
 export function ownerServiceImageUrl(slug: string): string | null {
-  const f = OWNER_SERVICE_IMAGES[slug]
-  if (f) return imageSrc(f)
-  // a photo the owner chose through the editor lands in SERVICE_IMAGES as a full URL (the build's own stock is a bare file name):
-  // it is the owner's choice too, and shows here at once, without waiting for a rebuild (the editor walk found the gap, 2026-09-30)
+  // the owner's latest choice wins: a photo chosen through the editor lands in SERVICE_IMAGES as a full URL after the build, so it is
+  // newer than the build-time owner registry (the second editor walk saw the homepage keep the older photo, 2026-09-30); the build's
+  // own stock is a bare file name and never counts as the owner's
   const chosen = SERVICE_IMAGES[slug]
-  return chosen && /^https?:\/\//.test(chosen) ? imageSrc(chosen) : null
+  if (chosen && /^https?:\/\//.test(chosen)) return imageSrc(chosen)
+  const f = OWNER_SERVICE_IMAGES[slug]
+  return f ? imageSrc(f) : null
 }
 
 // The owner's focal point for a service photo, or null: every block that draws the photo applies it as object-position.
