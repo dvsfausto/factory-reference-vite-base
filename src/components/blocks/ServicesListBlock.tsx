@@ -3,10 +3,11 @@ import { tr } from '~/lib/i18n'
 import { ArrowRight } from 'lucide-react'
 import { SITE } from '~/data/site'
 import { SERVICES } from '~/data/services-view'
+import { ownerServiceImageUrl } from '~/data/images'
 
 // ServicesPreview LAYOUT: 'list', an editorial, type-forward index: each service
 // is a hairline-separated row with an ordinal, a large display name, a blurb, and
-// a quiet arrow. No imagery, distinct precisely because it is restrained and
+// a quiet arrow. No stock imagery (the owner's own service photo shows as a thumbnail when set), distinct because it is restrained and
 // reads like a well-set table of contents. Character-agnostic.
 //
 // Editorial restraint (not a stripped grid): real hairline rules between rows,
@@ -68,7 +69,11 @@ export function ServicesListBlock({
               <span className="font-display text-sm font-semibold text-fam-accent-text md:col-span-1">
                 {String(i + 1).padStart(2, '0')}
               </span>
-              <h3 className="font-display text-2xl font-semibold tracking-tight text-fam-ink transition-colors group-hover:text-fam-accent-text-strong md:col-span-5 md:text-3xl">
+              {/* ★ the owner's own photo (2026-09-30): shown as a thumbnail when the service has one; the row stays type-forward without */}
+              {ownerServiceImageUrl(s.slug) && (
+                <img src={ownerServiceImageUrl(s.slug)!} alt={s.name} loading="lazy" width={320} height={240} className="aspect-[4/3] w-full rounded-xl object-cover md:col-span-2" data-service-photo={s.slug} />
+              )}
+              <h3 className={`font-display text-2xl font-semibold tracking-tight text-fam-ink transition-colors group-hover:text-fam-accent-text-strong md:text-3xl ${ownerServiceImageUrl(s.slug) ? 'md:col-span-3' : 'md:col-span-5'}`}>
                 {s.displayName}
               </h3>
               <p className="text-base leading-relaxed text-fam-ink-muted md:col-span-5">{s.short}</p>

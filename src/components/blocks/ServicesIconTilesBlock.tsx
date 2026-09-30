@@ -14,8 +14,9 @@ import {
 } from 'lucide-react'
 import { SITE } from '~/data/site'
 import { SERVICES } from '~/data/services-view'
+import { ownerServiceImageUrl } from '~/data/images'
 
-// ServicesPreview LAYOUT: 'icon-tiles', icon + title + blurb tiles, NO photos.
+// ServicesPreview LAYOUT: 'icon-tiles', icon + title + blurb tiles, no STOCK photos; the owner's own service photo shows when set.
 // The right call when a business has no service imagery: an intentional icon
 // treatment carries each tile instead of a missing or generic stock photo.
 // Character-agnostic.
@@ -89,16 +90,34 @@ export function ServicesIconTilesBlock({
             const iconName = (s as { icon?: string }).icon
             const Icon: LucideIcon =
               (iconName ? ICON_BY_NAME[iconName] : undefined) ?? DEFAULT_ICONS[i % DEFAULT_ICONS.length]!
+            // ★ the owner's own photo (2026-09-30): a service the owner gave a picture shows it here too, not only on its page;
+            // an agent's, a photographer's, a salon's services ARE pictures. Without one the icon treatment stays as it was.
+            const photo = ownerServiceImageUrl(s.slug)
             return (
               <Link
                 key={s.slug}
                 to="/services/$slug"
                 params={{ slug: s.slug }}
-                className="group flex flex-col rounded-2xl border border-fam-hairline bg-fam-card p-7 transition-all hover:border-fam-accent hover:elev-2"
+                className={`group flex flex-col rounded-2xl border border-fam-hairline bg-fam-card transition-all hover:border-fam-accent hover:elev-2 ${photo ? 'overflow-hidden' : 'p-7'}`}
               >
-                <span className="grid h-12 w-12 place-items-center rounded-xl bg-fam-accent-soft text-fam-accent-text transition-colors group-hover:bg-fam-accent-soft-2">
-                  <Icon className="h-6 w-6" />
-                </span>
+                {photo ? (
+                  <div className="aspect-[4/3] overflow-hidden">
+                    <img
+                      src={photo}
+                      alt={s.name}
+                      loading="lazy"
+                      width={800}
+                      height={600}
+                      className="h-full w-full object-cover transition-transform duration-(--motion-slow) group-hover:scale-(--hov-zoom)"
+                      data-service-photo={s.slug}
+                    />
+                  </div>
+                ) : (
+                  <span className="grid h-12 w-12 place-items-center rounded-xl bg-fam-accent-soft text-fam-accent-text transition-colors group-hover:bg-fam-accent-soft-2">
+                    <Icon className="h-6 w-6" />
+                  </span>
+                )}
+                <div className={photo ? 'flex flex-1 flex-col p-7' : 'contents'}>
                 <h3 className="mt-6 font-display text-xl font-semibold tracking-tight text-fam-ink">
                   {s.displayName}
                 </h3>
@@ -106,6 +125,7 @@ export function ServicesIconTilesBlock({
                 <span className="mt-6 inline-flex items-center gap-1 font-display text-sm font-semibold text-fam-accent-text transition-all group-hover:gap-2">
                   {exploreLabel} <ArrowRight className="h-4 w-4" />
                 </span>
+                </div>
               </Link>
             )
           })}

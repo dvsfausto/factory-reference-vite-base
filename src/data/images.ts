@@ -15,6 +15,8 @@ export const EDITORIAL_IMAGE = ''
 export const AREA_IMAGES: Record<string, string> = {}
 export const AREA_ALT: Record<string, string> = {}
 export const SERVICE_IMAGES: Record<string, string> = {}
+// The owner's OWN service photos (set on the service, never stock): the layouts that carry no stock imagery show these.
+export const OWNER_SERVICE_IMAGES: Record<string, string> = {}
 // Per-info-page images, spread across the editorial + service pool (scaffolder-emitted).
 export const PAGE_IMAGES: Record<string, string> = {}
 
@@ -36,6 +38,12 @@ export function serviceImage(slug: string): string {
 
 export function serviceImageUrl(slug: string): string {
   return imageSrc(serviceImage(slug))
+}
+
+// The owner's own photo for a service, or null: a picture-less layout (icon tiles, the list) shows it when it exists.
+export function ownerServiceImageUrl(slug: string): string | null {
+  const f = OWNER_SERVICE_IMAGES[slug]
+  return f ? imageSrc(f) : null
 }
 
 export function ogImageForService(slug: string): string {
