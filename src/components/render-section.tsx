@@ -4,7 +4,7 @@ import { tr, trTrustPhrase } from '~/lib/i18n'
 import { Phone, Mail, MapPin, Clock } from 'lucide-react'
 import { Reveal } from '~/components/Reveal'
 import { SITE } from '~/data/site'
-import { serviceImageUrl } from '~/data/images'
+import { serviceImageUrl, serviceImageFocus } from '~/data/images'
 import type { FAQ, ServicePageData, ServiceAreaPageData, InfoPageData } from '~/lib/types/page-types'
 // Page-specific full-content components reused by the inner-page block cases
 // (servicesIndex/areasIndex/reviewsIndex/contactForm). These render the FULL list
@@ -585,6 +585,7 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
             body={svc.hero.subhead}
             subheadline=""
             imageUrl={serviceImageUrl(svc.slug)}
+            imageFocus={serviceImageFocus(svc.slug)}
             trustItems={trustItems}
             {...(perService as Record<string, never>)}
           />

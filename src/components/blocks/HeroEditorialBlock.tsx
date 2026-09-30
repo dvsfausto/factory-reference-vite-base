@@ -30,6 +30,7 @@ export function HeroEditorialBlock({
   headline = site.hero.headline,
   body = site.hero.body,
   imageUrl = site.hero.image_url,
+  imageFocus = null,
   kicker = site.hero.kicker,
   subheadline = site.hero.subheadline,
   ctaLabel = site.hero.cta_primary_label,
@@ -40,6 +41,8 @@ export function HeroEditorialBlock({
   headline?: string
   body?: string
   imageUrl?: string
+  /** a service photo has a focal point, 2026-09-30: the item's own point on an inner page; null = the site hero's */
+  imageFocus?: string | null
   kicker?: string
   subheadline?: string
   ctaLabel?: string
@@ -140,7 +143,7 @@ export function HeroEditorialBlock({
             <img
               src={imageSrc(imageUrl)}
               alt={HERO_ALT}
-              className="h-[42vh] min-h-[320px] w-full object-cover md:h-[52vh]" data-hero-photo="" style={heroFocusStyle(site)} />
+              className="h-[42vh] min-h-[320px] w-full object-cover md:h-[52vh]" data-hero-photo="" style={imageFocus ? { objectPosition: imageFocus } : heroFocusStyle(site)} />
           </div>
         </div>
       </div>

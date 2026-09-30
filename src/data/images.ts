@@ -4,8 +4,10 @@
 
 // HERO_IMAGE moved to SITE.hero.image_url (src/data/site.ts) so the hero image
 // is editor-editable per field. Used here as the service/area fallback.
+import type { CSSProperties } from 'react'
 import { SITE } from '~/data/site'
 import { imageSrc } from '~/lib/asset-url'
+import { focusPoint } from '~/lib/hero-focus'
 
 export const HERO_ALT = 'Reference hero image'
 
@@ -17,6 +19,9 @@ export const AREA_ALT: Record<string, string> = {}
 export const SERVICE_IMAGES: Record<string, string> = {}
 // The owner's OWN service photos (set on the service, never stock): the layouts that carry no stock imagery show these.
 export const OWNER_SERVICE_IMAGES: Record<string, string> = {}
+// a service photo has a focal point, 2026-09-30: "x% y%" per service slug, set by the owner by asking ("show more of the top"),
+// the same value shape as SITE.hero.image_focus; "" or absent = no point (the portrait rule in lib/hero-focus-runtime.ts decides).
+export const SERVICE_IMAGE_FOCUS: Record<string, string> = {}
 // Per-info-page images, spread across the editorial + service pool (scaffolder-emitted).
 export const PAGE_IMAGES: Record<string, string> = {}
 
@@ -44,6 +49,16 @@ export function serviceImageUrl(slug: string): string {
 export function ownerServiceImageUrl(slug: string): string | null {
   const f = OWNER_SERVICE_IMAGES[slug]
   return f ? imageSrc(f) : null
+}
+
+// The owner's focal point for a service photo, or null: every block that draws the photo applies it as object-position.
+export function serviceImageFocus(slug: string): string | null {
+  return focusPoint(SERVICE_IMAGE_FOCUS[slug])
+}
+
+export function serviceImageFocusStyle(slug: string): CSSProperties | undefined {
+  const f = serviceImageFocus(slug)
+  return f ? { objectPosition: f } : undefined
 }
 
 export function ogImageForService(slug: string): string {

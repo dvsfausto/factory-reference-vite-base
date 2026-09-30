@@ -45,6 +45,7 @@ export function HeroAuroraBlock({
   headline = site.hero.headline,
   body = site.hero.body,
   imageUrl = site.hero.image_url,
+  imageFocus = null,
   kicker = site.hero.kicker,
   subheadline = site.hero.subheadline,
   ctaLabel = site.hero.cta_primary_label,
@@ -55,6 +56,8 @@ export function HeroAuroraBlock({
   headline?: string
   body?: string
   imageUrl?: string
+  /** a service photo has a focal point, 2026-09-30: the item's own point on an inner page; null = the site hero's */
+  imageFocus?: string | null
   kicker?: string
   subheadline?: string
   ctaLabel?: string
@@ -69,7 +72,7 @@ export function HeroAuroraBlock({
       <img
         src={imageSrc(imageUrl)}
         alt={HERO_ALT}
-        className="absolute inset-0 -z-30 h-full w-full object-cover" data-hero-photo="" style={heroFocusStyle(site)} />
+        className="absolute inset-0 -z-30 h-full w-full object-cover" data-hero-photo="" style={imageFocus ? { objectPosition: imageFocus } : heroFocusStyle(site)} />
       {/* Legibility scrim, dark from the left, fading right. */}
       <div className="absolute inset-0 -z-20 bg-gradient-to-tr from-fam-scrim via-fam-scrim/85 to-fam-scrim/30" />
       {/* Ambient brand AURORA, a slow-drifting, blurred wash of --wow-grad-brand.

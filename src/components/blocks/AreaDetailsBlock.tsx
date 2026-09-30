@@ -5,7 +5,7 @@ import { ArrowRight, MapPin, Quote, Star } from 'lucide-react'
 import type { ServiceAreaPageData } from '~/lib/types/page-types'
 import { Reveal } from '~/components/Reveal'
 import { SERVICES } from '~/data/services-view'
-import { serviceImageUrl } from '~/data/images'
+import { serviceImageUrl, serviceImageFocusStyle } from '~/data/images'
 
 // AREA-DETAIL VARIANT (Arc 3 · Stage D): the rich, consolidated MIDDLE content of an
 // area page, driven per-item by `area` (ctx.area). It renders, in order -
@@ -137,6 +137,7 @@ export function AreaDetailsBlock({
               <div className="aspect-[4/3] overflow-hidden">
                 <img
                   src={serviceImageUrl(s.slug)}
+                  data-service-photo={s.slug} style={serviceImageFocusStyle(s.slug)}
                   alt={s.name}
                   loading="lazy"
                   width={800}

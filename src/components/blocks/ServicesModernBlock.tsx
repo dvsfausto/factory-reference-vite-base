@@ -3,7 +3,7 @@ import { tr } from '~/lib/i18n'
 import { ArrowRight } from 'lucide-react'
 import { SITE } from '~/data/site'
 import { SERVICES } from '~/data/services-view'
-import { serviceImageUrl } from '~/data/images'
+import { serviceImageUrl, serviceImageFocusStyle } from '~/data/images'
 
 // ServicesPreview VARIANT: 'modern', clean offerings grid. Identity copy from
 // SITE.homeServices. A cool-gray section, sharp minimal cards (thin border,
@@ -65,7 +65,7 @@ export function ServicesModernBlock({
                 className="zi-rise group flex items-center gap-4 rounded-lg border border-fam-hairline bg-fam-card p-3 transition-colors hover:border-fam-accent"
               >
                 <div className="zi-media h-16 w-16 shrink-0 overflow-hidden rounded-md">
-                  <img src={serviceImageUrl(s.slug)} alt={s.name} loading="lazy" width={128} height={128} className="h-full w-full object-cover" />
+                  <img src={serviceImageUrl(s.slug)} alt={s.name} loading="lazy" width={128} height={128} className="h-full w-full object-cover" data-service-photo={s.slug} style={serviceImageFocusStyle(s.slug)} />
                 </div>
                 <div className="min-w-0">
                   <h3 className="truncate font-display text-base font-semibold tracking-tight text-fam-ink">{s.displayName}</h3>

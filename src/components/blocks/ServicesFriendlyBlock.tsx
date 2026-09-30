@@ -4,7 +4,7 @@ import { ArrowRight } from 'lucide-react'
 import { SectionHeaderFriendly } from '~/components/SectionHeaderFriendly'
 import { SITE } from '~/data/site'
 import { SERVICES } from '~/data/services-view'
-import { serviceImageUrl } from '~/data/images'
+import { serviceImageUrl, serviceImageFocusStyle } from '~/data/images'
 
 // ServicesPreview VARIANT: 'friendly', warm, bright offerings grid. Identity
 // copy from SITE.homeServices (zero hardcoded section copy). White rounded cards
@@ -54,6 +54,7 @@ export function ServicesFriendlyBlock({
               <div className="aspect-[4/3] overflow-hidden">
                 <img
                   src={serviceImageUrl(s.slug)}
+                  data-service-photo={s.slug} style={serviceImageFocusStyle(s.slug)}
                   alt={s.name}
                   loading="lazy"
                   width={800}

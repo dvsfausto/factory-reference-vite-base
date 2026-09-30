@@ -1,6 +1,6 @@
 import { Link } from '@tanstack/react-router'
 import { tr } from '~/lib/i18n'
-import { serviceImageUrl } from '~/data/images'
+import { serviceImageUrl, serviceImageFocusStyle } from '~/data/images'
 import type { ServiceRef } from '~/lib/types/page-types'
 
 interface Props {
@@ -31,6 +31,7 @@ export function ServicesSection({ heading, intro, services }: Props) {
               <div className="aspect-[4/3] overflow-hidden bg-fam-surface-slate-2">
                 <img
                   src={serviceImageUrl(s.slug)}
+                  data-service-photo={s.slug} style={serviceImageFocusStyle(s.slug)}
                   alt={s.name}
                   width={1200}
                   height={900}

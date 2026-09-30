@@ -25,6 +25,7 @@ export function HeroServiceBannerBlock({
   headline = site.hero.headline,
   body = site.hero.body,
   imageUrl = site.hero.image_url,
+  imageFocus = null,
   trustItems,
   cta: ctaOverride,
 }: {
@@ -33,6 +34,8 @@ export function HeroServiceBannerBlock({
   body?: string
   subheadline?: string
   imageUrl?: string
+  /** a service photo has a focal point, 2026-09-30: the item's own point on an inner page; null = the site hero's */
+  imageFocus?: string | null
   trustItems?: string[]
   decorativeAsset?: string
   /** A per-service CTA (the service-detail route passes serviceCta(slug)); absent → the site-wide one. */
@@ -82,7 +85,7 @@ export function HeroServiceBannerBlock({
           </div>
           <div className="lg:col-span-5">
             <div className="overflow-hidden rounded-2xl border border-[var(--fam-hairline,var(--color-ink-100,#e5e7eb))]">
-              <img src={imageSrc(imageUrl)} alt={HERO_ALT} loading="eager" className="aspect-[4/3] w-full object-cover" data-hero-photo="" style={heroFocusStyle(site)} />
+              <img src={imageSrc(imageUrl)} alt={HERO_ALT} loading="eager" className="aspect-[4/3] w-full object-cover" data-hero-photo="" style={imageFocus ? { objectPosition: imageFocus } : heroFocusStyle(site)} />
             </div>
           </div>
         </div>

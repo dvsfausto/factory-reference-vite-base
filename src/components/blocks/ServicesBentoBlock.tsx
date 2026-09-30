@@ -3,7 +3,7 @@ import { tr } from '~/lib/i18n'
 import { ArrowUpRight } from 'lucide-react'
 import { SITE } from '~/data/site'
 import { SERVICES } from '~/data/services-view'
-import { serviceImageUrl } from '~/data/images'
+import { serviceImageUrl, serviceImageFocusStyle } from '~/data/images'
 
 // ServicesPreview LAYOUT: 'bento', an asymmetric, mixed-size tile grid (the
 // modern top-of-class look): a large feature tile anchors the composition while
@@ -91,6 +91,7 @@ export function ServicesBentoBlock({
               >
                 <img
                   src={serviceImageUrl(s.slug)}
+                  data-service-photo={s.slug} style={serviceImageFocusStyle(s.slug)}
                   alt={s.name}
                   loading="lazy"
                   width={800}

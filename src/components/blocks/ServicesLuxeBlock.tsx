@@ -4,7 +4,7 @@ import { motion, useReducedMotion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import { SectionHeader } from '~/components/SectionHeader'
 import { SERVICES } from '~/data/services-view'
-import { serviceImageUrl } from '~/data/images'
+import { serviceImageUrl, serviceImageFocusStyle } from '~/data/images'
 
 // Services VARIANT: 'luxe', a premium glass-card grid on a soft radial brand
 // surface. Each card is a framed photo above a frosted body; on hover the whole
@@ -105,6 +105,7 @@ export function ServicesLuxeBlock({
                 <div className="relative aspect-[4/3] overflow-hidden">
                   <img
                     src={serviceImageUrl(s.slug)}
+                    data-service-photo={s.slug} style={serviceImageFocusStyle(s.slug)}
                     alt={s.name}
                     loading="lazy"
                     width={800}

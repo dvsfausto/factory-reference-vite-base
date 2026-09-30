@@ -8,7 +8,7 @@ import { SectionHeader } from "./SectionHeader";
 import { renderCharacterHero, renderCharacterCta } from "./CharacterHero";
 import { resolveCharacterTokens } from "~/lib/character-tokens";
 import { ReviewCard } from "./ReviewCard";
-import { areaImageUrl, areaAlt, serviceImageUrl } from "~/data/images";
+import { areaImageUrl, areaAlt, serviceImageUrl, serviceImageFocusStyle } from "~/data/images";
 import { SERVICES } from "~/data/services-view";
 import { reviews } from "~/data/reviews";
 import { SITE } from "~/data/site";
@@ -191,6 +191,7 @@ export function ServiceAreaPageTemplate({ data }: Props) {
                   <div className="aspect-[4/3] overflow-hidden">
                     <img
                       src={serviceImageUrl(s.slug)}
+                      data-service-photo={s.slug} style={serviceImageFocusStyle(s.slug)}
                       alt={s.name}
                       loading="lazy"
                       width={800}

@@ -14,7 +14,7 @@ import {
 } from 'lucide-react'
 import { SITE } from '~/data/site'
 import { SERVICES } from '~/data/services-view'
-import { ownerServiceImageUrl } from '~/data/images'
+import { ownerServiceImageUrl, serviceImageFocusStyle } from '~/data/images'
 
 // ServicesPreview LAYOUT: 'icon-tiles', icon + title + blurb tiles, no STOCK photos; the owner's own service photo shows when set.
 // The right call when a business has no service imagery: an intentional icon
@@ -110,6 +110,7 @@ export function ServicesIconTilesBlock({
                       height={600}
                       className="h-full w-full object-cover transition-transform duration-(--motion-slow) group-hover:scale-(--hov-zoom)"
                       data-service-photo={s.slug}
+                      style={serviceImageFocusStyle(s.slug)}
                     />
                   </div>
                 ) : (

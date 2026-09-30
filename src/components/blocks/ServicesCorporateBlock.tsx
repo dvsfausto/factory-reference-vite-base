@@ -4,7 +4,7 @@ import { ArrowRight } from 'lucide-react'
 import { SectionHeaderCorporate } from '~/components/SectionHeaderCorporate'
 import { SITE } from '~/data/site'
 import { SERVICES } from '~/data/services-view'
-import { serviceImageUrl } from '~/data/images'
+import { serviceImageUrl, serviceImageFocusStyle } from '~/data/images'
 
 // ServicesPreview VARIANT: 'corporate', a structured "practice areas" grid.
 // Identity copy from SITE.homeServices. Boxed bordered cards (defined borders,
@@ -54,6 +54,7 @@ export function ServicesCorporateBlock({
               <div className="aspect-[16/9] overflow-hidden border-b border-fam-hairline">
                 <img
                   src={serviceImageUrl(s.slug)}
+                  data-service-photo={s.slug} style={serviceImageFocusStyle(s.slug)}
                   alt={s.name}
                   loading="lazy"
                   width={800}

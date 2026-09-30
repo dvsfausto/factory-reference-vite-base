@@ -14,7 +14,8 @@ function settle(img: HTMLImageElement): void {
 }
 
 export function applyHeroFocusRule(root: ParentNode = document): void {
-  root.querySelectorAll<HTMLImageElement>('img[data-hero-photo]').forEach((img) => {
+  // a service photo has a focal point, 2026-09-30: the same portrait rule on every service photo (img[data-service-photo])
+  root.querySelectorAll<HTMLImageElement>('img[data-hero-photo], img[data-service-photo]').forEach((img) => {
     if (img.complete) settle(img)
     else img.addEventListener('load', () => settle(img), { once: true })
   })

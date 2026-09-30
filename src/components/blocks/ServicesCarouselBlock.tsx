@@ -3,7 +3,7 @@ import { tr } from '~/lib/i18n'
 import { ArrowRight } from 'lucide-react'
 import { SITE } from '~/data/site'
 import { SERVICES } from '~/data/services-view'
-import { serviceImageUrl } from '~/data/images'
+import { serviceImageUrl, serviceImageFocusStyle } from '~/data/images'
 
 // ServicesPreview LAYOUT: 'carousel', a horizontal, scroll-snap slider of service
 // cards. The right call when there are many services: they live in a single
@@ -75,6 +75,7 @@ export function ServicesCarouselBlock({
               <div className="aspect-[4/3] overflow-hidden">
                 <img
                   src={serviceImageUrl(s.slug)}
+                  data-service-photo={s.slug} style={serviceImageFocusStyle(s.slug)}
                   alt={s.name}
                   loading="lazy"
                   width={800}

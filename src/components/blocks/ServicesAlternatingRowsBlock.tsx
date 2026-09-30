@@ -3,7 +3,7 @@ import { tr } from '~/lib/i18n'
 import { ArrowRight } from 'lucide-react'
 import { SITE } from '~/data/site'
 import { SERVICES } from '~/data/services-view'
-import { serviceImageUrl } from '~/data/images'
+import { serviceImageUrl, serviceImageFocusStyle } from '~/data/images'
 
 // ServicesPreview LAYOUT: 'alternating-rows', an Apple-style zigzag, one service
 // per full-width row, image and text trading sides down the page with generous
@@ -65,6 +65,7 @@ export function ServicesAlternatingRowsBlock({
               <div className={`overflow-hidden rounded-3xl border border-fam-hairline elev-1 ${i % 2 === 1 ? 'lg:order-2' : ''}`}>
                 <img
                   src={serviceImageUrl(s.slug)}
+                  data-service-photo={s.slug} style={serviceImageFocusStyle(s.slug)}
                   alt={s.name}
                   loading="lazy"
                   width={900}

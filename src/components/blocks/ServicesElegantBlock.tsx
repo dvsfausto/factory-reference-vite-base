@@ -4,7 +4,7 @@ import { ArrowRight } from 'lucide-react'
 import { elegantSurface } from '~/lib/elegant-surface'
 import { SITE } from '~/data/site'
 import { SERVICES } from '~/data/services-view'
-import { serviceImageUrl } from '~/data/images'
+import { serviceImageUrl, serviceImageFocusStyle } from '~/data/images'
 
 // ServicesPreview VARIANT: 'elegant', refined offerings grid. Identity copy from
 // SITE.homeServices. Surface from elegantSurface(): LIGHT by default (warm ivory
@@ -59,7 +59,7 @@ export function ServicesElegantBlock({
           {lead && (
             <Link to="/services/$slug" params={{ slug: lead.slug }} className="group block">
               <div className="zi-media overflow-hidden rounded-2xl">
-                <img src={serviceImageUrl(lead.slug)} alt={lead.name} loading="lazy" className="aspect-[16/10] w-full object-cover" />
+                <img src={serviceImageUrl(lead.slug)} alt={lead.name} loading="lazy" className="aspect-[16/10] w-full object-cover" data-service-photo={lead.slug} style={serviceImageFocusStyle(lead.slug)} />
               </div>
               <h3 className={`mt-6 font-display text-3xl font-medium tracking-tight ${s.text} transition-colors group-hover:text-fam-accent-text-strong`}>{lead.displayName}</h3>
               <p className={`mt-2 max-w-md ${s.muted}`}>{lead.short}</p>
@@ -70,7 +70,7 @@ export function ServicesElegantBlock({
             {rest.map((sv) => (
               <Link key={sv.slug} to="/services/$slug" params={{ slug: sv.slug }} className="group flex items-center gap-5">
                 <div className="zi-media h-20 w-24 shrink-0 overflow-hidden rounded-xl">
-                  <img src={serviceImageUrl(sv.slug)} alt={sv.name} loading="lazy" className="h-full w-full object-cover" />
+                  <img src={serviceImageUrl(sv.slug)} alt={sv.name} loading="lazy" className="h-full w-full object-cover" data-service-photo={sv.slug} style={serviceImageFocusStyle(sv.slug)} />
                 </div>
                 <div>
                   <h3 className={`font-display text-xl font-medium tracking-tight ${s.text} transition-colors group-hover:text-fam-accent-text-strong`}>{sv.name}</h3>

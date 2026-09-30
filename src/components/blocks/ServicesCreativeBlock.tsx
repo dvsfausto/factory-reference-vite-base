@@ -4,7 +4,7 @@ import { ArrowUpRight } from 'lucide-react'
 import { SectionHeaderCreative } from '~/components/SectionHeaderCreative'
 import { SITE } from '~/data/site'
 import { SERVICES } from '~/data/services-view'
-import { serviceImageUrl } from '~/data/images'
+import { serviceImageUrl, serviceImageFocusStyle } from '~/data/images'
 
 // ServicesPreview VARIANT: 'creative', a STAGGERED, asymmetric card grid (cards
 // offset at different vertical positions), big rounded shapes, magenta accents,
@@ -56,6 +56,7 @@ export function ServicesCreativeBlock({
               <div className="aspect-[4/3] overflow-hidden">
                 <img
                   src={serviceImageUrl(s.slug)}
+                  data-service-photo={s.slug} style={serviceImageFocusStyle(s.slug)}
                   alt={s.name}
                   loading="lazy"
                   width={800}

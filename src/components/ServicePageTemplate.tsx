@@ -7,7 +7,7 @@ import { CTASection } from "./CTASection";
 import { SectionHeader } from "./SectionHeader";
 import { renderCharacterHero, renderCharacterCta } from "./CharacterHero";
 import { resolveCharacterTokens } from "~/lib/character-tokens";
-import { serviceImageUrl } from "~/data/images";
+import { serviceImageUrl, serviceImageFocusStyle } from "~/data/images";
 import { SITE } from "~/data/site";
 import { isRelatedServiceVisible } from "~/data/services-view";
 import { siteDecor } from "~/lib/decor";
@@ -137,6 +137,7 @@ export function ServicePageTemplate({ data }: Props) {
               <div className="aspect-[4/3] rounded-2xl border-4 border-fam-card elev-4 overflow-hidden bg-brand-50">
                 <img
                   src={serviceImageUrl(data.slug)}
+                  data-service-photo={data.slug} style={serviceImageFocusStyle(data.slug)}
                   alt={data.hero.h1}
                   width={1200}
                   height={900}

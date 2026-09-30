@@ -4,7 +4,7 @@ import { motion, useReducedMotion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import { SectionHeader } from '~/components/SectionHeader'
 import { SERVICES } from '~/data/services-view'
-import { serviceImageUrl } from '~/data/images'
+import { serviceImageUrl, serviceImageFocusStyle } from '~/data/images'
 
 // Services VARIANT: 'feature-rows', large, editorial feature ROWS that alternate
 // the photo left/right. An oversized brand-gradient index numeral anchors each
@@ -91,6 +91,7 @@ export function ServicesFeatureRowsBlock({
                 >
                   <img
                     src={serviceImageUrl(s.slug)}
+                    data-service-photo={s.slug} style={serviceImageFocusStyle(s.slug)}
                     alt={s.name}
                     loading="lazy"
                     width={900}

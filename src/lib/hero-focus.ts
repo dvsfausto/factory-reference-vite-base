@@ -11,15 +11,19 @@ import type { CSSProperties } from 'react'
 
 const FOCUS_RE = /^\s*(\d{1,3})%\s+(\d{1,3})%\s*$/
 
-/** "50% 25%" → "50% 25%", anything else → null (the runtime rule then decides) */
-// the site's hero type is the scaffolded literal (no image_focus on most sites), so the read is deliberately loose
-export function heroFocus(site: { hero?: object | null } | null | undefined): string | null {
-  const raw = (site?.hero as { image_focus?: unknown } | null | undefined)?.image_focus
+/** "50% 25%" → "50% 25%", anything else → null (the runtime rule then decides); the ONE parser every focal point
+ *  goes through (the hero's, and a service photo's since 2026-09-30, src/data/images.ts serviceImageFocus) */
+export function focusPoint(raw: unknown): string | null {
   if (typeof raw !== 'string') return null
   const m = FOCUS_RE.exec(raw)
   if (!m) return null
   const clamp = (n: string) => Math.max(0, Math.min(100, Number(n)))
   return `${clamp(m[1])}% ${clamp(m[2])}%`
+}
+
+// the site's hero type is the scaffolded literal (no image_focus on most sites), so the read is deliberately loose
+export function heroFocus(site: { hero?: object | null } | null | undefined): string | null {
+  return focusPoint((site?.hero as { image_focus?: unknown } | null | undefined)?.image_focus)
 }
 
 /** the inline style for a hero <img>: the explicit focal point when the site carries one, nothing otherwise */

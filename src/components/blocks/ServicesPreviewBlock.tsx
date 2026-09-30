@@ -3,7 +3,7 @@ import { tr } from '~/lib/i18n'
 import { ArrowRight } from 'lucide-react'
 import { SectionHeader } from '~/components/SectionHeader'
 import { SERVICES } from '~/data/services-view'
-import { serviceImageUrl } from '~/data/images'
+import { serviceImageUrl, serviceImageFocusStyle } from '~/data/images'
 
 // Markup extracted VERBATIM from routes/index.tsx (the SERVICES PREVIEW
 // section). Self-omits when there are no services, exactly today's
@@ -56,6 +56,7 @@ export function ServicesPreviewBlock({
               <div className="aspect-[4/3] overflow-hidden">
                 <img
                   src={serviceImageUrl(s.slug)}
+                  data-service-photo={s.slug} style={serviceImageFocusStyle(s.slug)}
                   alt={s.name}
                   loading="lazy"
                   width={800}

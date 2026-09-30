@@ -4,7 +4,7 @@ import { motion, useReducedMotion } from 'framer-motion'
 import { ArrowRight, ArrowUpRight } from 'lucide-react'
 import { SectionHeader } from '~/components/SectionHeader'
 import { SERVICES } from '~/data/services-view'
-import { serviceImageUrl } from '~/data/images'
+import { serviceImageUrl, serviceImageFocusStyle } from '~/data/images'
 
 // Services VARIANT: 'spotlight-tiles', the lead service takes a big, cinematic
 // brand-gradient SPOTLIGHT tile (photo under a brand wash, copy inset on glass);
@@ -85,6 +85,7 @@ export function ServicesSpotlightTilesBlock({
             >
               <img
                 src={serviceImageUrl(lead.slug)}
+                data-service-photo={lead.slug} style={serviceImageFocusStyle(lead.slug)}
                 alt={lead.name}
                 loading="lazy"
                 width={1000}
@@ -165,6 +166,7 @@ export function ServicesSpotlightTilesBlock({
                     <div className="relative h-24 w-24 flex-none overflow-hidden rounded-2xl sm:h-28 sm:w-28">
                       <img
                         src={serviceImageUrl(s.slug)}
+                        data-service-photo={s.slug} style={serviceImageFocusStyle(s.slug)}
                         alt={s.name}
                         loading="lazy"
                         width={224}
