@@ -4,7 +4,7 @@ import { tr, trTrustPhrase } from '~/lib/i18n'
 import { Phone, Mail, MapPin, Clock } from 'lucide-react'
 import { Reveal } from '~/components/Reveal'
 import { SITE } from '~/data/site'
-import { serviceImageUrl, serviceImageFocus } from '~/data/images'
+import { serviceImageUrl, serviceImageFocus, areaImageUrl } from '~/data/images'
 import type { FAQ, ServicePageData, ServiceAreaPageData, InfoPageData } from '~/lib/types/page-types'
 // Page-specific full-content components reused by the inner-page block cases
 // (servicesIndex/areasIndex/reviewsIndex/contactForm). These render the FULL list
@@ -591,9 +591,10 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
           />
         )
       }
-      // PER-ITEM hero for the area (Stage D) + info (Stage E) routes. Areas/info have no
-      // own image, so the hero uses the business hero photo (SITE.hero.image_url) — honest
-      // (the business's own photo), never a fabricated image. Reuses the per-item WOW hero map.
+      // PER-ITEM hero for the area (Stage D) + info (Stage E) routes. An area HAS its own picture: the build makes one per area
+      // (AREA_IMAGES, a photo of the place) and areaImageUrl falls back to the business hero only when none was made. This used to
+      // hard-code the site hero, so four new areas showed the homepage's photo instead of their own (2026-09-30). Info pages keep
+      // the business hero: the build makes no picture for them.
       if (ctx?.area) {
         const AreaHero = SERVICE_HERO_VARIANTS[block.variant ?? ''] ?? HeroAuroraBlock
         return (
@@ -602,7 +603,7 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
             headline={ctx.area.hero.h1}
             body={ctx.area.hero.subhead}
             subheadline=""
-            imageUrl={SITE.hero.image_url}
+            imageUrl={areaImageUrl(ctx.area.slug)}
           />
         )
       }
