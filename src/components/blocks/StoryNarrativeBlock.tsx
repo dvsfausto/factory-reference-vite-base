@@ -1,4 +1,5 @@
 import { SITE } from '~/data/site'
+import { imageSrc } from '~/lib/asset-url'
 import { tr } from '~/lib/i18n'
 
 // Story LAYOUT: 'narrative', a large, centered editorial statement (ported from
@@ -18,14 +19,27 @@ export function StoryNarrativeBlock({
   heading?: string
   body?: string
 }) {
-  const story = (site as { story?: { quote?: string; attribution?: string } }).story
+  const story = (site as { story?: { quote?: string; attribution?: string; image?: string } }).story
   const quote = story?.quote ?? site.about
   const attribution = story?.attribution ?? site.name
+  // ★ the owner's own portrait (2026-09-30): a story photo the owner set shows on this layout too, never a stock or hero fallback
+  const portrait = story?.image
   if (!quote) return null
   return (
     <section className="bg-fam-card">
       <div className="container-x py-section">
         <div className="mx-auto max-w-4xl text-center">
+          {portrait && (
+            <img
+              src={imageSrc(portrait)}
+              alt={attribution}
+              loading="lazy"
+              width={320}
+              height={320}
+              className="mx-auto mb-8 h-40 w-40 rounded-full object-cover object-top sm:h-48 sm:w-48"
+              data-story-photo=""
+            />
+          )}
           <span className="inline-flex items-center justify-center gap-3 text-xs font-semibold uppercase tracking-[0.25em] text-fam-accent-text">
             <span className="h-px w-10 bg-fam-accent" />
             {label}

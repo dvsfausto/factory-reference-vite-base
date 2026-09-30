@@ -1,6 +1,7 @@
 import { motion, useReducedMotion } from 'framer-motion'
 import { tr } from '~/lib/i18n'
 import { SITE } from '~/data/site'
+import { imageSrc } from '~/lib/asset-url'
 
 // Story VARIANT: 'manifesto-glow', a large, centered narrative statement on a
 // soft radial brand-tinted surface, opened by an oversized brand-gradient quote
@@ -29,8 +30,10 @@ export function StoryManifestoGlowBlock({
   body?: string
 }) {
   const reduce = useReducedMotion()
-  const story = (site as { story?: { quote?: string; attribution?: string } }).story
+  const story = (site as { story?: { quote?: string; attribution?: string; image?: string } }).story
   const quote = body ?? story?.quote ?? site.about
+  // ★ the owner's own portrait (2026-09-30): shown when set, never a fallback
+  const portrait = story?.image
   const attribution = story?.attribution ?? site.name
   if (!quote) return null
 
@@ -47,6 +50,9 @@ export function StoryManifestoGlowBlock({
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="relative mx-auto max-w-4xl text-center"
         >
+          {portrait && (
+            <img src={imageSrc(portrait)} alt={attribution} loading="lazy" width={320} height={320} className="mx-auto mb-8 h-40 w-40 rounded-full object-cover object-top sm:h-48 sm:w-48" data-story-photo="" />
+          )}
           <span className="inline-flex items-center justify-center gap-3 text-xs font-bold uppercase tracking-[0.25em] text-brand-700">
             <span className="h-px w-10" style={{ backgroundImage: 'var(--wow-grad-brand)' }} />
             {label}
