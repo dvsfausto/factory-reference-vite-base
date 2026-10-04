@@ -15,7 +15,7 @@ import { tr } from '~/lib/i18n'
  */
 export type HeldOptions = { packs: Array<{ id: string; name: string; credits: number; price: number }>; single: { amount: number; share_token: string | null; link: string } | null }
 export type HeldEntry = { bookingId: string; token: string; initial: 'pay' | 'confirming' | 'after'; expiresAt?: string | null; options?: HeldOptions | null; note?: string | null }
-type Status = { status: string; held: boolean; hold_expires_at: string | null; options?: HeldOptions | null; seat_no: number | null; seats_total: number | null; occurrence: { id: string; title: string; start_at: string; room_key?: string | null } | null; invoice: { amount: number; paid: boolean; share_token: string | null } | null; pack: { name: string; balance: number } | null; waiver: { signed: boolean; link: string | null } | null }
+type Status = { status: string; held: boolean; hold_expires_at: string | null; options?: HeldOptions | null; seat_no: number | null; seats_total: number | null; occurrence: { id: string; title: string; start_at: string; room_key?: string | null } | null; invoice: { amount: number; paid: boolean; share_token: string | null } | null; pack: { name: string; balance: number } | null; waiver: { signed: boolean; link: string | null } | null; /** paid or covered, the seat held until the waiver is signed (the business requires it before the booking) */ waiting?: 'waiver' | null }
 type Phase = 'pay' | 'confirming' | 'waiver' | 'spot' | 'done' | 'expired' | 'released'
 /** ★ THE ROOM (2026-09-24): rows of uneven length with the things that are not spots, as the owner laid it out (rooms_public) */
 type RoomItem = { kind: string; no?: number; text?: string }
@@ -51,6 +51,11 @@ function Primary({ children, onClick, disabled, tag }: { children: React.ReactNo
 export function HeldBookingFlow({ entry, onReleased }: { entry: HeldEntry; onReleased: () => void }) {
   const [phase, setPhase] = useState<Phase>(entry.initial === 'pay' ? 'pay' : 'confirming')
   const [waiverNote, setWaiverNote] = useState<string | null>(null)
+  /* ★ PAID, HELD FOR THE SIGNATURE (2026-10-04): remembered for this booking, so a hold that ends unsigned is explained truthfully
+     (what they bought stays theirs) even after the row is gone */
+  const WAIT_KEY = `zmode:held-wait:${entry.bookingId}`
+  const [paidWait, setPaidWait] = useState<boolean>(() => { try { return typeof window !== 'undefined' && window.sessionStorage.getItem(WAIT_KEY) === '1' } catch { return false } })
+  const markWait = () => { setPaidWait(true); try { window.sessionStorage.setItem(WAIT_KEY, '1') } catch { /* not kept */ } }
   const [live, setLive] = useState<{ expiresAt: string | null; options: HeldOptions | null }>({ expiresAt: entry.expiresAt ?? null, options: entry.options ?? null })
   const cameBackWithoutPaying = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('paid') !== '1' && new URLSearchParams(window.location.search).get('signed') !== '1'
   const [status, setStatus] = useState<Status | null>(null)
@@ -95,6 +100,8 @@ export function HeldBookingFlow({ entry, onReleased }: { entry: HeldEntry; onRel
       if (!s) { if (tries.current++ < 3) setTimeout(tick, 2500); else setPhase('expired'); return }
       if (s.status === 'confirmed' || s.status === 'completed') { setPhase(afterConfirmed(s)); return }
       if (s.status === 'expired' || s.status === 'cancelled') { setPhase('expired'); return }
+      /* the payment landed (or a credit covers it) and the business asks for the signature first: the sign card, no way around it */
+      if (s.waiting === 'waiver') { markWait(); setPhase('waiver'); return }
       /* back from Stripe's own Back link, nothing paid: the seat is still held, the doors are offered again */
       if (s.held && cameBackWithoutPaying) { setLive({ expiresAt: s.hold_expires_at, options: s.options ?? null }); setPhase('pay'); return }
       if (tries.current++ < 40) setTimeout(tick, 2500); else setPhase('expired')
@@ -193,25 +200,36 @@ export function HeldBookingFlow({ entry, onReleased }: { entry: HeldEntry; onRel
   if (phase === 'expired') {
     return (
       <Card tag="expired">
-        <p className="text-sm text-ink-700">{tr('booking.holdExpired')}</p>
+        <p className="text-sm text-ink-700" data-held-expired={paidWait ? 'unsigned' : 'unpaid'}>{tr(paidWait ? 'booking.holdExpiredUnsigned' : 'booking.holdExpired')}</p>
         <div className="mt-4"><Primary tag="again" onClick={onReleased}>{tr('booking.pickAgain')}</Primary></div>
       </Card>
     )
   }
   if (phase === 'released') return null
   if (phase === 'waiver') {
+    /* ★ REQUIRED BEFORE THE BOOKING (the business's choice, said by the server as waiting: 'waiver'): the seat is held, the class is not
+       theirs until they sign, so there is no "later". Otherwise the booking is already confirmed and "Sign later" stays an honest choice. */
+    const mustSign = status?.waiting === 'waiver'
+    const afterAsk = async () => {
+      const s = await readStatus()
+      if (mustSign) {
+        if (s && (s.status === 'confirmed' || s.status === 'completed')) { setWaiverNote(null); setPhase(spotOrDone(s)) }
+        else if (!s || s.status === 'expired' || s.status === 'cancelled') setPhase('expired')
+        else setWaiverNote(tr('booking.waiverNotYet'))
+        return
+      }
+      if (s?.waiver?.signed) { setWaiverNote(null); setPhase(spotOrDone(s)) } else setWaiverNote(tr('booking.waiverNotYet'))
+    }
     return (
       <Card tag="waiver">
-        <h3 className="font-display text-xl font-semibold text-ink-900">{tr('booking.seatYours')}</h3>
-        <p className="mt-1 text-sm text-ink-700">{tr('booking.waiverAsk')}</p>
+        <h3 className="font-display text-xl font-semibold text-ink-900" data-held-waiver={mustSign ? 'required' : 'optional'}>{tr(mustSign ? 'booking.waiverOneStep' : 'booking.seatYours')}</h3>
+        <p className="mt-1 text-sm text-ink-700">{tr(mustSign ? 'booking.waiverHeld' : 'booking.waiverAsk')}</p>
         <p data-waiver-once className="mt-1 text-sm text-ink-600">{tr('booking.waiverOnce')}</p>
         <div className="mt-4 flex flex-wrap gap-3">
           <a href={withReturn(status?.waiver?.link ?? '#', entry)} data-held-action="sign" className="inline-flex h-11 items-center justify-center rounded-xl px-6 font-display text-sm font-semibold text-fam-on-dark" style={{ backgroundImage: 'var(--wow-grad-brand)' }}>{tr('booking.waiverSign')}</a>
-          {/* ★ THE SERVER SAYS WHETHER IT IS SIGNED (2026-10-04): this button asks; it never moves on by itself. The booking here is already
-              confirmed (a business that requires the signature first holds the seat before this point), so leaving it for later is an
-              honest, separate choice. */}
-          <button type="button" data-held-action="signed" onClick={async () => { const s = await readStatus(); if (s?.waiver?.signed) { setWaiverNote(null); setPhase(spotOrDone(s)) } else setWaiverNote(tr('booking.waiverNotYet')) }} className="inline-flex h-11 items-center rounded-xl border px-5 text-sm font-semibold text-ink-900" style={{ borderColor: 'var(--wow-hairline)' }}>{tr('booking.waiverDone')}</button>
-          <button type="button" data-held-action="sign-later" onClick={() => setPhase(spotOrDone(status))} className="inline-flex h-11 items-center px-2 text-sm text-ink-600 underline-offset-2 hover:underline">{tr('booking.waiverLater')}</button>
+          {/* ★ THE SERVER SAYS WHETHER IT IS SIGNED (2026-10-04): this button asks; it never moves on by itself. */}
+          <button type="button" data-held-action="signed" onClick={() => void afterAsk()} className="inline-flex h-11 items-center rounded-xl border px-5 text-sm font-semibold text-ink-900" style={{ borderColor: 'var(--wow-hairline)' }}>{tr('booking.waiverDone')}</button>
+          {!mustSign && <button type="button" data-held-action="sign-later" onClick={() => setPhase(spotOrDone(status))} className="inline-flex h-11 items-center px-2 text-sm text-ink-600 underline-offset-2 hover:underline">{tr('booking.waiverLater')}</button>}
         </div>
         {waiverNote && <p role="alert" data-held-waiver-note className="mt-3 text-sm text-red-600">{waiverNote}</p>}
       </Card>
