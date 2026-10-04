@@ -150,6 +150,7 @@ export function ClassBookingFlow({ occurrence, kindId, onHeld }: { occurrence: {
       {!waiver || busy ? <p className="flex items-center gap-2 text-sm text-ink-700"><Loader2 className="h-4 w-4 animate-spin" />{tr('booking.checkingWaiver')}</p> : (
         <>
           <p className="text-sm text-ink-700">{tr('booking.waiverHeld')}</p>
+          <p data-waiver-once className="-mt-2 text-sm text-ink-600">{tr('booking.waiverOnce')}</p>
           {error && <p role="alert" className="text-sm text-red-600">{error}</p>}
           <div className="flex flex-wrap gap-3">
             {waiver.link && <a href={signLink(waiver.link)} data-class-action="sign" className="inline-flex h-12 items-center justify-center rounded-xl px-7 font-display text-sm font-semibold text-fam-on-dark" style={{ backgroundImage: 'var(--wow-grad-brand)' }}>{tr('booking.waiverSign')}</a>}

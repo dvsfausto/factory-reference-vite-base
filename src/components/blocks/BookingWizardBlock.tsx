@@ -613,6 +613,7 @@ export function BookingWizardBlock({
               {paidInfo.waiver && !paidInfo.waiver.signed && paidInfo.waiver.link && (
                 <div data-paid-waiver className="mt-4 border-t border-fam-hairline pt-4">
                   <p className="text-sm text-fam-ink">{tr('booking.waiverAsk')}</p>
+                  <p data-waiver-once className="mt-1 text-sm text-fam-ink-muted">{tr('booking.waiverOnce')}</p>
                   <a href={`${paidInfo.waiver.link}${paidInfo.waiver.link.includes('?') ? '&' : '?'}return=${encodeURIComponent(typeof window !== 'undefined' ? window.location.href : '')}`} data-paid-action="sign" className="mt-3 inline-flex h-11 items-center justify-center rounded-xl px-6 font-display text-sm font-semibold text-fam-on-dark" style={{ backgroundImage: 'var(--wow-grad-brand)' }}>{tr('booking.waiverSign')}</a>
                 </div>
               )}
@@ -1202,6 +1203,7 @@ export function BookingWizardBlock({
                     style={{ borderColor: 'var(--wow-hairline)' }}
                   >
                     <p className="text-ink-700">{tr('booking.waiverAsk')}</p>
+                    <p data-waiver-once className="mt-1 text-ink-600">{tr('booking.waiverOnce')}</p>
                     <a
                       href={waiverLink}
                       target="_blank"

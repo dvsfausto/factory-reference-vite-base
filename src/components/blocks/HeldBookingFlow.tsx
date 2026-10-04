@@ -204,6 +204,7 @@ export function HeldBookingFlow({ entry, onReleased }: { entry: HeldEntry; onRel
       <Card tag="waiver">
         <h3 className="font-display text-xl font-semibold text-ink-900">{tr('booking.seatYours')}</h3>
         <p className="mt-1 text-sm text-ink-700">{tr('booking.waiverAsk')}</p>
+        <p data-waiver-once className="mt-1 text-sm text-ink-600">{tr('booking.waiverOnce')}</p>
         <div className="mt-4 flex flex-wrap gap-3">
           <a href={withReturn(status?.waiver?.link ?? '#', entry)} data-held-action="sign" className="inline-flex h-11 items-center justify-center rounded-xl px-6 font-display text-sm font-semibold text-fam-on-dark" style={{ backgroundImage: 'var(--wow-grad-brand)' }}>{tr('booking.waiverSign')}</a>
           {/* ★ THE SERVER SAYS WHETHER IT IS SIGNED (2026-10-04): this button asks; it never moves on by itself. The booking here is already
