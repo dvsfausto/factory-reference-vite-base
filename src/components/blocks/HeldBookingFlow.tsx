@@ -50,6 +50,7 @@ function Primary({ children, onClick, disabled, tag }: { children: React.ReactNo
 
 export function HeldBookingFlow({ entry, onReleased }: { entry: HeldEntry; onReleased: () => void }) {
   const [phase, setPhase] = useState<Phase>(entry.initial === 'pay' ? 'pay' : 'confirming')
+  const [waiverNote, setWaiverNote] = useState<string | null>(null)
   const [live, setLive] = useState<{ expiresAt: string | null; options: HeldOptions | null }>({ expiresAt: entry.expiresAt ?? null, options: entry.options ?? null })
   const cameBackWithoutPaying = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('paid') !== '1' && new URLSearchParams(window.location.search).get('signed') !== '1'
   const [status, setStatus] = useState<Status | null>(null)
@@ -205,8 +206,13 @@ export function HeldBookingFlow({ entry, onReleased }: { entry: HeldEntry; onRel
         <p className="mt-1 text-sm text-ink-700">{tr('booking.waiverAsk')}</p>
         <div className="mt-4 flex flex-wrap gap-3">
           <a href={withReturn(status?.waiver?.link ?? '#', entry)} data-held-action="sign" className="inline-flex h-11 items-center justify-center rounded-xl px-6 font-display text-sm font-semibold text-fam-on-dark" style={{ backgroundImage: 'var(--wow-grad-brand)' }}>{tr('booking.waiverSign')}</a>
-          <button type="button" data-held-action="signed" onClick={() => setPhase(spotOrDone(status))} className="inline-flex h-11 items-center rounded-xl border px-5 text-sm font-semibold text-ink-900" style={{ borderColor: 'var(--wow-hairline)' }}>{tr('booking.waiverDone')}</button>
+          {/* ★ THE SERVER SAYS WHETHER IT IS SIGNED (2026-10-04): this button asks; it never moves on by itself. The booking here is already
+              confirmed (a business that requires the signature first holds the seat before this point), so leaving it for later is an
+              honest, separate choice. */}
+          <button type="button" data-held-action="signed" onClick={async () => { const s = await readStatus(); if (s?.waiver?.signed) { setWaiverNote(null); setPhase(spotOrDone(s)) } else setWaiverNote(tr('booking.waiverNotYet')) }} className="inline-flex h-11 items-center rounded-xl border px-5 text-sm font-semibold text-ink-900" style={{ borderColor: 'var(--wow-hairline)' }}>{tr('booking.waiverDone')}</button>
+          <button type="button" data-held-action="sign-later" onClick={() => setPhase(spotOrDone(status))} className="inline-flex h-11 items-center px-2 text-sm text-ink-600 underline-offset-2 hover:underline">{tr('booking.waiverLater')}</button>
         </div>
+        {waiverNote && <p role="alert" data-held-waiver-note className="mt-3 text-sm text-red-600">{waiverNote}</p>}
       </Card>
     )
   }

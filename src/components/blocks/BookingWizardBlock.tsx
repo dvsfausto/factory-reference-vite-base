@@ -369,7 +369,7 @@ export function BookingWizardBlock({
   const paid = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('paid') === '1'
   /* ★ THE PAID RETURN (the owner, 2026-09-23): a person back from Stripe sees first that it worked and what they now hold, read from
      the sale itself (pack-checkout GET ?session=): first name, the pack, the classes. Nothing is claimed before it is read. */
-  const [paidInfo, setPaidInfo] = useState<{ first_name: string | null; pack: string | null; credits: number | null; balance: number | null; landed: boolean } | null>(null)
+  const [paidInfo, setPaidInfo] = useState<{ first_name: string | null; pack: string | null; credits: number | null; balance: number | null; landed: boolean; waiver?: { signed: boolean; link: string | null } | null } | null>(null)
   useEffect(() => {
     if (!paid || typeof window === 'undefined') return
     const sid = new URLSearchParams(window.location.search).get('session_id') || ''
@@ -378,8 +378,9 @@ export function BookingWizardBlock({
     const read = async () => {
       try {
         const r = await fetch(`${SUPABASE_URL}/functions/v1/pack-checkout?session=${encodeURIComponent(sid)}&business=${BUSINESS_ID}`, { headers: ANON_HEADERS })
-        const j = (await r.json()) as { paid?: boolean; landed?: boolean; first_name?: string | null; pack?: string | null; credits?: number | null; balance?: number | null }
-        if (j.paid) setPaidInfo({ first_name: j.first_name ?? null, pack: j.pack ?? null, credits: j.credits ?? null, balance: j.balance ?? null, landed: !!j.landed })
+        const j = (await r.json()) as { paid?: boolean; landed?: boolean; first_name?: string | null; pack?: string | null; credits?: number | null; balance?: number | null; waiver?: { signed?: boolean; link?: string | null } | null }
+        /* ★ the sign step at pack checkout (2026-10-04): only when the business put it there; the server says whether it is signed */
+        if (j.paid) setPaidInfo({ first_name: j.first_name ?? null, pack: j.pack ?? null, credits: j.credits ?? null, balance: j.balance ?? null, landed: !!j.landed, waiver: j.waiver ? { signed: j.waiver.signed === true, link: typeof j.waiver.link === 'string' ? j.waiver.link : null } : null })
         if (j.paid && !j.landed && tries++ < 6) setTimeout(read, 2500)
       } catch { /* the page stays as it is */ }
     }
@@ -609,6 +610,13 @@ export function BookingWizardBlock({
                 {(paidInfo.first_name ? `${paidInfo.first_name}, ` : '') + tr('booking.paidBody').replace('{n}', String(paidInfo.balance ?? paidInfo.credits ?? '')).replace('{pack}', paidInfo.pack ?? '')}
                 {!paidInfo.landed ? ` ${tr('booking.paidLanding')}` : ''}
               </p>
+              {paidInfo.waiver && !paidInfo.waiver.signed && paidInfo.waiver.link && (
+                <div data-paid-waiver className="mt-4 border-t border-fam-hairline pt-4">
+                  <p className="text-sm text-fam-ink">{tr('booking.waiverAsk')}</p>
+                  <a href={`${paidInfo.waiver.link}${paidInfo.waiver.link.includes('?') ? '&' : '?'}return=${encodeURIComponent(typeof window !== 'undefined' ? window.location.href : '')}`} data-paid-action="sign" className="mt-3 inline-flex h-11 items-center justify-center rounded-xl px-6 font-display text-sm font-semibold text-fam-on-dark" style={{ backgroundImage: 'var(--wow-grad-brand)' }}>{tr('booking.waiverSign')}</a>
+                </div>
+              )}
+              {paidInfo.waiver?.signed && <p data-paid-waiver-signed className="mt-3 text-sm text-fam-ink-muted">{tr('booking.waiverSigned')}</p>}
             </div>
           )}
           {/* Header */}

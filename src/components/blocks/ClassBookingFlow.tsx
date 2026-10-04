@@ -93,6 +93,8 @@ export function ClassBookingFlow({ occurrence, kindId, onHeld }: { occurrence: {
     const w = ok ? { required: data.required !== false, signed: data.signed === true, link: typeof data.link === 'string' ? data.link : null } : { required: false, signed: true, link: null }
     setWaiver(w)
     if (!w.required || w.signed) await book(sess)
+    /* the server is the one that knows: not signed yet → said so, the step stays (2026-10-04) */
+    else setError(tr('booking.waiverNotYet'))
   }
   const signLink = (link: string) => {
     const back = `${window.location.origin}${window.location.pathname}?occurrence=${occurrence.id}&resume=waiver`
@@ -100,9 +102,13 @@ export function ClassBookingFlow({ occurrence, kindId, onHeld }: { occurrence: {
   }
   const book = async (sess: string) => {
     setBusy(true); setError(null); setPhase('booking')
-    const { ok, data } = await fn('create-booking', { businessId: BUSINESS_ID, ...(kindId ? { kindId } : {}), occurrenceId: occurrence.id, hold: true, source: 'portal' }, sess)
+    /* ★ WHERE THE WAIVER SITS IS THE BUSINESS'S CHOICE, READ FROM THE SERVER (2026-10-04): when it must be signed BEFORE the booking, the
+       server holds the seat (waiverHold) and answers `waiting: 'waiver'` with the link; this page shows the sign step, and the booking is
+       made when the person comes back signed. Nothing about the placement is baked into the page. */
+    const { ok, data } = await fn('create-booking', { businessId: BUSINESS_ID, ...(kindId ? { kindId } : {}), occurrenceId: occurrence.id, hold: true, waiverHold: true, source: 'portal' }, sess)
     setBusy(false)
-    const d = data as { success?: boolean; held?: boolean; already?: boolean; message?: string; error?: string; booking?: { id?: string }; hold?: { token?: string; expires_at?: string }; options?: HeldOptions }
+    const d = data as { success?: boolean; held?: boolean; already?: boolean; message?: string; error?: string; code?: string; waiting?: string; waiver?: { signed?: boolean; link?: string | null }; booking?: { id?: string }; hold?: { token?: string; expires_at?: string }; options?: HeldOptions }
+    if (d.waiting === 'waiver' || d.code === 'waiver_required') { setWaiver({ required: true, signed: false, link: typeof d.waiver?.link === 'string' ? d.waiver.link : null }); setError(null); setPhase('waiver'); return }
     if (!ok || !d.success || !d.booking?.id || !d.hold?.token) { setError(d.error || tr('booking.couldNotComplete')); setPhase('who'); return }
     onHeld({ bookingId: d.booking.id, token: d.hold.token, initial: d.held ? 'pay' : 'after', expiresAt: d.hold.expires_at ?? null, options: d.options ?? null, note: d.already ? (d.message ?? null) : null })
   }
@@ -143,7 +149,7 @@ export function ClassBookingFlow({ occurrence, kindId, onHeld }: { occurrence: {
     <div data-class-step="waiver" className="grid gap-4">
       {!waiver || busy ? <p className="flex items-center gap-2 text-sm text-ink-700"><Loader2 className="h-4 w-4 animate-spin" />{tr('booking.checkingWaiver')}</p> : (
         <>
-          <p className="text-sm text-ink-700">{tr('booking.waiverFirst')}</p>
+          <p className="text-sm text-ink-700">{tr('booking.waiverHeld')}</p>
           {error && <p role="alert" className="text-sm text-red-600">{error}</p>}
           <div className="flex flex-wrap gap-3">
             {waiver.link && <a href={signLink(waiver.link)} data-class-action="sign" className="inline-flex h-12 items-center justify-center rounded-xl px-7 font-display text-sm font-semibold text-fam-on-dark" style={{ backgroundImage: 'var(--wow-grad-brand)' }}>{tr('booking.waiverSign')}</a>}
