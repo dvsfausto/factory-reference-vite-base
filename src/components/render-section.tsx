@@ -39,6 +39,7 @@ import { HeroAuroraBlock } from '~/components/blocks/HeroAuroraBlock'
 import { HeroSpotlightBlock } from '~/components/blocks/HeroSpotlightBlock'
 import { HeroEditorialBlock } from '~/components/blocks/HeroEditorialBlock'
 import { HeroServiceBannerBlock } from '~/components/blocks/HeroServiceBannerBlock'
+import { HeroSplitPhotoBlock } from '~/components/blocks/HeroSplitPhotoBlock'
 import { HeroEstimateBlock } from '~/components/blocks/HeroEstimateBlock'
 import { HeroGalleryBlock } from '~/components/blocks/HeroGalleryBlock'
 import { HeroEditorialPhotoBlock } from '~/components/blocks/HeroEditorialPhotoBlock'
@@ -61,6 +62,7 @@ import { ServicesSpotlightTilesBlock } from '~/components/blocks/ServicesSpotlig
 import { ReviewsLuminousBlock } from '~/components/blocks/ReviewsLuminousBlock'
 import { ReviewsPullQuoteBlock } from '~/components/blocks/ReviewsPullQuoteBlock'
 import { ReviewsGlassWallBlock } from '~/components/blocks/ReviewsGlassWallBlock'
+import { ReviewsEditorialCardsBlock } from '~/components/blocks/ReviewsEditorialCardsBlock'
 import { CtaAuroraGlowBlock } from '~/components/blocks/CtaAuroraGlowBlock'
 import { CtaGlassPanelBlock } from '~/components/blocks/CtaGlassPanelBlock'
 import { CtaDarkBandBlock } from '~/components/blocks/CtaDarkBandBlock'
@@ -231,6 +233,9 @@ const HERO_VARIANTS: Record<string, typeof HeroBlock> = {
   editorial: HeroEditorialBlock,
   // Compact, family-aware inner-page banner (Phase 2) — the DEFAULT for detail heroes now.
   banner: HeroServiceBannerBlock,
+  // The Editorial look (ZB-147 W1.2): words on the page ground beside the photo; listed here like the banner so
+  // the manifest's hero list and this map name the same ids (on the homepage it reads the site hero).
+  'split-photo': HeroSplitPhotoBlock,
   // STRUCTURAL variant (niche arc Stage 4): the estimate form in the hero. Placed by a template row
   // (instant-estimate, logistics-quote) or the editor; never seeded by the design wave (it is a
   // conversion object, not a look). Homepage only — inner pages keep their banner.
@@ -257,6 +262,8 @@ const SERVICE_HERO_VARIANTS: Record<
   editorial: HeroEditorialBlock,
   // Compact, family-aware inner-page banner (Phase 2) — the DEFAULT for detail heroes now.
   banner: HeroServiceBannerBlock,
+  // The Editorial look (ZB-147 W1.2): the service's words on the page ground beside its photo.
+  'split-photo': HeroSplitPhotoBlock,
 }
 
 // Per-type variant maps for the other character-carrying blocks (same pattern as
@@ -350,6 +357,8 @@ const REVIEWS_VARIANTS: Record<string, typeof ReviewsBlock> = {
   luminous: ReviewsLuminousBlock,
   'pull-quote': ReviewsPullQuoteBlock,
   'glass-wall': ReviewsGlassWallBlock,
+  // The Editorial look (ZB-147 W1.2): three beige quote cards and the business's own Google reviews link.
+  'editorial-cards': ReviewsEditorialCardsBlock,
 }
 
 const AREAS_VARIANTS: Record<string, typeof ServiceAreasBlock> = {
@@ -585,7 +594,13 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
         // PER-SERVICE CTA (mixed catalogues): the banner takes this service's own target — book →
         // /book?service=, quote → /quote?service= — from serviceCta(slug). Other hero variants
         // keep the site-wide CTA (they have no cta prop); the banner is the default detail hero.
-        const perService = ServiceHero === HeroServiceBannerBlock ? { cta: serviceCta(svc.slug) } : {}
+        const perService =
+          ServiceHero === HeroServiceBannerBlock
+            ? { cta: serviceCta(svc.slug) }
+            : ServiceHero === HeroSplitPhotoBlock
+              ? // the Editorial split hero also names the service in its kicker ("<service> · <place>")
+                { cta: serviceCta(svc.slug), serviceName: SERVICES.find((s) => s.slug === svc.slug)?.displayName }
+              : {}
         return (
           <ServiceHero
             key="hero"
@@ -838,6 +853,8 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
           label={block.params?.label as string | undefined}
           heading={block.params?.heading as string | undefined}
           body={block.params?.body as string | undefined}
+          // the page's service, when the gallery sits on a service page: the Editorial photo strip leads with its photo
+          service={ctx?.service}
         />
       )
     }

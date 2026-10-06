@@ -544,6 +544,12 @@ const EN = {
   'editorial.connect': 'Connect',
   'editorial.blog': 'Blog',
   'editorial.scrollDown': 'Scroll down',
+  // ★ the Editorial look's section copy (ZB-147 W1.2)
+  'editorial.portfolioKicker': 'Portfolio',
+  'editorial.portfolioHeading': 'Selected work',
+  'editorial.reviewsKicker': 'Kind words from clients',
+  'editorial.reviewsHeading': 'An experience people feel good remembering.',
+  'editorial.googleReviews': 'Read more Google reviews',
 } as const
 
 // Miami Spanish, natural, not literal. Same keys as EN.
@@ -1058,6 +1064,11 @@ const ES: Record<keyof typeof EN, string> = {
   'editorial.connect': 'Conecta',
   'editorial.blog': 'Blog',
   'editorial.scrollDown': 'Bajar',
+  'editorial.portfolioKicker': 'Portafolio',
+  'editorial.portfolioHeading': 'Trabajo seleccionado',
+  'editorial.reviewsKicker': 'Palabras de nuestros clientes',
+  'editorial.reviewsHeading': 'Una experiencia que da gusto recordar.',
+  'editorial.googleReviews': 'Leer más reseñas en Google',
 }
 
 const DICT: Record<Lang, Record<string, string>> = { en: EN, es: ES }

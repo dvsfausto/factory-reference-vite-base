@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "inputs_hash": "e7bac88a496863e5",
+  "inputs_hash": "f138ebe802a77234",
   "counts": {
     "blocks": 44,
-    "variants": 176,
+    "variants": 180,
     "fields": 218,
     "fields_by_kind": {
       "boolean": 6,
@@ -147,6 +147,12 @@
         {
           "id": "editorial-photo",
           "label": "Editorial photo",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "split-photo",
+          "label": "Split photo (editorial)",
           "default": false,
           "wow": false
         },
@@ -332,7 +338,7 @@
         "phoneDisplay",
         "quoteForm"
       ],
-      "files": 18
+      "files": 19
     },
     {
       "type": "taglineBar",
@@ -1440,6 +1446,12 @@
           "wow": false
         },
         {
+          "id": "editorial-cards",
+          "label": "Editorial cards",
+          "default": false,
+          "wow": false
+        },
+        {
           "id": "bold",
           "label": "Bold",
           "default": false,
@@ -1586,7 +1598,7 @@
       "reads": [
         "homeReviews"
       ],
-      "files": 14
+      "files": 15
     },
     {
       "type": "faq",
@@ -2162,6 +2174,18 @@
           "label": "Justified",
           "default": false,
           "wow": false
+        },
+        {
+          "id": "portfolio-grid",
+          "label": "Portfolio (editorial)",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "photo-strip",
+          "label": "Photo strip (editorial)",
+          "default": false,
+          "wow": false
         }
       ],
       "fields": [
@@ -2226,7 +2250,7 @@
         "PROJECTS[].afterImage"
       ],
       "reads": [],
-      "files": 9
+      "files": 11
     },
     {
       "type": "process",
