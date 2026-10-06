@@ -1,3 +1,4 @@
+import { placeLine } from '~/lib/place'
 import { Link } from "@tanstack/react-router";
 import { Instagram, Facebook, Phone, Mail, MapPin, Clock, ArrowRight } from "lucide-react";
 import { Logo } from "./Logo";
@@ -63,7 +64,7 @@ const FOOTER_VARIANTS: Record<string, { structure: FooterStructure; theme: strin
   elegant: { structure: "editorial", theme: "elegant" },
 };
 
-const locationLine = () => [SITE.address.city, SITE.address.state].filter(Boolean).join(", ");
+const locationLine = () => placeLine();
 
 // ─── shared column pieces (composed by the structures) ─────────────────────────────────────────────────
 function SocialRow({ t }: { t: FooterTheme }) {

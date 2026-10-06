@@ -36,6 +36,8 @@ export interface ServiceAddress {
 export interface BookingFeatures {
   booking?: boolean | null
   hours_confirmed_at?: string | null
+  /** 'request' = a booking from the page waits for the owner's yes (create-booking's request mode); absent = instant. */
+  booking_mode?: string | null
 }
 
 export type LiveReason = 'live' | 'switch_off' | 'hours_unconfirmed' | 'no_config'

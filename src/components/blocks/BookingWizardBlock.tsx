@@ -330,6 +330,12 @@ export function BookingWizardBlock({
   const [payInfo, setPayInfo] = useState<{ link: string; amount: number; kind: string } | null>(null)
   /* ★ THE WAITLIST (the classes arc, 2026-09-23): a FULL class takes names; the same details step, then waitlist-join instead of a booking */
   const [waitlist, setWaitlist] = useState<{ position: number; waiting: number } | null>(null)
+  /* ★ A REQUEST IS NOT A BOOKING (ZB-147): a business in request mode answers `request: true`. The page then says the request
+     was received and that the date is not reserved yet. It never says "booked". The server decides; nothing is baked here. */
+  const [requested, setRequested] = useState(false)
+  /* the mode is the owner's live setting, read with the booking switch: the page stops promising an instant confirmation the
+     moment the owner asks for requests, without a rebuild */
+  const requestMode = features?.booking_mode === 'request'
   const [waitlistMode, setWaitlistMode] = useState(false)
   const [buying, setBuying] = useState<string | null>(null)
   /* ★★★ THE SEAT IS ONLY THEIRS ONCE IT IS PAID OR SPENT (the owner, 2026-09-24): after a class booking lands, HeldBookingFlow
@@ -560,6 +566,7 @@ export function BookingWizardBlock({
         hold?: { token?: string; expires_at?: string }
         options?: HeldOptions
         booking?: { id?: string; seat_no?: number | null }
+        request?: boolean
         invoice?: { link?: string; amount?: number; kind?: string; paid?: boolean }
         error?: string
         waiver?: { link?: string; signed?: boolean } | null
@@ -579,6 +586,7 @@ export function BookingWizardBlock({
       /* ★ THE WAIVER BY LINK (the classes arc, part 4): a class booking whose person has not signed the studio's current waiver
          gets the signing link on the confirmation screen. Signed before → nothing shown. */
       setWaiverLink(data.waiver && data.waiver.signed !== true && typeof data.waiver.link === 'string' ? data.waiver.link : null)
+      setRequested(data.request === true)
       setPayInfo(data.invoice && typeof data.invoice.link === 'string' && Number(data.invoice.amount) > 0 && data.invoice.paid !== true ? { link: data.invoice.link, amount: Number(data.invoice.amount), kind: String(data.invoice.kind ?? '') } : null)
       setStep('confirmed')
     } catch (err) {
@@ -634,7 +642,7 @@ export function BookingWizardBlock({
             </Heading>
             {body && (
               <p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-ink-700">
-                {body}
+                {requestMode && (body === tr('booking.bookBody') || /confirmed (right away|instantly)|confirmado al instante/i.test(body)) ? tr('booking.requestBody') : body}
               </p>
             )}
           </div>
@@ -1123,7 +1131,7 @@ export function BookingWizardBlock({
                                 <Loader2 className="h-4 w-4 animate-spin" />{tr('booking.submitting')}</>
                             ) : (
                               <>
-                                {waitlistMode ? tr('booking.joinWaitlist') : tr('booking.confirmBooking')}
+                                {waitlistMode ? tr('booking.joinWaitlist') : requestMode ? tr('booking.sendRequest') : tr('booking.confirmBooking')}
                                 {date && time && (
                                   <span className="opacity-90">
                                     · {formatDateLong(date)}, {to12h(time)}
@@ -1167,11 +1175,16 @@ export function BookingWizardBlock({
                 >
                   <Check className="h-7 w-7" />
                 </span>
-                <h3 className="mt-5 font-display text-2xl font-semibold tracking-tight text-ink-900">{waitlist ? tr('booking.waitlisted') : tr('booking.confirmed')}</h3>
+                <h3 className="mt-5 font-display text-2xl font-semibold tracking-tight text-ink-900">{waitlist ? tr('booking.waitlisted') : requested ? tr('booking.requested') : tr('booking.confirmed')}</h3>
                 {waitlist ? (
                   <p data-booking-waitlist className="mx-auto mt-2 max-w-md leading-relaxed text-ink-700">
                     {service.name}, {formatDateLong(date)} {tr('booking.at')} {to12h(time)}. {tr('booking.waitlistPosition')} {waitlist.position} {tr('booking.waitlistOf')} {waitlist.waiting}. {customer.phone ? tr('booking.waitlistText') : tr('booking.waitlistEmail')}
                   </p>
+                ) : (
+                requested ? (
+                <p data-booking-request className="mx-auto mt-2 max-w-md leading-relaxed text-ink-700">
+                  {service.name}, {formatDateLong(date)} {tr('booking.at')} {to12h(time)}. {tr('booking.requestNote')}
+                </p>
                 ) : (
                 <p className="mx-auto mt-2 max-w-md leading-relaxed text-ink-700">
                   {service.name}, {formatDateLong(date)} {tr('booking.at')} {to12h(time)}.
@@ -1179,7 +1192,7 @@ export function BookingWizardBlock({
                     ? ` ${tr('booking.confirmationTo')} ${customer.email}.`
                     : ` ${tr('booking.seeYouThen')}`}
                 </p>
-                )}
+                ))}
                 {payInfo && (
                   <div
                     data-booking-pay

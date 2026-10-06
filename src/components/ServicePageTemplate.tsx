@@ -1,3 +1,4 @@
+import { placeName } from '~/lib/place'
 import { Link } from "@tanstack/react-router";
 import { tr, trTrustLine, trTrustPhrase } from '~/lib/i18n'
 import { ArrowRight, Check, MapPin, Phone, Star } from "lucide-react";
@@ -268,7 +269,7 @@ export function ServicePageTemplate({ data }: Props) {
                     <span className={`font-script ${T ? T.accent : "text-brand-600"}`}>{localTitleParts.accent}</span>
                   </>
                 ) : (
-                  <>{tr('tmpl.builtFor')} <span className={`font-script ${T ? T.accent : "text-brand-600"}`}>{SITE.address.city || "you"}</span></>
+                  <>{tr('tmpl.builtFor')} <span className={`font-script ${T ? T.accent : "text-brand-600"}`}>{placeName() || "you"}</span></>
                 )}
               </h2>
               <div className="mt-5 space-y-4">

@@ -188,7 +188,7 @@
   --color-fam-hairline: var(--fam-hairline, #E6E8EC);
   --color-fam-ink: var(--fam-ink, #0F172A);
   --color-fam-ink-muted: var(--fam-ink-muted, #64748B);
-  --color-fam-ink-faint: var(--fam-ink-faint, #94A3B8);
+  --color-fam-ink-faint: var(--fam-ink-faint, #66738A); /* 4.5:1 on white: faint, still readable (ZB-147) */
   --color-fam-accent: var(--fam-accent, var(--accent-ramp-base, oklch(59.6% 0.145 163.225)));
   --color-fam-accent-text: var(--fam-accent-text, var(--accent-ramp-base, oklch(59.6% 0.145 163.225)));
   --color-fam-accent-text-strong: var(--fam-accent-text-strong, var(--accent-ramp-dark, oklch(50.8% 0.118 165.612)));
