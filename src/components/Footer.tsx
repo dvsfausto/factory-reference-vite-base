@@ -48,11 +48,13 @@ const FOOTER_THEMES: Record<string, FooterTheme> = {
   creative: { surface: "bg-fam-ink-panel text-fam-on-dark", tagline: "text-fam-on-dark/60", socialBorder: "border-fam-card/15", socialHover: "hover:bg-fam-accent", heading: "text-fam-on-dark font-display tracking-tight", listText: "text-fam-on-dark/60", listHover: "hover:text-fam-on-dark", areaAll: "text-fam-accent-on-dark hover:text-fam-on-dark", border: "border-fam-card/10", bottomText: "text-fam-on-dark/40", bottomHover: "hover:text-fam-on-dark", logoLight: true },
   modern: { surface: "bg-fam-ink-panel text-fam-on-dark", tagline: "text-fam-on-dark/60", socialBorder: "border-fam-card/15", socialHover: "hover:bg-fam-card/10", heading: "text-fam-on-dark font-display tracking-tight", listText: "text-fam-on-dark/60", listHover: "hover:text-fam-on-dark", areaAll: "text-fam-accent-on-dark hover:text-fam-on-dark", border: "border-fam-card/10", bottomText: "text-fam-on-dark/40", bottomHover: "hover:text-fam-on-dark", logoLight: true },
   clean: { surface: "bg-fam-surface text-fam-ink", tagline: "text-fam-ink-muted", socialBorder: "border-fam-hairline", socialHover: "hover:bg-fam-accent-soft", heading: "text-fam-ink font-display tracking-tight", listText: "text-fam-ink-muted", listHover: "hover:text-fam-accent-text-strong", areaAll: "text-fam-accent-text-strong hover:text-fam-accent-text", border: "border-fam-hairline", bottomText: "text-fam-ink-muted", bottomHover: "hover:text-fam-accent-text-strong", logoLight: false },
+  // The Editorial theme (ZB-147 W1.2): the near-black close, gold kickers for the column headings, soft on-dark text.
+  editorial: { surface: "bg-fam-statement-2 text-fam-on-statement", tagline: "text-fam-on-statement-muted", socialBorder: "border-fam-statement-hairline", socialHover: "hover:bg-fam-statement-3", heading: "text-fam-accent-tint font-sans text-[11px] font-medium uppercase tracking-[0.18em]", listText: "text-fam-on-statement-muted", listHover: "hover:text-fam-on-statement", areaAll: "text-fam-accent-tint hover:text-fam-on-statement", border: "border-fam-statement-hairline", bottomText: "text-fam-on-statement-faint", bottomHover: "hover:text-fam-on-statement", logoLight: true },
 };
 
 // family (or legacy character/chrome) → { structure, theme }. The four STRUCTURES are genuinely different
 // footer compositions, not one grid recolored.
-type FooterStructure = "columns" | "editorial" | "ctaBand" | "minimal";
+type FooterStructure = "columns" | "editorial" | "ctaBand" | "minimal" | "connect";
 const FOOTER_VARIANTS: Record<string, { structure: FooterStructure; theme: string }> = {
   "wow-glass": { structure: "columns", theme: "wow" },
   clean: { structure: "columns", theme: "clean" },
@@ -308,11 +310,87 @@ function FooterMinimal({ t }: { t: FooterTheme }) {
   );
 }
 
-// Resolve the footer variant: explicit prop (showcase) > SITE.footerVariant (family) > legacy chrome/character.
+// ─── STRUCTURE 5 · CONNECT (the Editorial theme, ZB-147 W1.2) — the near-black close under a top hairline. Three
+// columns on desktop: the mark + one line of the description (two lines at most) + social; the services (and the
+// areas, with "View all areas"); a gold "Connect" kicker over About, Blog when the owner made one, the company pages,
+// the guides and the contact details. Then a hairline and the small-caps row: © year name left, the tagline and the
+// legal links right. Everything the other footers show is here, rearranged, nothing dropped. ──
+const BLOG_PAGE = CUSTOM_PAGES.find((p) => /^blog$/i.test(p.slug));
+function FooterConnect({ t }: { t: FooterTheme }) {
+  const loc = locationLine();
+  const year = new Date().getFullYear();
+  const caps = "font-sans text-[11px] font-medium uppercase tracking-[0.18em]";
+  const showServices = SERVICES.length > 0 && SELLS.services;
+  return (
+    <>
+      <div className={`border-t ${t.border}`}>
+        <div className="container-x py-section grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-10">
+          <div className="lg:col-span-5">
+            <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={48} alt={SITE.name} />
+            {hasText(SITE.description) && <p className={`mt-6 max-w-sm font-sans text-sm leading-relaxed line-clamp-2 ${t.tagline}`}>{SITE.description}</p>}
+            <div className="mt-7"><SocialRow t={t} /></div>
+          </div>
+
+          <div className="lg:col-span-3">
+            {showServices && (
+              <>
+                <h4 className={`${t.heading} mb-5`}>{tr('footer.services')}</h4>
+                <ul className={`space-y-2.5 text-sm ${t.listText}`}>{SERVICES.map((s) => (<li key={s.slug}><Link to="/services/$slug" params={{ slug: s.slug }} className={`${t.listHover} transition-colors`}>{s.displayName}</Link></li>))}</ul>
+              </>
+            )}
+            {AREAS.length > 0 && (
+              <>
+                <h4 className={`${t.heading} mb-5 ${showServices ? 'mt-10' : ''}`}>{tr('footer.serviceAreas')}</h4>
+                <ul className={`space-y-2.5 text-sm ${t.listText}`}>{AREAS.map((a) => (<li key={a.slug}><Link to="/areas/$slug" params={{ slug: a.slug }} className={`${t.listHover} transition-colors`}>{a.name}</Link></li>))}<li><Link to="/areas" className={t.areaAll}>{tr('nav.viewAllAreas')}</Link></li></ul>
+              </>
+            )}
+          </div>
+
+          <div className="lg:col-span-4">
+            <h4 className={`${t.heading} mb-5`}>{tr('editorial.connect')}</h4>
+            <ul className={`space-y-2.5 text-sm ${t.listText}`}>
+              {!HIDDEN_NAV.includes('about') && <li><Link to="/about" className={t.listHover}>{tr('footer.about')}</Link></li>}
+              {BLOG_PAGE && <li><Link to="/$slug" params={{ slug: BLOG_PAGE.slug }} className={t.listHover}>{tr('editorial.blog')}</Link></li>}
+              {!HIDDEN_NAV.includes('pricing') && <li><Link to="/pricing" className={t.listHover}>{tr('footer.pricing')}</Link></li>}
+              {!HIDDEN_NAV.includes('reviews') && <li><Link to="/reviews" className={t.listHover}>{tr('footer.reviews')}</Link></li>}
+              {!HIDDEN_NAV.includes('contact') && <li><Link to="/contact" className={t.listHover}>{tr('footer.contact')}</Link></li>}
+              {CUSTOM_PAGES.filter((p) => p.nav !== false && p.slug !== BLOG_PAGE?.slug).map((p) => (<li key={p.slug}><Link to="/$slug" params={{ slug: p.slug }} className={t.listHover}>{p.title}</Link></li>))}
+              {INFO_PAGES.map((i) => (<li key={i.slug}><Link to="/info/$slug" params={{ slug: i.slug }} className={t.listHover}>{i.name}</Link></li>))}
+            </ul>
+            <ul className={`mt-8 space-y-2.5 text-sm ${t.listText}`}>
+              {HAS_EMAIL && <li><a href={`mailto:${SITE.email}`} className={`${t.listHover} break-all`}>{SITE.email}</a></li>}
+              {HAS_PHONE && <li><a href={`tel:${SITE.phone}`} className={t.listHover}>{SITE.phoneDisplay}</a></li>}
+              {loc && <li>{loc}</li>}
+              {SITE.hours && <li>{SITE.hours}</li>}
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div className={`border-t ${t.border}`}>
+        <div className={`container-x py-6 flex flex-wrap items-center justify-between gap-x-8 gap-y-3 ${caps} ${t.bottomText}`}>
+          <div>© {year} {SITE.name}</div>
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
+            {hasText(SITE.tagline) && <span className={t.tagline}>{SITE.tagline}</span>}
+            {LEGAL_PAGES.map((p) => (<Link key={p.slug} to="/$slug" params={{ slug: p.slug }} className={t.bottomHover}>{p.title}</Link>))}
+            {!LEGAL_PAGES.some((p) => /privacy|privacidad/i.test(p.slug)) && <Link to="/privacy" className={t.bottomHover}>{tr('footer.privacy')}</Link>}
+            <PortalLink className={t.bottomHover} />
+            <a href="/sitemap.xml" className={t.bottomHover}>{tr('footer.sitemap')}</a>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+// Resolve the footer variant: explicit prop (showcase) > the Editorial chrome > SITE.footerVariant (family) > legacy
+// chrome/character. The Editorial theme is the owner's whole-site choice, so like the header it outranks the design
+// wave's family footer (a site without chromeStyle 'editorial' resolves exactly as before).
 function resolveFooter(variantOverride?: string): { structure: FooterStructure; theme: string } {
+  const chrome = (SITE as { chromeStyle?: string }).chromeStyle ?? "";
+  if (!variantOverride && chrome === "editorial") return { structure: "connect", theme: "editorial" };
   const explicit = variantOverride ?? (SITE as { footerVariant?: string }).footerVariant;
   if (explicit && FOOTER_VARIANTS[explicit]) return FOOTER_VARIANTS[explicit]!;
-  const chrome = (SITE as { chromeStyle?: string }).chromeStyle ?? "";
   const character = (SITE as { character?: string }).character ?? "";
   const surface = (SITE as { surface?: string }).surface ?? "";
   if (chrome === "wow") return { structure: "columns", theme: "wow" };
@@ -330,6 +408,7 @@ export function Footer({ decorativeAsset = siteDecor(), variant }: { decorativeA
   return (
     <footer className={`relative overflow-hidden ${t.surface}`}>
       {structure === "editorial" && <FooterEditorial t={t} />}
+      {structure === "connect" && <FooterConnect t={t} />}
       {structure === "minimal" && <FooterMinimal t={t} />}
       {structure === "ctaBand" && <FooterCtaBand t={t} ctaTitle={tr('cta.readyWhenYouAre')} rounded={theme === "friendly"} />}
       {structure === "columns" && <FooterColumns t={t} wow={isWow} decor={showDecor ? decorativeAsset : undefined} />}

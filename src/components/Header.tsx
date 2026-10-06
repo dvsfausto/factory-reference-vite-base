@@ -1,5 +1,7 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useRouterState } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
+import { HOMEPAGE_LAYOUT } from "~/data/layout";
+import { ARROW } from "~/lib/editorial";
 import { Menu, X, Phone, ChevronDown } from "lucide-react";
 import { Logo } from "./Logo";
 import { SITE, BOOKING } from "~/data/site";
@@ -64,9 +66,59 @@ interface HeaderTheme {
   mobileBorder: string;
   mobilePhone: string;
   mobileCta: string;
+  /** Editorial-only: the shell's placement classes. Absent → `sticky top-0` (every other theme, unchanged). */
+  position?: string;
+  /** Editorial-only: no backdrop blur on a transparent shell over the hero photo. Absent → blur (unchanged). */
+  noBlur?: boolean;
+  /** Editorial-only: the CTA is a text link that ends in the arrow glyph. Absent → the label alone (unchanged). */
+  ctaArrow?: boolean;
 }
 
+// The Editorial theme's chrome (ZB-147 W1.2), selected by SITE.chromeStyle='editorial'. Two renderings of ONE
+// look: 'editorial' is the translucent cream bar with a hairline (every inner page, and the home page when its
+// hero is not the full-bleed photo); 'editorial-over' lays transparently over the 'editorial-photo' hero on the
+// home page with on-dark text. Both: 96px tall, nav centred in 12px uppercase tracked caps, the CTA a text link
+// ending in the arrow. Dropdowns and the <details> mobile menu keep their behaviour, shell classes only.
+const EDITORIAL_NAV = "font-sans text-[12px] font-medium uppercase tracking-[0.14em] transition-colors";
+const EDITORIAL_CTA = "inline-flex items-center gap-2 font-sans text-[12px] font-medium uppercase tracking-[0.14em] border-b border-current pb-1 transition-colors";
+const EDITORIAL_BASE: HeaderTheme = {
+  shell: "bg-fam-page/90 border-b border-fam-hairline",
+  scrolledShadow: "",
+  skip: "focus:bg-fam-ink focus:text-fam-page",
+  navLink: `${EDITORIAL_NAV} text-fam-ink hover:text-fam-accent-text-strong`,
+  cta: `${EDITORIAL_CTA} text-fam-ink hover:text-fam-accent-text-strong`,
+  ctaArrow: true,
+  ctaLabel: "Get in touch",
+  dropdownSurface: "bg-fam-page border border-fam-hairline elev-3",
+  dropdownItem: "hover:bg-fam-surface-2",
+  dropdownTitle: "text-fam-ink",
+  dropdownSub: "text-fam-ink-muted",
+  areaAllLink: "text-fam-accent-text-strong hover:bg-fam-surface-2",
+  phoneLink: "text-fam-ink-muted hover:text-fam-ink",
+  menuIcon: "text-fam-ink",
+  logoLight: false,
+  mobilePanel: "bg-fam-page",
+  mobileText: "text-fam-ink",
+  mobileLabel: "text-fam-ink-muted",
+  mobileBorder: "border-fam-hairline",
+  mobilePhone: "text-fam-accent-text-strong",
+  mobileCta: "inline-flex h-12 w-full items-center justify-center bg-fam-ink font-sans text-[12px] font-medium uppercase tracking-[0.14em] text-fam-page",
+};
+
 const HEADER_THEMES: Record<string, HeaderTheme> = {
+  editorial: EDITORIAL_BASE,
+  "editorial-over": {
+    ...EDITORIAL_BASE,
+    shell: "bg-transparent",
+    position: "absolute inset-x-0 top-0",
+    noBlur: true,
+    skip: "focus:bg-fam-page focus:text-fam-ink",
+    navLink: `${EDITORIAL_NAV} text-fam-on-statement hover:text-fam-accent-tint`,
+    cta: `${EDITORIAL_CTA} text-fam-on-statement hover:text-fam-accent-tint`,
+    phoneLink: "text-fam-on-statement-muted hover:text-fam-on-statement",
+    menuIcon: "text-fam-on-statement",
+    logoLight: true,
+  },
   // WOW chrome (Arc 1 · Stage 2). A frosted-glass sticky header that intensifies
   // on scroll, brand-reactive via the --wow-* tokens + the brand ramp. Character-
   // agnostic: selected by SITE.chromeStyle='wow' (not a character), so it composes
@@ -320,8 +372,13 @@ export function Header() {
   //     every other family → today's standard left-logo bar in its own colours.
   //   • COLOUR THEME — the family's HEADER_THEMES entry (elegant maps to the light editorial palette).
   const family = (SITE as { headerVariant?: string }).headerVariant ?? "";
-  const structure: "standard" | "editorial" | "utility" =
-    family === "elegant" ? "editorial" : family === "corporate" ? "utility" : "standard";
+  // The Editorial theme's chrome (ZB-147 W1.2): chromeStyle 'editorial' takes the centred structure; on the home
+  // page, when the homepage hero is the full-bleed 'editorial-photo', the shell lays transparently over it.
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const editorialChrome = chrome === "editorial";
+  const overHero = editorialChrome && pathname === "/" && HOMEPAGE_LAYOUT.some((b) => b.type === "hero" && b.variant === "editorial-photo");
+  const structure: "standard" | "editorial" | "utility" | "centered" =
+    editorialChrome ? "centered" : family === "elegant" ? "editorial" : family === "corporate" ? "utility" : "standard";
   // Family → colour-theme key. Most families share their name; two remap: elegant → the LIGHT editorial
   // palette (the dark espresso theme is opt-in via character+surface), and wow-glass → the brand-reactive
   // 'wow' glass theme (keyed by name here since the design wave sets no chromeStyle). Keeps header theme
@@ -329,7 +386,9 @@ export function Header() {
   const familyThemeKey =
     family === "elegant" ? "elegant-light" : family === "wow-glass" ? "wow" : family;
   const themeKey =
-    chrome && HEADER_THEMES[chrome]
+    overHero
+      ? "editorial-over"
+      : chrome && HEADER_THEMES[chrome]
       ? chrome
       : family && HEADER_THEMES[familyThemeKey]
         ? familyThemeKey
@@ -450,7 +509,12 @@ export function Header() {
       {SITE.phoneDisplay}
     </a>
   );
-  const ctaButton = <PrimaryCta className={t.cta}>{headerCtaLabel}</PrimaryCta>;
+  const ctaButton = (
+    <PrimaryCta className={t.cta}>
+      {headerCtaLabel}
+      {t.ctaArrow && <span aria-hidden="true" className="text-[13px]">{ARROW}</span>}
+    </PrimaryCta>
+  );
   const mobileTrigger = (
     <details ref={menuRef} className="mobile-nav lg:hidden" onToggle={onMenuToggle}>
       <summary className="inline-flex p-2 focus-ring rounded-md cursor-pointer" aria-label={tr('nav.openMenu')}>
@@ -517,9 +581,9 @@ export function Header() {
       <header
         data-header-structure={structure}
         data-header-theme={themeKey || "default"}
-        className={`sticky top-0 z-40 ${
+        className={`${t.position ?? "sticky top-0"} z-40 ${
           scrolled && t.shellScrolled ? t.shellScrolled : t.shell
-        } backdrop-blur ${t.shellScrolled ? "transition-all" : "transition-shadow"} ${
+        } ${t.noBlur ? "" : "backdrop-blur"} ${t.shellScrolled ? "transition-all" : "transition-shadow"} ${
           scrolled ? t.scrolledShadow : ""
         }`}
       >
@@ -538,6 +602,32 @@ export function Header() {
               {ctaButton}
             </div>
             {mobileTrigger}
+          </div>
+        )}
+
+        {structure === "centered" && (
+          // THE EDITORIAL THEME'S BAR (ZB-147 W1.2): 96px, logo left at 56px, the nav CENTRED (a three-track grid so
+          // the centre is the true centre whatever the logo and CTA widths), the CTA a text link on the right.
+          // Phone: logo + the <details> menu, as every structure.
+          <div className="container-x">
+            <div className="flex lg:hidden items-center justify-between h-24">
+              <Link to="/" className="focus-ring rounded-md" aria-label={`${SITE.name} ${tr('nav.homeLink')}`}>
+                <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={44} alt={SITE.name} />
+              </Link>
+              {mobileTrigger}
+            </div>
+            <div className="hidden lg:grid grid-cols-[1fr_auto_1fr] items-center h-24">
+              <Link to="/" className="justify-self-start focus-ring rounded-md" aria-label={`${SITE.name} ${tr('nav.homeLink')}`}>
+                <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={56} alt={SITE.name} />
+              </Link>
+              <nav className="flex items-center justify-center gap-2" aria-label={tr('nav.ariaPrimary')}>
+                {navLinks("left-1/2 -translate-x-1/2")}
+              </nav>
+              <div className="justify-self-end flex items-center gap-6">
+                {phoneCluster}
+                {ctaButton}
+              </div>
+            </div>
           </div>
         )}
 

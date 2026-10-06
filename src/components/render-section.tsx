@@ -41,6 +41,7 @@ import { HeroEditorialBlock } from '~/components/blocks/HeroEditorialBlock'
 import { HeroServiceBannerBlock } from '~/components/blocks/HeroServiceBannerBlock'
 import { HeroEstimateBlock } from '~/components/blocks/HeroEstimateBlock'
 import { HeroGalleryBlock } from '~/components/blocks/HeroGalleryBlock'
+import { HeroEditorialPhotoBlock } from '~/components/blocks/HeroEditorialPhotoBlock'
 import { EmergencyBarBlock } from '~/components/blocks/EmergencyBarBlock'
 import { EMERGENCY_BAR_VARIANTS } from '~/components/blocks/emergency-bar-variants'
 import { MenuListBlock } from '~/components/blocks/MenuListBlock'
@@ -62,6 +63,8 @@ import { ReviewsPullQuoteBlock } from '~/components/blocks/ReviewsPullQuoteBlock
 import { ReviewsGlassWallBlock } from '~/components/blocks/ReviewsGlassWallBlock'
 import { CtaAuroraGlowBlock } from '~/components/blocks/CtaAuroraGlowBlock'
 import { CtaGlassPanelBlock } from '~/components/blocks/CtaGlassPanelBlock'
+import { CtaDarkBandBlock } from '~/components/blocks/CtaDarkBandBlock'
+import { CtaDarkClosingBlock } from '~/components/blocks/CtaDarkClosingBlock'
 import { TrustBarGlowCardsBlock } from '~/components/blocks/TrustBarGlowCardsBlock'
 import { TrustBarHairlineRowsBlock } from '~/components/blocks/TrustBarHairlineRowsBlock'
 import { ServiceAreasGlowPinsBlock } from '~/components/blocks/ServiceAreasGlowPinsBlock'
@@ -235,6 +238,8 @@ const HERO_VARIANTS: Record<string, typeof HeroBlock> = {
   // LOOK variant (niche arc Stage 4): the owner's gallery as a mosaic beside the headline; the single
   // hero image when there are fewer than two photos. Placed by beauty-portfolio / project-showcase rows.
   gallery: HeroGalleryBlock,
+  // The Editorial theme (ZB-147 W1.2): the photo full bleed and full height, the words bottom-left over a scrim.
+  'editorial-photo': HeroEditorialPhotoBlock,
 }
 
 // SERVICE-DETAIL hero variants (Arc 3 · Stage C). The WOW heroes (aurora/spotlight/
@@ -299,6 +304,9 @@ const CTA_VARIANTS: Record<string, typeof CtaBlock> = {
   // WOW Stage 2: full-bleed brand-gradient aurora band, floating glass panel.
   'aurora-glow': CtaAuroraGlowBlock,
   'glass-panel': CtaGlassPanelBlock,
+  // The Editorial theme (ZB-147 W1.2): a centred statement band, and the left-aligned near-black close.
+  'dark-band': CtaDarkBandBlock,
+  'dark-closing': CtaDarkClosingBlock,
 }
 
 // ComponentType (not `typeof TrustBarBlock`): the WOW variants honestly omit

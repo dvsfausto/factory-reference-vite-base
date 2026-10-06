@@ -4,6 +4,7 @@ import { StoryStatBandBlock } from './StoryStatBandBlock'
 import { StoryMilestoneTimelineBlock } from './StoryMilestoneTimelineBlock'
 import { StoryEditorialFrameBlock } from './StoryEditorialFrameBlock'
 import { StoryManifestoGlowBlock } from './StoryManifestoGlowBlock'
+import { StoryImageTextSplitBlock } from './StoryImageTextSplitBlock'
 
 // Per-type variant map for the about/story section (additive, like HERO_VARIANTS),
 // narrative as the default fallback. narrative + split-image render from
@@ -17,4 +18,6 @@ export const STORY_VARIANTS: Record<string, typeof StoryNarrativeBlock> = {
   // WOW Stage 2 (brand-reactive + motion): editorial framed split, centered manifesto.
   'editorial-frame': StoryEditorialFrameBlock,
   'manifesto-glow': StoryManifestoGlowBlock,
+  // The Editorial theme (ZB-147 W1.2): a tall photo left, kicker + split heading + the about text right.
+  'image-text-split': StoryImageTextSplitBlock,
 }

@@ -537,6 +537,13 @@ const EN = {
   'map.lang': 'en',
   'review.onGoogle': 'on Google',
   'review.readOnGoogle': 'Read it on Google',
+  // ★ the Editorial theme's own words (ZB-147 W1.2): the story variant, the footer's Connect column, the hero's scroll cue
+  'editorial.storyKicker': 'Our story',
+  'editorial.storyHeading': 'Beautifully composed. Genuinely yours.',
+  'editorial.storyLink': 'Read more',
+  'editorial.connect': 'Connect',
+  'editorial.blog': 'Blog',
+  'editorial.scrollDown': 'Scroll down',
 } as const
 
 // Miami Spanish, natural, not literal. Same keys as EN.
@@ -1045,6 +1052,12 @@ const ES: Record<keyof typeof EN, string> = {
   'map.lang': 'es',
   'review.onGoogle': 'en Google',
   'review.readOnGoogle': 'Léela en Google',
+  'editorial.storyKicker': 'Nuestra historia',
+  'editorial.storyHeading': 'Bien compuesto. Genuinamente tuyo.',
+  'editorial.storyLink': 'Leer más',
+  'editorial.connect': 'Conecta',
+  'editorial.blog': 'Blog',
+  'editorial.scrollDown': 'Bajar',
 }
 
 const DICT: Record<Lang, Record<string, string>> = { en: EN, es: ES }
