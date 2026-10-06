@@ -607,3 +607,43 @@ a[href="tel:+"],
 a[href="tel:"] {
   display: none !important;
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════════════════════════════════
+   ★ THE EDITORIAL THEME (ZB-147 W1.1). A business that chose it (the owner's setting, SITE.theme = 'editorial',
+   stamped on <html data-site-theme="editorial">) gets this palette on the family tokens: cream page, beige alternate
+   band, a charcoal-green statement band, a near-black close (statement-2), gold accent, warm ink, soft rules. Every
+   block already paints with these tokens, so the whole site takes the look; the Editorial section variants
+   (src/components/editorial, *Editorial*Block) add the composition. A site without the setting never matches this
+   selector and is byte-identical. */
+html[data-site-theme="editorial"] {
+  --font-sans: "Manrope", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --fam-page: #F8F6F1;
+  --fam-surface: #F8F6F1;
+  --fam-surface-2: #EFEAE0;
+  --fam-surface-3: #F3EFE6;
+  --fam-surface-4: #EFEAE0;
+  --fam-surface-5: #FBFAF7;
+  --fam-card: #EFEAE0;
+  --fam-hairline: #DAD4C8;
+  --fam-line-2: #CFC8BA;
+  --fam-line-3: #E6E0D4;
+  --fam-ink: #1C1B19;
+  --fam-ink-muted: #5E5A53;
+  --fam-ink-faint: #6D6961;
+  --fam-ink-500: #5E5A53;
+  --fam-ink-300: #CFC8BA;
+  --fam-accent: #A8865A;
+  --fam-accent-text: #A8865A;
+  --fam-accent-text-strong: #8C6E47;
+  --fam-accent-soft: #F3EADB;
+  --fam-accent-soft-2: #EADFCB;
+  --fam-accent-tint: #D4BE97;
+  --fam-statement: #2E3730;
+  --fam-statement-2: #1B1B1A;
+  --fam-statement-3: #3A443C;
+  --fam-statement-hairline: #4A534C;
+  --fam-on-statement: #F8F6F1;
+  --fam-on-statement-muted: #C9C4B9;
+  --fam-on-statement-faint: #A8A399;
+  --fam-on-dark: #F8F6F1;
+}
