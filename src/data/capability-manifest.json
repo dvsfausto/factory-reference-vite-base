@@ -1,22 +1,22 @@
 {
   "version": 1,
-  "inputs_hash": "cb385e7d58932672",
+  "inputs_hash": "09dcb3af119a232f",
   "counts": {
     "blocks": 44,
-    "variants": 170,
-    "fields": 207,
+    "variants": 176,
+    "fields": 218,
     "fields_by_kind": {
-      "boolean": 5,
+      "boolean": 6,
       "enum": 5,
       "image": 12,
       "list": 23,
-      "money": 6,
+      "money": 7,
       "number": 3,
-      "text": 150,
-      "url": 3
+      "text": 158,
+      "url": 4
     },
     "photo_targets": 16,
-    "chrome_fields": 19,
+    "chrome_fields": 20,
     "pages": 11,
     "blocks_without_variants": 16,
     "blocks_without_files": [
@@ -103,6 +103,12 @@
           "wow": false
         },
         {
+          "id": "glass",
+          "label": "Glass panel",
+          "default": false,
+          "wow": false
+        },
+        {
           "id": "split-reversed",
           "label": "Split (reversed)",
           "default": false,
@@ -135,6 +141,12 @@
         {
           "id": "gallery",
           "label": "Gallery mosaic",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "split-photo",
+          "label": "Split photo (editorial)",
           "default": false,
           "wow": false
         },
@@ -261,6 +273,12 @@
           "of": "item"
         },
         {
+          "path": "REVIEWS[].url",
+          "kind": "url",
+          "required": false,
+          "of": "item"
+        },
+        {
           "path": "address.street",
           "kind": "text",
           "required": false,
@@ -280,6 +298,12 @@
         },
         {
           "path": "address.zip",
+          "kind": "text",
+          "required": false,
+          "of": "copy"
+        },
+        {
+          "path": "address.country",
           "kind": "text",
           "required": false,
           "of": "copy"
@@ -308,7 +332,7 @@
         "phoneDisplay",
         "quoteForm"
       ],
-      "files": 17
+      "files": 18
     },
     {
       "type": "taglineBar",
@@ -649,6 +673,12 @@
           "of": "item"
         },
         {
+          "path": "products[].rawPrice",
+          "kind": "money",
+          "required": false,
+          "of": "item"
+        },
+        {
           "path": "params.body",
           "kind": "text",
           "required": false,
@@ -737,6 +767,48 @@
         {
           "path": "classSchedule[].capacity",
           "kind": "number",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "classSchedule[].room",
+          "kind": "text",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "classSchedule[].occurrenceId",
+          "kind": "text",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "classSchedule[].kindId",
+          "kind": "text",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "classSchedule[].seatsLeft",
+          "kind": "text",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "classSchedule[].isFull",
+          "kind": "boolean",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "classSchedule[].date",
+          "kind": "text",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "classSchedule[].startAt",
+          "kind": "text",
           "required": false,
           "of": "item"
         },
@@ -1368,6 +1440,12 @@
           "wow": false
         },
         {
+          "id": "editorial-cards",
+          "label": "Editorial cards",
+          "default": false,
+          "wow": false
+        },
+        {
           "id": "bold",
           "label": "Bold",
           "default": false,
@@ -1460,6 +1538,12 @@
           "of": "item"
         },
         {
+          "path": "REVIEWS[].url",
+          "kind": "url",
+          "required": false,
+          "of": "item"
+        },
+        {
           "path": "homeReviews.label",
           "kind": "text",
           "required": false,
@@ -1508,7 +1592,7 @@
       "reads": [
         "homeReviews"
       ],
-      "files": 14
+      "files": 15
     },
     {
       "type": "faq",
@@ -2072,6 +2156,18 @@
           "label": "Justified",
           "default": false,
           "wow": false
+        },
+        {
+          "id": "portfolio-grid",
+          "label": "Portfolio (editorial)",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "photo-strip",
+          "label": "Photo strip (editorial)",
+          "default": false,
+          "wow": false
         }
       ],
       "fields": [
@@ -2136,7 +2232,7 @@
         "PROJECTS[].afterImage"
       ],
       "reads": [],
-      "files": 9
+      "files": 11
     },
     {
       "type": "process",
@@ -2639,6 +2735,12 @@
           "of": "copy"
         },
         {
+          "path": "address.country",
+          "kind": "text",
+          "required": false,
+          "of": "copy"
+        },
+        {
           "path": "email",
           "kind": "text",
           "required": false,
@@ -2906,7 +3008,7 @@
       "reads": [
         "packages"
       ],
-      "files": 5
+      "files": 6
     },
     {
       "type": "caseStudies",
@@ -3420,6 +3522,12 @@
           "label": "Full width band",
           "default": false,
           "wow": false
+        },
+        {
+          "id": "real-embed",
+          "label": "Real map",
+          "default": false,
+          "wow": false
         }
       ],
       "fields": [
@@ -3448,6 +3556,12 @@
           "of": "item"
         },
         {
+          "path": "name",
+          "kind": "text",
+          "required": false,
+          "of": "copy"
+        },
+        {
           "path": "params.body",
           "kind": "text",
           "required": false,
@@ -3467,8 +3581,10 @@
         }
       ],
       "photo_targets": [],
-      "reads": [],
-      "files": 3
+      "reads": [
+        "name"
+      ],
+      "files": 4
     },
     {
       "type": "blog",
@@ -3612,6 +3728,12 @@
           "of": "copy"
         },
         {
+          "path": "address.country",
+          "kind": "text",
+          "required": false,
+          "of": "copy"
+        },
+        {
           "path": "phone",
           "kind": "text",
           "required": false,
@@ -3684,6 +3806,12 @@
         },
         {
           "path": "params.heading",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.image",
           "kind": "text",
           "required": false,
           "of": "params"
@@ -5280,6 +5408,12 @@
           "of": "item"
         },
         {
+          "path": "REVIEWS[].url",
+          "kind": "url",
+          "required": false,
+          "of": "item"
+        },
+        {
           "path": "params.count",
           "kind": "text",
           "required": false,
@@ -5360,6 +5494,12 @@
           "of": "site"
         },
         {
+          "path": "address.country",
+          "kind": "text",
+          "required": false,
+          "of": "site"
+        },
+        {
           "path": "hours",
           "kind": "text",
           "required": false,
@@ -5424,6 +5564,11 @@
     },
     {
       "path": "address.zip",
+      "kind": "text",
+      "required": false
+    },
+    {
+      "path": "address.country",
       "kind": "text",
       "required": false
     },

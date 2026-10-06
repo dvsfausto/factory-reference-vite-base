@@ -537,6 +537,12 @@ const EN = {
   'map.lang': 'en',
   'review.onGoogle': 'on Google',
   'review.readOnGoogle': 'Read it on Google',
+  // ★ the Editorial look's section copy (ZB-147 W1.2)
+  'editorial.portfolioKicker': 'Portfolio',
+  'editorial.portfolioHeading': 'Selected work',
+  'editorial.reviewsKicker': 'Kind words from clients',
+  'editorial.reviewsHeading': 'An experience people feel good remembering.',
+  'editorial.googleReviews': 'Read more Google reviews',
 } as const
 
 // Miami Spanish, natural, not literal. Same keys as EN.
@@ -1045,6 +1051,11 @@ const ES: Record<keyof typeof EN, string> = {
   'map.lang': 'es',
   'review.onGoogle': 'en Google',
   'review.readOnGoogle': 'Léela en Google',
+  'editorial.portfolioKicker': 'Portafolio',
+  'editorial.portfolioHeading': 'Trabajo seleccionado',
+  'editorial.reviewsKicker': 'Palabras de nuestros clientes',
+  'editorial.reviewsHeading': 'Una experiencia que da gusto recordar.',
+  'editorial.googleReviews': 'Leer más reseñas en Google',
 }
 
 const DICT: Record<Lang, Record<string, string>> = { en: EN, es: ES }
