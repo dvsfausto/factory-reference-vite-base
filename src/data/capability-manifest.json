@@ -1,10 +1,10 @@
 {
   "version": 1,
-  "inputs_hash": "f138ebe802a77234",
+  "inputs_hash": "24b073b26de841f4",
   "counts": {
     "blocks": 44,
-    "variants": 180,
-    "fields": 218,
+    "variants": 183,
+    "fields": 221,
     "fields_by_kind": {
       "boolean": 6,
       "enum": 5,
@@ -12,7 +12,7 @@
       "list": 23,
       "money": 7,
       "number": 3,
-      "text": 158,
+      "text": 161,
       "url": 4
     },
     "photo_targets": 16,
@@ -899,6 +899,12 @@
           "wow": false
         },
         {
+          "id": "checklist-split",
+          "label": "Checklist split",
+          "default": false,
+          "wow": false
+        },
+        {
           "id": "bold",
           "label": "Bold",
           "default": false,
@@ -953,13 +959,25 @@
           "kind": "text",
           "required": false,
           "of": "item"
+        },
+        {
+          "path": "params.heading",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.label",
+          "kind": "text",
+          "required": false,
+          "of": "params"
         }
       ],
       "photo_targets": [],
       "reads": [
         "trustItems"
       ],
-      "files": 12
+      "files": 13
     },
     {
       "type": "servicesPreview",
@@ -1034,6 +1052,12 @@
         {
           "id": "carousel",
           "label": "Carousel",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "numbered-list",
+          "label": "Numbered list",
           "default": false,
           "wow": false
         },
@@ -1188,7 +1212,7 @@
       "reads": [
         "homeServices"
       ],
-      "files": 15
+      "files": 16
     },
     {
       "type": "serviceAreas",
@@ -2314,6 +2338,12 @@
           "label": "Vertical rail",
           "default": false,
           "wow": false
+        },
+        {
+          "id": "pull-quote-steps",
+          "label": "Pull quote steps",
+          "default": false,
+          "wow": false
         }
       ],
       "fields": [
@@ -2342,6 +2372,18 @@
           "of": "params"
         },
         {
+          "path": "params.ctaHref",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.ctaLabel",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
           "path": "params.heading",
           "kind": "text",
           "required": false,
@@ -2352,13 +2394,19 @@
           "kind": "text",
           "required": false,
           "of": "params"
+        },
+        {
+          "path": "params.quote",
+          "kind": "text",
+          "required": false,
+          "of": "params"
         }
       ],
       "photo_targets": [],
       "reads": [
         "steps"
       ],
-      "files": 7
+      "files": 8
     },
     {
       "type": "faqSection",

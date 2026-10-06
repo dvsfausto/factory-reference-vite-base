@@ -5,6 +5,8 @@ import { ProcessAlternatingBlock } from './ProcessAlternatingBlock'
 import { ProcessVerticalRailBlock } from './ProcessVerticalRailBlock'
 import { ProcessGlowNodesBlock } from './ProcessGlowNodesBlock'
 import { ProcessBoldNumeralsBlock } from './ProcessBoldNumeralsBlock'
+import { ProcessPullQuoteStepsBlock } from './ProcessPullQuoteStepsBlock'
+import type { ComponentProps, ComponentType } from 'react'
 
 // One process step. OPTIONAL data (read from SITE.steps via cast in the process
 // blocks — never declared on the emitted SITE literal), so a site with no steps
@@ -18,7 +20,10 @@ export interface ProcessStep {
 
 // Per-type variant map for the process section (additive, like HERO_VARIANTS),
 // numbered-steps as the default fallback.
-export const PROCESS_VARIANTS: Record<string, typeof ProcessNumberedStepsBlock> = {
+// `quote` / `ctaLabel` / `ctaHref` (ZB-147 W1.2): the block's own params, read by the Editorial 'pull-quote-steps'
+// layout; every other layout ignores them, so passing them changes nothing it renders.
+export type ProcessVariantProps = ComponentProps<typeof ProcessNumberedStepsBlock> & { quote?: string; ctaLabel?: string; ctaHref?: string }
+export const PROCESS_VARIANTS: Record<string, ComponentType<ProcessVariantProps>> = {
   'numbered-steps': ProcessNumberedStepsBlock,
   timeline: ProcessTimelineBlock,
   cards: ProcessCardsBlock,
@@ -27,4 +32,6 @@ export const PROCESS_VARIANTS: Record<string, typeof ProcessNumberedStepsBlock> 
   // WOW Stage 2 (brand-reactive + motion): gradient-connector timeline, bold index numerals.
   'glow-nodes': ProcessGlowNodesBlock,
   'bold-numerals': ProcessBoldNumeralsBlock,
+  // The Editorial theme (ZB-147 W1.2): kicker, serif pull quote, four hairline-topped numbered columns.
+  'pull-quote-steps': ProcessPullQuoteStepsBlock,
 }

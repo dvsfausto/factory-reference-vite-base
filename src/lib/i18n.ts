@@ -550,6 +550,11 @@ const EN = {
   'editorial.reviewsKicker': 'Kind words from clients',
   'editorial.reviewsHeading': 'An experience people feel good remembering.',
   'editorial.googleReviews': 'Read more Google reviews',
+  // ★ the Editorial theme's section variants (ZB-147 W1.2): kickers and the trust heading when the block carries none
+  'editorial.exploreKicker': 'Explore the experience',
+  'editorial.processKicker': 'The experience',
+  'editorial.checklistKicker': 'Designed to feel effortless',
+  'editorial.checklistHeading': 'Guidance at every step. Beauty in every frame.',
 } as const
 
 // Miami Spanish, natural, not literal. Same keys as EN.
@@ -1069,6 +1074,10 @@ const ES: Record<keyof typeof EN, string> = {
   'editorial.reviewsKicker': 'Palabras de nuestros clientes',
   'editorial.reviewsHeading': 'Una experiencia que da gusto recordar.',
   'editorial.googleReviews': 'Leer más reseñas en Google',
+  'editorial.exploreKicker': 'Descubre la experiencia',
+  'editorial.processKicker': 'La experiencia',
+  'editorial.checklistKicker': 'Pensado para que sea fácil',
+  'editorial.checklistHeading': 'Acompañamiento en cada paso. Belleza en cada imagen.',
 }
 
 const DICT: Record<Lang, Record<string, string>> = { en: EN, es: ES }

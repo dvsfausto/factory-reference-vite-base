@@ -69,6 +69,9 @@ import { CtaDarkBandBlock } from '~/components/blocks/CtaDarkBandBlock'
 import { CtaDarkClosingBlock } from '~/components/blocks/CtaDarkClosingBlock'
 import { TrustBarGlowCardsBlock } from '~/components/blocks/TrustBarGlowCardsBlock'
 import { TrustBarHairlineRowsBlock } from '~/components/blocks/TrustBarHairlineRowsBlock'
+// The Editorial theme's section variants (ZB-147 W1.2): ordinary map entries, editor-swappable one by one.
+import { ServicesNumberedListBlock } from '~/components/blocks/ServicesNumberedListBlock'
+import { TrustBarChecklistSplitBlock } from '~/components/blocks/TrustBarChecklistSplitBlock'
 import { ServiceAreasGlowPinsBlock } from '~/components/blocks/ServiceAreasGlowPinsBlock'
 import { ServiceAreasBrandPanelBlock } from '~/components/blocks/ServiceAreasBrandPanelBlock'
 import { FaqGlassAccordionBlock } from '~/components/blocks/FaqGlassAccordionBlock'
@@ -291,6 +294,8 @@ const SERVICES_VARIANTS: Record<string, typeof ServicesPreviewBlock> = {
   luxe: ServicesLuxeBlock,
   'feature-rows': ServicesFeatureRowsBlock,
   'spotlight-tiles': ServicesSpotlightTilesBlock,
+  // The Editorial theme (ZB-147 W1.2): numeral / serif name / arrow rows between hairlines.
+  'numbered-list': ServicesNumberedListBlock,
 }
 
 const CTA_VARIANTS: Record<string, typeof CtaBlock> = {
@@ -319,7 +324,10 @@ const CTA_VARIANTS: Record<string, typeof CtaBlock> = {
 // ComponentType (not `typeof TrustBarBlock`): the WOW variants honestly omit
 // (return null) on empty items, a wider return type than the default's — this
 // annotation accepts both.
-const TRUST_VARIANTS: Record<string, ComponentType<ComponentProps<typeof TrustBarBlock>>> = {
+// `label` / `heading` (ZB-147 W1.2): the block's own copy params, read by the Editorial 'checklist-split'
+// variant; every other variant ignores them, so passing them changes nothing it renders.
+type TrustVariantProps = ComponentProps<typeof TrustBarBlock> & { label?: string; heading?: string }
+const TRUST_VARIANTS: Record<string, ComponentType<TrustVariantProps>> = {
   bold: TrustBarBoldBlock,
   elegant: TrustBarElegantBlock,
   friendly: TrustBarFriendlyBlock,
@@ -336,6 +344,8 @@ const TRUST_VARIANTS: Record<string, ComponentType<ComponentProps<typeof TrustBa
   // WOW Stage 2: glass cards with gradient icon badges, hairline-divided rows.
   'glow-cards': TrustBarGlowCardsBlock,
   'hairline-rows': TrustBarHairlineRowsBlock,
+  // The Editorial theme (ZB-147 W1.2): kicker + split heading left, a hairline checklist right.
+  'checklist-split': TrustBarChecklistSplitBlock,
 }
 
 const REVIEWS_VARIANTS: Record<string, typeof ReviewsBlock> = {
@@ -750,6 +760,8 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
           items={
             ((data.site ?? SITE) as { trustItems?: { title: string; description: string }[] }).trustItems
           }
+          label={block.params?.label as string | undefined}
+          heading={block.params?.heading as string | undefined}
         />
       )
     }
@@ -867,6 +879,10 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
           label={block.params?.label as string | undefined}
           heading={block.params?.heading as string | undefined}
           body={block.params?.body as string | undefined}
+          // read by the Editorial 'pull-quote-steps' layout only (ZB-147 W1.2); the others ignore them
+          quote={block.params?.quote as string | undefined}
+          ctaLabel={block.params?.ctaLabel as string | undefined}
+          ctaHref={block.params?.ctaHref as string | undefined}
         />
       )
     }
