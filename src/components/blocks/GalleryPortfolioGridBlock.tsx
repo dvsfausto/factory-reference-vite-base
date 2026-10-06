@@ -3,7 +3,7 @@ import { tr } from '~/lib/i18n'
 import { imageSrc } from '~/lib/asset-url'
 import { placeLine } from '~/lib/place'
 import { ARROW } from '~/lib/editorial'
-import { faceSafeStyle, galleryPageHref, portfolioPicks, projectCategory } from '~/lib/editorial-media'
+import { faceSafeStyle, galleryPageHref, portfolioPicks, projectCategory, serviceHrefFor } from '~/lib/editorial-media'
 import { EditorialHeading, Kicker, Numeral } from '~/components/editorial/Primitives'
 
 // Gallery VARIANT: 'portfolio-grid' (the Editorial look, ZB-147 W1.2). A kicker and a serif heading, then three tall
@@ -65,8 +65,10 @@ export function GalleryPortfolioGridBlock({
                 </div>
               </>
             )
-            return href ? (
-              <a key={`${p.title}-${i}`} href={href} className="group block">
+            // the card's own service page first (a portfolio category is a kind of work), else the gallery page
+            const cardHref = serviceHrefFor(p.title, projectCategory(p)) ?? href
+            return cardHref ? (
+              <a key={`${p.title}-${i}`} href={cardHref} className="group block">
                 {card}
               </a>
             ) : (

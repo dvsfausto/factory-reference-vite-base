@@ -1,4 +1,5 @@
-import { createFileRoute, notFound } from '@tanstack/react-router'
+import { createFileRoute, notFound, redirect } from '@tanstack/react-router'
+import { AREA_REDIRECTS } from '~/data/area-redirects'
 import { SectionList } from '~/components/render-section'
 import { AREA_DETAIL_LAYOUT } from '~/data/area-detail-layout'
 import { JsonLd } from '~/components/JsonLd'
@@ -8,6 +9,9 @@ import { tr } from '~/lib/i18n'
 
 export const Route = createFileRoute('/areas/$slug')({
   loader: async ({ params }) => {
+    // A GONE AREA PAGE: a real 301 (ZB-147 W1.1), checked before the data lookup because its copy is gone.
+    const moved = AREA_REDIRECTS[params.slug]
+    if (moved) throw redirect({ href: moved, statusCode: 301 })
     // Stage C: the per-page copy is its own module (scripts/prune-variants.mjs split-page-data), fetched only when
     // this route runs — the homepage no longer ships every inner page's prose. Same object, same served HTML.
     const { serviceAreasData } = await import('virtual:zmode-page-data/serviceAreasData')
