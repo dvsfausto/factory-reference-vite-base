@@ -1,22 +1,22 @@
 {
   "version": 1,
-  "inputs_hash": "cb385e7d58932672",
+  "inputs_hash": "9690fa57d9f2381d",
   "counts": {
     "blocks": 44,
-    "variants": 170,
-    "fields": 207,
+    "variants": 175,
+    "fields": 221,
     "fields_by_kind": {
-      "boolean": 5,
+      "boolean": 6,
       "enum": 5,
       "image": 12,
       "list": 23,
-      "money": 6,
+      "money": 7,
       "number": 3,
-      "text": 150,
-      "url": 3
+      "text": 161,
+      "url": 4
     },
     "photo_targets": 16,
-    "chrome_fields": 19,
+    "chrome_fields": 20,
     "pages": 11,
     "blocks_without_variants": 16,
     "blocks_without_files": [
@@ -99,6 +99,12 @@
         {
           "id": "background",
           "label": "Background image",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "glass",
+          "label": "Glass panel",
           "default": false,
           "wow": false
         },
@@ -261,6 +267,12 @@
           "of": "item"
         },
         {
+          "path": "REVIEWS[].url",
+          "kind": "url",
+          "required": false,
+          "of": "item"
+        },
+        {
           "path": "address.street",
           "kind": "text",
           "required": false,
@@ -280,6 +292,12 @@
         },
         {
           "path": "address.zip",
+          "kind": "text",
+          "required": false,
+          "of": "copy"
+        },
+        {
+          "path": "address.country",
           "kind": "text",
           "required": false,
           "of": "copy"
@@ -649,6 +667,12 @@
           "of": "item"
         },
         {
+          "path": "products[].rawPrice",
+          "kind": "money",
+          "required": false,
+          "of": "item"
+        },
+        {
           "path": "params.body",
           "kind": "text",
           "required": false,
@@ -741,6 +765,48 @@
           "of": "item"
         },
         {
+          "path": "classSchedule[].room",
+          "kind": "text",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "classSchedule[].occurrenceId",
+          "kind": "text",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "classSchedule[].kindId",
+          "kind": "text",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "classSchedule[].seatsLeft",
+          "kind": "text",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "classSchedule[].isFull",
+          "kind": "boolean",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "classSchedule[].date",
+          "kind": "text",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "classSchedule[].startAt",
+          "kind": "text",
+          "required": false,
+          "of": "item"
+        },
+        {
           "path": "params.body",
           "kind": "text",
           "required": false,
@@ -821,6 +887,12 @@
           "wow": false
         },
         {
+          "id": "checklist-split",
+          "label": "Checklist split",
+          "default": false,
+          "wow": false
+        },
+        {
           "id": "bold",
           "label": "Bold",
           "default": false,
@@ -875,13 +947,25 @@
           "kind": "text",
           "required": false,
           "of": "item"
+        },
+        {
+          "path": "params.heading",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.label",
+          "kind": "text",
+          "required": false,
+          "of": "params"
         }
       ],
       "photo_targets": [],
       "reads": [
         "trustItems"
       ],
-      "files": 12
+      "files": 13
     },
     {
       "type": "servicesPreview",
@@ -956,6 +1040,12 @@
         {
           "id": "carousel",
           "label": "Carousel",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "numbered-list",
+          "label": "Numbered list",
           "default": false,
           "wow": false
         },
@@ -1110,7 +1200,7 @@
       "reads": [
         "homeServices"
       ],
-      "files": 15
+      "files": 16
     },
     {
       "type": "serviceAreas",
@@ -1456,6 +1546,12 @@
         {
           "path": "REVIEWS[].avatar",
           "kind": "image",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "REVIEWS[].url",
+          "kind": "url",
           "required": false,
           "of": "item"
         },
@@ -2200,6 +2296,12 @@
           "label": "Vertical rail",
           "default": false,
           "wow": false
+        },
+        {
+          "id": "pull-quote-steps",
+          "label": "Pull quote steps",
+          "default": false,
+          "wow": false
         }
       ],
       "fields": [
@@ -2228,6 +2330,18 @@
           "of": "params"
         },
         {
+          "path": "params.ctaHref",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.ctaLabel",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
           "path": "params.heading",
           "kind": "text",
           "required": false,
@@ -2238,13 +2352,19 @@
           "kind": "text",
           "required": false,
           "of": "params"
+        },
+        {
+          "path": "params.quote",
+          "kind": "text",
+          "required": false,
+          "of": "params"
         }
       ],
       "photo_targets": [],
       "reads": [
         "steps"
       ],
-      "files": 7
+      "files": 8
     },
     {
       "type": "faqSection",
@@ -2639,6 +2759,12 @@
           "of": "copy"
         },
         {
+          "path": "address.country",
+          "kind": "text",
+          "required": false,
+          "of": "copy"
+        },
+        {
           "path": "email",
           "kind": "text",
           "required": false,
@@ -2906,7 +3032,7 @@
       "reads": [
         "packages"
       ],
-      "files": 5
+      "files": 6
     },
     {
       "type": "caseStudies",
@@ -3420,6 +3546,12 @@
           "label": "Full width band",
           "default": false,
           "wow": false
+        },
+        {
+          "id": "real-embed",
+          "label": "Real map",
+          "default": false,
+          "wow": false
         }
       ],
       "fields": [
@@ -3448,6 +3580,12 @@
           "of": "item"
         },
         {
+          "path": "name",
+          "kind": "text",
+          "required": false,
+          "of": "copy"
+        },
+        {
           "path": "params.body",
           "kind": "text",
           "required": false,
@@ -3467,8 +3605,10 @@
         }
       ],
       "photo_targets": [],
-      "reads": [],
-      "files": 3
+      "reads": [
+        "name"
+      ],
+      "files": 4
     },
     {
       "type": "blog",
@@ -3612,6 +3752,12 @@
           "of": "copy"
         },
         {
+          "path": "address.country",
+          "kind": "text",
+          "required": false,
+          "of": "copy"
+        },
+        {
           "path": "phone",
           "kind": "text",
           "required": false,
@@ -3684,6 +3830,12 @@
         },
         {
           "path": "params.heading",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.image",
           "kind": "text",
           "required": false,
           "of": "params"
@@ -5280,6 +5432,12 @@
           "of": "item"
         },
         {
+          "path": "REVIEWS[].url",
+          "kind": "url",
+          "required": false,
+          "of": "item"
+        },
+        {
           "path": "params.count",
           "kind": "text",
           "required": false,
@@ -5360,6 +5518,12 @@
           "of": "site"
         },
         {
+          "path": "address.country",
+          "kind": "text",
+          "required": false,
+          "of": "site"
+        },
+        {
           "path": "hours",
           "kind": "text",
           "required": false,
@@ -5424,6 +5588,11 @@
     },
     {
       "path": "address.zip",
+      "kind": "text",
+      "required": false
+    },
+    {
+      "path": "address.country",
       "kind": "text",
       "required": false
     },

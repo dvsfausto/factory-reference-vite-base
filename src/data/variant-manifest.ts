@@ -83,6 +83,7 @@ export const VARIANT_MANIFEST: SectionVariants[] = [
       { id: 'list', label: 'List', description: 'Compact stacked list.' },
       { id: 'icon-tiles', label: 'Icon tiles', description: 'Icon-led tiles.' },
       { id: 'carousel', label: 'Carousel', description: 'Horizontal carousel.' },
+      { id: 'numbered-list', label: 'Numbered list', description: 'Editorial rows between hairlines: a small numeral, the service name in serif, a one-line blurb and an arrow.' },
       ...CHARACTER_VARIANTS,
     ],
   },
@@ -96,6 +97,7 @@ export const VARIANT_MANIFEST: SectionVariants[] = [
       { id: 'stat-numbers', label: 'Stat numbers', description: 'Big-number stat cells.' },
       { id: 'logo-strip', label: 'Logo strip', description: 'A strip of partner/credential logos.' },
       { id: 'credential-cells', label: 'Credential cells', description: 'Bordered credential cells.' },
+      { id: 'checklist-split', label: 'Checklist split', description: 'Editorial two columns on the beige band: a kicker and serif heading left, the trust items as a hairline checklist right.' },
       ...CHARACTER_VARIANTS,
     ],
   },
@@ -203,6 +205,7 @@ export const VARIANT_MANIFEST: SectionVariants[] = [
       { id: 'cards', label: 'Cards', description: 'Step cards.' },
       { id: 'alternating', label: 'Alternating', description: 'Alternating step rows.' },
       { id: 'vertical-rail', label: 'Vertical rail', description: 'A vertical rail of steps.' },
+      { id: 'pull-quote-steps', label: 'Pull quote steps', description: 'Editorial: a kicker, a large serif pull quote, then the steps as four hairline-topped numbered columns.' },
     ],
   },
   {
