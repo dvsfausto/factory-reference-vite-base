@@ -673,6 +673,15 @@ html[data-site-theme="editorial"] {
   --cta-foreground: #F8F6F1;
   --btn-primary-fg: #F8F6F1;
   --btn-primary-hover: #2E3730;
+  /* The widget's and forms' painted buttons read the brand gradient and glow: flat ink, no glow, a soft hairline. */
+  --wow-grad-brand: linear-gradient(0deg, #1C1B19, #1C1B19);
+  --wow-grad-brand-text: linear-gradient(0deg, #1C1B19, #1C1B19);
+  --wow-grad-surface: linear-gradient(0deg, #F8F6F1, #F8F6F1);
+  --wow-shadow-soft: none;
+  --wow-shadow-glow: none;
+  --wow-shadow-lift: none;
+  --wow-hairline: #DAD4C8;
+  --wow-tint: #F3EFE6;
   /* Square shapes: every radius token is 0 (the rounded-* utilities are re-pointed below). */
   --radius-sm: 0px;
   --radius-md: 0px;
