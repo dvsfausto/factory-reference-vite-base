@@ -6,6 +6,8 @@ import { SITE } from "~/data/site";
 import { PAGED_SERVICES as SERVICES } from "~/data/services-view";
 import { AREAS } from "~/data/areas";
 import { INFO_PAGES } from "~/data/info-pages";
+// the footer lists the guides proper; a service's guide post (<service>-guide, ZB-147 Stage B) is linked from its service page and the blog, not here
+const FOOTER_GUIDES = INFO_PAGES.filter((i) => !/-guide$/.test(i.slug));
 import { PortalLink } from '~/components/portal/PortalLink';
 import { CUSTOM_PAGES } from "~/data/custom-pages";
 import { siteDecor } from "~/lib/decor";
@@ -123,11 +125,11 @@ function CompanyCol({ t }: { t: FooterTheme }) {
           */}
         {CUSTOM_PAGES.filter((p) => p.nav !== false).map((p) => (<li key={p.slug}><Link to="/$slug" params={{ slug: p.slug }} className={t.listHover}>{p.title}</Link></li>))}
       </ul>
-      {INFO_PAGES.length > 0 && (
+      {FOOTER_GUIDES.length > 0 && (
         <>
           <h4 className={`text-sm font-semibold mt-6 mb-4 ${t.heading}`}>{tr('footer.guides')}</h4>
           <ul className={`space-y-2 text-sm ${t.listText}`}>
-            {INFO_PAGES.map((i) => (<li key={i.slug}><Link to="/info/$slug" params={{ slug: i.slug }} className={t.listHover}>{i.name}</Link></li>))}
+            {FOOTER_GUIDES.map((i) => (<li key={i.slug}><Link to="/info/$slug" params={{ slug: i.slug }} className={t.listHover}>{i.name}</Link></li>))}
           </ul>
         </>
       )}
@@ -355,7 +357,7 @@ function FooterConnect({ t }: { t: FooterTheme }) {
               {!HIDDEN_NAV.includes('reviews') && <li><Link to="/reviews" className={t.listHover}>{tr('footer.reviews')}</Link></li>}
               {!HIDDEN_NAV.includes('contact') && <li><Link to="/contact" className={t.listHover}>{tr('footer.contact')}</Link></li>}
               {CUSTOM_PAGES.filter((p) => p.nav !== false && p.slug !== BLOG_PAGE?.slug).map((p) => (<li key={p.slug}><Link to="/$slug" params={{ slug: p.slug }} className={t.listHover}>{p.title}</Link></li>))}
-              {INFO_PAGES.map((i) => (<li key={i.slug}><Link to="/info/$slug" params={{ slug: i.slug }} className={t.listHover}>{i.name}</Link></li>))}
+              {FOOTER_GUIDES.map((i) => (<li key={i.slug}><Link to="/info/$slug" params={{ slug: i.slug }} className={t.listHover}>{i.name}</Link></li>))}
             </ul>
             <ul className={`mt-8 space-y-2.5 text-sm ${t.listText}`}>
               {HAS_EMAIL && <li><a href={`mailto:${SITE.email}`} className={`${t.listHover} break-all`}>{SITE.email}</a></li>}

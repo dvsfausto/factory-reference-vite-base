@@ -654,6 +654,8 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
             body={ctx.info.hero.subhead}
             subheadline=""
             imageUrl={SITE.hero.image_url}
+            // the site's own first path (request mode: "Check availability"), not the generic call-or-text words (ZB-147 Stage B)
+            {...({ cta: primaryCta() } as object)}
           />
         )
       }

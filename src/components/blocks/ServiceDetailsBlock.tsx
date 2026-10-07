@@ -343,7 +343,7 @@ export function ServiceDetailsBlock({
   /* ★ visual service page (ZB-147 Stage B): the owner's packages and pricing notes stay on the page; every long section
      (how pricing works, scenarios, coverage, local context, the testimonial) lives on the service's guide post, linked once */
   if (VISUAL_SERVICE_PAGES) {
-    const open = blocks.filter((n) => (n as { key?: string | null } | null)?.key === 'packages' || (n as { key?: string | null } | null)?.key === 'pricing')
+    const open = blocks.filter((n) => (n as { key?: string | null } | null)?.key === 'packages') // the owner's prices only; the pricing prose is on the guide
     const guide = guideHrefFor(service.slug)
     if (open.length === 0 && !guide) return null
     return (
