@@ -21,6 +21,7 @@ export function HeroSplitPhotoBlock({
   imageFocus = null,
   serviceName,
   cta: ctaOverride,
+  secondary,
 }: {
   site?: typeof SITE
   headline?: string
@@ -35,6 +36,8 @@ export function HeroSplitPhotoBlock({
   serviceName?: string
   /** a per-service CTA (the service-detail route passes serviceCta(slug)); absent → the site-wide one */
   cta?: { href: string; label: string }
+  /** a second path beside the first (request mode: "Check your date" → the inquiry form); absent → one button */
+  secondary?: { href: string; label: string }
 }) {
   const cta = ctaOverride ?? primaryCta()
   const kicker = [serviceName, placeLine(site)].filter(Boolean).join(' · ')
@@ -45,8 +48,9 @@ export function HeroSplitPhotoBlock({
           {kicker && <Kicker>{kicker}</Kicker>}
           <EditorialHeading as="h1" text={headline} size="lg" className="mt-5" />
           {hasText(body) && <p className="mt-6 max-w-[34rem] font-sans text-[17px] leading-relaxed text-fam-ink-muted">{body}</p>}
-          <div className="mt-10">
+          <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
             <EditorialButton href={cta.href} tone="dark">{cta.label}</EditorialButton>
+            {secondary && <EditorialButton href={secondary.href} tone="link">{secondary.label}</EditorialButton>}
           </div>
         </div>
         <div className="relative order-1 aspect-[4/5] bg-fam-surface-2 lg:order-2 lg:aspect-auto lg:min-h-[640px]">

@@ -1,7 +1,7 @@
 import { SITE } from '~/data/site'
 import { tr } from '~/lib/i18n'
 import { placeLine } from '~/lib/place'
-import { primaryCta } from '~/lib/primaryCta'
+import { primaryCta, REQUEST_MODE } from '~/lib/primaryCta'
 import { hasText } from '~/lib/has-text'
 import { Kicker, EditorialHeading } from '~/components/editorial/Primitives'
 import { EditorialPrimaryCta } from '~/components/editorial/EditorialCta'
@@ -22,7 +22,8 @@ export function CtaDarkBandBlock({
   const homeCta = (site as { homeCta?: { title?: string; subtitle?: string } }).homeCta
   const heading = title ?? homeCta?.title ?? tr('cta.readyWhenYouAre')
   const line = subtitle ?? homeCta?.subtitle ?? tr('cta.quote24')
-  const label = (site as { ctaLabel?: string }).ctaLabel ?? primaryCta().label
+  // request mode: the band asks for availability (the owner's own label still wins)
+  const label = (site as { ctaLabel?: string }).ctaLabel ?? (REQUEST_MODE ? tr('cta.checkAvailability') : primaryCta().label)
   const place = placeLine(site)
   return (
     <section className="bg-fam-statement text-fam-on-statement">
