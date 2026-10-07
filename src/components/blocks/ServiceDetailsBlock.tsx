@@ -7,7 +7,7 @@ import type { ServicePageData, ServiceRef, ServiceVariant } from '~/lib/types/pa
 import { SERVICES } from '~/data/services'
 import { Reveal } from '~/components/Reveal'
 import { Fold, SHORT_SERVICE_COPY } from '~/components/Fold'
-import { VISUAL_SERVICE_PAGES, guideHrefFor } from '~/lib/service-pages'
+import { VISUAL_SERVICE_PAGES } from '~/lib/service-pages'
 
 // SERVICE-DETAIL VARIANT (Arc 3 · Stage C): the rich, consolidated MIDDLE content of
 // a service page, driven per-item by `service` (ctx.service). It renders, in order -
@@ -344,8 +344,7 @@ export function ServiceDetailsBlock({
      (how pricing works, scenarios, coverage, local context, the testimonial) lives on the service's guide post, linked once */
   if (VISUAL_SERVICE_PAGES) {
     const open = blocks.filter((n) => (n as { key?: string | null } | null)?.key === 'packages') // the owner's prices only; the pricing prose is on the guide
-    const guide = guideHrefFor(service.slug)
-    if (open.length === 0 && !guide) return null
+    if (open.length === 0) return null // the guide is linked once, from the "what we cover" paragraph above
     return (
       <>
         {open.map((node, i) => (
@@ -353,11 +352,6 @@ export function ServiceDetailsBlock({
             {node}
           </SubSection>
         ))}
-        {guide && open.length === 0 && (
-          <SubSection key="guide" surface="tint">
-            <p><a href={guide} className="font-sans text-[15px] font-semibold text-fam-ink underline-offset-4 hover:underline">{tr('service.readGuide')} ↗</a></p>
-          </SubSection>
-        )}
       </>
     )
   }
