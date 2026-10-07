@@ -39,9 +39,9 @@ export function GalleryPortfolioWallBlock({
   const photos: Photo[] = []
   const push = (ph: Photo) => { if (!photos.some((x) => x.src === ph.src)) photos.push(ph) }
   if (category) {
-    for (const p of projects) { const c = projectCategory(p); if (c && sameCategory(c, category)) push({ src: imageSrc(p.image), alt: p.alt ?? p.title, focus: null }) }
-    // a photo whose own title names the kind of work counts too ("Wedding photography")
-    for (const p of projects) { if (!projectCategory(p) && sameCategory(p.title, category)) push({ src: imageSrc(p.image), alt: p.alt ?? p.title, focus: null }) }
+    // only a photo the owner TAGGED with this kind of work belongs here (its job:<Category> tag); a caption is not a tag, and the
+    // generic 'gallery' tag names no kind of work. Untagged photos wait for the owner's tagging, never guessed onto a page.
+    for (const p of projects) { const c = projectCategory(p); if (c && c.toLowerCase() !== 'gallery' && sameCategory(c, category)) push({ src: imageSrc(p.image), alt: p.alt ?? p.title, focus: null }) }
   }
   for (const slug of services) { const own = ownerServiceImageUrl(slug); if (own) push({ src: own, alt: SERVICES.find((x) => x.slug === slug)?.name ?? '', focus: serviceImageFocus(slug) }) }
   if (!category && services.length === 0) for (const ph of ownerPhotos()) push(ph)
