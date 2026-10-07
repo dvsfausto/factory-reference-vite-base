@@ -1,5 +1,7 @@
+import { useState } from 'react'
 import { getAggregateRating, getHomepageReviews, reviews } from '~/data/reviews'
 import { tr } from '~/lib/i18n'
+import { reviewCategory } from '~/lib/review-category'
 import type { Review } from '~/lib/types/page-types'
 
 interface Props {
@@ -13,8 +15,17 @@ export function ReviewsSection({
   intro,
   count = 3,
 }: Props) {
+  /* ★ BY CATEGORY (ZB-147 W1.3): each review's category is the service it names (its own `service` field, else the
+     business's service whose name its text shares a word with; see lib/review-category). With two or more categories the
+     page offers them as filters; a review naming no service sits under "General". Nothing is invented: a review
+     without a service word is never assigned one. */
+  const [picked, setPicked] = useState<string>('')
   if (reviews.length === 0) return null
-  const display = getHomepageReviews(count)
+  const all = getHomepageReviews(count)
+  const categories = Array.from(new Set(all.map((r) => reviewCategory(r)).filter((c): c is string => !!c)))
+  const withGeneral = all.some((r) => !reviewCategory(r))
+  const showFilter = categories.length >= 2
+  const display = !showFilter || !picked ? all : all.filter((r) => (picked === '__general' ? !reviewCategory(r) : reviewCategory(r) === picked))
   const agg = getAggregateRating()
   return (
     <section className="bg-fam-card">
@@ -35,6 +46,16 @@ export function ReviewsSection({
             </p>
           )}
         </div>
+        {showFilter && (
+          <div className="mx-auto mt-8 flex max-w-5xl flex-wrap justify-center gap-2" role="group" aria-label={tr('blk.byCategory')} data-review-categories>
+            {[{ key: '', label: tr('blk.allCategories'), n: all.length }, ...categories.map((c) => ({ key: c, label: c, n: all.filter((r) => reviewCategory(r) === c).length })), ...(withGeneral ? [{ key: '__general', label: tr('blk.general'), n: all.filter((r) => !reviewCategory(r)).length }] : [])].map((c) => (
+              <button key={c.key || 'all'} type="button" aria-pressed={picked === c.key} onClick={() => setPicked(c.key)}
+                className={`rounded-full border px-4 py-1.5 text-sm transition-colors ${picked === c.key ? 'border-fam-ink bg-fam-ink text-fam-on-dark' : 'border-fam-hairline bg-fam-card text-fam-ink hover:border-fam-ink'}`}>
+                {c.label} <span className="opacity-70">{c.n}</span>
+              </button>
+            ))}
+          </div>
+        )}
         <div className="mx-auto mt-12 grid max-w-5xl gap-8 md:grid-cols-2 lg:grid-cols-3">
           {display.map((r) => (
             <ReviewCard key={r.id} review={r} />
@@ -63,9 +84,9 @@ function ReviewCard({ review }: { review: Review }) {
       </blockquote>
       <footer className="mt-4 border-t border-fam-line-slate pt-3 text-sm">
         <p className="font-semibold text-slate-900">{review.author}</p>
-        {(review.location || review.service) && (
+        {(review.location || reviewCategory(review)) && (
           <p className="mt-0.5 text-slate-500">
-            {[review.location, review.service].filter(Boolean).join(' · ')}
+            {[review.location, reviewCategory(review)].filter(Boolean).join(' · ')}
           </p>
         )}
         {review.source === 'google' && review.url && (

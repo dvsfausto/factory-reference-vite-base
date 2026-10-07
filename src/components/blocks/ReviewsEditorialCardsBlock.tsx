@@ -2,6 +2,7 @@ import { tr } from '~/lib/i18n'
 import { SITE } from '~/data/site'
 import { reviews as REVIEWS } from '~/data/reviews'
 import { EditorialButton, EditorialHeading, Kicker } from '~/components/editorial/Primitives'
+import { spreadByCategory } from '~/lib/review-category'
 
 // Reviews VARIANT: 'editorial-cards' (the Editorial look, ZB-147 W1.2). A two-column head (kicker left, serif heading
 // right), then three beige cards with a hairline border: the quote in the display face between typographic quotes,
@@ -20,7 +21,8 @@ export function ReviewsEditorialCardsBlock({
   scriptAccent?: string
   moreLink?: string
 }) {
-  const shown = reviews.filter((r) => typeof r.text === 'string' && r.text.trim().length > 0).slice(0, 3)
+  // three reviews that cover three kinds of work when the data allows it (one per category first), else the first three
+  const shown = spreadByCategory(reviews.filter((r) => typeof r.text === 'string' && r.text.trim().length > 0)).slice(0, 3)
   if (shown.length === 0) return null
   const placeId = (SITE as { googlePlaceId?: string }).googlePlaceId
   return (
