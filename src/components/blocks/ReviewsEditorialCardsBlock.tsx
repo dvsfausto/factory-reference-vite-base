@@ -14,15 +14,19 @@ export function ReviewsEditorialCardsBlock({
   reviews = REVIEWS,
   label = tr('editorial.reviewsKicker'),
   heading = tr('editorial.reviewsHeading'),
+  count,
 }: {
   reviews?: typeof REVIEWS
   label?: string
   heading?: string
   scriptAccent?: string
   moreLink?: string
+  /** how many to show (a block param); default three */
+  count?: number | string
 }) {
-  // three reviews that cover three kinds of work when the data allows it (one per category first), else the first three
-  const shown = spreadByCategory(reviews.filter((r) => typeof r.text === 'string' && r.text.trim().length > 0)).slice(0, 3)
+  const n = Math.max(1, Math.min(6, Number(count) || 3))
+  // reviews that cover as many kinds of work as the data allows (one per category first), else the first ones
+  const shown = spreadByCategory(reviews.filter((r) => typeof r.text === 'string' && r.text.trim().length > 0)).slice(0, n)
   if (shown.length === 0) return null
   const placeId = (SITE as { googlePlaceId?: string }).googlePlaceId
   return (

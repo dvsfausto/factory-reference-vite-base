@@ -2,6 +2,8 @@ import type { ProcessStep } from './process-variants'
 import { tr } from '~/lib/i18n'
 import { getProcessIcon } from './process-icons'
 import { SITE } from '~/data/site'
+import { defaultBookingSteps } from '~/lib/service-pages'
+import type { ServicePageData } from '~/lib/types/page-types'
 
 // Process LAYOUT: 'numbered-steps', a horizontal row of big-numbered steps.
 // Character-agnostic. OMIT-WHEN-ABSENT: steps read from optional SITE.steps via
@@ -16,13 +18,19 @@ export function ProcessNumberedStepsBlock({
   label = tr('section.howItWorks'),
   heading = tr('section.simpleProcess'),
   body,
+  service,
 }: {
   site?: typeof SITE
   label?: string
   heading?: string
   body?: string
+  /** the service whose page this sits on (renderer-supplied): with no steps of the business's own, "how to book" in three */
+  service?: ServicePageData
 }) {
-  const steps = (site as { steps?: ProcessStep[] }).steps
+  const own = (site as { steps?: ProcessStep[] }).steps
+  const fallback = service && (!own || own.length === 0)
+  const steps = fallback ? defaultBookingSteps() : own
+  if (fallback && heading === tr('section.simpleProcess')) heading = tr('process.bookHeading')
   if (!steps || steps.length === 0) return null
   return (
     <section className="bg-fam-card">

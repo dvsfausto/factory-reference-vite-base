@@ -13,14 +13,17 @@ export function ReviewsBlock({
   heading = tr('section.whatCustomersHeading'),
   scriptAccent = tr('section.sayAccent'),
   moreLink = tr('section.readAllReviewsArrow'),
+  count,
 }: {
   reviews?: typeof REVIEWS
+  /** how many to show (a block param); default six */
+  count?: number | string
   label?: string
   heading?: string
   scriptAccent?: string
   moreLink?: string
 }) {
-  const previewReviews = reviews.slice(0, 6)
+  const previewReviews = reviews.slice(0, Math.max(1, Math.min(6, Number(count) || 6)))
   if (previewReviews.length === 0) return null
   return (
     <section className="bg-brand-50 border-y border-brand-100">

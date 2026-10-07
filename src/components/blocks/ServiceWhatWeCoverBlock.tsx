@@ -1,5 +1,7 @@
 import { paragraphs } from '~/lib/paragraphs'
 import { Fold, SHORT_SERVICE_COPY } from '~/components/Fold'
+import { VISUAL_SERVICE_PAGES, guideHrefFor } from '~/lib/service-pages'
+import { tr } from '~/lib/i18n'
 import { motion, useReducedMotion } from 'framer-motion'
 import { Check } from 'lucide-react'
 import type { ServicePageData } from '~/lib/types/page-types'
@@ -48,6 +50,16 @@ export function ServiceWhatWeCoverBlock({
           {hasBody && (() => {
             const ps = paragraphs(whatWeBuy.body)
             const para = (p: string, i: number) => <p key={i} className="text-lg leading-relaxed text-[var(--fam-ink,var(--color-ink-700))]">{p}</p>
+            // visual service page: ONE paragraph on the page; every other word is on the service's guide post, linked here
+            if (VISUAL_SERVICE_PAGES) {
+              const guide = guideHrefFor(service.slug)
+              return (
+                <div className="mt-4 space-y-4">
+                  {para(ps[0]!, 0)}
+                  {guide && ps.length > 1 && <p><a href={guide} className="font-sans text-[15px] font-semibold text-[var(--fam-ink,var(--color-ink-900))] underline-offset-4 hover:underline">{tr('service.readGuide')} ↗</a></p>}
+                </div>
+              )
+            }
             // short service copy: the first paragraph open, the rest behind Read more (the same words)
             return SHORT_SERVICE_COPY && ps.length > 1 ? (
               <div className="mt-4 space-y-4">{para(ps[0]!, 0)}<Fold>{<div className="space-y-4">{ps.slice(1).map((p, i) => para(p, i + 1))}</div>}</Fold></div>
@@ -57,7 +69,7 @@ export function ServiceWhatWeCoverBlock({
           })()}
         </div>
 
-        {hasItems && (
+        {hasItems && !VISUAL_SERVICE_PAGES && (
           <ul className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2">
             {whatWeBuy.items.map((item, i) => (
               <motion.li

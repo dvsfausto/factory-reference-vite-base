@@ -1,5 +1,6 @@
 import type { BlogPost } from './blog-variants'
 import { SITE } from '~/data/site'
+import { INFO_PAGES, infoPagesData } from '~/data/info-pages'
 import { tr } from '~/lib/i18n'
 
 // Blog LAYOUT: 'card-grid', a grid of post cards (image when present, title,
@@ -20,8 +21,10 @@ export function BlogCardGridBlock({
   heading?: string
   body?: string
 }) {
-  const posts = (site as { posts?: BlogPost[] }).posts
-  if (!posts || posts.length === 0) return null
+  // the business's own posts first; else the site's guides (the info pages, incl. one guide per service on a visual site) are the blog
+  const own = (site as { posts?: BlogPost[] }).posts
+  const posts: BlogPost[] = own && own.length > 0 ? own : INFO_PAGES.map((p) => ({ title: infoPagesData[p.slug]?.title ?? p.name, excerpt: infoPagesData[p.slug]?.description, href: `/info/${p.slug}` }))
+  if (posts.length === 0) return null
   return (
     <section className="bg-fam-card">
       <div className="container-x py-section">
