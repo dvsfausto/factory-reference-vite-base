@@ -23,7 +23,8 @@ type Status = 'idle' | 'submitting' | 'success' | 'error'
 
 function visible(f: FormField, values: Record<string, string>): boolean {
   if (!f.showWhen) return true
-  return (values[f.showWhen.field] ?? '') === f.showWhen.equals
+  const v = values[f.showWhen.field] ?? ''
+  return Array.isArray(f.showWhen.equals) ? f.showWhen.equals.includes(v) : v === f.showWhen.equals
 }
 
 export function FormCustomBlock(props: {

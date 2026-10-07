@@ -16,7 +16,8 @@ export interface FormField {
   placeholder?: string
   options?: string[]
   /** Show this field only when another field equals a value (the one conditional the stage carries). */
-  showWhen?: { field: string; equals: string }
+  /** shown only when another field has this answer (a string) or one of these answers (a list): a field per service, ZB-147 W1.2 */
+  showWhen?: { field: string; equals: string | string[] }
   min?: number
   max?: number
 }
@@ -51,7 +52,10 @@ export function normaliseFields(raw: unknown): FormField[] {
     if (typeof r.placeholder === 'string' && r.placeholder.trim()) f.placeholder = r.placeholder.trim()
     if (Array.isArray(r.options)) { const o = r.options.filter((x): x is string => typeof x === 'string' && !!x.trim()).map((x) => x.trim()); if (o.length) f.options = o }
     const sw = r.showWhen as { field?: unknown; equals?: unknown } | undefined
-    if (sw && typeof sw.field === 'string' && sw.field.trim() && typeof sw.equals === 'string') f.showWhen = { field: sw.field.trim(), equals: sw.equals }
+    if (sw && typeof sw.field === 'string' && sw.field.trim()) {
+      if (typeof sw.equals === 'string') f.showWhen = { field: sw.field.trim(), equals: sw.equals }
+      else if (Array.isArray(sw.equals) && sw.equals.every((v) => typeof v === 'string')) f.showWhen = { field: sw.field.trim(), equals: sw.equals as string[] }
+    }
     if (typeof r.min === 'number') f.min = r.min
     if (typeof r.max === 'number') f.max = r.max
     out.push(f)
