@@ -786,8 +786,6 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
           body={block.params?.body as string | undefined}
           exploreLabel={block.params?.exploreLabel as string | undefined}
           moreLink={block.params?.moreLink as string | undefined}
-          // how many reviews this block shows (a visual service page asks for two); layouts without the prop ignore it
-          {...({ count: block.params?.count } as object)}
         />
       )
     }
@@ -819,6 +817,8 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
           // a heading supplied as a param (the section-copy wave, an owner edit) is a whole sentence: no accent word after it
           scriptAccent={block.params?.heading ? '' : (block.params?.scriptAccent as string | undefined)}
           moreLink={block.params?.moreLink as string | undefined}
+          // how many reviews this block shows (a visual service page asks for two); layouts without the prop ignore it
+          {...({ count: block.params?.count } as object)}
         />
       )
     }
