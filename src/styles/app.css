@@ -696,8 +696,13 @@ html[data-site-theme="editorial"] .rounded-lg,
 html[data-site-theme="editorial"] .rounded-xl,
 html[data-site-theme="editorial"] .rounded-2xl,
 html[data-site-theme="editorial"] .rounded-3xl,
+html[data-site-theme="editorial"] .rounded-\[1\.25rem\],
+html[data-site-theme="editorial"] .rounded-\[1\.5rem\],
 html[data-site-theme="editorial"] .rounded-\[1\.75rem\],
-html[data-site-theme="editorial"] .rounded-\[2rem\] {
+html[data-site-theme="editorial"] .rounded-\[2rem\],
+html[data-site-theme="editorial"] .rounded-\[28px\],
+html[data-site-theme="editorial"] a.rounded-full,
+html[data-site-theme="editorial"] button.rounded-full {
   border-radius: 0;
 }
 html[data-site-theme="editorial"] .btn-primary,
