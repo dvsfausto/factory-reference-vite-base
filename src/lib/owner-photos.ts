@@ -15,6 +15,6 @@ export function ownerPhotos(leadServiceSlug?: string | null): OwnerPhoto[] {
   const push = (ph: OwnerPhoto) => { if (!out.some((x) => x.src === ph.src)) out.push(ph) }
   if (leadServiceSlug) { const u = ownerServiceImageUrl(leadServiceSlug); const s = SERVICES.find((x) => x.slug === leadServiceSlug); if (u) push({ src: u, alt: s?.name ?? '', focus: serviceImageFocus(leadServiceSlug) }) }
   for (const s of SERVICES) { if (s.slug === leadServiceSlug) continue; const u = ownerServiceImageUrl(s.slug); if (u) push({ src: u, alt: s.name, focus: serviceImageFocus(s.slug) }) }
-  for (const p of PROJECTS) { const src = imageSrc(p.image); if (isOwnerUpload(src)) push({ src, alt: p.alt ?? p.title, focus: null }) }
+  for (const p of PROJECTS) { const src = imageSrc(p.image); const c = (p as { category?: string }).category; if (isOwnerUpload(src)) push({ src, alt: c && c.toLowerCase() !== 'gallery' ? c : (p.alt ?? p.title), focus: null }) }
   return out
 }

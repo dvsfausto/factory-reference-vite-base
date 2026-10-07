@@ -17,11 +17,12 @@ export function wallPhotos(params: { category?: string; services?: string[] }, p
   const out: WallPhoto[] = []
   const push = (ph: WallPhoto) => { if (!out.some((x) => x.src === ph.src)) out.push(ph) }
   const { category, services = [] } = params
-  if (category) for (const p of projects) { const c = projectCategory(p); if (c && c.toLowerCase() !== 'gallery' && sameCategory(c, category)) push({ src: imageSrc(p.image), alt: p.alt ?? p.title, focus: null }) }
+  // the alt names the kind of work the owner tagged (a fact), not a caption written for the photo by a tool
+  if (category) for (const p of projects) { const c = projectCategory(p); if (c && c.toLowerCase() !== 'gallery' && sameCategory(c, category)) push({ src: imageSrc(p.image), alt: c, focus: null }) }
   for (const slug of services) { const own = ownerServiceImageUrl(slug); if (own) push({ src: own, alt: SERVICES.find((x) => x.slug === slug)?.name ?? '', focus: serviceImageFocus(slug) }) }
   if (!category && services.length === 0) {
     for (const s of SERVICES) { const u = ownerServiceImageUrl(s.slug); if (u) push({ src: u, alt: s.name, focus: serviceImageFocus(s.slug) }) }
-    for (const p of projects) { const src = imageSrc(p.image); if (/\/public-assets\//.test(src)) push({ src, alt: p.alt ?? p.title, focus: null }) }
+    for (const p of projects) { const src = imageSrc(p.image); if (/\/public-assets\//.test(src)) push({ src, alt: (projectCategory(p) && projectCategory(p).toLowerCase() !== 'gallery') ? projectCategory(p) : (p.alt ?? p.title), focus: null }) }
   }
   return out
 }
