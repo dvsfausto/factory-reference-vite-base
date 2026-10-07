@@ -34,7 +34,8 @@ export const LAYOUT_VARIANT: Record<string, string> = { grid: 'grid', masonry: '
  */
 export function galleryItemsFor(key: PageKey, ctx?: { service?: ServicePageData; page?: string } | null): GalleryItem[] {
   const own = ownerGallery(key)
-  if (own) {
+  // an owner record with no photos (a layout or a cover set before any photo was chosen) keeps the page's default photos
+  if (own && own.photos.length > 0) {
     // a photo named by its address keeps what the library knows about it (its category, caption, alt): the cards and the
     // walls caption by category, so an owner-built gallery must not turn every photo into a nameless one
     const byUrl = new Map<string, GalleryItem>()

@@ -51,12 +51,13 @@ export function ServiceWhatWeCoverBlock({
             const ps = paragraphs(whatWeBuy.body)
             const para = (p: string, i: number) => <p key={i} className="text-lg leading-relaxed text-[var(--fam-ink,var(--color-ink-700))]">{p}</p>
             // visual service page: ONE paragraph on the page; every other word is on the service's guide post, linked here
-            if (VISUAL_SERVICE_PAGES) {
-              const guide = guideHrefFor(service.slug)
+            // only when the guide exists: between a setting change and the next build the prose stays on the page
+            const guide = VISUAL_SERVICE_PAGES ? guideHrefFor(service.slug) : null
+            if (guide) {
               return (
                 <div className="mt-4 space-y-4">
                   {para(ps[0]!, 0)}
-                  {guide && ps.length > 1 && <p><a href={guide} className="font-sans text-[15px] font-semibold text-[var(--fam-ink,var(--color-ink-900))] underline-offset-4 hover:underline">{tr('service.readGuide')} ↗</a></p>}
+                  {ps.length > 1 && <p><a href={guide} className="font-sans text-[15px] font-semibold text-[var(--fam-ink,var(--color-ink-900))] underline-offset-4 hover:underline">{tr('service.readGuide')} ↗</a></p>}
                 </div>
               )
             }
@@ -69,7 +70,7 @@ export function ServiceWhatWeCoverBlock({
           })()}
         </div>
 
-        {hasItems && !VISUAL_SERVICE_PAGES && (
+        {hasItems && !(VISUAL_SERVICE_PAGES && guideHrefFor(service.slug)) && (
           <ul className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2">
             {whatWeBuy.items.map((item, i) => (
               <motion.li

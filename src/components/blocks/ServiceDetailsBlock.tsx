@@ -7,7 +7,7 @@ import type { ServicePageData, ServiceRef, ServiceVariant } from '~/lib/types/pa
 import { SERVICES } from '~/data/services'
 import { Reveal } from '~/components/Reveal'
 import { Fold, SHORT_SERVICE_COPY } from '~/components/Fold'
-import { VISUAL_SERVICE_PAGES } from '~/lib/service-pages'
+import { VISUAL_SERVICE_PAGES, guideHrefFor } from '~/lib/service-pages'
 
 // SERVICE-DETAIL VARIANT (Arc 3 · Stage C): the rich, consolidated MIDDLE content of
 // a service page, driven per-item by `service` (ctx.service). It renders, in order -
@@ -342,7 +342,7 @@ export function ServiceDetailsBlock({
 
   /* ★ visual service page (ZB-147 Stage B): the owner's packages and pricing notes stay on the page; every long section
      (how pricing works, scenarios, coverage, local context, the testimonial) lives on the service's guide post, linked once */
-  if (VISUAL_SERVICE_PAGES) {
+  if (VISUAL_SERVICE_PAGES && guideHrefFor(service.slug)) { // only once the guide exists; until then the prose stays here
     const open = blocks.filter((n) => (n as { key?: string | null } | null)?.key === 'packages') // the owner's prices only; the pricing prose is on the guide
     if (open.length === 0) return null // the guide is linked once, from the "what we cover" paragraph above
     return (
