@@ -1,6 +1,6 @@
 import type { BlogPost } from './blog-variants'
 import { SITE } from '~/data/site'
-import { INFO_PAGES, infoPagesData } from '~/data/info-pages'
+import { INFO_PAGES } from '~/data/info-pages' // the registry only: a built site serves infoPagesData from a virtual module, not from this file
 import { tr } from '~/lib/i18n'
 
 // Blog LAYOUT: 'card-grid', a grid of post cards (image when present, title,
@@ -23,7 +23,7 @@ export function BlogCardGridBlock({
 }) {
   // the business's own posts first; else the site's guides (the info pages, incl. one guide per service on a visual site) are the blog
   const own = (site as { posts?: BlogPost[] }).posts
-  const posts: BlogPost[] = own && own.length > 0 ? own : INFO_PAGES.map((p) => ({ title: infoPagesData[p.slug]?.title ?? p.name, excerpt: infoPagesData[p.slug]?.description, href: `/info/${p.slug}` }))
+  const posts: BlogPost[] = own && own.length > 0 ? own : INFO_PAGES.map((p) => ({ title: p.name, href: `/info/${p.slug}` }))
   if (posts.length === 0) return null
   return (
     <section className="bg-fam-card">
