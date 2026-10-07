@@ -19,7 +19,7 @@ export function EditorialHeading({ text, as: Tag = 'h2', size = 'lg', onDark = f
       {second ? (
         <>
           <br />
-          <em className={`not-italic font-display italic ${onDark ? 'text-fam-accent-tint' : 'text-fam-accent-text'}`}>{second}</em>
+          <em className={`font-display italic ${onDark ? 'text-fam-accent-tint' : 'text-fam-accent-text'}`}>{second}</em>
         </>
       ) : null}
     </Tag>
