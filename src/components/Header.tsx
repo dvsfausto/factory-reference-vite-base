@@ -503,7 +503,11 @@ export function Header() {
     </>
   );
 
-  const phoneCluster = HAS_PHONE && (
+  // THE PHONE IN THE HEADER is the owner's choice (site.headerPhone 'show' | 'hide', factory-emitted as SITE.headerPhone);
+  // unset, the Editorial chrome leaves it out (its right side is the one inquiry link) and every other chrome shows it (ZB-147 W1.1).
+  const headerPhonePref = (SITE as { headerPhone?: string }).headerPhone;
+  const showHeaderPhone = HAS_PHONE && (headerPhonePref ? headerPhonePref === "show" : !editorialChrome);
+  const phoneCluster = showHeaderPhone && (
     <a href={`tel:${SITE.phone}`} className={`flex items-center gap-1.5 text-sm font-semibold ${t.phoneLink} focus-ring rounded-md px-2 py-1`}>
       <Phone className="h-4 w-4" />
       {SITE.phoneDisplay}
