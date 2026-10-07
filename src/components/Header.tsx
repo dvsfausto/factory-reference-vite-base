@@ -558,14 +558,19 @@ export function Header() {
       {/* Absolute under the bar, not fixed: the header's backdrop-blur is a containing block for fixed children. */}
       <div className={`absolute inset-x-0 top-full z-[60] ${t.mobilePanel} lg:hidden overflow-y-auto`} style={{ height: 'calc(100dvh - 5rem)' }}>
           <div className="container-x pb-12 space-y-6">
-            {navGroups.map((g, gi) => (
-              <div key={gi}>
-                <div className={`text-xs font-semibold ${t.mobileLabel} uppercase tracking-wider mb-2`}>{g.label}</div>
-                {g.items.map((it) => (
-                  <a key={it.href + it.label} href={it.href} onClick={closeMenu} className={`block py-2 text-base font-medium ${t.mobileText}`}>{it.label}</a>
-                ))}
-              </div>
-            ))}
+            {navGroups.map((g, gi) =>
+              g.items.length === 1 ? (
+                // a one-item group is a plain link on the phone too (no label over a single line)
+                <a key={gi} href={g.items[0]!.href} onClick={closeMenu} className={`block py-2 text-base font-medium ${t.mobileText}`}>{g.label}</a>
+              ) : (
+                <div key={gi}>
+                  <div className={`text-xs font-semibold ${t.mobileLabel} uppercase tracking-wider mb-2`}>{g.label}</div>
+                  {g.items.map((it) => (
+                    <a key={it.href + it.label} href={it.href} onClick={closeMenu} className={`block py-2 text-base font-medium ${t.mobileText}`}>{it.label}</a>
+                  ))}
+                </div>
+              ),
+            )}
             {navGroups.length === 0 && SERVICES.length > 0 && !HIDDEN_NAV.includes('services') && (
               <div>
                 <div className={`text-xs font-semibold ${t.mobileLabel} uppercase tracking-wider mb-2`}>{tr('nav.services')}</div>
