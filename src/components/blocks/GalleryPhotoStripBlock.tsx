@@ -76,7 +76,8 @@ export function GalleryPhotoStripBlock({
   if (photos.length === 0) return null
 
   const rows = Math.min(3, Math.max(1, Number(setting?.rows) || 1))
-  const seconds = setting?.speed === 'fast' ? 25 : setting?.speed === 'medium' ? 40 : 60
+  // the speed is pixels per second on a desktop box (220 px + 2 px gap): slow 60, medium 100, fast 160; a phone's smaller boxes move proportionally slower
+  const pxPerSecond = setting?.speed === 'fast' ? 160 : setting?.speed === 'medium' ? 100 : 60
   // ★ NO PHOTO TWICE AT ONCE (Fausto, 2026-10-07): with enough photos each row gets its OWN disjoint set, so a photo is never
   // in two rows; a row's sequence is at least six long (the widest screen shows about six boxes), so within a row the same
   // photo cannot be on screen twice either. Too few photos for disjoint rows → the rows share the list, offset by a third.
@@ -109,7 +110,7 @@ export function GalleryPhotoStripBlock({
           const items = rowItems(r)
           return (
             // the loop's duration grows with the row's length, so every row moves at the same pixel speed whatever it holds
-            <div key={r} className="strip-row" data-dir={r % 2 === 1 ? 'right' : 'left'} style={{ ['--strip-dur' as string]: `${Math.round(seconds * items.length / 8)}s` }}>
+            <div key={r} className="strip-row" data-dir={r % 2 === 1 ? 'right' : 'left'} style={{ ['--strip-dur' as string]: `${Math.max(10, Math.round((items.length * 222) / pxPerSecond))}s` }}>
               <ul className="strip-track flex w-max gap-[2px]" aria-hidden={r > 0 ? true : undefined}>
                 {[...items, ...items].map((ph, i) => (
                   <li key={`${ph.src}-${i}`} className="h-[32vw] w-[32vw] shrink-0 overflow-hidden bg-fam-surface-2 sm:h-[220px] sm:w-[220px]">
