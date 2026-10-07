@@ -3,7 +3,8 @@ import { tr } from '~/lib/i18n'
 import { imageSrc } from '~/lib/asset-url'
 import { placeLine } from '~/lib/place'
 import { ARROW } from '~/lib/editorial'
-import { faceSafeStyle, portfolioCard, portfolioPicks, projectCategory } from '~/lib/editorial-media'
+import { faceSafeStyle, portfolioCard, portfolioPicks, projectCategory, serviceBySlug, serviceFor } from '~/lib/editorial-media'
+import { ownerServiceImageUrl } from '~/data/images'
 import { EditorialHeading, Kicker, Numeral } from '~/components/editorial/Primitives'
 
 // Gallery VARIANT: 'portfolio-grid' (the Editorial look, ZB-147 W1.2). A kicker and a serif heading, then three tall
@@ -34,7 +35,23 @@ export function GalleryPortfolioGridBlock({
   // no grouping by category and no card dropped: a photo without a service or a category still gets its card
   // An owner-built card is titled by ITS photo's kind of work (the service that category names), never by the slot's title
   // setting: card<N>Title/Service were chosen for the category-grouped grid, and a family photo under "Weddings" is a false label.
-  const picks = (ownerBuilt ? projects : portfolioPicks(projects))
+  // ★ A CARD'S PHOTO MATCHES ITS TITLE (Karli's live home, 2026-10-07: a family photo under "Weddings & Celebrations"): a slot that
+  // names a service shows a photo OF that kind of work: the first library photo whose category names the service, else the
+  // service's own photo, else the grouped pick. Slots without a service keep the grouped pick (one photo per category).
+  const slotPicks = (): typeof projects => {
+    const base = portfolioPicks(projects)
+    const used = new Set<string>()
+    return base.map((p, i) => {
+      const svc = serviceBySlug(cards[i]?.service)
+      if (!svc) { used.add(p.image); return p }
+      const match = projects.find((q) => !used.has(q.image) && projectCategory(q) && serviceFor(q.title, projectCategory(q))?.slug === svc.slug)
+      if (match) { used.add(match.image); return match }
+      const own = ownerServiceImageUrl(svc.slug)
+      if (own && !used.has(own)) { const name = String(svc.displayName ?? svc.name ?? ''); used.add(own); return { title: name, image: own, alt: name, category: name } as (typeof projects)[number] }
+      used.add(p.image); return p
+    })
+  }
+  const picks = (ownerBuilt ? projects : slotPicks())
     .map((p, i) => ({ p, card: portfolioCard(p, ownerBuilt ? undefined : cards[i]) ?? (ownerBuilt ? { title: p.alt ?? p.title ?? '', href: null } : null) }))
     .filter((x): x is { p: (typeof projects)[number]; card: NonNullable<ReturnType<typeof portfolioCard>> } => x.card !== null)
   if (picks.length === 0) return null
