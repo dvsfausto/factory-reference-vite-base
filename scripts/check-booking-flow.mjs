@@ -11,8 +11,9 @@ if (!/data-held-action="release"[^>]*onClick=\{\(\) => setAskRelease\(true\)\}/.
 if (!/data-held-action="release-yes"/.test(held) || !/data-held-action="release-keep"/.test(held)) fails.push('1: the question needs Yes and Keep my spot')
 const wiz = read('src/components/blocks/BookingWizardBlock.tsx')
 if (!/paidInfo\.klass\?\.booking_id && paidInfo\.klass\.token \? \(/.test(wiz) || !/<HeldBookingFlow entry=\{\{ bookingId: paidInfo\.klass\.booking_id/.test(wiz)) fails.push('2: the paid return must hand the booked class to HeldBookingFlow')
-const portal = read('src/components/portal/CustomerPortal.tsx')
-if (!/localStorage\.getItem\(SESSION_KEY\)/.test(portal) || !/localStorage\.setItem\(SESSION_KEY/.test(portal)) fails.push('3: the portal session must be kept in localStorage too')
+const sessionLib = read('src/lib/portal-session.ts')
+if (!/localStorage\.getItem\(SESSION_KEY\)/.test(sessionLib) || !/localStorage\.setItem\(SESSION_KEY/.test(sessionLib)) fails.push('3: the portal session must be kept in localStorage too')
+for (const f of ['src/components/portal/CustomerPortal.tsx', 'src/components/blocks/ClassBookingFlow.tsx']) { const t = read(f); if (/sessionStorage\.(get|set|remove)Item\(SESSION_KEY/.test(t) || !/from '~\/lib\/portal-session'/.test(t)) fails.push(`3: ${f} must use the one session seam`) }
 const i18n = read('src/lib/i18n.ts')
 for (const k of ['booking.releaseAsk', 'booking.releaseYes', 'booking.keepMySpot', 'booking.paidBooked']) if ((i18n.match(new RegExp(`'${k.replace('.', '\\.')}':`, 'g')) || []).length < 2) fails.push(`4: ${k} needs English and Spanish`)
 if (fails.length) { console.error('✗ check-booking-flow:\n  ' + fails.join('\n  ')); process.exit(1) }

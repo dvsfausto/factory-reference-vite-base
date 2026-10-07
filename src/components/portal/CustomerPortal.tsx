@@ -15,12 +15,7 @@ import { hasPhone } from '~/lib/phone'
  * which names the person, so the same rows land as from the site or by asking. The business decides whether the portal is on.
  */
 const HEADERS = { 'Content-Type': 'application/json', apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` }
-const SESSION_KEY = 'zmode_portal_session'
-/* ★ ZB-180: the session is kept in BOTH stores. sessionStorage is per tab; a Stripe checkout that comes back in a new tab or an
-   in-app browser lost it and the person was asked for a code again. localStorage is per origin and survives the hop. */
-const readSession = (): string | null => { try { return window.sessionStorage.getItem(SESSION_KEY) ?? window.localStorage.getItem(SESSION_KEY) } catch { return null } }
-const writeSession = (t: string) => { try { window.sessionStorage.setItem(SESSION_KEY, t) } catch { /* not kept */ } try { window.localStorage.setItem(SESSION_KEY, t) } catch { /* not kept */ } }
-const clearSession = () => { try { window.sessionStorage.removeItem(SESSION_KEY) } catch { /* nothing */ } try { window.localStorage.removeItem(SESSION_KEY) } catch { /* nothing */ } }
+import { readSession, writeSession, clearSession } from '~/lib/portal-session'
 type Phase = 'checking' | 'off' | 'phone' | 'code' | 'home' | 'classes' | 'booking' | 'held'
 type Payload = { waiting?: Array<{ occurrenceId: string; classTitle: string | null; startTime: string; position: number }>; /* a seat held while paying is not a booking (the owner, 2026-09-29) */ held?: Array<{ id: string; classTitle: string | null; startTime: string; expiresAt: string }>; customer: { firstName: string | null; lastName: string | null }; bookings: Array<{ id: string; startTime: string; status: string; upcoming: boolean; serviceName?: string | null; classTitle?: string | null; seatNo?: number | null; cancellable?: boolean }>; packs: Array<{ id: string; packName?: string | null; balance: number; totalGranted?: number; status: string; expiresAt?: string | null }> }
 

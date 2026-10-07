@@ -18,7 +18,7 @@ import type { HeldEntry, HeldOptions } from '~/components/blocks/HeldBookingFlow
  */
 type Phase = 'who' | 'code' | 'waiver' | 'booking'
 const HEADERS = { 'Content-Type': 'application/json', apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` }
-const SESSION_KEY = 'zmode_portal_session'
+import { readSession, writeSession, clearSession } from '~/lib/portal-session'
 const REMEMBER_KEY = 'zmode_booking_me'
 
 /* ★ THE FIELD KEEPS FOCUS (the owner, 2026-09-24, on Fitcycling's live site: "the phone box only lets me type one digit"): these are
@@ -60,7 +60,7 @@ export function ClassBookingFlow({ occurrence, kindId, onHeld }: { occurrence: {
   /* a session from the last half hour (the same visit, or back from the sign page) skips the code */
   useEffect(() => {
     let sess: string | null = null
-    try { sess = window.sessionStorage.getItem(SESSION_KEY); const me = window.localStorage.getItem(REMEMBER_KEY); if (me) { const m = JSON.parse(me) as { phone?: string; firstName?: string; lastName?: string; email?: string }; setPhone(m.phone ?? ''); setFirst(m.firstName ?? ''); setLast(m.lastName ?? ''); setEmail(m.email ?? '') } } catch { /* none */ }
+    try { sess = readSession(); const me = window.localStorage.getItem(REMEMBER_KEY); if (me) { const m = JSON.parse(me) as { phone?: string; firstName?: string; lastName?: string; email?: string }; setPhone(m.phone ?? ''); setFirst(m.firstName ?? ''); setLast(m.lastName ?? ''); setEmail(m.email ?? '') } } catch { /* none */ }
     if (sess) { setToken(sess); void book(sess) }   // the same visit: no second code, straight to the class
   }, [])
   useEffect(() => {
@@ -83,7 +83,7 @@ export function ClassBookingFlow({ occurrence, kindId, onHeld }: { occurrence: {
     setBusy(true); setError(null)
     const { ok, data } = await fn('portal-verify', { businessId: BUSINESS_ID, phone: phone.trim(), code: code.trim() })
     if (!ok || typeof data.token !== 'string') { setBusy(false); setError(tr('portal.wrongCode')); return }
-    try { window.sessionStorage.setItem(SESSION_KEY, data.token) } catch { /* not kept */ }
+    writeSession(data.token)
     setToken(data.token); setBusy(false)
     await book(data.token)
   }
@@ -91,7 +91,7 @@ export function ClassBookingFlow({ occurrence, kindId, onHeld }: { occurrence: {
     setBusy(true); setError(null); setPhase('waiver')
     const { ok, status, data } = await fn('portal-waiver', { businessId: BUSINESS_ID }, sess)
     setBusy(false)
-    if (status === 401) { try { window.sessionStorage.removeItem(SESSION_KEY) } catch { /* nothing */ } setToken(null); setPhase('who'); return }
+    if (status === 401) { clearSession(); setToken(null); setPhase('who'); return }
     const w = ok ? { required: data.required !== false, signed: data.signed === true, link: typeof data.link === 'string' ? data.link : null } : { required: false, signed: true, link: null }
     setWaiver(w)
     if (!w.required || w.signed) await book(sess)
