@@ -1193,9 +1193,21 @@ export function SectionList({
   titleFromFirstBlock?: boolean
 }): ReactNode {
   const firstIsTitle = titleFromFirstBlock && !blocks.some((b) => b.type === 'intro')
+  /* ★ A GALLERY THE OWNER BUILT SHOWS EVEN WHERE THE LAYOUT HAS NO GALLERY SECTION (Fausto, 2026-10-07): a full-layout service
+     page (or any page) with an owner gallery but no gallery block gets a strip under its first paragraph. The strip is the same
+     gallery case (the owner's photos, their layout, hidden honoured), placed after the first-paragraph block: the service's
+     "what we cover", else the intro, else right after the hero. */
+  const ownKey = pageKeyOf(ctx); const own = ownerGallery(ownKey)
+  const injectAfter = (() => {
+    if (blocks.some((b) => b.type === 'gallery') || !own || own.hidden || own.photos.length === 0) return -1
+    const at = (t: string) => blocks.findIndex((b) => b.type === t)
+    const i = at('serviceWhatWeCover') >= 0 ? at('serviceWhatWeCover') : at('intro') >= 0 ? at('intro') : at('hero') >= 0 ? at('hero') : -1
+    return i >= 0 ? i : blocks.length - 1
+  })()
+  const withStrip: SectionBlock[] = injectAfter < 0 ? blocks : [...blocks.slice(0, injectAfter + 1), { type: 'gallery', variant: 'photo-strip' } as SectionBlock, ...blocks.slice(injectAfter + 1)]
   return (
     <>
-      {blocks.map((block, i) => {
+      {withStrip.map((block, i) => {
         const rendered = renderSection(block, ctx, firstIsTitle && i === 0 ? { headingLevel: 1 } : undefined)
         const scope = sectionStyleVars(block.params?.style)
         const scoped = scope ? <div data-zsec={block.type} style={scope}>{rendered}</div> : rendered
