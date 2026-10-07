@@ -45,12 +45,30 @@ export function GalleryPhotoStripBlock({
 }) {
   const [paused, setPaused] = useState(false)
   const setting = (SITE as { photoStrip?: StripSetting }).photoStrip
-  const marquee = motion ? motion === 'marquee' : setting?.motion === 'marquee'
+  const marqueeAsked = motion ? motion === 'marquee' : setting?.motion === 'marquee'
+  // ★ NO PHOTO TWICE AT ONCE (Fausto): a marquee row needs six distinct photos (the widest screen shows about six boxes), so the
+  // rows asked for shrink to what the photos can fill without repeating, and fewer than six photos means no loop at all: the
+  // still strip shows them once. With five wedding photos the owner sees five squares; the marquee returns at six.
+  const perRowMin = 6
+  const rowsAsked = Math.min(3, Math.max(1, Number(setting?.rows) || 1))
 
   // ★ an OWNER-BUILT gallery: exactly the owner's photos in the owner's order, nothing led in, nothing filled from elsewhere
   const ownPhotos: Photo[] = ownerBuilt ? projects.map((p) => ({ src: imageSrc(p.image), alt: p.alt ?? p.title, focus: null })) : []
 
-  if (!marquee) {
+  // the still strip: each photo once, five squares in a row on desktop (more wrap), a scroll-snap strip on a phone
+  const still = (photos: Photo[]) => (
+    <section className="bg-fam-page py-band" data-photo-strip="still">
+      <ul className="flex snap-x snap-mandatory gap-[2px] overflow-x-auto [scrollbar-width:none] md:grid md:grid-cols-5 md:overflow-visible">
+        {photos.map((ph, i) => (
+          <li key={`${ph.src}-${i}`} className="aspect-square w-[48vw] shrink-0 snap-start overflow-hidden bg-fam-surface-2 md:w-auto">
+            <img src={ph.src} alt={ph.alt} loading="lazy" style={faceSafeStyle(ph.focus)} className="h-full w-full object-cover" />
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
+
+  if (!marqueeAsked) {
     const photos: Photo[] = ownPhotos
     if (!ownerBuilt && service && SERVICE_IMAGES[service.slug]) {
       const ref = SERVICES.find((s) => s.slug === service.slug)
@@ -63,17 +81,7 @@ export function GalleryPhotoStripBlock({
       if (photos.length === 5) break
     }
     if (photos.length === 0) return null
-    return (
-      <section className="bg-fam-page py-band">
-        <ul className="flex snap-x snap-mandatory gap-[2px] overflow-x-auto [scrollbar-width:none] md:grid md:grid-cols-5 md:overflow-visible">
-          {photos.map((ph, i) => (
-            <li key={`${ph.src}-${i}`} className="aspect-square w-[48vw] shrink-0 snap-start overflow-hidden bg-fam-surface-2 md:w-auto">
-              <img src={ph.src} alt={ph.alt} loading="lazy" style={faceSafeStyle(ph.focus)} className="h-full w-full object-cover" />
-            </li>
-          ))}
-        </ul>
-      </section>
-    )
+    return still(photos)
   }
 
   // the real photos first (lib/owner-photos: this service's own, the other services' own, the owner's gallery); stock only when none is real
@@ -83,14 +91,15 @@ export function GalleryPhotoStripBlock({
   if (service && SERVICE_IMAGES[service.slug] && !ownerServiceImageUrl(service.slug)) stock.unshift({ src: serviceImageUrl(service.slug), alt: service.hero.h1, focus: serviceImageFocus(service.slug) })
   const photos = ownerBuilt ? ownPhotos : real.length ? real : stock
   if (photos.length === 0) return null
+  // the rows asked for shrink to what the photos fill without repeating; fewer than six photos → no loop, the still strip
+  const rows = Math.min(rowsAsked, Math.floor(photos.length / perRowMin))
+  if (rows < 1) return still(photos)
 
-  const rows = Math.min(3, Math.max(1, Number(setting?.rows) || 1))
   // the speed is pixels per second on a desktop box (220 px + 2 px gap): slow 60, medium 100, fast 160; a phone's smaller boxes move proportionally slower
   const pxPerSecond = setting?.speed === 'fast' ? 160 : setting?.speed === 'medium' ? 100 : 60
   // ★ NO PHOTO TWICE AT ONCE (Fausto, 2026-10-07): with enough photos each row gets its OWN disjoint set, so a photo is never
   // in two rows; a row's sequence is at least six long (the widest screen shows about six boxes), so within a row the same
-  // photo cannot be on screen twice either. Too few photos for disjoint rows → the rows share the list, offset by a third.
-  const perRowMin = 6
+  // photo cannot be on screen twice either (rows already shrank to what six-a-row allows, so the shared path below is a floor).
   const disjoint = photos.length >= rows * Math.min(perRowMin, Math.max(3, Math.floor(photos.length / rows)))
   const rowItems = (r: number): Photo[] => {
     if (disjoint) {

@@ -32,8 +32,10 @@ export function GalleryPortfolioGridBlock({
 }) {
   // ★ an OWNER-BUILT gallery (design_dna.galleries) shows exactly the owner's photos in the owner's order, every one of them,
   // no grouping by category and no card dropped: a photo without a service or a category still gets its card
+  // An owner-built card is titled by ITS photo's kind of work (the service that category names), never by the slot's title
+  // setting: card<N>Title/Service were chosen for the category-grouped grid, and a family photo under "Weddings" is a false label.
   const picks = (ownerBuilt ? projects : portfolioPicks(projects))
-    .map((p, i) => ({ p, card: portfolioCard(p, cards[i]) ?? (ownerBuilt ? { title: p.alt ?? p.title ?? '', href: null } : null) }))
+    .map((p, i) => ({ p, card: portfolioCard(p, ownerBuilt ? undefined : cards[i]) ?? (ownerBuilt ? { title: p.alt ?? p.title ?? '', href: null } : null) }))
     .filter((x): x is { p: (typeof projects)[number]; card: NonNullable<ReturnType<typeof portfolioCard>> } => x.card !== null)
   if (picks.length === 0) return null
   const cols = { 1: 'grid-cols-1', 2: 'grid-cols-1 sm:grid-cols-2' }[picks.length as 1 | 2] ?? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'
