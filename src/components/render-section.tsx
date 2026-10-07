@@ -874,7 +874,7 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
       if (own?.hidden) return null
       const ownVariant = own?.layout ? LAYOUT_VARIANT[own.layout] : undefined
       const GalleryComponent = GALLERY_VARIANTS[ownVariant ?? block.variant ?? ''] ?? GalleryMasonryBlock
-      const ownItems = own ? galleryItemsFor(pageKey, ctx) : null
+      const ownItems = own && own.photos.length > 0 ? galleryItemsFor(pageKey, ctx) : null // a record with no photos keeps the default photos and layout rules
       const galleryVariant = ownVariant ?? block.variant ?? 'masonry'
       return (
         // the page's gallery is marked for the owner walk and the editor's page read: which page, which layout, whose photos
