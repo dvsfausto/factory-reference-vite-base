@@ -19,6 +19,7 @@ import { tr } from "~/lib/i18n";
 // whatever the family theme says (a friendly header on Athletic Dark has no invert of its own). Light sites: unchanged.
 const isDarkSite = (SITE as { polarity?: string }).polarity === "dark"
 import { HAS_PHONE } from '~/lib/phone'
+import { portfolioMenuHref } from '~/lib/portfolio-pages'
 import { SELLS } from '~/lib/sells'
 // PRAISE-61 — nav links a customer chose to hide from the menu (design_dna.chrome.nav.hidden →
 // SITE.hiddenNav). ABSENT/empty → nothing filtered → byte-identical to today. Filtering only; the
@@ -432,7 +433,7 @@ export function Header() {
     <>
       {navGroups.map((g, gi) =>
         g.items.length === 1 ? (
-          <a key={gi} href={g.items[0]!.href} className={`px-3 py-2 ${t.navLink} focus-ring rounded-md`}>{g.label}</a>
+          <a key={gi} href={portfolioMenuHref(g.items[0]!.href)} className={`px-3 py-2 ${t.navLink} focus-ring rounded-md`}>{g.label}</a>
         ) : (
           <div key={gi} className="relative" onMouseEnter={() => setOpenMenu(`group-${gi}`)} onMouseLeave={() => setOpenMenu(null)}>
             <button className={`flex items-center gap-1 px-3 py-2 ${t.navLink} focus-ring rounded-md`} aria-expanded={openMenu === `group-${gi}`}>
@@ -442,7 +443,7 @@ export function Header() {
               <div className={`absolute ${dropAlign} top-full pt-2`}>
                 <div className={`${t.dropdownSurface} p-2 w-64`}>
                   {g.items.map((it) => (
-                    <a key={it.href + it.label} href={it.href} className={`block px-3 py-2 rounded-lg text-sm ${t.dropdownItem}`}>
+                    <a key={it.href + it.label} href={portfolioMenuHref(it.href)} className={`block px-3 py-2 rounded-lg text-sm ${t.dropdownItem}`}>
                       <div className={`font-medium ${t.dropdownTitle}`}>{it.label}</div>
                     </a>
                   ))}
@@ -561,12 +562,12 @@ export function Header() {
             {navGroups.map((g, gi) =>
               g.items.length === 1 ? (
                 // a one-item group is a plain link on the phone too (no label over a single line)
-                <a key={gi} href={g.items[0]!.href} onClick={closeMenu} className={`block py-2 text-base font-medium ${t.mobileText}`}>{g.label}</a>
+                <a key={gi} href={portfolioMenuHref(g.items[0]!.href)} onClick={closeMenu} className={`block py-2 text-base font-medium ${t.mobileText}`}>{g.label}</a>
               ) : (
                 <div key={gi}>
                   <div className={`text-xs font-semibold ${t.mobileLabel} uppercase tracking-wider mb-2`}>{g.label}</div>
                   {g.items.map((it) => (
-                    <a key={it.href + it.label} href={it.href} onClick={closeMenu} className={`block py-2 text-base font-medium ${t.mobileText}`}>{it.label}</a>
+                    <a key={it.href + it.label} href={portfolioMenuHref(it.href)} onClick={closeMenu} className={`block py-2 text-base font-medium ${t.mobileText}`}>{it.label}</a>
                   ))}
                 </div>
               ),

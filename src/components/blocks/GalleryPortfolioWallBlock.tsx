@@ -1,10 +1,7 @@
 import { PROJECTS } from '~/data/projects'
 import { tr } from '~/lib/i18n'
-import { imageSrc } from '~/lib/asset-url'
-import { faceSafeStyle, projectCategory } from '~/lib/editorial-media'
-import { SERVICES } from '~/data/services-view'
-import { ownerServiceImageUrl, serviceImageFocus } from '~/data/images'
-import { ownerPhotos } from '~/lib/owner-photos'
+import { faceSafeStyle } from '~/lib/editorial-media'
+import { wallPhotos } from '~/lib/portfolio-pages'
 import { EditorialHeading, Kicker } from '~/components/editorial/Primitives'
 import { Lightbox, useLightbox } from '~/components/editorial/Lightbox'
 
@@ -14,9 +11,6 @@ import { Lightbox, useLightbox } from '~/components/editorial/Lightbox'
 // `services` (slugs), plus, with no category and no services, every real photo. Stock never. No photo → nothing.
 //
 // TOKEN DISCIPLINE: fam-* grounds only; rhythm py-section.
-const stem = (w: string) => w.toLowerCase().replace(/(ies|s)$/, (m) => (m === 'ies' ? 'y' : ''))
-const words = (s: string) => s.toLowerCase().split(/[^a-z]+/).filter((w) => w.length > 2).map(stem)
-const sameCategory = (a: string, b: string) => { const wa = words(a), wb = words(b); return wa.some((w) => wb.includes(w)) }
 
 export function GalleryPortfolioWallBlock({
   projects = PROJECTS,
@@ -35,16 +29,7 @@ export function GalleryPortfolioWallBlock({
   /** service slugs whose own photos belong on this wall too */
   services?: string[]
 }) {
-  type Photo = { src: string; alt: string; focus: string | null }
-  const photos: Photo[] = []
-  const push = (ph: Photo) => { if (!photos.some((x) => x.src === ph.src)) photos.push(ph) }
-  if (category) {
-    // only a photo the owner TAGGED with this kind of work belongs here (its job:<Category> tag); a caption is not a tag, and the
-    // generic 'gallery' tag names no kind of work. Untagged photos wait for the owner's tagging, never guessed onto a page.
-    for (const p of projects) { const c = projectCategory(p); if (c && c.toLowerCase() !== 'gallery' && sameCategory(c, category)) push({ src: imageSrc(p.image), alt: p.alt ?? p.title, focus: null }) }
-  }
-  for (const slug of services) { const own = ownerServiceImageUrl(slug); if (own) push({ src: own, alt: SERVICES.find((x) => x.slug === slug)?.name ?? '', focus: serviceImageFocus(slug) }) }
-  if (!category && services.length === 0) for (const ph of ownerPhotos()) push(ph)
+  const photos = wallPhotos({ category, services }, projects)
   if (photos.length === 0) return null
   const lb = useLightbox(photos)
   return (
