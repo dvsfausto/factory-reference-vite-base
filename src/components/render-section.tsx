@@ -871,9 +871,11 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
       const ownVariant = own?.layout ? LAYOUT_VARIANT[own.layout] : undefined
       const GalleryComponent = GALLERY_VARIANTS[ownVariant ?? block.variant ?? ''] ?? GalleryMasonryBlock
       const ownItems = own ? galleryItemsFor(pageKey, ctx) : null
+      const galleryVariant = ownVariant ?? block.variant ?? 'masonry'
       return (
+        // the page's gallery is marked for the owner walk and the editor's page read: which page, which layout, whose photos
+        <div key="gallery" data-gallery-page={pageKey} data-gallery-variant={galleryVariant} data-gallery-owner={own ? '' : undefined}>
         <GalleryComponent
-          key="gallery"
           {...data}
           {...(ownItems ? { projects: ownItems } : {})}
           {...(own?.layout === 'marquee' ? { motion: 'marquee' } : own?.layout === 'strip' ? { motion: 'still' } : {})}
@@ -888,6 +890,7 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
           // the page's service, when the gallery sits on a service page: the Editorial photo strip leads with its photo
           service={ctx?.service}
         />
+        </div>
       )
     }
     case 'process': {
