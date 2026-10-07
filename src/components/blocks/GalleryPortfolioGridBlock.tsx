@@ -3,13 +3,15 @@ import { tr } from '~/lib/i18n'
 import { imageSrc } from '~/lib/asset-url'
 import { placeLine } from '~/lib/place'
 import { ARROW } from '~/lib/editorial'
-import { faceSafeStyle, galleryPageHref, portfolioPicks, projectCategory, serviceHrefFor } from '~/lib/editorial-media'
+import { faceSafeStyle, portfolioCard, portfolioPicks, projectCategory } from '~/lib/editorial-media'
 import { EditorialHeading, Kicker, Numeral } from '~/components/editorial/Primitives'
 
 // Gallery VARIANT: 'portfolio-grid' (the Editorial look, ZB-147 W1.2). A kicker and a serif heading, then three tall
 // 3:4 cards in a row: the photo, "01 · <tag>" (the project's category, else where the business works), the title in
-// the display face and the arrow at the right. Cards are PROJECTS grouped by category (portfolioPicks); each links to
-// the gallery page when the site has one. Fewer than three photos → the available columns; none → nothing.
+// the display face and the arrow at the right. Cards are PROJECTS grouped by category (portfolioPicks). A card is
+// TITLED BY THE SERVICE IT OPENS (the owner's card<N>Title / card<N>Service settings first, else the service its photo
+// matches), never by a gallery or site title; a card with no service and no category is left out (portfolioCard).
+// Fewer than three cards → the available columns; none → nothing.
 //
 // TOKEN DISCIPLINE: every colour is a fam-* token; rhythm py-section; photos through imageSrc(), lazy, face-safe crop.
 export function GalleryPortfolioGridBlock({
@@ -17,15 +19,18 @@ export function GalleryPortfolioGridBlock({
   label = tr('editorial.portfolioKicker'),
   heading = tr('editorial.portfolioHeading'),
   body,
+  cards = [],
 }: {
   projects?: typeof PROJECTS
   label?: string
   heading?: string
   body?: string
+  cards?: Array<{ title?: string; service?: string }>
 }) {
   const picks = portfolioPicks(projects)
+    .map((p, i) => ({ p, card: portfolioCard(p, cards[i]) }))
+    .filter((x): x is { p: (typeof projects)[number]; card: NonNullable<ReturnType<typeof portfolioCard>> } => x.card !== null)
   if (picks.length === 0) return null
-  const href = galleryPageHref()
   const cols = { 1: 'grid-cols-1', 2: 'grid-cols-1 sm:grid-cols-2', 3: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3' }[picks.length as 1 | 2 | 3]
   return (
     <section className="bg-fam-page">
@@ -37,7 +42,7 @@ export function GalleryPortfolioGridBlock({
         </div>
 
         <div className={`mt-12 grid gap-6 ${cols}`}>
-          {picks.map((p, i) => {
+          {picks.map(({ p, card: pick }, i) => {
             const tag = projectCategory(p) || placeLine()
             const card = (
               <>
@@ -60,13 +65,13 @@ export function GalleryPortfolioGridBlock({
                   )}
                 </div>
                 <div className="mt-2 flex items-start justify-between gap-4">
-                  <h3 className="font-display text-[28px] font-normal leading-tight text-fam-ink">{p.title}</h3>
+                  <h3 className="font-display text-[28px] font-normal leading-tight text-fam-ink">{pick.title}</h3>
                   <span aria-hidden="true" className="mt-2 font-sans text-[13px] text-fam-ink">{ARROW}</span>
                 </div>
               </>
             )
-            // the card's own service page first (a portfolio category is a kind of work), else the gallery page
-            const cardHref = serviceHrefFor(p.title, projectCategory(p)) ?? href
+            // the card's own service page (a portfolio card is a kind of work), else the gallery page when the site has one
+            const cardHref = pick.href
             return cardHref ? (
               <a key={`${p.title}-${i}`} href={cardHref} className="group block">
                 {card}

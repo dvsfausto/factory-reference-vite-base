@@ -506,7 +506,8 @@ export function Header() {
   // THE PHONE IN THE HEADER is the owner's choice (site.headerPhone 'show' | 'hide', factory-emitted as SITE.headerPhone);
   // unset, the Editorial chrome leaves it out (its right side is the one inquiry link) and every other chrome shows it (ZB-147 W1.1).
   const headerPhonePref = (SITE as { headerPhone?: string }).headerPhone;
-  const showHeaderPhone = HAS_PHONE && (headerPhonePref ? headerPhonePref === "show" : !editorialChrome);
+  const headerPhoneWanted = headerPhonePref ? headerPhonePref === "show" : !editorialChrome;
+  const showHeaderPhone = HAS_PHONE && headerPhoneWanted;
   const phoneCluster = showHeaderPhone && (
     <a href={`tel:${SITE.phone}`} className={`flex items-center gap-1.5 text-sm font-semibold ${t.phoneLink} focus-ring rounded-md px-2 py-1`}>
       <Phone className="h-4 w-4" />
@@ -559,7 +560,7 @@ export function Header() {
               <PortalLink place="menu" onClick={closeMenu} className={`block py-2 text-base font-medium ${t.mobileText}`} />
             </div>
             <div className={`pt-4 border-t ${t.mobileBorder} space-y-3`}>
-              {HAS_PHONE && (<a href={`tel:${SITE.phone}`} className={`flex items-center gap-2 text-base font-semibold ${t.mobilePhone}`}>
+              {HAS_PHONE && headerPhoneWanted && (<a href={`tel:${SITE.phone}`} className={`flex items-center gap-2 text-base font-semibold ${t.mobilePhone}`}>
                 <Phone className="h-5 w-5" /> {SITE.phoneDisplay}
               </a>)}
               <PrimaryCta onClick={closeMenu} className={t.mobileCta}>
@@ -681,7 +682,7 @@ export function Header() {
                 </div>
                 <div className="flex items-center gap-6">
                   {SITE.email && <a href={`mailto:${SITE.email}`} className="hover:underline">{SITE.email}</a>}
-                  {HAS_PHONE && (<a href={`tel:${SITE.phone}`} className={`font-semibold ${t.phoneLink}`}>{SITE.phoneDisplay}</a>)}
+                  {HAS_PHONE && headerPhoneWanted && (<a href={`tel:${SITE.phone}`} className={`font-semibold ${t.phoneLink}`}>{SITE.phoneDisplay}</a>)}
                 </div>
               </div>
             </div>

@@ -646,4 +646,66 @@ html[data-site-theme="editorial"] {
   --fam-on-statement-muted: #C9C4B9;
   --fam-on-statement-faint: #A8A399;
   --fam-on-dark: #F8F6F1;
+  /* The theme owns its type: Cormorant Garamond for every heading (the wave's display face never shows here). */
+  --font-display: "Cormorant Garamond", "Cormorant Garamond Fallback", Georgia, serif;
+  /* The old look's ink ramp and brand ramp (navy headings, blue buttons, the booking widget's brand text and
+     rings) resolve to the Editorial ink: the heading rule reads --color-ink-900, buttons read --cta/--color-brand-600,
+     and the brand-* utilities are re-pointed to their tokens by the brand emit. A gold accent for the brand text. */
+  --fam-ink-900: #1C1B19;
+  --fam-ink-700: #3A3833;
+  --fam-ink-100: #E6E0D4;
+  --fam-ink-50: #F3EFE6;
+  --color-brand-50: #F3EFE6;
+  --color-brand-100: #EFEAE0;
+  --color-brand-200: #DAD4C8;
+  --color-brand-400: #8A857B;
+  --color-brand-500: #5E5A53;
+  --color-brand-600: #1C1B19;
+  --color-brand-700: #1B1B1A;
+  --color-brand-800: #2E3730;
+  --color-brand-900: #121211;
+  --color-brand-text-600: #8C6E47;
+  --color-brand-text-800: #1C1B19;
+  --primary: #1C1B19;
+  --accent: #A8865A;
+  --cta: #1C1B19;
+  --cta-hover: #2E3730;
+  --cta-foreground: #F8F6F1;
+  --btn-primary-fg: #F8F6F1;
+  --btn-primary-hover: #2E3730;
+  /* Square shapes: every radius token is 0 (the rounded-* utilities are re-pointed below). */
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
+  --radius-3xl: 0px;
+  --radius: 0px;
+}
+/* The Editorial theme's shapes and shadows: pill buttons, 20px cards, 10px inputs and the rounded-* utilities (a literal
+   in @layer utilities, which a token alone does not reach) all go square; the blue button glow goes. Unlayered, so they
+   beat the layered rules; scoped to the theme, so no other site moves. */
+html[data-site-theme="editorial"] .btn,
+html[data-site-theme="editorial"] .badge-pill,
+html[data-site-theme="editorial"] .card-stead,
+html[data-site-theme="editorial"] .card-soft,
+html[data-site-theme="editorial"] .input-stead,
+html[data-site-theme="editorial"] .rounded-sm,
+html[data-site-theme="editorial"] .rounded-md,
+html[data-site-theme="editorial"] .rounded-lg,
+html[data-site-theme="editorial"] .rounded-xl,
+html[data-site-theme="editorial"] .rounded-2xl,
+html[data-site-theme="editorial"] .rounded-3xl,
+html[data-site-theme="editorial"] .rounded-\[1\.75rem\],
+html[data-site-theme="editorial"] .rounded-\[2rem\] {
+  border-radius: 0;
+}
+html[data-site-theme="editorial"] .btn-primary,
+html[data-site-theme="editorial"] .btn-primary:hover,
+html[data-site-theme="editorial"] .card-stead {
+  box-shadow: none;
+}
+html[data-site-theme="editorial"] .input-stead:focus {
+  border-color: var(--color-fam-ink);
+  box-shadow: none;
 }

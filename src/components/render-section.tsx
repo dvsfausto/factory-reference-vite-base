@@ -865,6 +865,8 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
           label={block.params?.label as string | undefined}
           heading={block.params?.heading as string | undefined}
           body={block.params?.body as string | undefined}
+          // the owner's titles and service pages for the Editorial portfolio's three cards (block.gallery.card<N>Title / card<N>Service)
+          cards={[1, 2, 3].map((n) => ({ title: block.params?.[`card${n}Title`] as string | undefined, service: block.params?.[`card${n}Service`] as string | undefined }))}
           // the page's service, when the gallery sits on a service page: the Editorial photo strip leads with its photo
           service={ctx?.service}
         />

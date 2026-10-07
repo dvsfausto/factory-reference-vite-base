@@ -55,10 +55,52 @@ export function portfolioPicks(projects: GalleryItem[] = PROJECTS, max = 3): Gal
   return picks
 }
 
-/** The service page a portfolio card belongs to: the service whose name shares a word with the card's title or category ("Wedding photography" → /services/wedding). */
-export function serviceHrefFor(...labels: Array<string | undefined | null>): string | null {
-  const words = labels.filter((l): l is string => !!l).join(' ').toLowerCase().split(/[^a-z]+/).filter((w) => w.length > 3 && !['photography', 'session', 'sessions', 'photos', 'photo', 'work'].includes(w))
+type ServiceLike = { slug: string; displayName?: string; name?: string }
+const serviceName = (s: ServiceLike): string => String(s.displayName ?? s.name ?? '')
+const stem = (w: string): string => w.replace(/(ies|s)$/, (m) => (m === 'ies' ? 'y' : ''))
+
+/**
+ * The service a portfolio card belongs to: the service whose name shares a word with the card's title or category
+ * ("Wedding photography" → wedding). Words are stemmed (portraits = portrait), filler words dropped, and the best
+ * match wins: more shared words first, then the shorter name ("Portrait session" → Family Portraits, not Business
+ * Lifestyle Portraits). Null when no service shares a word.
+ */
+export function serviceFor(...labels: Array<string | undefined | null>): ServiceLike | null {
+  const words = labels.filter((l): l is string => !!l).join(' ').toLowerCase().split(/[^a-z]+/).filter((w) => w.length > 3 && !['photography', 'session', 'sessions', 'photos', 'photo', 'work', 'project'].includes(w)).map(stem)
   if (!words.length) return null
-  const hit = SERVICES.find((s) => { const name = String((s as { displayName?: string; name?: string }).displayName ?? (s as { name?: string }).name ?? '').toLowerCase(); return words.some((w) => name.includes(w)) })
-  return hit ? `/services/${(hit as { slug: string }).slug}` : null
+  let best: { s: ServiceLike; score: number } | null = null
+  for (const s of SERVICES as ServiceLike[]) {
+    const nameWords = serviceName(s).toLowerCase().split(/[^a-z]+/).filter(Boolean).map(stem)
+    const score = words.filter((w) => nameWords.includes(w)).length
+    if (!score) continue
+    if (!best || score > best.score || (score === best.score && serviceName(s).length < serviceName(best.s).length)) best = { s, score }
+  }
+  return best?.s ?? null
+}
+
+/** The service page a portfolio card belongs to (see serviceFor), or null. */
+export function serviceHrefFor(...labels: Array<string | undefined | null>): string | null {
+  const hit = serviceFor(...labels)
+  return hit ? `/services/${hit.slug}` : null
+}
+
+/** A service by its slug (the owner's card<N>Service setting), or null. */
+export function serviceBySlug(slug: string | undefined | null): ServiceLike | null {
+  if (!slug) return null
+  const s = slug.trim().replace(/^\/?services\//, '').replace(/\/$/, '')
+  return (SERVICES as ServiceLike[]).find((x) => x.slug === s) ?? null
+}
+
+/**
+ * A portfolio card's title and page. The owner's setting first (card<N>Title, card<N>Service); else the card is titled
+ * by the service it matches and opens that service's page; else by its own category. A card that matches no service
+ * and carries no category has no title of its own (a gallery or site title is never a card's title) → null, the card is
+ * left out.
+ */
+export function portfolioCard(p: GalleryItem, owner?: { title?: string; service?: string }): { title: string; href: string | null } | null {
+  const chosen = serviceBySlug(owner?.service)
+  const matched = chosen ?? serviceFor(p.title, projectCategory(p))
+  const title = owner?.title?.trim() || (matched ? serviceName(matched) : projectCategory(p))
+  if (!title) return null
+  return { title, href: matched ? `/services/${matched.slug}` : galleryPageHref() }
 }
