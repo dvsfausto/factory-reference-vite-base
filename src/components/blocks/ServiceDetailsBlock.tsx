@@ -6,6 +6,7 @@ import { MapPin, Quote, Star } from 'lucide-react'
 import type { ServicePageData, ServiceRef, ServiceVariant } from '~/lib/types/page-types'
 import { SERVICES } from '~/data/services'
 import { Reveal } from '~/components/Reveal'
+import { Fold, SHORT_SERVICE_COPY } from '~/components/Fold'
 
 // SERVICE-DETAIL VARIANT (Arc 3 · Stage C): the rich, consolidated MIDDLE content of
 // a service page, driven per-item by `service` (ctx.service). It renders, in order -
@@ -338,6 +339,26 @@ export function ServiceDetailsBlock({
 
   if (blocks.length === 0) return null
 
+  /* short service copy: the packages (and the owner's pricing notes) stay open; the long sections (how pricing works,
+     scenarios, coverage, local context, the testimonial) fold behind one Read more, in their order, the same words */
+  if (SHORT_SERVICE_COPY) {
+    const open = blocks.filter((n) => (n as { key?: string | null } | null)?.key === 'packages' || (n as { key?: string | null } | null)?.key === 'pricing')
+    const folded = blocks.filter((n) => !open.includes(n))
+    return (
+      <>
+        {open.map((node, i) => (
+          <SubSection key={`o${i}`} surface={i % 2 === 0 ? 'tint' : 'white'}>
+            {node}
+          </SubSection>
+        ))}
+        {folded.length > 0 && (
+          <SubSection key="folded" surface={open.length % 2 === 0 ? 'tint' : 'white'}>
+            <div className="max-w-3xl"><Fold>{<div className="space-y-16">{folded}</div>}</Fold></div>
+          </SubSection>
+        )}
+      </>
+    )
+  }
   return (
     <>
       {blocks.map((node, i) => (

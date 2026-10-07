@@ -523,6 +523,13 @@
    and every hero was white with a dead menu; the server had rendered framer-motion's initial state inline, so nothing
    showed until ~700 KB of JS arrived and hydrated, and never if it failed). Only runs when the client set .js-reveal;
    with scripts off the hero is simply there. Ends visible whatever the bundle does. Reduced motion: no animation. */
+/* ★ THE PHOTO STRIP MARQUEE (ZB-147): one seamless loop per row (the sequence twice, moved by half its width), rows alternate
+   direction, paused on hover and while touched (data-paused), still when the device asks for reduced motion. */
+@keyframes strip-marquee { to { transform: translateX(-50%); } }
+.strip-track { animation: strip-marquee var(--strip-dur, 60s) linear infinite; will-change: transform; }
+.strip-row[data-dir="right"] .strip-track { animation-direction: reverse; }
+.strip-row:hover .strip-track, [data-paused] .strip-track { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) { .strip-track { animation: none; } }
 @keyframes enter-up { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
 .js-reveal [data-enter="up"] { animation: enter-up var(--wow-dur-slow, .5s) var(--wow-ease-out, ease-out) both; }
 .js-reveal [data-enter="up-late"] { animation: enter-up var(--wow-dur-slow, .6s) var(--wow-ease-out, ease-out) .1s both; }

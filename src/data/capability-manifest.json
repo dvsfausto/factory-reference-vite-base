@@ -1,16 +1,16 @@
 {
   "version": 1,
-  "inputs_hash": "24b073b26de841f4",
+  "inputs_hash": "e98e632ada6e401b",
   "counts": {
     "blocks": 44,
     "variants": 183,
-    "fields": 221,
+    "fields": 225,
     "fields_by_kind": {
       "boolean": 6,
-      "enum": 5,
+      "enum": 7,
       "image": 12,
-      "list": 23,
-      "money": 7,
+      "list": 24,
+      "money": 8,
       "number": 3,
       "text": 161,
       "url": 4
@@ -569,6 +569,30 @@
         {
           "path": "SERVICES[].action",
           "kind": "enum",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "SERVICES[].path",
+          "kind": "enum",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "SERVICES[].priceDisplay",
+          "kind": "enum",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "SERVICES[].price",
+          "kind": "money",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "SERVICES[].variants",
+          "kind": "list",
           "required": false,
           "of": "item"
         },
@@ -1144,6 +1168,30 @@
         {
           "path": "SERVICES[].action",
           "kind": "enum",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "SERVICES[].path",
+          "kind": "enum",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "SERVICES[].priceDisplay",
+          "kind": "enum",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "SERVICES[].price",
+          "kind": "money",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "SERVICES[].variants",
+          "kind": "list",
           "required": false,
           "of": "item"
         },
@@ -4404,6 +4452,30 @@
           "of": "item"
         },
         {
+          "path": "SERVICES[].path",
+          "kind": "enum",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "SERVICES[].priceDisplay",
+          "kind": "enum",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "SERVICES[].price",
+          "kind": "money",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "SERVICES[].variants",
+          "kind": "list",
+          "required": false,
+          "of": "item"
+        },
+        {
           "path": "SERVICES[].id",
           "kind": "text",
           "required": true,
@@ -5312,6 +5384,30 @@
         {
           "path": "SERVICES[].action",
           "kind": "enum",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "SERVICES[].path",
+          "kind": "enum",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "SERVICES[].priceDisplay",
+          "kind": "enum",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "SERVICES[].price",
+          "kind": "money",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "SERVICES[].variants",
+          "kind": "list",
           "required": false,
           "of": "item"
         },

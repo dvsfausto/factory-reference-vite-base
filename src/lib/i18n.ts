@@ -50,6 +50,8 @@ const EN = {
   'blk.byCategory': 'Reviews by kind of work',
   'blk.allCategories': 'All',
   'blk.general': 'General',
+  'service.readMore': 'Read more',
+  'service.readLess': 'Show less',
   // footer
   'footer.company': 'Company',
   'footer.guides': 'Guides',
@@ -605,6 +607,8 @@ const ES: Record<keyof typeof EN, string> = {
   'blk.byCategory': 'Reseñas por tipo de trabajo',
   'blk.allCategories': 'Todas',
   'blk.general': 'General',
+  'service.readMore': 'Leer más',
+  'service.readLess': 'Ver menos',
   'footer.company': 'Empresa',
   'footer.services': 'Servicios',
   'footer.serviceAreas': 'Zonas de servicio',

@@ -1,4 +1,5 @@
 import { paragraphs } from '~/lib/paragraphs'
+import { Fold, SHORT_SERVICE_COPY } from '~/components/Fold'
 import { motion, useReducedMotion } from 'framer-motion'
 import { Check } from 'lucide-react'
 import type { ServicePageData } from '~/lib/types/page-types'
@@ -44,9 +45,16 @@ export function ServiceWhatWeCoverBlock({
           <h2 className="font-display text-3xl leading-tight text-[var(--fam-ink,var(--color-ink-900))] sm:text-4xl">
             {whatWeBuy.title}
           </h2>
-          {hasBody && (
-            <div className="mt-4 space-y-4">{paragraphs(whatWeBuy.body).map((p, i) => (<p key={i} className="text-lg leading-relaxed text-[var(--fam-ink,var(--color-ink-700))]">{p}</p>))}</div>
-          )}
+          {hasBody && (() => {
+            const ps = paragraphs(whatWeBuy.body)
+            const para = (p: string, i: number) => <p key={i} className="text-lg leading-relaxed text-[var(--fam-ink,var(--color-ink-700))]">{p}</p>
+            // short service copy: the first paragraph open, the rest behind Read more (the same words)
+            return SHORT_SERVICE_COPY && ps.length > 1 ? (
+              <div className="mt-4 space-y-4">{para(ps[0]!, 0)}<Fold>{<div className="space-y-4">{ps.slice(1).map((p, i) => para(p, i + 1))}</div>}</Fold></div>
+            ) : (
+              <div className="mt-4 space-y-4">{ps.map(para)}</div>
+            )
+          })()}
         </div>
 
         {hasItems && (

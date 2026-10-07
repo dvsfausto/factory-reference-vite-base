@@ -1,6 +1,8 @@
+import { useState } from 'react'
 import { PROJECTS } from '~/data/projects'
 import { SERVICES } from '~/data/services-view'
-import { SERVICE_IMAGES, serviceImageFocus, serviceImageUrl } from '~/data/images'
+import { SERVICE_IMAGES, ownerServiceImageUrl, serviceImageFocus, serviceImageUrl } from '~/data/images'
+import { SITE } from '~/data/site'
 import type { ServicePageData } from '~/lib/types/page-types'
 import { imageSrc } from '~/lib/asset-url'
 import { faceSafeStyle } from '~/lib/editorial-media'
@@ -10,8 +12,19 @@ import { faceSafeStyle } from '~/lib/editorial-media'
 // working with CSS alone. On a service page (the renderer passes ctx.service) the service's own photo leads and
 // PROJECTS fill the rest; on the homepage PROJECTS alone. No photo → nothing.
 //
+// ★ MARQUEE (the owner's setting, ZB-147): SITE.photoStrip = { motion: 'marquee', rows: 1..3, speed: 'slow' | 'medium' | 'fast' }
+// (content keys site.photoStripMotion / site.photoStripRows / site.photoStripSpeed). Each row is one seamless loop (the
+// sequence twice, translated by half), rows alternate direction (1 left, 2 right, 3 left), slow by default; it pauses on
+// hover and while a finger is on it; a device asking for reduced motion gets a still strip; boxes have a fixed size, so
+// nothing shifts; images lazy, face-safe. The photos are the business's REAL ones first: this service's own photo, the
+// other services' own photos, the owner's gallery; stock only when there is no real photo at all. Unset → the strip above,
+// byte-identical.
+//
 // TOKEN DISCIPLINE: fam-* grounds only; rhythm py-band; photos through imageSrc(), lazy, face-safe crop.
 type Photo = { src: string; alt: string; focus: string | null }
+type StripSetting = { motion?: string; rows?: number | string; speed?: string }
+
+const isOwnerUpload = (src: string) => /\/public-assets\//.test(src) || /\/business-logos\//.test(src)
 
 export function GalleryPhotoStripBlock({
   projects = PROJECTS,
@@ -24,27 +37,86 @@ export function GalleryPhotoStripBlock({
   /** the service whose page this strip sits on (renderer-supplied); absent on the homepage */
   service?: ServicePageData
 }) {
-  const photos: Photo[] = []
-  if (service && SERVICE_IMAGES[service.slug]) {
-    const ref = SERVICES.find((s) => s.slug === service.slug)
-    photos.push({ src: serviceImageUrl(service.slug), alt: ref?.name ?? service.hero.h1, focus: serviceImageFocus(service.slug) })
+  const [paused, setPaused] = useState(false)
+  const setting = (SITE as { photoStrip?: StripSetting }).photoStrip
+  const marquee = setting?.motion === 'marquee'
+
+  if (!marquee) {
+    const photos: Photo[] = []
+    if (service && SERVICE_IMAGES[service.slug]) {
+      const ref = SERVICES.find((s) => s.slug === service.slug)
+      photos.push({ src: serviceImageUrl(service.slug), alt: ref?.name ?? service.hero.h1, focus: serviceImageFocus(service.slug) })
+    }
+    for (const p of projects) {
+      const src = imageSrc(p.image)
+      if (photos.some((x) => x.src === src)) continue
+      photos.push({ src, alt: p.alt ?? p.title, focus: null })
+      if (photos.length === 5) break
+    }
+    if (photos.length === 0) return null
+    return (
+      <section className="bg-fam-page py-band">
+        <ul className="flex snap-x snap-mandatory gap-[2px] overflow-x-auto [scrollbar-width:none] md:grid md:grid-cols-5 md:overflow-visible">
+          {photos.map((ph, i) => (
+            <li key={`${ph.src}-${i}`} className="aspect-square w-[48vw] shrink-0 snap-start overflow-hidden bg-fam-surface-2 md:w-auto">
+              <img src={ph.src} alt={ph.alt} loading="lazy" style={faceSafeStyle(ph.focus)} className="h-full w-full object-cover" />
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  // the real photos first: this service's own, the other services' own, the owner's gallery; stock only when none is real
+  const real: Photo[] = []
+  const stock: Photo[] = []
+  const push = (list: Photo[], ph: Photo) => { if (!real.some((x) => x.src === ph.src) && !stock.some((x) => x.src === ph.src)) list.push(ph) }
+  const own = service ? ownerServiceImageUrl(service.slug) : null
+  if (service && own) push(real, { src: own, alt: SERVICES.find((s) => s.slug === service.slug)?.name ?? service.hero.h1, focus: serviceImageFocus(service.slug) })
+  for (const s of SERVICES) {
+    if (service && s.slug === service.slug) continue
+    const u = ownerServiceImageUrl(s.slug)
+    if (u) push(real, { src: u, alt: s.name, focus: serviceImageFocus(s.slug) })
   }
   for (const p of projects) {
     const src = imageSrc(p.image)
-    if (photos.some((x) => x.src === src)) continue
-    photos.push({ src, alt: p.alt ?? p.title, focus: null })
-    if (photos.length === 5) break
+    push(isOwnerUpload(src) ? real : stock, { src, alt: p.alt ?? p.title, focus: null })
   }
+  if (service && SERVICE_IMAGES[service.slug] && !own) push(stock, { src: serviceImageUrl(service.slug), alt: service.hero.h1, focus: serviceImageFocus(service.slug) })
+  const photos = real.length ? real : stock
   if (photos.length === 0) return null
+
+  const rows = Math.min(3, Math.max(1, Number(setting?.rows) || 1))
+  const seconds = setting?.speed === 'fast' ? 25 : setting?.speed === 'medium' ? 40 : 60
+  // each row needs enough boxes to cover the widest screen before it repeats: at least eight, the list repeated
+  const perRow = Math.max(8, photos.length)
+  const rowItems = (r: number): Photo[] => Array.from({ length: perRow }, (_, i) => photos[(i + r * Math.ceil(photos.length / rows)) % photos.length]!)
+
   return (
-    <section className="bg-fam-page py-band">
-      <ul className="flex snap-x snap-mandatory gap-[2px] overflow-x-auto [scrollbar-width:none] md:grid md:grid-cols-5 md:overflow-visible">
-        {photos.map((ph, i) => (
-          <li key={`${ph.src}-${i}`} className="aspect-square w-[48vw] shrink-0 snap-start overflow-hidden bg-fam-surface-2 md:w-auto">
-            <img src={ph.src} alt={ph.alt} loading="lazy" style={faceSafeStyle(ph.focus)} className="h-full w-full object-cover" />
-          </li>
-        ))}
-      </ul>
+    <section
+      className="bg-fam-page py-band"
+      data-photo-strip="marquee"
+      data-paused={paused ? '' : undefined}
+      onTouchStart={() => setPaused(true)}
+      onTouchEnd={() => setPaused(false)}
+      onTouchCancel={() => setPaused(false)}
+    >
+      <div className="flex flex-col gap-[2px] overflow-hidden">
+        {Array.from({ length: rows }, (_, r) => {
+          const items = rowItems(r)
+          return (
+            <div key={r} className="strip-row" data-dir={r % 2 === 1 ? 'right' : 'left'} style={{ ['--strip-dur' as string]: `${seconds}s` }}>
+              <ul className="strip-track flex w-max gap-[2px]" aria-hidden={r > 0 ? true : undefined}>
+                {[...items, ...items].map((ph, i) => (
+                  <li key={`${ph.src}-${i}`} className="h-[32vw] w-[32vw] shrink-0 overflow-hidden bg-fam-surface-2 sm:h-[220px] sm:w-[220px]">
+                    <img src={ph.src} alt={i < items.length ? ph.alt : ''} loading="lazy" width={220} height={220} style={faceSafeStyle(ph.focus)} className="h-full w-full object-cover" />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )
+        })}
+      </div>
     </section>
   )
 }
