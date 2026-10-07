@@ -6,6 +6,7 @@ import { SITE } from '~/data/site'
 import type { ServicePageData } from '~/lib/types/page-types'
 import { imageSrc } from '~/lib/asset-url'
 import { faceSafeStyle } from '~/lib/editorial-media'
+import { isOwnerUpload, ownerPhotos } from '~/lib/owner-photos'
 
 // Gallery VARIANT: 'photo-strip' (the Editorial look, ZB-147 W1.2). Edge to edge, no container: five square photos in
 // a row on desktop with 2px gaps; on a phone the same photos as a horizontal scroll-snap strip, two per screen (48vw),
@@ -24,7 +25,6 @@ import { faceSafeStyle } from '~/lib/editorial-media'
 type Photo = { src: string; alt: string; focus: string | null }
 type StripSetting = { motion?: string; rows?: number | string; speed?: string }
 
-const isOwnerUpload = (src: string) => /\/public-assets\//.test(src) || /\/business-logos\//.test(src)
 
 export function GalleryPhotoStripBlock({
   projects = PROJECTS,
@@ -67,22 +67,11 @@ export function GalleryPhotoStripBlock({
     )
   }
 
-  // the real photos first: this service's own, the other services' own, the owner's gallery; stock only when none is real
-  const real: Photo[] = []
+  // the real photos first (lib/owner-photos: this service's own, the other services' own, the owner's gallery); stock only when none is real
+  const real: Photo[] = ownerPhotos(service?.slug)
   const stock: Photo[] = []
-  const push = (list: Photo[], ph: Photo) => { if (!real.some((x) => x.src === ph.src) && !stock.some((x) => x.src === ph.src)) list.push(ph) }
-  const own = service ? ownerServiceImageUrl(service.slug) : null
-  if (service && own) push(real, { src: own, alt: SERVICES.find((s) => s.slug === service.slug)?.name ?? service.hero.h1, focus: serviceImageFocus(service.slug) })
-  for (const s of SERVICES) {
-    if (service && s.slug === service.slug) continue
-    const u = ownerServiceImageUrl(s.slug)
-    if (u) push(real, { src: u, alt: s.name, focus: serviceImageFocus(s.slug) })
-  }
-  for (const p of projects) {
-    const src = imageSrc(p.image)
-    push(isOwnerUpload(src) ? real : stock, { src, alt: p.alt ?? p.title, focus: null })
-  }
-  if (service && SERVICE_IMAGES[service.slug] && !own) push(stock, { src: serviceImageUrl(service.slug), alt: service.hero.h1, focus: serviceImageFocus(service.slug) })
+  for (const p of projects) { const src = imageSrc(p.image); if (!isOwnerUpload(src) && !stock.some((x) => x.src === src)) stock.push({ src, alt: p.alt ?? p.title, focus: null }) }
+  if (service && SERVICE_IMAGES[service.slug] && !ownerServiceImageUrl(service.slug)) stock.unshift({ src: serviceImageUrl(service.slug), alt: service.hero.h1, focus: serviceImageFocus(service.slug) })
   const photos = real.length ? real : stock
   if (photos.length === 0) return null
 

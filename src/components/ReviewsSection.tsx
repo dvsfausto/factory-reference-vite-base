@@ -2,6 +2,9 @@ import { useState } from 'react'
 import { getAggregateRating, getHomepageReviews, reviews } from '~/data/reviews'
 import { tr } from '~/lib/i18n'
 import { reviewCategory } from '~/lib/review-category'
+import { ownerPhotos } from '~/lib/owner-photos'
+import { faceSafeStyle } from '~/lib/editorial-media'
+import { SITE } from '~/data/site'
 import type { Review } from '~/lib/types/page-types'
 
 interface Props {
@@ -56,11 +59,37 @@ export function ReviewsSection({
             ))}
           </div>
         )}
-        <div className="mx-auto mt-12 grid max-w-5xl gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {display.map((r) => (
-            <ReviewCard key={r.id} review={r} />
-          ))}
-        </div>
+        {/* ★ PHOTOS BESIDE THE REVIEWS (the owner's setting site.reviewsPhotos = 'sides', ZB-147 W1.3): the business's own photos run
+            down both sides on a wide screen (sticky columns), none on a phone; stock never. Unset → the grid alone, as before. */}
+        {(() => {
+          const rails = (SITE as { reviewsPhotos?: string }).reviewsPhotos === 'sides' ? ownerPhotos() : []
+          const left = rails.filter((_, i) => i % 2 === 0).slice(0, 4)
+          const right = rails.filter((_, i) => i % 2 === 1).slice(0, 4)
+          const grid = (
+            <div className="mx-auto mt-12 grid max-w-5xl gap-8 md:grid-cols-2 lg:grid-cols-3">
+              {display.map((r) => (
+                <ReviewCard key={r.id} review={r} />
+              ))}
+            </div>
+          )
+          if (!left.length) return grid
+          const rail = (list: typeof left, side: string) => (
+            <aside className="hidden lg:block" data-reviews-rail={side}>
+              <div className="sticky top-24 flex flex-col gap-2">
+                {list.map((ph) => (
+                  <img key={ph.src} src={ph.src} alt={ph.alt} loading="lazy" width={220} height={300} style={faceSafeStyle(ph.focus)} className="aspect-[3/4] w-full object-cover" />
+                ))}
+              </div>
+            </aside>
+          )
+          return (
+            <div className="grid gap-8 lg:grid-cols-[180px_minmax(0,1fr)_180px] xl:grid-cols-[220px_minmax(0,1fr)_220px]">
+              {rail(left, 'left')}
+              <div>{grid}</div>
+              {rail(right, 'right')}
+            </div>
+          )
+        })()}
       </div>
     </section>
   )

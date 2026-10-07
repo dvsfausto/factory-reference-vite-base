@@ -908,7 +908,8 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
           key="story"
           {...data}
           label={block.params?.label as string | undefined}
-          heading={block.params?.heading as string | undefined}
+          // the About page (it passes ctx.intro): the owner's slogan (site.slogan) heads the story when they set one
+          heading={(block.params?.heading as string | undefined) ?? (ctx?.intro && !ctx.service ? (SITE as { slogan?: string }).slogan || undefined : undefined)}
           body={block.params?.body as string | undefined}
         />
       )
