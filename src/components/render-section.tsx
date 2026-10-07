@@ -55,7 +55,7 @@ import { ClassScheduleWeekBlock } from '~/components/blocks/ClassScheduleWeekBlo
 import { CLASS_SCHEDULE_VARIANTS } from '~/components/blocks/class-schedule-variants'
 import { CustomFormInline } from '~/components/blocks/FormCustomBlock'
 import { useCustomForm } from '~/lib/useCustomForm'
-import { serviceCta, REQUEST_MODE, inquiryCta } from '~/lib/primaryCta'
+import { serviceCta, REQUEST_MODE, inquiryCta, primaryCta } from '~/lib/primaryCta'
 // WOW Stage 2 — additional section variants (brand-reactive + motion, consume --wow-*).
 // Additive map keys only; unknown variant → the section's default component.
 import { ServicesLuxeBlock } from '~/components/blocks/ServicesLuxeBlock'
