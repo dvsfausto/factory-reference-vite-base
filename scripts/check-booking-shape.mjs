@@ -67,6 +67,14 @@ t('per-service CTA: each service follows its own action, only to pages that exis
   assert.equal(serviceCtaTarget({ id: 'd4', slug: 'x', action: 'inquire' }, pages), null)
   assert.equal(serviceCtaTarget({ id: 'e5', slug: 'x' }, pages), null)
 })
+t("per-service CTA: the owner's own path wins over the derived action (W1.2)", () => {
+  const pages = { book: true, quote: true, bookingWidget: false }
+  assert.deepEqual(serviceCtaTarget({ id: 'a1', slug: 'wedding', action: 'collect', path: 'inquire' }, pages), { href: '/contact?service=wedding', label: 'checkDate' })
+  assert.deepEqual(serviceCtaTarget({ id: 'a2', slug: 'branding', action: 'book', path: 'quote' }, pages), { href: '/quote?service=branding', label: 'getQuote' })
+  assert.deepEqual(serviceCtaTarget({ id: 'a3', slug: 'family', action: 'collect', path: 'book' }, pages), { href: '/book?service=a3', label: 'bookNow' })
+  // no path set → exactly as before
+  assert.deepEqual(serviceCtaTarget({ id: 'a4', slug: 'x', action: 'book' }, pages), { href: '/book?service=a4', label: 'bookNow' })
+})
 t('per-service CTA never targets a missing page (falls back to the site-wide CTA)', () => {
   assert.equal(serviceCtaTarget({ id: 'a1', slug: 's', action: 'book' }, { book: false, quote: false, bookingWidget: false }), null)
   assert.deepEqual(serviceCtaTarget({ id: 'a1', slug: 's', action: 'book' }, { book: false, quote: false, bookingWidget: true }), { href: '/#book', label: 'bookNow' })

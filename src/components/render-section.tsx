@@ -610,7 +610,7 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
             : ServiceHero === HeroSplitPhotoBlock
               ? // the Editorial split hero also names the service in its kicker ("<service> · <place>")
                 // request mode: the second path, "Check your date" → the inquiry form with this service named
-                { cta: serviceCta(svc.slug), serviceName: SERVICES.find((s) => s.slug === svc.slug)?.displayName, ...(REQUEST_MODE ? { secondary: inquiryCta(svc.slug) } : {}) }
+                (() => { const primary = serviceCta(svc.slug); return { cta: primary, serviceName: SERVICES.find((s) => s.slug === svc.slug)?.displayName, ...(REQUEST_MODE && primary.href.startsWith('/book') ? { secondary: inquiryCta(svc.slug) } : {}) } })()
               : {}
         return (
           <ServiceHero

@@ -22,7 +22,7 @@ export function serviceCta(slug: string): { href: string; label: string } {
     bookingWidget: BOOKING.enabled,
   })
   if (!t) return site
-  const label = t.label === 'bookNow' ? (REQUEST_MODE ? tr('cta.bookDate') : tr('cta.bookNow')) : tr('cta.getQuote')
+  const label = t.label === 'bookNow' ? (REQUEST_MODE ? tr('cta.bookDate') : tr('cta.bookNow')) : t.label === 'checkDate' ? tr('cta.checkDate') : tr('cta.getQuote')
   return { href: t.href, label }
 }
 

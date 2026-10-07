@@ -3,7 +3,8 @@ import { tr } from '~/lib/i18n'
 import { paragraphs } from '~/lib/paragraphs'
 import { Link } from '@tanstack/react-router'
 import { MapPin, Quote, Star } from 'lucide-react'
-import type { ServicePageData } from '~/lib/types/page-types'
+import type { ServicePageData, ServiceRef, ServiceVariant } from '~/lib/types/page-types'
+import { SERVICES } from '~/data/services'
 import { Reveal } from '~/components/Reveal'
 
 // SERVICE-DETAIL VARIANT (Arc 3 · Stage C): the rich, consolidated MIDDLE content of
@@ -141,6 +142,38 @@ export function ServiceDetailsBlock({
     )
   }
 
+  /* ★ ZB-147 W1.2: THE OWNER'S PRICE, AS THEY CHOSE TO SHOW IT (ServiceRef.priceDisplay, services.metadata): the duration packages
+     with their prices ('show'), one "starting at" price ('from'), or nothing ('hidden': a custom quote). Unset → nothing here, the
+     page is as it was. Only the owner's numbers appear; no price is ever invented. */
+  const ref = SERVICES.find((x) => x.slug === service.slug) as (ServiceRef & { variants?: ServiceVariant[]; price?: string; priceDisplay?: string }) | undefined
+  const variants = ref?.priceDisplay === 'show' ? (ref.variants ?? []).filter((v) => v.price) : []
+  const startingAt = ref?.priceDisplay === 'from' ? (ref.price ?? ref.variants?.find((v) => v.price)?.price ?? null) : null
+  if (variants.length || startingAt) {
+    blocks.push(
+      <div key="packages" data-service-packages>
+        <div className="mx-auto max-w-3xl text-center">
+          <h2 className="font-display text-3xl leading-tight text-[var(--fam-ink,var(--color-ink-900))] sm:text-4xl">
+            {variants.length ? tr('service.packages') : tr('service.startingAt').replace('{price}', startingAt ?? '')}
+          </h2>
+        </div>
+        {variants.length > 0 && (
+          <ul className="mx-auto mt-10 max-w-2xl divide-y divide-fam-hairline border-y border-fam-hairline">
+            {variants.map((v) => (
+              <li key={v.label} className="flex items-baseline justify-between gap-6 py-4">
+                <div>
+                  <p className="font-display text-xl text-fam-ink">{v.label}</p>
+                  {(v.duration_minutes || v.note) && (
+                    <p className="mt-1 text-sm text-fam-ink-muted">{[v.duration_minutes ? tr('service.minutes').replace('{n}', String(v.duration_minutes)) : null, v.note].filter(Boolean).join(' · ')}</p>
+                  )}
+                </div>
+                <p className="font-display text-xl text-fam-ink">{v.price}</p>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>,
+    )
+  }
   if (showPricing) {
     blocks.push(
       <div key="pricing">

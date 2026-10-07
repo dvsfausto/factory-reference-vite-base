@@ -110,10 +110,13 @@ export function formatAddress(a: ServiceAddress | null | undefined): string {
  */
 export type ServiceAction = 'collect' | 'quote' | 'book' | 'inquire' | null | undefined
 export function serviceCtaTarget(
-  ref: { id: string; slug: string; action?: ServiceAction },
+  ref: { id: string; slug: string; action?: ServiceAction; path?: 'book' | 'inquire' | 'quote' },
   pages: { book: boolean; quote: boolean; bookingWidget: boolean },
-): { href: string; label: 'bookNow' | 'getQuote' } | null {
-  switch (ref.action) {
+): { href: string; label: 'bookNow' | 'getQuote' | 'checkDate' } | null {
+  // ZB-147 W1.2: the owner's own path for the service wins over the derived action. Only the OWNER'S 'inquire' goes to the
+  // contact form with the service named; a derived 'inquire' (nothing bookable or quotable) still falls to the site-wide CTA.
+  if (ref.path === 'inquire') return { href: `/contact?service=${encodeURIComponent(ref.slug)}`, label: 'checkDate' }
+  switch (ref.path ?? ref.action) {
     case 'book':
       if (pages.book) return { href: `/book?service=${encodeURIComponent(ref.id)}`, label: 'bookNow' }
       if (pages.bookingWidget) return { href: `/#book`, label: 'bookNow' }
