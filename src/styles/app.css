@@ -682,6 +682,22 @@ html[data-site-theme="editorial"] {
   --wow-shadow-lift: none;
   --wow-hairline: #DAD4C8;
   --wow-tint: #F3EFE6;
+  /* The old look's slate ramp (the reviews page, listings) becomes warm greys on the cream page. */
+  --fam-slate-50: #FBFAF7;
+  --fam-slate-100: #F3EFE6;
+  --fam-slate-200: #E6E0D4;
+  --fam-slate-300: #CFC8BA;
+  --fam-slate-400: #A09A8E;
+  --fam-slate-500: #6D6961;
+  --fam-slate-600: #5E5A53;
+  --fam-slate-700: #3A3833;
+  --fam-slate-800: #2A2926;
+  --fam-slate-900: #1C1B19;
+  --fam-slate-950: #121211;
+  --fam-surface-slate: #EFEAE0;
+  --fam-surface-slate-2: #F3EFE6;
+  --fam-line-slate: #DAD4C8;
+  --fam-line-slate-2: #CFC8BA;
   /* Square shapes: every radius token is 0 (the rounded-* utilities are re-pointed below). */
   --radius-sm: 0px;
   --radius-md: 0px;
@@ -718,6 +734,10 @@ html[data-site-theme="editorial"] .btn-primary,
 html[data-site-theme="editorial"] .btn-primary:hover,
 html[data-site-theme="editorial"] .card-stead {
   box-shadow: none;
+}
+/* Review stars take the gold accent instead of amber. */
+html[data-site-theme="editorial"] .text-amber-500 {
+  color: var(--color-fam-accent);
 }
 html[data-site-theme="editorial"] .input-stead:focus {
   border-color: var(--color-fam-ink);
