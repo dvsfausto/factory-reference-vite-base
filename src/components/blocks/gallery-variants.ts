@@ -9,6 +9,7 @@ import { GalleryFeaturedFilmBlock } from './GalleryFeaturedFilmBlock'
 import { GalleryEdgeGridBlock } from './GalleryEdgeGridBlock'
 import { GalleryPortfolioGridBlock } from './GalleryPortfolioGridBlock'
 import { GalleryPhotoStripBlock } from './GalleryPhotoStripBlock'
+import { GalleryPortfolioWallBlock } from './GalleryPortfolioWallBlock'
 import type { ComponentProps, ComponentType } from 'react'
 import type { ServicePageData } from '~/lib/types/page-types'
 
@@ -18,7 +19,7 @@ import type { ServicePageData } from '~/lib/types/page-types'
 // the gallery renders populated rather than omitting when empty.
 // The renderer also hands every variant the page's service (ctx.service) when there is one; a variant that reads
 // it (the Editorial photo strip) leads with that service's photo, the others ignore the prop.
-export const GALLERY_VARIANTS: Record<string, ComponentType<ComponentProps<typeof GalleryMasonryBlock> & { service?: ServicePageData; cards?: Array<{ title?: string; service?: string }> }>> = {
+export const GALLERY_VARIANTS: Record<string, ComponentType<ComponentProps<typeof GalleryMasonryBlock> & { service?: ServicePageData; cards?: Array<{ title?: string; service?: string }>; category?: string; services?: string[] }>> = {
   masonry: GalleryMasonryBlock,
   grid: GalleryGridBlock,
   'before-after-slider': GalleryBeforeAfterBlock,
@@ -32,4 +33,5 @@ export const GALLERY_VARIANTS: Record<string, ComponentType<ComponentProps<typeo
   // The Editorial look (ZB-147 W1.2): three tall portfolio cards; an edge-to-edge five-photo strip.
   'portfolio-grid': GalleryPortfolioGridBlock,
   'photo-strip': GalleryPhotoStripBlock,
+  'portfolio-wall': GalleryPortfolioWallBlock,
 }

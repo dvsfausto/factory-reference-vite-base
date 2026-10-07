@@ -108,7 +108,8 @@ export function GalleryPhotoStripBlock({
         {Array.from({ length: rows }, (_, r) => {
           const items = rowItems(r)
           return (
-            <div key={r} className="strip-row" data-dir={r % 2 === 1 ? 'right' : 'left'} style={{ ['--strip-dur' as string]: `${seconds}s` }}>
+            // the loop's duration grows with the row's length, so every row moves at the same pixel speed whatever it holds
+            <div key={r} className="strip-row" data-dir={r % 2 === 1 ? 'right' : 'left'} style={{ ['--strip-dur' as string]: `${Math.round(seconds * items.length / 8)}s` }}>
               <ul className="strip-track flex w-max gap-[2px]" aria-hidden={r > 0 ? true : undefined}>
                 {[...items, ...items].map((ph, i) => (
                   <li key={`${ph.src}-${i}`} className="h-[32vw] w-[32vw] shrink-0 overflow-hidden bg-fam-surface-2 sm:h-[220px] sm:w-[220px]">

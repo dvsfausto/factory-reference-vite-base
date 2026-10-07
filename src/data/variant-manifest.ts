@@ -185,6 +185,7 @@ export const VARIANT_MANIFEST: SectionVariants[] = [
       { id: 'featured-thumbs', label: 'Featured + thumbs', description: 'A featured image with thumbnails.' },
       { id: 'justified', label: 'Justified', description: 'A justified photo grid.' },
       { id: 'portfolio-grid', label: 'Portfolio (editorial)', description: 'Three tall portfolio cards, each numbered with its category or place, the title in the serif face and an arrow.' },
+      { id: 'portfolio-wall', label: 'Portfolio wall', description: 'A large grid of the business\'s own photos for one kind of work (params: category, the owner\'s word; services, slugs whose photos belong too), lazy, face-safe, a lightbox on tap. Stock never.' },
       { id: 'photo-strip', label: 'Photo strip (editorial)', description: 'Five square photos edge to edge; a swipeable strip on a phone. On a service page the service\'s own photo leads. Settings (site.photoStripMotion = marquee, site.photoStripRows 1 to 3, site.photoStripSpeed slow | medium | fast): a seamless moving strip, rows alternating direction, paused on hover and touch, still under reduced motion, the business\'s real photos first.' },
     ],
   },
