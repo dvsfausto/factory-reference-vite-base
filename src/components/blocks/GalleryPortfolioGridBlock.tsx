@@ -44,7 +44,7 @@ export function GalleryPortfolioGridBlock({
     return base.map((p, i) => {
       const svc = serviceBySlug(cards[i]?.service)
       if (!svc) { used.add(p.image); return p }
-      const match = projects.find((q) => !used.has(q.image) && projectCategory(q) && serviceFor(q.title, projectCategory(q))?.slug === svc.slug)
+      const match = projects.find((q) => !used.has(q.image) && projectCategory(q) && serviceFor(projectCategory(q))?.slug === svc.slug) // by the photo's CATEGORY only: a caption that mentions another kind of work must not move it
       if (match) { used.add(match.image); return match }
       const own = ownerServiceImageUrl(svc.slug)
       if (own && !used.has(own)) { const name = String(svc.displayName ?? svc.name ?? ''); used.add(own); return { title: name, image: own, alt: name, category: name } as (typeof projects)[number] }

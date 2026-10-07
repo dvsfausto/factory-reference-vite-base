@@ -50,10 +50,13 @@ export function GalleryGridBlock({
                   className="h-full w-full object-cover transition-transform duration-(--motion-slow) group-hover:scale-(--hov-zoom)"
                 />
               </div>
-              <figcaption className="p-4">
-                <span className="font-display text-sm font-semibold text-fam-ink">{p.title}</span>
-                {p.caption && <span className="mt-0.5 block text-xs italic text-fam-ink-faint">{p.caption}</span>}
-              </figcaption>
+              {/* a photo with no words gets no empty caption box (an owner-built gallery often has none) */}
+              {(p.title || p.caption) && (
+                <figcaption className="p-4">
+                  {p.title && <span className="font-display text-sm font-semibold text-fam-ink">{p.title}</span>}
+                  {p.caption && <span className="mt-0.5 block text-xs italic text-fam-ink-faint">{p.caption}</span>}
+                </figcaption>
+              )}
             </figure>
           ))}
         </div>
