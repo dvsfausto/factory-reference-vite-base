@@ -20,18 +20,23 @@ export function GalleryPortfolioGridBlock({
   heading = tr('editorial.portfolioHeading'),
   body,
   cards = [],
+  ownerBuilt = false,
 }: {
   projects?: typeof PROJECTS
   label?: string
   heading?: string
   body?: string
   cards?: Array<{ title?: string; service?: string }>
+  /** the page's gallery is the owner's own list (render-section): show it as given */
+  ownerBuilt?: boolean
 }) {
-  const picks = portfolioPicks(projects)
-    .map((p, i) => ({ p, card: portfolioCard(p, cards[i]) }))
+  // ★ an OWNER-BUILT gallery (design_dna.galleries) shows exactly the owner's photos in the owner's order, every one of them,
+  // no grouping by category and no card dropped: a photo without a service or a category still gets its card
+  const picks = (ownerBuilt ? projects : portfolioPicks(projects))
+    .map((p, i) => ({ p, card: portfolioCard(p, cards[i]) ?? (ownerBuilt ? { title: p.alt ?? p.title ?? '', href: null } : null) }))
     .filter((x): x is { p: (typeof projects)[number]; card: NonNullable<ReturnType<typeof portfolioCard>> } => x.card !== null)
   if (picks.length === 0) return null
-  const cols = { 1: 'grid-cols-1', 2: 'grid-cols-1 sm:grid-cols-2', 3: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3' }[picks.length as 1 | 2 | 3]
+  const cols = { 1: 'grid-cols-1', 2: 'grid-cols-1 sm:grid-cols-2' }[picks.length as 1 | 2] ?? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'
   return (
     <section className="bg-fam-page">
       <div className="container-x py-section">

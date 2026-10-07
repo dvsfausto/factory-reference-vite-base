@@ -30,8 +30,11 @@ export function GalleryPhotoStripBlock({
   projects = PROJECTS,
   service,
   motion,
+  ownerBuilt = false,
 }: {
   projects?: typeof PROJECTS
+  /** the page's gallery is the owner's own list (render-section): the strip shows exactly those photos, in order */
+  ownerBuilt?: boolean
   label?: string
   heading?: string
   body?: string
@@ -44,13 +47,16 @@ export function GalleryPhotoStripBlock({
   const setting = (SITE as { photoStrip?: StripSetting }).photoStrip
   const marquee = motion ? motion === 'marquee' : setting?.motion === 'marquee'
 
+  // ★ an OWNER-BUILT gallery: exactly the owner's photos in the owner's order, nothing led in, nothing filled from elsewhere
+  const ownPhotos: Photo[] = ownerBuilt ? projects.map((p) => ({ src: imageSrc(p.image), alt: p.alt ?? p.title, focus: null })) : []
+
   if (!marquee) {
-    const photos: Photo[] = []
-    if (service && SERVICE_IMAGES[service.slug]) {
+    const photos: Photo[] = ownPhotos
+    if (!ownerBuilt && service && SERVICE_IMAGES[service.slug]) {
       const ref = SERVICES.find((s) => s.slug === service.slug)
       photos.push({ src: serviceImageUrl(service.slug), alt: ref?.name ?? service.hero.h1, focus: serviceImageFocus(service.slug) })
     }
-    for (const p of projects) {
+    if (!ownerBuilt) for (const p of projects) {
       const src = imageSrc(p.image)
       if (photos.some((x) => x.src === src)) continue
       photos.push({ src, alt: p.alt ?? p.title, focus: null })
@@ -75,7 +81,7 @@ export function GalleryPhotoStripBlock({
   const stock: Photo[] = []
   for (const p of projects) { const src = imageSrc(p.image); if (!isOwnerUpload(src) && !stock.some((x) => x.src === src)) stock.push({ src, alt: p.alt ?? p.title, focus: null }) }
   if (service && SERVICE_IMAGES[service.slug] && !ownerServiceImageUrl(service.slug)) stock.unshift({ src: serviceImageUrl(service.slug), alt: service.hero.h1, focus: serviceImageFocus(service.slug) })
-  const photos = real.length ? real : stock
+  const photos = ownerBuilt ? ownPhotos : real.length ? real : stock
   if (photos.length === 0) return null
 
   const rows = Math.min(3, Math.max(1, Number(setting?.rows) || 1))

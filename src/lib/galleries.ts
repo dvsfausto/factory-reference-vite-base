@@ -18,6 +18,8 @@ export function pageKeyOf(ctx?: { service?: ServicePageData; page?: string; intr
   return 'home'
 }
 
+const fileNameOf = (url: string): string => url.replace(/[?#].*$/, '').split('/').pop() ?? url
+
 export function ownerGallery(key: PageKey): PageGallery | null {
   const g = GALLERIES[key]
   return g && Array.isArray(g.photos) ? g : null
@@ -33,7 +35,16 @@ export const LAYOUT_VARIANT: Record<string, string> = { grid: 'grid', masonry: '
 export function galleryItemsFor(key: PageKey, ctx?: { service?: ServicePageData; page?: string } | null): GalleryItem[] {
   const own = ownerGallery(key)
   if (own) {
-    const items = own.photos.map((p) => (typeof p === 'string' ? { title: '', image: p } : { title: p.title ?? '', image: p.url, alt: p.alt, category: p.category })) as GalleryItem[]
+    // a photo named by its address keeps what the library knows about it (its category, caption, alt): the cards and the
+    // walls caption by category, so an owner-built gallery must not turn every photo into a nameless one
+    const byUrl = new Map<string, GalleryItem>()
+    for (const p of PROJECTS) { byUrl.set(p.image, p); byUrl.set(fileNameOf(p.image), p) }
+    const known = (url: string): GalleryItem | undefined => byUrl.get(url) ?? byUrl.get(fileNameOf(url))
+    const items = own.photos.map((p) => {
+      if (typeof p === 'string') { const k = known(p); return k ? { ...k, image: p } : { title: '', image: p } }
+      const k = known(p.url)
+      return { title: p.title ?? k?.title ?? '', image: p.url, alt: p.alt ?? k?.alt, category: p.category ?? k?.category, caption: k?.caption }
+    }) as GalleryItem[]
     if (own.cover) { const i = items.findIndex((x) => x.image === own.cover); if (i > 0) items.unshift(...items.splice(i, 1)) }
     return items
   }

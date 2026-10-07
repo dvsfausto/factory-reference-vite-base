@@ -1,4 +1,5 @@
 import { PROJECTS } from '~/data/projects'
+import { GALLERIES } from '~/data/galleries'
 import { SERVICES } from '~/data/services-view'
 import { customPagesData } from '~/data/custom-pages'
 import { ownerServiceImageUrl, serviceImageFocus } from '~/data/images'
@@ -49,7 +50,10 @@ export function portfolioMenuHref(href: string): string {
   if (!slug || slug.includes('/')) return href
   const params = wallParamsOf(slug)
   if (!params) return href
-  if (wallPhotos(params).length >= PORTFOLIO_MENU_MIN_PHOTOS) return href
+  // the page's own gallery (the owner's list, design_dna.galleries) counts when the owner built one; else the wall's default photos
+  const own = GALLERIES[`page:${slug}`]
+  const shown = own && Array.isArray(own.photos) ? (own.hidden ? 0 : own.photos.length) : wallPhotos(params).length
+  if (shown >= PORTFOLIO_MENU_MIN_PHOTOS) return href
   const first = params.services?.find((s) => SERVICES.some((x) => x.slug === s))
   return first ? `/services/${first}` : href
 }

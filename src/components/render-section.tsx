@@ -877,7 +877,7 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
         <div key="gallery" data-gallery-page={pageKey} data-gallery-variant={galleryVariant} data-gallery-owner={own ? '' : undefined}>
         <GalleryComponent
           {...data}
-          {...(ownItems ? { projects: ownItems } : {})}
+          {...(ownItems ? { projects: ownItems, ownerBuilt: true } : {})}
           {...(own?.layout === 'marquee' ? { motion: 'marquee' } : own?.layout === 'strip' ? { motion: 'still' } : {})}
           label={block.params?.label as string | undefined}
           heading={block.params?.heading as string | undefined}

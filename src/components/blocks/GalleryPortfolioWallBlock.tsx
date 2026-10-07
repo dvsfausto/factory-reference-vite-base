@@ -1,6 +1,7 @@
 import { PROJECTS } from '~/data/projects'
 import { tr } from '~/lib/i18n'
-import { faceSafeStyle } from '~/lib/editorial-media'
+import { faceSafeStyle, projectCategory } from '~/lib/editorial-media'
+import { imageSrc } from '~/lib/asset-url'
 import { wallPhotos } from '~/lib/portfolio-pages'
 import { EditorialHeading, Kicker } from '~/components/editorial/Primitives'
 import { Lightbox, useLightbox } from '~/components/editorial/Lightbox'
@@ -19,6 +20,7 @@ export function GalleryPortfolioWallBlock({
   body,
   category,
   services = [],
+  ownerBuilt = false,
 }: {
   projects?: typeof PROJECTS
   label?: string
@@ -28,8 +30,12 @@ export function GalleryPortfolioWallBlock({
   category?: string
   /** service slugs whose own photos belong on this wall too */
   services?: string[]
+  /** the page's gallery is the owner's own list (render-section): the wall shows exactly it, in order, no category filter */
+  ownerBuilt?: boolean
 }) {
-  const photos = wallPhotos({ category, services }, projects)
+  const photos = ownerBuilt
+    ? projects.map((p) => ({ src: imageSrc(p.image), alt: (projectCategory(p) && projectCategory(p).toLowerCase() !== 'gallery') ? projectCategory(p) : (p.alt ?? p.title), focus: null }))
+    : wallPhotos({ category, services }, projects)
   if (photos.length === 0) return null
   const lb = useLightbox(photos)
   return (
