@@ -19,6 +19,7 @@ import { SERVICES } from '~/data/services-view'
 import { AREAS } from '~/data/areas'
 import { reviews as REVIEWS } from '~/data/reviews'
 import { reviewCategory } from '~/lib/review-category'
+import { galleryItemsFor, LAYOUT_VARIANT, ownerGallery, pageKeyOf } from '~/lib/galleries'
 import { PROJECTS } from '~/data/projects'
 import { BLOCK_NEEDS, INTO_KIND, type BlockNeed } from '~/data/block-contract'
 import { HeroBlock } from '~/components/blocks/HeroBlock'
@@ -429,6 +430,8 @@ export interface SectionContext {
   // the area/info cases render its content; absent everywhere else → those cases no-op.
   area?: ServiceAreaPageData
   info?: InfoPageData
+  /** the custom page's slug (routes/$slug.tsx): its own gallery lives under page:<slug> */
+  page?: string
 }
 
 // A layout block — the shared shape both HOMEPAGE_LAYOUT (LayoutBlock) and the
@@ -861,11 +864,19 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
       )
     }
     case 'gallery': {
-      const GalleryComponent = GALLERY_VARIANTS[block.variant ?? ''] ?? GalleryMasonryBlock
+      // ★ the page's OWN gallery (the owner's, design_dna.galleries) wins over the block's defaults: its photos, its layout, hidden
+      const pageKey = pageKeyOf(ctx)
+      const own = ownerGallery(pageKey)
+      if (own?.hidden) return null
+      const ownVariant = own?.layout ? LAYOUT_VARIANT[own.layout] : undefined
+      const GalleryComponent = GALLERY_VARIANTS[ownVariant ?? block.variant ?? ''] ?? GalleryMasonryBlock
+      const ownItems = own ? galleryItemsFor(pageKey, ctx) : null
       return (
         <GalleryComponent
           key="gallery"
           {...data}
+          {...(ownItems ? { projects: ownItems } : {})}
+          {...(own?.layout === 'marquee' ? { motion: 'marquee' } : own?.layout === 'strip' ? { motion: 'still' } : {})}
           label={block.params?.label as string | undefined}
           heading={block.params?.heading as string | undefined}
           body={block.params?.body as string | undefined}

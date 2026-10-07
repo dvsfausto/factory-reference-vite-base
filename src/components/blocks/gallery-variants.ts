@@ -19,7 +19,7 @@ import type { ServicePageData } from '~/lib/types/page-types'
 // the gallery renders populated rather than omitting when empty.
 // The renderer also hands every variant the page's service (ctx.service) when there is one; a variant that reads
 // it (the Editorial photo strip) leads with that service's photo, the others ignore the prop.
-export const GALLERY_VARIANTS: Record<string, ComponentType<ComponentProps<typeof GalleryMasonryBlock> & { service?: ServicePageData; cards?: Array<{ title?: string; service?: string }>; category?: string; services?: string[] }>> = {
+export const GALLERY_VARIANTS: Record<string, ComponentType<ComponentProps<typeof GalleryMasonryBlock> & { service?: ServicePageData; cards?: Array<{ title?: string; service?: string }>; category?: string; services?: string[]; motion?: 'marquee' | 'still' }>> = {
   masonry: GalleryMasonryBlock,
   grid: GalleryGridBlock,
   'before-after-slider': GalleryBeforeAfterBlock,

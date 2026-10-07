@@ -277,3 +277,12 @@ export interface Review {
   /** ★ the review at its source (a Google review's own page), so a reader can see it there (2026-09-25) */
   url?: string
 }
+
+/** ★ a page's own gallery, built by the owner (design_dna.galleries[pageKey]); see lib/galleries.ts */
+export interface PageGallery {
+  photos: Array<string | { url: string; title?: string; alt?: string; category?: string }>
+  cover?: string
+  layout?: 'grid' | 'masonry' | 'strip' | 'marquee' | 'wall'
+  hidden?: boolean
+  edited_at?: string
+}

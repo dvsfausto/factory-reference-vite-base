@@ -29,6 +29,7 @@ type StripSetting = { motion?: string; rows?: number | string; speed?: string }
 export function GalleryPhotoStripBlock({
   projects = PROJECTS,
   service,
+  motion,
 }: {
   projects?: typeof PROJECTS
   label?: string
@@ -36,10 +37,12 @@ export function GalleryPhotoStripBlock({
   body?: string
   /** the service whose page this strip sits on (renderer-supplied); absent on the homepage */
   service?: ServicePageData
+  /** a page's own choice (its gallery layout): marquee or still, over the site setting */
+  motion?: 'marquee' | 'still'
 }) {
   const [paused, setPaused] = useState(false)
   const setting = (SITE as { photoStrip?: StripSetting }).photoStrip
-  const marquee = setting?.motion === 'marquee'
+  const marquee = motion ? motion === 'marquee' : setting?.motion === 'marquee'
 
   if (!marquee) {
     const photos: Photo[] = []
