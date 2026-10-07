@@ -377,7 +377,7 @@ export function BookingWizardBlock({
   const paid = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('paid') === '1'
   /* ★ THE PAID RETURN (the owner, 2026-09-23): a person back from Stripe sees first that it worked and what they now hold, read from
      the sale itself (pack-checkout GET ?session=): first name, the pack, the classes. Nothing is claimed before it is read. */
-  const [paidInfo, setPaidInfo] = useState<{ first_name: string | null; pack: string | null; credits: number | null; balance: number | null; landed: boolean; waiver?: { signed: boolean; link: string | null } | null } | null>(null)
+  const [paidInfo, setPaidInfo] = useState<{ first_name: string | null; pack: string | null; credits: number | null; balance: number | null; landed: boolean; waiver?: { signed: boolean; link: string | null } | null; klass?: { occurrence_id: string; title: string | null; start_at: string | null; state: string; booking_id: string | null; token: string | null } | null } | null>(null)
   useEffect(() => {
     if (!paid || typeof window === 'undefined') return
     const sid = new URLSearchParams(window.location.search).get('session_id') || ''
@@ -386,9 +386,9 @@ export function BookingWizardBlock({
     const read = async () => {
       try {
         const r = await fetch(`${SUPABASE_URL}/functions/v1/pack-checkout?session=${encodeURIComponent(sid)}&business=${BUSINESS_ID}`, { headers: ANON_HEADERS })
-        const j = (await r.json()) as { paid?: boolean; landed?: boolean; first_name?: string | null; pack?: string | null; credits?: number | null; balance?: number | null; waiver?: { signed?: boolean; link?: string | null } | null }
+        const j = (await r.json()) as { paid?: boolean; landed?: boolean; first_name?: string | null; pack?: string | null; credits?: number | null; balance?: number | null; waiver?: { signed?: boolean; link?: string | null } | null; class?: { occurrence_id?: string; title?: string | null; start_at?: string | null; state?: string; booking_id?: string | null; token?: string | null } | null }
         /* ★ the sign step at pack checkout (2026-10-04): only when the business put it there; the server says whether it is signed */
-        if (j.paid) setPaidInfo({ first_name: j.first_name ?? null, pack: j.pack ?? null, credits: j.credits ?? null, balance: j.balance ?? null, landed: !!j.landed, waiver: j.waiver ? { signed: j.waiver.signed === true, link: typeof j.waiver.link === 'string' ? j.waiver.link : null } : null })
+        if (j.paid) setPaidInfo({ first_name: j.first_name ?? null, pack: j.pack ?? null, credits: j.credits ?? null, balance: j.balance ?? null, landed: !!j.landed, waiver: j.waiver ? { signed: j.waiver.signed === true, link: typeof j.waiver.link === 'string' ? j.waiver.link : null } : null , klass: j.class && j.class.occurrence_id ? { occurrence_id: j.class.occurrence_id, title: j.class.title ?? null, start_at: j.class.start_at ?? null, state: j.class.state ?? '', booking_id: j.class.booking_id ?? null, token: j.class.token ?? null } : null })
         if (j.paid && !j.landed && tries++ < 6) setTimeout(read, 2500)
       } catch { /* the page stays as it is */ }
     }
@@ -618,10 +618,19 @@ export function BookingWizardBlock({
           {paidInfo && (
             <div data-booking-paid role="status" className="mb-8 rounded-2xl border border-fam-hairline bg-fam-surface px-5 py-4 text-fam-ink">
               <div className="font-display text-lg font-semibold">{tr('booking.paidTitle')}</div>
-              <p className="mt-1 text-sm text-fam-ink-muted">
-                {(paidInfo.first_name ? `${paidInfo.first_name}, ` : '') + tr('booking.paidBody').replace('{n}', String(paidInfo.balance ?? paidInfo.credits ?? '')).replace('{pack}', paidInfo.pack ?? '')}
-                {!paidInfo.landed ? ` ${tr('booking.paidLanding')}` : ''}
-              </p>
+              {/* ★ ZB-180: the class the pack was bought for is booked by the sale itself; the return continues THAT booking
+                  ("You're booked", the waiver and the spot pick through the same hold flow), never "pick a class below" */}
+              {paidInfo.klass?.booking_id && paidInfo.klass.token ? (
+                <>
+                  <p data-paid-class className="mt-1 text-sm text-fam-ink-muted">{(paidInfo.first_name ? `${paidInfo.first_name}, ` : '') + tr('booking.paidBooked').replace('{n}', String(paidInfo.balance ?? paidInfo.credits ?? '')).replace('{pack}', paidInfo.pack ?? '')}</p>
+                  <div className="mt-4"><HeldBookingFlow entry={{ bookingId: paidInfo.klass.booking_id, token: paidInfo.klass.token, initial: 'confirming' }} onReleased={() => setPaidInfo((p) => (p ? { ...p, klass: null } : p))} /></div>
+                </>
+              ) : (
+                <p className="mt-1 text-sm text-fam-ink-muted">
+                  {(paidInfo.first_name ? `${paidInfo.first_name}, ` : '') + tr('booking.paidBody').replace('{n}', String(paidInfo.balance ?? paidInfo.credits ?? '')).replace('{pack}', paidInfo.pack ?? '')}
+                  {!paidInfo.landed ? ` ${tr('booking.paidLanding')}` : ''}
+                </p>
+              )}
               {paidInfo.waiver && !paidInfo.waiver.signed && paidInfo.waiver.link && (
                 <div data-paid-waiver className="mt-4 border-t border-fam-hairline pt-4">
                   <p className="text-sm text-fam-ink">{tr('booking.waiverAsk')}</p>
