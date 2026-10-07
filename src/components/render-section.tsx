@@ -18,6 +18,7 @@ import { LeadForm } from '~/components/LeadForm'
 import { SERVICES } from '~/data/services-view'
 import { AREAS } from '~/data/areas'
 import { reviews as REVIEWS } from '~/data/reviews'
+import { reviewCategory } from '~/lib/review-category'
 import { PROJECTS } from '~/data/projects'
 import { BLOCK_NEEDS, INTO_KIND, type BlockNeed } from '~/data/block-contract'
 import { HeroBlock } from '~/components/blocks/HeroBlock'
@@ -804,6 +805,8 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
         <ReviewsComponent
           key="reviews"
           {...data}
+          // on a service page, the reviews about THIS service first (their category = the service they name), then the rest
+          {...(ctx?.service ? { reviews: [...REVIEWS].sort((a, b) => Number(reviewCategory(b) === ctx.service!.title || reviewCategory(b) === SERVICES.find((x) => x.slug === ctx.service!.slug)?.displayName) - Number(reviewCategory(a) === ctx.service!.title || reviewCategory(a) === SERVICES.find((x) => x.slug === ctx.service!.slug)?.displayName)) } : {})}
           label={block.params?.label as string | undefined}
           heading={block.params?.heading as string | undefined}
           // a heading supplied as a param (the section-copy wave, an owner edit) is a whole sentence: no accent word after it
@@ -920,6 +923,8 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
         <FormsComponent
           key="forms"
           {...data}
+          // on a service page the custom form starts on THIS service (the same preselect the ?service= address gives)
+          serviceSlug={ctx?.service?.slug}
           label={block.params?.label as string | undefined}
           heading={block.params?.heading as string | undefined}
           body={block.params?.body as string | undefined}

@@ -29,6 +29,8 @@ function visible(f: FormField, values: Record<string, string>): boolean {
 
 export function FormCustomBlock(props: {
   site?: typeof SITE
+  /** the service page this form sits on (renderer-supplied): its service is preselected */
+  serviceSlug?: string
   label?: string
   heading?: string
   body?: string
@@ -48,6 +50,7 @@ export function CustomFormInline({ form, site = SITE }: { form: NonNullable<Retu
 function CustomForm({
   form,
   site = SITE,
+  serviceSlug,
   label,
   heading,
   body,
@@ -57,6 +60,7 @@ function CustomForm({
 }: {
   form: NonNullable<ReturnType<typeof useCustomForm>>
   site?: typeof SITE
+  serviceSlug?: string
   label?: string
   heading?: string
   body?: string
@@ -73,7 +77,7 @@ function CustomForm({
      starts on it, so the person does not pick again what they already chose. Nothing matches → the form as it was. */
   useEffect(() => {
     if (typeof window === 'undefined') return
-    const slug = new URLSearchParams(window.location.search).get('service')
+    const slug = serviceSlug ?? new URLSearchParams(window.location.search).get('service')
     if (!slug) return
     const svc = SERVICES.find((x) => x.slug === slug)
     const words = String((svc as { displayName?: string; name?: string } | undefined)?.displayName ?? svc?.name ?? slug).toLowerCase().split(/[^a-z]+/).filter((w) => w.length > 3).map((w) => w.replace(/(ies|s)$/, (m) => (m === 'ies' ? 'y' : '')))
