@@ -77,9 +77,23 @@ export function GalleryPhotoStripBlock({
 
   const rows = Math.min(3, Math.max(1, Number(setting?.rows) || 1))
   const seconds = setting?.speed === 'fast' ? 25 : setting?.speed === 'medium' ? 40 : 60
-  // each row needs enough boxes to cover the widest screen before it repeats: at least eight, the list repeated
-  const perRow = Math.max(8, photos.length)
-  const rowItems = (r: number): Photo[] => Array.from({ length: perRow }, (_, i) => photos[(i + r * Math.ceil(photos.length / rows)) % photos.length]!)
+  // ★ NO PHOTO TWICE AT ONCE (Fausto, 2026-10-07): with enough photos each row gets its OWN disjoint set, so a photo is never
+  // in two rows; a row's sequence is at least six long (the widest screen shows about six boxes), so within a row the same
+  // photo cannot be on screen twice either. Too few photos for disjoint rows → the rows share the list, offset by a third.
+  const perRowMin = 6
+  const disjoint = photos.length >= rows * Math.min(perRowMin, Math.max(3, Math.floor(photos.length / rows)))
+  const rowItems = (r: number): Photo[] => {
+    if (disjoint) {
+      const size = Math.floor(photos.length / rows)
+      const slice = photos.slice(r * size, r === rows - 1 ? photos.length : (r + 1) * size)
+      // a short slice repeats itself to reach six boxes (the repeat sits a whole slice apart, never side by side on screen for slices of 3+)
+      const out: Photo[] = []
+      while (out.length < Math.max(perRowMin, slice.length)) out.push(...slice)
+      return out
+    }
+    const perRow = Math.max(8, photos.length)
+    return Array.from({ length: perRow }, (_, i) => photos[(i + r * Math.ceil(photos.length / rows)) % photos.length]!)
+  }
 
   return (
     <section

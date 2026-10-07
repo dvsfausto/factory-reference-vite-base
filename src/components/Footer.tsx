@@ -217,7 +217,7 @@ function FooterEditorial({ t }: { t: FooterTheme }) {
       <div className="container-x py-section">
         {/* Masthead: wordmark left, small-caps place/phone right, over a hairline. */}
         <div className={`flex flex-wrap items-end justify-between gap-6 border-b ${t.border} pb-8`}>
-          <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={52} alt={SITE.name} />
+          <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={64} alt={SITE.name} />
           <span className={`${capLabel} ${t.tagline}`}>{[loc, SITE.phoneDisplay].filter(Boolean).join("  ·  ")}</span>
         </div>
 

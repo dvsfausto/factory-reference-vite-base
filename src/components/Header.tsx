@@ -661,13 +661,14 @@ export function Header() {
           <div className="container-x">
             <div className="flex lg:hidden items-center justify-between h-24">
               <Link to="/" className="focus-ring rounded-md" aria-label={`${SITE.name} ${tr('nav.homeLink')}`}>
-                <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={44} alt={SITE.name} />
+                <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={56} alt={SITE.name} />
               </Link>
               {mobileTrigger}
             </div>
+            {/* the centered (Editorial) header carries the logo larger: 72 on desktop, 56 on a phone (Fausto, 2026-10-07) */}
             <div className="hidden lg:grid grid-cols-[1fr_auto_1fr] items-center h-24">
               <Link to="/" className="justify-self-start focus-ring rounded-md" aria-label={`${SITE.name} ${tr('nav.homeLink')}`}>
-                <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={56} alt={SITE.name} />
+                <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={72} alt={SITE.name} />
               </Link>
               <nav className="flex items-center justify-center gap-2" aria-label={tr('nav.ariaPrimary')}>
                 {navLinks("left-1/2 -translate-x-1/2")}

@@ -1,4 +1,5 @@
 import { SITE } from '~/data/site'
+import { Logo } from '~/components/Logo'
 import { tr } from '~/lib/i18n'
 import { placeLine } from '~/lib/place'
 import { primaryCta, REQUEST_MODE } from '~/lib/primaryCta'
@@ -29,6 +30,8 @@ export function CtaDarkBandBlock({
     <section className="bg-fam-statement text-fam-on-statement">
       <div className="container-x py-band">
         <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
+          {/* the business's light logo (its knockout for dark grounds) heads the dark band when it has one */}
+          {(site as { logo_light_url?: string }).logo_light_url && <Logo src={(site as { logo_url?: string }).logo_url ?? ''} light lightSrc={(site as { logo_light_url?: string }).logo_light_url} height={40} alt={SITE.name} className="mb-6" />}
           {place && <Kicker onDark>{place}</Kicker>}
           <EditorialHeading size="lg" onDark text={heading} className="mt-5" />
           {hasText(line) && <p className="mt-6 max-w-xl font-sans text-base leading-relaxed text-fam-on-statement-muted sm:text-lg">{line}</p>}
