@@ -357,7 +357,7 @@ export function Header() {
   // phone showed a dead menu button while the bundle had not run). React only closes it after a link is followed.
   const menuRef = useRef<HTMLDetailsElement>(null);
   const closeMenu = () => { if (menuRef.current) menuRef.current.open = false; };
-  const [openMenu, setOpenMenu] = useState<"services" | "areas" | null>(null);
+  const [openMenu, setOpenMenu] = useState<"services" | "areas" | `group-${number}` | null>(null);
   const character = (SITE as { character?: string }).character ?? "";
   const surface = (SITE as { surface?: string }).surface ?? "";
   // SITE.chromeStyle is the frame (header/footer) style override — 'wow' selects
@@ -424,7 +424,36 @@ export function Header() {
   // The desktop nav links (dropdowns + page links). `dropAlign` positions the
   // dropdown panel — `left-0` under a left-aligned bar, centred under the editorial
   // masthead's centred nav row so the panel doesn't hang off-screen.
-  const navLinks = (dropAlign = "left-0") => (
+  /* ★ THE OWNER'S OWN MENU (ZB-147 W1.3): design_dna.chrome.nav.groups → SITE.navGroups = [{ label, items: [{ label, href }] }].
+     Set, it IS the menu: a group with several items is a dropdown, a group with one is a link; the default list below is not
+     drawn. Unset → the default menu, byte-identical. Hrefs are the site's own paths (validated at build). */
+  const navGroups = (SITE as { navGroups?: Array<{ label: string; items: Array<{ label: string; href: string }> }> }).navGroups ?? []
+  const navLinks = (dropAlign = "left-0") => navGroups.length > 0 ? (
+    <>
+      {navGroups.map((g, gi) =>
+        g.items.length === 1 ? (
+          <a key={gi} href={g.items[0]!.href} className={`px-3 py-2 ${t.navLink} focus-ring rounded-md`}>{g.label}</a>
+        ) : (
+          <div key={gi} className="relative" onMouseEnter={() => setOpenMenu(`group-${gi}`)} onMouseLeave={() => setOpenMenu(null)}>
+            <button className={`flex items-center gap-1 px-3 py-2 ${t.navLink} focus-ring rounded-md`} aria-expanded={openMenu === `group-${gi}`}>
+              {g.label} <ChevronDown className="h-4 w-4" />
+            </button>
+            {openMenu === `group-${gi}` && (
+              <div className={`absolute ${dropAlign} top-full pt-2`}>
+                <div className={`${t.dropdownSurface} p-2 w-64`}>
+                  {g.items.map((it) => (
+                    <a key={it.href + it.label} href={it.href} className={`block px-3 py-2 rounded-lg text-sm ${t.dropdownItem}`}>
+                      <div className={`font-medium ${t.dropdownTitle}`}>{it.label}</div>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        ),
+      )}
+    </>
+  ) : (
     <>
       {/* Services nav omitted when the site has no service pages (e.g. a
           generic-vertical business whose owner supplied none) — no empty
@@ -529,7 +558,15 @@ export function Header() {
       {/* Absolute under the bar, not fixed: the header's backdrop-blur is a containing block for fixed children. */}
       <div className={`absolute inset-x-0 top-full z-[60] ${t.mobilePanel} lg:hidden overflow-y-auto`} style={{ height: 'calc(100dvh - 5rem)' }}>
           <div className="container-x pb-12 space-y-6">
-            {SERVICES.length > 0 && !HIDDEN_NAV.includes('services') && (
+            {navGroups.map((g, gi) => (
+              <div key={gi}>
+                <div className={`text-xs font-semibold ${t.mobileLabel} uppercase tracking-wider mb-2`}>{g.label}</div>
+                {g.items.map((it) => (
+                  <a key={it.href + it.label} href={it.href} onClick={closeMenu} className={`block py-2 text-base font-medium ${t.mobileText}`}>{it.label}</a>
+                ))}
+              </div>
+            ))}
+            {navGroups.length === 0 && SERVICES.length > 0 && !HIDDEN_NAV.includes('services') && (
               <div>
                 <div className={`text-xs font-semibold ${t.mobileLabel} uppercase tracking-wider mb-2`}>{tr('nav.services')}</div>
                 {SERVICES.map((s) => (
@@ -539,7 +576,7 @@ export function Header() {
                 ))}
               </div>
             )}
-            {AREAS.length > 0 && !HIDDEN_NAV.includes('areas') && (
+            {navGroups.length === 0 && AREAS.length > 0 && !HIDDEN_NAV.includes('areas') && (
               <div>
                 <div className={`text-xs font-semibold ${t.mobileLabel} uppercase tracking-wider mb-2`}>{tr('nav.areas')}</div>
                 {AREAS.map((a) => (
@@ -549,6 +586,7 @@ export function Header() {
                 ))}
               </div>
             )}
+            {navGroups.length === 0 && (
             <div className="space-y-2">
               {!HIDDEN_NAV.includes('pricing') && <Link to="/pricing" onClick={closeMenu} className={`block py-2 text-base font-medium ${t.mobileText}`}>{tr('nav.pricing')}</Link>}
               {!HIDDEN_NAV.includes('reviews') && <Link to="/reviews" onClick={closeMenu} className={`block py-2 text-base font-medium ${t.mobileText}`}>{tr('nav.reviews')}</Link>}
@@ -559,6 +597,7 @@ export function Header() {
               ))}
               <PortalLink place="menu" onClick={closeMenu} className={`block py-2 text-base font-medium ${t.mobileText}`} />
             </div>
+            )}
             <div className={`pt-4 border-t ${t.mobileBorder} space-y-3`}>
               {HAS_PHONE && headerPhoneWanted && (<a href={`tel:${SITE.phone}`} className={`flex items-center gap-2 text-base font-semibold ${t.mobilePhone}`}>
                 <Phone className="h-5 w-5" /> {SITE.phoneDisplay}
