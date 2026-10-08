@@ -16,5 +16,8 @@ if (!/localStorage\.getItem\(SESSION_KEY\)/.test(sessionLib) || !/localStorage\.
 for (const f of ['src/components/portal/CustomerPortal.tsx', 'src/components/blocks/ClassBookingFlow.tsx']) { const t = read(f); if (/sessionStorage\.(get|set|remove)Item\(SESSION_KEY/.test(t) || !/from '~\/lib\/portal-session'/.test(t)) fails.push(`3: ${f} must use the one session seam`) }
 const i18n = read('src/lib/i18n.ts')
 for (const k of ['booking.releaseAsk', 'booking.releaseYes', 'booking.keepMySpot', 'booking.paidBooked']) if ((i18n.match(new RegExp(`'${k.replace('.', '\\.')}':`, 'g')) || []).length < 2) fails.push(`4: ${k} needs English and Spanish`)
+/* ★ ZB-194 (2026-10-08): 5. the paid return keeps the buyer: the landed sale's portal session is written to the one seam, so a pack
+   bought from the Packs section continues to "pick a class" as the buyer (no phone, no code, the credit in hand). */
+if (!/import \{ writeSession \} from '~\/lib\/portal-session'/.test(wiz) || !/if \(j\.paid && j\.landed && typeof j\.session === 'string' && j\.session\) writeSession\(j\.session\)/.test(wiz)) fails.push('5: the paid return must write the sale\'s portal session to the seam once the sale has landed')
 if (fails.length) { console.error('✗ check-booking-flow:\n  ' + fails.join('\n  ')); process.exit(1) }
 console.log('✓ check-booking-flow: release asks first, the paid return continues the booked class, the portal session survives the hop, EN+ES words')

@@ -5,6 +5,7 @@ import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { HAS_PHONE, hasPhone } from '~/lib/phone'
 import { HeldBookingFlow, type HeldEntry, type HeldOptions } from '~/components/blocks/HeldBookingFlow'
 import { ClassBookingFlow } from '~/components/blocks/ClassBookingFlow'
+import { writeSession } from '~/lib/portal-session'
 import {
   Calendar,
   Check,
@@ -386,7 +387,11 @@ export function BookingWizardBlock({
     const read = async () => {
       try {
         const r = await fetch(`${SUPABASE_URL}/functions/v1/pack-checkout?session=${encodeURIComponent(sid)}&business=${BUSINESS_ID}`, { headers: ANON_HEADERS })
-        const j = (await r.json()) as { paid?: boolean; landed?: boolean; first_name?: string | null; pack?: string | null; credits?: number | null; balance?: number | null; waiver?: { signed?: boolean; link?: string | null } | null; class?: { occurrence_id?: string; title?: string | null; start_at?: string | null; state?: string; booking_id?: string | null; token?: string | null } | null }
+        const j = (await r.json()) as { paid?: boolean; landed?: boolean; first_name?: string | null; pack?: string | null; credits?: number | null; balance?: number | null; waiver?: { signed?: boolean; link?: string | null } | null; class?: { occurrence_id?: string; title?: string | null; start_at?: string | null; state?: string; booking_id?: string | null; token?: string | null } | null; session?: string | null }
+        /* ★★★ ZB-194 (2026-10-08): THE PAID RETURN KEEPS THE BUYER. The landed sale hands back a portal session for the sale's own
+           contact; written to the one session seam, so "pick a class below" continues as the buyer (no phone, no code, the credit in
+           hand). A Fitcycling rider who mistyped her phone at purchase became a stranger with no credit at the class step. */
+        if (j.paid && j.landed && typeof j.session === 'string' && j.session) writeSession(j.session)
         /* ★ the sign step at pack checkout (2026-10-04): only when the business put it there; the server says whether it is signed */
         if (j.paid) setPaidInfo({ first_name: j.first_name ?? null, pack: j.pack ?? null, credits: j.credits ?? null, balance: j.balance ?? null, landed: !!j.landed, waiver: j.waiver ? { signed: j.waiver.signed === true, link: typeof j.waiver.link === 'string' ? j.waiver.link : null } : null , klass: j.class && j.class.occurrence_id ? { occurrence_id: j.class.occurrence_id, title: j.class.title ?? null, start_at: j.class.start_at ?? null, state: j.class.state ?? '', booking_id: j.class.booking_id ?? null, token: j.class.token ?? null } : null })
         if (j.paid && !j.landed && tries++ < 6) setTimeout(read, 2500)
