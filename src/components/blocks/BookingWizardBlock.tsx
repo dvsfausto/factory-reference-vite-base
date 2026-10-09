@@ -5,6 +5,7 @@ import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { HAS_PHONE, hasPhone } from '~/lib/phone'
 import { HeldBookingFlow, type HeldEntry, type HeldOptions } from '~/components/blocks/HeldBookingFlow'
 import { ClassBookingFlow } from '~/components/blocks/ClassBookingFlow'
+import { PhoneCodeStep, BookingFor, restoreVerified, PORTAL_SESSION_KEY, type Verified } from '~/components/blocks/PhoneCodeStep'
 import {
   Calendar,
   Check,
@@ -337,35 +338,28 @@ export function BookingWizardBlock({
      no room = a spot count, the owner's model 2026-09-29). Back from Stripe with
      ?paid=1&booking=&t= it reads the rows until they say confirmed. */
   const [held, setHeld] = useState<HeldEntry | null>(null)
-  /* ★ A KNOWN NUMBER IS NEVER ASKED TWICE: the phone goes first; when this business knows it, name and email are not asked.
-     A browser that booked before also remembers the person's details (their own choice of browser, their own device). */
-  const [known, setKnown] = useState<boolean | null>(null)
-  const [notMe, setNotMe] = useState(false)
+  /* ★★★ ZB-224 (the owner, 2026-10-09): THE PERSON IS KNOWN AFTER THE CODE, NEVER BEFORE. The phone goes first and a code goes to
+     it; once the code is right the server says who this is. A person with a name on file goes straight on, their credits shown; a new
+     person gives their name now. Nothing on this page asks "do you know this number" before the code. A browser that booked before
+     still remembers the number (their own device); a session from the same visit skips the code. */
+  const [me, setMe] = useState<Verified | null>(null)
   useEffect(() => {
     if (typeof window === 'undefined') return
     try {
       const raw = window.localStorage.getItem(REMEMBER_KEY)
-      if (raw) { const me = JSON.parse(raw) as Partial<CustomerInfo>; setCustomer((c) => ({ ...c, firstName: me.firstName ?? '', lastName: me.lastName ?? '', email: me.email ?? '', phone: me.phone ?? '' })) }
+      if (raw) { const m = JSON.parse(raw) as Partial<CustomerInfo>; setCustomer((c) => ({ ...c, phone: m.phone ?? '' })) }
     } catch { /* nothing remembered */ }
     const q = new URLSearchParams(window.location.search)
     const bk = q.get('booking'); const t = q.get('t'); const heldId = q.get('held')
     if (bk && t && q.get('paid') === '1') { setHeld({ bookingId: bk, token: t, initial: 'confirming' }); setStep('held') }
     else if (heldId && t) { setHeld({ bookingId: heldId, token: t, initial: 'confirming' }); setStep('held') }
+    void restoreVerified().then((v) => { if (v) { setMe(v); setCustomer((c) => ({ ...c, firstName: v.profile.firstName || c.firstName, lastName: v.profile.lastName || c.lastName })) } })
   }, [])
-  useEffect(() => {
-    const digits = customer.phone.replace(/\D/g, '')
-    if (digits.length < 10 || !BUSINESS_ID) { setKnown(null); return }
-    let stale = false
-    const id = setTimeout(async () => {
-      try {
-        const r = await fetch(`${SUPABASE_URL}/functions/v1/booking-lookup`, { method: 'POST', headers: { 'Content-Type': 'application/json', ...ANON_HEADERS }, body: JSON.stringify({ businessId: BUSINESS_ID, phone: customer.phone.trim() }) })
-        const j = (await r.json().catch(() => ({}))) as { known?: boolean }
-        if (!stale) setKnown(j.known === true)
-      } catch { if (!stale) setKnown(null) }
-    }, 400)
-    return () => { stale = true; clearTimeout(id) }
-  }, [customer.phone])
-  const recognised = known === true && !notMe
+  const verified = (v: Verified) => {
+    setMe(v)
+    setCustomer((c) => ({ ...c, phone: v.phone || c.phone, firstName: v.profile.firstName, lastName: v.profile.lastName, email: v.profile.email || c.email }))
+  }
+  const forgetMe = () => { setMe(null); try { window.sessionStorage.removeItem(PORTAL_SESSION_KEY) } catch { /* nothing */ } }
   const paid = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('paid') === '1'
   /* ★ THE PAID RETURN (the owner, 2026-09-23): a person back from Stripe sees first that it worked and what they now hold, read from
      the sale itself (pack-checkout GET ?session=): first name, the pack, the classes. Nothing is claimed before it is read. */
@@ -527,6 +521,8 @@ export function BookingWizardBlock({
         headers: { 'Content-Type': 'application/json', ...ANON_HEADERS },
         body: JSON.stringify({
           businessId: BUSINESS_ID,
+          /* ★ ZB-224: the verified person's session names them to the server; the typed fields only fill what is empty */
+          ...(me?.token ? { token: me.token } : {}),
           /* a class books by its kind, an appointment by its service (the owner, 2026-09-29) */
           ...(occurrence ? { kindId: occurrence.kind_id, occurrenceId: occurrence.id, hold: true } : { serviceId: service.id }),
           selectedDate: date.toISOString(),
@@ -568,7 +564,7 @@ export function BookingWizardBlock({
         if ((data as { code?: string }).code === 'pack_required' && Array.isArray((data as { packs?: unknown[] }).packs)) setPackOffer((data as { packs: Array<{ id: string; name: string; credits: number; price: number }> }).packs)
         throw new Error(data.error || tr('booking.couldNotComplete'))
       }
-      try { window.localStorage.setItem(REMEMBER_KEY, JSON.stringify({ firstName: customer.firstName.trim(), lastName: customer.lastName.trim(), email: customer.email.trim(), phone: customer.phone.trim() })) } catch { /* not remembered */ }
+      try { window.localStorage.setItem(REMEMBER_KEY, JSON.stringify({ phone: customer.phone.trim() })) } catch { /* not remembered */ }
       if (occurrence && data.booking?.id && data.hold?.token) {
         /* a class: held → pay; confirmed at once (a credit spent, or a free class) → the waiver or the spot. ONE PERSON, ONE CLASS:
            a booking they already hold comes back as itself (already:true), never a second one. */
@@ -699,7 +695,7 @@ export function BookingWizardBlock({
 
             {step === 'classflow' && occurrence && (
               <StepShell title={occurrence.title} onBack={() => setStep(classes.length ? 'class' : 'service')}>
-                <ClassBookingFlow key={occurrence.id} occurrence={occurrence} kindId={occurrence.kind_id ?? null} onHeld={(entry) => { setHeld(entry); setStep('held') }} />
+                <ClassBookingFlow key={occurrence.id} occurrence={occurrence} kindId={occurrence.kind_id ?? null} onVerified={setMe} onHeld={(entry) => { setHeld(entry); setStep('held') }} />
               </StepShell>
             )}
             {!loading && !loadError && !notLive && !emptyConfig && step !== 'held' && step !== 'classflow' && (
@@ -1023,6 +1019,10 @@ export function BookingWizardBlock({
                       title={tr('booking.yourDetails')}
                       onBack={() => setStep(visit ? 'address' : 'time')}
                     >
+                      {!me && (
+                        <PhoneCodeStep intro={tr('booking.whoIntro')} initialPhone={customer.phone} onVerified={verified} />
+                      )}
+                      {me && (
                       <form
                         onSubmit={(e) => {
                           e.preventDefault()
@@ -1030,52 +1030,7 @@ export function BookingWizardBlock({
                         }}
                         className="grid gap-4"
                       >
-                        {occurrence && <p className="text-sm text-ink-700">{tr('booking.phoneFirst')}</p>}
-                        <div className="grid gap-4 sm:grid-cols-2">
-                          <WField
-                            label={tr('form.phone')}
-                            type="tel"
-                            required
-                            value={customer.phone}
-                            autoComplete="tel"
-                            onChange={(v) => { setNotMe(false); setCustomer((c) => ({ ...c, phone: v })) }}
-                          />
-                          {recognised && (
-                            <div data-booking-known className="flex flex-col justify-end text-sm text-ink-700">
-                              <span>{tr('booking.welcomeBack')}</span>
-                              <button type="button" onClick={() => setNotMe(true)} className="mt-1 self-start text-brand-700 underline-offset-2 hover:underline">{tr('booking.notYou')}</button>
-                            </div>
-                          )}
-                        </div>
-                        <div className={`grid gap-4 sm:grid-cols-2${recognised ? ' hidden' : ''}`}>
-                          <WField
-                            label={tr('form.firstName')}
-                            required={!recognised}
-                            value={customer.firstName}
-                            autoComplete="given-name"
-                            onChange={(v) =>
-                              setCustomer((c) => ({ ...c, firstName: v }))
-                            }
-                          />
-                          <WField
-                            label={tr('form.lastName')}
-                            required={!recognised}
-                            value={customer.lastName}
-                            autoComplete="family-name"
-                            onChange={(v) =>
-                              setCustomer((c) => ({ ...c, lastName: v }))
-                            }
-                          />
-                          <WField
-                            label={tr('form.email')}
-                            type="email"
-                            value={customer.email}
-                            autoComplete="email"
-                            onChange={(v) =>
-                              setCustomer((c) => ({ ...c, email: v }))
-                            }
-                          />
-                        </div>
+                        <BookingFor me={me} onChange={forgetMe} />
                         <label className="block">
                           <span className="font-display text-sm font-medium text-ink-900">{tr('booking.anythingToKnow')}</span>
                           <textarea
@@ -1143,6 +1098,7 @@ export function BookingWizardBlock({
                           </span>)}
                         </div>
                       </form>
+                      )}
                     </StepShell>
                   )}
                 </motion.div>
@@ -1151,7 +1107,10 @@ export function BookingWizardBlock({
 
             {/* STEP: held (a class booking after it lands: pay while held, the waiver, the spot when the class is in a room, done) */}
             {step === 'held' && held && (
+              <div className="grid gap-3">
+              {me && <BookingFor me={me} />}
               <HeldBookingFlow key={held.bookingId} entry={held} onReleased={() => { setHeld(null); setStep(occurrence ? 'class' : 'service'); if (typeof window !== 'undefined') window.history.replaceState(null, '', window.location.pathname) }} />
+              </div>
             )}
             {/* STEP: confirmed (outside AnimatePresence so it persists) */}
             {step === 'confirmed' && service && date && time && (
