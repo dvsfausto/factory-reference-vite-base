@@ -3,8 +3,11 @@ import { tr } from '~/lib/i18n'
 import { paragraphs } from '~/lib/paragraphs'
 import { Link } from '@tanstack/react-router'
 import { MapPin, Quote, Star } from 'lucide-react'
-import type { ServicePageData } from '~/lib/types/page-types'
+import type { ServicePageData, ServiceRef, ServiceVariant } from '~/lib/types/page-types'
+import { SERVICES } from '~/data/services'
 import { Reveal } from '~/components/Reveal'
+import { Fold, SHORT_SERVICE_COPY } from '~/components/Fold'
+import { VISUAL_SERVICE_PAGES, guideHrefFor } from '~/lib/service-pages'
 
 // SERVICE-DETAIL VARIANT (Arc 3 · Stage C): the rich, consolidated MIDDLE content of
 // a service page, driven per-item by `service` (ctx.service). It renders, in order -
@@ -141,6 +144,38 @@ export function ServiceDetailsBlock({
     )
   }
 
+  /* ★ ZB-147 W1.2: THE OWNER'S PRICE, AS THEY CHOSE TO SHOW IT (ServiceRef.priceDisplay, services.metadata): the duration packages
+     with their prices ('show'), one "starting at" price ('from'), or nothing ('hidden': a custom quote). Unset → nothing here, the
+     page is as it was. Only the owner's numbers appear; no price is ever invented. */
+  const ref = SERVICES.find((x) => x.slug === service.slug) as (ServiceRef & { variants?: ServiceVariant[]; price?: string; priceDisplay?: string }) | undefined
+  const variants = ref?.priceDisplay === 'show' ? (ref.variants ?? []).filter((v) => v.price) : []
+  const startingAt = ref?.priceDisplay === 'from' ? (ref.price ?? ref.variants?.find((v) => v.price)?.price ?? null) : null
+  if (variants.length || startingAt) {
+    blocks.push(
+      <div key="packages" data-service-packages>
+        <div className="mx-auto max-w-3xl text-center">
+          <h2 className="font-display text-3xl leading-tight text-[var(--fam-ink,var(--color-ink-900))] sm:text-4xl">
+            {variants.length ? tr('service.packages') : tr('service.startingAt').replace('{price}', startingAt ?? '')}
+          </h2>
+        </div>
+        {variants.length > 0 && (
+          <ul className="mx-auto mt-10 max-w-2xl divide-y divide-fam-hairline border-y border-fam-hairline">
+            {variants.map((v) => (
+              <li key={v.label} className="flex items-baseline justify-between gap-6 py-4">
+                <div>
+                  <p className="font-display text-xl text-fam-ink">{v.label}</p>
+                  {(v.duration_minutes || v.note) && (
+                    <p className="mt-1 text-sm text-fam-ink-muted">{[v.duration_minutes ? tr('service.minutes').replace('{n}', String(v.duration_minutes)) : null, v.note].filter(Boolean).join(' · ')}</p>
+                  )}
+                </div>
+                <p className="font-display text-xl text-fam-ink">{v.price}</p>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>,
+    )
+  }
   if (showPricing) {
     blocks.push(
       <div key="pricing">
@@ -305,6 +340,42 @@ export function ServiceDetailsBlock({
 
   if (blocks.length === 0) return null
 
+  /* ★ visual service page (ZB-147 Stage B): the owner's packages and pricing notes stay on the page; every long section
+     (how pricing works, scenarios, coverage, local context, the testimonial) lives on the service's guide post, linked once */
+  if (VISUAL_SERVICE_PAGES && guideHrefFor(service.slug)) { // only once the guide exists; until then the prose stays here
+    const open = blocks.filter((n) => (n as { key?: string | null } | null)?.key === 'packages') // the owner's prices only; the pricing prose is on the guide
+    if (open.length === 0) return null // the guide is linked once, from the "what we cover" paragraph above
+    return (
+      <>
+        {open.map((node, i) => (
+          <SubSection key={`o${i}`} surface={i % 2 === 0 ? 'tint' : 'white'}>
+            {node}
+          </SubSection>
+        ))}
+      </>
+    )
+  }
+
+  /* short service copy: the packages (and the owner's pricing notes) stay open; the long sections (how pricing works,
+     scenarios, coverage, local context, the testimonial) fold behind one Read more, in their order, the same words */
+  if (SHORT_SERVICE_COPY) {
+    const open = blocks.filter((n) => (n as { key?: string | null } | null)?.key === 'packages' || (n as { key?: string | null } | null)?.key === 'pricing')
+    const folded = blocks.filter((n) => !open.includes(n))
+    return (
+      <>
+        {open.map((node, i) => (
+          <SubSection key={`o${i}`} surface={i % 2 === 0 ? 'tint' : 'white'}>
+            {node}
+          </SubSection>
+        ))}
+        {folded.length > 0 && (
+          <SubSection key="folded" surface={open.length % 2 === 0 ? 'tint' : 'white'}>
+            <div className="max-w-3xl"><Fold>{<div className="space-y-16">{folded}</div>}</Fold></div>
+          </SubSection>
+        )}
+      </>
+    )
+  }
   return (
     <>
       {blocks.map((node, i) => (

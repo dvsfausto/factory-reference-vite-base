@@ -18,6 +18,8 @@ import { LeadForm } from '~/components/LeadForm'
 import { SERVICES } from '~/data/services-view'
 import { AREAS } from '~/data/areas'
 import { reviews as REVIEWS } from '~/data/reviews'
+import { reviewCategory } from '~/lib/review-category'
+import { galleryItemsFor, LAYOUT_VARIANT, ownerGallery, pageKeyOf } from '~/lib/galleries'
 import { PROJECTS } from '~/data/projects'
 import { BLOCK_NEEDS, INTO_KIND, type BlockNeed } from '~/data/block-contract'
 import { HeroBlock } from '~/components/blocks/HeroBlock'
@@ -39,8 +41,10 @@ import { HeroAuroraBlock } from '~/components/blocks/HeroAuroraBlock'
 import { HeroSpotlightBlock } from '~/components/blocks/HeroSpotlightBlock'
 import { HeroEditorialBlock } from '~/components/blocks/HeroEditorialBlock'
 import { HeroServiceBannerBlock } from '~/components/blocks/HeroServiceBannerBlock'
+import { HeroSplitPhotoBlock } from '~/components/blocks/HeroSplitPhotoBlock'
 import { HeroEstimateBlock } from '~/components/blocks/HeroEstimateBlock'
 import { HeroGalleryBlock } from '~/components/blocks/HeroGalleryBlock'
+import { HeroEditorialPhotoBlock } from '~/components/blocks/HeroEditorialPhotoBlock'
 import { EmergencyBarBlock } from '~/components/blocks/EmergencyBarBlock'
 import { EMERGENCY_BAR_VARIANTS } from '~/components/blocks/emergency-bar-variants'
 import { MenuListBlock } from '~/components/blocks/MenuListBlock'
@@ -51,7 +55,7 @@ import { ClassScheduleWeekBlock } from '~/components/blocks/ClassScheduleWeekBlo
 import { CLASS_SCHEDULE_VARIANTS } from '~/components/blocks/class-schedule-variants'
 import { CustomFormInline } from '~/components/blocks/FormCustomBlock'
 import { useCustomForm } from '~/lib/useCustomForm'
-import { serviceCta } from '~/lib/primaryCta'
+import { serviceCta, REQUEST_MODE, inquiryCta, primaryCta } from '~/lib/primaryCta'
 // WOW Stage 2 — additional section variants (brand-reactive + motion, consume --wow-*).
 // Additive map keys only; unknown variant → the section's default component.
 import { ServicesLuxeBlock } from '~/components/blocks/ServicesLuxeBlock'
@@ -60,10 +64,16 @@ import { ServicesSpotlightTilesBlock } from '~/components/blocks/ServicesSpotlig
 import { ReviewsLuminousBlock } from '~/components/blocks/ReviewsLuminousBlock'
 import { ReviewsPullQuoteBlock } from '~/components/blocks/ReviewsPullQuoteBlock'
 import { ReviewsGlassWallBlock } from '~/components/blocks/ReviewsGlassWallBlock'
+import { ReviewsEditorialCardsBlock } from '~/components/blocks/ReviewsEditorialCardsBlock'
 import { CtaAuroraGlowBlock } from '~/components/blocks/CtaAuroraGlowBlock'
 import { CtaGlassPanelBlock } from '~/components/blocks/CtaGlassPanelBlock'
+import { CtaDarkBandBlock } from '~/components/blocks/CtaDarkBandBlock'
+import { CtaDarkClosingBlock } from '~/components/blocks/CtaDarkClosingBlock'
 import { TrustBarGlowCardsBlock } from '~/components/blocks/TrustBarGlowCardsBlock'
 import { TrustBarHairlineRowsBlock } from '~/components/blocks/TrustBarHairlineRowsBlock'
+// The Editorial theme's section variants (ZB-147 W1.2): ordinary map entries, editor-swappable one by one.
+import { ServicesNumberedListBlock } from '~/components/blocks/ServicesNumberedListBlock'
+import { TrustBarChecklistSplitBlock } from '~/components/blocks/TrustBarChecklistSplitBlock'
 import { ServiceAreasGlowPinsBlock } from '~/components/blocks/ServiceAreasGlowPinsBlock'
 import { ServiceAreasBrandPanelBlock } from '~/components/blocks/ServiceAreasBrandPanelBlock'
 import { FaqGlassAccordionBlock } from '~/components/blocks/FaqGlassAccordionBlock'
@@ -228,6 +238,9 @@ const HERO_VARIANTS: Record<string, typeof HeroBlock> = {
   editorial: HeroEditorialBlock,
   // Compact, family-aware inner-page banner (Phase 2) — the DEFAULT for detail heroes now.
   banner: HeroServiceBannerBlock,
+  // The Editorial look (ZB-147 W1.2): words on the page ground beside the photo; listed here like the banner so
+  // the manifest's hero list and this map name the same ids (on the homepage it reads the site hero).
+  'split-photo': HeroSplitPhotoBlock,
   // STRUCTURAL variant (niche arc Stage 4): the estimate form in the hero. Placed by a template row
   // (instant-estimate, logistics-quote) or the editor; never seeded by the design wave (it is a
   // conversion object, not a look). Homepage only — inner pages keep their banner.
@@ -235,6 +248,8 @@ const HERO_VARIANTS: Record<string, typeof HeroBlock> = {
   // LOOK variant (niche arc Stage 4): the owner's gallery as a mosaic beside the headline; the single
   // hero image when there are fewer than two photos. Placed by beauty-portfolio / project-showcase rows.
   gallery: HeroGalleryBlock,
+  // The Editorial theme (ZB-147 W1.2): the photo full bleed and full height, the words bottom-left over a scrim.
+  'editorial-photo': HeroEditorialPhotoBlock,
 }
 
 // SERVICE-DETAIL hero variants (Arc 3 · Stage C). The WOW heroes (aurora/spotlight/
@@ -252,6 +267,8 @@ const SERVICE_HERO_VARIANTS: Record<
   editorial: HeroEditorialBlock,
   // Compact, family-aware inner-page banner (Phase 2) — the DEFAULT for detail heroes now.
   banner: HeroServiceBannerBlock,
+  // The Editorial look (ZB-147 W1.2): the service's words on the page ground beside its photo.
+  'split-photo': HeroSplitPhotoBlock,
 }
 
 // Per-type variant maps for the other character-carrying blocks (same pattern as
@@ -279,6 +296,8 @@ const SERVICES_VARIANTS: Record<string, typeof ServicesPreviewBlock> = {
   luxe: ServicesLuxeBlock,
   'feature-rows': ServicesFeatureRowsBlock,
   'spotlight-tiles': ServicesSpotlightTilesBlock,
+  // The Editorial theme (ZB-147 W1.2): numeral / serif name / arrow rows between hairlines.
+  'numbered-list': ServicesNumberedListBlock,
 }
 
 const CTA_VARIANTS: Record<string, typeof CtaBlock> = {
@@ -299,12 +318,18 @@ const CTA_VARIANTS: Record<string, typeof CtaBlock> = {
   // WOW Stage 2: full-bleed brand-gradient aurora band, floating glass panel.
   'aurora-glow': CtaAuroraGlowBlock,
   'glass-panel': CtaGlassPanelBlock,
+  // The Editorial theme (ZB-147 W1.2): a centred statement band, and the left-aligned near-black close.
+  'dark-band': CtaDarkBandBlock,
+  'dark-closing': CtaDarkClosingBlock,
 }
 
 // ComponentType (not `typeof TrustBarBlock`): the WOW variants honestly omit
 // (return null) on empty items, a wider return type than the default's — this
 // annotation accepts both.
-const TRUST_VARIANTS: Record<string, ComponentType<ComponentProps<typeof TrustBarBlock>>> = {
+// `label` / `heading` (ZB-147 W1.2): the block's own copy params, read by the Editorial 'checklist-split'
+// variant; every other variant ignores them, so passing them changes nothing it renders.
+type TrustVariantProps = ComponentProps<typeof TrustBarBlock> & { label?: string; heading?: string }
+const TRUST_VARIANTS: Record<string, ComponentType<TrustVariantProps>> = {
   bold: TrustBarBoldBlock,
   elegant: TrustBarElegantBlock,
   friendly: TrustBarFriendlyBlock,
@@ -321,6 +346,8 @@ const TRUST_VARIANTS: Record<string, ComponentType<ComponentProps<typeof TrustBa
   // WOW Stage 2: glass cards with gradient icon badges, hairline-divided rows.
   'glow-cards': TrustBarGlowCardsBlock,
   'hairline-rows': TrustBarHairlineRowsBlock,
+  // The Editorial theme (ZB-147 W1.2): kicker + split heading left, a hairline checklist right.
+  'checklist-split': TrustBarChecklistSplitBlock,
 }
 
 const REVIEWS_VARIANTS: Record<string, typeof ReviewsBlock> = {
@@ -342,6 +369,8 @@ const REVIEWS_VARIANTS: Record<string, typeof ReviewsBlock> = {
   luminous: ReviewsLuminousBlock,
   'pull-quote': ReviewsPullQuoteBlock,
   'glass-wall': ReviewsGlassWallBlock,
+  // The Editorial look (ZB-147 W1.2): three beige quote cards and the business's own Google reviews link.
+  'editorial-cards': ReviewsEditorialCardsBlock,
 }
 
 const AREAS_VARIANTS: Record<string, typeof ServiceAreasBlock> = {
@@ -401,6 +430,8 @@ export interface SectionContext {
   // the area/info cases render its content; absent everywhere else → those cases no-op.
   area?: ServiceAreaPageData
   info?: InfoPageData
+  /** the custom page's slug (routes/$slug.tsx): its own gallery lives under page:<slug> */
+  page?: string
 }
 
 // A layout block — the shared shape both HOMEPAGE_LAYOUT (LayoutBlock) and the
@@ -577,7 +608,14 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
         // PER-SERVICE CTA (mixed catalogues): the banner takes this service's own target — book →
         // /book?service=, quote → /quote?service= — from serviceCta(slug). Other hero variants
         // keep the site-wide CTA (they have no cta prop); the banner is the default detail hero.
-        const perService = ServiceHero === HeroServiceBannerBlock ? { cta: serviceCta(svc.slug) } : {}
+        const perService =
+          ServiceHero === HeroServiceBannerBlock
+            ? { cta: serviceCta(svc.slug) }
+            : ServiceHero === HeroSplitPhotoBlock
+              ? // the Editorial split hero also names the service in its kicker ("<service> · <place>")
+                // request mode: the second path, "Check your date" → the inquiry form with this service named
+                (() => { const primary = serviceCta(svc.slug); return { cta: primary, serviceName: SERVICES.find((s) => s.slug === svc.slug)?.displayName, ...(REQUEST_MODE && primary.href.startsWith('/book') ? { secondary: inquiryCta(svc.slug) } : {}) } })()
+              : {}
         return (
           <ServiceHero
             key="hero"
@@ -616,6 +654,8 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
             body={ctx.info.hero.subhead}
             subheadline=""
             imageUrl={SITE.hero.image_url}
+            // the site's own first path (request mode: "Check availability"), not the generic call-or-text words (ZB-147 Stage B)
+            {...({ cta: primaryCta() } as object)}
           />
         )
       }
@@ -727,6 +767,8 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
           items={
             ((data.site ?? SITE) as { trustItems?: { title: string; description: string }[] }).trustItems
           }
+          label={block.params?.label as string | undefined}
+          heading={block.params?.heading as string | undefined}
         />
       )
     }
@@ -768,11 +810,15 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
         <ReviewsComponent
           key="reviews"
           {...data}
+          // on a service page, the reviews about THIS service first (their category = the service they name), then the rest
+          {...(ctx?.service ? { reviews: [...REVIEWS].sort((a, b) => Number(reviewCategory(b) === ctx.service!.title || reviewCategory(b) === SERVICES.find((x) => x.slug === ctx.service!.slug)?.displayName) - Number(reviewCategory(a) === ctx.service!.title || reviewCategory(a) === SERVICES.find((x) => x.slug === ctx.service!.slug)?.displayName)) } : {})}
           label={block.params?.label as string | undefined}
           heading={block.params?.heading as string | undefined}
           // a heading supplied as a param (the section-copy wave, an owner edit) is a whole sentence: no accent word after it
           scriptAccent={block.params?.heading ? '' : (block.params?.scriptAccent as string | undefined)}
           moreLink={block.params?.moreLink as string | undefined}
+          // how many reviews this block shows (a visual service page asks for two); layouts without the prop ignore it
+          {...({ count: block.params?.count } as object)}
         />
       )
     }
@@ -822,15 +868,33 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
       )
     }
     case 'gallery': {
-      const GalleryComponent = GALLERY_VARIANTS[block.variant ?? ''] ?? GalleryMasonryBlock
+      // ★ the page's OWN gallery (the owner's, design_dna.galleries) wins over the block's defaults: its photos, its layout, hidden
+      const pageKey = pageKeyOf(ctx)
+      const own = ownerGallery(pageKey)
+      if (own?.hidden) return null
+      const ownVariant = own?.layout ? LAYOUT_VARIANT[own.layout] : undefined
+      const GalleryComponent = GALLERY_VARIANTS[ownVariant ?? block.variant ?? ''] ?? GalleryMasonryBlock
+      const ownItems = own && own.photos.length > 0 ? galleryItemsFor(pageKey, ctx) : null // a record with no photos keeps the default photos and layout rules
+      const galleryVariant = ownVariant ?? block.variant ?? 'masonry'
       return (
+        // the page's gallery is marked for the owner walk and the editor's page read: which page, which layout, whose photos
+        <div key="gallery" data-gallery-page={pageKey} data-gallery-variant={galleryVariant} data-gallery-owner={own ? '' : undefined}>
         <GalleryComponent
-          key="gallery"
           {...data}
+          {...(ownItems ? { projects: ownItems, ownerBuilt: true } : {})}
+          {...(own?.layout === 'marquee' ? { motion: 'marquee' } : own?.layout === 'strip' ? { motion: 'still' } : {})}
           label={block.params?.label as string | undefined}
           heading={block.params?.heading as string | undefined}
           body={block.params?.body as string | undefined}
+          // the owner's titles and service pages for the Editorial portfolio's three cards (block.gallery.card<N>Title / card<N>Service)
+          cards={[1, 2, 3].map((n) => ({ title: block.params?.[`card${n}Title`] as string | undefined, service: block.params?.[`card${n}Service`] as string | undefined }))}
+          // the portfolio wall's kind of work and the services whose photos belong on it (a custom page's params)
+          category={block.params?.category as string | undefined}
+          services={Array.isArray(block.params?.services) ? (block.params!.services as unknown[]).filter((x): x is string => typeof x === 'string') : typeof block.params?.services === 'string' ? String(block.params.services).split(',').map((x) => x.trim()).filter(Boolean) : undefined}
+          // the page's service, when the gallery sits on a service page: the Editorial photo strip leads with its photo
+          service={ctx?.service}
         />
+        </div>
       )
     }
     case 'process': {
@@ -842,6 +906,12 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
           label={block.params?.label as string | undefined}
           heading={block.params?.heading as string | undefined}
           body={block.params?.body as string | undefined}
+          // read by the Editorial 'pull-quote-steps' layout only (ZB-147 W1.2); the others ignore them
+          quote={block.params?.quote as string | undefined}
+          ctaLabel={block.params?.ctaLabel as string | undefined}
+          ctaHref={block.params?.ctaHref as string | undefined}
+          // on a service page with no steps of the business's own: how to book, in three (ZB-147 Stage B); other layouts ignore it
+          {...({ service: ctx?.service } as object)}
         />
       )
     }
@@ -864,7 +934,8 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
           key="story"
           {...data}
           label={block.params?.label as string | undefined}
-          heading={block.params?.heading as string | undefined}
+          // the About page (it passes ctx.intro): the owner's slogan (site.slogan) heads the story when they set one
+          heading={(block.params?.heading as string | undefined) ?? (ctx?.intro && !ctx.service ? (SITE as { slogan?: string }).slogan || undefined : undefined)}
           body={block.params?.body as string | undefined}
         />
       )
@@ -875,6 +946,8 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
         <FormsComponent
           key="forms"
           {...data}
+          // on a service page the custom form starts on THIS service (the same preselect the ?service= address gives)
+          serviceSlug={ctx?.service?.slug}
           label={block.params?.label as string | undefined}
           heading={block.params?.heading as string | undefined}
           body={block.params?.body as string | undefined}
@@ -1120,9 +1193,21 @@ export function SectionList({
   titleFromFirstBlock?: boolean
 }): ReactNode {
   const firstIsTitle = titleFromFirstBlock && !blocks.some((b) => b.type === 'intro')
+  /* ★ A GALLERY THE OWNER BUILT SHOWS EVEN WHERE THE LAYOUT HAS NO GALLERY SECTION (Fausto, 2026-10-07): a full-layout service
+     page (or any page) with an owner gallery but no gallery block gets a strip under its first paragraph. The strip is the same
+     gallery case (the owner's photos, their layout, hidden honoured), placed after the first-paragraph block: the service's
+     "what we cover", else the intro, else right after the hero. */
+  const ownKey = pageKeyOf(ctx); const own = ownerGallery(ownKey)
+  const injectAfter = (() => {
+    if (blocks.some((b) => b.type === 'gallery') || !own || own.hidden || own.photos.length === 0) return -1
+    const at = (t: string) => blocks.findIndex((b) => b.type === t)
+    const i = at('serviceWhatWeCover') >= 0 ? at('serviceWhatWeCover') : at('intro') >= 0 ? at('intro') : at('hero') >= 0 ? at('hero') : -1
+    return i >= 0 ? i : blocks.length - 1
+  })()
+  const withStrip: SectionBlock[] = injectAfter < 0 ? blocks : [...blocks.slice(0, injectAfter + 1), { type: 'gallery', variant: 'photo-strip' } as SectionBlock, ...blocks.slice(injectAfter + 1)]
   return (
     <>
-      {blocks.map((block, i) => {
+      {withStrip.map((block, i) => {
         const rendered = renderSection(block, ctx, firstIsTitle && i === 0 ? { headingLevel: 1 } : undefined)
         const scope = sectionStyleVars(block.params?.style)
         const scoped = scope ? <div data-zsec={block.type} style={scope}>{rendered}</div> : rendered

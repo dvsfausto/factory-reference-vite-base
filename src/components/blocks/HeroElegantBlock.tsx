@@ -1,3 +1,4 @@
+import { placeLine } from '~/lib/place'
 import { PrimaryCta } from './PrimaryCta'
 import { tr } from '~/lib/i18n'
 import { ArrowRight, Phone } from 'lucide-react'
@@ -117,7 +118,7 @@ export function HeroElegantBlock({
   // uses: a magazine masthead rule, an oversized full-width serif headline, an ASYMMETRIC offset lede + CTA
   // on a 12-column grid, then a wide cinematic image BAND beneath (not beside), a vertical editorial flow
   // with generous air. This is the elegant family's composition + rhythm, echoed in its services/reviews.
-  const metaLine = [site.address.city, site.address.state].filter(Boolean).join(', ')
+  const metaLine = placeLine(site)
   return (
     <section className="bg-fam-surface text-fam-ink">
       <div className="container-x py-section">

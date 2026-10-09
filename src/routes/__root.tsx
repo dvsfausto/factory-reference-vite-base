@@ -51,6 +51,8 @@ export const Route = createRootRoute({
         rel: 'stylesheet',
         href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Great+Vibes&display=swap',
       },
+      // the Editorial theme's sans (Manrope); loaded only on a site that chose the theme
+      ...((SITE as { theme?: string }).theme === 'editorial' ? [{ rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&display=swap' }] : []),
     ],
   }),
   errorComponent: DefaultCatchBoundary,
@@ -75,6 +77,8 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       // SITE.motionLevel='subtle' (restrained business types) → gentler scroll-reveal
       // (see .motion-subtle in app.css). Absent → full motion (byte-identical default).
       className={(SITE as { motionLevel?: string }).motionLevel === 'subtle' ? 'motion-subtle' : undefined}
+      // the owner's chosen theme (SITE.theme, factory-emitted); absent → no attribute, byte-identical (ZB-147 W1.1)
+      data-site-theme={(SITE as { theme?: string }).theme || undefined}
     >
       <head>
         <HeadContent />

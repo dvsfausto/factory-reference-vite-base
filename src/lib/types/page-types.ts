@@ -29,6 +29,13 @@ export interface AreaLink {
   label: string
 }
 
+export interface ServiceVariant {
+  label: string
+  duration_minutes?: number | null
+  price?: string | null
+  note?: string | null
+}
+
 export interface ServiceRef {
   slug: string
   /**
@@ -77,6 +84,14 @@ export interface ServiceRef {
    * Products are their own thing (2026-09-29): a service is never bought, so there is no 'buy' here.
    */
   action?: 'collect' | 'quote' | 'book' | 'inquire'
+  /** ZB-147 W1.2: the owner's path for this service (services.metadata.path); absent → `action` decides */
+  path?: 'book' | 'inquire' | 'quote'
+  /** how the price shows on the service page: the variants, "starting at", or nothing (custom quote) */
+  priceDisplay?: 'show' | 'from' | 'hidden'
+  /** the catalogue price, formatted ("$600"), when the business shows prices */
+  price?: string
+  /** duration packages, each with its own price */
+  variants?: ServiceVariant[]
   /**
    * ★★★ THE CATALOG SERVICE UUID — REQUIRED, and that is the point.
    *
@@ -261,4 +276,13 @@ export interface Review {
   avatar?: string
   /** ★ the review at its source (a Google review's own page), so a reader can see it there (2026-09-25) */
   url?: string
+}
+
+/** ★ a page's own gallery, built by the owner (design_dna.galleries[pageKey]); see lib/galleries.ts */
+export interface PageGallery {
+  photos: Array<string | { url: string; title?: string; alt?: string; category?: string }>
+  cover?: string
+  layout?: 'grid' | 'masonry' | 'strip' | 'marquee' | 'wall'
+  hidden?: boolean
+  edited_at?: string
 }

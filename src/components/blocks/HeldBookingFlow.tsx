@@ -63,6 +63,8 @@ export function HeldBookingFlow({ entry, onReleased }: { entry: HeldEntry; onRel
   const [room, setRoom] = useState<Room | null>(null)
   const [busy, setBusy] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
+  /* ★ ZB-180: letting a held spot go asks first (one tap released a seat 14 s in, Fitcycling 2026-10-07) */
+  const [askRelease, setAskRelease] = useState(false)
   const [now, setNow] = useState(() => Date.now())
   const tries = useRef(0)
 
@@ -186,7 +188,17 @@ export function HeldBookingFlow({ entry, onReleased }: { entry: HeldEntry; onRel
           )}
         </div>
         {error && <p role="alert" className="mt-3 text-sm text-red-600">{error}</p>}
-        <button type="button" data-held-action="release" disabled={busy !== null} onClick={() => void letGo()} className="mt-4 text-sm text-ink-600 underline-offset-2 hover:underline">{tr('booking.letGo')}</button>
+        {!askRelease ? (
+          <button type="button" data-held-action="release" disabled={busy !== null} onClick={() => setAskRelease(true)} className="mt-4 text-sm text-ink-600 underline-offset-2 hover:underline">{tr('booking.letGo')}</button>
+        ) : (
+          <div data-held-release-ask role="group" className="mt-4 rounded-xl border px-4 py-3" style={{ borderColor: 'var(--wow-hairline)' }}>
+            <p className="text-sm text-ink-900">{tr('booking.releaseAsk').replace('{class}', status?.occurrence?.title ?? tr('booking.thisClass')).replace('{when}', status?.occurrence ? new Date(status.occurrence.start_at).toLocaleString(undefined, { weekday: 'long', hour: 'numeric', minute: '2-digit' }) : '')}</p>
+            <div className="mt-3 flex flex-wrap gap-2">
+              <button type="button" data-held-action="release-keep" disabled={busy !== null} onClick={() => setAskRelease(false)} className="inline-flex h-10 items-center rounded-xl border px-4 text-sm font-semibold text-ink-900" style={{ borderColor: 'var(--wow-hairline)' }}>{tr('booking.keepMySpot')}</button>
+              <button type="button" data-held-action="release-yes" disabled={busy !== null} onClick={() => void letGo()} className="inline-flex h-10 items-center rounded-xl px-4 text-sm font-semibold text-ink-600 underline-offset-2 hover:underline">{busy === 'release' ? '…' : tr('booking.releaseYes')}</button>
+            </div>
+          </div>
+        )}
       </Card>
     )
   }

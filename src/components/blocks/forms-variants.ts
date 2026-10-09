@@ -26,7 +26,7 @@ export interface FormBlockProps {
 // contact as the default fallback. The CONTACT/booking skins post the generic handle-website-lead
 // envelope (submitLead); the QUOTE variant posts a structured quote_request (submitQuoteRequest) —
 // they differ in endpoint, fields, and layout. Always rendered — a form is useful on any site.
-export const FORMS_VARIANTS: Record<string, ComponentType<FormBlockProps>> = {
+export const FORMS_VARIANTS: Record<string, ComponentType<FormBlockProps & { serviceSlug?: string }>> = {
   contact: FormContactBlock,
   booking: FormBookingBlock,
   quote: FormQuoteBlock,

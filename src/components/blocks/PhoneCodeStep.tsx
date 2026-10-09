@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Loader2 } from 'lucide-react'
 import { SUPABASE_URL, SUPABASE_ANON_KEY, BUSINESS_ID } from '~/data/site'
 import { tr } from '~/lib/i18n'
+import { readSession, writeSession, clearSession } from '~/lib/portal-session'
 
 /**
  * ★★★ THE PERSON IS KNOWN AFTER THE CODE, NEVER BEFORE (ZB-224, the owner, 2026-10-09).
@@ -14,7 +15,6 @@ import { tr } from '~/lib/i18n'
  * Shared by the class flow and the appointment wizard. Every fact comes from the portal functions; this page never names the person.
  */
 export type Verified = { token: string; known: boolean; credits: number; phone: string; profile: { firstName: string; lastName: string; email: string } }
-export const PORTAL_SESSION_KEY = 'zmode_portal_session'
 const HEADERS = { 'Content-Type': 'application/json', apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` }
 type Phase = 'phone' | 'code' | 'name'
 
@@ -27,11 +27,10 @@ export async function portalCall(name: string, body: Record<string, unknown>, se
 
 /** a session from the last half hour (the same visit, or back from the sign page): who it is, read from the portal, never typed */
 export async function restoreVerified(): Promise<Verified | null> {
-  let sess: string | null = null
-  try { sess = window.sessionStorage.getItem(PORTAL_SESSION_KEY) } catch { return null }
+  const sess = readSession()
   if (!sess) return null
   const { ok, status, data } = await portalCall('portal-read', { businessId: BUSINESS_ID }, sess)
-  if (!ok) { if (status === 401) { try { window.sessionStorage.removeItem(PORTAL_SESSION_KEY) } catch { /* nothing */ } } return null }
+  if (!ok) { if (status === 401) clearSession(); return null }
   const c = (data.customer ?? {}) as { firstName?: string | null; lastName?: string | null }
   const packs = (Array.isArray(data.packs) ? data.packs : []) as Array<{ balance?: number | null; status?: string | null }>
   const credits = packs.filter((p) => !p.status || p.status === 'active').reduce((n, p) => n + Math.max(0, Number(p.balance ?? 0)), 0)
@@ -81,7 +80,7 @@ export function PhoneCodeStep({ onVerified, intro, initialPhone }: { onVerified:
     setBusy(true); setError(null)
     const { ok, data } = await portalCall('portal-verify', { businessId: BUSINESS_ID, phone: phone.trim(), code: code.trim() })
     if (!ok || typeof data.token !== 'string') { setBusy(false); setError(tr('portal.wrongCode')); return }
-    try { window.sessionStorage.setItem(PORTAL_SESSION_KEY, data.token) } catch { /* not kept */ }
+    writeSession(data.token)
     const p = (data.profile ?? {}) as { firstName?: string | null; lastName?: string | null; email?: string | null }
     const v: Verified = { token: data.token, known: data.known === true, credits: Number(data.credits ?? 0) || 0, phone: phone.trim(), profile: { firstName: String(p.firstName ?? '').trim(), lastName: String(p.lastName ?? '').trim(), email: String(p.email ?? '').trim() || email.trim() } }
     setBusy(false)

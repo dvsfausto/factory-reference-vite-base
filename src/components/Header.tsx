@@ -1,5 +1,7 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useRouterState } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
+import { HOMEPAGE_LAYOUT } from "~/data/layout";
+import { ARROW } from "~/lib/editorial";
 import { Menu, X, Phone, ChevronDown } from "lucide-react";
 import { Logo } from "./Logo";
 import { SITE, BOOKING } from "~/data/site";
@@ -17,6 +19,7 @@ import { tr } from "~/lib/i18n";
 // whatever the family theme says (a friendly header on Athletic Dark has no invert of its own). Light sites: unchanged.
 const isDarkSite = (SITE as { polarity?: string }).polarity === "dark"
 import { HAS_PHONE } from '~/lib/phone'
+import { portfolioMenuHref } from '~/lib/portfolio-pages'
 import { SELLS } from '~/lib/sells'
 // PRAISE-61 — nav links a customer chose to hide from the menu (design_dna.chrome.nav.hidden →
 // SITE.hiddenNav). ABSENT/empty → nothing filtered → byte-identical to today. Filtering only; the
@@ -64,9 +67,59 @@ interface HeaderTheme {
   mobileBorder: string;
   mobilePhone: string;
   mobileCta: string;
+  /** Editorial-only: the shell's placement classes. Absent → `sticky top-0` (every other theme, unchanged). */
+  position?: string;
+  /** Editorial-only: no backdrop blur on a transparent shell over the hero photo. Absent → blur (unchanged). */
+  noBlur?: boolean;
+  /** Editorial-only: the CTA is a text link that ends in the arrow glyph. Absent → the label alone (unchanged). */
+  ctaArrow?: boolean;
 }
 
+// The Editorial theme's chrome (ZB-147 W1.2), selected by SITE.chromeStyle='editorial'. Two renderings of ONE
+// look: 'editorial' is the translucent cream bar with a hairline (every inner page, and the home page when its
+// hero is not the full-bleed photo); 'editorial-over' lays transparently over the 'editorial-photo' hero on the
+// home page with on-dark text. Both: 96px tall, nav centred in 12px uppercase tracked caps, the CTA a text link
+// ending in the arrow. Dropdowns and the <details> mobile menu keep their behaviour, shell classes only.
+const EDITORIAL_NAV = "font-sans text-[12px] font-medium uppercase tracking-[0.14em] transition-colors";
+const EDITORIAL_CTA = "inline-flex items-center gap-2 font-sans text-[12px] font-medium uppercase tracking-[0.14em] border-b border-current pb-1 transition-colors";
+const EDITORIAL_BASE: HeaderTheme = {
+  shell: "bg-fam-page/90 border-b border-fam-hairline",
+  scrolledShadow: "",
+  skip: "focus:bg-fam-ink focus:text-fam-page",
+  navLink: `${EDITORIAL_NAV} text-fam-ink hover:text-fam-accent-text-strong`,
+  cta: `${EDITORIAL_CTA} text-fam-ink hover:text-fam-accent-text-strong`,
+  ctaArrow: true,
+  ctaLabel: "Get in touch",
+  dropdownSurface: "bg-fam-page border border-fam-hairline elev-3",
+  dropdownItem: "hover:bg-fam-surface-2",
+  dropdownTitle: "text-fam-ink",
+  dropdownSub: "text-fam-ink-muted",
+  areaAllLink: "text-fam-accent-text-strong hover:bg-fam-surface-2",
+  phoneLink: "text-fam-ink-muted hover:text-fam-ink",
+  menuIcon: "text-fam-ink",
+  logoLight: false,
+  mobilePanel: "bg-fam-page",
+  mobileText: "text-fam-ink",
+  mobileLabel: "text-fam-ink-muted",
+  mobileBorder: "border-fam-hairline",
+  mobilePhone: "text-fam-accent-text-strong",
+  mobileCta: "inline-flex h-12 w-full items-center justify-center bg-fam-ink font-sans text-[12px] font-medium uppercase tracking-[0.14em] text-fam-page",
+};
+
 const HEADER_THEMES: Record<string, HeaderTheme> = {
+  editorial: EDITORIAL_BASE,
+  "editorial-over": {
+    ...EDITORIAL_BASE,
+    shell: "bg-transparent",
+    position: "absolute inset-x-0 top-0",
+    noBlur: true,
+    skip: "focus:bg-fam-page focus:text-fam-ink",
+    navLink: `${EDITORIAL_NAV} text-fam-on-statement hover:text-fam-accent-tint`,
+    cta: `${EDITORIAL_CTA} text-fam-on-statement hover:text-fam-accent-tint`,
+    phoneLink: "text-fam-on-statement-muted hover:text-fam-on-statement",
+    menuIcon: "text-fam-on-statement",
+    logoLight: true,
+  },
   // WOW chrome (Arc 1 · Stage 2). A frosted-glass sticky header that intensifies
   // on scroll, brand-reactive via the --wow-* tokens + the brand ramp. Character-
   // agnostic: selected by SITE.chromeStyle='wow' (not a character), so it composes
@@ -305,7 +358,7 @@ export function Header() {
   // phone showed a dead menu button while the bundle had not run). React only closes it after a link is followed.
   const menuRef = useRef<HTMLDetailsElement>(null);
   const closeMenu = () => { if (menuRef.current) menuRef.current.open = false; };
-  const [openMenu, setOpenMenu] = useState<"services" | "areas" | null>(null);
+  const [openMenu, setOpenMenu] = useState<"services" | "areas" | `group-${number}` | null>(null);
   const character = (SITE as { character?: string }).character ?? "";
   const surface = (SITE as { surface?: string }).surface ?? "";
   // SITE.chromeStyle is the frame (header/footer) style override — 'wow' selects
@@ -320,8 +373,13 @@ export function Header() {
   //     every other family → today's standard left-logo bar in its own colours.
   //   • COLOUR THEME — the family's HEADER_THEMES entry (elegant maps to the light editorial palette).
   const family = (SITE as { headerVariant?: string }).headerVariant ?? "";
-  const structure: "standard" | "editorial" | "utility" =
-    family === "elegant" ? "editorial" : family === "corporate" ? "utility" : "standard";
+  // The Editorial theme's chrome (ZB-147 W1.2): chromeStyle 'editorial' takes the centred structure; on the home
+  // page, when the homepage hero is the full-bleed 'editorial-photo', the shell lays transparently over it.
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const editorialChrome = chrome === "editorial";
+  const overHero = editorialChrome && pathname === "/" && HOMEPAGE_LAYOUT.some((b) => b.type === "hero" && b.variant === "editorial-photo");
+  const structure: "standard" | "editorial" | "utility" | "centered" =
+    editorialChrome ? "centered" : family === "elegant" ? "editorial" : family === "corporate" ? "utility" : "standard";
   // Family → colour-theme key. Most families share their name; two remap: elegant → the LIGHT editorial
   // palette (the dark espresso theme is opt-in via character+surface), and wow-glass → the brand-reactive
   // 'wow' glass theme (keyed by name here since the design wave sets no chromeStyle). Keeps header theme
@@ -329,7 +387,9 @@ export function Header() {
   const familyThemeKey =
     family === "elegant" ? "elegant-light" : family === "wow-glass" ? "wow" : family;
   const themeKey =
-    chrome && HEADER_THEMES[chrome]
+    overHero
+      ? "editorial-over"
+      : chrome && HEADER_THEMES[chrome]
       ? chrome
       : family && HEADER_THEMES[familyThemeKey]
         ? familyThemeKey
@@ -365,7 +425,36 @@ export function Header() {
   // The desktop nav links (dropdowns + page links). `dropAlign` positions the
   // dropdown panel — `left-0` under a left-aligned bar, centred under the editorial
   // masthead's centred nav row so the panel doesn't hang off-screen.
-  const navLinks = (dropAlign = "left-0") => (
+  /* ★ THE OWNER'S OWN MENU (ZB-147 W1.3): design_dna.chrome.nav.groups → SITE.navGroups = [{ label, items: [{ label, href }] }].
+     Set, it IS the menu: a group with several items is a dropdown, a group with one is a link; the default list below is not
+     drawn. Unset → the default menu, byte-identical. Hrefs are the site's own paths (validated at build). */
+  const navGroups = (SITE as { navGroups?: Array<{ label: string; items: Array<{ label: string; href: string }> }> }).navGroups ?? []
+  const navLinks = (dropAlign = "left-0") => navGroups.length > 0 ? (
+    <>
+      {navGroups.map((g, gi) =>
+        g.items.length === 1 ? (
+          <a key={gi} href={portfolioMenuHref(g.items[0]!.href)} className={`px-3 py-2 ${t.navLink} focus-ring rounded-md`}>{g.label}</a>
+        ) : (
+          <div key={gi} className="relative" onMouseEnter={() => setOpenMenu(`group-${gi}`)} onMouseLeave={() => setOpenMenu(null)}>
+            <button className={`flex items-center gap-1 px-3 py-2 ${t.navLink} focus-ring rounded-md`} aria-expanded={openMenu === `group-${gi}`}>
+              {g.label} <ChevronDown className="h-4 w-4" />
+            </button>
+            {openMenu === `group-${gi}` && (
+              <div className={`absolute ${dropAlign} top-full pt-2`}>
+                <div className={`${t.dropdownSurface} p-2 w-64`}>
+                  {g.items.map((it) => (
+                    <a key={it.href + it.label} href={portfolioMenuHref(it.href)} className={`block px-3 py-2 rounded-lg text-sm ${t.dropdownItem}`}>
+                      <div className={`font-medium ${t.dropdownTitle}`}>{it.label}</div>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        ),
+      )}
+    </>
+  ) : (
     <>
       {/* Services nav omitted when the site has no service pages (e.g. a
           generic-vertical business whose owner supplied none) — no empty
@@ -444,13 +533,23 @@ export function Header() {
     </>
   );
 
-  const phoneCluster = HAS_PHONE && (
+  // THE PHONE IN THE HEADER is the owner's choice (site.headerPhone 'show' | 'hide', factory-emitted as SITE.headerPhone);
+  // unset, the Editorial chrome leaves it out (its right side is the one inquiry link) and every other chrome shows it (ZB-147 W1.1).
+  const headerPhonePref = (SITE as { headerPhone?: string }).headerPhone;
+  const headerPhoneWanted = headerPhonePref ? headerPhonePref === "show" : !editorialChrome;
+  const showHeaderPhone = HAS_PHONE && headerPhoneWanted;
+  const phoneCluster = showHeaderPhone && (
     <a href={`tel:${SITE.phone}`} className={`flex items-center gap-1.5 text-sm font-semibold ${t.phoneLink} focus-ring rounded-md px-2 py-1`}>
       <Phone className="h-4 w-4" />
       {SITE.phoneDisplay}
     </a>
   );
-  const ctaButton = <PrimaryCta className={t.cta}>{headerCtaLabel}</PrimaryCta>;
+  const ctaButton = (
+    <PrimaryCta className={t.cta}>
+      {headerCtaLabel}
+      {t.ctaArrow && <span aria-hidden="true" className="text-[13px]">{ARROW}</span>}
+    </PrimaryCta>
+  );
   const mobileTrigger = (
     <details ref={menuRef} className="mobile-nav lg:hidden" onToggle={onMenuToggle}>
       <summary className="inline-flex p-2 focus-ring rounded-md cursor-pointer" aria-label={tr('nav.openMenu')}>
@@ -460,7 +559,20 @@ export function Header() {
       {/* Absolute under the bar, not fixed: the header's backdrop-blur is a containing block for fixed children. */}
       <div className={`absolute inset-x-0 top-full z-[60] ${t.mobilePanel} lg:hidden overflow-y-auto`} style={{ height: 'calc(100dvh - 5rem)' }}>
           <div className="container-x pb-12 space-y-6">
-            {SERVICES.length > 0 && !HIDDEN_NAV.includes('services') && (
+            {navGroups.map((g, gi) =>
+              g.items.length === 1 ? (
+                // a one-item group is a plain link on the phone too (no label over a single line)
+                <a key={gi} href={portfolioMenuHref(g.items[0]!.href)} onClick={closeMenu} className={`block py-2 text-base font-medium ${t.mobileText}`}>{g.label}</a>
+              ) : (
+                <div key={gi}>
+                  <div className={`text-xs font-semibold ${t.mobileLabel} uppercase tracking-wider mb-2`}>{g.label}</div>
+                  {g.items.map((it) => (
+                    <a key={it.href + it.label} href={portfolioMenuHref(it.href)} onClick={closeMenu} className={`block py-2 text-base font-medium ${t.mobileText}`}>{it.label}</a>
+                  ))}
+                </div>
+              ),
+            )}
+            {navGroups.length === 0 && SERVICES.length > 0 && !HIDDEN_NAV.includes('services') && (
               <div>
                 <div className={`text-xs font-semibold ${t.mobileLabel} uppercase tracking-wider mb-2`}>{tr('nav.services')}</div>
                 {SERVICES.map((s) => (
@@ -470,7 +582,7 @@ export function Header() {
                 ))}
               </div>
             )}
-            {AREAS.length > 0 && !HIDDEN_NAV.includes('areas') && (
+            {navGroups.length === 0 && AREAS.length > 0 && !HIDDEN_NAV.includes('areas') && (
               <div>
                 <div className={`text-xs font-semibold ${t.mobileLabel} uppercase tracking-wider mb-2`}>{tr('nav.areas')}</div>
                 {AREAS.map((a) => (
@@ -480,6 +592,7 @@ export function Header() {
                 ))}
               </div>
             )}
+            {navGroups.length === 0 && (
             <div className="space-y-2">
               {!HIDDEN_NAV.includes('pricing') && <Link to="/pricing" onClick={closeMenu} className={`block py-2 text-base font-medium ${t.mobileText}`}>{tr('nav.pricing')}</Link>}
               {!HIDDEN_NAV.includes('reviews') && <Link to="/reviews" onClick={closeMenu} className={`block py-2 text-base font-medium ${t.mobileText}`}>{tr('nav.reviews')}</Link>}
@@ -490,8 +603,9 @@ export function Header() {
               ))}
               <PortalLink place="menu" onClick={closeMenu} className={`block py-2 text-base font-medium ${t.mobileText}`} />
             </div>
+            )}
             <div className={`pt-4 border-t ${t.mobileBorder} space-y-3`}>
-              {HAS_PHONE && (<a href={`tel:${SITE.phone}`} className={`flex items-center gap-2 text-base font-semibold ${t.mobilePhone}`}>
+              {HAS_PHONE && headerPhoneWanted && (<a href={`tel:${SITE.phone}`} className={`flex items-center gap-2 text-base font-semibold ${t.mobilePhone}`}>
                 <Phone className="h-5 w-5" /> {SITE.phoneDisplay}
               </a>)}
               <PrimaryCta onClick={closeMenu} className={t.mobileCta}>
@@ -517,9 +631,9 @@ export function Header() {
       <header
         data-header-structure={structure}
         data-header-theme={themeKey || "default"}
-        className={`sticky top-0 z-40 ${
+        className={`${t.position ?? "sticky top-0"} z-40 ${
           scrolled && t.shellScrolled ? t.shellScrolled : t.shell
-        } backdrop-blur ${t.shellScrolled ? "transition-all" : "transition-shadow"} ${
+        } ${t.noBlur ? "" : "backdrop-blur"} ${t.shellScrolled ? "transition-all" : "transition-shadow"} ${
           scrolled ? t.scrolledShadow : ""
         }`}
       >
@@ -538,6 +652,33 @@ export function Header() {
               {ctaButton}
             </div>
             {mobileTrigger}
+          </div>
+        )}
+
+        {structure === "centered" && (
+          // THE EDITORIAL THEME'S BAR (ZB-147 W1.2): 96px, logo left at 56px, the nav CENTRED (a three-track grid so
+          // the centre is the true centre whatever the logo and CTA widths), the CTA a text link on the right.
+          // Phone: logo + the <details> menu, as every structure.
+          <div className="container-x">
+            <div className="flex lg:hidden items-center justify-between h-24">
+              <Link to="/" className="focus-ring rounded-md" aria-label={`${SITE.name} ${tr('nav.homeLink')}`}>
+                <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={56} alt={SITE.name} />
+              </Link>
+              {mobileTrigger}
+            </div>
+            {/* the centered (Editorial) header carries the logo larger: 72 on desktop, 56 on a phone (Fausto, 2026-10-07) */}
+            <div className="hidden lg:grid grid-cols-[1fr_auto_1fr] items-center h-24">
+              <Link to="/" className="justify-self-start focus-ring rounded-md" aria-label={`${SITE.name} ${tr('nav.homeLink')}`}>
+                <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={72} alt={SITE.name} />
+              </Link>
+              <nav className="flex items-center justify-center gap-2" aria-label={tr('nav.ariaPrimary')}>
+                {navLinks("left-1/2 -translate-x-1/2")}
+              </nav>
+              <div className="justify-self-end flex items-center gap-6">
+                {phoneCluster}
+                {ctaButton}
+              </div>
+            </div>
           </div>
         )}
 
@@ -587,7 +728,7 @@ export function Header() {
                 </div>
                 <div className="flex items-center gap-6">
                   {SITE.email && <a href={`mailto:${SITE.email}`} className="hover:underline">{SITE.email}</a>}
-                  {HAS_PHONE && (<a href={`tel:${SITE.phone}`} className={`font-semibold ${t.phoneLink}`}>{SITE.phoneDisplay}</a>)}
+                  {HAS_PHONE && headerPhoneWanted && (<a href={`tel:${SITE.phone}`} className={`font-semibold ${t.phoneLink}`}>{SITE.phoneDisplay}</a>)}
                 </div>
               </div>
             </div>

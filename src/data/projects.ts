@@ -20,6 +20,8 @@ export interface GalleryItem {
   caption?: string
   image: string
   alt?: string
+  /** the owner's category for the photo (a kind of work: Weddings, Events, …); the portfolio pages and cards group by it */
+  category?: string
   // Optional before/after pair (the slider variant); only rendered when present.
   beforeImage?: string
   afterImage?: string

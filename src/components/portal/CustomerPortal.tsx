@@ -15,7 +15,7 @@ import { hasPhone } from '~/lib/phone'
  * which names the person, so the same rows land as from the site or by asking. The business decides whether the portal is on.
  */
 const HEADERS = { 'Content-Type': 'application/json', apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` }
-const SESSION_KEY = 'zmode_portal_session'
+import { readSession, writeSession, clearSession } from '~/lib/portal-session'
 type Phase = 'checking' | 'off' | 'phone' | 'code' | 'home' | 'classes' | 'booking' | 'held'
 type Payload = { waiting?: Array<{ occurrenceId: string; classTitle: string | null; startTime: string; position: number }>; /* a seat held while paying is not a booking (the owner, 2026-09-29) */ held?: Array<{ id: string; classTitle: string | null; startTime: string; expiresAt: string }>; customer: { firstName: string | null; lastName: string | null }; bookings: Array<{ id: string; startTime: string; status: string; upcoming: boolean; serviceName?: string | null; classTitle?: string | null; seatNo?: number | null; cancellable?: boolean }>; packs: Array<{ id: string; packName?: string | null; balance: number; totalGranted?: number; status: string; expiresAt?: string | null }> }
 
@@ -61,7 +61,7 @@ export function CustomerPortal() {
   const load = async (sess: string) => {
     const { ok, status, data } = await fn('portal-read', { businessId: BUSINESS_ID }, sess)
     if (status === 404 && data.error === 'portal_off') { setPhase('off'); return }
-    if (!ok) { try { window.sessionStorage.removeItem(SESSION_KEY) } catch { /* nothing */ } setToken(null); setPhase('phone'); return }
+    if (!ok) { clearSession(); setToken(null); setPhase('phone'); return }
     setMe(data as unknown as Payload); setPhase('home')
   }
   useEffect(() => {
@@ -71,8 +71,7 @@ export function CustomerPortal() {
         const rows = (await r.json()) as Array<{ features_enabled: { portal?: boolean } | null }>
         if (rows[0]?.features_enabled?.portal !== true) { setPhase('off'); return }
       } catch { setPhase('off'); return }
-      let sess: string | null = null
-      try { sess = window.sessionStorage.getItem(SESSION_KEY) } catch { /* none */ }
+      const sess: string | null = readSession()
       const q = new URLSearchParams(window.location.search)
       const bk = q.get('booking'); const t = q.get('t'); const heldId = q.get('held')
       if ((bk && t && q.get('paid') === '1') || (heldId && t)) { setHeld({ bookingId: (bk ?? heldId) as string, token: t as string, initial: 'confirming' }); setToken(sess); setPhase('held'); return }
@@ -92,10 +91,10 @@ export function CustomerPortal() {
     const { ok, data } = await fn('portal-verify', { businessId: BUSINESS_ID, phone, code })
     setBusy(false)
     if (!ok || typeof data.token !== 'string') { setError(tr('portal.wrongCode')); return }
-    try { window.sessionStorage.setItem(SESSION_KEY, data.token) } catch { /* not kept */ }
+    writeSession(data.token)
     setToken(data.token); await load(data.token)
   }
-  const signOut = () => { try { window.sessionStorage.removeItem(SESSION_KEY) } catch { /* nothing */ } setToken(null); setMe(null); setPhase('phone') }
+  const signOut = () => { clearSession(); setToken(null); setMe(null); setPhase('phone') }
   const openClasses = async () => {
     setBusy(true)
     try { const r = await fetch(liveClassesUrl(BUSINESS_ID, await classWindowDays(21)), { headers: HEADERS }); setClasses((await r.json()) as LiveClass[]) } catch { setClasses([]) }

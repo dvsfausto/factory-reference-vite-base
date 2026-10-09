@@ -5,7 +5,9 @@ import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { HAS_PHONE, hasPhone } from '~/lib/phone'
 import { HeldBookingFlow, type HeldEntry, type HeldOptions } from '~/components/blocks/HeldBookingFlow'
 import { ClassBookingFlow } from '~/components/blocks/ClassBookingFlow'
-import { PhoneCodeStep, BookingFor, restoreVerified, PORTAL_SESSION_KEY, type Verified } from '~/components/blocks/PhoneCodeStep'
+import { PhoneCodeStep, BookingFor, restoreVerified, type Verified } from '~/components/blocks/PhoneCodeStep'
+import { writeSession } from '~/lib/portal-session'
+import { clearSession } from '~/lib/portal-session'
 import {
   Calendar,
   Check,
@@ -328,9 +330,17 @@ export function BookingWizardBlock({
      packs for sale; each gets a Buy button that opens a checkout on the business's own Stripe. Paid → back here with ?paid=1. */
   const [packOffer, setPackOffer] = useState<Array<{ id: string; name: string; credits: number; price: number }>>([])
   const [waiverLink, setWaiverLink] = useState<string | null>(null)
+  /* ★ W1.2: a request that needs the agreement signed carries the link to sign it (metadata.agreement, from create-booking) */
+  const [agreementLink, setAgreementLink] = useState<string | null>(null)
   const [payInfo, setPayInfo] = useState<{ link: string; amount: number; kind: string } | null>(null)
   /* ★ THE WAITLIST (the classes arc, 2026-09-23): a FULL class takes names; the same details step, then waitlist-join instead of a booking */
   const [waitlist, setWaitlist] = useState<{ position: number; waiting: number } | null>(null)
+  /* ★ A REQUEST IS NOT A BOOKING (ZB-147): a business in request mode answers `request: true`. The page then says the request
+     was received and that the date is not reserved yet. It never says "booked". The server decides; nothing is baked here. */
+  const [requested, setRequested] = useState(false)
+  /* the mode is the owner's live setting, read with the booking switch: the page stops promising an instant confirmation the
+     moment the owner asks for requests, without a rebuild */
+  const requestMode = features?.booking_mode === 'request'
   const [waitlistMode, setWaitlistMode] = useState(false)
   const [buying, setBuying] = useState<string | null>(null)
   /* ★★★ THE SEAT IS ONLY THEIRS ONCE IT IS PAID OR SPENT (the owner, 2026-09-24): after a class booking lands, HeldBookingFlow
@@ -359,11 +369,11 @@ export function BookingWizardBlock({
     setMe(v)
     setCustomer((c) => ({ ...c, phone: v.phone || c.phone, firstName: v.profile.firstName, lastName: v.profile.lastName, email: v.profile.email || c.email }))
   }
-  const forgetMe = () => { setMe(null); try { window.sessionStorage.removeItem(PORTAL_SESSION_KEY) } catch { /* nothing */ } }
+  const forgetMe = () => { setMe(null); clearSession() }
   const paid = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('paid') === '1'
   /* ★ THE PAID RETURN (the owner, 2026-09-23): a person back from Stripe sees first that it worked and what they now hold, read from
      the sale itself (pack-checkout GET ?session=): first name, the pack, the classes. Nothing is claimed before it is read. */
-  const [paidInfo, setPaidInfo] = useState<{ first_name: string | null; pack: string | null; credits: number | null; balance: number | null; landed: boolean; waiver?: { signed: boolean; link: string | null } | null } | null>(null)
+  const [paidInfo, setPaidInfo] = useState<{ first_name: string | null; pack: string | null; credits: number | null; balance: number | null; landed: boolean; waiver?: { signed: boolean; link: string | null } | null; klass?: { occurrence_id: string; title: string | null; start_at: string | null; state: string; booking_id: string | null; token: string | null } | null } | null>(null)
   useEffect(() => {
     if (!paid || typeof window === 'undefined') return
     const sid = new URLSearchParams(window.location.search).get('session_id') || ''
@@ -372,9 +382,13 @@ export function BookingWizardBlock({
     const read = async () => {
       try {
         const r = await fetch(`${SUPABASE_URL}/functions/v1/pack-checkout?session=${encodeURIComponent(sid)}&business=${BUSINESS_ID}`, { headers: ANON_HEADERS })
-        const j = (await r.json()) as { paid?: boolean; landed?: boolean; first_name?: string | null; pack?: string | null; credits?: number | null; balance?: number | null; waiver?: { signed?: boolean; link?: string | null } | null }
+        const j = (await r.json()) as { paid?: boolean; landed?: boolean; first_name?: string | null; pack?: string | null; credits?: number | null; balance?: number | null; waiver?: { signed?: boolean; link?: string | null } | null; class?: { occurrence_id?: string; title?: string | null; start_at?: string | null; state?: string; booking_id?: string | null; token?: string | null } | null; session?: string | null }
+        /* ★★★ ZB-194 (2026-10-08): THE PAID RETURN KEEPS THE BUYER. The landed sale hands back a portal session for the sale's own
+           contact; written to the one session seam, so "pick a class below" continues as the buyer (no phone, no code, the credit in
+           hand). A Fitcycling rider who mistyped her phone at purchase became a stranger with no credit at the class step. */
+        if (j.paid && j.landed && typeof j.session === 'string' && j.session) writeSession(j.session)
         /* ★ the sign step at pack checkout (2026-10-04): only when the business put it there; the server says whether it is signed */
-        if (j.paid) setPaidInfo({ first_name: j.first_name ?? null, pack: j.pack ?? null, credits: j.credits ?? null, balance: j.balance ?? null, landed: !!j.landed, waiver: j.waiver ? { signed: j.waiver.signed === true, link: typeof j.waiver.link === 'string' ? j.waiver.link : null } : null })
+        if (j.paid) setPaidInfo({ first_name: j.first_name ?? null, pack: j.pack ?? null, credits: j.credits ?? null, balance: j.balance ?? null, landed: !!j.landed, waiver: j.waiver ? { signed: j.waiver.signed === true, link: typeof j.waiver.link === 'string' ? j.waiver.link : null } : null , klass: j.class && j.class.occurrence_id ? { occurrence_id: j.class.occurrence_id, title: j.class.title ?? null, start_at: j.class.start_at ?? null, state: j.class.state ?? '', booking_id: j.class.booking_id ?? null, token: j.class.token ?? null } : null })
         if (j.paid && !j.landed && tries++ < 6) setTimeout(read, 2500)
       } catch { /* the page stays as it is */ }
     }
@@ -556,6 +570,8 @@ export function BookingWizardBlock({
         hold?: { token?: string; expires_at?: string }
         options?: HeldOptions
         booking?: { id?: string; seat_no?: number | null }
+        request?: boolean
+        agreement?: { link?: string; signed?: boolean } | null
         invoice?: { link?: string; amount?: number; kind?: string; paid?: boolean }
         error?: string
         waiver?: { link?: string; signed?: boolean } | null
@@ -575,6 +591,8 @@ export function BookingWizardBlock({
       /* ★ THE WAIVER BY LINK (the classes arc, part 4): a class booking whose person has not signed the studio's current waiver
          gets the signing link on the confirmation screen. Signed before → nothing shown. */
       setWaiverLink(data.waiver && data.waiver.signed !== true && typeof data.waiver.link === 'string' ? data.waiver.link : null)
+      setRequested(data.request === true)
+      setAgreementLink(data.agreement && data.agreement.signed !== true && typeof data.agreement.link === 'string' ? data.agreement.link : null)
       setPayInfo(data.invoice && typeof data.invoice.link === 'string' && Number(data.invoice.amount) > 0 && data.invoice.paid !== true ? { link: data.invoice.link, amount: Number(data.invoice.amount), kind: String(data.invoice.kind ?? '') } : null)
       setStep('confirmed')
     } catch (err) {
@@ -602,10 +620,19 @@ export function BookingWizardBlock({
           {paidInfo && (
             <div data-booking-paid role="status" className="mb-8 rounded-2xl border border-fam-hairline bg-fam-surface px-5 py-4 text-fam-ink">
               <div className="font-display text-lg font-semibold">{tr('booking.paidTitle')}</div>
-              <p className="mt-1 text-sm text-fam-ink-muted">
-                {(paidInfo.first_name ? `${paidInfo.first_name}, ` : '') + tr('booking.paidBody').replace('{n}', String(paidInfo.balance ?? paidInfo.credits ?? '')).replace('{pack}', paidInfo.pack ?? '')}
-                {!paidInfo.landed ? ` ${tr('booking.paidLanding')}` : ''}
-              </p>
+              {/* ★ ZB-180: the class the pack was bought for is booked by the sale itself; the return continues THAT booking
+                  ("You're booked", the waiver and the spot pick through the same hold flow), never "pick a class below" */}
+              {paidInfo.klass?.booking_id && paidInfo.klass.token ? (
+                <>
+                  <p data-paid-class className="mt-1 text-sm text-fam-ink-muted">{(paidInfo.first_name ? `${paidInfo.first_name}, ` : '') + tr('booking.paidBooked').replace('{n}', String(paidInfo.balance ?? paidInfo.credits ?? '')).replace('{pack}', paidInfo.pack ?? '')}</p>
+                  <div className="mt-4"><HeldBookingFlow entry={{ bookingId: paidInfo.klass.booking_id, token: paidInfo.klass.token, initial: 'confirming' }} onReleased={() => setPaidInfo((p) => (p ? { ...p, klass: null } : p))} /></div>
+                </>
+              ) : (
+                <p className="mt-1 text-sm text-fam-ink-muted">
+                  {(paidInfo.first_name ? `${paidInfo.first_name}, ` : '') + tr('booking.paidBody').replace('{n}', String(paidInfo.balance ?? paidInfo.credits ?? '')).replace('{pack}', paidInfo.pack ?? '')}
+                  {!paidInfo.landed ? ` ${tr('booking.paidLanding')}` : ''}
+                </p>
+              )}
               {paidInfo.waiver && !paidInfo.waiver.signed && paidInfo.waiver.link && (
                 <div data-paid-waiver className="mt-4 border-t border-fam-hairline pt-4">
                   <p className="text-sm text-fam-ink">{tr('booking.waiverAsk')}</p>
@@ -630,7 +657,7 @@ export function BookingWizardBlock({
             </Heading>
             {body && (
               <p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-ink-700">
-                {body}
+                {requestMode && (body === tr('booking.bookBody') || /confirmed (right away|instantly)|confirmado al instante/i.test(body)) ? tr('booking.requestBody') : body}
               </p>
             )}
           </div>
@@ -1078,7 +1105,7 @@ export function BookingWizardBlock({
                                 <Loader2 className="h-4 w-4 animate-spin" />{tr('booking.submitting')}</>
                             ) : (
                               <>
-                                {waitlistMode ? tr('booking.joinWaitlist') : tr('booking.confirmBooking')}
+                                {waitlistMode ? tr('booking.joinWaitlist') : requestMode ? tr('booking.sendRequest') : tr('booking.confirmBooking')}
                                 {date && time && (
                                   <span className="opacity-90">
                                     · {formatDateLong(date)}, {to12h(time)}
@@ -1126,11 +1153,16 @@ export function BookingWizardBlock({
                 >
                   <Check className="h-7 w-7" />
                 </span>
-                <h3 className="mt-5 font-display text-2xl font-semibold tracking-tight text-ink-900">{waitlist ? tr('booking.waitlisted') : tr('booking.confirmed')}</h3>
+                <h3 className="mt-5 font-display text-2xl font-semibold tracking-tight text-ink-900">{waitlist ? tr('booking.waitlisted') : requested ? tr('booking.requested') : tr('booking.confirmed')}</h3>
                 {waitlist ? (
                   <p data-booking-waitlist className="mx-auto mt-2 max-w-md leading-relaxed text-ink-700">
                     {service.name}, {formatDateLong(date)} {tr('booking.at')} {to12h(time)}. {tr('booking.waitlistPosition')} {waitlist.position} {tr('booking.waitlistOf')} {waitlist.waiting}. {customer.phone ? tr('booking.waitlistText') : tr('booking.waitlistEmail')}
                   </p>
+                ) : (
+                requested ? (
+                <p data-booking-request className="mx-auto mt-2 max-w-md leading-relaxed text-ink-700">
+                  {service.name}, {formatDateLong(date)} {tr('booking.at')} {to12h(time)}. {payInfo || agreementLink ? tr('booking.requestNeeds') : tr('booking.requestNote')}
+                </p>
                 ) : (
                 <p className="mx-auto mt-2 max-w-md leading-relaxed text-ink-700">
                   {service.name}, {formatDateLong(date)} {tr('booking.at')} {to12h(time)}.
@@ -1138,7 +1170,7 @@ export function BookingWizardBlock({
                     ? ` ${tr('booking.confirmationTo')} ${customer.email}.`
                     : ` ${tr('booking.seeYouThen')}`}
                 </p>
-                )}
+                ))}
                 {payInfo && (
                   <div
                     data-booking-pay
@@ -1152,6 +1184,24 @@ export function BookingWizardBlock({
                       style={{ backgroundImage: 'var(--wow-grad-brand)' }}
                     >
                       {tr('booking.payNow').replace('{amount}', `$${payInfo.amount.toFixed(2).replace(/\.00$/, '')}`)}
+                    </a>
+                  </div>
+                )}
+                {agreementLink && (
+                  <div
+                    data-booking-agreement
+                    className="mx-auto mt-5 max-w-md rounded-2xl border bg-fam-card p-4 text-left text-sm"
+                    style={{ borderColor: 'var(--wow-hairline)' }}
+                  >
+                    <p className="text-ink-700">{tr('booking.agreementAsk')}</p>
+                    <a
+                      href={agreementLink}
+                      target="_blank"
+                      rel="noopener"
+                      className="mt-3 inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-semibold text-fam-on-dark"
+                      style={{ backgroundImage: 'var(--wow-grad-brand)' }}
+                    >
+                      {tr('booking.agreementSign')}
                     </a>
                   </div>
                 )}

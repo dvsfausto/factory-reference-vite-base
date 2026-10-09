@@ -188,7 +188,7 @@
   --color-fam-hairline: var(--fam-hairline, #E6E8EC);
   --color-fam-ink: var(--fam-ink, #0F172A);
   --color-fam-ink-muted: var(--fam-ink-muted, #64748B);
-  --color-fam-ink-faint: var(--fam-ink-faint, #94A3B8);
+  --color-fam-ink-faint: var(--fam-ink-faint, #66738A); /* 4.5:1 on white: faint, still readable (ZB-147) */
   --color-fam-accent: var(--fam-accent, var(--accent-ramp-base, oklch(59.6% 0.145 163.225)));
   --color-fam-accent-text: var(--fam-accent-text, var(--accent-ramp-base, oklch(59.6% 0.145 163.225)));
   --color-fam-accent-text-strong: var(--fam-accent-text-strong, var(--accent-ramp-dark, oklch(50.8% 0.118 165.612)));
@@ -523,6 +523,13 @@
    and every hero was white with a dead menu; the server had rendered framer-motion's initial state inline, so nothing
    showed until ~700 KB of JS arrived and hydrated, and never if it failed). Only runs when the client set .js-reveal;
    with scripts off the hero is simply there. Ends visible whatever the bundle does. Reduced motion: no animation. */
+/* ★ THE PHOTO STRIP MARQUEE (ZB-147): one seamless loop per row (the sequence twice, moved by half its width), rows alternate
+   direction, paused on hover and while touched (data-paused), still when the device asks for reduced motion. */
+@keyframes strip-marquee { to { transform: translateX(-50%); } }
+.strip-track { animation: strip-marquee var(--strip-dur, 60s) linear infinite; will-change: transform; }
+.strip-row[data-dir="right"] .strip-track { animation-direction: reverse; }
+.strip-row:hover .strip-track, [data-paused] .strip-track { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) { .strip-track { animation: none; } }
 @keyframes enter-up { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
 .js-reveal [data-enter="up"] { animation: enter-up var(--wow-dur-slow, .5s) var(--wow-ease-out, ease-out) both; }
 .js-reveal [data-enter="up-late"] { animation: enter-up var(--wow-dur-slow, .6s) var(--wow-ease-out, ease-out) .1s both; }
@@ -606,4 +613,140 @@ details.mobile-nav[open] > summary .when-closed { display: none; }
 a[href="tel:+"],
 a[href="tel:"] {
   display: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════════════════════════════
+   ★ THE EDITORIAL THEME (ZB-147 W1.1). A business that chose it (the owner's setting, SITE.theme = 'editorial',
+   stamped on <html data-site-theme="editorial">) gets this palette on the family tokens: cream page, beige alternate
+   band, a charcoal-green statement band, a near-black close (statement-2), gold accent, warm ink, soft rules. Every
+   block already paints with these tokens, so the whole site takes the look; the Editorial section variants
+   (src/components/editorial, *Editorial*Block) add the composition. A site without the setting never matches this
+   selector and is byte-identical. */
+html[data-site-theme="editorial"] {
+  --font-sans: "Manrope", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --fam-page: #F8F6F1;
+  --fam-surface: #F8F6F1;
+  --fam-surface-2: #EFEAE0;
+  --fam-surface-3: #F3EFE6;
+  --fam-surface-4: #EFEAE0;
+  --fam-surface-5: #FBFAF7;
+  --fam-card: #EFEAE0;
+  --fam-hairline: #DAD4C8;
+  --fam-line-2: #CFC8BA;
+  --fam-line-3: #E6E0D4;
+  --fam-ink: #1C1B19;
+  --fam-ink-muted: #5E5A53;
+  --fam-ink-faint: #6D6961;
+  --fam-ink-500: #5E5A53;
+  --fam-ink-300: #CFC8BA;
+  --fam-accent: #A8865A;
+  --fam-accent-text: #A8865A;
+  --fam-accent-text-strong: #8C6E47;
+  --fam-accent-soft: #F3EADB;
+  --fam-accent-soft-2: #EADFCB;
+  --fam-accent-tint: #D4BE97;
+  --fam-statement: #2E3730;
+  --fam-statement-2: #1B1B1A;
+  --fam-statement-3: #3A443C;
+  --fam-statement-hairline: #4A534C;
+  --fam-on-statement: #F8F6F1;
+  --fam-on-statement-muted: #C9C4B9;
+  --fam-on-statement-faint: #A8A399;
+  --fam-on-dark: #F8F6F1;
+  /* The theme owns its type: Cormorant Garamond for every heading (the wave's display face never shows here). */
+  --font-display: "Cormorant Garamond", "Cormorant Garamond Fallback", Georgia, serif;
+  /* The old look's ink ramp and brand ramp (navy headings, blue buttons, the booking widget's brand text and
+     rings) resolve to the Editorial ink: the heading rule reads --color-ink-900, buttons read --cta/--color-brand-600,
+     and the brand-* utilities are re-pointed to their tokens by the brand emit. A gold accent for the brand text. */
+  --fam-ink-900: #1C1B19;
+  --fam-ink-700: #3A3833;
+  --fam-ink-100: #E6E0D4;
+  --fam-ink-50: #F3EFE6;
+  --color-brand-50: #F3EFE6;
+  --color-brand-100: #EFEAE0;
+  --color-brand-200: #DAD4C8;
+  --color-brand-400: #8A857B;
+  --color-brand-500: #5E5A53;
+  --color-brand-600: #1C1B19;
+  --color-brand-700: #1B1B1A;
+  --color-brand-800: #2E3730;
+  --color-brand-900: #121211;
+  --color-brand-text-600: #8C6E47;
+  --color-brand-text-800: #1C1B19;
+  --primary: #1C1B19;
+  --accent: #A8865A;
+  --cta: #1C1B19;
+  --cta-hover: #2E3730;
+  --cta-foreground: #F8F6F1;
+  --btn-primary-fg: #F8F6F1;
+  --btn-primary-hover: #2E3730;
+  /* The widget's and forms' painted buttons read the brand gradient and glow: flat ink, no glow, a soft hairline. */
+  --wow-grad-brand: linear-gradient(0deg, #1C1B19, #1C1B19);
+  --wow-grad-brand-text: linear-gradient(0deg, #1C1B19, #1C1B19);
+  --wow-grad-surface: linear-gradient(0deg, #F8F6F1, #F8F6F1);
+  --wow-shadow-soft: none;
+  --wow-shadow-glow: none;
+  --wow-shadow-lift: none;
+  --wow-hairline: #DAD4C8;
+  --wow-tint: #F3EFE6;
+  /* The old look's slate ramp (the reviews page, listings) becomes warm greys on the cream page. */
+  --fam-slate-50: #FBFAF7;
+  --fam-slate-100: #F3EFE6;
+  --fam-slate-200: #E6E0D4;
+  --fam-slate-300: #CFC8BA;
+  --fam-slate-400: #A09A8E;
+  --fam-slate-500: #6D6961;
+  --fam-slate-600: #5E5A53;
+  --fam-slate-700: #3A3833;
+  --fam-slate-800: #2A2926;
+  --fam-slate-900: #1C1B19;
+  --fam-slate-950: #121211;
+  --fam-surface-slate: #EFEAE0;
+  --fam-surface-slate-2: #F3EFE6;
+  --fam-line-slate: #DAD4C8;
+  --fam-line-slate-2: #CFC8BA;
+  /* Square shapes: every radius token is 0 (the rounded-* utilities are re-pointed below). */
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
+  --radius-3xl: 0px;
+  --radius: 0px;
+}
+/* The Editorial theme's shapes and shadows: pill buttons, 20px cards, 10px inputs and the rounded-* utilities (a literal
+   in @layer utilities, which a token alone does not reach) all go square; the blue button glow goes. Unlayered, so they
+   beat the layered rules; scoped to the theme, so no other site moves. */
+html[data-site-theme="editorial"] .btn,
+html[data-site-theme="editorial"] .badge-pill,
+html[data-site-theme="editorial"] .card-stead,
+html[data-site-theme="editorial"] .card-soft,
+html[data-site-theme="editorial"] .input-stead,
+html[data-site-theme="editorial"] .rounded-sm,
+html[data-site-theme="editorial"] .rounded-md,
+html[data-site-theme="editorial"] .rounded-lg,
+html[data-site-theme="editorial"] .rounded-xl,
+html[data-site-theme="editorial"] .rounded-2xl,
+html[data-site-theme="editorial"] .rounded-3xl,
+html[data-site-theme="editorial"] .rounded-\[1\.25rem\],
+html[data-site-theme="editorial"] .rounded-\[1\.5rem\],
+html[data-site-theme="editorial"] .rounded-\[1\.75rem\],
+html[data-site-theme="editorial"] .rounded-\[2rem\],
+html[data-site-theme="editorial"] .rounded-\[28px\],
+html[data-site-theme="editorial"] a.rounded-full,
+html[data-site-theme="editorial"] button.rounded-full {
+  border-radius: 0;
+}
+html[data-site-theme="editorial"] .btn-primary,
+html[data-site-theme="editorial"] .btn-primary:hover,
+html[data-site-theme="editorial"] .card-stead {
+  box-shadow: none;
+}
+/* Review stars take the gold accent instead of amber. */
+html[data-site-theme="editorial"] .text-amber-500 {
+  color: var(--color-fam-accent);
+}
+html[data-site-theme="editorial"] .input-stead:focus {
+  border-color: var(--color-fam-ink);
+  box-shadow: none;
 }

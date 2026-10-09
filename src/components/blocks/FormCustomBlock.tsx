@@ -1,6 +1,7 @@
-import { useState, type FormEvent } from 'react'
+import { useEffect, useState, type FormEvent } from 'react'
 import { tr, trFormText } from '~/lib/i18n'
 import { BUSINESS_ID, SITE, SUPABASE_URL } from '~/data/site'
+import { SERVICES } from '~/data/services'
 import { hasPhone } from '~/lib/phone'
 import { useCustomForm, type FormField } from '~/lib/useCustomForm'
 import { Field, Textarea, SubmitButton, SuccessCard } from './form-ui'
@@ -22,11 +23,14 @@ type Status = 'idle' | 'submitting' | 'success' | 'error'
 
 function visible(f: FormField, values: Record<string, string>): boolean {
   if (!f.showWhen) return true
-  return (values[f.showWhen.field] ?? '') === f.showWhen.equals
+  const v = values[f.showWhen.field] ?? ''
+  return Array.isArray(f.showWhen.equals) ? f.showWhen.equals.includes(v) : v === f.showWhen.equals
 }
 
 export function FormCustomBlock(props: {
   site?: typeof SITE
+  /** the service page this form sits on (renderer-supplied): its service is preselected */
+  serviceSlug?: string
   label?: string
   heading?: string
   body?: string
@@ -46,6 +50,7 @@ export function CustomFormInline({ form, site = SITE }: { form: NonNullable<Retu
 function CustomForm({
   form,
   site = SITE,
+  serviceSlug,
   label,
   heading,
   body,
@@ -55,6 +60,7 @@ function CustomForm({
 }: {
   form: NonNullable<ReturnType<typeof useCustomForm>>
   site?: typeof SITE
+  serviceSlug?: string
   label?: string
   heading?: string
   body?: string
@@ -67,6 +73,21 @@ function CustomForm({
   const [status, setStatus] = useState<Status>('idle')
   const [error, setError] = useState<string | null>(null)
   const [values, setValues] = useState<Record<string, string>>({})
+  /* ★ ?service=<slug> (the service page's "Check your date", ZB-147 W1.2): the first select whose options name that service
+     starts on it, so the person does not pick again what they already chose. Nothing matches → the form as it was. */
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const slug = serviceSlug ?? new URLSearchParams(window.location.search).get('service')
+    if (!slug) return
+    const svc = SERVICES.find((x) => x.slug === slug)
+    const words = String((svc as { displayName?: string; name?: string } | undefined)?.displayName ?? svc?.name ?? slug).toLowerCase().split(/[^a-z]+/).filter((w) => w.length > 3).map((w) => w.replace(/(ies|s)$/, (m) => (m === 'ies' ? 'y' : '')))
+    if (!words.length) return
+    for (const f of form.fields) {
+      if (f.type !== 'select' || !f.options?.length) continue
+      const hit = f.options.find((o) => { const ow = o.toLowerCase().split(/[^a-z]+/).map((w) => w.replace(/(ies|s)$/, (m) => (m === 'ies' ? 'y' : ''))); return words.some((w) => ow.includes(w)) })
+      if (hit) { setValues((p) => (p[f.name] ? p : { ...p, [f.name]: hit })); break }
+    }
+  }, [form])
   const set = (name: string, v: string) => setValues((p) => ({ ...p, [name]: v }))
   const shown = form.fields.filter((f) => visible(f, values))
 

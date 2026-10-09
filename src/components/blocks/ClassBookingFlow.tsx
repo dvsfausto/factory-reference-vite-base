@@ -3,7 +3,7 @@ import { Loader2 } from 'lucide-react'
 import { SUPABASE_URL, SUPABASE_ANON_KEY, BUSINESS_ID } from '~/data/site'
 import { tr } from '~/lib/i18n'
 import type { HeldEntry, HeldOptions } from '~/components/blocks/HeldBookingFlow'
-import { PhoneCodeStep, BookingFor, restoreVerified, PORTAL_SESSION_KEY, type Verified } from '~/components/blocks/PhoneCodeStep'
+import { PhoneCodeStep, BookingFor, restoreVerified, type Verified } from '~/components/blocks/PhoneCodeStep'
 
 /**
  * ★★★ THE FLOW ORDER (the owner, 2026-09-24; ZB-224, 2026-10-09): for a CLASS, the person is known before the seat is touched.
@@ -20,7 +20,7 @@ import { PhoneCodeStep, BookingFor, restoreVerified, PORTAL_SESSION_KEY, type Ve
  */
 type Phase = 'who' | 'waiver' | 'booking'
 const HEADERS = { 'Content-Type': 'application/json', apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` }
-const SESSION_KEY = PORTAL_SESSION_KEY
+import { readSession, clearSession } from '~/lib/portal-session'
 
 /* a class is booked by its KIND (the owner, 2026-09-29): kindId, never a service id */
 export function ClassBookingFlow({ occurrence, kindId, onHeld, onVerified }: { occurrence: { id: string; title: string }; kindId: string | null; onHeld: (entry: HeldEntry) => void; onVerified?: (v: Verified) => void }) {
@@ -40,7 +40,7 @@ export function ClassBookingFlow({ occurrence, kindId, onHeld, onVerified }: { o
   /* a session from the last half hour (the same visit, or back from the sign page) skips the code; who it is comes from the portal */
   useEffect(() => {
     let sess: string | null = null
-    try { sess = window.sessionStorage.getItem(SESSION_KEY) } catch { /* nothing kept */ }
+    sess = readSession()
     if (!sess) return
     setToken(sess)
     void restoreVerified().then((v) => { if (v) { setMe(v); onVerified?.(v) } })
@@ -54,7 +54,7 @@ export function ClassBookingFlow({ occurrence, kindId, onHeld, onVerified }: { o
     setBusy(true); setError(null); setPhase('waiver')
     const { ok, status, data } = await fn('portal-waiver', { businessId: BUSINESS_ID }, sess)
     setBusy(false)
-    if (status === 401) { try { window.sessionStorage.removeItem(SESSION_KEY) } catch { /* nothing */ } setToken(null); setPhase('who'); return }
+    if (status === 401) { clearSession(); setToken(null); setPhase('who'); return }
     const w = ok ? { required: data.required !== false, signed: data.signed === true, link: typeof data.link === 'string' ? data.link : null } : { required: false, signed: true, link: null }
     setWaiver(w)
     if (!w.required || w.signed) await book(sess)

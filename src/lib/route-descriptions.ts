@@ -1,3 +1,4 @@
+import { REGION } from '~/lib/place'
 import { SITE } from '~/data/site'
 import { SERVICES } from '~/data/services'
 import { AREAS } from '~/data/areas'
@@ -9,7 +10,7 @@ import { tr } from '~/lib/i18n'
  * the name, the city, the service names, the area names. Nothing generic, nothing invented, and the
  * list is capped so a description never runs past ~160 characters.
  */
-const place = () => [SITE.address?.city, SITE.address?.state].filter(Boolean).join(', ')
+const place = () => REGION || [SITE.address?.city, SITE.address?.state].filter(Boolean).join(', ') // a regional business is named by its region (ZB-147)
 const inPlace = () => (place() ? ` ${SITE_LANG_IN} ${place()}` : '')
 const SITE_LANG_IN = tr('route.in')
 function list(names: string[], max = 3): string {
