@@ -3,7 +3,7 @@ import { tr } from '~/lib/i18n'
 import { ArrowRight, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 import { HERO_ALT } from '~/data/images'
-import { imageSrc } from '~/lib/asset-url'
+import { heroImageSrc, heroImageSrcSet } from '~/lib/asset-url'
 import { heroFocusStyle } from '~/lib/hero-focus'
 
 import { hasPhone } from '~/lib/phone'
@@ -34,7 +34,9 @@ export function HeroBackgroundBlock({
   return (
     <section className="relative isolate flex min-h-[34rem] flex-col overflow-hidden bg-fam-panel md:min-h-[40rem]">
       <img
-        src={imageSrc(site.hero.image_url)}
+        src={heroImageSrc(site.hero.image_url)}
+        srcSet={heroImageSrcSet(site.hero.image_url)}
+        sizes="100vw"
         alt={HERO_ALT}
         className="absolute inset-0 -z-20 h-full w-full object-cover" data-hero-photo="" style={heroFocusStyle(site)} />
 

@@ -4,6 +4,7 @@ import { motion, useReducedMotion } from 'framer-motion'
 import { ArrowRight, Check, Sparkles } from 'lucide-react'
 import type { PricingPlan } from './pricing-variants'
 import { SITE } from '~/data/site'
+import { SERVICES } from '~/data/services-view'
 
 // Pricing VARIANT: 'luxe-glass', a WOW re-composition of the tiers section. Plans
 // sit as premium glass cards on a soft --wow-grad-surface; the real highlighted
@@ -106,6 +107,19 @@ export function PricingLuxeGlassBlock({
                       ))}
                     </ul>
                   )}
+                  {/* A plan that is a service with a payment link: the button opens that link (the price on the card is what it charges). */}
+                  {(() => { const buy = SERVICES.find((s) => s.name === p.name || s.displayName === p.name)?.buyUrl; return buy ? (
+                  <a
+                    href={buy} target="_blank" rel="noopener noreferrer"
+                    className={`mt-8 inline-flex h-12 items-center justify-center gap-2 rounded-full px-6 font-display text-sm font-semibold transition-transform hover:translate-y-(--hov-lift-sm) ${
+                      featured
+                        ? 'bg-fam-card text-ink-900'
+                        : 'bg-cta text-cta-foreground'
+                    }`}
+                    style={featured ? undefined : { boxShadow: 'var(--wow-shadow-glow)' }}
+                  >
+                    {tr('section.getStarted')} <ArrowRight className="h-4 w-4" />
+                  </a>) : (
                   <Link
                     to="/contact"
                     className={`mt-8 inline-flex h-12 items-center justify-center gap-2 rounded-full px-6 font-display text-sm font-semibold transition-transform hover:translate-y-(--hov-lift-sm) ${
@@ -116,7 +130,7 @@ export function PricingLuxeGlassBlock({
                     style={featured ? undefined : { boxShadow: 'var(--wow-shadow-glow)' }}
                   >
                     {tr('section.getStarted')} <ArrowRight className="h-4 w-4" />
-                  </Link>
+                  </Link>) })()}
                 </motion.div>
               )
             })}

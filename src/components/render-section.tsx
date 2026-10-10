@@ -608,9 +608,14 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
         // PER-SERVICE CTA (mixed catalogues): the banner takes this service's own target — book →
         // /book?service=, quote → /quote?service= — from serviceCta(slug). Other hero variants
         // keep the site-wide CTA (they have no cta prop); the banner is the default detail hero.
+        // ZB-154: a service with a payment link gets it as the buy/book button, the price on the button.
+        const buyRef = SERVICES.find((s) => s.slug === svc.slug)
+        const buy = ServiceHero === HeroServiceBannerBlock && buyRef?.buyUrl
+          ? { buyUrl: buyRef.buyUrl, buyLabel: `${tr('section.getStarted')}${svc.pricing?.ranges?.[0]?.range ? ` · ${svc.pricing.ranges[0].range}` : ''}` }
+          : {}
         const perService =
           ServiceHero === HeroServiceBannerBlock
-            ? { cta: serviceCta(svc.slug) }
+            ? { cta: serviceCta(svc.slug), ...buy }
             : ServiceHero === HeroSplitPhotoBlock
               ? // the Editorial split hero also names the service in its kicker ("<service> · <place>")
                 // request mode: the second path, "Check your date" → the inquiry form with this service named

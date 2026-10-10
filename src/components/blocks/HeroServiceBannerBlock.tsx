@@ -3,6 +3,7 @@ import { ArrowRight, Phone } from 'lucide-react'
 import { SITE } from '~/data/site'
 import { HERO_ALT } from '~/data/images'
 import { imageSrc } from '~/lib/asset-url'
+import { tr } from '~/lib/i18n'
 import { heroFocusStyle } from '~/lib/hero-focus'
 import { primaryCta } from '~/lib/primaryCta'
 
@@ -28,6 +29,8 @@ export function HeroServiceBannerBlock({
   imageFocus = null,
   trustItems,
   cta: ctaOverride,
+  buyUrl = "",
+  buyLabel = "",
 }: {
   site?: typeof SITE
   headline?: string
@@ -40,8 +43,11 @@ export function HeroServiceBannerBlock({
   decorativeAsset?: string
   /** A per-service CTA (the service-detail route passes serviceCta(slug)); absent → the site-wide one. */
   cta?: { href: string; label: string }
+  /** The service's payment link (ZB-154): it IS the buy/book button; the site-wide call-to-action follows as the quieter button. */
+  buyUrl?: string
+  buyLabel?: string
 }) {
-  const cta = ctaOverride ?? primaryCta()
+  const cta = buyUrl ? primaryCta() : (ctaOverride ?? primaryCta())
   const place = [site.address?.city, site.address?.state].filter(Boolean).join(', ')
   return (
     <section className="bg-[var(--fam-surface,#fff)]">
@@ -63,7 +69,10 @@ export function HeroServiceBannerBlock({
               </p>
             )}
             <div className="mt-7 flex flex-wrap items-center gap-3">
-              <PrimaryCta to={ctaOverride ? cta.href : undefined} className="btn btn-lg btn-primary">
+              {buyUrl && (<a href={buyUrl} target="_blank" rel="noopener noreferrer" className="btn btn-lg btn-primary">
+                {buyLabel || tr('section.getStarted')} <ArrowRight className="h-4 w-4" />
+              </a>)}
+              <PrimaryCta to={ctaOverride && !buyUrl ? cta.href : undefined} className={`btn btn-lg ${buyUrl ? 'btn-secondary' : 'btn-primary'}`}>
                 {cta.label} <ArrowRight className="h-4 w-4" />
               </PrimaryCta>
               {hasPhone(site.phone) && (<a
@@ -83,11 +92,12 @@ export function HeroServiceBannerBlock({
               </div>
             )}
           </div>
-          <div className="lg:col-span-5">
+          {/* An explicit "" = this item has no photo (the owner took it off): no frame, the words take the row. */}
+          {imageUrl !== "" && <div className="lg:col-span-5">
             <div className="overflow-hidden rounded-2xl border border-[var(--fam-hairline,var(--color-ink-100,#e5e7eb))]">
               <img src={imageSrc(imageUrl)} alt={HERO_ALT} loading="eager" className="aspect-[4/3] w-full object-cover" data-hero-photo="" style={imageFocus ? { objectPosition: imageFocus } : heroFocusStyle(site)} />
             </div>
-          </div>
+          </div>}
         </div>
       </div>
     </section>

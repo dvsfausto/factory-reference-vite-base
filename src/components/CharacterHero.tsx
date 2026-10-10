@@ -39,6 +39,9 @@ export interface CharacterHeroProps {
   subheadline?: string
   ctaLabel?: string
   trustItems?: string[]
+  /** A payment link for this page's service: rendered as the primary button (the site CTA moves beside it). */
+  buyUrl?: string
+  buyLabel?: string
 }
 
 // SITE.character key → hero variant component. Only `bold` differs from its name
