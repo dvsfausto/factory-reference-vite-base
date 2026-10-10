@@ -27,7 +27,7 @@ export function ServicesSection({ heading, intro, services }: Props) {
             // Three-way separation: a NON-PAGED service (paged:false) stays VISIBLE here but renders
             // as a CARD, not an anchor — no /services/$slug link is created, so nothing can dangle.
             const paged = s.paged !== false
-            const media = (
+            const media = !serviceImageUrl(s.slug) ? null : (
               <div className="aspect-[4/3] overflow-hidden bg-fam-surface-slate-2">
                 <img
                   src={serviceImageUrl(s.slug)}

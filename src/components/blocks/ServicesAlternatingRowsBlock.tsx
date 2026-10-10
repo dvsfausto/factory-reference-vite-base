@@ -61,8 +61,8 @@ export function ServicesAlternatingRowsBlock({
 
         <div className="mt-16 space-y-20 md:mt-24 md:space-y-28">
           {rows.map((s, i) => (
-            <div key={s.slug} className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
-              <div className={`overflow-hidden rounded-3xl border border-fam-hairline elev-1 ${i % 2 === 1 ? 'lg:order-2' : ''}`}>
+            <div key={s.slug} className={`grid items-center gap-10 ${serviceImageUrl(s.slug) ? 'lg:grid-cols-2 lg:gap-16' : ''}`}>
+              {serviceImageUrl(s.slug) && <div className={`overflow-hidden rounded-3xl border border-fam-hairline elev-1 ${i % 2 === 1 ? 'lg:order-2' : ''}`}>
                 <img
                   src={serviceImageUrl(s.slug)}
                   data-service-photo={s.slug} style={serviceImageFocusStyle(s.slug)}
@@ -72,7 +72,7 @@ export function ServicesAlternatingRowsBlock({
                   height={675}
                   className="aspect-[4/3] w-full object-cover"
                 />
-              </div>
+              </div>}
               <div className={i % 2 === 1 ? 'lg:order-1' : ''}>
                 <span className="font-display text-sm font-semibold text-fam-accent-text">
                   {String(i + 1).padStart(2, '0')}
@@ -88,6 +88,11 @@ export function ServicesAlternatingRowsBlock({
                 >
                   {exploreLabel} <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-(--hov-nudge)" />
                 </Link>
+                {s.buyUrl && (
+                  <a href={s.buyUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary mt-6 ml-6 inline-flex items-center gap-2">
+                    {tr('section.getStarted')} <ArrowRight className="h-4 w-4" />
+                  </a>
+                )}
               </div>
             </div>
           ))}

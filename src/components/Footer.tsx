@@ -143,7 +143,7 @@ function ContactCol({ t }: { t: FooterTheme }) {
       <h4 className={`text-sm font-semibold mb-4 ${t.heading}`}>{tr('footer.getInTouch')}</h4>
       <ul className={`space-y-3 text-sm ${t.listText}`}>
         {HAS_PHONE && <li className="flex items-start gap-2"><Phone className="h-4 w-4 mt-0.5 shrink-0" /><a href={`tel:${SITE.phone}`} className={t.listHover}>{SITE.phoneDisplay}</a></li>}
-        {HAS_EMAIL && <li className="flex items-start gap-2"><Mail className="h-4 w-4 mt-0.5 shrink-0" /><a href={`mailto:${SITE.email}`} className={`${t.listHover} break-all`}>{SITE.email}</a></li>}
+        {HAS_EMAIL && <li className="flex items-start gap-2"><Mail className="h-4 w-4 mt-0.5 shrink-0" /><a href={`mailto:${SITE.email}`} className={`${t.listHover} whitespace-nowrap`}>{SITE.email}</a></li>}
         {loc && <li className="flex items-start gap-2"><MapPin className="h-4 w-4 mt-0.5 shrink-0" /><span>{loc}</span></li>}
         {SITE.hours && <li className="flex items-start gap-2"><Clock className="h-4 w-4 mt-0.5 shrink-0" /><span>{SITE.hours}</span></li>}
       </ul>
@@ -155,7 +155,7 @@ function BottomBar({ t }: { t: FooterTheme }) {
   return (
     <div className={`border-t ${t.border} relative`}>
       <div className={`container-x py-5 flex flex-wrap items-center justify-between gap-3 text-xs ${t.bottomText}`}>
-        <div>© {year} {SITE.name}</div>
+        <div>© {year} {(SITE as { legalName?: string }).legalName || SITE.name}</div>
         <div className="flex gap-4">
           {/**
             * ⚠️ PRIVACY AND TERMS POINTED AT /contact ON EVERY GENERATED SITE. There is no privacy

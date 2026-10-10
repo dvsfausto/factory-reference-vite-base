@@ -18,6 +18,23 @@ const UNTRANSFORMABLE = /\.(svg|gif)(\?.*)?$/i;
 export const IMAGE_TRANSFORM_WIDTH = 1600;
 export const IMAGE_TRANSFORM_QUALITY = 70;
 
+// The full-bleed hero is the one picture drawn at the viewport's width: it gets its own, larger transform
+// (2400 wide, quality 80) plus a srcset, so a wide or 2x screen is not fed a 1600 px upscale (ZB-154: a
+// 2400 px upload read as blurry). Everything else keeps imageSrc() above. A non-storage ref passes through.
+// (plain JS syntax below: scripts/check-image-transform.mjs evaluates this file with the type words stripped)
+export const HERO_TRANSFORM_WIDTHS = [1200, 1600, 2400];
+export const HERO_TRANSFORM_QUALITY = 80;
+export function heroImageSrc(ref: string, width = 2400): string {
+  if (STORAGE_PUBLIC_OBJECT.test(ref) && !UNTRANSFORMABLE.test(ref) && !ref.includes("?")) {
+    return ref.replace(STORAGE_PUBLIC_OBJECT, "/storage/v1/render/image/public/") + `?width=${width}&resize=contain&quality=${HERO_TRANSFORM_QUALITY}`;
+  }
+  return imageSrc(ref);
+}
+export function heroImageSrcSet(ref: string) {
+  if (!(STORAGE_PUBLIC_OBJECT.test(ref) && !UNTRANSFORMABLE.test(ref) && !ref.includes("?"))) return undefined;
+  return HERO_TRANSFORM_WIDTHS.map((w) => `${heroImageSrc(ref, w)} ${w}w`).join(", ");
+}
+
 export function imageSrc(ref: string): string {
   if (STORAGE_PUBLIC_OBJECT.test(ref) && !UNTRANSFORMABLE.test(ref) && !ref.includes("?")) {
     return (

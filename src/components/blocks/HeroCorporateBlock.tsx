@@ -31,6 +31,8 @@ export function HeroCorporateBlock({
   kicker = site.hero.kicker,
   subheadline = site.hero.subheadline,
   ctaLabel = site.hero.cta_primary_label,
+  buyUrl = "",
+  buyLabel = "",
 }: {
   site?: typeof SITE
   trustItems?: string[]
@@ -38,6 +40,8 @@ export function HeroCorporateBlock({
   headline?: string
   body?: string
   imageUrl?: string
+  buyUrl?: string
+  buyLabel?: string
   kicker?: string
   subheadline?: string
   ctaLabel?: string
@@ -48,7 +52,7 @@ export function HeroCorporateBlock({
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-14">
           <div
             data-enter="up"
-            className="lg:col-span-7"
+            className={imageUrl === "" ? "lg:col-span-12 max-w-3xl" : "lg:col-span-7"}
           >
             {hasText(kicker) && (
               <span className="inline-flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.16em] text-fam-accent-text">
@@ -74,8 +78,17 @@ export function HeroCorporateBlock({
             )}
 
             <div className="mt-8 flex flex-wrap gap-3">
-              <PrimaryCta
+              {/* A payment link on the service: the buy button leads, the site's call-to-action follows as the quieter button. */}
+              {buyUrl && (<a
+                href={buyUrl} target="_blank" rel="noopener noreferrer"
                 className="inline-flex h-[52px] items-center gap-2 rounded-md bg-cta px-7 font-display text-base font-semibold text-cta-foreground transition-[filter] hover:brightness-(--hov-shade)"
+              >
+                {buyLabel || tr('section.getStarted')} <ArrowRight className="h-4 w-4" />
+              </a>)}
+              <PrimaryCta
+                className={buyUrl
+                  ? "inline-flex h-[52px] items-center gap-2 rounded-md border border-fam-hairline px-6 font-display font-semibold text-fam-ink transition-colors hover:border-fam-accent"
+                  : "inline-flex h-[52px] items-center gap-2 rounded-md bg-cta px-7 font-display text-base font-semibold text-cta-foreground transition-[filter] hover:brightness-(--hov-shade)"}
               >
                 {ctaLabel} <ArrowRight className="h-4 w-4" />
               </PrimaryCta>
@@ -88,8 +101,8 @@ export function HeroCorporateBlock({
             </div>
           </div>
 
-          {/* Framed image, defined border, tight radius, structured. */}
-          <div
+          {/* Framed image, defined border, tight radius, structured. An explicit "" = this page has no photo (the owner took it off). */}
+          {imageUrl !== "" && <div
             data-enter="up-late"
             className="lg:col-span-5"
           >
@@ -99,7 +112,7 @@ export function HeroCorporateBlock({
                 alt={HERO_ALT}
                 className="aspect-[4/3] w-full object-cover" data-hero-photo="" style={heroFocusStyle(site)} />
             </div>
-          </div>
+          </div>}
         </div>
 
         {/* Credentials strip, foregrounded trust signals in bordered cells. */}

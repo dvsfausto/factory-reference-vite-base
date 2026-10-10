@@ -60,6 +60,8 @@ export interface ServiceRef {
   displayName: string
   short: string
   tagline?: string
+  /** A payment link for this service (the owner's Stripe payment link): the "Get started" button opens it. Absent = no buy button. */
+  buyUrl?: string
   /**
    * Publish state. Absent === published (backward-compatible). The editor sets `false` to
    * UNPUBLISH a service: `visibleServices()` (src/data/services-view.ts) filters it out of every

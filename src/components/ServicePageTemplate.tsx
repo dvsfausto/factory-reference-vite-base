@@ -10,7 +10,7 @@ import { renderCharacterHero, renderCharacterCta } from "./CharacterHero";
 import { resolveCharacterTokens } from "~/lib/character-tokens";
 import { serviceImageUrl, serviceImageFocusStyle } from "~/data/images";
 import { SITE } from "~/data/site";
-import { isRelatedServiceVisible } from "~/data/services-view";
+import { isRelatedServiceVisible, SERVICES } from "~/data/services-view";
 import { siteDecor } from "~/lib/decor";
 const leaves = siteDecor();
 import type { ServicePageData } from "~/lib/types/page-types";
@@ -28,6 +28,9 @@ function splitScriptAccent(heading: string): { lead: string; accent: string } {
 
 export function ServicePageTemplate({ data }: Props) {
   const h1Parts = splitScriptAccent(data.hero.h1);
+  // A payment link on the service = the primary button; the price it charges sits on the button so nobody is surprised.
+  const buyUrl = SERVICES.find((s) => s.slug === data.slug)?.buyUrl ?? "";
+  const priceLabel = buyUrl ? (data.pricing?.ranges?.[0]?.range ?? "") : "";
   const localTitle = data.localContext?.title;
   const localTitleParts = localTitle ? splitScriptAccent(localTitle) : null;
 
@@ -38,6 +41,8 @@ export function ServicePageTemplate({ data }: Props) {
     headline: data.hero.h1,
     body: data.hero.subhead,
     imageUrl: serviceImageUrl(data.slug),
+    buyUrl,
+    buyLabel: buyUrl ? `${tr('section.getStarted')}${priceLabel ? ` · ${priceLabel}` : ""}` : "",
     subheadline: "",
     // Per-service trustLine ("a · b · c") flows INTO the character hero's own trust row
     // (integrated, below the headline) instead of an orphaned bare band under the hero.
@@ -126,7 +131,10 @@ export function ServicePageTemplate({ data }: Props) {
                 <p className="mt-3 text-sm text-ink-500">{trTrustLine(data.hero.trustLine)}</p>
               )}
               <div className="mt-7 flex flex-wrap gap-3">
-                <Link to="/contact" className="btn btn-lg btn-primary">
+                {buyUrl && (<a href={buyUrl} target="_blank" rel="noopener noreferrer" className="btn btn-lg btn-primary">
+                  {tr('section.getStarted')}{priceLabel ? ` · ${priceLabel}` : ''} <ArrowRight className="h-4 w-4" />
+                </a>)}
+                <Link to="/contact" className={`btn btn-lg ${buyUrl ? 'btn-secondary' : 'btn-primary'}`}>
                   {((SITE as { ctaLabel?: string }).ctaLabel ?? tr('cta.getFreeQuote')) + " "}<ArrowRight className="h-4 w-4" />
                 </Link>
                 {HAS_PHONE && (<a href={`tel:${SITE.phone}`} className="btn btn-lg btn-secondary">
@@ -134,7 +142,7 @@ export function ServicePageTemplate({ data }: Props) {
                 </a>)}
               </div>
             </div>
-            <div className="lg:col-span-5">
+            {serviceImageUrl(data.slug) && <div className="lg:col-span-5">
               <div className="aspect-[4/3] rounded-2xl border-4 border-fam-card elev-4 overflow-hidden bg-brand-50">
                 <img
                   src={serviceImageUrl(data.slug)}
@@ -148,7 +156,7 @@ export function ServicePageTemplate({ data }: Props) {
                   className="w-full h-full object-cover"
                 />
               </div>
-            </div>
+            </div>}
           </div>
         </div>
       </section>
