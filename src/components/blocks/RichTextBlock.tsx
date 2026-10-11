@@ -13,9 +13,9 @@ import { parseRichText, type Run } from '~/lib/rich-text'
 // WOW tokens: brand eyebrow + soft brand-tint surface, consistent with IntroBlock.
 /** a picture on the page: the owner's own upload or a stock photo; focus = "x% y%" when the owner moved it */
 export interface RichTextImage { url: string; alt?: string; credit?: string; focus?: string }
-const Runs = ({ runs }: { runs: Run[] }) => (
+export const Runs = ({ runs }: { runs: Run[] }) => (
   <>
-    {runs.map((r, i) => (r.bold ? <strong key={i} className="font-semibold text-ink-900">{r.text}</strong> : r.italic ? <em key={i}>{r.text}</em> : <span key={i}>{r.text}</span>))}
+    {runs.map((r, i) => (r.href ? <a key={i} href={r.href} target="_blank" rel="noopener noreferrer" className="font-semibold text-brand-700 underline underline-offset-4 decoration-brand-300 hover:decoration-brand-700">{r.text}</a> : r.bold ? <strong key={i} className="font-semibold text-ink-900">{r.text}</strong> : r.italic ? <em key={i}>{r.text}</em> : <span key={i}>{r.text}</span>))}
   </>
 )
 export function RichTextBlock({

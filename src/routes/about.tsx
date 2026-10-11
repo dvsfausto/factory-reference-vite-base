@@ -31,7 +31,7 @@ function AboutPage() {
         intro: {
           eyebrow: tr('nav.about'),
           heading: `${tr('route.about')} ${SITE.name}`,
-          body: [SITE.tagline, SITE.about].filter(Boolean).join(' '),
+          body: [SITE.tagline, SITE.about].filter(Boolean).join('\n\n'),
           script: undefined,
         },
       }}

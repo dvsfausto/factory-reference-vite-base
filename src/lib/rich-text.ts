@@ -2,22 +2,24 @@
 // "- High-energy cycling" with the asterisks and dashes as text). The assistant writes a small Markdown: headings (## / ###),
 // bullet lists (- or *), **bold**, *italic*, paragraphs on blank lines. This parser turns that into blocks the RichTextBlock
 // renders with the site's own type and tokens. Pure, no React, no HTML pass-through (a tag in the copy stays text).
-export type Run = { text: string; bold?: boolean; italic?: boolean }
+export type Run = { text: string; bold?: boolean; italic?: boolean; href?: string }
 export type RichBlock =
   | { kind: 'heading'; level: 2 | 3; runs: Run[] }
   | { kind: 'paragraph'; runs: Run[] }
   | { kind: 'list'; items: Run[][] }
 
-/** inline **bold** and *italic* (and _italic_) into runs; unmatched markers stay as text */
+/** inline **bold**, *italic* (and _italic_) and [a link](https://…) into runs; unmatched markers stay as text */
 export function parseRuns(text: string): Run[] {
   const runs: Run[] = []
-  const re = /\*\*([^*]+)\*\*|\*([^*\n]+)\*|_([^_\n]+)_/g
+  // ZB-241 (2026-10-11): a Markdown link the assistant wrote into an About page showed as "[Book a call](https://…)" on the site
+  const re = /\[([^\]\n]+)\]\((https?:\/\/[^)\s]+)\)|\*\*([^*]+)\*\*|\*([^*\n]+)\*|_([^_\n]+)_/g
   let last = 0
   let m: RegExpExecArray | null
   while ((m = re.exec(text))) {
     if (m.index > last) runs.push({ text: text.slice(last, m.index) })
-    if (m[1] !== undefined) runs.push({ text: m[1], bold: true })
-    else runs.push({ text: (m[2] ?? m[3])!, italic: true })
+    if (m[1] !== undefined) runs.push({ text: m[1], href: m[2] })
+    else if (m[3] !== undefined) runs.push({ text: m[3], bold: true })
+    else runs.push({ text: (m[4] ?? m[5])!, italic: true })
     last = m.index + m[0].length
   }
   if (last < text.length) runs.push({ text: text.slice(last) })

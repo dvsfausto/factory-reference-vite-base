@@ -1,4 +1,6 @@
 import { motion } from 'framer-motion'
+import { parseRichText } from '~/lib/rich-text'
+import { Runs } from '~/components/blocks/RichTextBlock'
 
 // Shared WOW page-intro (Arc 3 · Stage B), the brand-reactive replacement for the
 // page-local AboutIntro/PricingIntro AND the header for the converted inner pages
@@ -29,6 +31,10 @@ export function IntroBlock({
   script?: string
 }) {
   if (!heading) return null
+  /* ★ designed copy (ZB-241, 2026-10-11): the About page's prose is the assistant's small Markdown too (an owner's About showed
+     "**Inside Experience**", "- Career clarity" and "[Book a call](https://…)" as typed): headings, lists, emphasis and links in the
+     site's own type, paragraphs on blank lines. Plain copy is one paragraph, as before. */
+  const blocks = parseRichText(body ?? '')
   return (
     <section
       className="relative overflow-hidden"
@@ -56,8 +62,27 @@ export function IntroBlock({
               </span>
             )}
           </h1>
-          {body && (
-            <p className="mt-6 text-lg leading-relaxed text-ink-700">{body}</p>
+          {body && blocks.length > 0 && (
+            <div className="mt-6 space-y-5">
+              {blocks.map((b, i) =>
+                b.kind === 'heading' ? (
+                  b.level === 2
+                    ? <h2 key={i} className="pt-2 font-display text-2xl font-semibold leading-tight tracking-tight text-ink-900"><Runs runs={b.runs} /></h2>
+                    : <h3 key={i} className="pt-1 font-display text-lg font-semibold text-ink-900"><Runs runs={b.runs} /></h3>
+                ) : b.kind === 'list' ? (
+                  <ul key={i} className="space-y-3">
+                    {b.items.map((item, j) => (
+                      <li key={j} className="flex gap-3 text-lg leading-relaxed text-ink-700">
+                        <span aria-hidden="true" className="mt-[0.7em] h-2 w-2 shrink-0 rounded-full" style={{ backgroundImage: 'var(--wow-grad-brand)' }} />
+                        <span><Runs runs={item} /></span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p key={i} className="text-lg leading-relaxed text-ink-700 whitespace-pre-line"><Runs runs={b.runs} /></p>
+                ),
+              )}
+            </div>
           )}
         </motion.div>
       </div>

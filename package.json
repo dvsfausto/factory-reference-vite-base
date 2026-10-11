@@ -23,7 +23,8 @@
     "gen:capability": "node scripts/gen-capability-manifest.ts",
     "lint:capability": "node scripts/gen-capability-manifest.ts --check",
     "gate:push": "npm run build",
-    "hooks:install": "git config core.hooksPath .githooks"
+    "hooks:install": "git config core.hooksPath .githooks",
+    "test:intro-copy": "npx -y tsx --tsconfig tsconfig.json scripts/intro-copy/render-proof.tsx"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
