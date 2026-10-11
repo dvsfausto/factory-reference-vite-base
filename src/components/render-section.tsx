@@ -869,6 +869,8 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
           label={block.params?.label as string | undefined}
           heading={block.params?.heading as string | undefined}
           body={block.params?.body as string | undefined}
+          // the pricing page's intro is the title; the default pricing block does not repeat an eyebrow and heading under it (ZB-154)
+          {...((ctx?.intro ? { underIntro: true } : {}) as Record<string, never>)}
         />
       )
     }

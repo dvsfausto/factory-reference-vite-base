@@ -29,11 +29,14 @@ export function PricingLuxeGlassBlock({
   label = tr('nav.pricing'),
   heading = tr('blk.simpleTransparentPricing'),
   body,
+  underIntro = false,
 }: {
   site?: typeof SITE
   label?: string
   heading?: string
   body?: string
+  /** true when the page intro sits right above (the pricing route): the eyebrow and heading are not repeated (ZB-154, 2026-10-11) */
+  underIntro?: boolean
 }) {
   const reduce = useReducedMotion()
   const plans = (site as { plans?: PricingPlan[] }).plans
@@ -48,7 +51,7 @@ export function PricingLuxeGlassBlock({
       style={{ backgroundImage: 'var(--wow-grad-surface)' }}
     >
       <div className="container-x py-section">
-        <div className="mx-auto max-w-2xl text-center">
+        {!underIntro && <div className="mx-auto max-w-2xl text-center">
           <span className="inline-flex items-center justify-center gap-2.5 text-xs font-bold uppercase tracking-[0.2em] text-brand-700">
             <span
               className="h-2.5 w-2.5 rounded-full"
@@ -60,10 +63,10 @@ export function PricingLuxeGlassBlock({
             {heading}
           </h2>
           {body && <p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-ink-700">{body}</p>}
-        </div>
+        </div>}
 
         {hasPlans ? (
-          <div className="mx-auto mt-14 grid max-w-5xl grid-cols-1 items-stretch gap-6 md:grid-cols-3">
+          <div className={`mx-auto ${underIntro ? 'mt-2' : 'mt-14'} grid max-w-5xl grid-cols-1 items-stretch gap-6 md:grid-cols-3`}>
             {plans.slice(0, 3).map((p, i) => {
               const featured = Boolean(p.highlighted)
               return (

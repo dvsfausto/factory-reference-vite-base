@@ -22,7 +22,8 @@ export function ServicesSection({ heading, intro, services }: Props) {
             <p className="mt-4 text-lg leading-relaxed text-slate-700">{intro}</p>
           )}
         </div>
-        <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {/* ZB-154 (2026-10-11): columns match the count, so two or four services never leave a lone card in a row */}
+        <ul className={`mt-12 grid gap-6 sm:grid-cols-2 ${services.length === 2 || services.length === 4 ? 'lg:grid-cols-2' : 'lg:grid-cols-3'}`}>
           {services.map((s) => {
             // Three-way separation: a NON-PAGED service (paged:false) stays VISIBLE here but renders
             // as a CARD, not an anchor — no /services/$slug link is created, so nothing can dangle.
