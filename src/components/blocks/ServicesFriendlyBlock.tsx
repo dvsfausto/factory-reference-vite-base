@@ -5,6 +5,7 @@ import { SectionHeaderFriendly } from '~/components/SectionHeaderFriendly'
 import { SITE } from '~/data/site'
 import { SERVICES } from '~/data/services-view'
 import { serviceImageUrl, serviceImageFocusStyle } from '~/data/images'
+import { hasServicePhoto } from '~/lib/service-photo'
 
 // ServicesPreview VARIANT: 'friendly', warm, bright offerings grid. Identity
 // copy from SITE.homeServices (zero hardcoded section copy). White rounded cards
@@ -49,8 +50,9 @@ export function ServicesFriendlyBlock({
               key={s.slug}
               to="/services/$slug"
               params={{ slug: s.slug }}
-              className="group flex flex-col overflow-hidden rounded-3xl border border-fam-hairline bg-fam-card elev-1 transition-all hover:translate-y-(--hov-lift) hover:elev-4"
+              className={`group flex flex-col overflow-hidden rounded-3xl border border-fam-hairline bg-fam-card elev-1 transition-all hover:translate-y-(--hov-lift) hover:elev-4${hasServicePhoto(s.slug) ? '' : ' md:self-start'}`}
             >
+              {hasServicePhoto(s.slug) && (
               <div className="aspect-[4/3] overflow-hidden">
                 <img
                   src={serviceImageUrl(s.slug)}
@@ -62,6 +64,7 @@ export function ServicesFriendlyBlock({
                   className="h-full w-full object-cover transition-transform duration-(--motion-slow) group-hover:scale-(--hov-zoom)"
                 />
               </div>
+              )}
               <div className="flex flex-1 flex-col p-6">
                 <h3 className="font-display text-xl font-bold tracking-tight text-fam-ink">
                   {s.displayName}

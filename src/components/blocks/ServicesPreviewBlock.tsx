@@ -4,6 +4,7 @@ import { ArrowRight } from 'lucide-react'
 import { SectionHeader } from '~/components/SectionHeader'
 import { SERVICES } from '~/data/services-view'
 import { serviceImageUrl, serviceImageFocusStyle } from '~/data/images'
+import { hasServicePhoto } from '~/lib/service-photo'
 
 // Markup extracted VERBATIM from routes/index.tsx (the SERVICES PREVIEW
 // section). Self-omits when there are no services, exactly today's
@@ -51,8 +52,9 @@ export function ServicesPreviewBlock({
               key={s.slug}
               to="/services/$slug"
               params={{ slug: s.slug }}
-              className="card-stead overflow-hidden group hover:elev-4 hover:translate-y-(--hov-lift) transition-all"
+              className={`card-stead overflow-hidden group hover:elev-4 hover:translate-y-(--hov-lift) transition-all${hasServicePhoto(s.slug) ? '' : ' md:self-start'}`}
             >
+              {hasServicePhoto(s.slug) && (
               <div className="aspect-[4/3] overflow-hidden">
                 <img
                   src={serviceImageUrl(s.slug)}
@@ -64,6 +66,7 @@ export function ServicesPreviewBlock({
                   className="w-full h-full object-cover group-hover:scale-(--hov-zoom) transition-transform duration-(--motion-slow)"
                 />
               </div>
+              )}
               <div className="p-6">
                 <h3 className="text-xl">{s.displayName}</h3>
                 <p className="mt-2 text-ink-500">{s.short}</p>

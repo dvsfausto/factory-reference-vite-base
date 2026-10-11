@@ -5,6 +5,7 @@ import { SectionHeaderCorporate } from '~/components/SectionHeaderCorporate'
 import { SITE } from '~/data/site'
 import { SERVICES } from '~/data/services-view'
 import { serviceImageUrl, serviceImageFocusStyle } from '~/data/images'
+import { hasServicePhoto } from '~/lib/service-photo'
 
 // ServicesPreview VARIANT: 'corporate', a structured "practice areas" grid.
 // Identity copy from SITE.homeServices. Boxed bordered cards (defined borders,
@@ -51,6 +52,7 @@ export function ServicesCorporateBlock({
               params={{ slug: s.slug }}
               className="group flex flex-col bg-fam-card transition-colors hover:bg-fam-surface-5"
             >
+              {hasServicePhoto(s.slug) && (
               <div className="aspect-[16/9] overflow-hidden border-b border-fam-hairline">
                 <img
                   src={serviceImageUrl(s.slug)}
@@ -62,6 +64,7 @@ export function ServicesCorporateBlock({
                   className="h-full w-full object-cover"
                 />
               </div>
+              )}
               <div className="flex flex-1 flex-col p-7">
                 <h3 className="font-display text-xl font-bold tracking-tight text-fam-ink">
                   {s.displayName}

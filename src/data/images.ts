@@ -38,11 +38,15 @@ export function areaAlt(slug: string): string {
 }
 
 export function serviceImage(slug: string): string {
-  return SERVICE_IMAGES[slug] ?? SITE.hero.image_url
+  // "" = the owner took this service's photo off (text-forward); absent = the hero fallback as before. Mirrors the helper the
+  // factory emits (factory/scaffolder/src/emit/images-data.ts), so the fixture draws what a built site draws (ZB-241).
+  const v = SERVICE_IMAGES[slug]
+  return v === '' ? '' : (v ?? SITE.hero.image_url)
 }
 
 export function serviceImageUrl(slug: string): string {
-  return imageSrc(serviceImage(slug))
+  const v = serviceImage(slug)
+  return v ? imageSrc(v) : ''
 }
 
 // The owner's own photo for a service, or null: a picture-less layout (icon tiles, the list) shows it when it exists.

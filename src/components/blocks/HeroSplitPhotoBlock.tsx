@@ -41,10 +41,12 @@ export function HeroSplitPhotoBlock({
 }) {
   const cta = ctaOverride ?? primaryCta()
   const kicker = [serviceName, placeLine(site)].filter(Boolean).join(' · ')
+  // ZB-241: the owner took this photo off ("") → the words take the whole width, no empty half
+  const photo = imageUrl !== ''
   return (
     <section className="bg-fam-page">
-      <div className="grid grid-cols-1 lg:min-h-[640px] lg:grid-cols-2">
-        <div className="order-2 flex flex-col justify-center px-5 py-12 lg:order-1 lg:p-[7%]">
+      <div className={photo ? 'grid grid-cols-1 lg:min-h-[640px] lg:grid-cols-2' : 'grid grid-cols-1'}>
+        <div className={photo ? 'order-2 flex flex-col justify-center px-5 py-12 lg:order-1 lg:p-[7%]' : 'mx-auto w-full max-w-4xl px-5 py-16 lg:py-24'}>
           {kicker && <Kicker>{kicker}</Kicker>}
           <EditorialHeading as="h1" text={headline} size="lg" className="mt-5" />
           {hasText(body) && <p className="mt-6 max-w-[34rem] font-sans text-[17px] leading-relaxed text-fam-ink-muted">{body}</p>}
@@ -53,7 +55,7 @@ export function HeroSplitPhotoBlock({
             {secondary && <EditorialButton href={secondary.href} tone="link">{secondary.label}</EditorialButton>}
           </div>
         </div>
-        <div className="relative order-1 aspect-[4/5] bg-fam-surface-2 lg:order-2 lg:aspect-auto lg:min-h-[640px]">
+        {photo && <div className="relative order-1 aspect-[4/5] bg-fam-surface-2 lg:order-2 lg:aspect-auto lg:min-h-[640px]">
           <img
             src={imageSrc(imageUrl)}
             alt={HERO_ALT}
@@ -61,7 +63,7 @@ export function HeroSplitPhotoBlock({
             style={faceSafeStyle(imageFocus)}
             className="absolute inset-0 h-full w-full object-cover"
           />
-        </div>
+        </div>}
       </div>
     </section>
   )

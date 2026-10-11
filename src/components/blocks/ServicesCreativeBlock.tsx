@@ -5,6 +5,7 @@ import { SectionHeaderCreative } from '~/components/SectionHeaderCreative'
 import { SITE } from '~/data/site'
 import { SERVICES } from '~/data/services-view'
 import { serviceImageUrl, serviceImageFocusStyle } from '~/data/images'
+import { hasServicePhoto } from '~/lib/service-photo'
 
 // ServicesPreview VARIANT: 'creative', a STAGGERED, asymmetric card grid (cards
 // offset at different vertical positions), big rounded shapes, magenta accents,
@@ -51,8 +52,9 @@ export function ServicesCreativeBlock({
               key={s.slug}
               to="/services/$slug"
               params={{ slug: s.slug }}
-              className={`group flex flex-col overflow-hidden rounded-3xl bg-fam-surface-2 transition-transform hover:translate-y-(--hov-lift-lg) ${offsets[i] ?? ''}`}
+              className={`group flex flex-col overflow-hidden rounded-3xl bg-fam-surface-2 transition-transform hover:translate-y-(--hov-lift-lg) ${offsets[i] ?? ''}${hasServicePhoto(s.slug) ? '' : ' md:self-start'}`}
             >
+              {hasServicePhoto(s.slug) && (
               <div className="aspect-[4/3] overflow-hidden">
                 <img
                   src={serviceImageUrl(s.slug)}
@@ -64,6 +66,7 @@ export function ServicesCreativeBlock({
                   className="h-full w-full object-cover transition-transform duration-(--motion-slow) group-hover:scale-(--hov-zoom)"
                 />
               </div>
+              )}
               <div className="flex flex-1 flex-col p-7">
                 <h3 className="font-display text-2xl font-bold tracking-tight text-fam-ink">
                   {s.displayName}

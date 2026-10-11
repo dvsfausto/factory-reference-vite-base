@@ -5,6 +5,7 @@ import { SectionHeaderBold } from '~/components/SectionHeaderBold'
 import { SITE } from '~/data/site'
 import { SERVICES } from '~/data/services-view'
 import { serviceImageUrl, serviceImageFocusStyle } from '~/data/images'
+import { hasServicePhoto } from '~/lib/service-photo'
 
 // ServicesPreview VARIANT: 'bold', grounded/industrial services grid for trades.
 // Patterns from HeroBoldFullbleedBlock (the catalog reference):
@@ -54,8 +55,9 @@ export function ServicesBoldBlock({
               key={s.slug}
               to="/services/$slug"
               params={{ slug: s.slug }}
-              className="group flex flex-col overflow-hidden rounded-lg border border-fam-line-ink bg-fam-card transition-all hover:translate-y-(--hov-lift) hover:border-fam-accent hover:elev-4"
+              className={`group flex flex-col overflow-hidden rounded-lg border border-fam-line-ink bg-fam-card transition-all hover:translate-y-(--hov-lift) hover:border-fam-accent hover:elev-4${hasServicePhoto(s.slug) ? '' : ' md:self-start'}`}
             >
+              {hasServicePhoto(s.slug) && (
               <div className="aspect-[4/3] overflow-hidden">
                 <img
                   src={serviceImageUrl(s.slug)}
@@ -67,6 +69,7 @@ export function ServicesBoldBlock({
                   className="h-full w-full object-cover transition-transform duration-(--motion-slow) group-hover:scale-(--hov-zoom)"
                 />
               </div>
+              )}
               <div className="flex flex-1 flex-col p-6">
                 <h3 className="font-display text-xl font-semibold uppercase tracking-tight text-ink-900">
                   {s.displayName}

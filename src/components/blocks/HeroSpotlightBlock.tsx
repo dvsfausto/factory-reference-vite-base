@@ -69,10 +69,10 @@ export function HeroSpotlightBlock({
     >
       <div className="container-x relative py-section">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-16">
-          {/* Copy column */}
+          {/* Copy column (the whole width when the photo is off by the owner, ZB-241) */}
           <div
             data-enter="up"
-            className="lg:col-span-6"
+            className={imageUrl === '' ? 'max-w-3xl lg:col-span-12' : 'lg:col-span-6'}
           >
             {hasText(kicker) && (
               <span className="inline-flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.18em] text-brand-700">
@@ -128,7 +128,7 @@ export function HeroSpotlightBlock({
           </div>
 
           {/* Framed spotlight image + floating chips */}
-          <div
+          {imageUrl !== '' && <div
             data-enter="up-late"
             className="relative lg:col-span-6"
           >
@@ -177,7 +177,7 @@ export function HeroSpotlightBlock({
                 <span className="text-sm font-semibold text-ink-800">{topChip}</span>
               </div>
             )}
-          </div>
+          </div>}
         </div>
       </div>
     </section>

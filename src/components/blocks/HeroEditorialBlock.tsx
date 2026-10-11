@@ -126,8 +126,8 @@ export function HeroEditorialBlock({
           </div>
         </div>
 
-        {/* Wide image band with a brand-gradient corner accent. */}
-        <div
+        {/* Wide image band with a brand-gradient corner accent. Off by the owner (""): no band, the trust strip follows the words (ZB-241). */}
+        {imageUrl !== '' && <div
           data-enter="up-late"
           className="relative mt-12"
         >
@@ -145,7 +145,7 @@ export function HeroEditorialBlock({
               alt={HERO_ALT}
               className="h-[42vh] min-h-[320px] w-full object-cover md:h-[52vh]" data-hero-photo="" style={imageFocus ? { objectPosition: imageFocus } : heroFocusStyle(site)} />
           </div>
-        </div>
+        </div>}
       </div>
 
       {/* Brand-gradient trust strip, the real trust items. */}

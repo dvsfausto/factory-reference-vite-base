@@ -5,6 +5,7 @@ import { ArrowRight } from 'lucide-react'
 import { SectionHeader } from '~/components/SectionHeader'
 import { SERVICES } from '~/data/services-view'
 import { serviceImageUrl, serviceImageFocusStyle } from '~/data/images'
+import { hasServicePhoto } from '~/lib/service-photo'
 
 // Services VARIANT: 'feature-rows', large, editorial feature ROWS that alternate
 // the photo left/right. An oversized brand-gradient index numeral anchors each
@@ -58,6 +59,7 @@ export function ServicesFeatureRowsBlock({
         <div className="space-y-14 md:space-y-20">
           {previewServices.map((s, i) => {
             const flip = i % 2 === 1
+            const photo = hasServicePhoto(s.slug)
             return (
               <motion.div
                 key={s.slug}
@@ -69,10 +71,10 @@ export function ServicesFeatureRowsBlock({
                   delay: reduce ? 0 : i * 0.08,
                   ease: [0.16, 1, 0.3, 1],
                 }}
-                className="grid grid-cols-1 items-center gap-8 md:grid-cols-2 md:gap-14"
+                className={photo ? 'grid grid-cols-1 items-center gap-8 md:grid-cols-2 md:gap-14' : 'grid grid-cols-1'}
               >
-                {/* Photo, order flips on alternating rows (desktop only). */}
-                <motion.div
+                {/* Photo, order flips on alternating rows (desktop only). Off by the owner: the copy takes the row. */}
+                {photo && <motion.div
                   initial={false}
                   whileInView={reduce ? undefined : { opacity: 1, x: 0 }}
                   viewport={{ once: true, margin: '-10%' }}
@@ -98,7 +100,7 @@ export function ServicesFeatureRowsBlock({
                     height={640}
                     className="aspect-[7/5] w-full object-cover"
                   />
-                </motion.div>
+                </motion.div>}
 
                 {/* Copy column with the oversized gradient numeral. */}
                 <div className={flip ? 'md:order-1' : ''}>

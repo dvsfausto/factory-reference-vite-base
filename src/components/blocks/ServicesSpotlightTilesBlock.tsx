@@ -5,6 +5,7 @@ import { ArrowRight, ArrowUpRight } from 'lucide-react'
 import { SectionHeader } from '~/components/SectionHeader'
 import { SERVICES } from '~/data/services-view'
 import { serviceImageUrl, serviceImageFocusStyle } from '~/data/images'
+import { hasServicePhoto } from '~/lib/service-photo'
 
 // Services VARIANT: 'spotlight-tiles', the lead service takes a big, cinematic
 // brand-gradient SPOTLIGHT tile (photo under a brand wash, copy inset on glass);
@@ -83,7 +84,7 @@ export function ServicesSpotlightTilesBlock({
                 boxShadow: 'var(--wow-shadow-lift)',
               }}
             >
-              <img
+              {hasServicePhoto(lead.slug) && <img
                 src={serviceImageUrl(lead.slug)}
                 data-service-photo={lead.slug} style={serviceImageFocusStyle(lead.slug)}
                 alt={lead.name}
@@ -91,7 +92,7 @@ export function ServicesSpotlightTilesBlock({
                 width={1000}
                 height={800}
                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-(--motion-slower) group-hover:scale-(--hov-zoom)"
-              />
+              />}
               {/* Brand wash, decorative brand TINT over the photo (aesthetic only). */}
               <span
                 aria-hidden
@@ -163,7 +164,7 @@ export function ServicesSpotlightTilesBlock({
                       e.currentTarget.style.boxShadow = 'var(--wow-shadow-soft)'
                     }}
                   >
-                    <div className="relative h-24 w-24 flex-none overflow-hidden rounded-2xl sm:h-28 sm:w-28">
+                    {hasServicePhoto(s.slug) && <div className="relative h-24 w-24 flex-none overflow-hidden rounded-2xl sm:h-28 sm:w-28">
                       <img
                         src={serviceImageUrl(s.slug)}
                         data-service-photo={s.slug} style={serviceImageFocusStyle(s.slug)}
@@ -173,7 +174,7 @@ export function ServicesSpotlightTilesBlock({
                         height={224}
                         className="h-full w-full object-cover transition-transform duration-(--motion-slower) group-hover:scale-(--hov-zoom-xl)"
                       />
-                    </div>
+                    </div>}
                     <div className="min-w-0 flex-1">
                       <h3 className="font-display text-lg leading-snug">{s.displayName}</h3>
                       <p className="mt-1 line-clamp-2 text-sm text-ink-500">

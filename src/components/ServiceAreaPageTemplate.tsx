@@ -9,6 +9,7 @@ import { renderCharacterHero, renderCharacterCta } from "./CharacterHero";
 import { resolveCharacterTokens } from "~/lib/character-tokens";
 import { ReviewCard } from "./ReviewCard";
 import { areaImageUrl, areaAlt, serviceImageUrl, serviceImageFocusStyle } from "~/data/images";
+import { hasServicePhoto } from '~/lib/service-photo'
 import { SERVICES } from "~/data/services-view";
 import { reviews } from "~/data/reviews";
 import { SITE } from "~/data/site";
@@ -186,8 +187,9 @@ export function ServiceAreaPageTemplate({ data }: Props) {
                   key={s.slug}
                   to="/services/$slug"
                   params={{ slug: s.slug }}
-                  className={T ? `${T.card} ${T.cardRadius} border ${T.border} overflow-hidden group ${T.cardElevation}` : "card-stead overflow-hidden group hover:elev-4 hover:translate-y-(--hov-lift) transition-all"}
+                  className={`${T ? `${T.card} ${T.cardRadius} border ${T.border} overflow-hidden group ${T.cardElevation}` : 'card-stead overflow-hidden group hover:elev-4 hover:translate-y-(--hov-lift) transition-all'}${hasServicePhoto(s.slug) ? '' : ' md:self-start'}`}
                 >
+                  {hasServicePhoto(s.slug) && (
                   <div className="aspect-[4/3] overflow-hidden">
                     <img
                       src={serviceImageUrl(s.slug)}
@@ -199,6 +201,7 @@ export function ServiceAreaPageTemplate({ data }: Props) {
                       className="w-full h-full object-cover group-hover:scale-(--hov-zoom) transition-transform duration-(--motion-slow)"
                     />
                   </div>
+                  )}
                   <div className="p-6">
                     <h4 className={hCls}>{s.displayName}</h4>
                     <p className={`mt-2 text-sm ${tMuted}`}>{s.short}</p>

@@ -4,6 +4,7 @@ import { ArrowUpRight } from 'lucide-react'
 import { SITE } from '~/data/site'
 import { SERVICES } from '~/data/services-view'
 import { serviceImageUrl, serviceImageFocusStyle } from '~/data/images'
+import { hasServicePhoto } from '~/lib/service-photo'
 
 // ServicesPreview LAYOUT: 'bento', an asymmetric, mixed-size tile grid (the
 // modern top-of-class look): a large feature tile anchors the composition while
@@ -88,8 +89,9 @@ export function ServicesBentoBlock({
                 to="/services/$slug"
                 params={{ slug: s.slug }}
                 className={`group relative isolate flex flex-col justify-end overflow-hidden rounded-2xl bg-fam-panel ${span}`}
+                style={hasServicePhoto(s.slug) ? undefined : { backgroundImage: 'var(--wow-grad-brand)' }}
               >
-                <img
+                {hasServicePhoto(s.slug) && <img
                   src={serviceImageUrl(s.slug)}
                   data-service-photo={s.slug} style={serviceImageFocusStyle(s.slug)}
                   alt={s.name}
@@ -97,7 +99,7 @@ export function ServicesBentoBlock({
                   width={800}
                   height={600}
                   className="absolute inset-0 -z-20 h-full w-full object-cover transition-transform duration-(--motion-slow) group-hover:scale-(--hov-zoom)"
-                />
+                />}
                 <div className="absolute inset-0 -z-10 bg-gradient-to-t from-fam-scrim-2/90 via-fam-scrim-2/30 to-transparent" />
                 <div className="flex items-end justify-between gap-3 p-6">
                   <h3 className={`font-display font-semibold tracking-tight text-fam-on-dark drop-shadow-sm ${i === 0 ? 'text-2xl sm:text-3xl' : 'text-xl'}`}>

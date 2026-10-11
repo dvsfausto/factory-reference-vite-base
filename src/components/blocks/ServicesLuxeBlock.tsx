@@ -5,6 +5,7 @@ import { ArrowRight } from 'lucide-react'
 import { SectionHeader } from '~/components/SectionHeader'
 import { SERVICES } from '~/data/services-view'
 import { serviceImageUrl, serviceImageFocusStyle } from '~/data/images'
+import { hasServicePhoto } from '~/lib/service-photo'
 
 // Services VARIANT: 'luxe', a premium glass-card grid on a soft radial brand
 // surface. Each card is a framed photo above a frosted body; on hover the whole
@@ -72,6 +73,7 @@ export function ServicesLuxeBlock({
           {previewServices.map((s, i) => (
             <motion.div
               key={s.slug}
+              className={hasServicePhoto(s.slug) ? undefined : 'md:self-start'}
               initial={false}
               whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-10%' }}
@@ -102,6 +104,7 @@ export function ServicesLuxeBlock({
                   e.currentTarget.style.boxShadow = 'var(--wow-shadow-soft)'
                 }}
               >
+                {hasServicePhoto(s.slug) && (
                 <div className="relative aspect-[4/3] overflow-hidden">
                   <img
                     src={serviceImageUrl(s.slug)}
@@ -123,7 +126,16 @@ export function ServicesLuxeBlock({
                     {String(i + 1).padStart(2, '0')}
                   </span>
                 </div>
+                )}
                 <div className="flex flex-1 flex-col p-6">
+                  {!hasServicePhoto(s.slug) && (
+                    <span
+                      className="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl font-display text-lg font-bold text-fam-on-dark"
+                      style={{ backgroundImage: 'var(--wow-grad-brand)', boxShadow: 'var(--wow-shadow-glow)' }}
+                    >
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                  )}
                   <h3 className="font-display text-xl leading-snug">{s.displayName}</h3>
                   <p className="mt-2 flex-1 text-ink-500">{s.short}</p>
                   {/* Brand-gradient rule that widens on hover. */}

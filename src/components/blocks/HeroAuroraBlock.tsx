@@ -68,11 +68,11 @@ export function HeroAuroraBlock({
 
   return (
     <section className="relative isolate flex min-h-[calc(100vh-4rem)] flex-col overflow-hidden bg-fam-panel-ink text-fam-on-dark">
-      {/* Full-bleed business photo. */}
-      <img
+      {/* Full-bleed business photo. Off by the owner (""): the ink surface, the scrim and the aurora carry the words (ZB-241). */}
+      {imageUrl !== '' && <img
         src={imageSrc(imageUrl)}
         alt={HERO_ALT}
-        className="absolute inset-0 -z-30 h-full w-full object-cover" data-hero-photo="" style={imageFocus ? { objectPosition: imageFocus } : heroFocusStyle(site)} />
+        className="absolute inset-0 -z-30 h-full w-full object-cover" data-hero-photo="" style={imageFocus ? { objectPosition: imageFocus } : heroFocusStyle(site)} />}
       {/* Legibility scrim, dark from the left, fading right. */}
       <div className="absolute inset-0 -z-20 bg-gradient-to-tr from-fam-scrim via-fam-scrim/85 to-fam-scrim/30" />
       {/* Ambient brand AURORA, a slow-drifting, blurred wash of --wow-grad-brand.

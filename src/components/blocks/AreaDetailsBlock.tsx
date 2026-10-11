@@ -6,6 +6,7 @@ import type { ServiceAreaPageData } from '~/lib/types/page-types'
 import { Reveal } from '~/components/Reveal'
 import { SERVICES } from '~/data/services-view'
 import { serviceImageUrl, serviceImageFocusStyle } from '~/data/images'
+import { hasServicePhoto } from '~/lib/service-photo'
 
 // AREA-DETAIL VARIANT (Arc 3 · Stage D): the rich, consolidated MIDDLE content of an
 // area page, driven per-item by `area` (ctx.area). It renders, in order -
@@ -128,12 +129,13 @@ export function AreaDetailsBlock({
               key={s.slug}
               to="/services/$slug"
               params={{ slug: s.slug }}
-              className="group flex flex-col overflow-hidden rounded-2xl border bg-fam-card/85 backdrop-blur-md transition-transform duration-(--motion-slow) hover:translate-y-(--hov-lift)"
+              className={`group flex flex-col overflow-hidden rounded-2xl border bg-fam-card/85 backdrop-blur-md transition-transform duration-(--motion-slow) hover:translate-y-(--hov-lift)${hasServicePhoto(s.slug) ? '' : ' md:self-start'}`}
               style={{
                 borderColor: 'var(--fam-hairline, var(--wow-hairline))',
                 boxShadow: 'var(--wow-shadow-soft)',
               }}
             >
+              {hasServicePhoto(s.slug) && (
               <div className="aspect-[4/3] overflow-hidden">
                 <img
                   src={serviceImageUrl(s.slug)}
@@ -145,6 +147,7 @@ export function AreaDetailsBlock({
                   className="h-full w-full object-cover transition-transform duration-(--motion-slow) group-hover:scale-(--hov-zoom)"
                 />
               </div>
+              )}
               <div className="p-6">
                 <h3 className="font-display text-lg leading-snug text-[var(--fam-ink,var(--color-ink-900))]">
                   {s.displayName}

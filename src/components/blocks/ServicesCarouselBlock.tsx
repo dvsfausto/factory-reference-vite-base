@@ -4,6 +4,7 @@ import { ArrowRight } from 'lucide-react'
 import { SITE } from '~/data/site'
 import { SERVICES } from '~/data/services-view'
 import { serviceImageUrl, serviceImageFocusStyle } from '~/data/images'
+import { hasServicePhoto } from '~/lib/service-photo'
 
 // ServicesPreview LAYOUT: 'carousel', a horizontal, scroll-snap slider of service
 // cards. The right call when there are many services: they live in a single
@@ -70,8 +71,9 @@ export function ServicesCarouselBlock({
               key={s.slug}
               to="/services/$slug"
               params={{ slug: s.slug }}
-              className="group flex w-[280px] shrink-0 snap-start flex-col overflow-hidden rounded-2xl border border-fam-hairline bg-fam-card transition-all hover:border-fam-accent hover:elev-2 md:w-[340px]"
+              className={`group flex w-[280px] shrink-0 snap-start flex-col overflow-hidden rounded-2xl border border-fam-hairline bg-fam-card transition-all hover:border-fam-accent hover:elev-2 md:w-[340px]${hasServicePhoto(s.slug) ? '' : ' self-start'}`}
             >
+              {hasServicePhoto(s.slug) && (
               <div className="aspect-[4/3] overflow-hidden">
                 <img
                   src={serviceImageUrl(s.slug)}
@@ -83,6 +85,7 @@ export function ServicesCarouselBlock({
                   className="h-full w-full object-cover transition-transform duration-(--motion-slow) group-hover:scale-(--hov-zoom)"
                 />
               </div>
+              )}
               <div className="flex flex-1 flex-col p-7">
                 <h3 className="font-display text-xl font-semibold tracking-tight text-fam-ink">{s.displayName}</h3>
                 <p className="mt-2 flex-1 text-fam-ink-muted">{s.short}</p>
