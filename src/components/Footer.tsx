@@ -1,4 +1,5 @@
 import { placeLine } from '~/lib/place'
+import { SocialIcon } from '~/components/blocks/SocialIcon'
 import { Link } from "@tanstack/react-router";
 import { Instagram, Facebook, Phone, Mail, MapPin, Clock, ArrowRight } from "lucide-react";
 import { Logo } from "./Logo";
@@ -71,12 +72,18 @@ const FOOTER_VARIANTS: Record<string, { structure: FooterStructure; theme: strin
 const locationLine = () => placeLine();
 
 // ─── shared column pieces (composed by the structures) ─────────────────────────────────────────────────
+const isHttps = (v: unknown): v is string => typeof v === 'string' && /^https:\/\/[^\s]+$/.test(v);
 function SocialRow({ t }: { t: FooterTheme }) {
   const cls = `h-9 w-9 rounded-full border ${t.socialBorder} flex items-center justify-center ${t.socialHover} focus-ring transition-colors`;
+  const more = SITE.social as Record<string, string | undefined>;
   return (
     <div className="flex gap-3">
       {SITE.social.instagram && <a href={SITE.social.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className={cls}><Instagram className="h-4 w-4" /></a>}
       {SITE.social.facebook && <a href={SITE.social.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className={cls}><Facebook className="h-4 w-4" /></a>}
+      {/* 2026-10-12: TikTok, LinkedIn and a website, each only when the site holds an https link for it (no link, no icon) */}
+      {isHttps(more.tiktok) && <a href={more.tiktok} target="_blank" rel="noopener noreferrer" aria-label="TikTok" className={cls}><SocialIcon platform="tiktok" className="h-4 w-4" /></a>}
+      {isHttps(more.linkedin) && <a href={more.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className={cls}><SocialIcon platform="linkedin" className="h-4 w-4" /></a>}
+      {isHttps(more.website) && <a href={more.website} target="_blank" rel="noopener noreferrer" aria-label={tr('footer.website')} className={cls}><SocialIcon platform="website" className="h-4 w-4" /></a>}
       {SITE.social.yelp && <a href={SITE.social.yelp} target="_blank" rel="noopener noreferrer" aria-label="Yelp" className={`${cls} text-xs font-bold`}>Y</a>}
       {SITE.social.google && <a href={SITE.social.google} target="_blank" rel="noopener noreferrer" aria-label="Google" className={`${cls} text-xs font-bold`}>G</a>}
     </div>

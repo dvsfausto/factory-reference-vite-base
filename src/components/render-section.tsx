@@ -600,7 +600,7 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
           body={block.params?.body as string | undefined}
           image={block.params?.image as { url: string; alt?: string; credit?: string; focus?: string } | undefined}
           // 'feature' (2026-10-12): the picture whole and one https button; every other richText renders as before
-          feature={block.variant === 'feature' ? { buttonLabel: block.params?.buttonLabel as string | undefined, buttonHref: block.params?.buttonHref as string | undefined } : undefined}
+          feature={block.variant === 'feature' ? { buttonLabel: block.params?.buttonLabel as string | undefined, buttonHref: block.params?.buttonHref as string | undefined, caption: block.params?.caption as string | undefined, image2: block.params?.image2 as { url: string; alt?: string; focus?: string } | undefined } : undefined}
           headingLevel={opts?.headingLevel}
         />
       )

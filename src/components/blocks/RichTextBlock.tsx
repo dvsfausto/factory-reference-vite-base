@@ -34,7 +34,7 @@ export function RichTextBlock({
   image?: RichTextImage
   /** 'feature' layout (2026-10-12; chosen by the block's own variant): the picture shown whole
    *  (a logo is never cropped) and one button to an https address in a new tab; no label or no https link → no button. */
-  feature?: { buttonLabel?: string; buttonHref?: string }
+  feature?: { buttonLabel?: string; buttonHref?: string; caption?: string; image2?: RichTextImage }
 }) {
   const Heading = headingLevel === 1 ? 'h1' : 'h2'
   /* ★ designed copy (2026-09-29): the small Markdown the assistant writes becomes headings, lists and emphasis in the site's own
@@ -42,12 +42,15 @@ export function RichTextBlock({
   const blocks = parseRichText(body ?? '')
   const pic = image && typeof image.url === 'string' && image.url ? image : null
   if (!heading && blocks.length === 0 && !pic) return null
+  // 'feature' extras (2026-10-12): a line under the picture in the display face, and a second picture in its own column; each only with its data
+  const caption = feature?.caption?.trim() ? feature.caption.trim() : null
+  const pic2 = feature?.image2 && typeof feature.image2.url === 'string' && feature.image2.url ? feature.image2 : null
   return (
     <section className="relative" data-block="richText">
       <div className="container-x py-section">
         <motion.div
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className={pic ? 'grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-start' : 'max-w-3xl'}
+          className={pic ? (pic2 ? 'grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)_minmax(0,0.85fr)] lg:items-center' : 'grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-start') : 'max-w-3xl'}
         >
           {pic && (
             <figure className={feature ? 'overflow-hidden rounded-2xl lg:order-first' : 'overflow-hidden rounded-2xl border border-fam-hairline bg-fam-surface lg:order-last lg:sticky lg:top-24'} data-page-image="">
@@ -59,6 +62,7 @@ export function RichTextBlock({
                 style={pic.focus ? { objectPosition: pic.focus } : undefined}
               />
               {pic.credit && <figcaption className="px-4 py-2 text-xs text-ink-500">{pic.credit}</figcaption>}
+              {caption && <figcaption className="pb-2 text-center font-display text-xl font-semibold tracking-[0.14em] text-fam-ink" data-feature-caption="">{caption}</figcaption>}
             </figure>
           )}
           <div className="max-w-3xl">
@@ -109,6 +113,17 @@ export function RichTextBlock({
             </a>
           )}
           </div>
+          {pic2 && (
+            <figure className="overflow-hidden rounded-2xl elev-3" data-page-image="" data-feature-image2="">
+              <img
+                src={pic2.url}
+                alt={pic2.alt ?? heading ?? ''}
+                loading="lazy"
+                className="aspect-[3/4] w-full object-cover"
+                style={{ objectPosition: pic2.focus ?? '50% 30%' }}
+              />
+            </figure>
+          )}
         </motion.div>
       </div>
     </section>

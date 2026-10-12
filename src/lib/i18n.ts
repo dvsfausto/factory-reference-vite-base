@@ -483,6 +483,7 @@ const EN = {
   'section.follow': 'Follow',
   'section.followers': 'followers',
   'section.followOn': 'Follow on',
+  'footer.website': 'Website',
   'cta.reachOutToday': 'Reach out today and let us take it from here.',
   // ★★★ THE SPANISH SWEEP (2026-09-24): every sentence the template itself writes, from the block defaults
   // ('Simple, transparent pricing') to the carousel hint and the cookie notice. `en` = the exact former literal.
@@ -1054,6 +1055,7 @@ const ES: Record<keyof typeof EN, string> = {
   'section.follow': 'Seguir',
   'section.followers': 'seguidores',
   'section.followOn': 'Seguir en',
+  'footer.website': 'Sitio web',
   'cta.reachOutToday': 'Escríbenos hoy y nosotros nos encargamos del resto.',
   'blk.mostPopular': "El más popular",
   'blk.popular': "Popular",
