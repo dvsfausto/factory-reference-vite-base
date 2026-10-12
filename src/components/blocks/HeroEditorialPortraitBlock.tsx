@@ -33,7 +33,7 @@ export function HeroEditorialPortraitBlock({
 }) {
   return (
     <section className="bg-fam-surface-2">
-      <div className="container-x py-12 lg:py-20">
+      <div className="container-x py-section">
         {hasText(site.hero.kicker) && (
           <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] text-fam-accent-text">
             <span className="h-px w-7 bg-fam-accent" />
