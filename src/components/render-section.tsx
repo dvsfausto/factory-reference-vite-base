@@ -1104,7 +1104,8 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
       return (
         <ServicesSection
           key="servicesIndex"
-          heading={(block.params?.heading as string | undefined) ?? tr('nav.services')}
+          // under the page intro ("Our services") the list carries no second heading (ZB-154, 2026-10-11)
+          heading={(block.params?.heading as string | undefined) ?? (ctx?.intro ? '' : tr('nav.services'))}
           intro={block.params?.intro as string | undefined}
           services={data.services ?? SERVICES}
         />

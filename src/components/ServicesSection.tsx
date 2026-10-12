@@ -14,16 +14,16 @@ export function ServicesSection({ heading, intro, services }: Props) {
   return (
     <section className="bg-fam-surface-slate">
       <div className="mx-auto max-w-6xl px-4 py-16">
-        <div className="max-w-2xl">
-          <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+        {(heading || intro) && <div className="max-w-2xl">
+          {heading && <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
             {heading}
-          </h2>
+          </h2>}
           {intro && (
             <p className="mt-4 text-lg leading-relaxed text-slate-700">{intro}</p>
           )}
-        </div>
+        </div>}
         {/* ZB-154 (2026-10-11): columns match the count, so two or four services never leave a lone card in a row */}
-        <ul className={`mt-12 grid gap-6 sm:grid-cols-2 ${services.length === 2 || services.length === 4 ? 'lg:grid-cols-2' : 'lg:grid-cols-3'}`}>
+        <ul className={`${heading || intro ? 'mt-12' : ''} grid gap-6 sm:grid-cols-2 ${services.length === 2 || services.length === 4 ? 'lg:grid-cols-2' : 'lg:grid-cols-3'}`}>
           {services.map((s) => {
             // Three-way separation: a NON-PAGED service (paged:false) stays VISIBLE here but renders
             // as a CARD, not an anchor — no /services/$slug link is created, so nothing can dangle.

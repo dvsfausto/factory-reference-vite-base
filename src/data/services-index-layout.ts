@@ -1,6 +1,7 @@
 import type { BlockType } from './layout'
 import { familyOr } from '~/lib/family-variant'
 import { tr } from '~/lib/i18n'
+import { QUOTABLE_SERVICES } from './services-view'
 
 // Per-page composition for /services (Arc 3 · Stage B), mirroring about-layout.ts.
 // The services-index route maps over this array via the shared renderer. Adds an
@@ -27,5 +28,6 @@ export interface ServicesIndexBlock {
 export const SERVICES_INDEX_LAYOUT: ServicesIndexBlock[] = [
   { type: 'intro' },
   { type: 'servicesIndex' },
-  { type: 'cta', variant: familyOr('aurora-glow'), params: { title: tr('blk.needAQuote') } },
+  // "Need a quote?" only where something is quoted; a site that books or sells packages keeps its own words (ZB-154, 2026-10-11)
+  { type: 'cta', variant: familyOr('aurora-glow'), params: QUOTABLE_SERVICES.length ? { title: tr('blk.needAQuote') } : {} },
 ]
