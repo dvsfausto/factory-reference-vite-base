@@ -1,10 +1,10 @@
 {
   "version": 1,
-  "inputs_hash": "e98e632ada6e401b",
+  "inputs_hash": "ab2878a61c23884a",
   "counts": {
     "blocks": 44,
-    "variants": 183,
-    "fields": 225,
+    "variants": 185,
+    "fields": 230,
     "fields_by_kind": {
       "boolean": 6,
       "enum": 7,
@@ -12,8 +12,8 @@
       "list": 24,
       "money": 8,
       "number": 3,
-      "text": 161,
-      "url": 4
+      "text": 163,
+      "url": 7
     },
     "photo_targets": 16,
     "chrome_fields": 20,
@@ -99,6 +99,12 @@
         {
           "id": "background",
           "label": "Background image",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "editorial-portrait",
+          "label": "Editorial portrait",
           "default": false,
           "wow": false
         },
@@ -338,7 +344,7 @@
         "phoneDisplay",
         "quoteForm"
       ],
-      "files": 19
+      "files": 20
     },
     {
       "type": "taglineBar",
@@ -551,6 +557,12 @@
         {
           "path": "SERVICES[].tagline",
           "kind": "text",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "SERVICES[].buyUrl",
+          "kind": "url",
           "required": false,
           "of": "item"
         },
@@ -1154,6 +1166,12 @@
           "of": "item"
         },
         {
+          "path": "SERVICES[].buyUrl",
+          "kind": "url",
+          "required": false,
+          "of": "item"
+        },
+        {
           "path": "SERVICES[].published",
           "kind": "boolean",
           "required": false,
@@ -1640,6 +1658,12 @@
           "of": "copy"
         },
         {
+          "path": "params.count",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
           "path": "params.heading",
           "kind": "text",
           "required": false,
@@ -1911,6 +1935,24 @@
           "of": "copy"
         },
         {
+          "path": "logo_light_url",
+          "kind": "url",
+          "required": false,
+          "of": "copy"
+        },
+        {
+          "path": "logo_url",
+          "kind": "url",
+          "required": false,
+          "of": "copy"
+        },
+        {
+          "path": "name",
+          "kind": "text",
+          "required": false,
+          "of": "copy"
+        },
+        {
           "path": "phone",
           "kind": "text",
           "required": false,
@@ -1948,6 +1990,9 @@
         "headerCtaLabel",
         "hero",
         "homeCta",
+        "logo_light_url",
+        "logo_url",
+        "name",
         "phone",
         "phoneDisplay",
         "tagline"
@@ -2254,6 +2299,12 @@
           "wow": false
         },
         {
+          "id": "portfolio-wall",
+          "label": "Portfolio wall",
+          "default": false,
+          "wow": false
+        },
+        {
           "id": "photo-strip",
           "label": "Photo strip (editorial)",
           "default": false,
@@ -2286,6 +2337,12 @@
           "of": "item"
         },
         {
+          "path": "PROJECTS[].category",
+          "kind": "text",
+          "required": false,
+          "of": "item"
+        },
+        {
           "path": "PROJECTS[].beforeImage",
           "kind": "image",
           "required": false,
@@ -2299,6 +2356,12 @@
         },
         {
           "path": "params.body",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.category",
           "kind": "text",
           "required": false,
           "of": "params"
@@ -2322,7 +2385,7 @@
         "PROJECTS[].afterImage"
       ],
       "reads": [],
-      "files": 11
+      "files": 12
     },
     {
       "type": "process",
@@ -4434,6 +4497,12 @@
           "of": "item"
         },
         {
+          "path": "SERVICES[].buyUrl",
+          "kind": "url",
+          "required": false,
+          "of": "item"
+        },
+        {
           "path": "SERVICES[].published",
           "kind": "boolean",
           "required": false,
@@ -5366,6 +5435,12 @@
         {
           "path": "SERVICES[].tagline",
           "kind": "text",
+          "required": false,
+          "of": "item"
+        },
+        {
+          "path": "SERVICES[].buyUrl",
+          "kind": "url",
           "required": false,
           "of": "item"
         },

@@ -60,6 +60,7 @@ export const VARIANT_MANIFEST: SectionVariants[] = [
       { id: 'bold-fullbleed', label: 'Bold full-bleed', description: 'Dark, industrial full-bleed image with a heavy uppercase headline and a trust band.' },
       { id: 'centered', label: 'Centered', description: 'Centered, full-width single-column hero.' },
       { id: 'background', label: 'Background image', description: 'The photo bright and full-bleed, the words on a light panel.' },
+      { id: 'editorial-portrait', label: 'Editorial portrait', description: 'A warm ground, the headline large across the top, the owner\'s portrait in a tall frame beside the words, the trust points on hairlines.' },
       { id: 'glass', label: 'Glass panel', description: 'The photo bright and full-bleed, the words on a see-through, softly blurred panel; the picture shows through.' },
       { id: 'split-reversed', label: 'Split (reversed)', description: 'Image left / copy right.' },
       { id: 'minimal', label: 'Minimal', description: 'Sparse, type-first hero.' },

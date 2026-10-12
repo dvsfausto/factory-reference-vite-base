@@ -31,6 +31,7 @@ import { HeroCorporateBlock } from '~/components/blocks/HeroCorporateBlock'
 import { HeroCreativeBlock } from '~/components/blocks/HeroCreativeBlock'
 import { HeroCenteredBlock } from '~/components/blocks/HeroCenteredBlock'
 import { HeroBackgroundBlock } from '~/components/blocks/HeroBackgroundBlock'
+import { HeroEditorialPortraitBlock } from '~/components/blocks/HeroEditorialPortraitBlock'
 import { HeroGlassBlock } from './blocks/HeroGlassBlock'
 import { HeroSplitReversedBlock } from '~/components/blocks/HeroSplitReversedBlock'
 import { HeroMinimalBlock } from '~/components/blocks/HeroMinimalBlock'
@@ -227,6 +228,8 @@ const HERO_VARIANTS: Record<string, typeof HeroBlock> = {
   // unchanged — these are pure additive map keys.
   centered: HeroCenteredBlock,
   background: HeroBackgroundBlock,
+  // A person, not a place (ZB-154, 2026-10-12): warm ground, large headline, a tall portrait frame, trust on hairlines; chosen per business.
+  'editorial-portrait': HeroEditorialPortraitBlock,
   'split-reversed': HeroSplitReversedBlock,
   minimal: HeroMinimalBlock,
   video: HeroVideoBlock,
