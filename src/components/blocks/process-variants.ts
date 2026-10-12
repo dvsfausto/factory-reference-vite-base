@@ -6,6 +6,7 @@ import { ProcessVerticalRailBlock } from './ProcessVerticalRailBlock'
 import { ProcessGlowNodesBlock } from './ProcessGlowNodesBlock'
 import { ProcessBoldNumeralsBlock } from './ProcessBoldNumeralsBlock'
 import { ProcessPullQuoteStepsBlock } from './ProcessPullQuoteStepsBlock'
+import { ProcessVideoLibraryBlock } from './ProcessVideoLibraryBlock'
 import type { ComponentProps, ComponentType } from 'react'
 
 // One process step. OPTIONAL data (read from SITE.steps via cast in the process
@@ -34,4 +35,6 @@ export const PROCESS_VARIANTS: Record<string, ComponentType<ProcessVariantProps>
   'bold-numerals': ProcessBoldNumeralsBlock,
   // The Editorial theme (ZB-147 W1.2): kicker, serif pull quote, four hairline-topped numbered columns.
   'pull-quote-steps': ProcessPullQuoteStepsBlock,
+  // 2026-10-12: a creator's series as cards with a picture and a Watch button
+  'video-library': ProcessVideoLibraryBlock,
 }

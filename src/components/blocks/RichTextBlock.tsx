@@ -24,6 +24,7 @@ export function RichTextBlock({
   headingLevel = 2,
   body,
   image,
+  feature,
 }: {
   eyebrow?: string
   heading?: string
@@ -31,6 +32,9 @@ export function RichTextBlock({
   headingLevel?: 1 | 2
   body?: string
   image?: RichTextImage
+  /** 'feature' layout (2026-10-12; chosen by the block's own variant): the picture shown whole
+   *  (a logo is never cropped) and one button to an https address in a new tab; no label or no https link → no button. */
+  feature?: { buttonLabel?: string; buttonHref?: string }
 }) {
   const Heading = headingLevel === 1 ? 'h1' : 'h2'
   /* ★ designed copy (2026-09-29): the small Markdown the assistant writes becomes headings, lists and emphasis in the site's own
@@ -46,12 +50,12 @@ export function RichTextBlock({
           className={pic ? 'grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-start' : 'max-w-3xl'}
         >
           {pic && (
-            <figure className="overflow-hidden rounded-2xl border border-fam-hairline bg-fam-surface lg:order-last lg:sticky lg:top-24" data-page-image="">
+            <figure className={feature ? 'overflow-hidden rounded-2xl lg:order-first' : 'overflow-hidden rounded-2xl border border-fam-hairline bg-fam-surface lg:order-last lg:sticky lg:top-24'} data-page-image="">
               <img
                 src={pic.url}
                 alt={pic.alt ?? heading ?? ''}
                 loading="lazy"
-                className="aspect-[4/3] w-full object-cover"
+                className={feature ? 'aspect-[4/3] w-full object-contain p-8 sm:p-12' : 'aspect-[4/3] w-full object-cover'}
                 style={pic.focus ? { objectPosition: pic.focus } : undefined}
               />
               {pic.credit && <figcaption className="px-4 py-2 text-xs text-ink-500">{pic.credit}</figcaption>}
@@ -59,7 +63,7 @@ export function RichTextBlock({
           )}
           <div className="max-w-3xl">
           {eyebrow && (
-            <span className="inline-flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.18em] text-brand-700">
+            <span className={`inline-flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.18em] ${feature ? 'text-fam-accent-text' : 'text-brand-700'}`}>
               <span
                 className="h-2.5 w-2.5 rounded-full"
                 style={{ backgroundImage: 'var(--wow-grad-brand)' }}
@@ -68,7 +72,7 @@ export function RichTextBlock({
             </span>
           )}
           {heading && (
-            <Heading className="mt-4 font-display text-3xl font-semibold leading-tight tracking-tight text-ink-900 sm:text-4xl">
+            <Heading className={`mt-4 font-display text-3xl font-semibold leading-tight tracking-tight sm:text-4xl ${feature ? 'text-fam-ink' : 'text-ink-900'}`}>
               {heading}
             </Heading>
           )}
@@ -89,10 +93,20 @@ export function RichTextBlock({
                     ))}
                   </ul>
                 ) : (
-                  <p key={i} className="text-lg leading-relaxed text-ink-700 whitespace-pre-line"><Runs runs={b.runs} /></p>
+                  <p key={i} className={`text-lg leading-relaxed whitespace-pre-line ${feature ? 'text-fam-ink' : 'text-ink-700'}`}><Runs runs={b.runs} /></p>
                 ),
               )}
             </div>
+          )}
+          {feature && feature.buttonLabel && feature.buttonHref && /^https:\/\/[^\s]+$/.test(feature.buttonHref) && (
+            <a
+              href={feature.buttonHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-8 inline-flex h-[52px] items-center gap-2 rounded-full bg-cta px-7 font-display text-base font-bold text-cta-foreground transition-transform hover:translate-y-(--hov-lift-sm) focus-ring"
+            >
+              {feature.buttonLabel}
+            </a>
           )}
           </div>
         </motion.div>

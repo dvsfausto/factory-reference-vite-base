@@ -479,6 +479,10 @@ const EN = {
   'route.servicesIndexBody': 'A short list of focused services, done well.',
   'faq.everythingYouNeed': 'Everything you need to know before we get started.',
   'section.getStarted': 'Get started',
+  'section.watch': 'Watch',
+  'section.follow': 'Follow',
+  'section.followers': 'followers',
+  'section.followOn': 'Follow on',
   'cta.reachOutToday': 'Reach out today and let us take it from here.',
   // ★★★ THE SPANISH SWEEP (2026-09-24): every sentence the template itself writes, from the block defaults
   // ('Simple, transparent pricing') to the carousel hint and the cookie notice. `en` = the exact former literal.
@@ -1046,6 +1050,10 @@ const ES: Record<keyof typeof EN, string> = {
   'route.servicesIndexBody': 'Una lista breve de servicios enfocados, bien hechos.',
   'faq.everythingYouNeed': 'Todo lo que necesitas saber antes de empezar.',
   'section.getStarted': 'Empezar',
+  'section.watch': 'Ver',
+  'section.follow': 'Seguir',
+  'section.followers': 'seguidores',
+  'section.followOn': 'Seguir en',
   'cta.reachOutToday': 'Escríbenos hoy y nosotros nos encargamos del resto.',
   'blk.mostPopular': "El más popular",
   'blk.popular': "Popular",

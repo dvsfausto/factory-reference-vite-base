@@ -75,6 +75,8 @@ import { TrustBarHairlineRowsBlock } from '~/components/blocks/TrustBarHairlineR
 // The Editorial theme's section variants (ZB-147 W1.2): ordinary map entries, editor-swappable one by one.
 import { ServicesNumberedListBlock } from '~/components/blocks/ServicesNumberedListBlock'
 import { TrustBarChecklistSplitBlock } from '~/components/blocks/TrustBarChecklistSplitBlock'
+import { TrustBarSocialCardsBlock } from '~/components/blocks/TrustBarSocialCardsBlock'
+import { HeroCreativeSocialBlock } from '~/components/blocks/HeroCreativeSocialBlock'
 import { ServiceAreasGlowPinsBlock } from '~/components/blocks/ServiceAreasGlowPinsBlock'
 import { ServiceAreasBrandPanelBlock } from '~/components/blocks/ServiceAreasBrandPanelBlock'
 import { FaqGlassAccordionBlock } from '~/components/blocks/FaqGlassAccordionBlock'
@@ -253,6 +255,8 @@ const HERO_VARIANTS: Record<string, typeof HeroBlock> = {
   gallery: HeroGalleryBlock,
   // The Editorial theme (ZB-147 W1.2): the photo full bleed and full height, the words bottom-left over a scrim.
   'editorial-photo': HeroEditorialPhotoBlock,
+  // 2026-10-12: 'creative' without the sticker, with her linked platforms and dated counts
+  'creative-social': HeroCreativeSocialBlock as typeof HeroBlock,
 }
 
 // SERVICE-DETAIL hero variants (Arc 3 · Stage C). The WOW heroes (aurora/spotlight/
@@ -351,6 +355,8 @@ const TRUST_VARIANTS: Record<string, ComponentType<TrustVariantProps>> = {
   'hairline-rows': TrustBarHairlineRowsBlock,
   // The Editorial theme (ZB-147 W1.2): kicker + split heading left, a hairline checklist right.
   'checklist-split': TrustBarChecklistSplitBlock,
+  // 2026-10-12: a card per linked platform with its count and a Follow button
+  'social-cards': TrustBarSocialCardsBlock,
 }
 
 const REVIEWS_VARIANTS: Record<string, typeof ReviewsBlock> = {
@@ -593,6 +599,8 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
           heading={block.params?.heading as string | undefined}
           body={block.params?.body as string | undefined}
           image={block.params?.image as { url: string; alt?: string; credit?: string; focus?: string } | undefined}
+          // 'feature' (2026-10-12): the picture whole and one https button; every other richText renders as before
+          feature={block.variant === 'feature' ? { buttonLabel: block.params?.buttonLabel as string | undefined, buttonHref: block.params?.buttonHref as string | undefined } : undefined}
           headingLevel={opts?.headingLevel}
         />
       )
@@ -681,6 +689,8 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
             (SITE as { trustItems?: { title: string }[] }).trustItems?.map((t) => t.title)
           }
           decorativeAsset={block.params?.decorativeAsset as string | undefined}
+          // the date beside follower counts, read by 'creative-social' only (the others ignore it)
+          {...({ note: block.params?.subtitle as string | undefined } as object)}
         />
         </div>
       )
@@ -777,6 +787,8 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
           }
           label={block.params?.label as string | undefined}
           heading={block.params?.heading as string | undefined}
+          // read by 'social-cards' only (the date beside the counts); the other layouts ignore it
+          {...({ body: block.params?.body as string | undefined } as object)}
         />
       )
     }
