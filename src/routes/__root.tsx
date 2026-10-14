@@ -12,6 +12,7 @@ import { DefaultCatchBoundary } from '~/components/DefaultCatchBoundary'
 import { NotFound } from '~/components/NotFound'
 import { Header } from '~/components/Header'
 import { Footer } from '~/components/Footer'
+import { BookingLinksFollowOpen } from '~/components/BookingLinksFollowOpen'
 import { JsonLd } from '~/components/JsonLd'
 import { localBusinessLd } from '~/lib/seo'
 import { SITE, SITE_LANGUAGE, BUSINESS_ID, SITE_KEY, SUPABASE_URL } from '~/data/site'
@@ -204,6 +205,7 @@ function RootComponent() {
   return (
     <>
       <JsonLd data={localBusinessLd()} />
+      <BookingLinksFollowOpen />
       <Header />
       <main id="main">
         <Outlet />
