@@ -21,7 +21,9 @@ const HEADERS = { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_A
 export function useBookingLinksFollowOpen() {
   const router = useRouter()
   React.useEffect(() => {
-    if (!BUSINESS_ID || BUSINESS_ID === '00000000-0000-0000-0000-000000000000') return
+    /* widened to string: a generated site bakes BUSINESS_ID as a literal type, and comparing two different literals is a type error */
+    const businessId: string = BUSINESS_ID
+    if (!businessId || businessId === '00000000-0000-0000-0000-000000000000') return
     let cancelled = false
     let observer: MutationObserver | null = null
     let onClick: ((e: MouseEvent) => void) | null = null
