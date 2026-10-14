@@ -173,7 +173,7 @@ function RestaurantMenu({ menus, label, heading, body }: { menus: LiveMenu[]; la
           <div key={m.id} data-menu={m.id} className="mt-12">
             {named && <h3 className="font-display text-2xl font-semibold tracking-tight text-fam-ink sm:text-3xl">{m.name}</h3>}
             {m.note && <p className={named ? 'mt-2 max-w-prose text-fam-ink-muted' : 'max-w-prose text-fam-ink-muted'}>{m.note}</p>}
-            <div className={named || m.note ? 'mt-8 grid gap-x-16 gap-y-12 lg:grid-cols-2' : 'grid gap-x-16 gap-y-12 lg:grid-cols-2'}>
+            <div className={`${named || m.note ? 'mt-8 ' : ''}grid gap-x-16 gap-y-12 ${m.sections.length > 1 ? 'lg:grid-cols-2' : 'max-w-2xl'}`}>
               {m.sections.map((s) => (
                 <div key={s.id} data-menu-section={s.id}>
                   <h4 className="font-display text-xl font-semibold tracking-tight text-fam-ink">
