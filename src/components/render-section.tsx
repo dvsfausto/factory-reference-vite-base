@@ -98,7 +98,7 @@ import { TaglineBarTickerBlock } from '~/components/blocks/TaglineBarTickerBlock
 import { HeroLegacyBlock } from '~/components/blocks/HeroLegacyBlock'
 import { RichTextStatementBlock } from '~/components/blocks/RichTextStatementBlock'
 import { ServicesProgramCardsBlock } from '~/components/blocks/ServicesProgramCardsBlock'
-import { CtaAccentBandBlock } from '~/components/blocks/CtaAccentBandBlock'
+import { CtaBrandBandBlock } from '~/components/blocks/CtaBrandBandBlock'
 import { LocalBarBlock } from '~/components/blocks/LocalBarBlock'
 import { TrustBarBlock } from '~/components/blocks/TrustBarBlock'
 import { TrustBarBoldBlock } from '~/components/blocks/TrustBarBoldBlock'
@@ -338,14 +338,14 @@ const CTA_VARIANTS: Record<string, typeof CtaBlock> = {
   // The Editorial theme (ZB-147 W1.2): a centred statement band, and the left-aligned near-black close.
   'dark-band': CtaDarkBandBlock,
   'dark-closing': CtaDarkClosingBlock,
-  // 2026-10-14: the closing band in the accent, a very large uppercase title, the button in the page's tone
-  'accent-band': CtaAccentBandBlock as typeof CtaBlock,
+  // 2026-10-14: the closing band in the button colour, a very large uppercase title, the button in the page's tone
+  'brand-band': CtaBrandBandBlock as typeof CtaBlock,
 }
 
 // Tagline bar LAYOUTS (2026-10-14). The bar had one look and no seam; 'band' names it so the swap can return to it.
 const TAGLINE_VARIANTS: Record<string, typeof TaglineBarBlock> = {
   band: TaglineBarBlock,
-  // the phrases spread across an accent band with a mark between them
+  // the phrases spread across a band in the button colour with a mark between them
   ticker: TaglineBarTickerBlock,
 }
 
@@ -895,7 +895,7 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
           {...data}
           title={block.params?.title as string | undefined}
           subtitle={block.params?.subtitle as string | undefined}
-          // the small line over the title: read by 'accent-band' only
+          // the small line over the title: read by 'brand-band' only
           {...({ label: block.params?.label as string | undefined } as object)}
         />
       )

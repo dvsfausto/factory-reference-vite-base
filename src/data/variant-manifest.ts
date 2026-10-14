@@ -149,7 +149,7 @@ export const VARIANT_MANIFEST: SectionVariants[] = [
       { id: 'stacked-centered', label: 'Stacked centered', description: 'Centered, stacked CTA.' },
       { id: 'dark-band', label: 'Dark band (editorial)', description: 'Centered on a deep charcoal-green band: a small place line, a serif heading with an italic accent line, one sentence and a square light button.' },
       { id: 'dark-closing', label: 'Dark closing (editorial)', description: 'Left-aligned on a near-black band, meant as the last section before the footer: serif heading, one sentence, a square light button.' },
-      { id: 'accent-band', label: 'Accent band', description: 'The closing band in the accent colour: a small line, a very large uppercase title, one sentence and a square button in the page\'s tone.' },
+      { id: 'brand-band', label: 'Brand band', description: 'The closing band in the button colour: a small line, a very large uppercase title, one sentence and a square button in the page\'s tone.' },
       ...CHARACTER_VARIANTS,
     ],
   },
@@ -158,7 +158,7 @@ export const VARIANT_MANIFEST: SectionVariants[] = [
     label: 'Tagline bar',
     variants: [
       { id: 'band', label: 'Band', description: 'The tagline centred on a dark brand band, the default.', default: true },
-      { id: 'ticker', label: 'Ticker', description: 'The tagline\'s phrases spread across an accent band in small capitals, a mark between them.' },
+      { id: 'ticker', label: 'Ticker', description: 'The tagline\'s phrases spread across a band in the button colour, in small capitals, a mark between them.' },
     ],
   },
   {

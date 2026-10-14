@@ -4,10 +4,10 @@ import { hasText } from '~/lib/has-text'
 import { primaryCta } from '~/lib/primaryCta'
 import { PrimaryCta } from './PrimaryCta'
 
-// CTA LAYOUT: 'accent-band' (2026-10-14). The closing band in the accent colour: a small tracked line (the block's
+// CTA LAYOUT: 'brand-band' (2026-10-14). The closing band in the site's button colour (--cta, the owner's brand fill): a small tracked line (the block's
 // label) over a very large uppercase title, the subtitle under it, and the affordance button in the page's own tone,
 // all centred. Title/subtitle = the block's params, else the site's closing words; label only when set.
-export function CtaAccentBandBlock({
+export function CtaBrandBandBlock({
   site = SITE,
   title,
   subtitle,
@@ -24,7 +24,7 @@ export function CtaAccentBandBlock({
   const cta = primaryCta()
   if (!hasText(t)) return null
   return (
-    <section className="bg-fam-accent text-fam-on-accent" data-block="cta" data-variant="accent-band">
+    <section className="bg-cta text-cta-foreground" data-block="cta" data-variant="brand-band">
       <div className="container-x py-section text-center">
         {hasText(label) && <p className="text-[11px] font-bold uppercase tracking-[0.2em]">{label}</p>}
         <h2 style={{ color: 'inherit' }} className="mx-auto mt-4 max-w-[16ch] font-display text-[clamp(2.6rem,6vw,4.9rem)] font-bold uppercase leading-[0.95] tracking-[-0.01em]">{t}</h2>

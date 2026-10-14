@@ -8,8 +8,8 @@ import { faceSafeStyle } from '~/lib/editorial-media'
 import { PrimaryCta } from './PrimaryCta'
 
 // HOMEPAGE HERO VARIANT: 'legacy' (2026-10-14). The words large and uppercase on the left over the page ground, the
-// owner's photo filling the right of the band and fading into the ground behind the words; on a phone the photo fills
-// the band and the words sit at the bottom over a fade. The headline's last word takes the accent. Every line is the
+// owner's photo filling the right of the band and fading into the ground behind the words; on a phone the photo comes
+// first (its bottom fading into the ground) and the words follow on the ground, so a bright photo never sits under them. The headline's last word takes the accent as text (contrast-safe on the ground); the button is the site's button colour. Every line is the
 // site's own: kicker, headline, body then subheadline, the affordance button, and the trust points as one small line
 // under it (each only with its data). No photo → the words alone on the ground.
 export function HeroLegacyBlock({
@@ -29,9 +29,9 @@ export function HeroLegacyBlock({
   const last = words.length > 1 ? words[words.length - 1] : ''
   const facts = (trustItems ?? []).filter(hasText).slice(0, 3)
   return (
-    <section className="relative isolate flex min-h-[640px] items-end overflow-hidden bg-fam-page text-fam-ink lg:min-h-[740px] lg:items-center" data-hero-legacy="">
+    <section className="relative isolate overflow-hidden bg-fam-page text-fam-ink lg:flex lg:min-h-[740px] lg:items-center" data-hero-legacy="">
       {photo && (
-        <div className="absolute inset-0 -z-10 lg:left-auto lg:w-[62%]">
+        <div className="relative h-[min(112vw,520px)] lg:absolute lg:inset-y-0 lg:right-0 lg:h-auto lg:w-[62%]">
           <img
             src={imageSrc(hero.image_url)}
             alt={HERO_ALT}
@@ -40,10 +40,10 @@ export function HeroLegacyBlock({
             className="h-full w-full object-cover"
           />
           {/* phone: the fade rises from the bottom under the words; desktop: it runs in from the left edge */}
-          <div className="absolute inset-0 bg-[linear-gradient(0deg,var(--color-fam-page)_8%,color-mix(in_oklab,var(--color-fam-page)_70%,transparent)_48%,transparent_85%)] lg:bg-[linear-gradient(90deg,var(--color-fam-page)_0%,color-mix(in_oklab,var(--color-fam-page)_55%,transparent)_30%,transparent_70%),linear-gradient(0deg,color-mix(in_oklab,var(--color-fam-page)_50%,transparent),transparent_45%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(0deg,var(--color-fam-page)_4%,color-mix(in_oklab,var(--color-fam-page)_55%,transparent)_26%,transparent_55%)] lg:bg-[linear-gradient(90deg,var(--color-fam-page)_0%,color-mix(in_oklab,var(--color-fam-page)_55%,transparent)_30%,transparent_70%),linear-gradient(0deg,color-mix(in_oklab,var(--color-fam-page)_50%,transparent),transparent_45%)]" />
         </div>
       )}
-      <div className="container-x relative w-full pb-12 pt-40 lg:py-section">
+      <div className={`container-x relative z-10 w-full pb-12 lg:py-section ${photo ? '-mt-16 lg:mt-0' : 'pt-16'}`}>
         <div className="max-w-[44rem]">
           {hasText(hero.kicker) && (
             <p className="flex items-center gap-2.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-fam-ink">
@@ -62,7 +62,7 @@ export function HeroLegacyBlock({
             </div>
           )}
           <PrimaryCta
-            className="mt-8 inline-flex items-center gap-7 bg-fam-accent px-6 py-4 text-sm font-bold text-fam-on-accent transition-[filter] hover:brightness-(--hov-shade)"
+            className="mt-8 inline-flex items-center gap-7 bg-cta px-6 py-4 text-sm font-bold text-cta-foreground transition-[filter] hover:brightness-(--hov-shade)"
           >
             {cta.label}
             <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
