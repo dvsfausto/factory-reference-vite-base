@@ -12,7 +12,7 @@ import { DefaultCatchBoundary } from '~/components/DefaultCatchBoundary'
 import { NotFound } from '~/components/NotFound'
 import { Header } from '~/components/Header'
 import { Footer } from '~/components/Footer'
-import { BookingLinksFollowOpen } from '~/components/BookingLinksFollowOpen'
+import { useBookingLinksFollowOpen } from '~/components/BookingLinksFollowOpen'
 import { JsonLd } from '~/components/JsonLd'
 import { localBusinessLd } from '~/lib/seo'
 import { SITE, SITE_LANGUAGE, BUSINESS_ID, SITE_KEY, SUPABASE_URL } from '~/data/site'
@@ -198,6 +198,8 @@ function RootComponent() {
   /* ★ THE HERO PHOTO KEEPS WHAT MATTERS (lib/hero-focus.ts): a portrait photo with no owner-set focal point is anchored
      towards its top once it has loaded; runs again after every client-side navigation, since inner pages draw their own hero. */
   const pathname = useRouterState({ select: (s) => s.location.pathname })
+  /* ★ ZB-296: links to /book follow whether booking is open (components/BookingLinksFollowOpen.tsx) */
+  useBookingLinksFollowOpen()
   React.useEffect(() => {
     try { applyHeroFocusRule() } catch { /* a crop rule is never worth failing a render over */ }
   }, [pathname])
@@ -205,7 +207,6 @@ function RootComponent() {
   return (
     <>
       <JsonLd data={localBusinessLd()} />
-      <BookingLinksFollowOpen />
       <Header />
       <main id="main">
         <Outlet />

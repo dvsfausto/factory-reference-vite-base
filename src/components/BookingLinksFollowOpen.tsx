@@ -17,7 +17,8 @@ const HEADERS = { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_A
  * form (when the site has one) or the contact form instead, a plain button says "Get a quote" / "Get in touch" in the site's
  * language, and the same holds for links drawn later (a client-side page change). Clicks go through the router, never to /book.
  */
-export function BookingLinksFollowOpen() {
+/** A hook, called inside the root component: it adds no element, so the page tree (and every useId the server renders) is unchanged. */
+export function useBookingLinksFollowOpen() {
   const router = useRouter()
   React.useEffect(() => {
     if (!BUSINESS_ID || BUSINESS_ID === '00000000-0000-0000-0000-000000000000') return
@@ -77,5 +78,4 @@ export function BookingLinksFollowOpen() {
     })()
     return () => { cancelled = true; observer?.disconnect(); if (onClick) document.removeEventListener('click', onClick, true) }
   }, [router])
-  return null
 }
