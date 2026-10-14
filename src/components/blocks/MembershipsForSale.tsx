@@ -121,7 +121,7 @@ export function MembershipsForSale({ label, heading, body, fallback = null }: { 
               {open && (
                 <form onSubmit={(e) => void subscribe(e)} data-membership-form>
                   <DialogPrimitive.Title className="font-display text-xl font-semibold text-fam-ink">{open.name}{open.price == null ? '' : ` · ${money(open.price, open.currency)} ${planCadence(open)}`}</DialogPrimitive.Title>
-                  <DialogPrimitive.Description id="membership-panel-line" className="mt-1 text-sm text-fam-ink-muted">{tr('members.panelLine')}</DialogPrimitive.Description>
+                  <DialogPrimitive.Description id="membership-panel-line" className="mt-1 text-sm text-fam-ink-muted">{open.trial_days ? fill(tr('members.panelLineTrial'), open.trial_days) : tr('members.panelLine')}</DialogPrimitive.Description>
                   <p className="mt-3 text-sm text-fam-ink-muted">{planGives(open)}{open.trial_days ? ` · ${fill(tr('members.trial'), open.trial_days)}` : ''}</p>
                   <div className="mt-4 grid gap-3 sm:grid-cols-2">
                     <label className="text-sm"><span className="text-fam-ink-muted">{tr('form.firstName')}</span><input required autoFocus value={form.firstName} onChange={(e) => setForm({ ...form, firstName: e.target.value })} className="mt-1 w-full rounded-xl border border-fam-hairline bg-fam-surface px-3 py-2 text-fam-ink" /></label>
