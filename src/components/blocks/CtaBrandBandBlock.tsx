@@ -5,7 +5,7 @@ import { primaryCta } from '~/lib/primaryCta'
 import { PrimaryCta } from './PrimaryCta'
 
 // CTA LAYOUT: 'brand-band' (2026-10-14). The closing band in the site's button colour (--cta, the owner's brand fill): a small tracked line (the block's
-// label) over a very large uppercase title, the subtitle under it, and the affordance button in the page's own tone,
+// label) over a very large uppercase title, the subtitle under it, and the affordance button in the page's text colour,
 // all centred. Title/subtitle = the block's params, else the site's closing words; label only when set.
 export function CtaBrandBandBlock({
   site = SITE,
@@ -29,7 +29,7 @@ export function CtaBrandBandBlock({
         {hasText(label) && <p className="text-[11px] font-bold uppercase tracking-[0.2em]">{label}</p>}
         <h2 style={{ color: 'inherit' }} className="mx-auto mt-4 max-w-[16ch] font-display text-[clamp(2.6rem,6vw,4.9rem)] font-bold uppercase leading-[0.95] tracking-[-0.01em]">{t}</h2>
         {hasText(sub) && <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed">{sub}</p>}
-        <PrimaryCta className="mt-8 inline-flex items-center gap-7 bg-fam-page px-6 py-4 text-sm font-bold text-fam-ink transition-[filter] hover:brightness-(--hov-shade)">
+        <PrimaryCta className="mt-8 inline-flex items-center gap-7 bg-fam-ink px-6 py-4 text-sm font-bold text-fam-page transition-[filter] hover:brightness-(--hov-shade)">
           {cta.label}
           <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
         </PrimaryCta>
