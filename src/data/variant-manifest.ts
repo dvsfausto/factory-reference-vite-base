@@ -69,6 +69,7 @@ export const VARIANT_MANIFEST: SectionVariants[] = [
       { id: 'estimate', label: 'Estimate form', description: 'The estimate request form in the hero, beside the headline (no photo).' },
       { id: 'gallery', label: 'Gallery mosaic', description: 'The owner\'s gallery photos as a mosaic beside the headline; the single photo when there are fewer than two.' },
       { id: 'editorial-photo', label: 'Editorial photo', description: 'The photo full screen with the words bottom-left over a dark fade: kicker, serif headline with an italic accent line, a square button and a text link.' },
+      { id: 'legacy', label: 'Legacy (big words, photo right)', description: 'The words large and uppercase on the left with the last word in the accent, the photo filling the right and fading into the ground; on a phone the photo fills the band and the words sit at the bottom.' },
       { id: 'split-photo', label: 'Split photo (editorial)', description: 'The words on the page ground beside the photo filling the other half; on a service page the service name and place lead, the photo comes first on a phone.' },
       ...CHARACTER_VARIANTS.filter((v) => v.id !== 'bold' && v.id !== 'modern'),
     ],
@@ -87,6 +88,7 @@ export const VARIANT_MANIFEST: SectionVariants[] = [
       { id: 'icon-tiles', label: 'Icon tiles', description: 'Icon-led tiles.' },
       { id: 'carousel', label: 'Carousel', description: 'Horizontal carousel.' },
       { id: 'numbered-list', label: 'Numbered list', description: 'Editorial rows between hairlines: a small numeral, the service name in serif, a one-line blurb and an arrow.' },
+      { id: 'program-cards', label: 'Program cards', description: 'Tall numbered cards in a row on the opposite tone of the page, the first card leading; the services, then the classes from the weekly schedule.' },
       ...CHARACTER_VARIANTS,
     ],
   },
@@ -147,7 +149,16 @@ export const VARIANT_MANIFEST: SectionVariants[] = [
       { id: 'stacked-centered', label: 'Stacked centered', description: 'Centered, stacked CTA.' },
       { id: 'dark-band', label: 'Dark band (editorial)', description: 'Centered on a deep charcoal-green band: a small place line, a serif heading with an italic accent line, one sentence and a square light button.' },
       { id: 'dark-closing', label: 'Dark closing (editorial)', description: 'Left-aligned on a near-black band, meant as the last section before the footer: serif heading, one sentence, a square light button.' },
+      { id: 'accent-band', label: 'Accent band', description: 'The closing band in the accent colour: a small line, a very large uppercase title, one sentence and a square button in the page\'s tone.' },
       ...CHARACTER_VARIANTS,
+    ],
+  },
+  {
+    section: 'taglineBar',
+    label: 'Tagline bar',
+    variants: [
+      { id: 'band', label: 'Band', description: 'The tagline centred on a dark brand band, the default.', default: true },
+      { id: 'ticker', label: 'Ticker', description: 'The tagline\'s phrases spread across an accent band in small capitals, a mark between them.' },
     ],
   },
   {
