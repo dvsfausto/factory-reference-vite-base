@@ -38,6 +38,8 @@ export interface BookingFeatures {
   hours_confirmed_at?: string | null
   /** 'request' = a booking from the page waits for the owner's yes (create-booking's request mode); absent = instant. */
   booking_mode?: string | null
+  /** ZB-290: the customer portal switch. On = the details step asks the phone and a texted code; off = the plain name, phone and email form. */
+  portal?: boolean | null
 }
 
 export type LiveReason = 'live' | 'switch_off' | 'hours_unconfirmed' | 'no_config'
