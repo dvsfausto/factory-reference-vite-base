@@ -379,6 +379,7 @@ export const VARIANT_MANIFEST: SectionVariants[] = [
     label: 'Class schedule',
     variants: [
       { id: 'week', label: 'Week', description: 'One column per day with a session; time, class, instructor and spots on each card.', default: true },
+      { id: 'connected', label: 'Connected (phone)', description: 'The words and a short list beside a phone frame holding the live next three classes with Book, the packs with Buy and a My bookings tab; every tap opens the real page.' },
     ],
   },
   {

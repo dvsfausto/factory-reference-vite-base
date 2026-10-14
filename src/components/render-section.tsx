@@ -803,6 +803,8 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
           label={block.params?.label as string | undefined}
           heading={block.params?.heading as string | undefined}
           body={block.params?.body as string | undefined}
+          // false: the schedule without the packs under it (a page whose packs live on /pricing), 2026-10-14
+          packs={block.params?.packs !== false}
         />
       )
     }

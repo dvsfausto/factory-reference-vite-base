@@ -23,10 +23,13 @@ export function ClassScheduleWeekBlock({
   label,
   heading,
   body,
+  packs = true,
 }: {
   label?: string
   heading?: string
   body?: string
+  /** false (a page that sells its packs elsewhere, e.g. /book when /pricing carries them): the schedule alone (2026-10-14) */
+  packs?: boolean
 }) {
   const all = useClassSchedule()
   const span = weekSpan(all)
@@ -117,7 +120,7 @@ export function ClassScheduleWeekBlock({
         )}
         {/* ★ the packs for sale, with a Buy that works (the classes arc, 2026-09-23); nothing when the business sells none */}
         {beyondLine && <p className="mt-6 text-center text-sm text-ink-600" data-schedule-beyond="">{beyondLine}</p>}
-        <PacksForSale />
+        {packs && <PacksForSale />}
       </div>
     </section>
   )

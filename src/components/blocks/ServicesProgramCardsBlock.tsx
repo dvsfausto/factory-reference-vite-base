@@ -79,7 +79,7 @@ export function ServicesProgramCardsBlock({
             <div>
               {hasText(label) && <p className="text-[11px] font-bold uppercase tracking-[0.2em]">{label}</p>}
               {hasText(heading) && (
-                <h2 style={{ color: 'inherit' }} className="mt-4 max-w-[40rem] font-display text-[clamp(2.4rem,4.6vw,4.1rem)] font-bold leading-[1.03] tracking-[-0.01em]">{heading}</h2>
+                <h2 style={{ color: 'inherit' }} className="mt-4 max-w-[40rem] font-display text-[clamp(2.4rem,4.6vw,4.1rem)] font-bold leading-[1.06] tracking-[-0.01em]">{heading}</h2>
               )}
             </div>
             {hasText(body) && <p style={INVERSE_MUTED} className="max-w-[17rem] text-sm leading-[1.7]">{body}</p>}

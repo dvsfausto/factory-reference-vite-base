@@ -462,6 +462,9 @@ const EN = {
   'programs.dayRange': '{from} to {to}',
   'programs.perClass': '{n} spots a class',
   'programs.seeSchedule': 'See the schedule',
+  // the 'connected' phone (2026-10-14)
+  'connected.classes': 'Classes',
+  'connected.packs': 'Packs',
   'day.sun': 'Sunday',
   'day.mon': 'Monday',
   'day.tue': 'Tuesday',
@@ -1037,6 +1040,8 @@ const ES: Record<keyof typeof EN, string> = {
   'programs.dayRange': '{from} a {to}',
   'programs.perClass': '{n} cupos por clase',
   'programs.seeSchedule': 'Ver el horario',
+  'connected.classes': 'Clases',
+  'connected.packs': 'Paquetes',
   'day.sun': 'Domingo',
   'day.mon': 'Lunes',
   'day.tue': 'Martes',

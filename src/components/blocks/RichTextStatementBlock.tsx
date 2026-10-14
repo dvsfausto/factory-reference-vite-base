@@ -34,7 +34,7 @@ export function RichTextStatementBlock({
         <div>
           {hasText(eyebrow) && <p className="text-[11px] font-bold uppercase tracking-[0.2em]">{eyebrow}</p>}
           {hasText(heading) && (
-            <Heading style={{ color: 'inherit' }} className="mt-4 font-display text-[clamp(2.4rem,4.6vw,4.1rem)] font-bold leading-[1.03] tracking-[-0.01em]">
+            <Heading style={{ color: 'inherit' }} className="mt-4 font-display text-[clamp(2.4rem,4.6vw,4.1rem)] font-bold leading-[1.06] tracking-[-0.01em]">
               {heading}
             </Heading>
           )}

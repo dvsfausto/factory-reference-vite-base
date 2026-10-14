@@ -51,7 +51,7 @@ export function HeroLegacyBlock({
               {hero.kicker}
             </p>
           )}
-          <h1 className="mt-6 font-display text-[clamp(3.25rem,8vw,7rem)] font-bold uppercase leading-[0.92] tracking-[-0.01em] text-fam-ink">
+          <h1 className="mt-6 font-display text-[clamp(3.25rem,8vw,7rem)] font-bold uppercase leading-[0.95] tracking-[-0.01em] text-fam-ink">
             {lead}
             {last && <> <span className="text-fam-accent-text">{last}</span></>}
           </h1>
