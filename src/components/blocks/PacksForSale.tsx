@@ -11,7 +11,7 @@ import { BUSINESS_ID, SUPABASE_ANON_KEY, SUPABASE_URL } from '~/data/site'
 // the classes land the moment Stripe confirms, and the person comes back to /book?paid=1 to pick a class. When the business has
 // not connected card payments, Buy says so plainly and points to the front desk; nothing is invented. Renders nothing when the
 // business sells no packs. Sits under the class schedule, so it shows on every site that has one.
-interface Pack { id: string; name: string; description: string | null; credits: number; /** null = ask for the price (phase 3, 2026-09-29) */ price: number | null; currency: string; validity_days: number | null; /** ★ packs per kind (2026-09-26): the class kinds this pack covers, by name; empty = every class */ covers?: string[] | null }
+export interface Pack { id: string; name: string; description: string | null; credits: number; /** null = ask for the price (phase 3, 2026-09-29) */ price: number | null; currency: string; validity_days: number | null; /** ★ packs per kind (2026-09-26): the class kinds this pack covers, by name; empty = every class */ covers?: string[] | null }
 const headers = { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` }
 const money = (n: number, currency?: string | null) => moneyShort(n, currency ?? SITE_CURRENCY)
 
@@ -19,19 +19,33 @@ const money = (n: number, currency?: string | null) => moneyShort(n, currency ??
    read live, with Buy; never a page of typed words that goes stale"). The book page, the home page's Packages section and any custom page's
    Packages section all draw THIS: the live packs_public read with Buy through the business's own card door. `fallback` is what draws when
    the business has no packs on file (the baked packages block, or nothing). */
-export function PacksForSale({ label, heading, body, fallback = null }: { label?: string; heading?: string; body?: string; fallback?: React.ReactNode } = {}) {
+/** the live packs (packs_public), null while loading; the same read the section below draws (2026-10-14: shared with the 'connected' phone) */
+export function usePacksForSale(): Pack[] | null {
   const [packs, setPacks] = useState<Pack[] | null>(null)
-  const [open, setOpen] = useState<Pack | null>(null)
-  const [form, setForm] = useState({ firstName: '', lastName: '', email: '', phone: '' })
-  const [busy, setBusy] = useState(false)
-  const [note, setNote] = useState<string | null>(null)
   useEffect(() => {
-    if (!BUSINESS_ID || !SUPABASE_URL) return
+    if (!BUSINESS_ID || !SUPABASE_URL) { setPacks([]); return }
     fetch(`${SUPABASE_URL}/rest/v1/packs_public?business_id=eq.${BUSINESS_ID}&select=id,name,description,credits,price,currency,validity_days,covers&order=display_order.asc,price.asc`, { headers })
       .then((r) => (r.ok ? r.json() : []))
       .then((rows: Pack[]) => setPacks(Array.isArray(rows) ? rows : []))
       .catch(() => setPacks([]))
   }, [])
+  return packs
+}
+
+export function PacksForSale({ label, heading, body, fallback = null }: { label?: string; heading?: string; body?: string; fallback?: React.ReactNode } = {}) {
+  const packs = usePacksForSale()
+  const [open, setOpen] = useState<Pack | null>(null)
+  const [form, setForm] = useState({ firstName: '', lastName: '', email: '', phone: '' })
+  const [busy, setBusy] = useState(false)
+  const [note, setNote] = useState<string | null>(null)
+  /* ★ A LINK MAY NAME A PACK (2026-10-14): ?pack=<id> opens that pack's Buy panel once the packs load (the homepage phone's Buy
+     lands here); an unknown id or a pack with no price opens nothing. */
+  useEffect(() => {
+    if (!packs || typeof window === 'undefined') return
+    const want = new URLSearchParams(window.location.search).get('pack')
+    const hit = want ? packs.find((p) => p.id === want && p.price != null) : undefined
+    if (hit) { setOpen(hit); setNote(null); document.querySelector(`[data-pack="${hit.id}"]`)?.scrollIntoView({ block: 'center' }) }
+  }, [packs])
   if (packs === null) return null
   if (packs.length === 0) return <>{fallback}</>
 

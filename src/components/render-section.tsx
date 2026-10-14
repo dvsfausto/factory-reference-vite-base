@@ -93,6 +93,12 @@ import { ProcessBoldNumeralsBlock } from '~/components/blocks/ProcessBoldNumeral
 import { FormFloatGlassBlock } from '~/components/blocks/FormFloatGlassBlock'
 import { FormBrandSplitBlock } from '~/components/blocks/FormBrandSplitBlock'
 import { TaglineBarBlock } from '~/components/blocks/TaglineBarBlock'
+// The LEGADO look (2026-10-14): five catalogue variants a site gets only when its layout chooses them
+import { TaglineBarTickerBlock } from '~/components/blocks/TaglineBarTickerBlock'
+import { HeroLegacyBlock } from '~/components/blocks/HeroLegacyBlock'
+import { RichTextStatementBlock } from '~/components/blocks/RichTextStatementBlock'
+import { ServicesProgramCardsBlock } from '~/components/blocks/ServicesProgramCardsBlock'
+import { CtaBrandBandBlock } from '~/components/blocks/CtaBrandBandBlock'
 import { LocalBarBlock } from '~/components/blocks/LocalBarBlock'
 import { TrustBarBlock } from '~/components/blocks/TrustBarBlock'
 import { TrustBarBoldBlock } from '~/components/blocks/TrustBarBoldBlock'
@@ -258,6 +264,8 @@ const HERO_VARIANTS: Record<string, typeof HeroBlock> = {
   'editorial-photo': HeroEditorialPhotoBlock,
   // 2026-10-12: 'creative' without the sticker, with her linked platforms and dated counts
   'creative-social': HeroCreativeSocialBlock as typeof HeroBlock,
+  // 2026-10-14: the words large on the left, the photo filling the right and fading into the ground, the last word in the accent
+  legacy: HeroLegacyBlock as typeof HeroBlock,
 }
 
 // SERVICE-DETAIL hero variants (Arc 3 · Stage C). The WOW heroes (aurora/spotlight/
@@ -306,6 +314,8 @@ const SERVICES_VARIANTS: Record<string, typeof ServicesPreviewBlock> = {
   'spotlight-tiles': ServicesSpotlightTilesBlock,
   // The Editorial theme (ZB-147 W1.2): numeral / serif name / arrow rows between hairlines.
   'numbered-list': ServicesNumberedListBlock,
+  // 2026-10-14: tall cards in a row on the inverse tone, the services then the classes, the first card leading
+  'program-cards': ServicesProgramCardsBlock as typeof ServicesPreviewBlock,
 }
 
 const CTA_VARIANTS: Record<string, typeof CtaBlock> = {
@@ -329,6 +339,15 @@ const CTA_VARIANTS: Record<string, typeof CtaBlock> = {
   // The Editorial theme (ZB-147 W1.2): a centred statement band, and the left-aligned near-black close.
   'dark-band': CtaDarkBandBlock,
   'dark-closing': CtaDarkClosingBlock,
+  // 2026-10-14: the closing band in the button colour, a very large uppercase title, the button in the page's tone
+  'brand-band': CtaBrandBandBlock as typeof CtaBlock,
+}
+
+// Tagline bar LAYOUTS (2026-10-14). The bar had one look and no seam; 'band' names it so the swap can return to it.
+const TAGLINE_VARIANTS: Record<string, typeof TaglineBarBlock> = {
+  band: TaglineBarBlock,
+  // the phrases spread across a band in the button colour with a mark between them
+  ticker: TaglineBarTickerBlock,
 }
 
 // ComponentType (not `typeof TrustBarBlock`): the WOW variants honestly omit
@@ -593,6 +612,18 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
     // page can carry supplied text; self-omits when there's no heading/body. Absent from
     // every factory page's layout → this case is never hit on existing pages (byte-identical).
     case 'richText':
+      // 'statement' (2026-10-14): heading left, paragraphs right, one text link, on the inverse tone
+      if (block.variant === 'statement') return (
+        <RichTextStatementBlock
+          key="richText"
+          eyebrow={block.params?.eyebrow as string | undefined}
+          heading={block.params?.heading as string | undefined}
+          body={block.params?.body as string | undefined}
+          buttonLabel={block.params?.buttonLabel as string | undefined}
+          buttonHref={block.params?.buttonHref as string | undefined}
+          headingLevel={opts?.headingLevel}
+        />
+      )
       return (
         <RichTextBlock
           key="richText"
@@ -720,8 +751,10 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
       return ctx?.info ? <InfoArticleBlock info={ctx.info} variant={block.variant} /> : null
     case 'relatedInfo':
       return ctx?.info ? <RelatedInfoBlock info={ctx.info} /> : null
-    case 'taglineBar':
-      return <TaglineBarBlock key="taglineBar" {...data} />
+    case 'taglineBar': {
+      const TaglineComponent = TAGLINE_VARIANTS[block.variant ?? ''] ?? TaglineBarBlock
+      return <TaglineComponent key="taglineBar" {...data} />
+    }
     case 'localBar':
       return (
         <LocalBarBlock
@@ -771,6 +804,8 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
           label={block.params?.label as string | undefined}
           heading={block.params?.heading as string | undefined}
           body={block.params?.body as string | undefined}
+          // false: the schedule without the packs under it (a page whose packs live on /pricing), 2026-10-14
+          packs={block.params?.packs !== false}
         />
       )
     }
@@ -807,6 +842,8 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
           body={block.params?.body as string | undefined}
           exploreLabel={block.params?.exploreLabel as string | undefined}
           moreLink={block.params?.moreLink as string | undefined}
+          // card<N>Service / card<N>Title: read by 'program-cards' only (which item sits in place N, and its title)
+          {...({ cards: [1, 2, 3].map((n) => ({ service: block.params?.[`card${n}Service`] as string | undefined, title: block.params?.[`card${n}Title`] as string | undefined })) } as object)}
         />
       )
     }
@@ -861,6 +898,8 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
           {...data}
           title={block.params?.title as string | undefined}
           subtitle={block.params?.subtitle as string | undefined}
+          // the small line over the title: read by 'brand-band' only
+          {...({ label: block.params?.label as string | undefined } as object)}
         />
       )
     }

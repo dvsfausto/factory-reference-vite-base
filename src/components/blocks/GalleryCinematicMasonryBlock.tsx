@@ -74,7 +74,7 @@ export function GalleryCinematicMasonryBlock({
                 style={{ backgroundImage: 'var(--wow-grad-brand)' }}
               >
                 <span className="font-display text-sm font-semibold">{p.title}</span>
-                {p.caption && <span className="text-xs italic text-fam-on-dark/80">{p.caption}</span>}
+                {p.caption && <span className="text-xs italic text-fam-on-dark">{p.caption}</span>}
               </figcaption>
             </motion.figure>
           ))}

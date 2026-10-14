@@ -1046,18 +1046,28 @@ export function BookingWizardBlock({
                       title={tr('booking.yourDetails')}
                       onBack={() => setStep(visit ? 'address' : 'time')}
                     >
-                      {!me && (
+                      {/* ★ ZB-290 (the owner, 2026-10-14): the code step needs the customer portal (portal-start refuses with portal_off),
+                          so a business with the portal off books with the plain name, phone and email form, as before ZB-224. */}
+                      {!me && features?.portal === true && (
                         <PhoneCodeStep intro={tr('booking.whoIntro')} initialPhone={customer.phone} onVerified={verified} />
                       )}
-                      {me && (
+                      {(me || features?.portal !== true) && (
                       <form
                         onSubmit={(e) => {
                           e.preventDefault()
                           submit()
                         }}
                         className="grid gap-4"
+                        data-booking-details={me ? 'verified' : 'form'}
                       >
-                        <BookingFor me={me} onChange={forgetMe} />
+                        {me ? <BookingFor me={me} onChange={forgetMe} /> : (
+                          <div className="grid gap-4 sm:grid-cols-2">
+                            <WField label={tr('form.phone')} type="tel" required value={customer.phone} autoComplete="tel" onChange={(v) => setCustomer((c) => ({ ...c, phone: v }))} />
+                            <WField label={tr('form.email')} type="email" value={customer.email} autoComplete="email" onChange={(v) => setCustomer((c) => ({ ...c, email: v }))} />
+                            <WField label={tr('form.firstName')} required value={customer.firstName} autoComplete="given-name" onChange={(v) => setCustomer((c) => ({ ...c, firstName: v }))} />
+                            <WField label={tr('form.lastName')} required value={customer.lastName} autoComplete="family-name" onChange={(v) => setCustomer((c) => ({ ...c, lastName: v }))} />
+                          </div>
+                        )}
                         <label className="block">
                           <span className="font-display text-sm font-medium text-ink-900">{tr('booking.anythingToKnow')}</span>
                           <textarea
