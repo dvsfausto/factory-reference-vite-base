@@ -112,7 +112,7 @@ export function ClassScheduleConnectedBlock({ label, heading, body }: { label?: 
         {showPhone && (
           <a
             href="/book"
-            aria-label={cta.label}
+            aria-label={tr('connected.phoneLabel')}
             data-connected-phone=""
             className="mx-auto block w-full max-w-[280px] cursor-pointer rounded-[42px] outline-none focus-visible:outline-[3px] focus-visible:outline-offset-4 focus-visible:outline-cta focus-visible:outline-solid lg:max-w-[335px] lg:rotate-3"
             style={{ backgroundColor: C.screen, border: `8px solid ${C.bezel}`, padding: '26px 19px 18px', boxShadow: `18px 28px 55px ${C.shadow}`, color: C.ink }}
