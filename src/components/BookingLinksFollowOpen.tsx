@@ -70,9 +70,10 @@ export function useBookingLinksFollowOpen() {
           const a = (e.target as Element | null)?.closest?.('a[data-booking-closed]') as HTMLAnchorElement | null
           if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return
           const to = a.dataset.bookingClosed as string
-          if (/^https?:\/\//.test(to)) return
           e.preventDefault()
           e.stopPropagation()
+          /* a hosted form on another address leaves the site; the router's own Link would still go to /book, so the page goes itself */
+          if (/^https?:\/\//.test(to)) { window.location.assign(to); return }
           void router.navigate({ href: to })
         }
         document.addEventListener('click', onClick, true)
