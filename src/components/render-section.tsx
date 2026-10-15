@@ -151,6 +151,7 @@ import { MembershipTierCardsBlock } from '~/components/blocks/MembershipTierCard
 import { MEMBERSHIP_VARIANTS } from '~/components/blocks/membership-variants'
 import { PackagesBundleCardsBlock } from '~/components/blocks/PackagesBundleCardsBlock'
 import { PacksForSale } from '~/components/blocks/PacksForSale'
+import { MembershipsForSale } from '~/components/blocks/MembershipsForSale'
 import { PACKAGES_VARIANTS } from '~/components/blocks/packages-variants'
 import { CaseStudiesFeaturedBlock } from '~/components/blocks/CaseStudiesFeaturedBlock'
 import { CASE_STUDIES_VARIANTS } from '~/components/blocks/case-studies-variants'
@@ -1024,13 +1025,22 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
     }
     case 'membership': {
       const MembershipComponent = MEMBERSHIP_VARIANTS[block.variant ?? ''] ?? MembershipTierCardsBlock
+      /* ★ ZB-276: the baked display-only block renders first and stays unless membership_plans_public answers with live plans,
+         then the live plans with Subscribe take the section (MembershipsForSale). No plans = exactly the block drawn before. */
       return (
-        <MembershipComponent
+        <MembershipsForSale
           key="membership"
-          {...data}
           label={block.params?.label as string | undefined}
           heading={block.params?.heading as string | undefined}
           body={block.params?.body as string | undefined}
+          fallback={
+            <MembershipComponent
+              {...data}
+              label={block.params?.label as string | undefined}
+              heading={block.params?.heading as string | undefined}
+              body={block.params?.body as string | undefined}
+            />
+          }
         />
       )
     }
