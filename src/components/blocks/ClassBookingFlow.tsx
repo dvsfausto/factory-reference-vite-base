@@ -133,7 +133,8 @@ export function ClassBookingFlow({ occurrence, kindId, onHeld, onVerified }: { o
       if (expired) { clearSession(); setToken(null) }
       setError(expired ? tr('booking.signInAgain') : (d.error || tr('booking.couldNotComplete'))); setPhase('who'); return
     }
-    if (spot) markSpotChosen(d.booking.id)
+    /* the spot picked here, or a booking they already had (it keeps its spot): no second pick after the payment */
+    if (spot || d.already) markSpotChosen(d.booking.id)
     onHeld({ bookingId: d.booking.id, token: d.hold.token, initial: d.held ? 'pay' : 'after', expiresAt: d.hold.expires_at ?? null, options: d.options ?? null, note: d.already ? (d.message ?? null) : null })
   }
 
