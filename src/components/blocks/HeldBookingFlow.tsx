@@ -19,7 +19,7 @@ type Status = { status: string; held: boolean; hold_expires_at: string | null; o
 type Phase = 'pay' | 'confirming' | 'waiver' | 'spot' | 'done' | 'expired' | 'released'
 /** ★ THE ROOM (2026-09-24): rows of uneven length with the things that are not spots, as the owner laid it out (rooms_public) */
 type RoomItem = { kind: string; no?: number; text?: string }
-type Room = { name: string; front: string | null; rows: Array<{ label?: string; items: RoomItem[] }>; spot_kind?: string | null }
+export type Room = { name: string; front: string | null; rows: Array<{ label?: string; items: RoomItem[] }>; spot_kind?: string | null }
 /** the icon for a kind of spot: the room says what its spots are (bike, mat, chair, station), the drawing shows it */
 export function SpotIcon({ kind, className }: { kind?: string | null; className?: string }) {
   const c = className ?? 'h-4 w-4'
@@ -48,6 +48,51 @@ function Primary({ children, onClick, disabled, tag }: { children: React.ReactNo
   return <button type="button" data-held-action={tag} disabled={disabled} onClick={onClick} className="inline-flex h-11 items-center justify-center gap-2 rounded-xl px-6 font-display text-sm font-semibold text-fam-on-dark disabled:opacity-60" style={{ backgroundImage: 'var(--wow-grad-brand)' }}>{children}</button>
 }
 
+/** ★ ZB-349 (2026-10-18): the room drawing, shared by the spot pick BEFORE sign-in (ClassBookingFlow) and the one after payment here.
+ *  The same drawing as before: the owner's rows with the things that are not spots, else a plain grid of numbers. */
+export type SeatCell = { seat_no: number; taken: boolean; mine: boolean }
+export function RoomMap({ room, seats, busy, onPick }: { room: Room | null; seats: SeatCell[]; busy: boolean; onPick: (n: number) => void }) {
+  return room ? (
+          <div data-held-room className="mx-auto mt-4 w-fit max-w-full overflow-x-auto">
+            {room.front && <div className="mb-2 rounded-md border border-dashed py-1 text-center text-[11px] uppercase tracking-[0.15em] text-ink-600" style={{ borderColor: 'var(--wow-hairline)' }}>{room.front}</div>}
+            <div className="grid gap-2">
+              {room.rows.map((row, ri) => (
+                <div key={ri} data-room-row={ri} className="flex flex-nowrap items-center justify-center gap-1 sm:gap-2">
+                  {row.label && <span className="mr-1 shrink-0 text-[11px] uppercase tracking-wide text-ink-600">{row.label}</span>}
+                  {row.items.map((it, ii) => {
+                    if (it.kind === 'seat' && typeof it.no === 'number') {
+                      const st = seats.find((x) => x.seat_no === it.no)
+                      const state = !st ? 'closed' : st.mine ? 'mine' : st.taken ? 'taken' : 'free'
+                      return (
+                        <button key={ii} type="button" data-held-seat={it.no} data-seat-state={state} disabled={state !== 'free' && state !== 'mine' || busy} onClick={() => state === 'free' && onPick(it.no as number)}
+                          className={`flex h-10 w-10 shrink-0 flex-col items-center justify-center rounded-lg border text-xs font-semibold leading-none max-[359px]:h-9 max-[359px]:w-9 sm:h-12 sm:w-12 ${state === 'mine' ? 'text-fam-on-dark' : state === 'free' ? 'text-ink-900' : 'opacity-40'} ${state === 'taken' ? 'line-through' : ''}`}
+                          style={state === 'mine' ? { backgroundImage: 'var(--wow-grad-brand)', borderColor: 'transparent' } : { borderColor: 'var(--wow-hairline)' }}
+                          title={state === 'closed' ? tr('booking.spotClosed') : undefined}><SpotIcon kind={room.spot_kind} className="mb-0.5 h-4 w-4 sm:h-5 sm:w-5" />{it.no}</button>
+                      )
+                    }
+                    if (it.kind === 'gap') return <span key={ii} className="h-10 w-10 shrink-0 max-[359px]:w-9 sm:h-11 sm:w-11" aria-hidden />
+                    const word = it.text || (it.kind === 'instructor' ? tr('booking.roomInstructor') : it.kind === 'mirror' ? tr('booking.roomMirror') : it.kind === 'door' ? tr('booking.roomDoor') : it.kind)
+                    return <span key={ii} data-room-item={it.kind} className={`inline-flex h-10 shrink-0 items-center rounded-lg border border-dashed px-1 text-[9px] uppercase tracking-normal text-ink-600 sm:h-11 sm:px-2 sm:text-[11px] sm:tracking-wide ${it.kind === 'instructor' ? 'font-semibold' : ''}`} style={{ borderColor: 'var(--wow-hairline)' }}>{word}</span>
+                  })}
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : (
+        <div className="mt-4 grid grid-cols-5 gap-2 sm:grid-cols-6">
+          {seats.map((s) => (
+            <button key={s.seat_no} type="button" data-held-seat={s.seat_no} data-seat-state={s.mine ? 'mine' : s.taken ? 'taken' : 'free'} disabled={s.taken || busy} onClick={() => !s.taken && onPick(s.seat_no)}
+              className={`h-11 rounded-lg border text-sm font-semibold ${s.mine ? 'text-fam-on-dark' : s.taken ? 'opacity-40 line-through' : 'text-ink-900'}`}
+              style={s.mine ? { backgroundImage: 'var(--wow-grad-brand)', borderColor: 'transparent' } : { borderColor: 'var(--wow-hairline)' }}>{s.seat_no}</button>
+          ))}
+        </div>
+        )
+}
+/** ★ ZB-349: the spot was picked before sign-in and booked by number; remembered per booking so the paid return skips the second pick */
+export const SPOT_CHOSEN_KEY = (bookingId: string) => `zmode:spot-chosen:${bookingId}`
+export function markSpotChosen(bookingId: string) { try { window.localStorage.setItem(SPOT_CHOSEN_KEY(bookingId), '1') } catch { /* not kept */ } }
+const spotChosen = (bookingId: string) => { try { return typeof window !== 'undefined' && window.localStorage.getItem(SPOT_CHOSEN_KEY(bookingId)) === '1' } catch { return false } }
+
 export function HeldBookingFlow({ entry, onReleased }: { entry: HeldEntry; onReleased: () => void }) {
   const [phase, setPhase] = useState<Phase>(entry.initial === 'pay' ? 'pay' : 'confirming')
   const [waiverNote, setWaiverNote] = useState<string | null>(null)
@@ -73,7 +118,7 @@ export function HeldBookingFlow({ entry, onReleased }: { entry: HeldEntry; onRel
     return { ok: r.ok, data: (await r.json().catch(() => ({}))) as Record<string, unknown> }
   }
   /* the picker exists only for a class in a room (the owner's model, 2026-09-29): room_key null = a spot count, never a pick */
-  const spotOrDone = (s: Status | null) => (s && s.occurrence?.room_key && s.seats_total && s.seats_total > 0 ? 'spot' : 'done') as Phase
+  const spotOrDone = (s: Status | null) => (s && s.occurrence?.room_key && s.seats_total && s.seats_total > 0 && !spotChosen(entry.bookingId) ? 'spot' : 'done') as Phase
   /* where a confirmed booking goes next: the waiver first time only, then the spot when the class is in a room */
   const afterConfirmed = (s: Status) => {
     if (s.waiver && !s.waiver.signed && s.waiver.link) return 'waiver' as Phase
@@ -252,41 +297,7 @@ export function HeldBookingFlow({ entry, onReleased }: { entry: HeldEntry; onRel
       <Card tag="spot">
         <h3 className="font-display text-xl font-semibold text-ink-900">{tr('booking.pickSpot')}</h3>
         <p className="mt-1 text-sm text-ink-700">{mine ? tr('booking.yourSpot').replace('{n}', String(mine)) : tr('booking.spotHint')}</p>
-        {room ? (
-          <div data-held-room className="mx-auto mt-4 w-fit max-w-full overflow-x-auto">
-            {room.front && <div className="mb-2 rounded-md border border-dashed py-1 text-center text-[11px] uppercase tracking-[0.15em] text-ink-600" style={{ borderColor: 'var(--wow-hairline)' }}>{room.front}</div>}
-            <div className="grid gap-2">
-              {room.rows.map((row, ri) => (
-                <div key={ri} data-room-row={ri} className="flex flex-wrap items-center justify-center gap-2">
-                  {row.label && <span className="mr-1 text-[11px] uppercase tracking-wide text-ink-600">{row.label}</span>}
-                  {row.items.map((it, ii) => {
-                    if (it.kind === 'seat' && typeof it.no === 'number') {
-                      const st = seats.find((x) => x.seat_no === it.no)
-                      const state = !st ? 'closed' : st.mine ? 'mine' : st.taken ? 'taken' : 'free'
-                      return (
-                        <button key={ii} type="button" data-held-seat={it.no} data-seat-state={state} disabled={state !== 'free' && state !== 'mine' || busy !== null} onClick={() => state === 'free' && void pickSeat(it.no as number)}
-                          className={`flex h-12 w-12 flex-col items-center justify-center rounded-lg border text-xs font-semibold leading-none ${state === 'mine' ? 'text-fam-on-dark' : state === 'free' ? 'text-ink-900' : 'opacity-40'} ${state === 'taken' ? 'line-through' : ''}`}
-                          style={state === 'mine' ? { backgroundImage: 'var(--wow-grad-brand)', borderColor: 'transparent' } : { borderColor: 'var(--wow-hairline)' }}
-                          title={state === 'closed' ? tr('booking.spotClosed') : undefined}><SpotIcon kind={room.spot_kind} className="mb-0.5 h-5 w-5" />{it.no}</button>
-                      )
-                    }
-                    if (it.kind === 'gap') return <span key={ii} className="h-11 w-11" aria-hidden />
-                    const word = it.text || (it.kind === 'instructor' ? tr('booking.roomInstructor') : it.kind === 'mirror' ? tr('booking.roomMirror') : it.kind === 'door' ? tr('booking.roomDoor') : it.kind)
-                    return <span key={ii} data-room-item={it.kind} className={`inline-flex h-11 items-center rounded-lg border border-dashed px-2 text-[11px] uppercase tracking-wide text-ink-600 ${it.kind === 'instructor' ? 'font-semibold' : ''}`} style={{ borderColor: 'var(--wow-hairline)' }}>{word}</span>
-                  })}
-                </div>
-              ))}
-            </div>
-          </div>
-        ) : (
-        <div className="mt-4 grid grid-cols-5 gap-2 sm:grid-cols-6">
-          {seats.map((s) => (
-            <button key={s.seat_no} type="button" data-held-seat={s.seat_no} data-seat-state={s.mine ? 'mine' : s.taken ? 'taken' : 'free'} disabled={s.taken || busy !== null} onClick={() => void pickSeat(s.seat_no)}
-              className={`h-11 rounded-lg border text-sm font-semibold ${s.mine ? 'text-fam-on-dark' : s.taken ? 'opacity-40 line-through' : 'text-ink-900'}`}
-              style={s.mine ? { backgroundImage: 'var(--wow-grad-brand)', borderColor: 'transparent' } : { borderColor: 'var(--wow-hairline)' }}>{s.seat_no}</button>
-          ))}
-        </div>
-        )}
+        <RoomMap room={room} seats={seats} busy={busy !== null} onPick={(n) => void pickSeat(n)} />
         {error && <p role="alert" className="mt-3 text-sm text-red-600">{error}</p>}
         <div className="mt-4"><Primary tag="keep" disabled={!mine} onClick={() => setPhase('done')}>{tr('booking.keepSpot')}</Primary></div>
       </Card>
