@@ -69,11 +69,23 @@ export function ClassBookingFlow({ occurrence, kindId, onHeld, onVerified }: { o
   /* the spot first (a class in a room), then who they are: a session from the last half hour skips the code */
   useEffect(() => {
     void (async () => {
-      const inRoom = await loadSpots()
+      const skip = await alreadyIn(readSession())
+      const inRoom = skip ? false : await loadSpots()
       if (inRoom) { setPhase('spot'); return }
       afterSpot(null)
     })()
   }, [])
+  /* ★ ZB-349: no spot pick for a rider back from signing (resume=waiver) or already booked or holding a spot on this class; the
+     booking they have keeps its spot (portal-read names each booking's class) */
+  const alreadyIn = async (sess: string | null): Promise<boolean> => {
+    try { if (new URLSearchParams(window.location.search).get('resume') === 'waiver') return true } catch { /* no address */ }
+    if (!sess) return false
+    const { ok, data } = await fn('portal-read', { businessId: BUSINESS_ID }, sess)
+    if (!ok) return false
+    const mine = [...((data.bookings ?? []) as Array<{ occurrenceId?: string | null; status?: string }>).filter((b) => ['pending', 'confirmed'].includes(String(b.status))), ...((data.held ?? []) as Array<{ occurrenceId?: string | null }>)]
+    return mine.some((b) => b.occurrenceId === occurrence.id)
+  }
+
   const afterSpot = (n: number | null) => {
     const sess = readSession()
     if (!sess) { setPhase('who'); return }
@@ -116,8 +128,10 @@ export function ClassBookingFlow({ occurrence, kindId, onHeld, onVerified }: { o
     }
     /* a session that ran out (30 minutes) is let go, so the code is asked again instead of failing the same way */
     if (!ok || !d.success || !d.booking?.id || !d.hold?.token) {
-      if (!d.code || d.code === 'contact_not_allowed') { clearSession(); setToken(null) }
-      setError(d.code ? (d.error || tr('booking.couldNotComplete')) : tr('booking.signInAgain')); setPhase('who'); return
+      /* only a sign-in that ran out asks for the number again (the server's codes; the old crash text until the server fix is live) */
+      const expired = d.code === 'session_expired' || d.code === 'details_required' || d.code === 'contact_not_allowed' || /reading 'phone'/.test(String(d.error ?? ''))
+      if (expired) { clearSession(); setToken(null) }
+      setError(expired ? tr('booking.signInAgain') : (d.error || tr('booking.couldNotComplete'))); setPhase('who'); return
     }
     if (spot) markSpotChosen(d.booking.id)
     onHeld({ bookingId: d.booking.id, token: d.hold.token, initial: d.held ? 'pay' : 'after', expiresAt: d.hold.expires_at ?? null, options: d.options ?? null, note: d.already ? (d.message ?? null) : null })
