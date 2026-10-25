@@ -485,10 +485,38 @@ export function BookingWizardBlock({
   }, [enabled])
 
   const days = useMemo(() => bookableDays(availability), [availability])
-  const slots = useMemo(
+  const ownSlots = useMemo(
     () => (service && date ? generateSlots(service, date, availability) : []),
     [service, date, availability],
   )
+  /* ★★★ THE PAGE ASKS THE ONE BOOKING FUNCTION (Fausto 2026-10-25): the times come from public-slots (open_slots: notice, how far ahead,
+     bookings, staff, blocks, Google busy times), so the page never offers a time the booking would refuse. A business still in shadow (or
+     any failure, or no answer within 3 s) keeps the page's own times exactly as before; the server logs the comparison. */
+  const [server, setServer] = useState<{ key: string; times: string[] | null } | null>(null)
+  const slotKey = service && date ? `${service.id}|${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}` : ''
+  useEffect(() => {
+    if (!slotKey || !service) return
+    let on = true
+    const ctl = new AbortController()
+    const timer = setTimeout(() => ctl.abort(), 3000)
+    void fetch(`${SUPABASE_URL}/functions/v1/public-slots`, {
+      method: 'POST', signal: ctl.signal, headers: { 'Content-Type': 'application/json', ...ANON_HEADERS },
+      body: JSON.stringify({ businessId: BUSINESS_ID, serviceId: service.id, date: slotKey.split('|')[1], old: ownSlots, caller: 'booking_page' }),
+    })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((j: { mode?: string; slots?: Array<{ time?: unknown }> } | null) => {
+        if (!on) return
+        const live = !!j && j.mode === 'live' && Array.isArray(j.slots)
+        setServer({ key: slotKey, times: live ? j!.slots!.map((x) => x.time).filter((t): t is string => typeof t === 'string' && /^\d{2}:\d{2}$/.test(t)) : null })
+      })
+      .catch(() => { if (on) setServer({ key: slotKey, times: null }) })
+      .finally(() => clearTimeout(timer))
+    return () => { on = false; clearTimeout(timer); ctl.abort() }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [slotKey, ownSlots.join(',')])
+  const asked = !!slotKey && server?.key === slotKey
+  const slots = asked && server!.times ? server!.times : ownSlots
+  const slotsPending = !!slotKey && !asked
 
   if (!enabled) return null
 
@@ -922,7 +950,9 @@ export function BookingWizardBlock({
                       title={visit ? tr('booking.arrivalTime') : tr('booking.chooseTime')}
                       onBack={() => setStep('date')}
                     >
-                      {slots.length === 0 ? (
+                      {slotsPending ? (
+                        <div data-slots-loading className="flex justify-center py-8 text-ink-600"><Loader2 className="h-5 w-5 animate-spin" /></div>
+                      ) : slots.length === 0 ? (
                         <p className="rounded-2xl border border-dashed px-5 py-8 text-center text-sm text-ink-600" style={{ borderColor: 'var(--wow-hairline)' }}>
                           {tr('booking.noOpenTimes')}
                           {hasPhone(site.phone) && (<>
