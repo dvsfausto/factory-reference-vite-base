@@ -2,12 +2,12 @@ import { ANNOUNCEMENT } from '~/lib/chrome-extras'
 
 /**
  * The announcement strip (ZB-451). Renders nothing unless the business set one. One line, never wraps: a long text is
- * cut with an ellipsis rather than pushing the header down. The owner's colours when set (validated hex), else the
- * site's CTA slot, so it always reads on its own ground.
+ * cut with an ellipsis rather than pushing the header down. The owner's colours when set (validated hex; the text colour
+ * picked by contrast when only the ground is set), else the site's CTA slot, so it always reads on its own ground.
  */
 export function AnnouncementBar() {
   if (!ANNOUNCEMENT) return null
-  const own = ANNOUNCEMENT.bg ? { background: ANNOUNCEMENT.bg, color: ANNOUNCEMENT.fg ?? '#ffffff' } : undefined
+  const own = ANNOUNCEMENT.bg ? { background: ANNOUNCEMENT.bg, color: ANNOUNCEMENT.fg } : undefined
   return (
     <div
       data-announcement=""

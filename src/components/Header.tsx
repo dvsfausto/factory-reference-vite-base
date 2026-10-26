@@ -645,7 +645,7 @@ export function Header() {
         {structure === "standard" && (
           <div className="container-x flex items-center justify-between h-20">
             <Link to="/" className="focus-ring rounded-md" aria-label={`${SITE.name} ${tr('nav.homeLink')}`}>
-              <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={logoHeight(44)} alt={SITE.name} />
+              <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={logoHeight(44, 80)} alt={SITE.name} />
             </Link>
             <nav className="hidden lg:flex items-center gap-1" aria-label={tr('nav.ariaPrimary')}>
               {navLinks()}
@@ -665,14 +665,14 @@ export function Header() {
           <div className="container-x">
             <div className="flex lg:hidden items-center justify-between h-24">
               <Link to="/" className="focus-ring rounded-md" aria-label={`${SITE.name} ${tr('nav.homeLink')}`}>
-                <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={logoHeight(56)} alt={SITE.name} />
+                <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={logoHeight(56, 96)} alt={SITE.name} />
               </Link>
               {mobileTrigger}
             </div>
             {/* the centered (Editorial) header carries the logo larger: 72 on desktop, 56 on a phone (Fausto, 2026-10-07) */}
             <div className="hidden lg:grid grid-cols-[1fr_auto_1fr] items-center h-24">
               <Link to="/" className="justify-self-start focus-ring rounded-md" aria-label={`${SITE.name} ${tr('nav.homeLink')}`}>
-                <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={logoHeight(72)} alt={SITE.name} />
+                <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={logoHeight(72, 96)} alt={SITE.name} />
               </Link>
               <nav className="flex items-center justify-center gap-2" aria-label={tr('nav.ariaPrimary')}>
                 {navLinks("left-1/2 -translate-x-1/2")}
@@ -693,7 +693,7 @@ export function Header() {
           <div className="container-x">
             <div className="flex lg:hidden items-center justify-between h-20">
               <Link to="/" className="focus-ring rounded-md" aria-label={`${SITE.name} ${tr('nav.homeLink')}`}>
-                <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={logoHeight(40)} alt={SITE.name} />
+                <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={logoHeight(40, 80)} alt={SITE.name} />
               </Link>
               {mobileTrigger}
             </div>
@@ -703,7 +703,7 @@ export function Header() {
                   {cityLine || SITE.hours}
                 </div>
                 <Link to="/" className="justify-self-center focus-ring rounded-md" aria-label={`${SITE.name} ${tr('nav.homeLink')}`}>
-                  <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={logoHeight(46)} alt={SITE.name} />
+                  <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={logoHeight(46, 80)} alt={SITE.name} />
                 </Link>
                 <div className="justify-self-end flex items-center gap-4">
                   {phoneCluster}
@@ -737,7 +737,7 @@ export function Header() {
             </div>
             <div className="container-x flex items-center justify-between h-[72px]">
               <Link to="/" className="focus-ring rounded-md" aria-label={`${SITE.name} ${tr('nav.homeLink')}`}>
-                <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={logoHeight(42)} alt={SITE.name} />
+                <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={logoHeight(42, 72)} alt={SITE.name} />
               </Link>
               <nav className="hidden lg:flex items-center gap-1" aria-label={tr('nav.ariaPrimary')}>
                 {navLinks()}
