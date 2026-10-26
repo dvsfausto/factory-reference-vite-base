@@ -412,7 +412,7 @@ const EN = {
   'portal.off': 'Bookings by phone and code are not available on this site yet.',
   'portal.callUs': 'To change a booking, call',
   'portal.phoneIntro': 'Your phone number, and we text you a code. Then your classes and bookings are here.',
-  'portal.sendCode': 'Text me a code',
+  'portal.sendCode': 'Send me a code',
   'portal.noAccount': 'No account or password. If we have your number, the code arrives in a moment.',
   'portal.codeByText': 'If we know that number, a code is on its way by text from our number. It expires in 10 minutes.',
   'portal.codeByEmail': 'If we know that number, a code is on its way by email to the address we have. It expires in 10 minutes.',
