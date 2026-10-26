@@ -4,6 +4,8 @@ import { HOMEPAGE_LAYOUT } from "~/data/layout";
 import { ARROW } from "~/lib/editorial";
 import { Menu, X, Phone, ChevronDown } from "lucide-react";
 import { Logo } from "./Logo";
+import { AnnouncementBar } from "./AnnouncementBar";
+import { ANNOUNCEMENT, logoHeight } from "~/lib/chrome-extras";
 import { SITE, BOOKING } from "~/data/site";
 import { PrimaryCta } from "~/components/blocks/PrimaryCta";
 import { primaryCta } from "~/lib/primaryCta";
@@ -557,7 +559,7 @@ export function Header() {
         <X className={`when-open h-6 w-6 ${t.menuIcon}`} aria-hidden="true" />
       </summary>
       {/* Absolute under the bar, not fixed: the header's backdrop-blur is a containing block for fixed children. */}
-      <div className={`absolute inset-x-0 top-full z-[60] ${t.mobilePanel} lg:hidden overflow-y-auto`} style={{ height: 'calc(100dvh - 5rem)' }}>
+      <div className={`absolute inset-x-0 top-full z-[60] ${t.mobilePanel} lg:hidden overflow-y-auto`} style={{ height: ANNOUNCEMENT ? 'calc(100dvh - 7.25rem)' : 'calc(100dvh - 5rem)' }}>
           <div className="container-x pb-12 space-y-6">
             {navGroups.map((g, gi) =>
               g.items.length === 1 ? (
@@ -637,12 +639,13 @@ export function Header() {
           scrolled ? t.scrolledShadow : ""
         }`}
       >
+        <AnnouncementBar />
         {skipLink}
 
         {structure === "standard" && (
           <div className="container-x flex items-center justify-between h-20">
             <Link to="/" className="focus-ring rounded-md" aria-label={`${SITE.name} ${tr('nav.homeLink')}`}>
-              <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={44} alt={SITE.name} />
+              <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={logoHeight(44)} alt={SITE.name} />
             </Link>
             <nav className="hidden lg:flex items-center gap-1" aria-label={tr('nav.ariaPrimary')}>
               {navLinks()}
@@ -662,14 +665,14 @@ export function Header() {
           <div className="container-x">
             <div className="flex lg:hidden items-center justify-between h-24">
               <Link to="/" className="focus-ring rounded-md" aria-label={`${SITE.name} ${tr('nav.homeLink')}`}>
-                <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={56} alt={SITE.name} />
+                <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={logoHeight(56)} alt={SITE.name} />
               </Link>
               {mobileTrigger}
             </div>
             {/* the centered (Editorial) header carries the logo larger: 72 on desktop, 56 on a phone (Fausto, 2026-10-07) */}
             <div className="hidden lg:grid grid-cols-[1fr_auto_1fr] items-center h-24">
               <Link to="/" className="justify-self-start focus-ring rounded-md" aria-label={`${SITE.name} ${tr('nav.homeLink')}`}>
-                <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={72} alt={SITE.name} />
+                <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={logoHeight(72)} alt={SITE.name} />
               </Link>
               <nav className="flex items-center justify-center gap-2" aria-label={tr('nav.ariaPrimary')}>
                 {navLinks("left-1/2 -translate-x-1/2")}
@@ -690,7 +693,7 @@ export function Header() {
           <div className="container-x">
             <div className="flex lg:hidden items-center justify-between h-20">
               <Link to="/" className="focus-ring rounded-md" aria-label={`${SITE.name} ${tr('nav.homeLink')}`}>
-                <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={40} alt={SITE.name} />
+                <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={logoHeight(40)} alt={SITE.name} />
               </Link>
               {mobileTrigger}
             </div>
@@ -700,7 +703,7 @@ export function Header() {
                   {cityLine || SITE.hours}
                 </div>
                 <Link to="/" className="justify-self-center focus-ring rounded-md" aria-label={`${SITE.name} ${tr('nav.homeLink')}`}>
-                  <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={46} alt={SITE.name} />
+                  <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={logoHeight(46)} alt={SITE.name} />
                 </Link>
                 <div className="justify-self-end flex items-center gap-4">
                   {phoneCluster}
@@ -734,7 +737,7 @@ export function Header() {
             </div>
             <div className="container-x flex items-center justify-between h-[72px]">
               <Link to="/" className="focus-ring rounded-md" aria-label={`${SITE.name} ${tr('nav.homeLink')}`}>
-                <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={42} alt={SITE.name} />
+                <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={logoHeight(42)} alt={SITE.name} />
               </Link>
               <nav className="hidden lg:flex items-center gap-1" aria-label={tr('nav.ariaPrimary')}>
                 {navLinks()}

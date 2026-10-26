@@ -1,4 +1,5 @@
 import type { ComponentProps, ComponentType, CSSProperties, ReactNode } from 'react'
+import { streetFirst } from '~/lib/chrome-extras'
 import { Fragment } from 'react'
 import { tr, trTrustPhrase } from '~/lib/i18n'
 import { Phone, Mail, MapPin, Clock } from 'lucide-react'
@@ -477,9 +478,9 @@ interface SectionBlock {
 // bg-slate JSX with brand/ink tokens + --wow-* surfaces.
 function ContactFormSection() {
   const customForm = useCustomForm()
-  const addr = [SITE.address.city, SITE.address.state, SITE.address.zip]
+  const addr = streetFirst([SITE.address.city, SITE.address.state, SITE.address.zip]
     .filter(Boolean)
-    .join(', ')
+    .join(', '))
   const rows = [
     HAS_PHONE ? { Icon: Phone, label: SITE.phoneDisplay, href: `tel:${SITE.phone}` } : null,
     HAS_EMAIL ? { Icon: Mail, label: SITE.email, href: `mailto:${SITE.email}` } : null,

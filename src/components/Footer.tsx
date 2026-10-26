@@ -1,4 +1,5 @@
 import { placeLine } from '~/lib/place'
+import { streetFirst } from '~/lib/chrome-extras'
 import { SocialIcon } from '~/components/blocks/SocialIcon'
 import { Link } from "@tanstack/react-router";
 import { Instagram, Facebook, Phone, Mail, MapPin, Clock, ArrowRight } from "lucide-react";
@@ -69,7 +70,7 @@ const FOOTER_VARIANTS: Record<string, { structure: FooterStructure; theme: strin
   elegant: { structure: "editorial", theme: "elegant" },
 };
 
-const locationLine = () => placeLine();
+const locationLine = () => streetFirst(placeLine());
 
 // ─── shared column pieces (composed by the structures) ─────────────────────────────────────────────────
 const isHttps = (v: unknown): v is string => typeof v === 'string' && /^https:\/\/[^\s]+$/.test(v);
