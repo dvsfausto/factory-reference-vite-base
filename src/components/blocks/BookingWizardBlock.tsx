@@ -376,6 +376,8 @@ export function BookingWizardBlock({
   }, [customer.phone])
   const recognised = known === true && !notMe
   const paid = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('paid') === '1'
+  /* the Packs section's Buy carried a class (2026-10-28): while the sale lands, the page says the class is being booked, not "pick a class" */
+  const forClassReturn = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('for_class') === '1'
   /* ★ THE PAID RETURN (the owner, 2026-09-23): a person back from Stripe sees first that it worked and what they now hold, read from
      the sale itself (pack-checkout GET ?session=): first name, the pack, the classes. Nothing is claimed before it is read. */
   const [paidInfo, setPaidInfo] = useState<{ first_name: string | null; pack: string | null; credits: number | null; balance: number | null; landed: boolean; waiver?: { signed: boolean; link: string | null } | null; klass?: { occurrence_id: string; title: string | null; start_at: string | null; state: string; booking_id: string | null; token: string | null } | null } | null>(null)
@@ -630,6 +632,14 @@ export function BookingWizardBlock({
                   <p data-paid-class className="mt-1 text-sm text-fam-ink-muted">{(paidInfo.first_name ? `${paidInfo.first_name}, ` : '') + tr('booking.paidBooked').replace('{n}', String(paidInfo.balance ?? paidInfo.credits ?? '')).replace('{pack}', paidInfo.pack ?? '')}</p>
                   <div className="mt-4"><HeldBookingFlow entry={{ bookingId: paidInfo.klass.booking_id, token: paidInfo.klass.token, initial: 'confirming' }} onReleased={() => setPaidInfo((p) => (p ? { ...p, klass: null } : p))} /></div>
                 </>
+              ) : paidInfo.klass ? (
+                /* ★★★ A ONE-CLASS PACK BOUGHT FOR A CLASS (Fitcycling P0, 2026-10-28): the sale's own answer about that class (packSale
+                   for_class), said as it is: booked, sign first, full, gone, or not booked yet. Never "pick a class" when it is booked. */
+                <p data-paid-class={paidInfo.klass.state} className="mt-1 text-sm text-fam-ink-muted">
+                  {(paidInfo.first_name ? `${paidInfo.first_name}, ` : '') + tr(paidInfo.klass.state === 'booked' ? 'booking.paidClassBooked' : paidInfo.klass.state === 'sign' ? 'booking.paidClassSign' : paidInfo.klass.state === 'full' ? 'booking.paidClassFull' : paidInfo.klass.state === 'gone' ? 'booking.paidClassGone' : 'booking.paidClassNotYet').replace('{class}', (paidInfo.klass.title ?? '').trim() || tr('booking.thisClass')).replace('{when}', paidInfo.klass.start_at ? new Intl.DateTimeFormat(SITE_LANGUAGE === 'es' ? 'es' : 'en-US', { timeZone: BOOKING.timezone || undefined, weekday: 'long', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit' }).format(new Date(paidInfo.klass.start_at)) : '').replace(/, \./, '.')}
+                </p>
+              ) : !paidInfo.landed && forClassReturn ? (
+                <p data-paid-class="landing" className="mt-1 text-sm text-fam-ink-muted">{(paidInfo.first_name ? `${paidInfo.first_name}, ` : '') + tr('booking.paidClassLanding')}</p>
               ) : (
                 <p className="mt-1 text-sm text-fam-ink-muted">
                   {(paidInfo.first_name ? `${paidInfo.first_name}, ` : '') + tr('booking.paidBody').replace('{n}', String(paidInfo.balance ?? paidInfo.credits ?? '')).replace('{pack}', paidInfo.pack ?? '')}
