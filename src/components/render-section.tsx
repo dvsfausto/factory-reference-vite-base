@@ -205,6 +205,10 @@ import { InfoArticleBlock } from '~/components/blocks/InfoArticleBlock'
 import { RelatedInfoBlock } from '~/components/blocks/RelatedInfoBlock'
 // Native self-service BOOKING wizard (Arc 4a · Stage 2) — self-gates on BOOKING.enabled.
 import { BookingWizardBlock } from '~/components/blocks/BookingWizardBlock'
+// The Showcase theme's compositions (2026-10-29): selected only by their own variant ids, inert on every other site.
+import { HeroShowcaseBlock } from '~/components/blocks/HeroShowcaseBlock'
+import { ServicesShowcaseTilesBlock } from '~/components/blocks/ServicesShowcaseTilesBlock'
+import { CtaShowcaseBandBlock } from '~/components/blocks/CtaShowcaseBandBlock'
 import { HAS_PHONE } from '~/lib/phone'
 import { HAS_EMAIL } from '~/lib/email'
 
@@ -267,6 +271,8 @@ const HERO_VARIANTS: Record<string, typeof HeroBlock> = {
   'creative-social': HeroCreativeSocialBlock as typeof HeroBlock,
   // 2026-10-14: the words large on the left, the photo filling the right and fading into the ground, the last word in the accent
   legacy: HeroLegacyBlock as typeof HeroBlock,
+  // 2026-10-29 the Showcase theme: one photo filling the screen, the headline alone and one button over a soft foot scrim
+  showcase: HeroShowcaseBlock as typeof HeroBlock,
 }
 
 // SERVICE-DETAIL hero variants (Arc 3 · Stage C). The WOW heroes (aurora/spotlight/
@@ -317,6 +323,8 @@ const SERVICES_VARIANTS: Record<string, typeof ServicesPreviewBlock> = {
   'numbered-list': ServicesNumberedListBlock,
   // 2026-10-14: tall cards in a row on the inverse tone, the services then the classes, the first card leading
   'program-cards': ServicesProgramCardsBlock as typeof ServicesPreviewBlock,
+  // 2026-10-29 the Showcase theme: three large tall photo tiles, the name and one small link each (anchor #collections)
+  'showcase-tiles': ServicesShowcaseTilesBlock as typeof ServicesPreviewBlock,
 }
 
 const CTA_VARIANTS: Record<string, typeof CtaBlock> = {
@@ -342,6 +350,8 @@ const CTA_VARIANTS: Record<string, typeof CtaBlock> = {
   'dark-closing': CtaDarkClosingBlock,
   // 2026-10-14: the closing band in the button colour, a very large uppercase title, the button in the page's tone
   'brand-band': CtaBrandBandBlock as typeof CtaBlock,
+  // 2026-10-29 the Showcase theme: one sentence and one ink button on the white page between gold hairlines
+  'showcase-band': CtaShowcaseBandBlock as typeof CtaBlock,
 }
 
 // Tagline bar LAYOUTS (2026-10-14). The bar had one look and no seam; 'band' names it so the swap can return to it.
@@ -901,6 +911,8 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
           subtitle={block.params?.subtitle as string | undefined}
           // the small line over the title: read by 'brand-band' only
           {...({ label: block.params?.label as string | undefined } as object)}
+          // the sentence and the button's own link: read by 'showcase-band' only, and handed to it alone
+          {...(block.variant === 'showcase-band' ? ({ heading: block.params?.heading as string | undefined, href: block.params?.href as string | undefined } as object) : {})}
         />
       )
     }

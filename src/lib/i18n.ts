@@ -638,6 +638,8 @@ const EN = {
   'editorial.storyHeading': 'Beautifully composed. Genuinely yours.',
   'editorial.storyLink': 'Read more',
   'editorial.connect': 'Connect',
+  // the Showcase theme's one word (2026-10-29): the small link under a collection tile
+  'showcase.view': 'View',
   'editorial.blog': 'Blog',
   'editorial.scrollDown': 'Scroll down',
   // ★ the Editorial look's section copy (ZB-147 W1.2)
@@ -1255,6 +1257,7 @@ const ES: Record<keyof typeof EN, string> = {
   'editorial.storyHeading': 'Bien compuesto. Genuinamente tuyo.',
   'editorial.storyLink': 'Leer más',
   'editorial.connect': 'Conecta',
+  'showcase.view': 'Ver',
   'editorial.blog': 'Blog',
   'editorial.scrollDown': 'Bajar',
   'editorial.portfolioKicker': 'Portafolio',

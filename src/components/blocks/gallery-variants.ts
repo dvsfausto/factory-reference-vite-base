@@ -10,6 +10,7 @@ import { GalleryEdgeGridBlock } from './GalleryEdgeGridBlock'
 import { GalleryPortfolioGridBlock } from './GalleryPortfolioGridBlock'
 import { GalleryPhotoStripBlock } from './GalleryPhotoStripBlock'
 import { GalleryPortfolioWallBlock } from './GalleryPortfolioWallBlock'
+import { GalleryShowcasePiecesBlock } from './GalleryShowcasePiecesBlock'
 import type { ComponentProps, ComponentType } from 'react'
 import type { ServicePageData } from '~/lib/types/page-types'
 
@@ -34,4 +35,6 @@ export const GALLERY_VARIANTS: Record<string, ComponentType<ComponentProps<typeo
   'portfolio-grid': GalleryPortfolioGridBlock,
   'photo-strip': GalleryPhotoStripBlock,
   'portfolio-wall': GalleryPortfolioWallBlock,
+  // 2026-10-29 the Showcase theme: large photos of the pieces, each a name and one line read from its caption
+  'showcase-pieces': GalleryShowcasePiecesBlock,
 }
