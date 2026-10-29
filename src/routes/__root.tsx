@@ -13,6 +13,8 @@ import { NotFound } from '~/components/NotFound'
 import { Header } from '~/components/Header'
 import { Footer } from '~/components/Footer'
 import { useBookingLinksFollowOpen } from '~/components/BookingLinksFollowOpen'
+import { TextUsPill } from '~/components/showcase/TextUs'
+import { isShowcase } from '~/lib/editorial'
 import { JsonLd } from '~/components/JsonLd'
 import { localBusinessLd } from '~/lib/seo'
 import { SITE, SITE_LANGUAGE, BUSINESS_ID, SITE_KEY, SUPABASE_URL } from '~/data/site'
@@ -54,6 +56,8 @@ export const Route = createRootRoute({
       },
       // the Editorial theme's sans (Manrope); loaded only on a site that chose the theme
       ...((SITE as { theme?: string }).theme === 'editorial' ? [{ rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&display=swap' }] : []),
+      // the Showcase theme's high-contrast display serif (Bodoni Moda); loaded only on a site that chose the theme
+      ...((SITE as { theme?: string }).theme === 'showcase' ? [{ rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&display=swap' }] : []),
     ],
   }),
   errorComponent: DefaultCatchBoundary,
@@ -212,6 +216,8 @@ function RootComponent() {
         <Outlet />
       </main>
       <Footer />
+      {/* the Showcase theme's floating "Text us" pill (components/showcase/TextUs.tsx); every other site renders nothing here */}
+      {isShowcase() && <TextUsPill />}
     </>
   )
 }

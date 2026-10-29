@@ -2,11 +2,11 @@ import { SITE } from '~/data/site'
 import { HERO_ALT } from '~/data/images'
 import { imageSrc } from '~/lib/asset-url'
 import { heroFocusStyle } from '~/lib/hero-focus'
-import { ShowcaseCta } from '~/components/showcase/ShowcaseCta'
-import { logoSizeOf, sizedLogoHeight, logoBarPx } from '~/lib/chrome-extras'
+import { GoldHeading } from '~/components/showcase/Primitives'
 
 /* ★ THE LOGO IN THE HERO (2026-10-29). SITE.heroLogo (boolean, any hero may honour it later): the Showcase hero shows the
-   business's logo large above the headline unless it is false. Legible over any photo, and the file is never altered:
+   business's logo large above the headline only when it is true (off by default: the Showcase header carries
+   the logo large and centred). Legible over any photo, and the file is never altered:
      · a distinct knockout (logo_light_url, not a copy of the logo) or a mark measured light (SITE.logoTone = 'light')
        stands on the photo as it is, the scrim under it;
      · every other logo (a dark mark, a JPEG on white) sits on a white plate, so its own white ground reads as the plate.
@@ -25,10 +25,10 @@ function HeroLogo({ site }: { site: typeof SITE }) {
   )
 }
 
-// Hero VARIANT: 'showcase' (the Showcase theme, 2026-10-29). ONE photo filling the screen under the header, the
-// headline alone in the display face bottom-left over a soft scrim rising from the foot, and ONE button: the site's
-// primary call to action (PrimaryCta, the same target every hero uses). No kicker, no body, no trust row, no phone.
-// Props match HeroBlock (trustItems / decorativeAsset are accepted and unused). Renders server-side with no JavaScript.
+// Hero VARIANT: 'showcase' (the Showcase theme, 2026-10-29). ONE photo filling the screen under the header and ONE big
+// uppercase serif headline centred on it (hero.headline, the gold-word rule), over a soft scrim. No button, no kicker, no body,
+// no trust row (booking lives on /book only on a Showcase site). A video plays instead of the photo when SITE.hero.video_url
+// is set (the photo is its poster), the same data path as the 'video' hero. Props match HeroBlock. Server-rendered, no JS.
 export function HeroShowcaseBlock({
   site = SITE,
 }: {
@@ -37,28 +37,30 @@ export function HeroShowcaseBlock({
   decorativeAsset?: string
 }) {
   const hero = site.hero
-  const showLogo = (site as { heroLogo?: boolean }).heroLogo !== false && !!(site as { logo_url?: string }).logo_url
-  // the header's desktop bar grows for a large logo (Header.tsx barGrow): the photo still ends at the fold
-  const size = logoSizeOf()
-  const grown = !!size && logoBarPx(96, sizedLogoHeight(72, 'desktop', size)) > 96
+  const videoUrl = (hero as { video_url?: string }).video_url
+  const showLogo = (site as { heroLogo?: boolean }).heroLogo === true && !!(site as { logo_url?: string }).logo_url
+  const media = 'absolute inset-0 -z-20 h-full w-full object-cover'
   return (
-    <section className={`relative isolate flex min-h-[calc(100svh-6rem)] ${grown ? 'lg:min-h-[calc(100svh-105px)] ' : ''}flex-col justify-end overflow-hidden bg-fam-statement-2 text-fam-on-statement`}>
-      <img
-        src={imageSrc(hero.image_url)}
-        alt={HERO_ALT}
-        className="absolute inset-0 -z-20 h-full w-full object-cover"
-        data-hero-photo=""
-        fetchPriority="high"
-        style={heroFocusStyle(site)}
-      />
-      {/* the scrim: only at the foot, where the words sit, so the photo stays the photo */}
-      <div aria-hidden="true" className="absolute inset-x-0 bottom-0 -z-10 h-2/3 bg-gradient-to-t from-fam-statement-2/65 via-fam-statement-2/20 to-transparent" />
-      <div data-enter="up" className="w-full px-5 pb-14 pt-40 sm:px-8 md:px-[6%] md:pb-20">
-        {showLogo && <div className="mb-8 md:mb-10"><HeroLogo site={site} /></div>}
-        <h1 className="max-w-4xl text-balance font-display text-[44px] font-normal leading-[1.02] tracking-[-0.02em] text-fam-on-statement sm:text-6xl md:text-7xl lg:text-[88px]">
-          {hero.headline}
-        </h1>
-        <ShowcaseCta tone="light" className="mt-9 md:mt-10">{hero.cta_primary_label}</ShowcaseCta>
+    // the Showcase header bar is 88px on a phone and 120px from lg up (plus its hairline): the photo ends at the fold
+    <section className="relative isolate flex min-h-[calc(100svh-89px)] flex-col items-center justify-center overflow-hidden bg-fam-statement-2 text-fam-on-statement lg:min-h-[calc(100svh-121px)]">
+      {videoUrl ? (
+        <video autoPlay muted loop playsInline poster={imageSrc(hero.image_url)} className={media} style={heroFocusStyle(site)}>
+          <source src={videoUrl} />
+        </video>
+      ) : (
+        <img src={imageSrc(hero.image_url)} alt={HERO_ALT} className={media} data-hero-photo="" fetchPriority="high" style={heroFocusStyle(site)} />
+      )}
+      {/* the scrim: an even soft veil, a little deeper at the centre line where the words sit */}
+      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-fam-statement-2/25" />
+      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-b from-transparent via-fam-statement-2/20 to-transparent" />
+      <div data-enter="up" className="flex w-full flex-col items-center px-5 py-24 text-center sm:px-8">
+        {showLogo && <div className="mb-10"><HeroLogo site={site} /></div>}
+        <GoldHeading
+          as="h1"
+          text={hero.headline}
+          onDark
+          className="max-w-5xl text-balance text-[40px] sm:text-6xl md:text-7xl lg:text-[96px]"
+        />
       </div>
     </section>
   )

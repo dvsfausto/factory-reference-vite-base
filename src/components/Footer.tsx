@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { placeLine } from '~/lib/place'
 import { streetFirst } from '~/lib/chrome-extras'
 import { SocialIcon } from '~/components/blocks/SocialIcon'
@@ -396,37 +397,72 @@ function FooterConnect({ t }: { t: FooterTheme }) {
   );
 }
 
-// ─── STRUCTURE 6 · SHOWCASE (2026-10-29): two quiet rows on the white page under a hairline. Row one, centred: the
-// logo (or the name), the menu links (the owner's own menu when set, else the site's pages), the social icons. Row two:
-// © year name, the privacy and legal links. Lots of space, few words. ──
+// ─── STRUCTURE 6 · SHOWCASE (2026-10-29): the white page continues under a hairline. A contact strip with ONLY the details
+// the site has (the place, the phone, the email, the hours; each left out when absent), then the logo beside three link
+// columns (Menu: the owner's menu, else the site's pages; Collections: the services; Contact), the social icons when there
+// are any, and the © line. Room under the last line on a phone for the floating "Text us" pill. ──
 function FooterShowcase({ t }: { t: FooterTheme }) {
   const year = new Date().getFullYear();
-  const caps = "font-sans text-[11px] font-medium uppercase tracking-[0.18em]";
+  const caps = "font-sans text-[11px] font-medium uppercase tracking-[0.28em]";
   const navGroups = (SITE as { navGroups?: Array<{ label: string; items: Array<{ label: string; href: string }> }> }).navGroups ?? [];
   const ownLinks = navGroups.flatMap((g) => (g.items.length === 1 ? [{ label: g.label, href: g.items[0]!.href }] : g.items));
+  const loc = locationLine();
+  const facts: Array<{ key: string; node: ReactNode }> = [];
+  if (loc) facts.push({ key: "loc", node: <span>{loc}</span> });
+  HAS_PHONE && facts.push({ key: "phone", node: <a href={`tel:${SITE.phone}`} className={t.listHover}>{SITE.phoneDisplay}</a> });
+  HAS_EMAIL && facts.push({ key: "email", node: <a href={`mailto:${SITE.email}`} className={`${t.listHover} break-all`}>{SITE.email}</a> });
+  if (hasText(SITE.hours)) facts.push({ key: "hours", node: <span>{SITE.hours}</span> });
+  const social = SITE.social as Record<string, string | undefined>;
+  const hasSocial = ["instagram", "facebook", "yelp", "google"].some((k) => !!social[k]) || ["tiktok", "linkedin", "website"].some((k) => isHttps(social[k]));
+  const showServices = SERVICES.length > 0 && SELLS.services;
+  const head = `${caps} text-fam-ink mb-6`;
   return (
     <>
+      {facts.length > 0 && (
+        <div className={`border-t ${t.border}`}>
+          <ul className={`container-x m-0 flex list-none flex-col items-center gap-x-12 gap-y-3 px-5 py-10 text-center md:flex-row md:flex-wrap md:justify-center ${caps} ${t.listText}`}>
+            {facts.map((f) => (<li key={f.key}>{f.node}</li>))}
+          </ul>
+        </div>
+      )}
       <div className={`border-t ${t.border}`}>
-        <div className="container-x py-section flex flex-col items-center gap-10 text-center">
-          <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={44} alt={SITE.name} />
-          <nav className={`flex flex-wrap justify-center gap-x-9 gap-y-3 ${caps} ${t.listText}`}>
-            {ownLinks.length > 0
-              ? ownLinks.map((l) => (<a key={l.href + l.label} href={portfolioMenuHref(l.href)} className={`${t.listHover} transition-colors`}>{l.label}</a>))
-              : (
-                <>
-                  {SERVICES.length > 0 && SELLS.services && !HIDDEN_NAV.includes('services') && <Link to="/services" className={t.listHover}>{tr('nav.services')}</Link>}
-                  {!HIDDEN_NAV.includes('about') && <Link to="/about" className={t.listHover}>{tr('footer.about')}</Link>}
-                  {!HIDDEN_NAV.includes('reviews') && <Link to="/reviews" className={t.listHover}>{tr('footer.reviews')}</Link>}
-                  {!HIDDEN_NAV.includes('contact') && <Link to="/contact" className={t.listHover}>{tr('footer.contact')}</Link>}
-                  {CUSTOM_PAGES.filter((p) => p.nav !== false).map((p) => (<Link key={p.slug} to="/$slug" params={{ slug: p.slug }} className={t.listHover}>{p.title}</Link>))}
-                </>
-              )}
-          </nav>
-          <SocialRow t={t} />
+        <div className="container-x py-section grid grid-cols-1 gap-12 text-center md:grid-cols-4 md:text-left">
+          <div className="flex flex-col items-center md:items-start">
+            <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={72} alt={SITE.name} />
+            {hasSocial && <div className="mt-8"><SocialRow t={t} /></div>}
+          </div>
+          <div>
+            <h4 className={head}>{tr('showcase.menu')}</h4>
+            <ul className={`space-y-3 text-sm ${t.listText}`}>
+              {ownLinks.length > 0
+                ? ownLinks.map((l) => (<li key={l.href + l.label}><a href={portfolioMenuHref(l.href)} className={t.listHover}>{l.label}</a></li>))
+                : (
+                  <>
+                    {!HIDDEN_NAV.includes('about') && <li><Link to="/about" className={t.listHover}>{tr('footer.about')}</Link></li>}
+                    {!HIDDEN_NAV.includes('reviews') && <li><Link to="/reviews" className={t.listHover}>{tr('footer.reviews')}</Link></li>}
+                    {CUSTOM_PAGES.filter((p) => p.nav !== false).map((p) => (<li key={p.slug}><Link to="/$slug" params={{ slug: p.slug }} className={t.listHover}>{p.title}</Link></li>))}
+                  </>
+                )}
+            </ul>
+          </div>
+          {showServices && (
+            <div>
+              <h4 className={head}>{tr('showcase.collections')}</h4>
+              <ul className={`space-y-3 text-sm ${t.listText}`}>{SERVICES.map((s) => (<li key={s.slug}><Link to="/services/$slug" params={{ slug: s.slug }} className={t.listHover}>{s.displayName}</Link></li>))}</ul>
+            </div>
+          )}
+          <div>
+            <h4 className={head}>{tr('footer.contact')}</h4>
+            <ul className={`space-y-3 text-sm ${t.listText}`}>
+              <li><Link to="/contact" className={t.listHover}>{tr('footer.getInTouch')}</Link></li>
+              {HAS_EMAIL && <li><a href={`mailto:${SITE.email}`} className={`${t.listHover} break-all`}>{SITE.email}</a></li>}
+              {HAS_PHONE && <li><a href={`tel:${SITE.phone}`} className={t.listHover}>{SITE.phoneDisplay}</a></li>}
+            </ul>
+          </div>
         </div>
       </div>
       <div className={`border-t ${t.border}`}>
-        <div className={`container-x py-6 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 sm:justify-between ${caps} ${t.bottomText}`}>
+        <div className={`container-x pt-6 pb-24 md:pb-6 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 sm:justify-between ${caps} ${t.bottomText}`}>
           <div>© {year} {(SITE as { legalName?: string }).legalName || SITE.name}</div>
           <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
             {LEGAL_PAGES.map((p) => (<Link key={p.slug} to="/$slug" params={{ slug: p.slug }} className={t.bottomHover}>{p.title}</Link>))}

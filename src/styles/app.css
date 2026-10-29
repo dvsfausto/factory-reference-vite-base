@@ -759,6 +759,10 @@ html[data-site-theme="editorial"] .input-stead:focus {
    variants (Hero/Services/Gallery/Cta *Showcase*Block) add the composition. A site without the setting never matches
    this selector and is byte-identical. */
 html[data-site-theme="showcase"] {
+  /* the theme owns its display face: a high-contrast serif for the uppercase headlines (loaded in __root on Showcase only) */
+  --font-display: "Bodoni Moda", "Playfair Display", "Didot", Georgia, serif;
+  /* a slower rhythm: 80px between sections on a phone, 140px from lg up */
+  --rhythm-section: 80px;
   --fam-page: #FFFFFF;
   --fam-surface: #FFFFFF;
   --fam-surface-2: #F7F6F4;
@@ -774,8 +778,8 @@ html[data-site-theme="showcase"] {
   --fam-ink-faint: #8A857D;
   --fam-ink-500: #6F6A63;
   --fam-ink-300: #DCD7CE;
-  --fam-accent: #B39461;
-  --fam-accent-text: #8F7444;
+  --fam-accent: #B8975A;
+  --fam-accent-text: #9A7A45;
   --fam-accent-text-strong: #7A6239;
   --fam-accent-soft: #F6F1E8;
   --fam-accent-soft-2: #EFE6D6;
@@ -883,4 +887,9 @@ html[data-site-theme="showcase"] .text-brand-700 {
 html[data-site-theme="showcase"] .text-brand-800,
 html[data-site-theme="showcase"] .text-brand-900 {
   color: var(--color-fam-ink);
+}
+@media (min-width: 1024px) {
+  html[data-site-theme="showcase"] {
+    --rhythm-section: 140px;
+  }
 }

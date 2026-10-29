@@ -209,6 +209,9 @@ import { BookingWizardBlock } from '~/components/blocks/BookingWizardBlock'
 import { HeroShowcaseBlock } from '~/components/blocks/HeroShowcaseBlock'
 import { ServicesShowcaseTilesBlock } from '~/components/blocks/ServicesShowcaseTilesBlock'
 import { CtaShowcaseBandBlock } from '~/components/blocks/CtaShowcaseBandBlock'
+import { ServicesShowcaseBridalBlock } from '~/components/blocks/ServicesShowcaseBridalBlock'
+import { RichTextShowcaseCollageBlock } from '~/components/blocks/RichTextShowcaseCollageBlock'
+import { TaglineBarShowcaseTickerBlock } from '~/components/blocks/TaglineBarShowcaseTickerBlock'
 import { HAS_PHONE } from '~/lib/phone'
 import { HAS_EMAIL } from '~/lib/email'
 
@@ -325,6 +328,8 @@ const SERVICES_VARIANTS: Record<string, typeof ServicesPreviewBlock> = {
   'program-cards': ServicesProgramCardsBlock as typeof ServicesPreviewBlock,
   // 2026-10-29 the Showcase theme: three large tall photo tiles, the name and one small link each (anchor #collections)
   'showcase-tiles': ServicesShowcaseTilesBlock as typeof ServicesPreviewBlock,
+  // 2026-10-29 the Showcase theme: a gold chip, a gold-word headline, the first two services as large tiles, three small points
+  'showcase-bridal': ServicesShowcaseBridalBlock as typeof ServicesPreviewBlock,
 }
 
 const CTA_VARIANTS: Record<string, typeof CtaBlock> = {
@@ -359,6 +364,8 @@ const TAGLINE_VARIANTS: Record<string, typeof TaglineBarBlock> = {
   band: TaglineBarBlock,
   // the phrases spread across a band in the button colour with a mark between them
   ticker: TaglineBarTickerBlock,
+  // 2026-10-29 the Showcase theme: a marquee in spaced capitals between hairlines, gold diamonds between the items
+  'showcase-ticker': TaglineBarShowcaseTickerBlock as typeof TaglineBarBlock,
 }
 
 // ComponentType (not `typeof TrustBarBlock`): the WOW variants honestly omit
@@ -623,6 +630,16 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
     // page can carry supplied text; self-omits when there's no heading/body. Absent from
     // every factory page's layout → this case is never hit on existing pages (byte-identical).
     case 'richText':
+      // 'showcase-collage' (2026-10-29): piece cutouts scattered around a centred gold-word headline, one line, one button
+      if (block.variant === 'showcase-collage') return (
+        <RichTextShowcaseCollageBlock
+          key="richText"
+          heading={block.params?.heading as string | undefined}
+          body={block.params?.body as string | undefined}
+          buttonLabel={block.params?.buttonLabel as string | undefined}
+          buttonHref={block.params?.buttonHref as string | undefined}
+        />
+      )
       // 'statement' (2026-10-14): heading left, paragraphs right, one text link, on the inverse tone
       if (block.variant === 'statement') return (
         <RichTextStatementBlock
@@ -764,7 +781,7 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
       return ctx?.info ? <RelatedInfoBlock info={ctx.info} /> : null
     case 'taglineBar': {
       const TaglineComponent = TAGLINE_VARIANTS[block.variant ?? ''] ?? TaglineBarBlock
-      return <TaglineComponent key="taglineBar" {...data} />
+      return <TaglineComponent key="taglineBar" {...data} {...(block.variant === 'showcase-ticker' ? ({ body: block.params?.body as string | undefined } as object) : {})} />
     }
     case 'localBar':
       return (
@@ -855,6 +872,8 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
           moreLink={block.params?.moreLink as string | undefined}
           // card<N>Service / card<N>Title: read by 'program-cards' only (which item sits in place N, and its title)
           {...({ cards: [1, 2, 3].map((n) => ({ service: block.params?.[`card${n}Service`] as string | undefined, title: block.params?.[`card${n}Title`] as string | undefined })) } as object)}
+          // the chip and the small gold line: read by 'showcase-bridal' only, and handed to it alone
+          {...(block.variant === 'showcase-bridal' ? ({ eyebrow: block.params?.eyebrow as string | undefined, subtitle: block.params?.subtitle as string | undefined } as object) : {})}
         />
       )
     }
@@ -912,7 +931,7 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
           // the small line over the title: read by 'brand-band' only
           {...({ label: block.params?.label as string | undefined } as object)}
           // the sentence and the button's own link: read by 'showcase-band' only, and handed to it alone
-          {...(block.variant === 'showcase-band' ? ({ heading: block.params?.heading as string | undefined, href: block.params?.href as string | undefined } as object) : {})}
+          {...(block.variant === 'showcase-band' ? ({ heading: block.params?.heading as string | undefined, href: block.params?.href as string | undefined, buttonLabel: block.params?.buttonLabel as string | undefined, buttonHref: block.params?.buttonHref as string | undefined } as object) : {})}
         />
       )
     }
@@ -968,6 +987,8 @@ export function renderSection(block: SectionBlock, ctx?: SectionContext, opts?: 
           services={Array.isArray(block.params?.services) ? (block.params!.services as unknown[]).filter((x): x is string => typeof x === 'string') : typeof block.params?.services === 'string' ? String(block.params.services).split(',').map((x) => x.trim()).filter(Boolean) : undefined}
           // the page's service, when the gallery sits on a service page: the Editorial photo strip leads with its photo
           service={ctx?.service}
+          // the chip and the small gold line under each piece: read by 'showcase-pieces' only, and handed to it alone
+          {...(galleryVariant === 'showcase-pieces' ? ({ eyebrow: block.params?.eyebrow as string | undefined, subtitle: block.params?.subtitle as string | undefined } as object) : {})}
         />
         </div>
       )

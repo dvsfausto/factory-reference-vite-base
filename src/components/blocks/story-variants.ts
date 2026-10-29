@@ -10,6 +10,8 @@ import { StoryImageTextSplitBlock } from './StoryImageTextSplitBlock'
 // narrative as the default fallback. narrative + split-image render from
 // SITE.about (present on any build); stat-band + milestone-timeline are
 // omit-when-absent (optional SITE.stats / SITE.milestones via cast).
+import { StoryShowcaseSignatureBlock } from './StoryShowcaseSignatureBlock'
+
 export const STORY_VARIANTS: Record<string, typeof StoryNarrativeBlock> = {
   narrative: StoryNarrativeBlock,
   'split-image': StorySplitImageBlock,
@@ -20,4 +22,6 @@ export const STORY_VARIANTS: Record<string, typeof StoryNarrativeBlock> = {
   'manifesto-glow': StoryManifestoGlowBlock,
   // The Editorial theme (ZB-147 W1.2): a tall photo left, kicker + split heading + the about text right.
   'image-text-split': StoryImageTextSplitBlock,
+  // 2026-10-29 the Showcase theme: a two-line gold-word headline left, three signature pieces right
+  'showcase-signature': StoryShowcaseSignatureBlock as typeof StoryNarrativeBlock,
 }

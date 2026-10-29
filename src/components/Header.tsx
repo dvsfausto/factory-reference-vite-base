@@ -108,11 +108,11 @@ const EDITORIAL_BASE: HeaderTheme = {
   mobileCta: "inline-flex h-12 w-full items-center justify-center bg-fam-ink font-sans text-[12px] font-medium uppercase tracking-[0.14em] text-fam-page",
 };
 
-// The Showcase theme's chrome (2026-10-29), selected by SITE.chromeStyle='showcase': a white bar with a hairline
-// under it, 96px tall, the logo left, the owner's menu centred in small tracked caps, one small outline button on the
-// right, no phone unless the owner asks (site.headerPhone). It stays a solid white bar over every hero (legibility first:
-// a dark logo never sits on a photo). Same centred structure and phone menu as the Editorial chrome, shell classes only.
-const SHOWCASE_NAV = "font-sans text-[12px] font-medium uppercase tracking-[0.18em] transition-colors";
+// The Showcase theme's chrome (2026-10-29), selected by SITE.chromeStyle='showcase': the 'split' structure. A white bar
+// with a hairline under it (120px on desktop, 88px on a phone), the logo LARGE and CENTRED, the owner's menu split around it
+// in small spaced capitals (the first half of SITE.navGroups left, the rest right). No button and no phone in the bar or the
+// phone menu: booking lives on /book only. A solid white bar over every hero, so a dark logo never sits on a photo.
+const SHOWCASE_NAV = "font-sans text-[11px] font-medium uppercase tracking-[0.28em] transition-colors";
 const SHOWCASE_BASE: HeaderTheme = {
   ...EDITORIAL_BASE,
   shell: "bg-fam-page border-b border-fam-hairline",
@@ -397,8 +397,8 @@ export function Header() {
   const editorialChrome = chrome === "editorial";
   const showcaseChrome = chrome === "showcase";
   const overHero = editorialChrome && pathname === "/" && HOMEPAGE_LAYOUT.some((b) => b.type === "hero" && b.variant === "editorial-photo");
-  const structure: "standard" | "editorial" | "utility" | "centered" =
-    editorialChrome || showcaseChrome ? "centered" : family === "elegant" ? "editorial" : family === "corporate" ? "utility" : "standard";
+  const structure: "standard" | "editorial" | "utility" | "centered" | "split" =
+    showcaseChrome ? "split" : editorialChrome ? "centered" : family === "elegant" ? "editorial" : family === "corporate" ? "utility" : "standard";
   // Family → colour-theme key. Most families share their name; two remap: elegant → the LIGHT editorial
   // palette (the dark espresso theme is opt-in via character+surface), and wow-glass → the brand-reactive
   // 'wow' glass theme (keyed by name here since the design wave sets no chromeStyle). Keeps header theme
@@ -552,6 +552,36 @@ export function Header() {
     </>
   );
 
+  // The Showcase split bar draws one slice of the owner's groups (same link/dropdown markup as navLinks, the index kept so
+  // each dropdown keeps its own open state).
+  const splitNav = (from: number, to: number) => (
+    <>
+      {navGroups.slice(from, to).map((g, k) => {
+        const gi = from + k;
+        return g.items.length === 1 ? (
+          <a key={gi} href={portfolioMenuHref(g.items[0]!.href)} className={`px-3 py-2 ${t.navLink} focus-ring`}>{g.label}</a>
+        ) : (
+          <div key={gi} className="relative" onMouseEnter={() => setOpenMenu(`group-${gi}`)} onMouseLeave={() => setOpenMenu(null)}>
+            <button className={`flex items-center gap-1 px-3 py-2 ${t.navLink} focus-ring`} aria-expanded={openMenu === `group-${gi}`}>
+              {g.label} <ChevronDown className="h-3.5 w-3.5" />
+            </button>
+            {openMenu === `group-${gi}` && (
+              <div className="absolute left-0 top-full pt-2">
+                <div className={`${t.dropdownSurface} p-2 w-64`}>
+                  {g.items.map((it) => (
+                    <a key={it.href + it.label} href={portfolioMenuHref(it.href)} className={`block px-3 py-2 text-sm ${t.dropdownItem}`}>
+                      <div className={`font-medium ${t.dropdownTitle}`}>{it.label}</div>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        );
+      })}
+    </>
+  );
+
   // THE PHONE IN THE HEADER is the owner's choice (site.headerPhone 'show' | 'hide', factory-emitted as SITE.headerPhone);
   // unset, the Editorial chrome leaves it out (its right side is the one inquiry link) and every other chrome shows it (ZB-147 W1.1).
   const headerPhonePref = (SITE as { headerPhone?: string }).headerPhone;
@@ -576,7 +606,7 @@ export function Header() {
         <X className={`when-open h-6 w-6 ${t.menuIcon}`} aria-hidden="true" />
       </summary>
       {/* Absolute under the bar, not fixed: the header's backdrop-blur is a containing block for fixed children. */}
-      <div className={`absolute inset-x-0 top-full z-[60] ${t.mobilePanel} lg:hidden overflow-y-auto`} style={{ height: ANNOUNCEMENT ? 'calc(100dvh - 7.25rem)' : 'calc(100dvh - 5rem)' }}>
+      <div className={`absolute inset-x-0 top-full z-[60] ${t.mobilePanel} lg:hidden overflow-y-auto`} style={{ height: ANNOUNCEMENT ? 'calc(100dvh - 7.25rem)' : showcaseChrome ? 'calc(100dvh - 5.5rem)' : 'calc(100dvh - 5rem)' }}>
           <div className="container-x pb-12 space-y-6">
             {navGroups.map((g, gi) =>
               g.items.length === 1 ? (
@@ -623,6 +653,8 @@ export function Header() {
               <PortalLink place="menu" onClick={closeMenu} className={`block py-2 text-base font-medium ${t.mobileText}`} />
             </div>
             )}
+            {/* the Showcase chrome carries no button and no phone here: booking lives on /book only */}
+            {!showcaseChrome && (
             <div className={`pt-4 border-t ${t.mobileBorder} space-y-3`}>
               {HAS_PHONE && headerPhoneWanted && (<a href={`tel:${SITE.phone}`} className={`flex items-center gap-2 text-base font-semibold ${t.mobilePhone}`}>
                 <Phone className="h-5 w-5" /> {SITE.phoneDisplay}
@@ -631,6 +663,7 @@ export function Header() {
                 {headerCtaLabel}
               </PrimaryCta>
             </div>
+            )}
           </div>
       </div>
     </details>
@@ -695,6 +728,31 @@ export function Header() {
               {ctaButton}
             </div>
             {mobileTrigger}
+          </div>
+        )}
+
+        {structure === "split" && (
+          // THE SHOWCASE BAR (2026-10-29): phone, the menu left, the logo centred, a matching spacer right; desktop, a
+          // three-track grid, the first half of the owner's menu left, the logo centred and large, the rest right.
+          <div className="container-x">
+            <div className="grid lg:hidden grid-cols-[2.5rem_1fr_2.5rem] items-center h-[88px]">
+              {mobileTrigger}
+              <Link to="/" className="justify-self-center focus-ring" aria-label={`${SITE.name} ${tr('nav.homeLink')}`}>
+                {headerLogo(64, 88, "phone")}
+              </Link>
+              <span aria-hidden="true" />
+            </div>
+            <div className="hidden lg:grid grid-cols-[1fr_auto_1fr] items-center gap-8 h-[120px]">
+              <nav className="justify-self-start flex items-center gap-4" aria-label={tr('nav.ariaPrimary')}>
+                {navGroups.length > 0 ? splitNav(0, Math.ceil(navGroups.length / 2)) : navLinks()}
+              </nav>
+              <Link to="/" className="justify-self-center focus-ring" aria-label={`${SITE.name} ${tr('nav.homeLink')}`}>
+                {headerLogo(88, 120, "desktop")}
+              </Link>
+              <nav className="justify-self-end flex items-center gap-4" aria-label={tr('nav.ariaSecondary')}>
+                {navGroups.length > 0 && splitNav(Math.ceil(navGroups.length / 2), navGroups.length)}
+              </nav>
+            </div>
           </div>
         )}
 

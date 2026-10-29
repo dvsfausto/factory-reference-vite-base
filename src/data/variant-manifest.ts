@@ -89,6 +89,7 @@ export const VARIANT_MANIFEST: SectionVariants[] = [
       { id: 'icon-tiles', label: 'Icon tiles', description: 'Icon-led tiles.' },
       { id: 'carousel', label: 'Carousel', description: 'Horizontal carousel.' },
       { id: 'numbered-list', label: 'Numbered list', description: 'Editorial rows between hairlines: a small numeral, the service name in serif, a one-line blurb and an arrow.' },
+      { id: 'showcase-bridal', label: 'Showcase bridal', description: 'A gold chip (eyebrow), a big uppercase headline with one gold word (heading; *word* marks it, else the last word), one short line (body), the first two services as large framed tiles with their names in spaced capitals and a small gold line (subtitle), then up to three small points from the trust items. Anchored at #bridal.' },
       { id: 'showcase-tiles', label: 'Showcase tiles', description: 'The first three services as large tall photo tiles, each with only its name and a small View link. A heading only when given. Anchored at #collections.' },
       { id: 'program-cards', label: 'Program cards', description: 'Tall numbered cards in a row on the opposite tone of the page, the first card leading; the services, then the classes from the weekly schedule.' },
       ...CHARACTER_VARIANTS,
@@ -151,7 +152,7 @@ export const VARIANT_MANIFEST: SectionVariants[] = [
       { id: 'stacked-centered', label: 'Stacked centered', description: 'Centered, stacked CTA.' },
       { id: 'dark-band', label: 'Dark band (editorial)', description: 'Centered on a deep charcoal-green band: a small place line, a serif heading with an italic accent line, one sentence and a square light button.' },
       { id: 'dark-closing', label: 'Dark closing (editorial)', description: 'Left-aligned on a near-black band, meant as the last section before the footer: serif heading, one sentence, a square light button.' },
-      { id: 'showcase-band', label: 'Showcase band', description: 'Centered on the white page between two short gold hairlines: one sentence in the display face and one square ink button (params: heading, label, href).' },
+      { id: 'showcase-band', label: 'Showcase band', description: 'Centered on the white page between two short gold hairlines: one uppercase sentence with a gold word and one square ink button (params: heading; buttonLabel or label; buttonHref (https) or href, else the contact page on a Showcase site).' },
       { id: 'brand-band', label: 'Brand band', description: 'The closing band in the button colour: a small line, a very large uppercase title, one sentence and a square button in the page\'s tone.' },
       ...CHARACTER_VARIANTS,
     ],
@@ -162,6 +163,7 @@ export const VARIANT_MANIFEST: SectionVariants[] = [
     variants: [
       { id: 'band', label: 'Band', description: 'The tagline centred on a dark brand band, the default.', default: true },
       { id: 'ticker', label: 'Ticker', description: 'The tagline\'s phrases spread across a band in the button colour, in small capitals, a mark between them.' },
+      { id: 'showcase-ticker', label: 'Showcase ticker', description: 'A slow marquee between two hairlines: the items in spaced capitals with a small gold diamond between them (body, items separated by ·; else the service names). Still under reduced motion.' },
     ],
   },
   {
@@ -184,6 +186,7 @@ export const VARIANT_MANIFEST: SectionVariants[] = [
       { id: 'stat-band', label: 'Stat band', description: 'Story with a stats band (only if real stats exist).' },
       { id: 'milestone-timeline', label: 'Milestone timeline', description: 'A timeline of milestones (only if real milestones exist).' },
       { id: 'image-text-split', label: 'Image and text (editorial)', description: 'A tall photo on the left, the story on the right under a small kicker and a serif heading with an italic accent line, with a Read more link.' },
+      { id: 'showcase-signature', label: 'Showcase signature', description: 'A two-line uppercase headline with its gold word (heading) and one sentence (body) on the left; on the right three large photos of the gallery items in the category signature, one wide on top and two below, each named in spaced capitals.' },
     ],
   },
   {
@@ -201,7 +204,7 @@ export const VARIANT_MANIFEST: SectionVariants[] = [
       { id: 'justified', label: 'Justified', description: 'A justified photo grid.' },
       { id: 'portfolio-grid', label: 'Portfolio (editorial)', description: 'Three tall portfolio cards, each numbered with its category or place, the title in the serif face and an arrow.' },
       { id: 'portfolio-wall', label: 'Portfolio wall', description: 'A large grid of the business\'s own photos for one kind of work (params: category, the owner\'s word; services, slugs whose photos belong too), lazy, face-safe, a lightbox on tap. Stock never.' },
-      { id: 'showcase-pieces', label: 'Showcase pieces', description: 'Large photos of the pieces, two columns on desktop and one on a phone, each with a name and one line (caption: first line the name, second line the one-liner).' },
+      { id: 'showcase-pieces', label: 'Showcase pieces', description: 'Large framed photos of the pieces, three columns on desktop, two on a tablet, one on a phone; each named in spaced capitals (the caption\'s first line) over a small gold line (subtitle, default Custom · One of One). Gallery items in the categories collage and signature are left out. Optional chip (eyebrow) and gold-word headline (heading). Anchored at #pieces.' },
       { id: 'photo-strip', label: 'Photo strip (editorial)', description: 'Five square photos edge to edge; a swipeable strip on a phone. On a service page the service\'s own photo leads. Settings (site.photoStripMotion = marquee, site.photoStripRows 1 to 3, site.photoStripSpeed slow | medium | fast): a seamless moving strip, rows alternating direction, paused on hover and touch, still under reduced motion, the business\'s real photos first.' },
     ],
   },
