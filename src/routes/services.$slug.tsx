@@ -1,4 +1,5 @@
 import { createFileRoute, notFound, redirect } from '@tanstack/react-router'
+import { SERVICE_REDIRECTS } from '~/data/service-redirects'
 import { SectionList } from '~/components/render-section'
 import { SERVICE_DETAIL_LAYOUT } from '~/data/service-detail-layout'
 import { JsonLd } from '~/components/JsonLd'
@@ -10,6 +11,9 @@ import { tr } from '~/lib/i18n'
 
 export const Route = createFileRoute('/services/$slug')({
   loader: async ({ params }) => {
+    // A MOVED OR GONE SERVICE PAGE: a real 301 (2026-10-29), checked before the data lookup because its copy is gone.
+    const moved = SERVICE_REDIRECTS[params.slug]
+    if (moved) throw redirect({ href: moved, statusCode: 301 })
     // Stage C: the per-page copy is its own module (scripts/prune-variants.mjs split-page-data), fetched only when
     // this route runs — the homepage no longer ships every inner page's prose. Same object, same served HTML.
     const { servicesData } = await import('virtual:zmode-page-data/servicesData')
