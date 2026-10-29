@@ -10,6 +10,9 @@ import { SITE } from '~/data/site'
  */
 export const SITE_THEME: string = typeof (SITE as { theme?: unknown }).theme === 'string' ? ((SITE as { theme?: string }).theme as string) : ''
 export const isEditorial = (): boolean => SITE_THEME === 'editorial'
+/** The Showcase theme (2026-10-29): white grounds, a serif display face, few words, a thin gold hairline. Tokens in app.css
+ *  under html[data-site-theme="showcase"]; the chrome reads SITE.chromeStyle === 'showcase'. Absent, nothing changes. */
+export const isShowcase = (): boolean => SITE_THEME === 'showcase'
 
 /** The arrow every Editorial button and link carries (U+2197). One glyph, one place. */
 export const ARROW = '↗'

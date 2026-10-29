@@ -750,3 +750,129 @@ html[data-site-theme="editorial"] .input-stead:focus {
   border-color: var(--color-fam-ink);
   box-shadow: none;
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════════════════════════════════
+   ★ THE SHOWCASE THEME (2026-10-29). For a business whose product is the picture (jewelry, art, fashion,
+   florists): the owner's setting SITE.theme = 'showcase', stamped on <html data-site-theme="showcase">. Pure white
+   grounds, near-black ink, warm grey quiet text, one thin gold accent kept for hairlines, square corners, flat ink
+   buttons. The display face is whatever the typography tokens send (the factory sends a serif). The Showcase section
+   variants (Hero/Services/Gallery/Cta *Showcase*Block) add the composition. A site without the setting never matches
+   this selector and is byte-identical. */
+html[data-site-theme="showcase"] {
+  --fam-page: #FFFFFF;
+  --fam-surface: #FFFFFF;
+  --fam-surface-2: #F7F6F4;
+  --fam-surface-3: #FAF9F7;
+  --fam-surface-4: #F7F6F4;
+  --fam-surface-5: #FFFFFF;
+  --fam-card: #FFFFFF;
+  --fam-hairline: #E8E4DD;
+  --fam-line-2: #DCD7CE;
+  --fam-line-3: #EFECE6;
+  --fam-ink: #121212;
+  --fam-ink-muted: #6F6A63;
+  --fam-ink-faint: #8A857D;
+  --fam-ink-500: #6F6A63;
+  --fam-ink-300: #DCD7CE;
+  --fam-accent: #B39461;
+  --fam-accent-text: #8F7444;
+  --fam-accent-text-strong: #7A6239;
+  --fam-accent-soft: #F6F1E8;
+  --fam-accent-soft-2: #EFE6D6;
+  --fam-accent-tint: #D6C29C;
+  --fam-statement: #121212;
+  --fam-statement-2: #0B0B0B;
+  --fam-statement-3: #1E1E1E;
+  --fam-statement-hairline: #2E2E2E;
+  --fam-on-statement: #FFFFFF;
+  --fam-on-statement-muted: #CFCBC4;
+  --fam-on-statement-faint: #A39F98;
+  --fam-on-dark: #FFFFFF;
+  --fam-ink-900: #121212;
+  --fam-ink-700: #33312E;
+  --fam-ink-100: #EFECE6;
+  --fam-ink-50: #FAF9F7;
+  --color-brand-50: #FAF9F7;
+  --color-brand-100: #F7F6F4;
+  --color-brand-200: #E8E4DD;
+  --color-brand-400: #8A857D;
+  --color-brand-500: #6F6A63;
+  --color-brand-600: #121212;
+  --color-brand-700: #0B0B0B;
+  --color-brand-800: #1E1E1E;
+  --color-brand-900: #0B0B0B;
+  --color-brand-text-600: #7A6239;
+  --color-brand-text-800: #121212;
+  --primary: #121212;
+  --accent: #B39461;
+  --cta: #121212;
+  --cta-hover: #33312E;
+  --cta-foreground: #FFFFFF;
+  --btn-primary-fg: #FFFFFF;
+  --btn-primary-hover: #33312E;
+  /* the booking widget's and forms' painted buttons: flat ink, no glow, a soft hairline */
+  --wow-grad-brand: linear-gradient(0deg, #121212, #121212);
+  --wow-grad-brand-text: linear-gradient(0deg, #121212, #121212);
+  --wow-grad-surface: linear-gradient(0deg, #FFFFFF, #FFFFFF);
+  --wow-shadow-soft: none;
+  --wow-shadow-glow: none;
+  --wow-shadow-lift: none;
+  --wow-hairline: #E8E4DD;
+  --wow-tint: #FAF9F7;
+  --fam-slate-50: #FAF9F7;
+  --fam-slate-100: #F7F6F4;
+  --fam-slate-200: #EFECE6;
+  --fam-slate-300: #DCD7CE;
+  --fam-slate-400: #A39F98;
+  --fam-slate-500: #8A857D;
+  --fam-slate-600: #6F6A63;
+  --fam-slate-700: #33312E;
+  --fam-slate-800: #222120;
+  --fam-slate-900: #121212;
+  --fam-slate-950: #0B0B0B;
+  --fam-surface-slate: #F7F6F4;
+  --fam-surface-slate-2: #FAF9F7;
+  --fam-line-slate: #E8E4DD;
+  --fam-line-slate-2: #DCD7CE;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
+  --radius-3xl: 0px;
+  --radius: 0px;
+}
+/* The Showcase theme's shapes: as the Editorial theme, every card, pill and button goes square and the glow goes.
+   Unlayered, so they beat the layered rules; scoped to the theme, so no other site moves. */
+html[data-site-theme="showcase"] .btn,
+html[data-site-theme="showcase"] .badge-pill,
+html[data-site-theme="showcase"] .card-stead,
+html[data-site-theme="showcase"] .card-soft,
+html[data-site-theme="showcase"] .input-stead,
+html[data-site-theme="showcase"] .rounded-sm,
+html[data-site-theme="showcase"] .rounded-md,
+html[data-site-theme="showcase"] .rounded-lg,
+html[data-site-theme="showcase"] .rounded-xl,
+html[data-site-theme="showcase"] .rounded-2xl,
+html[data-site-theme="showcase"] .rounded-3xl,
+html[data-site-theme="showcase"] .rounded-\[1\.25rem\],
+html[data-site-theme="showcase"] .rounded-\[1\.5rem\],
+html[data-site-theme="showcase"] .rounded-\[1\.75rem\],
+html[data-site-theme="showcase"] .rounded-\[2rem\],
+html[data-site-theme="showcase"] .rounded-\[28px\],
+html[data-site-theme="showcase"] a.rounded-full,
+html[data-site-theme="showcase"] button.rounded-full {
+  border-radius: 0;
+}
+html[data-site-theme="showcase"] .btn-primary,
+html[data-site-theme="showcase"] .btn-primary:hover,
+html[data-site-theme="showcase"] .card-stead {
+  box-shadow: none;
+}
+html[data-site-theme="showcase"] .text-amber-500 {
+  color: var(--color-fam-accent);
+}
+html[data-site-theme="showcase"] .input-stead:focus {
+  border-color: var(--color-fam-ink);
+  box-shadow: none;
+}
