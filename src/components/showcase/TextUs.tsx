@@ -8,7 +8,9 @@ import { HAS_PHONE } from '~/lib/phone'
    the contact page. Kept small and in the corner; the Showcase footer leaves room under its last line so it never sits over words on a
    phone. Rendered only on a Showcase site (__root). */
 export function TextUsPill() {
-  const href = HAS_PHONE ? `sms:${SITE.phone}` : '/contact'
+  // ★ the business's texting line first (SITE.textNumber, emitted only once texts to it are answered), else the site phone, else contact
+  const textNumber = (SITE as { textNumber?: string }).textNumber
+  const href = textNumber ? `sms:${textNumber}` : HAS_PHONE ? `sms:${SITE.phone}` : '/contact'
   return (
     <a
       href={href}
