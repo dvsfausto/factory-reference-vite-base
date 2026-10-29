@@ -5,7 +5,7 @@ import { ARROW } from "~/lib/editorial";
 import { Menu, X, Phone, ChevronDown } from "lucide-react";
 import { Logo } from "./Logo";
 import { AnnouncementBar } from "./AnnouncementBar";
-import { ANNOUNCEMENT, logoHeight } from "~/lib/chrome-extras";
+import { ANNOUNCEMENT, logoHeight, logoSizeOf, sizedLogoHeight, logoBarPx } from "~/lib/chrome-extras";
 import { SITE, BOOKING } from "~/data/site";
 import { PrimaryCta } from "~/components/blocks/PrimaryCta";
 import { primaryCta } from "~/lib/primaryCta";
@@ -645,6 +645,29 @@ export function Header() {
   // exist. No invented stats, no fake credential logos (the corporate honesty rail).
   const cityLine = [SITE.address?.city, SITE.address?.state].filter(Boolean).join(", ");
 
+  /* ★ THE LOGO SIZE (2026-10-29): SITE.logoSize small | medium | large, the Showcase theme large by default, the owner's exact
+     SITE.logoHeight first (lib/chrome-extras.ts). Nothing set → the very same <Logo> as before, at logoHeight(fallback, bar).
+     A bar shared by phone and desktop carries the phone size under lg and the desktop size from lg up. A large desktop logo
+     grows its bar to 104px (lg:h-[104px]); the phone bars already hold the large phone size, so the phone menu never moves. */
+  const logoSize = logoSizeOf();
+  const headerLogo = (fallback: number, bar: number, place: "phone" | "desktop" | "both") => {
+    const logo = (h: number) => <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={h} alt={SITE.name} />;
+    if (!logoSize) return logo(logoHeight(fallback, bar));
+    if (place !== "both") return logo(sizedLogoHeight(fallback, place, logoSize));
+    const phone = sizedLogoHeight(fallback, "phone", logoSize);
+    const desktop = sizedLogoHeight(fallback, "desktop", logoSize);
+    if (phone === desktop) return logo(desktop);
+    return (
+      <>
+        <span className="block lg:hidden">{logo(phone)}</span>
+        <span className="hidden lg:block">{logo(desktop)}</span>
+      </>
+    );
+  };
+  /** the extra class a desktop bar takes when its logo needs more room ('' when it fits, so the class string is unchanged) */
+  const barGrow = (fallback: number, bar: number) =>
+    logoSize && logoBarPx(bar, sizedLogoHeight(fallback, "desktop", logoSize)) > bar ? " lg:h-[104px]" : "";
+
   return (
     <>
       <header
@@ -660,9 +683,9 @@ export function Header() {
         {skipLink}
 
         {structure === "standard" && (
-          <div className="container-x flex items-center justify-between h-20">
+          <div className={`container-x flex items-center justify-between h-20${barGrow(44, 80)}`}>
             <Link to="/" className="focus-ring rounded-md" aria-label={`${SITE.name} ${tr('nav.homeLink')}`}>
-              <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={logoHeight(44, 80)} alt={SITE.name} />
+              {headerLogo(44, 80, "both")}
             </Link>
             <nav className="hidden lg:flex items-center gap-1" aria-label={tr('nav.ariaPrimary')}>
               {navLinks()}
@@ -682,14 +705,14 @@ export function Header() {
           <div className="container-x">
             <div className="flex lg:hidden items-center justify-between h-24">
               <Link to="/" className="focus-ring rounded-md" aria-label={`${SITE.name} ${tr('nav.homeLink')}`}>
-                <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={logoHeight(56, 96)} alt={SITE.name} />
+                {headerLogo(56, 96, "phone")}
               </Link>
               {mobileTrigger}
             </div>
             {/* the centered (Editorial) header carries the logo larger: 72 on desktop, 56 on a phone (Fausto, 2026-10-07) */}
-            <div className="hidden lg:grid grid-cols-[1fr_auto_1fr] items-center h-24">
+            <div className={`hidden lg:grid grid-cols-[1fr_auto_1fr] items-center h-24${barGrow(72, 96)}`}>
               <Link to="/" className="justify-self-start focus-ring rounded-md" aria-label={`${SITE.name} ${tr('nav.homeLink')}`}>
-                <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={logoHeight(72, 96)} alt={SITE.name} />
+                {headerLogo(72, 96, "desktop")}
               </Link>
               <nav className="flex items-center justify-center gap-2" aria-label={tr('nav.ariaPrimary')}>
                 {navLinks("left-1/2 -translate-x-1/2")}
@@ -710,17 +733,17 @@ export function Header() {
           <div className="container-x">
             <div className="flex lg:hidden items-center justify-between h-20">
               <Link to="/" className="focus-ring rounded-md" aria-label={`${SITE.name} ${tr('nav.homeLink')}`}>
-                <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={logoHeight(40, 80)} alt={SITE.name} />
+                {headerLogo(40, 80, "phone")}
               </Link>
               {mobileTrigger}
             </div>
             <div className="hidden lg:block">
-              <div className="grid grid-cols-3 items-center h-20">
+              <div className={`grid grid-cols-3 items-center h-20${barGrow(46, 80)}`}>
                 <div className={`justify-self-start text-[11px] uppercase tracking-[0.22em] ${t.mobileLabel}`}>
                   {cityLine || SITE.hours}
                 </div>
                 <Link to="/" className="justify-self-center focus-ring rounded-md" aria-label={`${SITE.name} ${tr('nav.homeLink')}`}>
-                  <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={logoHeight(46, 80)} alt={SITE.name} />
+                  {headerLogo(46, 80, "desktop")}
                 </Link>
                 <div className="justify-self-end flex items-center gap-4">
                   {phoneCluster}
@@ -752,9 +775,9 @@ export function Header() {
                 </div>
               </div>
             </div>
-            <div className="container-x flex items-center justify-between h-[72px]">
+            <div className={`container-x flex items-center justify-between h-[72px]${barGrow(42, 72)}`}>
               <Link to="/" className="focus-ring rounded-md" aria-label={`${SITE.name} ${tr('nav.homeLink')}`}>
-                <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={logoHeight(42, 72)} alt={SITE.name} />
+                {headerLogo(42, 72, "both")}
               </Link>
               <nav className="hidden lg:flex items-center gap-1" aria-label={tr('nav.ariaPrimary')}>
                 {navLinks()}

@@ -8,7 +8,7 @@ import { SITE } from '~/data/site'
  *   showStreet (true)              : the street leads the place line in the footer and the contact block
  * The functions are pure over an `extras` object (default: this site's SITE) so scripts/check-chrome-extras.ts can test them.
  */
-export type ChromeExtras = { announcement?: { text?: unknown; bg?: unknown; fg?: unknown }; logoHeight?: unknown; showStreet?: unknown }
+export type ChromeExtras = { announcement?: { text?: unknown; bg?: unknown; fg?: unknown }; logoHeight?: unknown; showStreet?: unknown; logoSize?: unknown; theme?: unknown }
 const SITE_EXTRAS = SITE as unknown as ChromeExtras
 const HEX = /^#[0-9a-fA-F]{6}$/
 const hex = (v: unknown): string | undefined => (typeof v === 'string' && HEX.test(v) ? v : undefined)
@@ -38,6 +38,32 @@ export function logoHeight(fallback: number, barPx: number, x: ChromeExtras = SI
   const h = Number(x.logoHeight)
   if (x.logoHeight == null || !Number.isFinite(h) || h < 32 || h > 96) return fallback
   return Math.min(Math.round(h), barPx - 24)
+}
+
+/**
+ * ★ THE LOGO SIZE (2026-10-29, Fausto: "the logo must be big and readable"). SITE.logoSize = 'small' | 'medium' | 'large', a
+ * setting for every business. Precedence: the owner's exact SITE.logoHeight (above) wins; then SITE.logoSize; then the theme's
+ * default (the Showcase theme = 'large'); else null = today's size exactly (the header renders the same markup as before).
+ */
+export type LogoSize = 'small' | 'medium' | 'large'
+export function logoSizeOf(x: ChromeExtras = SITE_EXTRAS): LogoSize | null {
+  const h = Number(x.logoHeight)
+  if (x.logoHeight != null && Number.isFinite(h) && h >= 32 && h <= 96) return null // the owner's own height is used as is
+  if (x.logoSize === 'small' || x.logoSize === 'medium' || x.logoSize === 'large') return x.logoSize
+  if (x.theme === 'showcase') return 'large'
+  return null
+}
+/** The three steps, per bar: 'medium' = the layout's own default; 'small' a little under it; 'large' 80px on a desktop bar and
+ *  56px on a phone bar (never under the default). A large desktop logo grows its bar (see LOGO_BAR_GROWN), the phone bars hold it. */
+export const LOGO_LARGE = { desktop: 80, phone: 56 } as const
+export function sizedLogoHeight(fallback: number, place: 'desktop' | 'phone', size: LogoSize): number {
+  if (size === 'small') return Math.max(28, Math.round(fallback * 0.82))
+  if (size === 'large') return Math.max(fallback, LOGO_LARGE[place])
+  return fallback
+}
+/** The height a desktop bar needs to hold a logo with 12px of air above and below: the bar's own height when it already fits. */
+export function logoBarPx(barPx: number, logoPx: number): number {
+  return Math.max(barPx, logoPx + 24)
 }
 
 /** "Jr. Andahuaylas 381, Lima" when the business turned the street on, else the line unchanged; never twice. */
