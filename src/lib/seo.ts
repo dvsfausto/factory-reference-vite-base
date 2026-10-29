@@ -16,7 +16,7 @@ export interface BuildMetaInput {
 
 /** The gold-word markers an owner may put in a heading ("Made in *Miami*") are styling, never text: a title, a description or a
  *  share card reads the words alone (2026-10-29, found on Adrian Hoda's live tab title). Text without markers is unchanged. */
-const plainMeta = (t: string): string => t.replace(/\*([^*\n]+)\*/g, '$1')
+const plainMeta = <T,>(t: T): T => (typeof t === 'string' ? (t.replace(/\*([^*\n]+)\*/g, '$1') as T) : t) // a missing value passes through untouched
 
 export function buildMeta(rawInput: BuildMetaInput) {
   const input = { ...rawInput, title: plainMeta(rawInput.title), description: plainMeta(rawInput.description) }
