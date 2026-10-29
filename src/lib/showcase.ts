@@ -38,10 +38,12 @@ export function gridPieces(projects: GalleryItem[] = PROJECTS): GalleryItem[] {
   return projects.filter((p) => p.image && cat(p) !== 'collage' && cat(p) !== 'signature')
 }
 
-/** The name and the one line of a piece: the caption's first line is the name, the next line the one-liner (12 words at most). */
+/** The name and the one line of a piece: the caption's first line is the name, the next line the one-liner (12 words at most).
+ *  No caption = no name: the factory's fallback title is a category word, and a photo without the owner's own words is never
+ *  presented as a named piece (Fausto 2026-10-29: stock photos carry no piece names). */
 export function pieceText(p: GalleryItem): { name: string; line: string } {
   const lines = (p.caption ?? '').split(/\r?\n/).map((l) => l.trim()).filter(Boolean)
-  if (lines.length === 0) return { name: (p.title ?? '').trim(), line: '' }
+  if (lines.length === 0) return { name: '', line: '' }
   const words = (lines[1] ?? '').split(/\s+/).filter(Boolean)
   const line = words.length > 12 ? `${words.slice(0, 12).join(' ')}…` : words.join(' ')
   return { name: lines[0]!, line }

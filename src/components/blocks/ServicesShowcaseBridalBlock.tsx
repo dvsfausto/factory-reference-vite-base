@@ -1,6 +1,5 @@
 import { Link } from '@tanstack/react-router'
 import { SITE } from '~/data/site'
-import { tr } from '~/lib/i18n'
 import { SERVICES } from '~/data/services-view'
 import { serviceImageUrl, serviceImageFocusStyle } from '~/data/images'
 import { hasServicePhoto } from '~/lib/service-photo'
@@ -32,7 +31,8 @@ export function ServicesShowcaseBridalBlock({
   const tiles = services.slice(0, 2)
   if (tiles.length === 0) return null
   const points = ((SITE as { trustItems?: Array<{ title?: string; description?: string }> }).trustItems ?? []).filter((t) => hasText(t.title)).slice(0, 3)
-  const line = hasText(subtitle) ? subtitle! : tr('showcase.pieceLine')
+  // the gold line under a tile only when the owner wrote one (no default claim on a stock photo, Fausto 2026-10-29)
+  const line = hasText(subtitle) ? subtitle! : ''
   return (
     <section id="bridal" className="scroll-mt-32 bg-fam-page" data-showcase="bridal">
       <div className="container-x py-section">
@@ -52,7 +52,7 @@ export function ServicesShowcaseBridalBlock({
                 </div>
                 <div className="mt-6 text-center">
                   <h3 className={`${CAPS} text-[13px] text-fam-ink`}>{s.displayName}</h3>
-                  <p className={`mt-2 ${CAPS} text-[10px] text-fam-accent-text`}>{line}</p>
+                  {hasText(line) && <p className={`mt-2 ${CAPS} text-[10px] text-fam-accent-text`}>{line}</p>}
                 </div>
               </Link>
             </li>

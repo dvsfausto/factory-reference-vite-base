@@ -47,10 +47,12 @@ export function GalleryShowcasePiecesBlock({
                   <div className="aspect-[4/5] overflow-hidden border border-fam-hairline bg-fam-page">
                     <img src={imageSrc(p.image)} alt={p.alt ?? name} loading="lazy" className="h-full w-full object-cover" />
                   </div>
-                  <figcaption className="mt-6 text-center">
-                    {hasText(name) && <p className={`${CAPS} text-[12px] text-fam-ink`}>{name}</p>}
-                    <p className={`mt-2 ${CAPS} text-[10px] text-fam-accent-text`}>{line}</p>
-                  </figcaption>
+                  {hasText(name) && (
+                    <figcaption className="mt-6 text-center">
+                      <p className={`${CAPS} text-[12px] text-fam-ink`}>{name}</p>
+                      <p className={`mt-2 ${CAPS} text-[10px] text-fam-accent-text`}>{line}</p>
+                    </figcaption>
+                  )}
                 </figure>
               </li>
             )
