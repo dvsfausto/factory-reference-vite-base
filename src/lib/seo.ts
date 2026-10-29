@@ -14,7 +14,12 @@ export interface BuildMetaInput {
   ogAlt?: string
 }
 
-export function buildMeta(input: BuildMetaInput) {
+/** The gold-word markers an owner may put in a heading ("Made in *Miami*") are styling, never text: a title, a description or a
+ *  share card reads the words alone (2026-10-29, found on Adrian Hoda's live tab title). Text without markers is unchanged. */
+const plainMeta = (t: string): string => t.replace(/\*([^*\n]+)\*/g, '$1')
+
+export function buildMeta(rawInput: BuildMetaInput) {
+  const input = { ...rawInput, title: plainMeta(rawInput.title), description: plainMeta(rawInput.description) }
   const url = `${SITE.domain}${input.path}`
   const meta = [
     { title: input.title },
