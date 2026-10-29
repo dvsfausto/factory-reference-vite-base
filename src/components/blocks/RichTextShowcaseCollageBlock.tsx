@@ -69,12 +69,14 @@ export function RichTextShowcaseCollageBlock({
         )}
       </div>
       {/* tablet and up: the scatter around the clear middle */}
-      <div className="relative hidden min-h-[720px] items-center justify-center md:flex lg:min-h-[820px]">
+      <div className="hidden py-section md:block">
+      <div className="relative flex min-h-[640px] items-center justify-center lg:min-h-[760px]">
         {cutouts.map((_, i) => {
           const s = SPOTS[i]!
           return img(i, 'absolute h-auto', { [s.side]: `${s.x}%`, top: `${s.y}%`, width: `min(${s.w}vw, ${s.max}px)` })
         })}
         <div className="px-8">{words}</div>
+      </div>
       </div>
     </section>
   )

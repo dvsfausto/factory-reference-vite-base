@@ -893,3 +893,10 @@ html[data-site-theme="showcase"] .text-brand-900 {
     --rhythm-section: 140px;
   }
 }
+/* The display face: the theme's own token above loses to the build's inlined family on the utilities, so the headings and
+   .font-display take it here by name (anything set in the sans on purpose keeps the sans). */
+html[data-site-theme="showcase"] :is(h1, h2, h3, h4, h5, h6, .font-display):not(.font-sans) {
+  font-family: "Bodoni Moda", "Playfair Display", "Didot", Georgia, serif;
+  /* a text optical size: Bodoni's display cut thins its hairlines to nothing at 96px, over a photo the letters break up */
+  font-variation-settings: "opsz" 20;
+}
