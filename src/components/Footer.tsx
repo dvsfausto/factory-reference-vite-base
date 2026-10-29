@@ -4,6 +4,7 @@ import { SocialIcon } from '~/components/blocks/SocialIcon'
 import { Link } from "@tanstack/react-router";
 import { Instagram, Facebook, Phone, Mail, MapPin, Clock, ArrowRight } from "lucide-react";
 import { Logo } from "./Logo";
+import { portfolioMenuHref } from '~/lib/portfolio-pages';
 import { SITE } from "~/data/site";
 import { PAGED_SERVICES as SERVICES } from "~/data/services-view";
 import { AREAS } from "~/data/areas";
@@ -53,12 +54,14 @@ const FOOTER_THEMES: Record<string, FooterTheme> = {
   modern: { surface: "bg-fam-ink-panel text-fam-on-dark", tagline: "text-fam-on-dark/60", socialBorder: "border-fam-card/15", socialHover: "hover:bg-fam-card/10", heading: "text-fam-on-dark font-display tracking-tight", listText: "text-fam-on-dark/60", listHover: "hover:text-fam-on-dark", areaAll: "text-fam-accent-on-dark hover:text-fam-on-dark", border: "border-fam-card/10", bottomText: "text-fam-on-dark/40", bottomHover: "hover:text-fam-on-dark", logoLight: true },
   clean: { surface: "bg-fam-surface text-fam-ink", tagline: "text-fam-ink-muted", socialBorder: "border-fam-hairline", socialHover: "hover:bg-fam-accent-soft", heading: "text-fam-ink font-display tracking-tight", listText: "text-fam-ink-muted", listHover: "hover:text-fam-accent-text-strong", areaAll: "text-fam-accent-text-strong hover:text-fam-accent-text", border: "border-fam-hairline", bottomText: "text-fam-ink-muted", bottomHover: "hover:text-fam-accent-text-strong", logoLight: false },
   // The Editorial theme (ZB-147 W1.2): the near-black close, gold kickers for the column headings, soft on-dark text.
+  // The Showcase theme (2026-10-29): the white page continues, a hairline above, quiet warm grey text.
+  showcase: { surface: "bg-fam-page text-fam-ink", tagline: "text-fam-ink-muted", socialBorder: "border-fam-hairline", socialHover: "hover:bg-fam-surface-2", heading: "text-fam-ink font-sans text-[11px] font-medium uppercase tracking-[0.18em]", listText: "text-fam-ink-muted", listHover: "hover:text-fam-ink", areaAll: "text-fam-ink hover:text-fam-accent-text-strong", border: "border-fam-hairline", bottomText: "text-fam-ink-faint", bottomHover: "hover:text-fam-ink", logoLight: false },
   editorial: { surface: "bg-fam-statement-2 text-fam-on-statement", tagline: "text-fam-on-statement-muted", socialBorder: "border-fam-statement-hairline", socialHover: "hover:bg-fam-statement-3", heading: "text-fam-accent-tint font-sans text-[11px] font-medium uppercase tracking-[0.18em]", listText: "text-fam-on-statement-muted", listHover: "hover:text-fam-on-statement", areaAll: "text-fam-accent-tint hover:text-fam-on-statement", border: "border-fam-statement-hairline", bottomText: "text-fam-on-statement-faint", bottomHover: "hover:text-fam-on-statement", logoLight: true },
 };
 
 // family (or legacy character/chrome) → { structure, theme }. The four STRUCTURES are genuinely different
 // footer compositions, not one grid recolored.
-type FooterStructure = "columns" | "editorial" | "ctaBand" | "minimal" | "connect";
+type FooterStructure = "columns" | "editorial" | "ctaBand" | "minimal" | "connect" | "showcase";
 const FOOTER_VARIANTS: Record<string, { structure: FooterStructure; theme: string }> = {
   "wow-glass": { structure: "columns", theme: "wow" },
   clean: { structure: "columns", theme: "clean" },
@@ -393,12 +396,56 @@ function FooterConnect({ t }: { t: FooterTheme }) {
   );
 }
 
+// ─── STRUCTURE 6 · SHOWCASE (2026-10-29): two quiet rows on the white page under a hairline. Row one, centred: the
+// logo (or the name), the menu links (the owner's own menu when set, else the site's pages), the social icons. Row two:
+// © year name, the privacy and legal links. Lots of space, few words. ──
+function FooterShowcase({ t }: { t: FooterTheme }) {
+  const year = new Date().getFullYear();
+  const caps = "font-sans text-[11px] font-medium uppercase tracking-[0.18em]";
+  const navGroups = (SITE as { navGroups?: Array<{ label: string; items: Array<{ label: string; href: string }> }> }).navGroups ?? [];
+  const ownLinks = navGroups.flatMap((g) => (g.items.length === 1 ? [{ label: g.label, href: g.items[0]!.href }] : g.items));
+  return (
+    <>
+      <div className={`border-t ${t.border}`}>
+        <div className="container-x py-section flex flex-col items-center gap-10 text-center">
+          <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={44} alt={SITE.name} />
+          <nav className={`flex flex-wrap justify-center gap-x-9 gap-y-3 ${caps} ${t.listText}`}>
+            {ownLinks.length > 0
+              ? ownLinks.map((l) => (<a key={l.href + l.label} href={portfolioMenuHref(l.href)} className={`${t.listHover} transition-colors`}>{l.label}</a>))
+              : (
+                <>
+                  {SERVICES.length > 0 && SELLS.services && !HIDDEN_NAV.includes('services') && <Link to="/services" className={t.listHover}>{tr('nav.services')}</Link>}
+                  {!HIDDEN_NAV.includes('about') && <Link to="/about" className={t.listHover}>{tr('footer.about')}</Link>}
+                  {!HIDDEN_NAV.includes('reviews') && <Link to="/reviews" className={t.listHover}>{tr('footer.reviews')}</Link>}
+                  {!HIDDEN_NAV.includes('contact') && <Link to="/contact" className={t.listHover}>{tr('footer.contact')}</Link>}
+                  {CUSTOM_PAGES.filter((p) => p.nav !== false).map((p) => (<Link key={p.slug} to="/$slug" params={{ slug: p.slug }} className={t.listHover}>{p.title}</Link>))}
+                </>
+              )}
+          </nav>
+          <SocialRow t={t} />
+        </div>
+      </div>
+      <div className={`border-t ${t.border}`}>
+        <div className={`container-x py-6 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 sm:justify-between ${caps} ${t.bottomText}`}>
+          <div>© {year} {(SITE as { legalName?: string }).legalName || SITE.name}</div>
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+            {LEGAL_PAGES.map((p) => (<Link key={p.slug} to="/$slug" params={{ slug: p.slug }} className={t.bottomHover}>{p.title}</Link>))}
+            {!LEGAL_PAGES.some((p) => /privacy|privacidad/i.test(p.slug)) && <Link to="/privacy" className={t.bottomHover}>{tr('footer.privacy')}</Link>}
+            <PortalLink className={t.bottomHover} />
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
 // Resolve the footer variant: explicit prop (showcase) > the Editorial chrome > SITE.footerVariant (family) > legacy
 // chrome/character. The Editorial theme is the owner's whole-site choice, so like the header it outranks the design
 // wave's family footer (a site without chromeStyle 'editorial' resolves exactly as before).
 function resolveFooter(variantOverride?: string): { structure: FooterStructure; theme: string } {
   const chrome = (SITE as { chromeStyle?: string }).chromeStyle ?? "";
   if (!variantOverride && chrome === "editorial") return { structure: "connect", theme: "editorial" };
+  if (!variantOverride && chrome === "showcase") return { structure: "showcase", theme: "showcase" };
   const explicit = variantOverride ?? (SITE as { footerVariant?: string }).footerVariant;
   if (explicit && FOOTER_VARIANTS[explicit]) return FOOTER_VARIANTS[explicit]!;
   const character = (SITE as { character?: string }).character ?? "";
@@ -419,6 +466,7 @@ export function Footer({ decorativeAsset = siteDecor(), variant }: { decorativeA
     <footer className={`relative overflow-hidden ${t.surface}`}>
       {structure === "editorial" && <FooterEditorial t={t} />}
       {structure === "connect" && <FooterConnect t={t} />}
+      {structure === "showcase" && <FooterShowcase t={t} />}
       {structure === "minimal" && <FooterMinimal t={t} />}
       {structure === "ctaBand" && <FooterCtaBand t={t} ctaTitle={tr('cta.readyWhenYouAre')} rounded={theme === "friendly"} />}
       {structure === "columns" && <FooterColumns t={t} wow={isWow} decor={showDecor ? decorativeAsset : undefined} />}

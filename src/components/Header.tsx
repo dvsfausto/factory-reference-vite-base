@@ -108,8 +108,24 @@ const EDITORIAL_BASE: HeaderTheme = {
   mobileCta: "inline-flex h-12 w-full items-center justify-center bg-fam-ink font-sans text-[12px] font-medium uppercase tracking-[0.14em] text-fam-page",
 };
 
+// The Showcase theme's chrome (2026-10-29), selected by SITE.chromeStyle='showcase': a white bar with a hairline
+// under it, 96px tall, the logo left, the owner's menu centred in small tracked caps, one small outline button on the
+// right, no phone unless the owner asks (site.headerPhone). It stays a solid white bar over every hero (legibility first:
+// a dark logo never sits on a photo). Same centred structure and phone menu as the Editorial chrome, shell classes only.
+const SHOWCASE_NAV = "font-sans text-[12px] font-medium uppercase tracking-[0.18em] transition-colors";
+const SHOWCASE_BASE: HeaderTheme = {
+  ...EDITORIAL_BASE,
+  shell: "bg-fam-page border-b border-fam-hairline",
+  navLink: `${SHOWCASE_NAV} text-fam-ink hover:text-fam-accent-text-strong`,
+  cta: "inline-flex items-center border border-fam-ink px-5 py-2.5 font-sans text-[11px] font-medium uppercase tracking-[0.18em] text-fam-ink transition-colors hover:bg-fam-ink hover:text-fam-page",
+  ctaArrow: false,
+  noBlur: true,
+  mobileCta: "inline-flex h-12 w-full items-center justify-center bg-fam-ink font-sans text-[12px] font-medium uppercase tracking-[0.18em] text-fam-page",
+};
+
 const HEADER_THEMES: Record<string, HeaderTheme> = {
   editorial: EDITORIAL_BASE,
+  showcase: SHOWCASE_BASE,
   "editorial-over": {
     ...EDITORIAL_BASE,
     shell: "bg-transparent",
@@ -379,9 +395,10 @@ export function Header() {
   // page, when the homepage hero is the full-bleed 'editorial-photo', the shell lays transparently over it.
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const editorialChrome = chrome === "editorial";
+  const showcaseChrome = chrome === "showcase";
   const overHero = editorialChrome && pathname === "/" && HOMEPAGE_LAYOUT.some((b) => b.type === "hero" && b.variant === "editorial-photo");
   const structure: "standard" | "editorial" | "utility" | "centered" =
-    editorialChrome ? "centered" : family === "elegant" ? "editorial" : family === "corporate" ? "utility" : "standard";
+    editorialChrome || showcaseChrome ? "centered" : family === "elegant" ? "editorial" : family === "corporate" ? "utility" : "standard";
   // Family → colour-theme key. Most families share their name; two remap: elegant → the LIGHT editorial
   // palette (the dark espresso theme is opt-in via character+surface), and wow-glass → the brand-reactive
   // 'wow' glass theme (keyed by name here since the design wave sets no chromeStyle). Keeps header theme
@@ -538,7 +555,7 @@ export function Header() {
   // THE PHONE IN THE HEADER is the owner's choice (site.headerPhone 'show' | 'hide', factory-emitted as SITE.headerPhone);
   // unset, the Editorial chrome leaves it out (its right side is the one inquiry link) and every other chrome shows it (ZB-147 W1.1).
   const headerPhonePref = (SITE as { headerPhone?: string }).headerPhone;
-  const headerPhoneWanted = headerPhonePref ? headerPhonePref === "show" : !editorialChrome;
+  const headerPhoneWanted = headerPhonePref ? headerPhonePref === "show" : !editorialChrome && !showcaseChrome;
   const showHeaderPhone = HAS_PHONE && headerPhoneWanted;
   const phoneCluster = showHeaderPhone && (
     <a href={`tel:${SITE.phone}`} className={`flex items-center gap-1.5 text-sm font-semibold ${t.phoneLink} focus-ring rounded-md px-2 py-1`}>
