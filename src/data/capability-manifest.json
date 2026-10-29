@@ -1,10 +1,10 @@
 {
   "version": 1,
-  "inputs_hash": "ab2878a61c23884a",
+  "inputs_hash": "d60ab36dc126108d",
   "counts": {
     "blocks": 44,
-    "variants": 185,
-    "fields": 230,
+    "variants": 195,
+    "fields": 239,
     "fields_by_kind": {
       "boolean": 6,
       "enum": 7,
@@ -12,13 +12,13 @@
       "list": 24,
       "money": 8,
       "number": 3,
-      "text": 163,
-      "url": 7
+      "text": 168,
+      "url": 11
     },
     "photo_targets": 16,
     "chrome_fields": 20,
     "pages": 11,
-    "blocks_without_variants": 16,
+    "blocks_without_variants": 15,
     "blocks_without_files": [
       "contactForm"
     ]
@@ -157,8 +157,20 @@
           "wow": false
         },
         {
+          "id": "legacy",
+          "label": "Legacy (big words, photo right)",
+          "default": false,
+          "wow": false
+        },
+        {
           "id": "split-photo",
           "label": "Split photo (editorial)",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "showcase",
+          "label": "Showcase photo",
           "default": false,
           "wow": false
         },
@@ -331,6 +343,36 @@
           "kind": "text",
           "required": false,
           "of": "copy"
+        },
+        {
+          "path": "social.instagram",
+          "kind": "url",
+          "required": false,
+          "of": "copy"
+        },
+        {
+          "path": "social.facebook",
+          "kind": "url",
+          "required": false,
+          "of": "copy"
+        },
+        {
+          "path": "social.yelp",
+          "kind": "url",
+          "required": false,
+          "of": "copy"
+        },
+        {
+          "path": "social.google",
+          "kind": "url",
+          "required": false,
+          "of": "copy"
+        },
+        {
+          "path": "params.subtitle",
+          "kind": "text",
+          "required": false,
+          "of": "params"
         }
       ],
       "photo_targets": [
@@ -342,9 +384,11 @@
         "hero",
         "phone",
         "phoneDisplay",
-        "quoteForm"
+        "quoteForm",
+        "social",
+        "stats"
       ],
-      "files": 20
+      "files": 23
     },
     {
       "type": "taglineBar",
@@ -364,7 +408,20 @@
         "kind": null,
         "fallback": false
       },
-      "variants": [],
+      "variants": [
+        {
+          "id": "band",
+          "label": "Band",
+          "default": true,
+          "wow": false
+        },
+        {
+          "id": "ticker",
+          "label": "Ticker",
+          "default": false,
+          "wow": false
+        }
+      ],
       "fields": [
         {
           "path": "tagline",
@@ -377,7 +434,7 @@
       "reads": [
         "tagline"
       ],
-      "files": 1
+      "files": 2
     },
     {
       "type": "localBar",
@@ -773,6 +830,12 @@
           "label": "Week",
           "default": true,
           "wow": false
+        },
+        {
+          "id": "connected",
+          "label": "Connected (phone)",
+          "default": false,
+          "wow": false
         }
       ],
       "fields": [
@@ -855,6 +918,12 @@
           "of": "item"
         },
         {
+          "path": "name",
+          "kind": "text",
+          "required": false,
+          "of": "copy"
+        },
+        {
           "path": "params.body",
           "kind": "text",
           "required": false,
@@ -871,11 +940,19 @@
           "kind": "text",
           "required": false,
           "of": "params"
+        },
+        {
+          "path": "params.packs",
+          "kind": "text",
+          "required": false,
+          "of": "params"
         }
       ],
       "photo_targets": [],
-      "reads": [],
-      "files": 1
+      "reads": [
+        "name"
+      ],
+      "files": 2
     },
     {
       "type": "trustBar",
@@ -997,6 +1074,36 @@
           "of": "item"
         },
         {
+          "path": "social.instagram",
+          "kind": "url",
+          "required": false,
+          "of": "copy"
+        },
+        {
+          "path": "social.facebook",
+          "kind": "url",
+          "required": false,
+          "of": "copy"
+        },
+        {
+          "path": "social.yelp",
+          "kind": "url",
+          "required": false,
+          "of": "copy"
+        },
+        {
+          "path": "social.google",
+          "kind": "url",
+          "required": false,
+          "of": "copy"
+        },
+        {
+          "path": "params.body",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
           "path": "params.heading",
           "kind": "text",
           "required": false,
@@ -1011,9 +1118,11 @@
       ],
       "photo_targets": [],
       "reads": [
+        "social",
+        "stats",
         "trustItems"
       ],
-      "files": 13
+      "files": 14
     },
     {
       "type": "servicesPreview",
@@ -1094,6 +1203,18 @@
         {
           "id": "numbered-list",
           "label": "Numbered list",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "showcase-tiles",
+          "label": "Showcase tiles",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "program-cards",
+          "label": "Program cards",
           "default": false,
           "wow": false
         },
@@ -1278,7 +1399,7 @@
       "reads": [
         "homeServices"
       ],
-      "files": 16
+      "files": 18
     },
     {
       "type": "serviceAreas",
@@ -1837,6 +1958,18 @@
           "wow": false
         },
         {
+          "id": "showcase-band",
+          "label": "Showcase band",
+          "default": false,
+          "wow": false
+        },
+        {
+          "id": "brand-band",
+          "label": "Brand band",
+          "default": false,
+          "wow": false
+        },
+        {
           "id": "bold",
           "label": "Bold",
           "default": false,
@@ -1971,6 +2104,24 @@
           "of": "copy"
         },
         {
+          "path": "params.heading",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.href",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.label",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
           "path": "params.subtitle",
           "kind": "text",
           "required": false,
@@ -1997,7 +2148,7 @@
         "phoneDisplay",
         "tagline"
       ],
-      "files": 15
+      "files": 17
     },
     {
       "type": "team",
@@ -2305,6 +2456,12 @@
           "wow": false
         },
         {
+          "id": "showcase-pieces",
+          "label": "Showcase pieces",
+          "default": false,
+          "wow": false
+        },
+        {
           "id": "photo-strip",
           "label": "Photo strip (editorial)",
           "default": false,
@@ -2385,7 +2542,7 @@
         "PROJECTS[].afterImage"
       ],
       "reads": [],
-      "files": 12
+      "files": 13
     },
     {
       "type": "process",
@@ -2517,7 +2674,7 @@
       "reads": [
         "steps"
       ],
-      "files": 8
+      "files": 9
     },
     {
       "type": "faqSection",
@@ -3089,7 +3246,7 @@
       "reads": [
         "memberships"
       ],
-      "files": 5
+      "files": 6
     },
     {
       "type": "packages",
@@ -3982,6 +4139,24 @@
           "of": "params"
         },
         {
+          "path": "params.buttonHref",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.buttonLabel",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
+          "path": "params.caption",
+          "kind": "text",
+          "required": false,
+          "of": "params"
+        },
+        {
           "path": "params.eyebrow",
           "kind": "text",
           "required": false,
@@ -4002,7 +4177,7 @@
       ],
       "photo_targets": [],
       "reads": [],
-      "files": 1
+      "files": 2
     },
     {
       "type": "intro",
