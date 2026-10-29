@@ -876,3 +876,11 @@ html[data-site-theme="showcase"] .input-stead:focus {
   border-color: var(--color-fam-ink);
   box-shadow: none;
 }
+/* The small brand kickers (booking, page intros) take the quiet gold text; the darker brand text reads as ink. */
+html[data-site-theme="showcase"] .text-brand-700 {
+  color: var(--color-fam-accent-text-strong);
+}
+html[data-site-theme="showcase"] .text-brand-800,
+html[data-site-theme="showcase"] .text-brand-900 {
+  color: var(--color-fam-ink);
+}
