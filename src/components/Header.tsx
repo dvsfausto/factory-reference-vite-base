@@ -647,9 +647,10 @@ export function Header() {
       </>
     );
   };
-  /** the extra class a desktop bar takes when its logo needs more room ('' when it fits, so the class string is unchanged) */
+  /** the extra class a desktop bar takes when its logo needs more room ('' when it fits, so the class string is unchanged). The bar's
+   own classes stay a whole string literal so the CSS scanner still sees them (h-[72px] glued to ${…} was not generated). */
   const barGrow = (fallback: number, bar: number) =>
-    logoSize && logoBarPx(bar, sizedLogoHeight(fallback, "desktop", logoSize)) > bar ? " lg:h-[104px]" : "";
+    logoSize && logoBarPx(bar, sizedLogoHeight(fallback, "desktop", logoSize)) > bar ? "lg:h-[104px]" : "";
 
   return (
     <>
@@ -666,7 +667,7 @@ export function Header() {
         {skipLink}
 
         {structure === "standard" && (
-          <div className={`container-x flex items-center justify-between h-20${barGrow(44, 80)}`}>
+          <div className={["container-x flex items-center justify-between h-20", barGrow(44, 80)].filter(Boolean).join(" ")}>
             <Link to="/" className="focus-ring rounded-md" aria-label={`${SITE.name} ${tr('nav.homeLink')}`}>
               {headerLogo(44, 80, "both")}
             </Link>
@@ -693,7 +694,7 @@ export function Header() {
               {mobileTrigger}
             </div>
             {/* the centered (Editorial) header carries the logo larger: 72 on desktop, 56 on a phone (Fausto, 2026-10-07) */}
-            <div className={`hidden lg:grid grid-cols-[1fr_auto_1fr] items-center h-24${barGrow(72, 96)}`}>
+            <div className={["hidden lg:grid grid-cols-[1fr_auto_1fr] items-center h-24", barGrow(72, 96)].filter(Boolean).join(" ")}>
               <Link to="/" className="justify-self-start focus-ring rounded-md" aria-label={`${SITE.name} ${tr('nav.homeLink')}`}>
                 {headerLogo(72, 96, "desktop")}
               </Link>
@@ -721,7 +722,7 @@ export function Header() {
               {mobileTrigger}
             </div>
             <div className="hidden lg:block">
-              <div className={`grid grid-cols-3 items-center h-20${barGrow(46, 80)}`}>
+              <div className={["grid grid-cols-3 items-center h-20", barGrow(46, 80)].filter(Boolean).join(" ")}>
                 <div className={`justify-self-start text-[11px] uppercase tracking-[0.22em] ${t.mobileLabel}`}>
                   {cityLine || SITE.hours}
                 </div>
@@ -758,7 +759,7 @@ export function Header() {
                 </div>
               </div>
             </div>
-            <div className={`container-x flex items-center justify-between h-[72px]${barGrow(42, 72)}`}>
+            <div className={["container-x flex items-center justify-between h-[72px]", barGrow(42, 72)].filter(Boolean).join(" ")}>
               <Link to="/" className="focus-ring rounded-md" aria-label={`${SITE.name} ${tr('nav.homeLink')}`}>
                 {headerLogo(42, 72, "both")}
               </Link>
