@@ -5,6 +5,8 @@ import { imageSrc } from '~/lib/asset-url'
 import { SITE } from '~/data/site'
 import { HOMEPAGE_LAYOUT } from '~/data/layout'
 import { SectionList } from '~/components/render-section'
+import { COMING_SOON } from '~/lib/coming-soon'
+import { ComingSoonHome } from '~/components/ComingSoonHome'
 
 export const Route = createFileRoute('/')({
   // Homepage SEO head goes through the SHARED buildMeta() (same helper sub-pages
@@ -21,7 +23,8 @@ export const Route = createFileRoute('/')({
       path: '/',
       ogImage: imageSrc(SITE.hero.image_url),
     }),
-  component: HomePage,
+  // coming-soon mode: the logo, the hero and the form, nothing else (components/ComingSoonHome.tsx)
+  component: COMING_SOON ? ComingSoonHome : HomePage,
 })
 
 // The homepage now renders through the SHARED renderer (src/components/render-

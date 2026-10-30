@@ -2,13 +2,18 @@ import { createFileRoute } from '@tanstack/react-router'
 import { tr } from '~/lib/i18n'
 import { buildMeta } from '~/lib/seo'
 import { SITE } from '~/data/site'
+import { COMING_SOON } from '~/lib/coming-soon'
 
 // ★ /privacy (2026-09-16): the one statement every generated site can honestly make. Added the day the
 // beacon started recording engagement and a daily visitor code, so the sites say what they collect.
 // Short on purpose: what is collected, what is not, and who to ask. It is NOT a legal document — an
 // owner-made privacy page (a custom page whose slug says privacy) takes the footer link instead.
 export const Route = createFileRoute('/privacy')({
-  head: () => buildMeta({ title: `${tr('privacy.title')} | ${SITE.name}`, description: tr('privacy.intro'), path: '/privacy' }),
+  head: () => {
+    const m = buildMeta({ title: `${tr('privacy.title')} | ${SITE.name}`, description: tr('privacy.intro'), path: '/privacy' })
+    // coming-soon mode: the only page besides home a visitor can open, kept out of search
+    return COMING_SOON ? { ...m, meta: [...m.meta, { name: 'robots', content: 'noindex' }] } : m
+  },
   component: PrivacyPage,
 })
 
