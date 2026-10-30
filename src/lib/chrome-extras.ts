@@ -56,10 +56,29 @@ export function logoSizeOf(x: ChromeExtras = SITE_EXTRAS): LogoSize | null {
 /** The three steps, per bar: 'medium' = the layout's own default; 'small' a little under it; 'large' 80px on a desktop bar and
  *  56px on a phone bar (never under the default). A large desktop logo grows its bar (see LOGO_BAR_GROWN), the phone bars hold it. */
 export const LOGO_LARGE = { desktop: 80, phone: 56 } as const
+/** ★ Fausto 2026-10-30 (Adrian: "logo larger at the top and the bottom"): 'large' is about a third over the layout's own size, never under
+ *  LOGO_LARGE, on desktop bars (which grow to hold it); phone bars keep today's large, except the Showcase split bar, which grows itself
+ *  (Header.tsx); before, a layout whose default was already large (the Showcase split bar) showed no difference at all */
+export const LOGO_LARGE_SCALE = 1.3
 export function sizedLogoHeight(fallback: number, place: 'desktop' | 'phone', size: LogoSize): number {
   if (size === 'small') return Math.max(28, Math.round(fallback * 0.82))
-  if (size === 'large') return Math.max(fallback, LOGO_LARGE[place])
+  /* phone bars never grow (the gate's rule), so the phone keeps today's large; the desktop gets the larger step */
+  if (size === 'large') return place === 'phone' ? Math.max(fallback, LOGO_LARGE.phone) : Math.max(Math.round(fallback * LOGO_LARGE_SCALE), LOGO_LARGE.desktop)
   return fallback
+}
+/** the footer's logo follows the same setting (Fausto 2026-10-30); nothing set = the footer's own height, exactly as before */
+export function footerLogoHeight(h: number, x: ChromeExtras = SITE_EXTRAS): number {
+  const size = logoSizeOf(x)
+  return size ? sizedLogoHeight(h, 'desktop', size) : h
+}
+/** the class a desktop bar takes to hold a logo needing `needPx` (12px air above and below); whole literals so the CSS scanner sees
+ *  every one; '' when the bar already fits */
+export function grownBarClass(barPx: number, needPx: number): string {
+  if (needPx <= barPx) return ''
+  if (needPx <= 104) return 'lg:h-[104px]'
+  if (needPx <= 128) return 'lg:h-[128px]'
+  if (needPx <= 144) return 'lg:h-[144px]'
+  return 'lg:h-[160px]'
 }
 /** The height a desktop bar needs to hold a logo with 12px of air above and below: the bar's own height when it already fits. */
 export function logoBarPx(barPx: number, logoPx: number): number {

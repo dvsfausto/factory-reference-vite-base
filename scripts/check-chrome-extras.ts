@@ -1,6 +1,7 @@
+import { readFileSync } from 'node:fs'
 // ZB-451 gate: the optional chrome settings (lib/chrome-extras.ts). Runs in the build; pure functions, no DOM.
 import assert from 'node:assert/strict'
-import { announcementOf, logoHeight, logoSizeOf, sizedLogoHeight, logoBarPx, streetFirst, textOn } from '../src/lib/chrome-extras'
+import { announcementOf, logoHeight, logoSizeOf, sizedLogoHeight, logoBarPx, streetFirst, textOn, footerLogoHeight, grownBarClass } from '../src/lib/chrome-extras'
 
 // Nothing set: every function returns the layout's own value.
 assert.equal(announcementOf({}), null)
@@ -47,3 +48,16 @@ assert.equal(streetFirst('', site, { showStreet: true }), site.address.street)
 assert.equal(streetFirst('Lima', { address: { street: '  ' } }, { showStreet: true }), 'Lima')
 
 console.log('✓ check-chrome-extras: announcement colours, logo caps on 6 header bars, street once, logo sizes')
+
+// Footer + larger desktop step (Fausto 2026-10-30): the footer follows the size; nothing set = the footer's own height; large desktop is
+// about a third over the layout's size; every grown bar class is a whole literal the CSS scanner sees.
+assert.equal(footerLogoHeight(48, {}), 48, 'nothing set: the footer logo is unchanged')
+assert.ok(footerLogoHeight(48, { logoSize: 'large' }) > 48, 'large: the footer logo grows')
+assert.equal(footerLogoHeight(64, { logoSize: 'small' }), sizedLogoHeight(64, 'desktop', 'small'))
+assert.equal(sizedLogoHeight(88, 'desktop', 'large'), 114)
+assert.equal(grownBarClass(120, 100), '')
+for (const need of [104, 128, 144, 170]) assert.match(grownBarClass(80, need), /^lg:h-\[(104|128|144|160)px\]$/)
+{ const header = readFileSync(new URL('../src/components/Header.tsx', import.meta.url), 'utf8'), lib = readFileSync(new URL('../src/lib/chrome-extras.ts', import.meta.url), 'utf8')
+  for (const c of ['h-[112px]', 'h-[144px]']) assert.ok(header.includes(c), `Header keeps ${c} as a whole literal`)
+  for (const c of ['lg:h-[104px]', 'lg:h-[128px]', 'lg:h-[144px]', 'lg:h-[160px]']) assert.ok(lib.includes(`'${c}'`), `${c} is a whole literal`) }
+console.log('✓ check-chrome-extras: footer follows the logo size; large desktop step; grown bar classes are whole literals')

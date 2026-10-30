@@ -5,7 +5,7 @@ import { ARROW } from "~/lib/editorial";
 import { Menu, X, Phone, ChevronDown } from "lucide-react";
 import { Logo } from "./Logo";
 import { AnnouncementBar } from "./AnnouncementBar";
-import { ANNOUNCEMENT, logoHeight, logoSizeOf, sizedLogoHeight, logoBarPx } from "~/lib/chrome-extras";
+import { ANNOUNCEMENT, logoHeight, logoSizeOf, sizedLogoHeight, logoBarPx, grownBarClass } from "~/lib/chrome-extras";
 import { SITE, BOOKING } from "~/data/site";
 import { PrimaryCta } from "~/components/blocks/PrimaryCta";
 import { primaryCta } from "~/lib/primaryCta";
@@ -700,7 +700,9 @@ export function Header() {
   /** the extra class a desktop bar takes when its logo needs more room ('' when it fits, so the class string is unchanged). The bar's
    own classes stay a whole string literal so the CSS scanner still sees them (h-[72px] glued to ${…} was not generated). */
   const barGrow = (fallback: number, bar: number) =>
-    logoSize && logoBarPx(bar, sizedLogoHeight(fallback, "desktop", logoSize)) > bar ? "lg:h-[104px]" : "";
+    logoSize ? grownBarClass(bar, logoBarPx(bar, sizedLogoHeight(fallback, "desktop", logoSize))) : "";
+  /* the Showcase split bars grow with a large logo too (phone 88 -> 112, desktop 120 -> 144), whole class strings for the scanner */
+  const splitLarge = logoSize === "large";
 
   return (
     <>
@@ -736,14 +738,14 @@ export function Header() {
           // THE SHOWCASE BAR (2026-10-29): phone, the menu left, the logo centred, a matching spacer right; desktop, a
           // three-track grid, the first half of the owner's menu left, the logo centred and large, the rest right.
           <div className="container-x">
-            <div className="grid lg:hidden grid-cols-[2.5rem_1fr_2.5rem] items-center h-[88px]">
+            <div className={splitLarge ? "grid lg:hidden grid-cols-[2.5rem_1fr_2.5rem] items-center h-[112px]" : "grid lg:hidden grid-cols-[2.5rem_1fr_2.5rem] items-center h-[88px]"}>
               {mobileTrigger}
               <Link to="/" className="justify-self-center focus-ring" aria-label={`${SITE.name} ${tr('nav.homeLink')}`}>
-                {headerLogo(64, 88, "phone")}
+                {headerLogo(splitLarge ? 84 : 64, splitLarge ? 112 : 88, "phone")}
               </Link>
               <span aria-hidden="true" />
             </div>
-            <div className="hidden lg:grid grid-cols-[1fr_auto_1fr] items-center gap-8 h-[120px]">
+            <div className={splitLarge ? "hidden lg:grid grid-cols-[1fr_auto_1fr] items-center gap-8 h-[144px]" : "hidden lg:grid grid-cols-[1fr_auto_1fr] items-center gap-8 h-[120px]"}>
               <nav className="justify-self-start flex items-center gap-4" aria-label={tr('nav.ariaPrimary')}>
                 {navGroups.length > 0 ? splitNav(0, Math.ceil(navGroups.length / 2)) : navLinks()}
               </nav>

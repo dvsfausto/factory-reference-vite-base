@@ -5,6 +5,7 @@ import { SocialIcon } from '~/components/blocks/SocialIcon'
 import { Link } from "@tanstack/react-router";
 import { Instagram, Facebook, Phone, Mail, MapPin, Clock, ArrowRight } from "lucide-react";
 import { Logo } from "./Logo";
+import { footerLogoHeight } from "~/lib/chrome-extras";
 import { portfolioMenuHref } from '~/lib/portfolio-pages';
 import { SITE } from "~/data/site";
 import { PAGED_SERVICES as SERVICES } from "~/data/services-view";
@@ -195,7 +196,7 @@ function BottomBar({ t }: { t: FooterTheme }) {
 function LogoTagline({ t }: { t: FooterTheme }) {
   return (
     <div>
-      <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={48} alt={SITE.name} />
+      <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={footerLogoHeight(48)} alt={SITE.name} />
       {hasText(SITE.tagline) && <p className={`mt-4 text-sm ${t.tagline} leading-relaxed font-display italic`}>{SITE.tagline}</p>}
       <div className="mt-5"><SocialRow t={t} /></div>
     </div>
@@ -231,7 +232,7 @@ function FooterEditorial({ t }: { t: FooterTheme }) {
       <div className="container-x py-section">
         {/* Masthead: wordmark left, small-caps place/phone right, over a hairline. */}
         <div className={`flex flex-wrap items-end justify-between gap-6 border-b ${t.border} pb-8`}>
-          <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={64} alt={SITE.name} />
+          <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={footerLogoHeight(64)} alt={SITE.name} />
           <span className={`${capLabel} ${t.tagline}`}>{[loc, SITE.phoneDisplay].filter(Boolean).join("  ·  ")}</span>
         </div>
 
@@ -301,7 +302,7 @@ function FooterMinimal({ t }: { t: FooterTheme }) {
           {/* Logo + tagline: the minimal footer still carries SITE.tagline (footer.tagline is an
               editor-editable field — dropping it silently no-op'd owner edits). Kept to one tight line. */}
           <div>
-            <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={40} alt={SITE.name} />
+            <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={footerLogoHeight(40)} alt={SITE.name} />
             {hasText(SITE.tagline) && <p className={`mt-3 max-w-xs text-sm ${t.tagline} leading-relaxed font-display italic`}>{SITE.tagline}</p>}
           </div>
           <nav className={`flex flex-wrap gap-x-7 gap-y-2 text-xs font-semibold uppercase tracking-[0.12em] ${t.listText}`}>
@@ -340,7 +341,7 @@ function FooterConnect({ t }: { t: FooterTheme }) {
       <div className={`border-t ${t.border}`}>
         <div className="container-x py-section grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-10">
           <div className="lg:col-span-5">
-            <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={48} alt={SITE.name} />
+            <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={footerLogoHeight(48)} alt={SITE.name} />
             {hasText(SITE.description) && <p className={`mt-6 max-w-sm font-sans text-sm leading-relaxed line-clamp-2 ${t.tagline}`}>{SITE.description}</p>}
             <div className="mt-7"><SocialRow t={t} /></div>
           </div>
@@ -428,7 +429,7 @@ function FooterShowcase({ t }: { t: FooterTheme }) {
       <div className={`border-t ${t.border}`}>
         <div className="container-x py-section grid grid-cols-1 gap-12 text-center md:grid-cols-4 md:text-left">
           <div className="flex flex-col items-center md:items-start">
-            <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={72} alt={SITE.name} />
+            <Logo src={SITE.logo_url} light={t.logoLight || isDarkSite} lightSrc={SITE.logo_light_url} height={footerLogoHeight(72)} alt={SITE.name} />
             {hasSocial && <div className="mt-8"><SocialRow t={t} /></div>}
           </div>
           <div>
