@@ -4,6 +4,7 @@ import {
   Outlet,
   Scripts,
   createRootRoute,
+  redirect,
   useRouterState,
 } from '@tanstack/react-router'
 import * as React from 'react'
@@ -20,6 +21,7 @@ import { localBusinessLd } from '~/lib/seo'
 import { SITE, SITE_LANGUAGE, BUSINESS_ID, SITE_KEY, SUPABASE_URL } from '~/data/site'
 import { businessLocale } from '~/lib/seo'
 import appCss from '~/styles/app.css?url'
+import { COMING_SOON, comingSoonAllows } from '~/lib/coming-soon'
 
 export const Route = createRootRoute({
   head: () => ({
@@ -60,6 +62,11 @@ export const Route = createRootRoute({
       ...((SITE as { theme?: string }).theme === 'showcase' ? [{ rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&display=swap' }] : []),
     ],
   }),
+  // ★ COMING-SOON MODE (lib/coming-soon.ts): every page but '/' and '/privacy' answers a temporary redirect home (the mode
+  // is reversible, so never a 301). Off (every site without the setting) → this never throws.
+  beforeLoad: ({ location }) => {
+    if (COMING_SOON && !comingSoonAllows(location.pathname)) throw redirect({ href: '/', statusCode: 307 })
+  },
   errorComponent: DefaultCatchBoundary,
   notFoundComponent: () => <NotFound />,
   shellComponent: RootDocument,
@@ -208,6 +215,17 @@ function RootComponent() {
     try { applyHeroFocusRule() } catch { /* a crop rule is never worth failing a render over */ }
   }, [pathname])
 
+  // coming-soon mode: no header, no footer, no floating bars; only the page itself
+  if (COMING_SOON) {
+    return (
+      <>
+        <JsonLd data={localBusinessLd()} />
+        <main id="main">
+          <Outlet />
+        </main>
+      </>
+    )
+  }
   return (
     <>
       <JsonLd data={localBusinessLd()} />
